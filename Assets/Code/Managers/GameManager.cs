@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
             ui.SetReputation(reputation);
     }
 
+    public void AddReputation(int amount)
+    {
+        reputation += amount;
+        if (ui != null) ui.SetReputation(reputation);
+    }
+
+
     void SyncUI()
     {
         if (ui != null)
