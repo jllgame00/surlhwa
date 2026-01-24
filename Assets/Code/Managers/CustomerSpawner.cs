@@ -8,9 +8,14 @@ public class CustomerSpawner : MonoBehaviour
     public Transform defaultExitPoint;
     public SpecialGuestData[] specialGuests;
     private GameManager gm;
+    [SerializeField] private MiniGameManager miniGameManager;
+
 
     void Update()
-    {
+    {   
+        if (miniGameManager != null && miniGameManager.IsPlaying)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Space))
             SpawnCustomer();
     }
@@ -37,9 +42,11 @@ public class CustomerSpawner : MonoBehaviour
         var go = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
 
         var cc = go.GetComponent<CustomerController>();
+        Debug.Log($"[Spawner] cc={(cc ? "OK" : "NULL")}");
         if (cc != null && seatManager != null)
         {
             var seat = seatManager.GetFreeSeat(cc);
+            Debug.Log($"[Spawner] seat={(seat ? seat.name : "NULL")}");
             cc.AssignSeat(seat);
         }
     }
@@ -48,5 +55,8 @@ public class CustomerSpawner : MonoBehaviour
     void Awake()
     {
         gm = FindFirstObjectByType<GameManager>();
+
+        if (miniGameManager == null)
+            miniGameManager = FindFirstObjectByType<MiniGameManager>();
     }
 }

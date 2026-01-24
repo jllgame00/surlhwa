@@ -11,6 +11,8 @@ public class SeatManager : MonoBehaviour
             .Select(go => go.GetComponent<SeatPoint>())
             .Where(s => s != null)
             .ToArray();
+
+        Debug.Log($"[SeatManager] Found seats: {seats.Length}");
     }
 
     public SeatPoint GetFreeSeat(CustomerController cc)

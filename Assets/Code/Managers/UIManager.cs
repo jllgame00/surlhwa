@@ -17,4 +17,22 @@ public class UIManager : MonoBehaviour
     {
         if (orderText != null) orderText.text = text;
     }
+
+    [SerializeField] private OrderManager orderManager;
+
+    public void OnClickServe()
+    {
+        Debug.Log("[UI] Serve clicked");
+
+        if (orderManager == null)
+        {
+            Debug.LogError("[UI] orderManager is NULL (assign it in Inspector)");
+            return;
+        }
+
+        Debug.Log("[UI] calling OrderManager.ResolveServe()");
+        orderManager.ResolveServe();
+        Debug.Log("[UI] returned from OrderManager.ResolveServe()");
+    }
+
 }
