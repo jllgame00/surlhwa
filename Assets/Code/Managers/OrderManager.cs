@@ -3,9 +3,8 @@ using System;
 
 public class OrderManager : MonoBehaviour
 {
-    // ====== Debug: track state changes ======
     [Header("Debug")]
-    [SerializeField] private bool allowPlayWithoutCustomer = true; // 디버그용: customer 없어도 미니게임 전환 테스트
+    [SerializeField] private bool allowPlayWithoutCustomer = true;
 
     // ====== Runtime State ======
     private CustomerController _currentCustomer;
@@ -38,7 +37,6 @@ public class OrderManager : MonoBehaviour
     [SerializeField] private MiniGameManager miniGameManager;
 
     private bool HasActiveOrder => currentOrder != null;
-    // (원하면 더 엄격히: currentCustomer != null && currentOrder != null)
 
     void Awake()
     {
@@ -59,12 +57,10 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        // 이미 주문이 활성 상태면 새로 발급하지 않음 (Update에서 반복 호출되는 문제 방지)
+        // 이미 주문이 있으면 반복 발급 방지
         if (HasActiveOrder)
         {
-            // 같은 손님에게 이미 발급된 상태면 그냥 무시
-            if (currentCustomer == cc) return;
-
+            if (currentCustomer == cc) return; // 같은 손님이 계속 Update에서 호출하는 거 무시
             Debug.LogWarning($"[OrderManager] Another order is already active (order={currentOrder?.orderName}). Ignoring new issue from {cc.name}");
             return;
         }
@@ -84,7 +80,7 @@ public class OrderManager : MonoBehaviour
             ui.SetOrderText($"ORDER: {currentOrder.orderName}");
     }
 
-    // UI 버튼에서 호출 (UIManager가 이 메서드 호출)
+    // UI 버튼에서 호출
     public void ResolveServe()
     {
         Debug.Log($"[OrderManager] ResolveServe id={GetInstanceID()} called");
@@ -103,7 +99,6 @@ public class OrderManager : MonoBehaviour
 
         if (currentCustomer == null)
         {
-            // 지금 너 상황 디버깅용: customer가 왜 null 되는지 추적하면서도 미니게임 전환은 확인 가능하게
             Debug.LogWarning("[OrderManager] currentCustomer is NULL (no active customer)");
 
             if (!allowPlayWithoutCustomer)
@@ -120,39 +115,34 @@ public class OrderManager : MonoBehaviour
     {
         Debug.Log($"[OrderManager] MiniGame Done => success={result.success}, repDelta={result.repDelta}, grade={result.grade}");
 
-        // 성공/실패에 따른 처리
-        if (result.success)
+        // 평판 처리
+        if (gm != null)
         {
-            // 평판: 기본 보상 + 미니게임 보정
-            if (gm != null)
+            if (result.success)
             {
                 int totalRep = 0;
                 if (currentOrder != null) totalRep += currentOrder.reputationReward;
                 totalRep += result.repDelta;
                 gm.AddReputation(totalRep);
             }
-
-            if (currentCustomer != null)
-                currentCustomer.OnServed(true);
-        }
-        else
-        {
-            // 실패 시 repDelta가 음수면 깎임
-            if (gm != null)
+            else
+            {
+                // fail이면 보통 0이거나 음수로 깎이게 설계 가능
                 gm.AddReputation(result.repDelta);
-
-            if (currentCustomer != null)
-                currentCustomer.OnServed(false);
+            }
         }
+
+        // 대사는 CustomerController가 한다 (중복 호출 제거)
+        if (currentCustomer != null)
+            currentCustomer.OnServed(result.success);
 
         // 상태 초기화
-        currentCustomer = null; // setter가 추적 로그 찍음
+        currentCustomer = null;
         currentOrder = null;
 
         if (ui != null) ui.SetOrderText("ORDER: -");
     }
 
-    // 필요하면 외부에서 강제로 리셋할 때 사용
     public void ForceClearOrder()
     {
         Debug.LogWarning("[OrderManager] ForceClearOrder()");

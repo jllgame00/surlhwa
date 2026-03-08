@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: 08da9ac1267e2f5469bcaa07ffb68718
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - standSprite: {instanceID: 0}
+  - sitSprite: {instanceID: 0}
+  - defaultExitPoint: {instanceID: 0}
+  - dialogueData: {instanceID: 0}
+  - dialogueBubblePrefab: {fileID: 1248672012858792684, guid: 5e1bead4382e36a4e82ba6bcf17e1432, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

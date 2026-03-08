@@ -35,4 +35,14 @@ public class UIManager : MonoBehaviour
         Debug.Log("[UI] returned from OrderManager.ResolveServe()");
     }
 
+    [SerializeField] private TMP_Text dialogueText;
+
+    public void ShowDialogue(string text)
+    {
+        if (dialogueText == null) return;
+
+        dialogueText.text = text;
+        dialogueText.gameObject.SetActive(true);
+    }
+
 }
