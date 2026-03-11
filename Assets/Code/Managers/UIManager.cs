@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,18 +8,25 @@ public class UIManager : MonoBehaviour
     public TMP_Text repText;
     public TMP_Text orderText;
 
+    [SerializeField] private OrderManager orderManager;
+    [SerializeField] private TMP_Text dialogueText;
+
     public void SetReputation(int rep)
     {
-        if (repText != null) repText.text = $"Rep: {rep}";
+        if (repText != null)
+            repText.text = $"Rep: {rep}";
     }
-
 
     public void SetOrderText(string text)
     {
-        if (orderText != null) orderText.text = text;
-    }
+        Debug.Log(
+            $"[UIManager] SetOrderText -> {text}\n" +
+            $"[UIManager] Caller StackTrace:\n{Environment.StackTrace}"
+        );
 
-    [SerializeField] private OrderManager orderManager;
+        if (orderText != null)
+            orderText.text = text;
+    }
 
     public void OnClickServe()
     {
@@ -35,8 +43,6 @@ public class UIManager : MonoBehaviour
         Debug.Log("[UI] returned from OrderManager.ResolveServe()");
     }
 
-    [SerializeField] private TMP_Text dialogueText;
-
     public void ShowDialogue(string text)
     {
         if (dialogueText == null) return;
@@ -44,5 +50,4 @@ public class UIManager : MonoBehaviour
         dialogueText.text = text;
         dialogueText.gameObject.SetActive(true);
     }
-
 }

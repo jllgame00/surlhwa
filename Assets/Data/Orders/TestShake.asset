@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: TestShake
+  m_EditorClassIdentifier: 
+  orderName: TestShake
+  reputationReward: 1
+  miniGameType: 3
+  steps:
+  - type: 2
+    ingredientName: 
+    targetAmount01: 0
+    tolerance01: 0
+    maxPourSpeed: 0
+    targetMin01: 0
+    targetMax01: 0
+    gaugeSpeed: 0

@@ -1,0 +1,259 @@
+using System;
+using System.Collections;
+using TMPro;
+using UnityEngine;
+
+public class ShakeMiniGame : MonoBehaviour, IMiniGame
+{
+    public enum ShakeState { Ready, Shaking, Result }
+    public enum PrepDirection { None, Left, Right }
+
+    [Header("UI")]
+    [SerializeField] private RectTransform shaker;
+    [SerializeField] private TMP_Text progressText;
+    [SerializeField] private TMP_Text hintText;
+    [SerializeField] private TMP_Text resultLabel;
+
+    [Header("Rules")]
+    [SerializeField] private int requiredSuccessCount = 6;
+    [SerializeField] private float timeLimit = 6f;
+    [SerializeField] private float prepareTimeout = 0.8f;
+    [SerializeField] private int maxMistakes = 3;
+
+    [Header("Motion")]
+    [SerializeField] private float prepareOffsetX = 30f;
+    [SerializeField] private float shakeMoveX = 80f;
+    [SerializeField] private float shakeDuration = 0.08f;
+    [SerializeField] private float returnDuration = 0.08f;
+
+    private ShakeState state = ShakeState.Ready;
+    private PrepDirection preparedDirection = PrepDirection.None;
+    private PrepDirection lastExecutedDirection = PrepDirection.None;
+
+    private float remainTime;
+    private float prepareRemainTime;
+
+    private int successCount = 0;
+    private int mistakeCount = 0;
+
+    private Vector2 shakerOrigin;
+    private bool isAnimating = false;
+
+    private Action<MiniGameResult> onDone;
+
+    public void StartGame(OrderData order, Action<MiniGameResult> callback)
+    {
+        onDone = callback;
+
+        state = ShakeState.Ready;
+        preparedDirection = PrepDirection.None;
+        lastExecutedDirection = PrepDirection.None;
+
+        remainTime = timeLimit;
+        prepareRemainTime = 0f;
+        successCount = 0;
+        mistakeCount = 0;
+        isAnimating = false;
+
+        if (shaker != null)
+            shakerOrigin = shaker.anchoredPosition;
+
+        if (resultLabel != null)
+            resultLabel.text = "";
+
+        UpdateProgressText();
+        SetHint("← 또는 → 로 준비");
+
+        state = ShakeState.Shaking;
+    }
+
+    private void Update()
+    {
+        if (state != ShakeState.Shaking) return;
+
+        remainTime -= Time.deltaTime;
+        if (remainTime <= 0f)
+        {
+            ResolveFail("FAIL");
+            return;
+        }
+
+        if (preparedDirection != PrepDirection.None)
+        {
+            prepareRemainTime -= Time.deltaTime;
+            if (prepareRemainTime <= 0f)
+            {
+                preparedDirection = PrepDirection.None;
+                ResetShakerToOrigin();
+                SetHint("준비 시간 초과!");
+                RegisterMistake();
+            }
+        }
+
+        HandlePrepareInput();
+        HandleExecuteInput();
+    }
+
+    private void HandlePrepareInput()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+            Prepare(PrepDirection.Left);
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+            Prepare(PrepDirection.Right);
+    }
+
+    private void HandleExecuteInput()
+    {
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+        if (isAnimating) return;
+
+        if (preparedDirection == PrepDirection.None)
+        {
+            SetHint("방향 먼저 준비!");
+            RegisterMistake();
+            return;
+        }
+
+        ExecuteShake(preparedDirection);
+    }
+
+    private void Prepare(PrepDirection dir)
+    {
+        preparedDirection = dir;
+        prepareRemainTime = prepareTimeout;
+
+        if (shaker != null)
+        {
+            float offsetX = dir == PrepDirection.Left ? -prepareOffsetX : prepareOffsetX;
+            shaker.anchoredPosition = shakerOrigin + new Vector2(offsetX, 0f);
+        }
+
+        SetHint(dir == PrepDirection.Left ? "왼쪽 준비" : "오른쪽 준비");
+    }
+
+    private void ExecuteShake(PrepDirection dir)
+    {
+        bool isFirst = lastExecutedDirection == PrepDirection.None;
+        bool alternated = lastExecutedDirection != dir;
+
+        if (!isFirst && !alternated)
+        {
+            SetHint("반대 방향으로 흔들어!");
+            preparedDirection = PrepDirection.None;
+            ResetShakerToOrigin();
+            RegisterMistake();
+            return;
+        }
+
+        successCount++;
+        lastExecutedDirection = dir;
+        preparedDirection = PrepDirection.None;
+
+        UpdateProgressText();
+        SetHint(dir == PrepDirection.Left ? "왼쪽 쉐이크!" : "오른쪽 쉐이크!");
+
+        StartCoroutine(PlayShakeMotion(dir));
+
+        if (successCount >= requiredSuccessCount)
+            ResolveSuccess();
+    }
+
+    private IEnumerator PlayShakeMotion(PrepDirection dir)
+    {
+        isAnimating = true;
+
+        if (shaker != null)
+        {
+            Vector2 start = shaker.anchoredPosition;
+            float moveX = dir == PrepDirection.Left ? -shakeMoveX : shakeMoveX;
+            Vector2 target = shakerOrigin + new Vector2(moveX, 0f);
+
+            yield return LerpAnchoredPos(start, target, shakeDuration);
+            yield return LerpAnchoredPos(target, shakerOrigin, returnDuration);
+        }
+
+        isAnimating = false;
+    }
+
+    private IEnumerator LerpAnchoredPos(Vector2 from, Vector2 to, float duration)
+    {
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / duration);
+            if (shaker != null)
+                shaker.anchoredPosition = Vector2.Lerp(from, to, p);
+            yield return null;
+        }
+
+        if (shaker != null)
+            shaker.anchoredPosition = to;
+    }
+
+    private void RegisterMistake()
+    {
+        mistakeCount++;
+        if (mistakeCount >= maxMistakes)
+            ResolveFail("FAIL");
+        else
+            UpdateProgressText();
+    }
+
+    private void ResolveSuccess()
+    {
+        state = ShakeState.Result;
+
+        string grade = mistakeCount == 0 ? "Perfect" : "Good";
+        int repDelta = mistakeCount == 0 ? 2 : 1;
+
+        if (resultLabel != null)
+            resultLabel.text = grade;
+
+        StartCoroutine(FinishAfterDelay(new MiniGameResult
+        {
+            success = true,
+            repDelta = repDelta,
+            grade = grade
+        }));
+    }
+
+    private void ResolveFail(string label)
+    {
+        state = ShakeState.Result;
+
+        if (resultLabel != null)
+            resultLabel.text = label;
+
+        StartCoroutine(FinishAfterDelay(new MiniGameResult
+        {
+            success = false,
+            repDelta = -1,
+            grade = "Fail"
+        }));
+    }
+
+    private IEnumerator FinishAfterDelay(MiniGameResult result)
+    {
+        yield return new WaitForSeconds(1f);
+        onDone?.Invoke(result);
+    }
+
+    private void UpdateProgressText()
+    {
+        if (progressText != null)
+            progressText.text = $"Shake {successCount}/{requiredSuccessCount}  Mistake {mistakeCount}/{maxMistakes}";
+    }
+
+    private void SetHint(string msg)
+    {
+        if (hintText != null)
+            hintText.text = msg;
+    }
+
+    private void ResetShakerToOrigin()
+    {
+        if (shaker != null)
+            shaker.anchoredPosition = shakerOrigin;
+    }
+}

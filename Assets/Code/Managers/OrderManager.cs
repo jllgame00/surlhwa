@@ -77,7 +77,10 @@ public class OrderManager : MonoBehaviour
         Debug.Log($"[OrderManager] IssueOrderTo SET customer={currentCustomer.name} order={currentOrder.orderName}");
 
         if (ui != null)
+        {
+            Debug.Log($"[OrderManager] IssueOrderTo -> setting ORDER text = {currentOrder.orderName}");
             ui.SetOrderText($"ORDER: {currentOrder.orderName}");
+        }
     }
 
     // UI 버튼에서 호출
@@ -140,7 +143,11 @@ public class OrderManager : MonoBehaviour
         currentCustomer = null;
         currentOrder = null;
 
-        if (ui != null) ui.SetOrderText("ORDER: -");
+        if (ui != null)
+        {
+            Debug.Log("[OrderManager] OnMiniGameDone -> resetting ORDER text to -");
+            ui.SetOrderText("ORDER: -");
+        }
     }
 
     public void ForceClearOrder()

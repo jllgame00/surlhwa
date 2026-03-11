@@ -166,7 +166,8 @@ MonoBehaviour:
   buildPrefab: {fileID: 0}
   floatPrefab: {fileID: 0}
   stirPrefab: {fileID: 7411188713256325596, guid: 081d8cfa995984442afe1762848abab9, type: 3}
-  shakePrefab: {fileID: 0}
+  shakePrefab: {fileID: 2919689071938475337, guid: e17507ce645e9a04f98d08387d3f4665, type: 3}
+  debugPlayMode: 1
   mainHUD: {fileID: 1203440824}
   mainWorld: {fileID: 394194045}
   mainCamera: {fileID: 519420031}
@@ -609,8 +610,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'ORDER: -'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: af8ca7cee578d1143a96f98199bc7552, type: 2}
+  m_sharedMaterial: {fileID: 6479833276232034660, guid: af8ca7cee578d1143a96f98199bc7552, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -641,8 +642,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -4036,7 +4037,8 @@ MonoBehaviour:
   allowPlayWithoutCustomer: 1
   orderPool:
   - {fileID: 11400000, guid: 3cd1d69284df4ed4facab04626ad1f41, type: 2}
-  miniGameManager: {fileID: 0}
+  - {fileID: 11400000, guid: 66261992cc3b0ba4a8b749fb5420c826, type: 2}
+  miniGameManager: {fileID: 4119505}
 --- !u!4 &1780158366
 Transform:
   m_ObjectHideFlags: 0
