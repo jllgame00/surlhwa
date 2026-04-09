@@ -163,11 +163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d509ef17fb4adcd4896ddd726a5a7e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPrefab: {fileID: 0}
+  buildPrefab: {fileID: 699856573565143853, guid: 7a1a9bf5165ca3440bff0de6bbb3bda3, type: 3}
   floatPrefab: {fileID: 0}
   stirPrefab: {fileID: 7411188713256325596, guid: 081d8cfa995984442afe1762848abab9, type: 3}
   shakePrefab: {fileID: 2919689071938475337, guid: e17507ce645e9a04f98d08387d3f4665, type: 3}
-  debugPlayMode: 1
+  debugPlayMode: 0
   mainHUD: {fileID: 1203440824}
   mainWorld: {fileID: 394194045}
   mainCamera: {fileID: 519420031}
@@ -4038,6 +4038,7 @@ MonoBehaviour:
   orderPool:
   - {fileID: 11400000, guid: 3cd1d69284df4ed4facab04626ad1f41, type: 2}
   - {fileID: 11400000, guid: 66261992cc3b0ba4a8b749fb5420c826, type: 2}
+  - {fileID: 11400000, guid: f909fd19d3ea67346a83440c9d7014fb, type: 2}
   miniGameManager: {fileID: 4119505}
 --- !u!4 &1780158366
 Transform:
