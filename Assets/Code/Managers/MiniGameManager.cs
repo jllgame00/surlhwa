@@ -9,7 +9,8 @@ public class MiniGameManager : MonoBehaviour
         RandomStirShake,
         ForceStir,
         ForceShake,
-        ForceBuild
+        ForceBuild,
+        ForceFloat
     }
 
     [Header("MiniGame Prefabs")]
@@ -102,6 +103,9 @@ public class MiniGameManager : MonoBehaviour
     {
         switch (debugPlayMode)
         {
+            case DebugPlayMode.ForceFloat:
+                return floatPrefab;
+
             case DebugPlayMode.ForceStir:
                 return stirPrefab;
 
@@ -141,6 +145,7 @@ public class MiniGameManager : MonoBehaviour
         if (debugPlayMode == DebugPlayMode.RandomStirShake ||
             debugPlayMode == DebugPlayMode.ForceStir ||
             debugPlayMode == DebugPlayMode.ForceShake ||
+            debugPlayMode == DebugPlayMode.ForceFloat ||
             debugPlayMode == DebugPlayMode.ForceBuild)
         {
             if (selectedPrefab == stirPrefab)
@@ -149,6 +154,8 @@ public class MiniGameManager : MonoBehaviour
                 label = "TestShake";
             else if (selectedPrefab == buildPrefab)
                 label = "TestBuild";
+            else if (selectedPrefab == floatPrefab)
+                label = "TestFloat";
         }
 
         ui.SetOrderText($"ORDER: {label}");
