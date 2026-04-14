@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3129869de1adc14584583431ba7a42b, type: 3}
+  m_Name: GeneralGuestReactionDB
+  m_EditorClassIdentifier: Assembly-CSharp::GuestReactionDatabase
+  lines:
+  - text: "...\uC624\uB298\uC740 \uC774\uB7F0 \uAE30\uBD84\uC740 \uC544\uB2C8\uC5C8\uC5B4\uC694."
+    phase: 0
+    heartCount: 0
+    tags: 
+  - text: "\uC870\uAE08 \uB2E4\uB974\uB124\uC694."
+    phase: 0
+    heartCount: 0
+    tags: 
+  - text: "\uB098\uC05C \uAC74 \uC544\uB2CC\uB370... \uB9C8\uC74C\uC774 \uB2FF\uC9C4
+      \uC54A\uC558\uC5B4\uC694."
+    phase: 1
+    heartCount: 0
+    tags: 
+  - text: "\uB2E4\uC74C\uC5D4 \uC870\uAE08 \uB2E4\uB978 \uAC78 \uBD80\uD0C1\uD574\uB3C4
+      \uB420\uAE4C\uC694."
+    phase: 1
+    heartCount: 0
+    tags: 
+  - text: "\uB098\uC058\uC9C4 \uC54A\uC544\uC694."
+    phase: 0
+    heartCount: 1
+    tags: 
+  - text: "\uC870\uAE08 \uC5B4\uAE0B\uB0AC\uC9C0\uB9CC, \uC2EB\uC9C4 \uC54A\uC544\uC694."
+    phase: 0
+    heartCount: 1
+    tags: 
+  - text: "\uC644\uBCBD\uD558\uC9C4 \uC54A\uC558\uC9C0\uB9CC, \uADF8 \uB9C8\uC74C\uC740
+      \uC804\uD574\uC84C\uC5B4\uC694."
+    phase: 1
+    heartCount: 1
+    tags: 
+  - text: "\uC624\uB298 \uBC24\uC744 \uBC84\uD2F0\uAE30\uC5D4 \uCDA9\uBD84\uD588\uC5B4\uC694."
+    phase: 1
+    heartCount: 1
+    tags: 
+  - text: "...\uC88B\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 
+  - text: "\uC774\uC0C1\uD558\uAC8C \uB9C8\uC74C\uC774 \uC880 \uAC00\uBCBC\uC6CC\uC84C\uC5B4\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 
+  - text: "\uB355\uBD84\uC5D0 \uC624\uB298\uC744 \uC870\uAE08 \uB35C \uBBF8\uC6CC\uD558\uAC8C
+      \uB410\uC5B4\uC694."
+    phase: 1
+    heartCount: 2
+    tags: 
+  - text: "\uC774 \uBC24\uC5D0 \uC5B4\uC6B8\uB9AC\uB294 \uB9DB\uC774\uC5C8\uC5B4\uC694."
+    phase: 1
+    heartCount: 2
+    tags: 
+  - text: "...\uADF8\uB798\uC694. \uBC14\uB85C \uC774\uAC70\uC608\uC694."
+    phase: 0
+    heartCount: 3
+    tags: 
+  - text: "\uC624\uB298 \uB0B4\uAC00 \uC6D0\uD55C \uAC8C \uC815\uD655\uD788 \uC774\uB7F0
+      \uB9DB\uC774\uC5C8\uC5B4\uC694."
+    phase: 0
+    heartCount: 3
+    tags: 
+  - text: "\uC624\uB298 \uBC24\uC744 \uAE30\uC5B5\uD558\uAC8C \uB420 \uAC83 \uAC19\uC544\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 
+  - text: "\uACE0\uB9D9\uB2E4\uB294 \uB9D0\uB85C\uB294 \uC870\uAE08 \uBD80\uC871\uD55C
+      \uAC83 \uAC19\uC544\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 
+  - text: "...\uC870\uC6A9\uD574\uC11C \uC88B\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 00000000
+  - text: "\uD63C\uC790\uC778 \uBC24\uC774 \uC870\uAE08 \uB35C \uAE38\uAC8C \uB290\uAEF4\uC84C\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 00000000
+  - text: "...\uC870\uAE08 \uC548\uC2EC\uB418\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 01000000
+  - text: "\uC0DD\uAC01\uBCF4\uB2E4 \uB9CE\uC774 \uC704\uB85C\uBC1B\uC558\uB124\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 01000000
+  - text: "\uC88B\uB124\uC694. \uC815\uC2E0\uC774 \uC880 \uC120\uBA85\uD574\uC838\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 02000000
+  - text: "\uC774\uC81C\uB294 \uC880 \uC81C\uB300\uB85C \uC0DD\uAC01\uD560 \uC218
+      \uC788\uACA0\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 02000000
+  - text: "...\uBD80\uB4DC\uB7FD\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 03000000
+  - text: "\uC624\uB298\uC740 \uC774 \uC815\uB3C4\uB85C \uCDA9\uBD84\uD788 \uD3B8\uC548\uD574\uC84C\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 03000000
+  - text: "\uC88B\uB124\uC694. \uB108\uBB34 \uC27D\uAC8C \uB2EC\uB798\uC9C0 \uC54A\uC544\uC11C."
+    phase: 0
+    heartCount: 2
+    tags: 04000000
+  - text: "\uB2EC\uC9C0 \uC54A\uC544\uC11C \uC624\uD788\uB824 \uC624\uB798 \uB0A8\uC744
+      \uAC83 \uAC19\uC544\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 04000000
+  - text: "\uC88B\uB124\uC694. \uD568\uBD80\uB85C \uBC1D\uC9C0 \uC54A\uC544\uC11C."
+    phase: 0
+    heartCount: 2
+    tags: 05000000
+  - text: "\uBB34\uAC70\uC6B4 \uB9C8\uC74C\uC744 \uC5B5\uC9C0\uB85C \uB4E4\uC5B4\uC62C\uB9AC\uC9C4
+      \uC54A\uC544\uC11C \uC88B\uC558\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 05000000
+  - text: "\uAE54\uB054\uD558\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 06000000
+  - text: "\uBCF5\uC7A1\uD588\uB358 \uAC8C \uC870\uAE08\uC740 \uAC00\uB77C\uC549\uC558\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 06000000
+  - text: "...\uB530\uB73B\uD558\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 07000000
+  - text: "\uC624\uB298\uC740 \uC774 \uC628\uAE30\uB97C \uAE30\uC5B5\uD560 \uAC83
+      \uAC19\uC544\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 07000000
+  - text: "\uC5B5\uC9C0\uB85C \uAD1C\uCC2E\uC544\uC9C0\uB77C\uACE0 \uD558\uC9C4 \uC54A\uC544\uC11C
+      \uC88B\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 08000000
+  - text: "\uC544\uC9C1 \uB2E4 \uAD1C\uCC2E\uC9C4 \uC54A\uC9C0\uB9CC, \uC870\uAE08\uC740
+      \uACAC\uB51C \uC218 \uC788\uACA0\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 08000000
+  - text: "...\uC544\uC9C1 \uB0A8\uC544 \uC788\uB294 \uAC8C \uC788\uAE34 \uD558\uB124\uC694."
+    phase: 0
+    heartCount: 2
+    tags: 09000000
+  - text: "\uB0A8\uACA8\uB454 \uB9C8\uC74C\uC744 \uC870\uAE08 \uB35C \uBBF8\uC6CC\uD558\uAC8C
+      \uB410\uC5B4\uC694."
+    phase: 1
+    heartCount: 2
+    tags: 09000000
+  - text: "...\uC870\uC6A9\uD55C\uB370\uB3C4 \uC774\uC0C1\uD558\uAC8C \uB35C \uC678\uB86D\uB124\uC694."
+    phase: 0
+    heartCount: 3
+    tags: 0000000001000000
+  - text: "\uD63C\uC790\uC778 \uBC24\uC778\uB370\uB3C4, \uC644\uC804\uD788 \uD63C\uC790\uB294
+      \uC544\uB2CC \uAE30\uBD84\uC774\uC5C8\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 0000000001000000
+  - text: "\uBB34\uAC70\uC6B4\uB370\uB3C4 \uCC28\uAC11\uC9C4 \uC54A\uB124\uC694."
+    phase: 0
+    heartCount: 3
+    tags: 0500000007000000
+  - text: "\uBB34\uAC70\uC6B4 \uBC24\uC744 \uC870\uAE08 \uB530\uB73B\uD558\uAC8C
+      \uAC74\uB108\uAC8C \uB410\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 0500000007000000
+  - text: "\uC774\uB7F0 \uC501\uC4F8\uD568\uC774\uBA74, \uC624\uD788\uB824 \uC194\uC9C1\uD574\uC11C
+      \uC88B\uB124\uC694."
+    phase: 0
+    heartCount: 3
+    tags: 0800000004000000
+  - text: "\uD6C4\uD68C\uB97C \uB35C\uC5B4\uB0B4\uC9C4 \uBABB\uD574\uB3C4, \uC870\uAE08
+      \uB35C \uC544\uD504\uAC8C \uB0A8\uC558\uC5B4\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 0800000004000000
+  - text: "\uBA38\uB9BF\uC18D\uC774 \uB9D1\uC544\uC9C0\uBA74\uC11C\uB3C4 \uB610\uB837\uD574\uC9C0\uB124\uC694."
+    phase: 0
+    heartCount: 3
+    tags: 0600000002000000
+  - text: "\uD750\uB838\uB358 \uAC8C \uAC77\uD788\uACE0, \uC774\uC81C \uBB58 \uD574\uC57C
+      \uD560\uC9C0 \uBCF4\uC774\uB124\uC694."
+    phase: 1
+    heartCount: 3
+    tags: 0600000002000000

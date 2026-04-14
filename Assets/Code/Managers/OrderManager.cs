@@ -130,14 +130,13 @@ public class OrderManager : MonoBehaviour
             }
             else
             {
-                // fail이면 보통 0이거나 음수로 깎이게 설계 가능
                 gm.AddReputation(result.repDelta);
             }
         }
 
-        // 대사는 CustomerController가 한다 (중복 호출 제거)
+        // 새 반응 시스템 호출
         if (currentCustomer != null)
-            currentCustomer.OnServed(result.success);
+            currentCustomer.OnServedWithReaction(currentOrder, result);
 
         // 상태 초기화
         currentCustomer = null;

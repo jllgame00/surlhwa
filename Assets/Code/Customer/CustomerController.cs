@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -25,8 +26,14 @@ public class CustomerController : MonoBehaviour
 
     [Header("Dialogue")]
     [SerializeField] private DialogueData dialogueData;
-
     [SerializeField] private GameObject dialogueBubblePrefab;
+
+    [Header("Emotion Reaction")]
+    [SerializeField] private GuestReactionDatabase reactionDatabase;
+    [SerializeField] private GuestEmotionRequest emotionRequest = new GuestEmotionRequest();
+    [SerializeField] private Transform reactionAnchor;
+
+    private static EmotionTag lastGeneralGuestPrimaryTag = EmotionTag.Loneliness;
 
     void Awake()
     {
@@ -48,6 +55,14 @@ public class CustomerController : MonoBehaviour
         }
 
         state = State.MovingToSeat;
+    }
+
+    public void AssignRandomEmotionForGeneralGuest()
+    {
+        GeneralGuestEmotionGenerator.FillRandom(emotionRequest, lastGeneralGuestPrimaryTag);
+        lastGeneralGuestPrimaryTag = emotionRequest.primaryTag;
+
+        Debug.Log($"[Customer] Emotion Assigned -> {emotionRequest.primaryTag} + {emotionRequest.secondaryTag}");
     }
 
     void Update()
@@ -74,7 +89,7 @@ public class CustomerController : MonoBehaviour
                 break;
 
             case State.Waiting:
-                // Serve 누르면 OrderManager가 처리 후 OnServed 콜백
+                // Serve 누르면 OrderManager가 처리 후 OnServed / OnServedWithReaction 콜백
                 break;
 
             case State.Leaving:
@@ -118,6 +133,8 @@ public class CustomerController : MonoBehaviour
 
         if (sitSprite != null) sr.sprite = sitSprite;
 
+        AssignRandomEmotionForGeneralGuest();
+
         // 입장/착석 랜덤 대사
         SayRandom(dialogueData != null ? dialogueData.onEnterLines : null);
     }
@@ -129,10 +146,9 @@ public class CustomerController : MonoBehaviour
         return transform.position + Vector3.left * 3f;
     }
 
-    // OrderManager가 성공/실패 처리 후 호출
+    // 기존 구조 유지용
     public void OnServed(bool success)
     {
-        // 성공/실패 랜덤 대사
         if (dialogueData != null)
         {
             var lines = success ? dialogueData.onSuccessLines : dialogueData.onFailLines;
@@ -140,6 +156,63 @@ public class CustomerController : MonoBehaviour
         }
 
         state = State.Leaving;
+    }
+
+    // 새 반응 시스템용
+    public void OnServedWithReaction(OrderData servedOrder, MiniGameResult result)
+    {
+        EmotionTag[] desiredTags = emotionRequest != null
+            ? emotionRequest.ToArray()
+            : System.Array.Empty<EmotionTag>();
+
+        EmotionTag[] servedTags = (servedOrder != null &&
+                           servedOrder.targetCocktail != null &&
+                           servedOrder.targetCocktail.emotionTags != null)
+            ? servedOrder.targetCocktail.emotionTags
+            : System.Array.Empty<EmotionTag>();
+
+        bool recipeInTolerance = result.success;
+
+        int hearts = GuestReactionResolver.CalculateHearts(desiredTags, servedTags, recipeInTolerance);
+
+        string immediateLine = reactionDatabase != null
+            ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Immediate)
+            : "...";
+
+        ShowReactionBubble(immediateLine);
+        ShowHearts(hearts);
+
+        StartCoroutine(ExitReactionThenLeave(desiredTags, hearts));
+    }
+
+    private IEnumerator ExitReactionThenLeave(EmotionTag[] desiredTags, int hearts)
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        string exitLine = reactionDatabase != null
+            ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Exit)
+            : "...";
+
+        ShowReactionBubble(exitLine);
+        ShowHearts(hearts);
+
+        yield return new WaitForSeconds(1.5f);
+
+        state = State.Leaving;
+    }
+
+    private void ShowReactionBubble(string line)
+    {
+        if (string.IsNullOrEmpty(line)) return;
+        SayLine(line);
+    }
+
+    private void ShowHearts(int hearts)
+    {
+        Debug.Log($"[Customer] Hearts = {hearts}");
+
+        // 나중에 하트 팝업 프리팹 붙이면 여기서 처리
+        // ex) Instantiate(heartPopupPrefab, reactionAnchor != null ? reactionAnchor.position : transform.position, Quaternion.identity);
     }
 
     void LeaveAndDestroy()
@@ -151,6 +224,30 @@ public class CustomerController : MonoBehaviour
     }
 
     // ---------- Dialogue helpers ----------
+    void SayLine(string line)
+    {
+        if (dialogueBubblePrefab == null)
+        {
+            Debug.LogError("[Customer] dialogueBubblePrefab is NULL");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(line)) return;
+
+        GameObject bubble = Instantiate(dialogueBubblePrefab);
+
+        var bubbleComp = bubble.GetComponent<DialogueBubble>();
+        if (bubbleComp == null)
+        {
+            Debug.LogError("[Customer] DialogueBubble component missing on prefab!");
+            Destroy(bubble);
+            return;
+        }
+
+        Transform followTarget = reactionAnchor != null ? reactionAnchor : transform;
+        bubbleComp.Init(followTarget, line);
+    }
+
     void SayRandom(string[] lines)
     {
         if (dialogueBubblePrefab == null)

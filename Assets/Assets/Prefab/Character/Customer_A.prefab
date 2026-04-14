@@ -111,3 +111,8 @@ MonoBehaviour:
   defaultExitPoint: {fileID: 0}
   dialogueData: {fileID: 11400000, guid: 853114293df87424fb4855a2bea215be, type: 2}
   dialogueBubblePrefab: {fileID: 6878723193407893406, guid: 5e1bead4382e36a4e82ba6bcf17e1432, type: 3}
+  reactionDatabase: {fileID: 11400000, guid: 69bb3d3dde54fd9489e61196d4cad9e7, type: 2}
+  emotionRequest:
+    primaryTag: 0
+    secondaryTag: 0
+  reactionAnchor: {fileID: 0}
