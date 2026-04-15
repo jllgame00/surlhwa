@@ -24,3 +24,4 @@ MonoBehaviour:
     targetMin01: 0
     targetMax01: 0
     gaugeSpeed: 0
+  targetCocktail: {fileID: 11400000, guid: 33507b543d53e214f9077f528a3acd5d, type: 2}

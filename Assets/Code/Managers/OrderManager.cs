@@ -156,4 +156,37 @@ public class OrderManager : MonoBehaviour
         currentOrder = null;
         if (ui != null) ui.SetOrderText("ORDER: -");
     }
+
+    public void PlaySpecificOrder(OrderData order, CustomerController customer)
+    {
+        if (order == null)
+        {
+            Debug.LogError("[OrderManager] PlaySpecificOrder called with NULL order");
+            return;
+        }
+
+        if (customer == null)
+        {
+            Debug.LogError("[OrderManager] PlaySpecificOrder called with NULL customer");
+            return;
+        }
+
+        if (miniGameManager == null)
+            miniGameManager = FindFirstObjectByType<MiniGameManager>();
+
+        if (miniGameManager == null)
+        {
+            Debug.LogError("[OrderManager] miniGameManager is NULL");
+            return;
+        }
+
+        currentCustomer = customer;
+        currentOrder = order;
+
+        if (ui != null)
+            ui.SetOrderText($"ORDER: {currentOrder.orderName}");
+
+        Debug.Log($"[OrderManager] PlaySpecificOrder -> {currentOrder.orderName}");
+        miniGameManager.Play(currentOrder, OnMiniGameDone);
+    }
 }

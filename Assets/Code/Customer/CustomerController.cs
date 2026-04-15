@@ -35,6 +35,9 @@ public class CustomerController : MonoBehaviour
 
     private static EmotionTag lastGeneralGuestPrimaryTag = EmotionTag.Loneliness;
 
+    private InteractionUIController interactionUI;
+    [SerializeField] private Transform interactionAnchor;
+
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -43,6 +46,7 @@ public class CustomerController : MonoBehaviour
         orderManager = FindFirstObjectByType<OrderManager>();
         seatManager = FindFirstObjectByType<SeatManager>();
         ui = FindFirstObjectByType<UIManager>();
+        interactionUI = FindFirstObjectByType<InteractionUIController>();
     }
 
     public void AssignSeat(SeatPoint seat)
@@ -84,7 +88,9 @@ public class CustomerController : MonoBehaviour
                 break;
 
             case State.Ordering:
-                if (orderManager != null) orderManager.IssueOrderTo(this);
+                if (interactionUI != null)
+                    interactionUI.RegisterCustomer(this);
+
                 state = State.Waiting;
                 break;
 
@@ -220,6 +226,9 @@ public class CustomerController : MonoBehaviour
         if (seatManager != null && targetSeat != null)
             seatManager.ReleaseSeat(targetSeat);
 
+        if (interactionUI != null)
+            interactionUI.ClearCustomer(this);
+
         Destroy(gameObject);
     }
 
@@ -280,5 +289,43 @@ public class CustomerController : MonoBehaviour
     {
         if (lines == null || lines.Length == 0) return "";
         return lines[UnityEngine.Random.Range(0, lines.Length)];
+    }
+
+    public Vector3 GetInteractionAnchorPosition()
+    {
+        return interactionAnchor != null ? interactionAnchor.position : transform.position;
+    }
+
+    public string GetInteractionHintLine()
+    {
+        return BuildHintLine();
+    }
+
+    private string BuildHintLine()
+    {
+        // emotionRequest는 네가 이미 붙여둔 랜덤 감정 시스템을 그대로 사용
+        // 없으면 기본 문장 반환
+        if (emotionRequest == null)
+            return "오늘은 어떤 한 잔이 좋을까요.";
+
+        return $"{GetHintSentence(emotionRequest.primaryTag)}\n{GetHintSentence(emotionRequest.secondaryTag)}";
+    }
+
+    private string GetHintSentence(EmotionTag tag)
+    {
+        return tag switch
+        {
+            EmotionTag.Loneliness => "조용한 쪽이면 좋겠어요.",
+            EmotionTag.Comfort => "조금 부드러운 쪽이면 좋겠어요.",
+            EmotionTag.Awakening => "머리가 맑아지는 느낌이면 좋겠네요.",
+            EmotionTag.Softness => "너무 날카롭지 않은 쪽이 좋아요.",
+            EmotionTag.Bitterness => "조금 씁쓸해도 괜찮아요.",
+            EmotionTag.Heavy => "가볍지 않은 쪽이 오늘은 맞을 것 같아요.",
+            EmotionTag.Clarity => "복잡하지 않고 맑은 쪽이 필요해요.",
+            EmotionTag.Warmth => "조금 따뜻한 기분이 들면 좋겠어요.",
+            EmotionTag.Regret => "쉽게 달래는 맛은 아니었으면 해요.",
+            EmotionTag.Longing => "조금 오래 남는 느낌이면 좋겠어요.",
+            _ => "오늘은 어떤 한 잔이 좋을까요."
+        };
     }
 }

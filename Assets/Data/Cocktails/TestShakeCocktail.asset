@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225203d2ff5ca044ebcc044a58765f2a, type: 3}
   m_Name: TestShakeCocktail
   m_EditorClassIdentifier: Assembly-CSharp::CocktailData
-  cocktailName: 
+  cocktailName: TestShakeCocktail
   description: 
-  miniGameType: 0
+  miniGameType: 3
   steps: []
-  emotionTags: 
+  emotionTags: 0200000004000000
