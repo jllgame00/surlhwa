@@ -31,7 +31,7 @@ public class InteractionUIController : MonoBehaviour
 
     [Header("Follow")]
     [SerializeField] private Camera worldCamera;
-    [SerializeField] private Vector3 worldOffset = new Vector3(0f, 1.2f, 0f);
+    [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.2f, 0f);
 
     [Header("Method Button Visual")]
     [SerializeField] private Color normalColor = Color.white;
@@ -42,6 +42,7 @@ public class InteractionUIController : MonoBehaviour
 
     private MiniGameType selectedMethod;
     private bool hasMethodSelected;
+    private bool wantsEllipsisVisible;
 
     private void Awake()
     {
@@ -58,13 +59,17 @@ public class InteractionUIController : MonoBehaviour
         if (confirmButton != null) confirmButton.onClick.AddListener(OnClickConfirm);
         if (cancelButton != null) cancelButton.onClick.AddListener(OnClickCancel);
 
-        ClosePanels(keepEllipsis: false);
+        hasMethodSelected = false;
+        wantsEllipsisVisible = false;
+
+        ClosePanels(false);
         RefreshMethodVisuals();
+        RefreshConfirmState();
     }
 
     private void LateUpdate()
     {
-        if (activeCustomer == null || ellipsisPrompt == null || !ellipsisPrompt.gameObject.activeSelf)
+        if (activeCustomer == null || ellipsisPrompt == null)
             return;
 
         UpdateEllipsisPosition();
@@ -74,9 +79,13 @@ public class InteractionUIController : MonoBehaviour
     {
         activeCustomer = customer;
         hasMethodSelected = false;
+        wantsEllipsisVisible = customer != null;
 
-        ClosePanels(keepEllipsis: customer != null);
+        ClosePanels(wantsEllipsisVisible);
         RefreshMethodVisuals();
+        RefreshConfirmState();
+
+        Debug.Log($"[InteractionUI] RegisterCustomer -> {(customer != null ? customer.name : "NULL")}");
     }
 
     public void ClearCustomer(CustomerController customer)
@@ -84,27 +93,38 @@ public class InteractionUIController : MonoBehaviour
         if (activeCustomer != customer)
             return;
 
+        Debug.Log($"[InteractionUI] ClearCustomer -> {(customer != null ? customer.name : "NULL")}");
+
         activeCustomer = null;
-        ClosePanels(keepEllipsis: false);
+        hasMethodSelected = false;
+        wantsEllipsisVisible = false;
+
+        ClosePanels(false);
+        RefreshMethodVisuals();
+        RefreshConfirmState();
     }
 
     private void UpdateEllipsisPosition()
     {
         Camera cam = worldCamera != null ? worldCamera : Camera.main;
-        if (cam == null || activeCustomer == null)
+        if (cam == null || activeCustomer == null || ellipsisPrompt == null)
             return;
 
         Vector3 worldPos = activeCustomer.GetInteractionAnchorPosition() + worldOffset;
-        Vector3 screenPos = cam.WorldToScreenPoint(worldPos);
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(cam, worldPos);
 
-        if (screenPos.z <= 0f)
+        Canvas canvas = ellipsisPrompt.GetComponentInParent<Canvas>();
+        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            screenPos,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : cam,
+            out Vector2 localPoint))
         {
-            ellipsisPrompt.gameObject.SetActive(false);
-            return;
+            ellipsisPrompt.anchoredPosition = localPoint;
+            ellipsisPrompt.gameObject.SetActive(true);
         }
-
-        ellipsisPrompt.gameObject.SetActive(true);
-        ellipsisPrompt.position = screenPos;
     }
 
     private void OnClickEllipsis()
@@ -112,36 +132,53 @@ public class InteractionUIController : MonoBehaviour
         if (activeCustomer == null)
             return;
 
+        ClosePanels(false);
+
         string line = activeCustomer.GetInteractionHintLine();
         OpenDialogue(line);
     }
 
     private void OpenDialogue(string line)
     {
+        wantsEllipsisVisible = false;
+        hasMethodSelected = false;
+
         if (dialogueText != null)
             dialogueText.text = line;
 
         if (overlayBlocker != null) overlayBlocker.SetActive(true);
-        if (dialoguePanel != null) dialoguePanel.SetActive(true);
+
         if (brewPanel != null) brewPanel.SetActive(false);
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
         if (ellipsisPrompt != null) ellipsisPrompt.gameObject.SetActive(false);
+
+        RefreshMethodVisuals();
+        RefreshConfirmState();
     }
 
     private void OnClickBrew()
     {
-        if (overlayBlocker != null) overlayBlocker.SetActive(true);
+        if (activeCustomer == null)
+            return;
+
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (brewPanel != null) brewPanel.SetActive(true);
+        if (overlayBlocker != null) overlayBlocker.SetActive(true);
 
         hasMethodSelected = false;
         RefreshMethodVisuals();
+        RefreshConfirmState();
     }
 
     private void SelectMethod(MiniGameType type)
     {
         selectedMethod = type;
         hasMethodSelected = true;
+
+        Debug.Log($"[InteractionUI] SelectMethod -> {type}");
+
         RefreshMethodVisuals();
+        RefreshConfirmState();
     }
 
     private void RefreshMethodVisuals()
@@ -150,6 +187,12 @@ public class InteractionUIController : MonoBehaviour
         SetButtonSelected(shakeButton, hasMethodSelected && selectedMethod == MiniGameType.Shake);
         SetButtonSelected(buildButton, hasMethodSelected && selectedMethod == MiniGameType.Build);
         SetButtonSelected(floatButton, hasMethodSelected && selectedMethod == MiniGameType.Float);
+    }
+
+    private void RefreshConfirmState()
+    {
+        if (confirmButton != null)
+            confirmButton.interactable = hasMethodSelected;
     }
 
     private void SetButtonSelected(Button button, bool selected)
@@ -181,7 +224,7 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        ClosePanels(keepEllipsis: false);
+        ClosePanels(false);
 
         if (orderManager == null)
             orderManager = FindFirstObjectByType<OrderManager>();
@@ -191,6 +234,8 @@ public class InteractionUIController : MonoBehaviour
             Debug.LogError("[InteractionUI] OrderManager is NULL");
             return;
         }
+
+        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / {order.orderName}");
 
         orderManager.PlaySpecificOrder(order, activeCustomer);
     }
@@ -209,11 +254,23 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickCancel()
     {
-        ClosePanels(keepEllipsis: activeCustomer != null);
+        // BrewPanel에서 취소하면 DialoguePanel로 복귀
+        if (brewPanel != null && brewPanel.activeSelf)
+        {
+            string line = activeCustomer != null ? activeCustomer.GetInteractionHintLine() : "";
+            OpenDialogue(line);
+            return;
+        }
+
+        // DialoguePanel에서 취소하면 다시 ellipsis로
+        wantsEllipsisVisible = activeCustomer != null;
+        ClosePanels(wantsEllipsisVisible);
     }
 
     private void ClosePanels(bool keepEllipsis)
     {
+        wantsEllipsisVisible = keepEllipsis;
+
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (brewPanel != null) brewPanel.SetActive(false);
         if (overlayBlocker != null) overlayBlocker.SetActive(false);

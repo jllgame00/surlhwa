@@ -17,9 +17,7 @@ public class CustomerController : MonoBehaviour
     public Sprite sitSprite;
 
     // 외부 참조
-    private OrderManager orderManager;
     private SeatManager seatManager;
-    private UIManager ui;
 
     // 나갈 때 목표
     public Transform defaultExitPoint;
@@ -28,25 +26,33 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private DialogueData dialogueData;
     [SerializeField] private GameObject dialogueBubblePrefab;
 
+    private GameObject currentDialogueBubble;
+
     [Header("Emotion Reaction")]
     [SerializeField] private GuestReactionDatabase reactionDatabase;
     [SerializeField] private GuestEmotionRequest emotionRequest = new GuestEmotionRequest();
     [SerializeField] private Transform reactionAnchor;
+    [SerializeField] private GameObject heartPopupPrefab;
 
     private static EmotionTag lastGeneralGuestPrimaryTag = EmotionTag.Loneliness;
 
-    private InteractionUIController interactionUI;
+    [Header("Interaction")]
     [SerializeField] private Transform interactionAnchor;
+    private InteractionUIController interactionUI;
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         if (standSprite != null) sr.sprite = standSprite;
 
-        orderManager = FindFirstObjectByType<OrderManager>();
         seatManager = FindFirstObjectByType<SeatManager>();
-        ui = FindFirstObjectByType<UIManager>();
         interactionUI = FindFirstObjectByType<InteractionUIController>();
+    }
+
+    private void OnDisable()
+    {
+        if (interactionUI != null)
+            interactionUI.ClearCustomer(this);
     }
 
     public void AssignSeat(SeatPoint seat)
@@ -90,12 +96,17 @@ public class CustomerController : MonoBehaviour
             case State.Ordering:
                 if (interactionUI != null)
                     interactionUI.RegisterCustomer(this);
+                else
+                    Debug.LogWarning("[Customer] InteractionUIController not found");
 
                 state = State.Waiting;
                 break;
 
             case State.Waiting:
-                // Serve 누르면 OrderManager가 처리 후 OnServed / OnServedWithReaction 콜백
+                // InteractionUIController에서
+                // ... -> DialoguePanel -> BrewPanel -> Confirm 흐름 처리
+                // Confirm 시 OrderManager.PlaySpecificOrder() 호출
+                // 완료 시 OnServedWithReaction() 콜백
                 break;
 
             case State.Leaving:
@@ -106,7 +117,6 @@ public class CustomerController : MonoBehaviour
                 }
         }
 
-        // y값 기준 정렬
         sr.sortingOrder = Mathf.RoundToInt(-transform.position.y * 100f);
     }
 
@@ -117,7 +127,6 @@ public class CustomerController : MonoBehaviour
 
         if (dir.magnitude <= step || (Mathf.Abs(dir.x) < arriveThreshold.x && Mathf.Abs(dir.y) < arriveThreshold.y))
         {
-            Debug.Log("[Customer] Arrived at seat");
             transform.position = dest;
             onArrive?.Invoke();
             return;
@@ -130,8 +139,6 @@ public class CustomerController : MonoBehaviour
 
     void SitDown()
     {
-        Debug.Log("[Customer] SitDown called");
-
         state = State.Sitting;
 
         if (targetSeat != null && targetSeat.sitMarker != null)
@@ -140,9 +147,7 @@ public class CustomerController : MonoBehaviour
         if (sitSprite != null) sr.sprite = sitSprite;
 
         AssignRandomEmotionForGeneralGuest();
-
-        // 입장/착석 랜덤 대사
-        SayRandom(dialogueData != null ? dialogueData.onEnterLines : null);
+        // SayRandom(dialogueData != null ? dialogueData.onEnterLines : null);
     }
 
     Vector3 GetExitDestination()
@@ -152,7 +157,6 @@ public class CustomerController : MonoBehaviour
         return transform.position + Vector3.left * 3f;
     }
 
-    // 기존 구조 유지용
     public void OnServed(bool success)
     {
         if (dialogueData != null)
@@ -164,45 +168,67 @@ public class CustomerController : MonoBehaviour
         state = State.Leaving;
     }
 
-    // 새 반응 시스템용
     public void OnServedWithReaction(OrderData servedOrder, MiniGameResult result)
     {
+        if (interactionUI != null)
+            interactionUI.ClearCustomer(this);
+
         EmotionTag[] desiredTags = emotionRequest != null
             ? emotionRequest.ToArray()
             : System.Array.Empty<EmotionTag>();
 
         EmotionTag[] servedTags = (servedOrder != null &&
-                           servedOrder.targetCocktail != null &&
-                           servedOrder.targetCocktail.emotionTags != null)
+                                   servedOrder.targetCocktail != null &&
+                                   servedOrder.targetCocktail.emotionTags != null)
             ? servedOrder.targetCocktail.emotionTags
             : System.Array.Empty<EmotionTag>();
 
         bool recipeInTolerance = result.success;
-
         int hearts = GuestReactionResolver.CalculateHearts(desiredTags, servedTags, recipeInTolerance);
 
+        StopAllCoroutines();
+        StartCoroutine(ReactionSequenceThenLeave(desiredTags, hearts));
+    }
+
+    private IEnumerator ReactionSequenceThenLeave(EmotionTag[] desiredTags, int hearts)
+    {
         string immediateLine = reactionDatabase != null
             ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Immediate)
             : "...";
 
+        // 1) 첫 반응 대사
         ShowReactionBubble(immediateLine);
+
+        // 2) 잠깐 보여주기
+        yield return new WaitForSeconds(1.2f);
+
+        // 3) 말풍선 제거
+        ClearDialogueBubble();
+
+        // 4) 텀
+        yield return new WaitForSeconds(0.5f);
+
+        // 5) 하트 표시
         ShowHearts(hearts);
 
-        StartCoroutine(ExitReactionThenLeave(desiredTags, hearts));
-    }
-
-    private IEnumerator ExitReactionThenLeave(EmotionTag[] desiredTags, int hearts)
-    {
-        yield return new WaitForSeconds(1.5f);
+        // 6) 하트 보여준 뒤 텀
+        yield return new WaitForSeconds(1.0f);
 
         string exitLine = reactionDatabase != null
             ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Exit)
             : "...";
 
+        // 7) 퇴장 전 대사
         ShowReactionBubble(exitLine);
-        ShowHearts(hearts);
 
-        yield return new WaitForSeconds(1.5f);
+        // 8) 잠깐 보여주기
+        yield return new WaitForSeconds(1.2f);
+
+        // 9) 말풍선 제거
+        ClearDialogueBubble();
+
+        // 10) 마지막 텀
+        yield return new WaitForSeconds(0.3f);
 
         state = State.Leaving;
     }
@@ -217,12 +243,38 @@ public class CustomerController : MonoBehaviour
     {
         Debug.Log($"[Customer] Hearts = {hearts}");
 
-        // 나중에 하트 팝업 프리팹 붙이면 여기서 처리
-        // ex) Instantiate(heartPopupPrefab, reactionAnchor != null ? reactionAnchor.position : transform.position, Quaternion.identity);
+        if (heartPopupPrefab == null)
+        {
+            Debug.LogWarning("[Customer] heartPopupPrefab is NULL");
+            return;
+        }
+
+        if (hearts <= 0)
+        {
+            Debug.LogWarning("[Customer] hearts <= 0, popup skipped");
+            return;
+        }
+
+        Transform target = reactionAnchor != null ? reactionAnchor : transform;
+        Debug.Log($"[Customer] Spawning heart popup at {target.position}");
+
+        GameObject popup = Instantiate(heartPopupPrefab);
+        HeartPopup popupComp = popup.GetComponent<HeartPopup>();
+
+        if (popupComp == null)
+        {
+            Debug.LogError("[Customer] HeartPopup component missing on prefab!");
+            Destroy(popup);
+            return;
+        }
+
+        popupComp.Init(target, hearts);
     }
 
     void LeaveAndDestroy()
     {
+        ClearDialogueBubble();
+
         if (seatManager != null && targetSeat != null)
             seatManager.ReleaseSeat(targetSeat);
 
@@ -232,7 +284,6 @@ public class CustomerController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // ---------- Dialogue helpers ----------
     void SayLine(string line)
     {
         if (dialogueBubblePrefab == null)
@@ -243,13 +294,17 @@ public class CustomerController : MonoBehaviour
 
         if (string.IsNullOrEmpty(line)) return;
 
+        ClearDialogueBubble();
+
         GameObject bubble = Instantiate(dialogueBubblePrefab);
+        currentDialogueBubble = bubble;
 
         var bubbleComp = bubble.GetComponent<DialogueBubble>();
         if (bubbleComp == null)
         {
             Debug.LogError("[Customer] DialogueBubble component missing on prefab!");
             Destroy(bubble);
+            currentDialogueBubble = null;
             return;
         }
 
@@ -265,20 +320,22 @@ public class CustomerController : MonoBehaviour
             return;
         }
 
-        Debug.Log("[Customer] SayRandom called");
-
         if (lines == null || lines.Length == 0) return;
 
         string line = Pick(lines);
         if (string.IsNullOrEmpty(line)) return;
 
+        ClearDialogueBubble();
+
         GameObject bubble = Instantiate(dialogueBubblePrefab);
+        currentDialogueBubble = bubble;
 
         var bubbleComp = bubble.GetComponent<DialogueBubble>();
         if (bubbleComp == null)
         {
             Debug.LogError("[Customer] DialogueBubble component missing on prefab!");
             Destroy(bubble);
+            currentDialogueBubble = null;
             return;
         }
 
@@ -303,12 +360,25 @@ public class CustomerController : MonoBehaviour
 
     private string BuildHintLine()
     {
-        // emotionRequest는 네가 이미 붙여둔 랜덤 감정 시스템을 그대로 사용
-        // 없으면 기본 문장 반환
         if (emotionRequest == null)
             return "오늘은 어떤 한 잔이 좋을까요.";
 
-        return $"{GetHintSentence(emotionRequest.primaryTag)}\n{GetHintSentence(emotionRequest.secondaryTag)}";
+        string primary = GetHintSentence(emotionRequest.primaryTag);
+        string secondary = GetHintSentence(emotionRequest.secondaryTag);
+
+        if (string.IsNullOrEmpty(secondary))
+            return primary;
+
+        return $"{primary}\n그리고… {secondary}";
+    }
+
+    private void ClearDialogueBubble()
+    {
+        if (currentDialogueBubble != null)
+        {
+            Destroy(currentDialogueBubble);
+            currentDialogueBubble = null;
+        }
     }
 
     private string GetHintSentence(EmotionTag tag)
