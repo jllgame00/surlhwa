@@ -32,6 +32,42 @@ public class MiniGameManager : MonoBehaviour
 
     public bool IsPlaying => currentMiniGame != null;
 
+    private void SetupRecipeGuide(GameObject miniGameRoot, GameObject selectedPrefab, OrderData order)
+    {
+        if (miniGameRoot == null)
+            return;
+
+        RecipeGuidePanelController guide =
+            miniGameRoot.GetComponentInChildren<RecipeGuidePanelController>(true);
+
+        if (guide == null)
+        {
+            Debug.LogWarning("[MiniGameManager] RecipeGuidePanelController not found in minigame prefab");
+            return;
+        }
+
+        MiniGameType method = ResolveMethodForGuide(selectedPrefab, order);
+        guide.SetMethod(method);
+
+        Debug.Log($"[MiniGameManager] Recipe guide method set -> {method}");
+    }
+
+    private MiniGameType ResolveMethodForGuide(GameObject selectedPrefab, OrderData order)
+    {
+        // 디버그 강제 모드일 때는 실제로 띄운 프리팹 기준으로 맞춰줌
+        if (selectedPrefab == stirPrefab) return MiniGameType.Stir;
+        if (selectedPrefab == shakePrefab) return MiniGameType.Shake;
+        if (selectedPrefab == buildPrefab) return MiniGameType.Build;
+        if (selectedPrefab == floatPrefab) return MiniGameType.Float;
+
+        // 일반 모드면 주문 데이터 기준
+        if (order != null)
+            return order.miniGameType;
+
+        // 최후 fallback
+        return MiniGameType.Stir;
+    }
+
     private void Awake()
     {
         ui = FindFirstObjectByType<UIManager>();
@@ -75,6 +111,9 @@ public class MiniGameManager : MonoBehaviour
         SetMainSceneActive(false);
 
         currentMiniGame = Instantiate(prefab, transform);
+
+        // 레시피 가이드 패널에 현재 조주 방식 전달
+        SetupRecipeGuide(currentMiniGame, selectedPrefab: prefab, order: order);
 
         var game = currentMiniGame.GetComponentInChildren<IMiniGame>(true);
         if (game == null)

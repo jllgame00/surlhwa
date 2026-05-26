@@ -1,12 +1,13 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 
 public class StirMiniGame : MonoBehaviour, IMiniGame
 {
-    enum State { Ready, Stirring, Result }
-    State state = State.Ready;
+    enum State { Preview, Stirring, Result }
+    State state = State.Preview;
 
     [Header("Gauge Track (UI)")]
     public RectTransform gaugeBGRect;
@@ -21,29 +22,32 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Cup / Spoon (UI)")]
     public RectTransform cup;
     public RectTransform spoon;
-    public RectTransform spoonInCup;   // 컵 안 위치(빈 RectTransform)
+    public RectTransform spoonInCup;
 
     [Header("Text (UI)")]
     public TMP_Text resultLabel;
+
+    [Header("Start UI")]
+    public Button startButton;
+    public TMP_Text startHintText;
 
     [Header("Timing")]
     public float fillDuration = 3.0f;
     public float resultHold = 0.8f;
 
     [Header("Spoon Orbit (Stir Motion)")]
-    public RectTransform orbitCenter;  // 보통 spoonInCup 또는 cup
+    public RectTransform orbitCenter;
     public float orbitRadius = 16f;
     public float orbitSpeed = 7f;
     public float orbitYScale = 0.65f;
     public float wobbleDeg = 10f;
 
     [Header("Spoon Pose")]
-    public float spoonBaseAngleDeg = 90f; // 세로로 세우기(필요하면 -90)
+    public float spoonBaseAngleDeg = 90f;
 
     float t;
     float targetMin, targetMax;
     float perfectMin, perfectMax;
-
     float orbitAngle;
 
     Action<MiniGameResult> onDone;
@@ -53,17 +57,29 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         onDone = done;
         AutoBindIfMissing();
 
-        state = State.Ready;
+        state = State.Preview;
         t = 0f;
         orbitAngle = 0f;
 
         if (resultLabel != null)
         {
             resultLabel.gameObject.SetActive(true);
-            resultLabel.text = "Press SPACE to start";
+            resultLabel.text = "";
         }
 
-        // 판정 구간
+        if (startHintText != null)
+        {
+            startHintText.gameObject.SetActive(true);
+            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+        }
+
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(true);
+            startButton.onClick.RemoveAllListeners();
+            startButton.onClick.AddListener(BeginGameplay);
+        }
+
         float center = UnityEngine.Random.Range(0.55f, 0.95f);
         targetMin = Mathf.Clamp01(center - 0.08f);
         targetMax = Mathf.Clamp01(center + 0.08f);
@@ -75,30 +91,49 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
         UpdateMarker();
 
-        // 공전 중심 기본값
         if (orbitCenter == null) orbitCenter = spoonInCup != null ? spoonInCup : cup;
 
-        // 스푼 초기 위치: 처음부터 컵 안 + 세로 각도
         if (spoon != null && spoonInCup != null)
         {
             spoon.anchoredPosition = spoonInCup.anchoredPosition;
             spoon.localRotation = Quaternion.Euler(0f, 0f, spoonBaseAngleDeg);
         }
 
-        Debug.Log($"[StirMiniGame] refs: bg={(gaugeBGRect ? gaugeBGRect.name : "NULL")}, marker={(marker ? marker.name : "NULL")}, spoon={(spoon ? spoon.name : "NULL")}, orbitCenter={(orbitCenter ? orbitCenter.name : "NULL")}");
+        Debug.Log(
+            $"[StirMiniGame] Preview ready / " +
+            $"startButton={(startButton != null ? startButton.name : "NULL")} / " +
+            $"startHintText={(startHintText != null ? startHintText.name : "NULL")}"
+        );
+    }
+
+    public void BeginGameplay()
+    {
+        Debug.Log("[StirMiniGame] BeginGameplay clicked");
+
+        if (state != State.Preview)
+        {
+            Debug.LogWarning($"[StirMiniGame] Begin ignored. state={state}");
+            return;
+        }
+
+        state = State.Stirring;
+
+        if (resultLabel != null)
+            resultLabel.text = "";
+
+        if (startHintText != null)
+            startHintText.gameObject.SetActive(false);
+
+        if (startButton != null)
+            startButton.gameObject.SetActive(false);
+
+        Debug.Log("[StirMiniGame] BeginGameplay -> Stirring");
     }
 
     void Update()
     {
-        if (state == State.Ready)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (resultLabel != null) resultLabel.text = "";
-                state = State.Stirring;
-            }
+        if (state == State.Preview)
             return;
-        }
 
         if (state == State.Stirring)
         {
@@ -131,7 +166,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
         float yMin = markerHalf;
         float yMax = trackHeight - markerHalf;
-
         float y = Mathf.Lerp(yMin, yMax, t);
 
         Vector2 pos = marker.anchoredPosition;
@@ -150,7 +184,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
         spoon.anchoredPosition = orbitCenter.anchoredPosition + new Vector2(x, y);
 
-        // 풍차 자전 금지: 기본각 + 워블만
         float wobble = Mathf.Sin(orbitAngle * 2f) * wobbleDeg;
         spoon.localRotation = Quaternion.Euler(0f, 0f, spoonBaseAngleDeg + wobble);
     }
@@ -228,6 +261,15 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel == null)
             resultLabel = transform.Find("UI/ResultLabel")?.GetComponent<TMP_Text>();
 
+        if (startButton == null)
+            startButton = transform.Find("UI/StartButton")?.GetComponent<Button>();
+
+        if (startButton == null)
+            startButton = transform.Find("UI/StartupButton")?.GetComponent<Button>();
+
+        if (startHintText == null)
+            startHintText = transform.Find("UI/StartHintText")?.GetComponent<TMP_Text>();
+
         if (cup == null)
             cup = transform.Find("UI/Cup")?.GetComponent<RectTransform>();
 
@@ -236,7 +278,5 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
         if (spoonInCup == null)
             spoonInCup = transform.Find("UI/SpoonInCup")?.GetComponent<RectTransform>();
-
-        // orbitCenter는 StartGame에서 spoonInCup/cup로 결정
     }
 }

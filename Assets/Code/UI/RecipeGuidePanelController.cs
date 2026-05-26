@@ -28,6 +28,12 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void Awake()
     {
+        if (recipeUnlockManager == null)
+            recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
+
+        if (recipeUnlockManager == null)
+            Debug.LogWarning("[RecipeGuidePanel] RecipeUnlockManager not found in scene");
+
         if (openButton != null) openButton.onClick.AddListener(OpenPanel);
         if (closeButton != null) closeButton.onClick.AddListener(ClosePanel);
 
@@ -51,6 +57,15 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void OpenPanel()
     {
+        if (recipeUnlockManager == null)
+            recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
+
+        if (recipeUnlockManager == null)
+        {
+            Debug.LogWarning("[RecipeGuidePanel] Cannot open: RecipeUnlockManager is null");
+            return;
+        }
+
         if (panelRoot != null)
             panelRoot.SetActive(true);
 
