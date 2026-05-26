@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7391397266160508724}
   - component: {fileID: 885334224400257551}
   - component: {fileID: 3031936326909416335}
+  - component: {fileID: 7653717910755260017}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +113,27 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7653717910755260017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122549134763629379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f050a4f5c2af67741ab9b62e840a9eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeGuidePanelController
+  recipeUnlockManager: {fileID: 0}
+  panelRoot: {fileID: 1279703752052077347}
+  openButton: {fileID: 2813708237362410763}
+  closeButton: {fileID: 4192032520234733861}
+  recipeListParent: {fileID: 3810856559747748399}
+  recipeButtonPrefab: {fileID: 9058992205661850971, guid: 24ef0e595a45a114aa2b8b1b5102ae7a, type: 3}
+  recipeNameText: {fileID: 8323731096495479589}
+  recipeMethodText: {fileID: 273818573063894340}
+  recipeIngredientText: {fileID: 4775611042790194022}
 --- !u!1 &574275002191668362
 GameObject:
   m_ObjectHideFlags: 0

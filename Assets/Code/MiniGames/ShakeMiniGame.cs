@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShakeMiniGame : MonoBehaviour, IMiniGame
 {
-    public enum ShakeState { Ready, Shaking, Result }
+    public enum ShakeState { Preview, Shaking, Result }
     public enum PrepDirection { None, Left, Right }
 
     [Header("UI")]
@@ -13,6 +14,10 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text hintText;
     [SerializeField] private TMP_Text resultLabel;
+
+    [Header("Start UI")]
+    [SerializeField] private Button startButton;
+    [SerializeField] private TMP_Text startHintText;
 
     [Header("Rules")]
     [SerializeField] private int requiredSuccessCount = 6;
@@ -26,7 +31,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     [SerializeField] private float shakeDuration = 0.08f;
     [SerializeField] private float returnDuration = 0.08f;
 
-    private ShakeState state = ShakeState.Ready;
+    private ShakeState state = ShakeState.Preview;
     private PrepDirection preparedDirection = PrepDirection.None;
     private PrepDirection lastExecutedDirection = PrepDirection.None;
 
@@ -44,8 +49,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     public void StartGame(OrderData order, Action<MiniGameResult> callback)
     {
         onDone = callback;
+        AutoBindIfMissing();
 
-        state = ShakeState.Ready;
+        state = ShakeState.Preview;
         preparedDirection = PrepDirection.None;
         lastExecutedDirection = PrepDirection.None;
 
@@ -61,15 +67,62 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel != null)
             resultLabel.text = "";
 
+        if (startHintText != null)
+        {
+            startHintText.gameObject.SetActive(true);
+            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+        }
+
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(true);
+            startButton.onClick.RemoveAllListeners();
+            startButton.onClick.AddListener(BeginGameplay);
+        }
+
         UpdateProgressText();
-        SetHint("← 또는 → 로 준비");
+        SetHint("시작 버튼을 눌러 쉐이크를 시작하세요");
+
+        Debug.Log(
+            $"[ShakeMiniGame] Preview ready / " +
+            $"startButton={(startButton != null ? startButton.name : "NULL")} / " +
+            $"startHintText={(startHintText != null ? startHintText.name : "NULL")}"
+        );
+    }
+
+    public void BeginGameplay()
+    {
+        Debug.Log("[ShakeMiniGame] BeginGameplay clicked");
+
+        if (state != ShakeState.Preview)
+        {
+            Debug.LogWarning($"[ShakeMiniGame] Begin ignored. state={state}");
+            return;
+        }
 
         state = ShakeState.Shaking;
+
+        if (startHintText != null)
+            startHintText.gameObject.SetActive(false);
+
+        if (startButton != null)
+            startButton.gameObject.SetActive(false);
+
+        if (resultLabel != null)
+            resultLabel.text = "";
+
+        SetHint("← 또는 → 로 준비");
+
+        Debug.Log("[ShakeMiniGame] BeginGameplay -> Shaking");
     }
 
     private void Update()
     {
-        if (state != ShakeState.Shaking) return;
+        if (state == ShakeState.Preview)
+            return;
+
+        if (state != ShakeState.Shaking)
+            return;
 
         remainTime -= Time.deltaTime;
         if (remainTime <= 0f)
@@ -255,5 +308,29 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     {
         if (shaker != null)
             shaker.anchoredPosition = shakerOrigin;
+    }
+
+    private void AutoBindIfMissing()
+    {
+        if (shaker == null)
+            shaker = transform.Find("UI/Shaker")?.GetComponent<RectTransform>();
+
+        if (progressText == null)
+            progressText = transform.Find("UI/ProgressText")?.GetComponent<TMP_Text>();
+
+        if (hintText == null)
+            hintText = transform.Find("UI/HintText")?.GetComponent<TMP_Text>();
+
+        if (resultLabel == null)
+            resultLabel = transform.Find("UI/ResultLabel")?.GetComponent<TMP_Text>();
+
+        if (startButton == null)
+            startButton = transform.Find("UI/StartButton")?.GetComponent<Button>();
+
+        if (startButton == null)
+            startButton = transform.Find("UI/StartupButton")?.GetComponent<Button>();
+
+        if (startHintText == null)
+            startHintText = transform.Find("UI/StartHintText")?.GetComponent<TMP_Text>();
     }
 }

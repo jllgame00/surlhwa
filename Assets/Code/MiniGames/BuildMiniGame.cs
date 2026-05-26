@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildMiniGame : MonoBehaviour, IMiniGame
 {
-    public enum BuildState { Ready, Pouring, Result }
+    public enum BuildState { Preview, Pouring, Result }
 
     [Header("UI")]
     [SerializeField] private RectTransform liquidArea;
@@ -16,6 +17,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     [SerializeField] private TMP_Text hintText;
     [SerializeField] private TMP_Text resultLabel;
 
+    [Header("Start UI")]
+    [SerializeField] private Button startButton;
+    [SerializeField] private TMP_Text startHintText;
+
     [Header("Rules")]
     [SerializeField] private float timeLimit = 4.5f;
     [SerializeField] private float fillSpeed = 180f;
@@ -23,7 +28,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     [SerializeField] private float perfectTolerance = 8f;
     [SerializeField] private float goodTolerance = 18f;
 
-    private BuildState state = BuildState.Ready;
+    private BuildState state = BuildState.Preview;
 
     private Action<MiniGameResult> onDone;
     private OrderData currentOrder;
@@ -40,7 +45,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         onDone = callback;
         currentOrder = order;
 
-        state = BuildState.Ready;
+        AutoBindIfMissing();
+
+        state = BuildState.Preview;
         remainTime = timeLimit;
         currentFillHeight = 0f;
         releasedOnce = false;
@@ -62,15 +69,62 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel != null)
             resultLabel.text = "";
 
+        if (startHintText != null)
+        {
+            startHintText.gameObject.SetActive(true);
+            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+        }
+
+        if (startButton != null)
+        {
+            startButton.gameObject.SetActive(true);
+            startButton.onClick.RemoveAllListeners();
+            startButton.onClick.AddListener(BeginGameplay);
+        }
+
         UpdateProgressText();
-        SetHint("SPACE를 누르고 있다가 적정선에서 떼세요");
+        SetHint("시작 버튼을 누르면 빌드가 시작됩니다");
+
+        Debug.Log(
+            $"[BuildMiniGame] Preview ready / " +
+            $"startButton={(startButton != null ? startButton.name : "NULL")} / " +
+            $"startHintText={(startHintText != null ? startHintText.name : "NULL")}"
+        );
+    }
+
+    public void BeginGameplay()
+    {
+        Debug.Log("[BuildMiniGame] BeginGameplay clicked");
+
+        if (state != BuildState.Preview)
+        {
+            Debug.LogWarning($"[BuildMiniGame] Begin ignored. state={state}");
+            return;
+        }
 
         state = BuildState.Pouring;
+
+        if (startHintText != null)
+            startHintText.gameObject.SetActive(false);
+
+        if (startButton != null)
+            startButton.gameObject.SetActive(false);
+
+        if (resultLabel != null)
+            resultLabel.text = "";
+
+        SetHint("SPACE를 누르고 있다가 적정선에서 떼세요");
+
+        Debug.Log("[BuildMiniGame] BeginGameplay -> Pouring");
     }
 
     private void Update()
     {
-        if (state != BuildState.Pouring) return;
+        if (state == BuildState.Preview)
+            return;
+
+        if (state != BuildState.Pouring)
+            return;
 
         remainTime -= Time.deltaTime;
         if (remainTime <= 0f)
@@ -200,5 +254,38 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         }
 
         return "Build";
+    }
+
+    private void AutoBindIfMissing()
+    {
+        if (liquidArea == null)
+            liquidArea = transform.Find("UI/LiquidArea")?.GetComponent<RectTransform>();
+
+        if (liquidFill == null)
+            liquidFill = transform.Find("UI/LiquidArea/LiquidFill")?.GetComponent<RectTransform>();
+
+        if (targetZone == null)
+            targetZone = transform.Find("UI/LiquidArea/TargetZone")?.GetComponent<RectTransform>();
+
+        if (ingredientText == null)
+            ingredientText = transform.Find("UI/IngredientText")?.GetComponent<TMP_Text>();
+
+        if (progressText == null)
+            progressText = transform.Find("UI/ProgressText")?.GetComponent<TMP_Text>();
+
+        if (hintText == null)
+            hintText = transform.Find("UI/HintText")?.GetComponent<TMP_Text>();
+
+        if (resultLabel == null)
+            resultLabel = transform.Find("UI/ResultLabel")?.GetComponent<TMP_Text>();
+
+        if (startButton == null)
+            startButton = transform.Find("UI/StartButton")?.GetComponent<Button>();
+
+        if (startButton == null)
+            startButton = transform.Find("UI/StartupButton")?.GetComponent<Button>();
+
+        if (startHintText == null)
+            startHintText = transform.Find("UI/StartHintText")?.GetComponent<TMP_Text>();
     }
 }

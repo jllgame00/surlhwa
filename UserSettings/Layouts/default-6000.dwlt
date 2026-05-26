@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1718
     height: 1340
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Console
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 72
+  controlID: 124
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 157
+  controlID: 153
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -936,7 +936,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Code/UI
+    - Assets/Code/MiniGames
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Code/UI
+  - Assets/Code/MiniGames
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\univ\surlhwa\Surlhwa
   m_LockTracker:
@@ -955,18 +955,18 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 60}
     m_SelectedIDs:
-    - m_Data: 51052
+    - m_Data: 51134
     m_LastClickedID:
-      m_Data: 51052
+      m_Data: 51134
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 50988
-    - m_Data: 50990
-    - m_Data: 50992
-    - m_Data: 50994
-    - m_Data: 50996
-    - m_Data: 50998
-    - m_Data: 51000
+    - m_Data: 51496
+    - m_Data: 51498
+    - m_Data: 51500
+    - m_Data: 51502
+    - m_Data: 51504
+    - m_Data: 51506
+    - m_Data: 51508
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -999,13 +999,13 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 50988
-    - m_Data: 50990
-    - m_Data: 50992
-    - m_Data: 50994
-    - m_Data: 50996
-    - m_Data: 50998
-    - m_Data: 51000
+    - m_Data: 51496
+    - m_Data: 51498
+    - m_Data: 51500
+    - m_Data: 51502
+    - m_Data: 51504
+    - m_Data: 51506
+    - m_Data: 51508
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1032,9 +1032,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 53938
-    m_LastClickedInstanceID: 53938
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 0
@@ -1118,10 +1117,8 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -5236
-      - m_Data: 53938
-      - m_Data: 53998
-      - m_Data: 54096
+      - m_Data: -1314
+      - m_Data: 49266
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1772,7 +1769,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 979.161, y: 678.09454, z: 4.317206}
     speed: 2
-    m_Value: {x: 885.90796, y: 576.2663, z: -3.182066}
+    m_Value: {x: 979.161, y: 678.09454, z: 4.317206}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1824,7 +1821,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 669.73444
     speed: 2
-    m_Value: 601.0519
+    m_Value: 669.73444
   m_Ortho:
     m_Target: 1
     speed: 2

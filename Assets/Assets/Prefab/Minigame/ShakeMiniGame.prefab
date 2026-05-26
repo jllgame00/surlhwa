@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2836933619141369630}
   - component: {fileID: 263476109252688947}
   - component: {fileID: 5458698520355387179}
+  - component: {fileID: 7273486634827353245}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -231,6 +232,27 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7273486634827353245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249782833148554843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f050a4f5c2af67741ab9b62e840a9eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeGuidePanelController
+  recipeUnlockManager: {fileID: 0}
+  panelRoot: {fileID: 3267634933785123917}
+  openButton: {fileID: 4308406802063763832}
+  closeButton: {fileID: 6577891076950340680}
+  recipeListParent: {fileID: 8854416249012698446}
+  recipeButtonPrefab: {fileID: 9058992205661850971, guid: 24ef0e595a45a114aa2b8b1b5102ae7a, type: 3}
+  recipeNameText: {fileID: 8089513735980847036}
+  recipeMethodText: {fileID: 8089513735980847036}
+  recipeIngredientText: {fileID: 868052635234270379}
 --- !u!1 &830452130256558275
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,6 +835,8 @@ MonoBehaviour:
   progressText: {fileID: 8138731196967741208}
   hintText: {fileID: 9143980896261635621}
   resultLabel: {fileID: 793669034818270681}
+  startButton: {fileID: 0}
+  startHintText: {fileID: 0}
   requiredSuccessCount: 6
   timeLimit: 6
   prepareTimeout: 0.8
