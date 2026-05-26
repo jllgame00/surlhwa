@@ -31,6 +31,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     private BuildState state = BuildState.Preview;
 
     private Action<MiniGameResult> onDone;
+
+    [Header("Recipe Guide")]
+    [SerializeField] private RecipeGuidePanelController recipeGuide;
+
     private OrderData currentOrder;
 
     private float remainTime;
@@ -46,6 +50,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         currentOrder = order;
 
         AutoBindIfMissing();
+
+        if (recipeGuide == null)
+            recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
 
         state = BuildState.Preview;
         remainTime = timeLimit;
@@ -188,7 +195,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         {
             success = true,
             repDelta = repDelta,
-            grade = grade
+            grade = grade,
+            brewedComposition = CreateBrewComposition()
         }));
     }
 
@@ -203,7 +211,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         {
             success = false,
             repDelta = -1,
-            grade = "Fail"
+            grade = "Fail",
+            brewedComposition = CreateBrewComposition()
         }));
     }
 
@@ -211,6 +220,19 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     {
         yield return new WaitForSeconds(1f);
         onDone?.Invoke(result);
+    }
+
+    private BrewComposition CreateBrewComposition()
+    {
+        return new BrewComposition
+        {
+            method = MiniGameType.Build,
+            ingredients = new[]
+            {
+            new BrewIngredientEntry { ingredientId = "gin", amount = 2f },
+            new BrewIngredientEntry { ingredientId = "tonic", amount = 4f }
+        }
+        };
     }
 
     private void SetLiquidHeight(float height)

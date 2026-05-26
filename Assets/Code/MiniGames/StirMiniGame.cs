@@ -52,10 +52,16 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
     Action<MiniGameResult> onDone;
 
+    [Header("Recipe Guide")]
+    [SerializeField] private RecipeGuidePanelController recipeGuide;
+
     public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
         onDone = done;
         AutoBindIfMissing();
+
+        if (recipeGuide == null)
+            recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
 
         state = State.Preview;
         t = 0f;
@@ -199,7 +205,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         {
             success = good || perfect,
             repDelta = perfect ? 2 : (good ? 1 : 0),
-            grade = perfect ? "Perfect" : (good ? "Good" : "Fail")
+            grade = perfect ? "Perfect" : (good ? "Good" : "Fail"),
+            brewedComposition = CreateBrewComposition()
         };
 
         ShowResult(result.grade);
@@ -214,7 +221,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         {
             success = false,
             repDelta = 0,
-            grade = "Fail"
+            grade = "Fail",
+            brewedComposition = CreateBrewComposition()
         };
 
         ShowResult("Fail");
@@ -225,6 +233,20 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     {
         yield return new WaitForSeconds(delay);
         onDone?.Invoke(result);
+    }
+
+    private BrewComposition CreateBrewComposition()
+    {
+        return new BrewComposition
+        {
+            method = MiniGameType.Stir,
+            ingredients = new[]
+            {
+            new BrewIngredientEntry { ingredientId = "whiskey", amount = 2f },
+            new BrewIngredientEntry { ingredientId = "vermouth", amount = 1f },
+            new BrewIngredientEntry { ingredientId = "water", amount = 1f }
+        }
+        };
     }
 
     void ShowResult(string text)

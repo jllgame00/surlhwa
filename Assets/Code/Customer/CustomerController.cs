@@ -43,7 +43,9 @@ public class CustomerController : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
-        if (standSprite != null) sr.sprite = standSprite;
+
+        if (standSprite != null)
+            sr.sprite = standSprite;
 
         seatManager = FindFirstObjectByType<SeatManager>();
         interactionUI = FindFirstObjectByType<InteractionUIController>();
@@ -58,6 +60,7 @@ public class CustomerController : MonoBehaviour
     public void AssignSeat(SeatPoint seat)
     {
         targetSeat = seat;
+
         if (targetSeat == null)
         {
             state = State.Leaving;
@@ -81,7 +84,7 @@ public class CustomerController : MonoBehaviour
         {
             case State.MovingToSeat:
                 {
-                    var dest = (targetSeat != null && targetSeat.approachMarker != null)
+                    Vector3 dest = (targetSeat != null && targetSeat.approachMarker != null)
                         ? targetSeat.approachMarker.position
                         : (targetSeat != null ? targetSeat.transform.position : transform.position);
 
@@ -122,10 +125,11 @@ public class CustomerController : MonoBehaviour
 
     void MoveToward(Vector3 dest, System.Action onArrive)
     {
-        var dir = (dest - transform.position);
-        var step = moveSpeed * Time.deltaTime;
+        Vector3 dir = dest - transform.position;
+        float step = moveSpeed * Time.deltaTime;
 
-        if (dir.magnitude <= step || (Mathf.Abs(dir.x) < arriveThreshold.x && Mathf.Abs(dir.y) < arriveThreshold.y))
+        if (dir.magnitude <= step ||
+            (Mathf.Abs(dir.x) < arriveThreshold.x && Mathf.Abs(dir.y) < arriveThreshold.y))
         {
             transform.position = dest;
             onArrive?.Invoke();
@@ -134,7 +138,8 @@ public class CustomerController : MonoBehaviour
 
         transform.position += dir.normalized * step;
 
-        if (dir.x != 0) transform.localScale = new Vector3(dir.x > 0 ? 1 : -1, 1, 1);
+        if (dir.x != 0)
+            transform.localScale = new Vector3(dir.x > 0 ? 1 : -1, 1, 1);
     }
 
     void SitDown()
@@ -144,31 +149,53 @@ public class CustomerController : MonoBehaviour
         if (targetSeat != null && targetSeat.sitMarker != null)
             transform.position = targetSeat.sitMarker.position;
 
-        if (sitSprite != null) sr.sprite = sitSprite;
+        if (sitSprite != null)
+            sr.sprite = sitSprite;
 
         AssignRandomEmotionForGeneralGuest();
+
+        // 자동 입장 말풍선은 현재 UI 흐름과 겹치므로 비활성 유지
         // SayRandom(dialogueData != null ? dialogueData.onEnterLines : null);
     }
 
     Vector3 GetExitDestination()
     {
-        if (targetSeat != null && targetSeat.exitMarker != null) return targetSeat.exitMarker.position;
-        if (defaultExitPoint != null) return defaultExitPoint.position;
+        if (targetSeat != null && targetSeat.exitMarker != null)
+            return targetSeat.exitMarker.position;
+
+        if (defaultExitPoint != null)
+            return defaultExitPoint.position;
+
         return transform.position + Vector3.left * 3f;
     }
 
+    // 기존 구조 유지용
     public void OnServed(bool success)
     {
+        if (interactionUI != null)
+            interactionUI.ClearCustomer(this);
+
         if (dialogueData != null)
         {
-            var lines = success ? dialogueData.onSuccessLines : dialogueData.onFailLines;
+            string[] lines = success ? dialogueData.onSuccessLines : dialogueData.onFailLines;
             SayRandom(lines);
         }
 
         state = State.Leaving;
     }
 
+    // 기존 OrderData 기반 호출이 남아 있어도 깨지지 않게 유지
     public void OnServedWithReaction(OrderData servedOrder, MiniGameResult result)
+    {
+        CocktailData fallbackCocktail = servedOrder != null
+            ? servedOrder.targetCocktail
+            : null;
+
+        OnServedWithReaction(fallbackCocktail, result);
+    }
+
+    // 새 구조: 실제 서빙된 CocktailData 기준으로 반응 계산
+    public void OnServedWithReaction(CocktailData servedCocktail, MiniGameResult result)
     {
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
@@ -177,14 +204,22 @@ public class CustomerController : MonoBehaviour
             ? emotionRequest.ToArray()
             : System.Array.Empty<EmotionTag>();
 
-        EmotionTag[] servedTags = (servedOrder != null &&
-                                   servedOrder.targetCocktail != null &&
-                                   servedOrder.targetCocktail.emotionTags != null)
-            ? servedOrder.targetCocktail.emotionTags
+        EmotionTag[] servedTags = (servedCocktail != null && servedCocktail.emotionTags != null)
+            ? servedCocktail.emotionTags
             : System.Array.Empty<EmotionTag>();
 
         bool recipeInTolerance = result.success;
-        int hearts = GuestReactionResolver.CalculateHearts(desiredTags, servedTags, recipeInTolerance);
+
+        int hearts = GuestReactionResolver.CalculateHearts(
+            desiredTags,
+            servedTags,
+            recipeInTolerance
+        );
+
+        Debug.Log(
+            $"[Customer] ServedCocktail={(servedCocktail != null ? servedCocktail.name : "NULL")} / " +
+            $"Hearts={hearts}"
+        );
 
         StopAllCoroutines();
         StartCoroutine(ReactionSequenceThenLeave(desiredTags, hearts));
@@ -235,7 +270,9 @@ public class CustomerController : MonoBehaviour
 
     private void ShowReactionBubble(string line)
     {
-        if (string.IsNullOrEmpty(line)) return;
+        if (string.IsNullOrEmpty(line))
+            return;
+
         SayLine(line);
     }
 
@@ -256,6 +293,7 @@ public class CustomerController : MonoBehaviour
         }
 
         Transform target = reactionAnchor != null ? reactionAnchor : transform;
+
         Debug.Log($"[Customer] Spawning heart popup at {target.position}");
 
         GameObject popup = Instantiate(heartPopupPrefab);
@@ -292,14 +330,15 @@ public class CustomerController : MonoBehaviour
             return;
         }
 
-        if (string.IsNullOrEmpty(line)) return;
+        if (string.IsNullOrEmpty(line))
+            return;
 
         ClearDialogueBubble();
 
         GameObject bubble = Instantiate(dialogueBubblePrefab);
         currentDialogueBubble = bubble;
 
-        var bubbleComp = bubble.GetComponent<DialogueBubble>();
+        DialogueBubble bubbleComp = bubble.GetComponent<DialogueBubble>();
         if (bubbleComp == null)
         {
             Debug.LogError("[Customer] DialogueBubble component missing on prefab!");
@@ -320,17 +359,20 @@ public class CustomerController : MonoBehaviour
             return;
         }
 
-        if (lines == null || lines.Length == 0) return;
+        if (lines == null || lines.Length == 0)
+            return;
 
         string line = Pick(lines);
-        if (string.IsNullOrEmpty(line)) return;
+
+        if (string.IsNullOrEmpty(line))
+            return;
 
         ClearDialogueBubble();
 
         GameObject bubble = Instantiate(dialogueBubblePrefab);
         currentDialogueBubble = bubble;
 
-        var bubbleComp = bubble.GetComponent<DialogueBubble>();
+        DialogueBubble bubbleComp = bubble.GetComponent<DialogueBubble>();
         if (bubbleComp == null)
         {
             Debug.LogError("[Customer] DialogueBubble component missing on prefab!");
@@ -339,12 +381,15 @@ public class CustomerController : MonoBehaviour
             return;
         }
 
-        bubbleComp.Init(transform, line);
+        Transform followTarget = reactionAnchor != null ? reactionAnchor : transform;
+        bubbleComp.Init(followTarget, line);
     }
 
     string Pick(string[] lines)
     {
-        if (lines == null || lines.Length == 0) return "";
+        if (lines == null || lines.Length == 0)
+            return "";
+
         return lines[UnityEngine.Random.Range(0, lines.Length)];
     }
 

@@ -118,6 +118,23 @@ public class OrderManager : MonoBehaviour
     {
         Debug.Log($"[OrderManager] MiniGame Done => success={result.success}, repDelta={result.repDelta}, grade={result.grade}");
 
+        if (result.brewedComposition != null)
+        {
+            Debug.Log($"[OrderManager] Brewed Method = {result.brewedComposition.method}");
+
+            if (result.brewedComposition.ingredients != null)
+            {
+                foreach (var ingredient in result.brewedComposition.ingredients)
+                {
+                    Debug.Log($"[OrderManager] Brewed Ingredient = {ingredient.ingredientId} / amount={ingredient.amount}");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[OrderManager] brewedComposition is NULL");
+        }
+
         // 평판 처리
         if (gm != null)
         {

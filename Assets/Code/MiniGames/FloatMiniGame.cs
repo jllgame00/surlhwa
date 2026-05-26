@@ -41,6 +41,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
     private Action<MiniGameResult> onDone;
     private OrderData currentOrder;
 
+    [Header("Recipe Guide")]
+    [SerializeField] private RecipeGuidePanelController recipeGuide;
+
     private float remainTime;
     private float currentTopHeight;
     private float maxTopHeight;
@@ -57,6 +60,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
         currentOrder = order;
 
         AutoBindIfMissing();
+        
+        if (recipeGuide == null)
+            recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
 
         state = FloatState.Preview;
         remainTime = timeLimit;
@@ -232,7 +238,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
         {
             success = true,
             repDelta = repDelta,
-            grade = grade
+            grade = grade,
+            brewedComposition = CreateBrewComposition()
         }));
     }
 
@@ -248,8 +255,22 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
         {
             success = false,
             repDelta = -1,
-            grade = "Fail"
+            grade = "Fail",
+            brewedComposition = CreateBrewComposition()
         }));
+    }
+
+    private BrewComposition CreateBrewComposition()
+    {
+        return new BrewComposition
+        {
+            method = MiniGameType.Float,
+            ingredients = new[]
+            {
+            new BrewIngredientEntry { ingredientId = "coffee", amount = 3f },
+            new BrewIngredientEntry { ingredientId = "cream", amount = 1f }
+        }
+        };
     }
 
     private IEnumerator FinishAfterDelay(MiniGameResult result)

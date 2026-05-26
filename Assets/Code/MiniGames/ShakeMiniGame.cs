@@ -46,10 +46,16 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
     private Action<MiniGameResult> onDone;
 
+    [Header("Recipe Guide")]
+    [SerializeField] private RecipeGuidePanelController recipeGuide;
+
     public void StartGame(OrderData order, Action<MiniGameResult> callback)
     {
         onDone = callback;
         AutoBindIfMissing();
+
+        if (recipeGuide == null)
+            recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
 
         state = ShakeState.Preview;
         preparedDirection = PrepDirection.None;
@@ -267,7 +273,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         {
             success = true,
             repDelta = repDelta,
-            grade = grade
+            grade = grade,
+            brewedComposition = CreateBrewComposition()
         }));
     }
 
@@ -282,7 +289,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         {
             success = false,
             repDelta = -1,
-            grade = "Fail"
+            grade = "Fail",
+            brewedComposition = CreateBrewComposition()
         }));
     }
 
@@ -290,6 +298,20 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     {
         yield return new WaitForSeconds(1f);
         onDone?.Invoke(result);
+    }
+
+    private BrewComposition CreateBrewComposition()
+    {
+        return new BrewComposition
+        {
+            method = MiniGameType.Shake,
+            ingredients = new[]
+            {
+            new BrewIngredientEntry { ingredientId = "rum", amount = 2f },
+            new BrewIngredientEntry { ingredientId = "lime", amount = 1f },
+            new BrewIngredientEntry { ingredientId = "syrup", amount = 1f }
+        }
+        };
     }
 
     private void UpdateProgressText()
