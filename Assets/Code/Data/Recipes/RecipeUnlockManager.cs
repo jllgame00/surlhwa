@@ -58,6 +58,23 @@ public class RecipeUnlockManager : MonoBehaviour
         return result;
     }
 
+    public List<CocktailRecipeData> GetAllRecipesByMethod(MiniGameType method)
+    {
+        List<CocktailRecipeData> result = new();
+
+        if (allRecipes == null) return result;
+
+        foreach (var recipe in allRecipes)
+        {
+            if (recipe == null) continue;
+            if (recipe.method != method) continue;
+
+            result.Add(recipe);
+        }
+
+        return result;
+    }
+
     public List<CocktailRecipeData> GetAllRecipes()
     {
         List<CocktailRecipeData> result = new();

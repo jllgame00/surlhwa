@@ -36,6 +36,8 @@ public class OrderManager : MonoBehaviour
     [Header("MiniGame")]
     [SerializeField] private MiniGameManager miniGameManager;
 
+    private RecipeUnlockManager recipeUnlockManager;
+
     private bool HasActiveOrder => currentOrder != null;
 
     void Awake()
@@ -45,6 +47,8 @@ public class OrderManager : MonoBehaviour
 
         if (miniGameManager == null)
             miniGameManager = FindFirstObjectByType<MiniGameManager>();
+
+        recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
 
         Debug.Log($"[OrderManager] Awake name={name} id={GetInstanceID()}");
     }
@@ -135,6 +139,56 @@ public class OrderManager : MonoBehaviour
             Debug.LogWarning("[OrderManager] brewedComposition is NULL");
         }
 
+        CocktailData servedCocktail = null;
+        CocktailRecipeData matchedRecipe = null;
+
+        if (recipeUnlockManager != null && result.brewedComposition != null)
+        {
+            var candidates = recipeUnlockManager.GetAllRecipesByMethod(result.brewedComposition.method);
+            RecipeMatchResult matchResult = RecipeMatchService.FindBestMatch(result.brewedComposition, candidates);
+
+            if (matchResult.success && matchResult.matchedRecipe != null)
+            {
+                matchedRecipe = matchResult.matchedRecipe;
+                servedCocktail = matchedRecipe.targetCocktail;
+
+                Debug.Log(
+                    $"[OrderManager] Recipe Match SUCCESS -> " +
+                    $"{matchedRecipe.displayName} / similarity={matchResult.similarity:0.00}"
+                );
+
+                bool wasUnlocked = recipeUnlockManager.IsUnlocked(matchedRecipe);
+
+                if (!wasUnlocked)
+                {
+                    bool newlyUnlocked = recipeUnlockManager.UnlockRecipe(matchedRecipe);
+
+                    if (newlyUnlocked)
+                    {
+                        Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {matchedRecipe.displayName}");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log(
+                    $"[OrderManager] Recipe Match FAIL -> " +
+                    $"best={(matchResult.matchedRecipe != null ? matchResult.matchedRecipe.displayName : "None")} / " +
+                    $"similarity={matchResult.similarity:0.00}"
+                );
+            }
+        }
+
+        if (servedCocktail == null && currentOrder != null)
+        {
+            servedCocktail = currentOrder.targetCocktail;
+
+            Debug.Log(
+                $"[OrderManager] Fallback Served Cocktail = " +
+                $"{(servedCocktail != null ? servedCocktail.name : "None")}"
+            );
+        }
+
         // 평판 처리
         if (gm != null)
         {
@@ -153,7 +207,7 @@ public class OrderManager : MonoBehaviour
 
         // 새 반응 시스템 호출
         if (currentCustomer != null)
-            currentCustomer.OnServedWithReaction(currentOrder, result);
+            currentCustomer.OnServedWithReaction(servedCocktail, result);
 
         // 상태 초기화
         currentCustomer = null;
