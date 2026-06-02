@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fd951cc4e54004cafa03e87fefe250, type: 3}
   m_Name: Ingredient_Syrup
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
-  ingredientId: whiskey
-  displayName: Whiskey
-  category: 0
+  ingredientId: syrup
+  displayName: Syrup
+  category: 2
   icon: {fileID: 0}

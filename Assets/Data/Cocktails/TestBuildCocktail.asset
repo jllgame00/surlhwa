@@ -17,3 +17,4 @@ MonoBehaviour:
   miniGameType: 0
   steps: []
   emotionTags: 0600000001000000
+  cocktailSprite: {fileID: 0}

@@ -25,3 +25,12 @@ MonoBehaviour:
     targetMax01: 0
     gaugeSpeed: 0
   targetCocktail: {fileID: 11400000, guid: c45c5194c56c1de45a5cd0061e701a27, type: 2}
+  defaultBrewSession:
+    method: 0
+    ingredients:
+    - ingredient: {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
+      amount: 2
+    - ingredient: {fileID: 11400000, guid: e00d4a7e4e940b74297043ec0154e4c1, type: 2}
+      amount: 1
+    - ingredient: {fileID: 11400000, guid: 02f6eceda66c83e4d901b2dc701c2d3a, type: 2}
+      amount: 1

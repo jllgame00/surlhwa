@@ -6754,6 +6754,8 @@ MonoBehaviour:
   allRecipes:
   - {fileID: 11400000, guid: adb3cfe77a1b3894ca30f4e8033dfb0a, type: 2}
   - {fileID: 11400000, guid: 2b54330e34efa6c46a19054ea18fc8db, type: 2}
+  - {fileID: 11400000, guid: 955c68b1cac12a64faba38ab72681dc6, type: 2}
+  - {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
 --- !u!1 &891507630
 GameObject:
   m_ObjectHideFlags: 0
