@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RecipeUnlockManager : MonoBehaviour
 {
+    private const string SaveKey = "SURLHWA_UNLOCKED_RECIPES";
+
     [Header("All Recipe Data")]
     [SerializeField] private CocktailRecipeData[] allRecipes;
 
@@ -10,13 +12,12 @@ public class RecipeUnlockManager : MonoBehaviour
 
     private void Awake()
     {
+        LoadUnlocks();
         InitializeDefaultUnlocks();
     }
 
     private void InitializeDefaultUnlocks()
     {
-        unlockedRecipeIds.Clear();
-
         if (allRecipes == null) return;
 
         foreach (var recipe in allRecipes)
@@ -26,18 +27,36 @@ public class RecipeUnlockManager : MonoBehaviour
             if (recipe.unlockedByDefault)
                 unlockedRecipeIds.Add(recipe.recipeId);
         }
+
+        SaveUnlocks();
     }
 
     public bool IsUnlocked(CocktailRecipeData recipe)
     {
         if (recipe == null) return false;
+        if (string.IsNullOrEmpty(recipe.recipeId)) return false;
+
         return unlockedRecipeIds.Contains(recipe.recipeId);
     }
 
     public bool UnlockRecipe(CocktailRecipeData recipe)
     {
         if (recipe == null) return false;
-        return unlockedRecipeIds.Add(recipe.recipeId);
+        if (string.IsNullOrEmpty(recipe.recipeId))
+        {
+            Debug.LogWarning("[RecipeUnlockManager] Cannot unlock recipe with empty recipeId");
+            return false;
+        }
+
+        bool added = unlockedRecipeIds.Add(recipe.recipeId);
+
+        if (added)
+        {
+            SaveUnlocks();
+            Debug.Log($"[RecipeUnlockManager] Saved unlocked recipe -> {recipe.recipeId}");
+        }
+
+        return added;
     }
 
     public List<CocktailRecipeData> GetUnlockedRecipesByMethod(MiniGameType method)
@@ -50,8 +69,23 @@ public class RecipeUnlockManager : MonoBehaviour
         {
             if (recipe == null) continue;
             if (recipe.method != method) continue;
-            if (!unlockedRecipeIds.Contains(recipe.recipeId)) continue;
+            if (!IsUnlocked(recipe)) continue;
 
+            result.Add(recipe);
+        }
+
+        return result;
+    }
+
+    public List<CocktailRecipeData> GetAllRecipes()
+    {
+        List<CocktailRecipeData> result = new();
+
+        if (allRecipes == null) return result;
+
+        foreach (var recipe in allRecipes)
+        {
+            if (recipe == null) continue;
             result.Add(recipe);
         }
 
@@ -75,18 +109,47 @@ public class RecipeUnlockManager : MonoBehaviour
         return result;
     }
 
-    public List<CocktailRecipeData> GetAllRecipes()
+    private void SaveUnlocks()
     {
-        List<CocktailRecipeData> result = new();
+        string data = string.Join("|", unlockedRecipeIds);
+        PlayerPrefs.SetString(SaveKey, data);
+        PlayerPrefs.Save();
 
-        if (allRecipes == null) return result;
+        Debug.Log($"[RecipeUnlockManager] SaveUnlocks -> {data}");
+    }
 
-        foreach (var recipe in allRecipes)
+    private void LoadUnlocks()
+    {
+        unlockedRecipeIds.Clear();
+
+        string data = PlayerPrefs.GetString(SaveKey, "");
+
+        if (string.IsNullOrEmpty(data))
         {
-            if (recipe == null) continue;
-            result.Add(recipe);
+            Debug.Log("[RecipeUnlockManager] No saved unlock data");
+            return;
         }
 
-        return result;
+        string[] ids = data.Split('|');
+
+        foreach (string id in ids)
+        {
+            if (string.IsNullOrEmpty(id)) continue;
+            unlockedRecipeIds.Add(id);
+        }
+
+        Debug.Log($"[RecipeUnlockManager] LoadUnlocks -> {data}");
+    }
+
+    [ContextMenu("Debug/Clear Saved Unlocks")]
+    public void ClearSavedUnlocks()
+    {
+        PlayerPrefs.DeleteKey(SaveKey);
+        PlayerPrefs.Save();
+
+        unlockedRecipeIds.Clear();
+        InitializeDefaultUnlocks();
+
+        Debug.Log("[RecipeUnlockManager] Cleared saved unlocks");
     }
 }
