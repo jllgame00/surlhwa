@@ -15,4 +15,7 @@ public class CocktailData : ScriptableObject
 
     [Header("Emotion Tags")]
     public EmotionTag[] emotionTags;
+
+    [Header("Visual")]
+    public Sprite cocktailSprite;
 }

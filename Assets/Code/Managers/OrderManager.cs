@@ -38,6 +38,8 @@ public class OrderManager : MonoBehaviour
 
     private RecipeUnlockManager recipeUnlockManager;
 
+    private RecipeUnlockPopupController unlockPopup;
+
     private bool HasActiveOrder => currentOrder != null;
 
     void Awake()
@@ -49,6 +51,8 @@ public class OrderManager : MonoBehaviour
             miniGameManager = FindFirstObjectByType<MiniGameManager>();
 
         recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
+
+        unlockPopup = FindFirstObjectByType<RecipeUnlockPopupController>();
 
         Debug.Log($"[OrderManager] Awake name={name} id={GetInstanceID()}");
     }
@@ -166,6 +170,9 @@ public class OrderManager : MonoBehaviour
                     if (newlyUnlocked)
                     {
                         Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {matchedRecipe.displayName}");
+
+                        if (unlockPopup != null)
+                            unlockPopup.Show(matchedRecipe);
                     }
                 }
             }
