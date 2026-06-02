@@ -45,6 +45,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Spoon Pose")]
     public float spoonBaseAngleDeg = 90f;
 
+    private OrderData currentOrder;
+
     float t;
     float targetMin, targetMax;
     float perfectMin, perfectMax;
@@ -59,6 +61,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     {
         onDone = done;
         AutoBindIfMissing();
+
+        currentOrder = order;
 
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
@@ -237,16 +241,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
     private BrewComposition CreateBrewComposition()
     {
-        return new BrewComposition
-        {
-            method = MiniGameType.Stir,
-            ingredients = new[]
-            {
-            new BrewIngredientEntry { ingredientId = "whiskey", amount = 2f },
-            new BrewIngredientEntry { ingredientId = "vermouth", amount = 1f },
-            new BrewIngredientEntry { ingredientId = "water", amount = 1f }
-        }
-        };
+        return BrewCompositionFactory.FromSession(
+            currentOrder != null ? currentOrder.defaultBrewSession : null,
+            MiniGameType.Stir
+        );
     }
 
     void ShowResult(string text)

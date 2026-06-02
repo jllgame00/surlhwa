@@ -224,15 +224,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
     private BrewComposition CreateBrewComposition()
     {
-        return new BrewComposition
-        {
-            method = MiniGameType.Build,
-            ingredients = new[]
-            {
-            new BrewIngredientEntry { ingredientId = "gin", amount = 2f },
-            new BrewIngredientEntry { ingredientId = "tonic", amount = 4f }
-        }
-        };
+        return BrewCompositionFactory.FromSession(
+            currentOrder != null ? currentOrder.defaultBrewSession : null,
+            MiniGameType.Build
+        );
     }
 
     private void SetLiquidHeight(float height)

@@ -46,6 +46,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
     private Action<MiniGameResult> onDone;
 
+    private OrderData currentOrder;
+
     [Header("Recipe Guide")]
     [SerializeField] private RecipeGuidePanelController recipeGuide;
 
@@ -53,6 +55,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     {
         onDone = callback;
         AutoBindIfMissing();
+
+        currentOrder = order;
 
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
@@ -302,16 +306,10 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
     private BrewComposition CreateBrewComposition()
     {
-        return new BrewComposition
-        {
-            method = MiniGameType.Shake,
-            ingredients = new[]
-            {
-            new BrewIngredientEntry { ingredientId = "rum", amount = 2f },
-            new BrewIngredientEntry { ingredientId = "lime", amount = 1f },
-            new BrewIngredientEntry { ingredientId = "syrup", amount = 1f }
-        }
-        };
+        return BrewCompositionFactory.FromSession(
+            currentOrder != null ? currentOrder.defaultBrewSession : null,
+            MiniGameType.Shake
+        );
     }
 
     private void UpdateProgressText()

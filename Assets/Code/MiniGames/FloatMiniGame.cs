@@ -262,15 +262,10 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
     private BrewComposition CreateBrewComposition()
     {
-        return new BrewComposition
-        {
-            method = MiniGameType.Float,
-            ingredients = new[]
-            {
-            new BrewIngredientEntry { ingredientId = "coffee", amount = 3f },
-            new BrewIngredientEntry { ingredientId = "cream", amount = 1f }
-        }
-        };
+        return BrewCompositionFactory.FromSession(
+            currentOrder != null ? currentOrder.defaultBrewSession : null,
+            MiniGameType.Float
+        );
     }
 
     private IEnumerator FinishAfterDelay(MiniGameResult result)
