@@ -12,21 +12,35 @@ public class BrewIngredientOptionView : MonoBehaviour
     [SerializeField] private Button plusButton;
     [SerializeField] private Button minusButton;
 
+    [Header("Select")]
+    [SerializeField] private Button selectButton;
+
     private IngredientData ingredient;
     private float currentAmount;
     private float amountStep;
+
     private Action<IngredientData, float> onAmountChanged;
+    private Action<IngredientData> onSelected;
+
+    private void Awake()
+    {
+        if (selectButton == null)
+            selectButton = GetComponent<Button>();
+    }
 
     public void Bind(
         IngredientData ingredientData,
         float initialAmount,
         float step,
-        Action<IngredientData, float> changedCallback)
+        Action<IngredientData, float> changedCallback,
+        Action<IngredientData> selectedCallback = null)
     {
         ingredient = ingredientData;
         currentAmount = Mathf.Max(0f, initialAmount);
         amountStep = Mathf.Max(0.1f, step);
+
         onAmountChanged = changedCallback;
+        onSelected = selectedCallback;
 
         if (nameText != null)
         {
@@ -44,6 +58,12 @@ public class BrewIngredientOptionView : MonoBehaviour
                 iconImage.sprite = ingredient.icon;
         }
 
+        if (selectButton != null)
+        {
+            selectButton.onClick.RemoveAllListeners();
+            selectButton.onClick.AddListener(Select);
+        }
+
         if (plusButton != null)
         {
             plusButton.onClick.RemoveAllListeners();
@@ -57,6 +77,19 @@ public class BrewIngredientOptionView : MonoBehaviour
         }
 
         Refresh();
+    }
+
+    public void Select()
+    {
+        if (ingredient == null)
+        {
+            Debug.LogWarning("[BrewIngredientOptionView] Select called but ingredient is NULL");
+            return;
+        }
+
+        Debug.Log($"[BrewIngredientOptionView] Select -> {ingredient.displayName}");
+
+        onSelected?.Invoke(ingredient);
     }
 
     private void IncreaseAmount()
@@ -83,11 +116,7 @@ public class BrewIngredientOptionView : MonoBehaviour
 
     private void Refresh()
     {
-        if (amountText == null)
-            return;
-
-        amountText.text = currentAmount <= 0f
-            ? "0"
-            : currentAmount.ToString("0.##");
+        if (amountText != null)
+            amountText.text = currentAmount <= 0f ? "0" : currentAmount.ToString("0.##");
     }
 }

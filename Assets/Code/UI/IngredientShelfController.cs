@@ -17,6 +17,8 @@ public class IngredientShelfController : MonoBehaviour
     [Header("Amount")]
     [SerializeField] private float amountStep = 0.5f;
 
+    private JiggerPanelController linkedJiggerPanel;
+
     private MiniGameType currentMethod;
     private readonly Dictionary<IngredientData, float> selectedAmounts = new Dictionary<IngredientData, float>();
 
@@ -98,11 +100,14 @@ public class IngredientShelfController : MonoBehaviour
         if (allIngredients == null)
             return;
 
-        foreach (IngredientData ingredient in allIngredients)
-        {
-            if (ingredient == null)
-                continue;
+        IEnumerable<IngredientData> sortedIngredients = allIngredients
+            .Where(ingredient => ingredient != null)
+            .OrderBy(ingredient => ingredient.category)
+            .ThenBy(ingredient => ingredient.sortOrder)
+            .ThenBy(ingredient => ingredient.displayName);
 
+        foreach (IngredientData ingredient in sortedIngredients)
+        {
             float amount = selectedAmounts.TryGetValue(ingredient, out float savedAmount)
                 ? savedAmount
                 : 0f;
@@ -113,7 +118,8 @@ public class IngredientShelfController : MonoBehaviour
                 ingredient,
                 amount,
                 amountStep,
-                OnIngredientAmountChanged
+                OnIngredientAmountChanged,
+                OnIngredientSelected
             );
         }
     }
@@ -156,5 +162,57 @@ public class IngredientShelfController : MonoBehaviour
         }
 
         summaryText.text = string.Join(" / ", parts);
+    }
+
+    public void SetJiggerPanel(JiggerPanelController jiggerPanel)
+    {
+        linkedJiggerPanel = jiggerPanel;
+
+        Debug.Log(
+            $"[IngredientShelf] JiggerPanel linked -> " +
+            $"{(linkedJiggerPanel != null ? linkedJiggerPanel.name : "NULL")}"
+        );
+    }
+
+    public void AddAmount(IngredientData ingredient, float amount)
+    {
+        if (ingredient == null)
+            return;
+
+        selectedAmounts.TryGetValue(ingredient, out float currentAmount);
+        selectedAmounts[ingredient] = Mathf.Max(0f, currentAmount + amount);
+
+        RebuildIngredientList();
+        RefreshTexts();
+    }
+
+    public void SetAmount(IngredientData ingredient, float amount)
+    {
+        if (ingredient == null)
+            return;
+
+        if (amount <= 0f)
+            selectedAmounts.Remove(ingredient);
+        else
+            selectedAmounts[ingredient] = amount;
+
+        RebuildIngredientList();
+        RefreshTexts();
+    }
+
+    private void OnIngredientSelected(IngredientData ingredient)
+    {
+        if (ingredient == null)
+            return;
+
+        if (linkedJiggerPanel == null)
+        {
+            Debug.LogWarning($"[IngredientShelf] Selected {ingredient.displayName}, but linkedJiggerPanel is NULL");
+            return;
+        }
+
+        linkedJiggerPanel.SelectIngredient(ingredient);
+
+        Debug.Log($"[IngredientShelf] Selected ingredient -> {ingredient.displayName}");
     }
 }

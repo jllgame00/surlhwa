@@ -62,6 +62,9 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
+    [Header("Jigger Panel")]
+    [SerializeField] private JiggerPanelController jiggerPanel;
+
     public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
         BrewSessionData fallbackSession = order != null
@@ -90,8 +93,19 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         if (ingredientShelf != null)
             ingredientShelf.Initialize(MiniGameType.Stir, currentBrewSession);
 
+        if (jiggerPanel == null)
+            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
+
+        if (ingredientShelf != null && jiggerPanel != null)
+        {
+            jiggerPanel.Initialize(ingredientShelf);
+            ingredientShelf.SetJiggerPanel(jiggerPanel);
+            jiggerPanel.gameObject.SetActive(true);
+        }
+
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
+
 
         state = State.Preview;
         t = 0f;
@@ -166,6 +180,9 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
 
         if (ingredientShelf != null)
             ingredientShelf.SetVisible(false);
+
+        if (jiggerPanel != null)
+            jiggerPanel.gameObject.SetActive(false);
 
         state = State.Stirring;
 

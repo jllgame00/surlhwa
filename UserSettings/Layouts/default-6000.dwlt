@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1718
     height: 1340
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Game
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 162
+  controlID: 46
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -953,21 +953,22 @@ MonoBehaviour:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 31}
+    scrollPos: {x: 0, y: 120}
     m_SelectedIDs:
-    - m_Data: 51736
+    - m_Data: 51670
     m_LastClickedID:
-      m_Data: 51736
+      m_Data: 51670
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 51530
-    - m_Data: 51532
-    - m_Data: 51534
-    - m_Data: 51536
-    - m_Data: 51538
-    - m_Data: 51540
-    - m_Data: 51542
-    - m_Data: 51544
+    - m_Data: 51874
+    - m_Data: 51876
+    - m_Data: 51878
+    - m_Data: 51880
+    - m_Data: 51882
+    - m_Data: 51884
+    - m_Data: 51886
+    - m_Data: 51888
+    - m_Data: 51890
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1000,14 +1001,15 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 51530
-    - m_Data: 51532
-    - m_Data: 51534
-    - m_Data: 51536
-    - m_Data: 51538
-    - m_Data: 51540
-    - m_Data: 51542
-    - m_Data: 51544
+    - m_Data: 51874
+    - m_Data: 51876
+    - m_Data: 51878
+    - m_Data: 51880
+    - m_Data: 51882
+    - m_Data: 51884
+    - m_Data: 51886
+    - m_Data: 51888
+    - m_Data: 51890
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1034,8 +1036,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs:
+    - m_Data: 49530
+    m_LastClickedInstanceID: 49530
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 0
@@ -1045,6 +1048,7 @@ MonoBehaviour:
     - m_Data: 51242
     - m_Data: -22200
     - m_Data: 48562
+    - m_Data: 51174
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1120,6 +1124,7 @@ MonoBehaviour:
         m_Data: 0
       m_ExpandedIDs:
       - m_Data: -1314
+      - m_Data: 49350
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

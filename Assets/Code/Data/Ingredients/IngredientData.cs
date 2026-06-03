@@ -12,4 +12,7 @@ public class IngredientData : ScriptableObject
 
     [Header("Visual")]
     public Sprite icon;
+
+    [Header("Sorting")]
+    public int sortOrder;
 }
