@@ -237,6 +237,11 @@ public class OrderManager : MonoBehaviour
 
     public void PlaySpecificOrder(OrderData order, CustomerController customer)
     {
+        PlaySpecificOrder(order, customer, null);
+    }
+
+    public void PlaySpecificOrder(OrderData order, CustomerController customer, BrewSessionData selectedSession)
+    {
         if (order == null)
         {
             Debug.LogError("[OrderManager] PlaySpecificOrder called with NULL order");
@@ -261,10 +266,21 @@ public class OrderManager : MonoBehaviour
         currentCustomer = customer;
         currentOrder = order;
 
+        BrewSessionData sessionToUse = selectedSession;
+
+        if (sessionToUse == null && currentOrder != null)
+            sessionToUse = currentOrder.defaultBrewSession;
+
         if (ui != null)
             ui.SetOrderText($"ORDER: {currentOrder.orderName}");
 
-        Debug.Log($"[OrderManager] PlaySpecificOrder -> {currentOrder.orderName}");
-        miniGameManager.Play(currentOrder, OnMiniGameDone);
+        Debug.Log(
+            $"[OrderManager] PlaySpecificOrder -> " +
+            $"{currentOrder.orderName} / " +
+            $"SessionMethod={(sessionToUse != null ? sessionToUse.method.ToString() : "NULL")} / " +
+            $"SelectedSession={(selectedSession != null)}"
+        );
+
+        miniGameManager.Play(currentOrder, sessionToUse, OnMiniGameDone);
     }
 }

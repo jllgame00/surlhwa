@@ -37,6 +37,8 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color selectedColor = new Color(1f, 0.9f, 0.6f, 1f);
 
+    [SerializeField] private BrewSelectionController brewSelectionController;
+
     private OrderManager orderManager;
     private CustomerController activeCustomer;
 
@@ -47,6 +49,9 @@ public class InteractionUIController : MonoBehaviour
     private void Awake()
     {
         orderManager = FindFirstObjectByType<OrderManager>();
+
+        if (brewSelectionController == null && brewPanel != null)
+            brewSelectionController = brewPanel.GetComponentInChildren<BrewSelectionController>(true);
 
         if (ellipsisButton != null) ellipsisButton.onClick.AddListener(OnClickEllipsis);
         if (brewButton != null) brewButton.onClick.AddListener(OnClickBrew);
@@ -175,6 +180,14 @@ public class InteractionUIController : MonoBehaviour
         selectedMethod = type;
         hasMethodSelected = true;
 
+        OrderData order = GetTestOrder(selectedMethod);
+
+        if (brewSelectionController != null)
+        {
+            brewSelectionController.Begin(order);
+            brewSelectionController.SetMethod(type);
+        }
+
         Debug.Log($"[InteractionUI] SelectMethod -> {type}");
 
         RefreshMethodVisuals();
@@ -224,6 +237,13 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
+        BrewSessionData selectedSession = null;
+
+        if (brewSelectionController != null && brewSelectionController.HasAnySelectedIngredient())
+        {
+            selectedSession = brewSelectionController.BuildSelectedSession();
+        }
+
         ClosePanels(false);
 
         if (orderManager == null)
@@ -235,9 +255,9 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / {order.orderName}");
+        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / {order.orderName} / HasSelectedSession={selectedSession != null}");
 
-        orderManager.PlaySpecificOrder(order, activeCustomer);
+        orderManager.PlaySpecificOrder(order, activeCustomer, selectedSession);
     }
 
     private OrderData GetTestOrder(MiniGameType type)

@@ -85,10 +85,20 @@ public class MiniGameManager : MonoBehaviour
 
     public void Play(OrderData order, Action<MiniGameResult> onDone)
     {
+        BrewSessionData fallbackSession = order != null
+            ? order.defaultBrewSession
+            : null;
+
+        Play(order, fallbackSession, onDone);
+    }
+
+    public void Play(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
+    {
         Debug.Log(
             $"[MiniGameManager] Play() called\n" +
             $" order = {(order != null ? order.orderName : "NULL")}\n" +
             $" order.miniGameType = {(order != null ? order.miniGameType.ToString() : "NULL")}\n" +
+            $" brewSession = {(brewSession != null ? brewSession.method.ToString() : "NULL")}\n" +
             $" currentMiniGame = {(currentMiniGame != null ? currentMiniGame.name : "NULL")}\n" +
             $" debugPlayMode = {debugPlayMode}"
         );
@@ -125,7 +135,7 @@ public class MiniGameManager : MonoBehaviour
             return;
         }
 
-        game.StartGame(order, result =>
+        game.StartGame(order, brewSession, result =>
         {
             if (currentMiniGame != null)
             {

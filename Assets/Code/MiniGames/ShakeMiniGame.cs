@@ -51,12 +51,39 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     [Header("Recipe Guide")]
     [SerializeField] private RecipeGuidePanelController recipeGuide;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> callback)
+    [Header("Ingredient Shelf")]
+    [SerializeField] private IngredientShelfController ingredientShelf;
+
+    private BrewSessionData currentBrewSession;
+
+    public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
-        onDone = callback;
+        BrewSessionData fallbackSession = order != null
+            ? order.defaultBrewSession
+            : null;
+
+        StartGame(order, fallbackSession, done);
+    }
+
+    public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
+    {
+        onDone = done;
+
         AutoBindIfMissing();
 
         currentOrder = order;
+
+        currentBrewSession = brewSession != null
+            ? brewSession
+            : order != null
+                ? order.defaultBrewSession
+                : null;
+
+        if (ingredientShelf == null)
+            ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
+
+        if (ingredientShelf != null)
+            ingredientShelf.Initialize(MiniGameType.Shake, currentBrewSession);
 
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
@@ -95,6 +122,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
         Debug.Log(
             $"[ShakeMiniGame] Preview ready / " +
+            $"BrewSession={(currentBrewSession != null ? currentBrewSession.method.ToString() : "NULL")} / " +
             $"startButton={(startButton != null ? startButton.name : "NULL")} / " +
             $"startHintText={(startHintText != null ? startHintText.name : "NULL")}"
         );
@@ -109,6 +137,20 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             Debug.LogWarning($"[ShakeMiniGame] Begin ignored. state={state}");
             return;
         }
+
+        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        {
+            currentBrewSession = ingredientShelf.BuildSession();
+
+            Debug.Log(
+                $"[ShakeMiniGame] BrewSession built from ingredient shelf / " +
+                $"Method={currentBrewSession.method} / " +
+                $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+            );
+        }
+
+        if (ingredientShelf != null)
+            ingredientShelf.SetVisible(false);
 
         state = ShakeState.Shaking;
 
@@ -307,7 +349,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     private BrewComposition CreateBrewComposition()
     {
         return BrewCompositionFactory.FromSession(
-            currentOrder != null ? currentOrder.defaultBrewSession : null,
+            currentBrewSession,
             MiniGameType.Shake
         );
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static ShakeMiniGame;
 
 public class BuildMiniGame : MonoBehaviour, IMiniGame
 {
@@ -35,6 +36,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     [Header("Recipe Guide")]
     [SerializeField] private RecipeGuidePanelController recipeGuide;
 
+    [Header("Ingredient Shelf")]
+    [SerializeField] private IngredientShelfController ingredientShelf;
+
     private OrderData currentOrder;
 
     private float remainTime;
@@ -44,12 +48,36 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     private bool releasedOnce = false;
     private int stepCount = 0;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> callback)
+    private BrewSessionData currentBrewSession;
+
+    public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
-        onDone = callback;
-        currentOrder = order;
+        BrewSessionData fallbackSession = order != null
+            ? order.defaultBrewSession
+            : null;
+
+        StartGame(order, fallbackSession, done);
+    }
+
+    public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
+    {
+        onDone = done;
 
         AutoBindIfMissing();
+
+        currentOrder = order;
+
+        currentBrewSession = brewSession != null
+            ? brewSession
+            : order != null
+                ? order.defaultBrewSession
+                : null;
+
+        if (ingredientShelf == null)
+            ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
+
+        if (ingredientShelf != null)
+            ingredientShelf.Initialize(MiniGameType.Build, currentBrewSession);
 
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
@@ -94,6 +122,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
         Debug.Log(
             $"[BuildMiniGame] Preview ready / " +
+            $"BrewSession={(currentBrewSession != null ? currentBrewSession.method.ToString() : "NULL")} / " +
             $"startButton={(startButton != null ? startButton.name : "NULL")} / " +
             $"startHintText={(startHintText != null ? startHintText.name : "NULL")}"
         );
@@ -108,6 +137,20 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
             Debug.LogWarning($"[BuildMiniGame] Begin ignored. state={state}");
             return;
         }
+
+        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        {
+            currentBrewSession = ingredientShelf.BuildSession();
+
+            Debug.Log(
+                $"[BuildMiniGame] BrewSession built from ingredient shelf / " +
+                $"Method={currentBrewSession.method} / " +
+                $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+            );
+        }
+
+        if (ingredientShelf != null)
+            ingredientShelf.SetVisible(false);
 
         state = BuildState.Pouring;
 
@@ -224,10 +267,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
     private BrewComposition CreateBrewComposition()
     {
-        return BrewCompositionFactory.FromSession(
-            currentOrder != null ? currentOrder.defaultBrewSession : null,
-            MiniGameType.Build
-        );
+        return BrewCompositionFactory.FromSession(currentBrewSession, MiniGameType.Build);
     }
 
     private void SetLiquidHeight(float height)

@@ -44,6 +44,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
     [Header("Recipe Guide")]
     [SerializeField] private RecipeGuidePanelController recipeGuide;
 
+    [Header("Ingredient Shelf")]
+    [SerializeField] private IngredientShelfController ingredientShelf;
+
     private float remainTime;
     private float currentTopHeight;
     private float maxTopHeight;
@@ -54,13 +57,37 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
     private float topLiquidStartY;
     private float liquidAreaHeight;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> callback)
+    private BrewSessionData currentBrewSession;
+
+    public void StartGame(OrderData order, Action<MiniGameResult> onDone)
     {
-        onDone = callback;
+        BrewSessionData fallbackSession = order != null
+            ? order.defaultBrewSession
+            : null;
+
+        StartGame(order, fallbackSession, onDone);
+    }
+
+    public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
+    {
+        this.onDone = onDone;
+
         currentOrder = order;
 
+        currentBrewSession = brewSession != null
+            ? brewSession
+            : order != null
+                ? order.defaultBrewSession
+                : null;
+
+        if (ingredientShelf == null)
+            ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
+
+        if (ingredientShelf != null)
+            ingredientShelf.Initialize(MiniGameType.Float, currentBrewSession);
+
         AutoBindIfMissing();
-        
+
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
 
@@ -108,6 +135,20 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
             Debug.LogWarning($"[FloatMiniGame] Begin ignored. state={state}");
             return;
         }
+
+        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        {
+            currentBrewSession = ingredientShelf.BuildSession();
+
+            Debug.Log(
+                $"[FloatMiniGame] BrewSession built from ingredient shelf / " +
+                $"Method={currentBrewSession.method} / " +
+                $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+            );
+        }
+
+        if (ingredientShelf != null)
+            ingredientShelf.SetVisible(false);
 
         state = FloatState.Pouring;
 
@@ -263,7 +304,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
     private BrewComposition CreateBrewComposition()
     {
         return BrewCompositionFactory.FromSession(
-            currentOrder != null ? currentOrder.defaultBrewSession : null,
+            currentBrewSession,
             MiniGameType.Float
         );
     }
