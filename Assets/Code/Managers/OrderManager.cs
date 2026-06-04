@@ -4,6 +4,7 @@ using System;
 public class OrderManager : MonoBehaviour
 {
     [Header("Debug")]
+    [SerializeField] private bool verboseLogging = false;
     [SerializeField] private bool allowPlayWithoutCustomer = true;
 
     // ====== Runtime State ======
@@ -13,7 +14,7 @@ public class OrderManager : MonoBehaviour
         get => _currentCustomer;
         set
         {
-            if (_currentCustomer != value)
+            if (verboseLogging && _currentCustomer != value)
             {
                 Debug.Log(
                     $"[OrderManager] currentCustomer change: " +

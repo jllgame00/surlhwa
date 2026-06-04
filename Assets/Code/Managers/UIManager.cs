@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private OrderManager orderManager;
     [SerializeField] private TMP_Text dialogueText;
 
+    [Header("Debug")]
+    [SerializeField] private bool verboseLogging = false;
+
     public void SetReputation(int rep)
     {
         if (repText != null)
@@ -19,10 +22,13 @@ public class UIManager : MonoBehaviour
 
     public void SetOrderText(string text)
     {
-        Debug.Log(
-            $"[UIManager] SetOrderText -> {text}\n" +
-            $"[UIManager] Caller StackTrace:\n{Environment.StackTrace}"
-        );
+        if (verboseLogging)
+        {
+            Debug.Log(
+                $"[UIManager] SetOrderText -> {text}\n" +
+                $"[UIManager] Caller StackTrace:\n{Environment.StackTrace}"
+            );
+        }
 
         if (orderText != null)
             orderText.text = text;
