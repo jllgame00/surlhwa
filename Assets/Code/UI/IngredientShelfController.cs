@@ -17,11 +17,15 @@ public class IngredientShelfController : MonoBehaviour
     private JiggerPanelController linkedJiggerPanel;
 
     private MiniGameType currentMethod;
+    private IngredientData selectedIngredient;
+
     private readonly Dictionary<IngredientData, float> selectedAmounts = new Dictionary<IngredientData, float>();
+    private readonly List<BrewIngredientOptionView> optionViews = new List<BrewIngredientOptionView>();
 
     public void Initialize(MiniGameType method, BrewSessionData initialSession)
     {
         currentMethod = method;
+        selectedIngredient = null;
         selectedAmounts.Clear();
 
         SeedFromSession(initialSession);
@@ -88,6 +92,8 @@ public class IngredientShelfController : MonoBehaviour
             Debug.LogWarning("[IngredientShelfController] List root or option prefab is missing.");
             return;
         }
+        
+        optionViews.Clear();
 
         for (int i = ingredientListRoot.childCount - 1; i >= 0; i--)
         {
@@ -116,6 +122,9 @@ public class IngredientShelfController : MonoBehaviour
                 amount,
                 OnIngredientSelected
             );
+
+            optionViews.Add(option);
+            option.SetSelectedVisual(ingredient == selectedIngredient);
         }
     }
 
@@ -187,6 +196,9 @@ public class IngredientShelfController : MonoBehaviour
         if (ingredient == null)
             return;
 
+        selectedIngredient = ingredient;
+        RefreshSelectedVisuals();
+
         if (linkedJiggerPanel == null)
         {
             Debug.LogWarning($"[IngredientShelf] Selected {ingredient.displayName}, but linkedJiggerPanel is NULL");
@@ -196,5 +208,16 @@ public class IngredientShelfController : MonoBehaviour
         linkedJiggerPanel.SelectIngredient(ingredient);
 
         Debug.Log($"[IngredientShelf] Selected ingredient -> {ingredient.displayName}");
+    }
+    
+    private void RefreshSelectedVisuals()
+    {
+        foreach (BrewIngredientOptionView option in optionViews)
+        {
+            if (option == null)
+                continue;
+
+            option.SetSelectedVisual(option.Ingredient == selectedIngredient);
+        }
     }
 }

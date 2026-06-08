@@ -13,6 +13,13 @@ public class BrewIngredientOptionView : MonoBehaviour
     [Header("Select")]
     [SerializeField] private Button selectButton;
 
+    [Header("Selection Visual")]
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Color normalColor = new Color(1f, 1f, 1f, 0.12f);
+    [SerializeField] private Color selectedColor = new Color(1f, 0.82f, 0.38f, 0.45f);
+    
+    public IngredientData Ingredient => ingredient;
+    
     private IngredientData ingredient;
     private float currentAmount;
 
@@ -22,6 +29,9 @@ public class BrewIngredientOptionView : MonoBehaviour
     {
         if (selectButton == null)
             selectButton = GetComponent<Button>();
+
+        if (backgroundImage == null)
+            backgroundImage = GetComponent<Image>();
     }
 
     public void Bind(
@@ -57,6 +67,7 @@ public class BrewIngredientOptionView : MonoBehaviour
         }
 
         Refresh();
+        SetSelectedVisual(false);
     }
 
     public void Select()
@@ -80,5 +91,13 @@ public class BrewIngredientOptionView : MonoBehaviour
                 ? "0 oz"
                 : $"{currentAmount:0.##} oz";
         }
+    }
+    
+    public void SetSelectedVisual(bool selected)
+    {
+        if (backgroundImage == null)
+            return;
+
+        backgroundImage.color = selected ? selectedColor : normalColor;
     }
 }

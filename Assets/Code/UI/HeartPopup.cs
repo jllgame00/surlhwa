@@ -7,6 +7,8 @@ public class HeartPopup : MonoBehaviour
     [SerializeField] private float lifeTime = 1.2f;
     [SerializeField] private Vector3 offset = new Vector3(0f, 1.2f, 0f);
 
+    private const char HeartSymbol = '\u2665'; // â™¥
+
     private Transform followTarget;
 
     public void Init(Transform target, int hearts)
@@ -14,7 +16,10 @@ public class HeartPopup : MonoBehaviour
         followTarget = target;
 
         if (heartText != null)
-            heartText.text = new string('¢¾', Mathf.Clamp(hearts, 0, 3));
+        {
+            int clampedHearts = Mathf.Clamp(hearts, 0, 3);
+            heartText.text = new string(HeartSymbol, clampedHearts);
+        }
 
         UpdatePosition();
         Destroy(gameObject, lifeTime);
@@ -27,7 +32,9 @@ public class HeartPopup : MonoBehaviour
 
     private void UpdatePosition()
     {
-        if (followTarget == null) return;
+        if (followTarget == null)
+            return;
+
         transform.position = followTarget.position + offset;
     }
 }
