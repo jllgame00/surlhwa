@@ -15,6 +15,9 @@ public class BrewIngredientOptionView : MonoBehaviour
     [Header("Select")]
     [SerializeField] private Button selectButton;
 
+    [Header("Mode")]
+    [SerializeField] private bool useInlineAmountButtons = false;
+
     private IngredientData ingredient;
     private float currentAmount;
     private float amountStep;
@@ -66,14 +69,20 @@ public class BrewIngredientOptionView : MonoBehaviour
 
         if (plusButton != null)
         {
+            plusButton.gameObject.SetActive(useInlineAmountButtons);
             plusButton.onClick.RemoveAllListeners();
-            plusButton.onClick.AddListener(IncreaseAmount);
+
+            if (useInlineAmountButtons)
+                plusButton.onClick.AddListener(IncreaseAmount);
         }
 
         if (minusButton != null)
         {
+            minusButton.gameObject.SetActive(useInlineAmountButtons);
             minusButton.onClick.RemoveAllListeners();
-            minusButton.onClick.AddListener(DecreaseAmount);
+
+            if (useInlineAmountButtons)
+                minusButton.onClick.AddListener(DecreaseAmount);
         }
 
         Refresh();
