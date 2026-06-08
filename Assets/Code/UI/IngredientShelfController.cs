@@ -14,9 +14,6 @@ public class IngredientShelfController : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text summaryText;
 
-    [Header("Amount")]
-    [SerializeField] private float amountStep = 0.5f;
-
     private JiggerPanelController linkedJiggerPanel;
 
     private MiniGameType currentMethod;
@@ -117,24 +114,9 @@ public class IngredientShelfController : MonoBehaviour
             option.Bind(
                 ingredient,
                 amount,
-                amountStep,
-                OnIngredientAmountChanged,
                 OnIngredientSelected
             );
         }
-    }
-
-    private void OnIngredientAmountChanged(IngredientData ingredient, float amount)
-    {
-        if (ingredient == null)
-            return;
-
-        if (amount <= 0f)
-            selectedAmounts.Remove(ingredient);
-        else
-            selectedAmounts[ingredient] = amount;
-
-        RefreshTexts();
     }
 
     private void RefreshTexts()

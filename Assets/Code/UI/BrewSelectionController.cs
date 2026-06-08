@@ -14,9 +14,6 @@ public class BrewSelectionController : MonoBehaviour
     [SerializeField] private TMP_Text selectedMethodText;
     [SerializeField] private TMP_Text summaryText;
 
-    [Header("Amount")]
-    [SerializeField] private float amountStep = 0.5f;
-
     private OrderData currentOrder;
     private MiniGameType selectedMethod;
 
@@ -129,28 +126,9 @@ public class BrewSelectionController : MonoBehaviour
 
             option.Bind(
                 ingredient,
-                amount,
-                amountStep,
-                OnIngredientAmountChanged
+                amount
             );
         }
-    }
-
-    private void OnIngredientAmountChanged(IngredientData ingredient, float amount)
-    {
-        if (ingredient == null)
-            return;
-
-        if (amount <= 0f)
-        {
-            selectedAmounts.Remove(ingredient);
-        }
-        else
-        {
-            selectedAmounts[ingredient] = amount;
-        }
-
-        RefreshTexts();
     }
 
     private void RefreshTexts()

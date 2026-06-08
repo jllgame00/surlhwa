@@ -9,20 +9,13 @@ public class BrewIngredientOptionView : MonoBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text amountText;
-    [SerializeField] private Button plusButton;
-    [SerializeField] private Button minusButton;
 
     [Header("Select")]
     [SerializeField] private Button selectButton;
 
-    [Header("Mode")]
-    [SerializeField] private bool useInlineAmountButtons = false;
-
     private IngredientData ingredient;
     private float currentAmount;
-    private float amountStep;
 
-    private Action<IngredientData, float> onAmountChanged;
     private Action<IngredientData> onSelected;
 
     private void Awake()
@@ -34,15 +27,11 @@ public class BrewIngredientOptionView : MonoBehaviour
     public void Bind(
         IngredientData ingredientData,
         float initialAmount,
-        float step,
-        Action<IngredientData, float> changedCallback,
         Action<IngredientData> selectedCallback = null)
     {
         ingredient = ingredientData;
         currentAmount = Mathf.Max(0f, initialAmount);
-        amountStep = Mathf.Max(0.1f, step);
 
-        onAmountChanged = changedCallback;
         onSelected = selectedCallback;
 
         if (nameText != null)
@@ -67,24 +56,6 @@ public class BrewIngredientOptionView : MonoBehaviour
             selectButton.onClick.AddListener(Select);
         }
 
-        if (plusButton != null)
-        {
-            plusButton.gameObject.SetActive(useInlineAmountButtons);
-            plusButton.onClick.RemoveAllListeners();
-
-            if (useInlineAmountButtons)
-                plusButton.onClick.AddListener(IncreaseAmount);
-        }
-
-        if (minusButton != null)
-        {
-            minusButton.gameObject.SetActive(useInlineAmountButtons);
-            minusButton.onClick.RemoveAllListeners();
-
-            if (useInlineAmountButtons)
-                minusButton.onClick.AddListener(DecreaseAmount);
-        }
-
         Refresh();
     }
 
@@ -99,28 +70,6 @@ public class BrewIngredientOptionView : MonoBehaviour
         Debug.Log($"[BrewIngredientOptionView] Select -> {ingredient.displayName}");
 
         onSelected?.Invoke(ingredient);
-    }
-
-    private void IncreaseAmount()
-    {
-        currentAmount += amountStep;
-        NotifyChanged();
-    }
-
-    private void DecreaseAmount()
-    {
-        currentAmount -= amountStep;
-
-        if (currentAmount < 0f)
-            currentAmount = 0f;
-
-        NotifyChanged();
-    }
-
-    private void NotifyChanged()
-    {
-        Refresh();
-        onAmountChanged?.Invoke(ingredient, currentAmount);
     }
 
     private void Refresh()
