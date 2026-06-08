@@ -140,10 +140,28 @@ public class RecipeGuidePanelController : MonoBehaviour
             RecipeIngredientEntry entry = recipe.ingredients[i];
             if (entry == null) continue;
 
-            sb.AppendLine($"{entry.category} / {entry.ingredientId} / ratio {entry.ratio}");
+            sb.AppendLine($"{FormatIngredientName(entry.ingredientId)} {entry.ratio:0.##} oz");
         }
 
         return sb.ToString();
+    }
+
+    private static string FormatIngredientName(string ingredientId)
+    {
+        if (string.IsNullOrWhiteSpace(ingredientId))
+            return "Unknown";
+
+        string[] words = ingredientId.Split(new[] { '_', '-' }, System.StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].Length == 0)
+                continue;
+
+            string lower = words[i].ToLowerInvariant();
+            words[i] = char.ToUpperInvariant(lower[0]) + lower.Substring(1);
+        }
+
+        return string.Join(" ", words);
     }
 
     private void ClearDetail()
@@ -155,7 +173,7 @@ public class RecipeGuidePanelController : MonoBehaviour
             recipeMethodText.text = "";
 
         if (recipeIngredientText != null)
-            recipeIngredientText.text = "선택한 레시피의 기주 / 리큐르 / 음료 비율이 표시됩니다.";
+            recipeIngredientText.text = "선택한 레시피의 재료 용량(oz)이 표시됩니다.";
     }
 
     private void RefreshButtonVisuals()

@@ -21,6 +21,15 @@ public class JiggerPanelController : MonoBehaviour
     [SerializeField] private float popScale = 1.18f;
     [SerializeField] private float popDuration = 0.07f;
     [SerializeField] private float shakeDistance = 8f;
+    
+    [Header("Liquid Fill")]
+    [SerializeField] private Image liquidFillImage;
+    [SerializeField] private float maxVisualAmount = 2f;
+    
+    [Header("Jigger Capacity")]
+    [SerializeField] private float maxJiggerCapacity = 2f;
+    
+    [SerializeField] private Button undoButton;
 
     private IngredientShelfController shelf;
     private IngredientData selectedIngredient;
@@ -30,6 +39,9 @@ public class JiggerPanelController : MonoBehaviour
     private Coroutine popRoutine;
     private Vector3 originalJiggerScale = Vector3.one;
     private Vector2 originalJiggerPosition;
+    
+    private IngredientData lastPouredIngredient;
+    private float lastPouredAmount;
 
     private void Awake()
     {
@@ -41,6 +53,9 @@ public class JiggerPanelController : MonoBehaviour
 
         if (pourButton != null)
             pourButton.onClick.AddListener(PourToShelf);
+        
+        if (undoButton != null)
+            undoButton.onClick.AddListener(UndoLastPour);
 
         if (clearButton != null)
             clearButton.onClick.AddListener(ClearJigger);
@@ -53,6 +68,8 @@ public class JiggerPanelController : MonoBehaviour
         shelf = targetShelf;
         selectedIngredient = null;
         measuredAmount = 0f;
+        lastPouredIngredient = null;
+        lastPouredAmount = 0f;
 
         if (jiggerVisualRoot == null && jiggerImage != null)
             jiggerVisualRoot = jiggerImage.GetComponent<RectTransform>();
@@ -64,13 +81,17 @@ public class JiggerPanelController : MonoBehaviour
         }
 
         Refresh();
+        RefreshLiquidFill();
         gameObject.SetActive(true);
     }
 
     public void SelectIngredient(IngredientData ingredient)
     {
         if (selectedIngredient != ingredient)
+        {
             measuredAmount = 0f;
+            RefreshLiquidFill();
+        }
 
         selectedIngredient = ingredient;
 
@@ -97,14 +118,40 @@ public class JiggerPanelController : MonoBehaviour
             return;
         }
 
-        measuredAmount += amount;
+        if (maxJiggerCapacity <= 0f)
+            maxJiggerCapacity = 2f;
+
+        if (measuredAmount >= maxJiggerCapacity)
+        {
+            if (feedbackText != null)
+                feedbackText.text = "Jigger is full";
+
+            Debug.Log("[JiggerPanel] Cannot measure. Jigger is already full.");
+
+            PlayJiggerPop();
+            Refresh();
+            return;
+        }
+
+        float previousAmount = measuredAmount;
+        measuredAmount = Mathf.Min(measuredAmount + amount, maxJiggerCapacity);
+
+        float addedAmount = measuredAmount - previousAmount;
 
         if (feedbackText != null)
-            feedbackText.text = $"{selectedIngredient.displayName} +{amount:0.##} oz";
+        {
+            feedbackText.text = addedAmount > 0f
+                ? $"{selectedIngredient.displayName} +{addedAmount:0.##} oz"
+                : "Jigger is full";
+        }
 
+        RefreshLiquidFill();
         PlayJiggerPop();
 
-        Debug.Log($"[JiggerPanel] Measure +{amount:0.##} -> {selectedIngredient.displayName} / total={measuredAmount:0.##}");
+        Debug.Log(
+            $"[JiggerPanel] Measure +{addedAmount:0.##} -> " +
+            $"{selectedIngredient.displayName} / total={measuredAmount:0.##}"
+        );
 
         Refresh();
     }
@@ -123,14 +170,22 @@ public class JiggerPanelController : MonoBehaviour
             return;
         }
 
-        shelf.AddAmount(selectedIngredient, measuredAmount);
+        float pouredAmount = measuredAmount;
+        IngredientData pouredIngredient = selectedIngredient;
+
+        shelf.AddAmount(pouredIngredient, pouredAmount);
+
+        lastPouredIngredient = pouredIngredient;
+        lastPouredAmount = pouredAmount;
+        RefreshUndoState();
 
         if (feedbackText != null)
-            feedbackText.text = $"Poured {measuredAmount:0.##} oz {selectedIngredient.displayName}";
+            feedbackText.text = $"Poured {pouredAmount:0.##} oz {pouredIngredient.displayName}";
 
-        Debug.Log($"[JiggerPanel] Pour {measuredAmount:0.##} -> {selectedIngredient.displayName}");
+        Debug.Log($"[JiggerPanel] Pour {pouredAmount:0.##} -> {pouredIngredient.displayName}");
 
         measuredAmount = 0f;
+        RefreshLiquidFill();
         PlayJiggerPop();
         Refresh();
     }
@@ -138,6 +193,7 @@ public class JiggerPanelController : MonoBehaviour
     private void ClearJigger()
     {
         measuredAmount = 0f;
+        RefreshLiquidFill();
 
         if (feedbackText != null)
             feedbackText.text = "Jigger cleared";
@@ -159,6 +215,18 @@ public class JiggerPanelController : MonoBehaviour
         measureText.text = measuredAmount <= 0f
             ? "Empty"
             : $"{measuredAmount:0.##} oz";
+    }
+    
+    private void RefreshLiquidFill()
+    {
+        if (liquidFillImage == null)
+            return;
+
+        float fill = maxVisualAmount <= 0f
+            ? 0f
+            : Mathf.Clamp01(measuredAmount / maxVisualAmount);
+
+        liquidFillImage.fillAmount = fill;
     }
 
     private void PlayJiggerPop()
@@ -216,5 +284,38 @@ public class JiggerPanelController : MonoBehaviour
 
         jiggerVisualRoot.localScale = baseScale;
         jiggerVisualRoot.anchoredPosition = basePos;
+    }
+    
+    private void UndoLastPour()
+    {
+        if (shelf == null || lastPouredIngredient == null || lastPouredAmount <= 0f)
+        {
+            if (feedbackText != null)
+                feedbackText.text = "Nothing to undo";
+
+            Debug.Log("[JiggerPanel] Nothing to undo.");
+            RefreshUndoState();
+            return;
+        }
+
+        shelf.RemoveAmount(lastPouredIngredient, lastPouredAmount);
+
+        if (feedbackText != null)
+            feedbackText.text = $"Undid {lastPouredAmount:0.##} oz {lastPouredIngredient.displayName}";
+
+        Debug.Log($"[JiggerPanel] Undo pour {lastPouredAmount:0.##} -> {lastPouredIngredient.displayName}");
+
+        lastPouredIngredient = null;
+        lastPouredAmount = 0f;
+
+        RefreshUndoState();
+    }
+    
+    private void RefreshUndoState()
+    {
+        if (undoButton == null)
+            return;
+
+        undoButton.interactable = lastPouredIngredient != null && lastPouredAmount > 0f;
     }
 }

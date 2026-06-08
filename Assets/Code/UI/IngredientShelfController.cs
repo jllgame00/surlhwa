@@ -220,4 +220,25 @@ public class IngredientShelfController : MonoBehaviour
             option.SetSelectedVisual(option.Ingredient == selectedIngredient);
         }
     }
+    
+    public void RemoveAmount(IngredientData ingredient, float amount)
+    {
+        if (ingredient == null)
+            return;
+
+        if (amount <= 0f)
+            return;
+
+        selectedAmounts.TryGetValue(ingredient, out float currentAmount);
+
+        float nextAmount = Mathf.Max(0f, currentAmount - amount);
+
+        if (nextAmount <= 0f)
+            selectedAmounts.Remove(ingredient);
+        else
+            selectedAmounts[ingredient] = nextAmount;
+
+        RebuildIngredientList();
+        RefreshTexts();
+    }
 }

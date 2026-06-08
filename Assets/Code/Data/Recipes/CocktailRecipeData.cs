@@ -25,6 +25,7 @@ public class RecipeIngredientEntry
 {
     public string ingredientId;
     public IngredientCategory category;
+    [Tooltip("Displayed to players as ounces (oz). Recipe matching may normalize this value and compare relative proportions.")]
     public float ratio;
 }
 
