@@ -107,7 +107,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+            startHintText.text = "Check the recipe, then start.";
         }
 
         if (startButton != null)
@@ -118,7 +118,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         }
 
         UpdateProgressText();
-        SetHint("시작 버튼을 누르면 빌드가 시작됩니다");
+        SetHint("Press Start to begin building.");
 
         Debug.Log(
             $"[BuildMiniGame] Preview ready / " +
@@ -138,19 +138,18 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        if (ingredientShelf != null)
         {
             currentBrewSession = ingredientShelf.BuildSession();
 
             Debug.Log(
-                $"[BuildMiniGame] BrewSession built from ingredient shelf / " +
+                $"[{nameof(BuildMiniGame)}] BrewSession built from ingredient shelf / " +
                 $"Method={currentBrewSession.method} / " +
                 $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
             );
-        }
 
-        if (ingredientShelf != null)
             ingredientShelf.SetVisible(false);
+        }
 
         state = BuildState.Pouring;
 
@@ -163,7 +162,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel != null)
             resultLabel.text = "";
 
-        SetHint("SPACE를 누르고 있다가 적정선에서 떼세요");
+        SetHint("Hold SPACE to pour, release to stop.");
 
         Debug.Log("[BuildMiniGame] BeginGameplay -> Pouring");
     }
@@ -190,7 +189,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
             if (currentFillHeight > maxFillHeight + overflowGrace)
             {
-                SetHint("너무 많이 따랐다!");
+                SetHint("Too much poured!");
                 ResolveFail("FAIL");
                 return;
             }

@@ -120,7 +120,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+            startHintText.text = "Check the recipe, then start.";
         }
 
         if (startButton != null)
@@ -167,19 +167,18 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        if (ingredientShelf != null)
         {
             currentBrewSession = ingredientShelf.BuildSession();
 
             Debug.Log(
-                $"[StirMiniGame] BrewSession built from ingredient shelf / " +
+                $"[{nameof(StirMiniGame)}] BrewSession built from ingredient shelf / " +
                 $"Method={currentBrewSession.method} / " +
                 $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
             );
-        }
 
-        if (ingredientShelf != null)
             ingredientShelf.SetVisible(false);
+        }
 
         if (jiggerPanel != null)
             jiggerPanel.gameObject.SetActive(false);

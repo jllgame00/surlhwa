@@ -135,7 +135,7 @@ public class OrderManager : MonoBehaviour
             {
                 foreach (var ingredient in result.brewedComposition.ingredients)
                 {
-                    Debug.Log($"[OrderManager] Brewed Ingredient = {ingredient.ingredientId} / amount={ingredient.amount}");
+                    Debug.Log($"[OrderManager] Brewed Ingredient = {ingredient.ingredientId} / amount={ingredient.amount:0.##} oz");
                 }
             }
         }

@@ -107,7 +107,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+            startHintText.text = "Check the recipe, then start.";
         }
 
         if (startButton != null)
@@ -118,7 +118,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         }
 
         UpdateProgressText();
-        SetHint("시작 버튼을 눌러 쉐이크를 시작하세요");
+        SetHint("Press Start to begin shaking.");
 
         Debug.Log(
             $"[ShakeMiniGame] Preview ready / " +
@@ -138,19 +138,18 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        if (ingredientShelf != null)
         {
             currentBrewSession = ingredientShelf.BuildSession();
 
             Debug.Log(
-                $"[ShakeMiniGame] BrewSession built from ingredient shelf / " +
+                $"[{nameof(ShakeMiniGame)}] BrewSession built from ingredient shelf / " +
                 $"Method={currentBrewSession.method} / " +
                 $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
             );
-        }
 
-        if (ingredientShelf != null)
             ingredientShelf.SetVisible(false);
+        }
 
         state = ShakeState.Shaking;
 
@@ -163,7 +162,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel != null)
             resultLabel.text = "";
 
-        SetHint("← 또는 → 로 준비");
+        SetHint("Press LEFT or RIGHT, then tap SPACE.");
 
         Debug.Log("[ShakeMiniGame] BeginGameplay -> Shaking");
     }
@@ -190,7 +189,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             {
                 preparedDirection = PrepDirection.None;
                 ResetShakerToOrigin();
-                SetHint("준비 시간 초과!");
+                SetHint("Too slow!");
                 RegisterMistake();
             }
         }
@@ -214,7 +213,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
         if (preparedDirection == PrepDirection.None)
         {
-            SetHint("방향 먼저 준비!");
+            SetHint("Pick a direction first!");
             RegisterMistake();
             return;
         }
@@ -233,7 +232,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             shaker.anchoredPosition = shakerOrigin + new Vector2(offsetX, 0f);
         }
 
-        SetHint(dir == PrepDirection.Left ? "왼쪽 준비" : "오른쪽 준비");
+        SetHint(dir == PrepDirection.Left ? "Left ready." : "Right ready.");
     }
 
     private void ExecuteShake(PrepDirection dir)
@@ -243,7 +242,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
         if (!isFirst && !alternated)
         {
-            SetHint("반대 방향으로 흔들어!");
+            SetHint("Alternate directions!");
             preparedDirection = PrepDirection.None;
             ResetShakerToOrigin();
             RegisterMistake();
@@ -255,7 +254,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         preparedDirection = PrepDirection.None;
 
         UpdateProgressText();
-        SetHint(dir == PrepDirection.Left ? "왼쪽 쉐이크!" : "오른쪽 쉐이크!");
+        SetHint(dir == PrepDirection.Left ? "Left shake!" : "Right shake!");
 
         StartCoroutine(PlayShakeMotion(dir));
 

@@ -109,7 +109,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "레시피를 확인한 뒤 시작하세요";
+            startHintText.text = "Check the recipe, then start.";
         }
 
         if (startButton != null)
@@ -136,19 +136,18 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && ingredientShelf.HasAnySelectedIngredient())
+        if (ingredientShelf != null)
         {
             currentBrewSession = ingredientShelf.BuildSession();
 
             Debug.Log(
-                $"[FloatMiniGame] BrewSession built from ingredient shelf / " +
+                $"[{nameof(FloatMiniGame)}] BrewSession built from ingredient shelf / " +
                 $"Method={currentBrewSession.method} / " +
                 $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
             );
-        }
 
-        if (ingredientShelf != null)
             ingredientShelf.SetVisible(false);
+        }
 
         state = FloatState.Pouring;
 
@@ -161,7 +160,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel != null)
             resultLabel.text = "";
 
-        SetHint("SPACE를 눌러 천천히 띄우고, 적정선에서 떼세요");
+        SetHint("Hold SPACE to float, release to stop.");
 
         Debug.Log("[FloatMiniGame] BeginGameplay -> Pouring");
     }
@@ -188,7 +187,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
             if (currentTopHeight > maxTopHeight + overflowGrace)
             {
-                SetHint("너무 빨리 넘쳤다!");
+                SetHint("Too much poured!");
                 ResolveFail("FAIL");
                 return;
             }
@@ -215,7 +214,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
             resultLabel.text = "";
 
         UpdateProgressText();
-        SetHint("시작 버튼을 누르면 플로트가 시작됩니다");
+        SetHint("Press Start to begin floating.");
     }
 
     private void ApplyLiquidAndSpoon()

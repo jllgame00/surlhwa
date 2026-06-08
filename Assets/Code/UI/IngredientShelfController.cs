@@ -28,7 +28,8 @@ public class IngredientShelfController : MonoBehaviour
         selectedIngredient = null;
         selectedAmounts.Clear();
 
-        SeedFromSession(initialSession);
+        // Do not seed from the recipe/default session.
+        // The shelf represents what the player has actually poured.
         RebuildIngredientList();
         RefreshTexts();
 
