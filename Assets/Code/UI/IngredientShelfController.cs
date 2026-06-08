@@ -158,7 +158,7 @@ public class IngredientShelfController : MonoBehaviour
             if (pair.Key == null || pair.Value <= 0f)
                 continue;
 
-            parts.Add($"{pair.Key.displayName} x {pair.Value:0.##}");
+            parts.Add($"{pair.Key.displayName} {pair.Value:0.##} oz");
         }
 
         summaryText.text = string.Join(" / ", parts);

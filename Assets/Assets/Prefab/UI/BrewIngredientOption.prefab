@@ -153,7 +153,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 120
+  m_PreferredWidth: 100
   m_PreferredHeight: 30
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 34
+  m_PreferredWidth: 56
   m_PreferredHeight: 30
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 28
+  m_PreferredWidth: 24
   m_PreferredHeight: 28
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
@@ -595,7 +595,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 28
+  m_PreferredWidth: 24
   m_PreferredHeight: 28
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1

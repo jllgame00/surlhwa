@@ -117,6 +117,10 @@ public class BrewIngredientOptionView : MonoBehaviour
     private void Refresh()
     {
         if (amountText != null)
-            amountText.text = currentAmount <= 0f ? "0" : currentAmount.ToString("0.##");
+        {
+            amountText.text = currentAmount <= 0f
+                ? "0 oz"
+                : $"{currentAmount:0.##} oz";
+        }
     }
 }
