@@ -136,6 +136,13 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
+        if (ingredientShelf != null && !ingredientShelf.HasAnySelectedIngredient())
+        {
+            SetHint("Pour at least one ingredient first.");
+            Debug.LogWarning("[FloatMiniGame] Cannot start. No ingredients poured.");
+            return;
+        }
+
         if (ingredientShelf != null)
         {
             currentBrewSession = ingredientShelf.BuildSession();

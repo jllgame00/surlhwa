@@ -167,6 +167,13 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
+        if (ingredientShelf != null && !ingredientShelf.HasAnySelectedIngredient())
+        {
+            SetHint("Pour at least one ingredient first.");
+            Debug.LogWarning("[StirMiniGame] Cannot start. No ingredients poured.");
+            return;
+        }
+
         if (ingredientShelf != null)
         {
             currentBrewSession = ingredientShelf.BuildSession();
@@ -309,6 +316,12 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         if (resultLabel == null) return;
         resultLabel.text = text;
         resultLabel.gameObject.SetActive(true);
+    }
+
+    private void SetHint(string msg)
+    {
+        if (startHintText != null)
+            startHintText.text = msg;
     }
 
     void PlaceZone(RectTransform zone, float min, float max)
