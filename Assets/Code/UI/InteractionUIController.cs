@@ -36,6 +36,12 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private EmotionTag forcedFirstCustomerSecondaryTag = EmotionTag.Warmth;
     [SerializeField] private bool autoSelectForcedMethodOnBrew = true;
 
+    [Header("Debug Second Customer Route")]
+    [SerializeField] private bool forceSecondCustomerRoute = false;
+    [SerializeField] private MiniGameType forcedSecondCustomerMethod = MiniGameType.Shake;
+    [SerializeField] private EmotionTag forcedSecondCustomerPrimaryTag = EmotionTag.Awakening;
+    [SerializeField] private EmotionTag forcedSecondCustomerSecondaryTag = EmotionTag.Clarity;
+
     [Header("Follow")]
     [SerializeField] private Camera worldCamera;
     [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.2f, 0f);
@@ -53,9 +59,12 @@ public class InteractionUIController : MonoBehaviour
     private bool hasMethodSelected;
     private bool wantsEllipsisVisible;
     private bool forcedFirstCustomerRouteConsumed;
+    private bool forcedSecondCustomerRouteConsumed;
     private bool activeCustomerUsesForcedRoute;
+    private bool activeCustomerUsesFirstCustomerRoute;
+    private MiniGameType activeForcedMethod = MiniGameType.Stir;
 
-    public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesForcedRoute;
+    public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesFirstCustomerRoute;
 
     private void Awake()
     {
@@ -96,7 +105,21 @@ public class InteractionUIController : MonoBehaviour
         activeCustomer = customer;
         hasMethodSelected = false;
         wantsEllipsisVisible = customer != null;
-        activeCustomerUsesForcedRoute = TryApplyFirstCustomerRoute(customer);
+        activeCustomerUsesForcedRoute = false;
+        activeCustomerUsesFirstCustomerRoute = false;
+        activeForcedMethod = MiniGameType.Stir;
+
+        if (TryApplyFirstCustomerRoute(customer))
+        {
+            activeCustomerUsesForcedRoute = true;
+            activeCustomerUsesFirstCustomerRoute = true;
+            activeForcedMethod = forcedFirstCustomerMethod;
+        }
+        else if (TryApplySecondCustomerRoute(customer))
+        {
+            activeCustomerUsesForcedRoute = true;
+            activeForcedMethod = forcedSecondCustomerMethod;
+        }
 
         ClosePanels(wantsEllipsisVisible);
         RefreshMethodVisuals();
@@ -116,6 +139,8 @@ public class InteractionUIController : MonoBehaviour
         hasMethodSelected = false;
         wantsEllipsisVisible = false;
         activeCustomerUsesForcedRoute = false;
+        activeCustomerUsesFirstCustomerRoute = false;
+        activeForcedMethod = MiniGameType.Stir;
 
         ClosePanels(false);
         RefreshMethodVisuals();
@@ -188,19 +213,19 @@ public class InteractionUIController : MonoBehaviour
         RefreshConfirmState();
 
         if (activeCustomerUsesForcedRoute && autoSelectForcedMethodOnBrew)
-            SelectMethod(forcedFirstCustomerMethod);
+            SelectMethod(activeForcedMethod);
     }
 
     private void SelectMethod(MiniGameType type)
     {
-        if (activeCustomerUsesForcedRoute && type != forcedFirstCustomerMethod)
+        if (activeCustomerUsesForcedRoute && type != activeForcedMethod)
         {
             Debug.Log(
-                $"[InteractionUI] Debug first route locks method to {forcedFirstCustomerMethod}. " +
+                $"[InteractionUI] Debug route locks method to {activeForcedMethod}. " +
                 $"Ignoring requested method={type}."
             );
 
-            type = forcedFirstCustomerMethod;
+            type = activeForcedMethod;
         }
         selectedMethod = type;
         hasMethodSelected = true;
@@ -328,6 +353,45 @@ public class InteractionUIController : MonoBehaviour
             $"[InteractionUI] Debug first route armed -> " +
             $"Method={forcedFirstCustomerMethod}, Order={forcedOrder.orderName}, " +
             $"Emotion={forcedFirstCustomerPrimaryTag}+{forcedFirstCustomerSecondaryTag}"
+        );
+
+        return true;
+    }
+
+    private bool TryApplySecondCustomerRoute(CustomerController customer)
+    {
+        if (!forceSecondCustomerRoute)
+            return false;
+
+        if (!forceFirstCustomerRoute || !forcedFirstCustomerRouteConsumed)
+            return false;
+
+        if (forcedSecondCustomerRouteConsumed)
+            return false;
+
+        if (customer == null)
+            return false;
+
+        OrderData forcedOrder = GetTestOrder(forcedSecondCustomerMethod);
+        if (forcedOrder == null)
+        {
+            Debug.LogWarning(
+                $"[InteractionUI] Debug second route requested {forcedSecondCustomerMethod}, but no test order is assigned."
+            );
+            return false;
+        }
+
+        customer.ForceEmotionRequestForDebug(
+            forcedSecondCustomerPrimaryTag,
+            forcedSecondCustomerSecondaryTag
+        );
+
+        forcedSecondCustomerRouteConsumed = true;
+
+        Debug.Log(
+            $"[InteractionUI] Debug second route armed -> " +
+            $"Method={forcedSecondCustomerMethod}, Order={forcedOrder.orderName}, " +
+            $"Emotion={forcedSecondCustomerPrimaryTag}+{forcedSecondCustomerSecondaryTag}"
         );
 
         return true;
