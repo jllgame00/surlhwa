@@ -2008,6 +2008,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeGuidePanelController
   recipeUnlockManager: {fileID: 882522457}
+  interactionUIController: {fileID: 0}
+  resultToast: {fileID: 0}
   panelRoot: {fileID: 1611502928}
   openButton: {fileID: 1684445065}
   closeButton: {fileID: 74076974}
@@ -13378,6 +13380,11 @@ MonoBehaviour:
   testShakeOrder: {fileID: 11400000, guid: 66261992cc3b0ba4a8b749fb5420c826, type: 2}
   testBuildOrder: {fileID: 11400000, guid: f909fd19d3ea67346a83440c9d7014fb, type: 2}
   testFloatOrder: {fileID: 11400000, guid: 3f4b958e96f99024fb45beff5cb1cf4c, type: 2}
+  forceFirstCustomerRoute: 1
+  forcedFirstCustomerMethod: 2
+  forcedFirstCustomerPrimaryTag: 0
+  forcedFirstCustomerSecondaryTag: 7
+  autoSelectForcedMethodOnBrew: 1
   worldCamera: {fileID: 519420031}
   worldOffset: {x: 0, y: 1.2, z: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}

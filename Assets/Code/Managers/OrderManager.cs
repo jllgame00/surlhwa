@@ -196,7 +196,8 @@ public class OrderManager : MonoBehaviour
             }
         }
         
-        ShowResultToast(matchedRecipe, unlockedNewRecipe);
+        bool firstCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
+        ShowResultToast(matchedRecipe, unlockedNewRecipe, result, firstCustomerRoute);
 
         if (matchedRecipe == null)
         {
@@ -233,7 +234,12 @@ public class OrderManager : MonoBehaviour
         }
     }
     
-    private void ShowResultToast(CocktailRecipeData matchedRecipe, bool unlockedNewRecipe)
+    private void ShowResultToast(
+        CocktailRecipeData matchedRecipe,
+        bool unlockedNewRecipe,
+        MiniGameResult result,
+        bool firstCustomerRoute
+    )
     {
         if (resultToast == null)
             resultToast = FindFirstObjectByType<ResultToastController>();
@@ -243,13 +249,23 @@ public class OrderManager : MonoBehaviour
 
         if (matchedRecipe == null)
         {
-            resultToast.ShowUnknownCocktail();
+            if (firstCustomerRoute)
+                resultToast.ShowFirstRouteUnknownCocktail(result.success);
+            else
+                resultToast.ShowUnknownCocktail();
+
             return;
         }
 
         if (unlockedNewRecipe)
         {
             resultToast.ShowRecipeUnlocked(matchedRecipe.displayName);
+            return;
+        }
+
+        if (firstCustomerRoute && result.success)
+        {
+            resultToast.ShowFirstCorrectBrew();
             return;
         }
 

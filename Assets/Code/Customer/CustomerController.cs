@@ -4,6 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class CustomerController : MonoBehaviour
 {
+    private const string FirstRouteHintLine =
+        "밖은 생각보다 조용하네요.\n" +
+        "차가운 밤을 조금 데워줄 수 있는 한 잔이 있을까요?\n\n" +
+        "혼자 남겨진 듯한 맛.\n" +
+        "그리고, 아주 조금은 따뜻한 끝맛이면 좋겠어요.\n\n" +
+        "레시피북을 펼치면, 첫 장에 적힌 조주법을 확인할 수 있습니다.";
+
+    private const string FirstRouteSuccessImmediateLine = "따뜻하네요.";
+    private const string FirstRouteSuccessExitLine = "눈이 조금은 늦게 녹는 것 같아요.";
+    private const string FirstRouteUnknownSuccessLine = "낯선 맛이지만, 마음은 전해졌어요.";
+    private const string FirstRouteWeakLine = "아직은 조금 흔들리는 맛이네요.";
+
     public float moveSpeed = 2.0f;
     public Vector2 arriveThreshold = new Vector2(0.05f, 0.05f);
 
@@ -106,6 +118,14 @@ public class CustomerController : MonoBehaviour
         lastGeneralGuestPrimaryTag = primaryTag;
 
         Debug.Log($"[Customer] Debug Emotion Forced -> {primaryTag} + {secondaryTag}");
+    }
+
+    public bool IsInForcedFirstCustomerRoute()
+    {
+        if (interactionUI == null)
+            interactionUI = FindFirstObjectByType<InteractionUIController>();
+
+        return interactionUI != null && interactionUI.IsForcedFirstCustomerRouteActive;
     }
 
     void Update()
@@ -225,6 +245,8 @@ public class CustomerController : MonoBehaviour
     // New path: calculate reaction from the actually served CocktailData.
     public void OnServedWithReaction(CocktailData servedCocktail, MiniGameResult result)
     {
+        bool firstCustomerRoute = IsInForcedFirstCustomerRoute();
+
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
 
@@ -235,7 +257,9 @@ public class CustomerController : MonoBehaviour
         if (servedCocktail == null)
         {
             int unknownHearts = result.success ? 1 : 0;
-            string unknownLine = GetRandomUnknownReactionLine(result.success);
+            string unknownLine = firstCustomerRoute
+                ? GetFirstRouteUnknownReactionLine(result.success)
+                : GetRandomUnknownReactionLine(result.success);
 
             Debug.Log(
                 $"[Customer] ServedCocktail=NULL / " +
@@ -265,6 +289,15 @@ public class CustomerController : MonoBehaviour
         );
 
         StopAllCoroutines();
+
+        if (firstCustomerRoute)
+        {
+            string immediateLine = result.success ? FirstRouteSuccessImmediateLine : FirstRouteWeakLine;
+            string exitLine = result.success ? FirstRouteSuccessExitLine : null;
+            StartCoroutine(ReactionSequenceThenLeave(immediateLine, exitLine, hearts));
+            return;
+        }
+
         StartCoroutine(ReactionSequenceThenLeave(desiredTags, hearts));
     }
 
@@ -451,6 +484,9 @@ public class CustomerController : MonoBehaviour
 
     private string BuildHintLine()
     {
+        if (IsInForcedFirstCustomerRoute())
+            return FirstRouteHintLine;
+
         if (emotionRequest == null)
             return "손님이 어떤 맛을 원하는지 아직 모르겠습니다.";
 
@@ -503,5 +539,10 @@ public class CustomerController : MonoBehaviour
 
         string line = lines[Random.Range(0, lines.Length)];
         return string.IsNullOrEmpty(line) ? fallbackLine : line;
+    }
+
+    private string GetFirstRouteUnknownReactionLine(bool miniGameSuccess)
+    {
+        return miniGameSuccess ? FirstRouteUnknownSuccessLine : FirstRouteWeakLine;
     }
 }

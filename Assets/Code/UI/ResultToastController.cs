@@ -59,6 +59,31 @@ public class ResultToastController : MonoBehaviour
         );
     }
 
+    public void ShowFirstCorrectBrew()
+    {
+        Show(
+            "첫 잔 완성",
+            "손님이 잔을 조용히 감싸 쥡니다."
+        );
+    }
+
+    public void ShowFirstRouteUnknownCocktail(bool miniGameSuccess)
+    {
+        if (miniGameSuccess)
+        {
+            Show(
+                "이름 없는 한 잔",
+                "낯설지만, 어딘가 오래 남는 맛입니다."
+            );
+            return;
+        }
+
+        Show(
+            "흐려진 한 잔",
+            "아직은 마음이 잔 안에서 흔들리고 있습니다."
+        );
+    }
+
     public void ShowUnknownCocktail()
     {
         Show(
