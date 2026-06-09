@@ -198,24 +198,9 @@ public class OrderManager : MonoBehaviour
         
         ShowResultToast(matchedRecipe, unlockedNewRecipe);
 
-        if (servedCocktail == null && currentOrder != null)
+        if (matchedRecipe == null)
         {
-            servedCocktail = currentOrder.targetCocktail;
-
-            Debug.Log(
-                $"[OrderManager] Fallback Served Cocktail = " +
-                $"{(servedCocktail != null ? servedCocktail.name : "None")}"
-            );
-        }
-
-        if (servedCocktail == null && currentOrder != null)
-        {
-            servedCocktail = currentOrder.targetCocktail;
-
-            Debug.Log(
-                $"[OrderManager] Fallback Served Cocktail = " +
-                $"{(servedCocktail != null ? servedCocktail.name : "None")}"
-            );
+            Debug.LogWarning("[OrderManager] No matched cocktail. Serving as unknown cocktail.");
         }
 
         // ���� ó��
@@ -223,9 +208,8 @@ public class OrderManager : MonoBehaviour
         {
             if (result.success)
             {
-                int totalRep = 0;
-                if (currentOrder != null) totalRep += currentOrder.reputationReward;
-                totalRep += result.repDelta;
+                int totalRep = result.repDelta;
+                if (matchedRecipe != null && currentOrder != null) totalRep += currentOrder.reputationReward;
                 gm.AddReputation(totalRep);
             }
             else
