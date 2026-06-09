@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fd951cc4e54004cafa03e87fefe250, type: 3}
   m_Name: Ingredient_CoffeeLiqueurIngredient_CoffeeLiqueur
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
-  ingredientId: coffee_Liqueur
+  ingredientId: coffee_liqueur
   displayName: CoffeeLiqueur
   category: 1
   icon: {fileID: 0}
