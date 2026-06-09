@@ -5,8 +5,14 @@ using UnityEngine.UI;
 
 public class RecipeGuidePanelController : MonoBehaviour
 {
+    private const string FirstRecipeRevealShownKey = "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN";
+    private const string FirstRecipeRevealTitle = "ë ˆì‹œí”¼ë¶ì˜ ì²« ì¥";
+    private const string FirstRecipeRevealMessage = "ì°¨ê°€ìš´ ë°¤ì„ ë°ìš¸ í•œ ì”ì´ ì¡°ìš©íˆ ê¸°ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.";
+
     [Header("Managers")]
     [SerializeField] private RecipeUnlockManager recipeUnlockManager;
+    [SerializeField] private InteractionUIController interactionUIController;
+    [SerializeField] private ResultToastController resultToast;
 
     [Header("UI")]
     [SerializeField] private GameObject panelRoot;
@@ -70,6 +76,7 @@ public class RecipeGuidePanelController : MonoBehaviour
             panelRoot.SetActive(true);
 
         RefreshRecipeList();
+        TryShowFirstRecipeReveal();
     }
 
     private void ClosePanel()
@@ -131,7 +138,7 @@ public class RecipeGuidePanelController : MonoBehaviour
     private string BuildIngredientText(CocktailRecipeData recipe)
     {
         if (recipe == null || recipe.ingredients == null || recipe.ingredients.Length == 0)
-            return "Àç·á Á¤º¸ ¾øÀ½";
+            return "ì¬ë£Œ ì •ë³´ ì—†ìŒ";
 
         System.Text.StringBuilder sb = new();
 
@@ -167,13 +174,13 @@ public class RecipeGuidePanelController : MonoBehaviour
     private void ClearDetail()
     {
         if (recipeNameText != null)
-            recipeNameText.text = "·¹½ÃÇÇ ¼±ÅÃ";
+            recipeNameText.text = "ë ˆì‹œí”¼ ì„ íƒ";
 
         if (recipeMethodText != null)
             recipeMethodText.text = "";
 
         if (recipeIngredientText != null)
-            recipeIngredientText.text = "¼±ÅÃÇÑ ·¹½ÃÇÇÀÇ Àç·á ¿ë·®(oz)ÀÌ Ç¥½ÃµË´Ï´Ù.";
+            recipeIngredientText.text = "ì„ íƒí•œ ë ˆì‹œí”¼ì˜ ì¬ë£Œ ìš©ëŸ‰(oz)ì´ í‘œì‹œë©ë‹ˆë‹¤.";
     }
 
     private void RefreshButtonVisuals()
@@ -199,5 +206,52 @@ public class RecipeGuidePanelController : MonoBehaviour
         }
 
         spawnedButtons.Clear();
+    }
+
+    private void TryShowFirstRecipeReveal()
+    {
+        if (PlayerPrefs.GetInt(FirstRecipeRevealShownKey, 0) == 1)
+            return;
+
+        if (!IsForcedFirstCustomerRouteActive())
+            return;
+
+        if (resultToast == null)
+            resultToast = FindFirstObjectByType<ResultToastController>();
+
+        if (resultToast == null)
+        {
+            Debug.LogWarning("[RecipeGuidePanel] Cannot show first recipe reveal: ResultToastController not found");
+            return;
+        }
+
+        resultToast.Show(FirstRecipeRevealTitle, FirstRecipeRevealMessage);
+
+        PlayerPrefs.SetInt(FirstRecipeRevealShownKey, 1);
+        PlayerPrefs.Save();
+
+        Debug.Log("[RecipeGuidePanel] First recipe reveal shown");
+    }
+
+    private bool IsForcedFirstCustomerRouteActive()
+    {
+        if (interactionUIController == null)
+            interactionUIController = FindFirstObjectByType<InteractionUIController>();
+
+        return interactionUIController != null && interactionUIController.IsForcedFirstCustomerRouteActive;
+    }
+
+    public static void ClearSavedFirstRecipeRevealFlag()
+    {
+        PlayerPrefs.DeleteKey(FirstRecipeRevealShownKey);
+        PlayerPrefs.Save();
+
+        Debug.Log("[RecipeGuidePanel] Cleared first recipe reveal flag");
+    }
+
+    [ContextMenu("Debug/Clear First Recipe Reveal Flag")]
+    private void ClearFirstRecipeRevealFlagForDebug()
+    {
+        ClearSavedFirstRecipeRevealFlag();
     }
 }

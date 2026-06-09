@@ -145,6 +145,7 @@ public class RecipeUnlockManager : MonoBehaviour
     public void ClearSavedUnlocks()
     {
         PlayerPrefs.DeleteKey(SaveKey);
+        RecipeGuidePanelController.ClearSavedFirstRecipeRevealFlag();
         PlayerPrefs.Save();
 
         unlockedRecipeIds.Clear();

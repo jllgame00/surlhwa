@@ -55,6 +55,8 @@ public class InteractionUIController : MonoBehaviour
     private bool forcedFirstCustomerRouteConsumed;
     private bool activeCustomerUsesForcedRoute;
 
+    public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesForcedRoute;
+
     private void Awake()
     {
         orderManager = FindFirstObjectByType<OrderManager>();
@@ -333,7 +335,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickCancel()
     {
-        // BrewPanel¿¡¼­ Ãë¼ÒÇÏ¸é DialoguePanel·Î º¹±Í
+        // BrewPanelì—ì„œ ì·¨ì†Œí•˜ë©´ DialoguePanelë¡œ ë³µê·€
         if (brewPanel != null && brewPanel.activeSelf)
         {
             string line = activeCustomer != null ? activeCustomer.GetInteractionHintLine() : "";
@@ -341,7 +343,7 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        // DialoguePanel¿¡¼­ Ãë¼ÒÇÏ¸é ´Ù½Ã ellipsis·Î
+        // DialoguePanelì—ì„œ ì·¨ì†Œí•˜ë©´ ë‹¤ì‹œ ellipsisë¡œ
         wantsEllipsisVisible = activeCustomer != null;
         ClosePanels(wantsEllipsisVisible);
     }
