@@ -27,5 +27,5 @@ MonoBehaviour:
     category: 2
     ratio: 1
   matchThreshold: 0.85
-  unlockedByDefault: 0
+  unlockedByDefault: 1
   discoverable: 1
