@@ -54,15 +54,14 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
+    [Header("Jigger Panel")]
+    [SerializeField] private JiggerPanelController jiggerPanel;
+
     private BrewSessionData currentBrewSession;
 
     public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
-        BrewSessionData fallbackSession = order != null
-            ? order.defaultBrewSession
-            : null;
-
-        StartGame(order, fallbackSession, done);
+        StartGame(order, null, done);
     }
 
     public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
@@ -73,17 +72,25 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
         currentOrder = order;
 
-        currentBrewSession = brewSession != null
-            ? brewSession
-            : order != null
-                ? order.defaultBrewSession
-                : null;
-
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
 
+        currentBrewSession = ingredientShelf != null
+            ? null
+            : brewSession;
+
         if (ingredientShelf != null)
-            ingredientShelf.Initialize(MiniGameType.Shake, currentBrewSession);
+            ingredientShelf.Initialize(MiniGameType.Shake, null);
+
+        if (jiggerPanel == null)
+            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
+
+        if (ingredientShelf != null && jiggerPanel != null)
+        {
+            jiggerPanel.Initialize(ingredientShelf);
+            ingredientShelf.SetJiggerPanel(jiggerPanel);
+            jiggerPanel.gameObject.SetActive(true);
+        }
 
         if (recipeGuide == null)
             recipeGuide = GetComponentInChildren<RecipeGuidePanelController>(true);
@@ -157,6 +164,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
             ingredientShelf.SetVisible(false);
         }
+
+        if (jiggerPanel != null)
+            jiggerPanel.gameObject.SetActive(false);
 
         state = ShakeState.Shaking;
 

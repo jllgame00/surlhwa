@@ -47,6 +47,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
+    [Header("Jigger Panel")]
+    [SerializeField] private JiggerPanelController jiggerPanel;
+
     private float remainTime;
     private float currentTopHeight;
     private float maxTopHeight;
@@ -61,11 +64,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
     public void StartGame(OrderData order, Action<MiniGameResult> onDone)
     {
-        BrewSessionData fallbackSession = order != null
-            ? order.defaultBrewSession
-            : null;
-
-        StartGame(order, fallbackSession, onDone);
+        StartGame(order, null, onDone);
     }
 
     public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
@@ -74,17 +73,25 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
         currentOrder = order;
 
-        currentBrewSession = brewSession != null
-            ? brewSession
-            : order != null
-                ? order.defaultBrewSession
-                : null;
-
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
 
+        currentBrewSession = ingredientShelf != null
+            ? null
+            : brewSession;
+
         if (ingredientShelf != null)
-            ingredientShelf.Initialize(MiniGameType.Float, currentBrewSession);
+            ingredientShelf.Initialize(MiniGameType.Float, null);
+
+        if (jiggerPanel == null)
+            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
+
+        if (ingredientShelf != null && jiggerPanel != null)
+        {
+            jiggerPanel.Initialize(ingredientShelf);
+            ingredientShelf.SetJiggerPanel(jiggerPanel);
+            jiggerPanel.gameObject.SetActive(true);
+        }
 
         AutoBindIfMissing();
 
@@ -155,6 +162,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
             ingredientShelf.SetVisible(false);
         }
+
+        if (jiggerPanel != null)
+            jiggerPanel.gameObject.SetActive(false);
 
         state = FloatState.Pouring;
 

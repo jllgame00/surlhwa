@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class CustomerController : MonoBehaviour
 {
-    private const string UnknownCocktailReactionLine = "ÀÌ¸§Àº ¸ğ¸£°ÚÁö¸¸, ¹¦ÇÏ°Ô ³²´Â ¸ÀÀÌ³×¿ä.";
-
     public float moveSpeed = 2.0f;
     public Vector2 arriveThreshold = new Vector2(0.05f, 0.05f);
 
@@ -18,10 +16,10 @@ public class CustomerController : MonoBehaviour
     public Sprite standSprite;
     public Sprite sitSprite;
 
-    // ¿ÜºÎ ÂüÁ¶
+    // External references
     private SeatManager seatManager;
 
-    // ³ª°¥ ¶§ ¸ñÇ¥
+    // Exit destination
     public Transform defaultExitPoint;
 
     [Header("Dialogue")]
@@ -41,6 +39,25 @@ public class CustomerController : MonoBehaviour
     [Header("Interaction")]
     [SerializeField] private Transform interactionAnchor;
     private InteractionUIController interactionUI;
+    
+    [Header("Unknown Cocktail Reactions")]
+    [SerializeField]
+    private string[] unknownSuccessLines =
+    {
+        "ì´ë¦„ì€ ëª¨ë¥´ê² ì§€ë§Œ, ë¬˜í•˜ê²Œ ë‚¨ëŠ” ë§›ì´ë„¤ìš”.",
+        "ë‚¯ì„  ë§›ì´ì§€ë§Œ ì´ìƒí•˜ê²Œ ê¸°ì–µì— ë‚¨ë„¤ìš”.",
+        "ì•„ì§ ì™„ì„±ë˜ì§„ ì•Šì•˜ì§€ë§Œ ë¬´ì–¸ê°€ ë‹¿ëŠ” ëŠë‚Œì´ ìˆì–´ìš”.",
+        "ì²«ë§›ë³´ë‹¤ ë’¤ì— ë‚¨ëŠ” ì—¬ìš´ì´ ë” ì¢‹ë„¤ìš”."
+    };
+
+    [SerializeField]
+    private string[] unknownFailLines =
+    {
+        "ì•„ì§ì€ ì¡°ê¸ˆ í”ë“¤ë¦¬ëŠ” ë§›ì´ë„¤ìš”.",
+        "ì˜¤ëŠ˜ ì›í•˜ëŠ” ëŠë‚Œê³¼ëŠ” ì¡°ê¸ˆ ê±°ë¦¬ê°€ ìˆëŠ” ê²ƒ ê°™ì•„ìš”.",
+        "ë¬´ì–¸ê°€ ë‹¿ê¸´ í–ˆì§€ë§Œ ë§ˆìŒì´ í¸í•´ì§€ì§„ ì•Šë„¤ìš”.",
+        "ì…ì•ˆì— ë‚¨ëŠ” ë§›ì´ ì•„ì§ ì–´ìƒ‰í•˜ë„¤ìš”."
+    };
 
     void Awake()
     {
@@ -108,10 +125,8 @@ public class CustomerController : MonoBehaviour
                 break;
 
             case State.Waiting:
-                // InteractionUIController¿¡¼­
-                // ... -> DialoguePanel -> BrewPanel -> Confirm Èå¸§ Ã³¸®
-                // Confirm ½Ã OrderManager.PlaySpecificOrder() È£Ãâ
-                // ¿Ï·á ½Ã OnServedWithReaction() Äİ¹é
+                // InteractionUIController handles DialoguePanel -> BrewPanel -> Confirm.
+                // Confirm starts OrderManager.PlaySpecificOrder(); completion calls OnServedWithReaction().
                 break;
 
             case State.Leaving:
@@ -156,7 +171,7 @@ public class CustomerController : MonoBehaviour
 
         AssignRandomEmotionForGeneralGuest();
 
-        // ÀÚµ¿ ÀÔÀå ¸»Ç³¼±Àº ÇöÀç UI Èå¸§°ú °ãÄ¡¹Ç·Î ºñÈ°¼º À¯Áö
+        // Auto entry bubbles stay disabled to avoid overlapping the current UI flow.
         // SayRandom(dialogueData != null ? dialogueData.onEnterLines : null);
     }
 
@@ -171,7 +186,7 @@ public class CustomerController : MonoBehaviour
         return transform.position + Vector3.left * 3f;
     }
 
-    // ±âÁ¸ ±¸Á¶ À¯Áö¿ë
+    // Legacy serve path.
     public void OnServed(bool success)
     {
         if (interactionUI != null)
@@ -186,7 +201,7 @@ public class CustomerController : MonoBehaviour
         state = State.Leaving;
     }
 
-    // ±âÁ¸ OrderData ±â¹İ È£ÃâÀÌ ³²¾Æ ÀÖ¾îµµ ±úÁöÁö ¾Ê°Ô À¯Áö
+    // Kept for older OrderData-based callers.
     public void OnServedWithReaction(OrderData servedOrder, MiniGameResult result)
     {
         CocktailData fallbackCocktail = servedOrder != null
@@ -196,7 +211,7 @@ public class CustomerController : MonoBehaviour
         OnServedWithReaction(fallbackCocktail, result);
     }
 
-    // »õ ±¸Á¶: ½ÇÁ¦ ¼­ºùµÈ CocktailData ±âÁØÀ¸·Î ¹İÀÀ °è»ê
+    // New path: calculate reaction from the actually served CocktailData.
     public void OnServedWithReaction(CocktailData servedCocktail, MiniGameResult result)
     {
         if (interactionUI != null)
@@ -209,6 +224,7 @@ public class CustomerController : MonoBehaviour
         if (servedCocktail == null)
         {
             int unknownHearts = result.success ? 1 : 0;
+            string unknownLine = GetRandomUnknownReactionLine(result.success);
 
             Debug.Log(
                 $"[Customer] ServedCocktail=NULL / " +
@@ -216,7 +232,7 @@ public class CustomerController : MonoBehaviour
             );
 
             StopAllCoroutines();
-            StartCoroutine(UnknownCocktailReactionSequenceThenLeave(desiredTags, unknownHearts));
+            StartCoroutine(ReactionSequenceThenLeave(unknownLine, unknownHearts));
             return;
         }
 
@@ -241,73 +257,47 @@ public class CustomerController : MonoBehaviour
         StartCoroutine(ReactionSequenceThenLeave(desiredTags, hearts));
     }
 
-    private IEnumerator UnknownCocktailReactionSequenceThenLeave(EmotionTag[] desiredTags, int hearts)
-    {
-        ShowReactionBubble(UnknownCocktailReactionLine);
-
-        yield return new WaitForSeconds(1.2f);
-
-        ClearDialogueBubble();
-
-        yield return new WaitForSeconds(0.5f);
-
-        ShowHearts(hearts);
-
-        yield return new WaitForSeconds(1.0f);
-
-        string exitLine = reactionDatabase != null
-            ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Exit)
-            : "...";
-
-        ShowReactionBubble(exitLine);
-
-        yield return new WaitForSeconds(1.2f);
-
-        ClearDialogueBubble();
-
-        yield return new WaitForSeconds(0.3f);
-
-        state = State.Leaving;
-    }
-
     private IEnumerator ReactionSequenceThenLeave(EmotionTag[] desiredTags, int hearts)
     {
         string immediateLine = reactionDatabase != null
             ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Immediate)
             : "...";
 
-        // 1) Ã¹ ¹İÀÀ ´ë»ç
-        ShowReactionBubble(immediateLine);
-
-        // 2) Àá±ñ º¸¿©ÁÖ±â
-        yield return new WaitForSeconds(1.2f);
-
-        // 3) ¸»Ç³¼± Á¦°Å
-        ClearDialogueBubble();
-
-        // 4) ÅÒ
-        yield return new WaitForSeconds(0.5f);
-
-        // 5) ÇÏÆ® Ç¥½Ã
-        ShowHearts(hearts);
-
-        // 6) ÇÏÆ® º¸¿©ÁØ µÚ ÅÒ
-        yield return new WaitForSeconds(1.0f);
-
         string exitLine = reactionDatabase != null
             ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Exit)
             : "...";
 
-        // 7) ÅğÀå Àü ´ë»ç
-        ShowReactionBubble(exitLine);
+        yield return ReactionSequenceThenLeave(immediateLine, exitLine, hearts);
+    }
 
-        // 8) Àá±ñ º¸¿©ÁÖ±â
+    private IEnumerator ReactionSequenceThenLeave(string immediateLine, int hearts)
+    {
+        yield return ReactionSequenceThenLeave(immediateLine, null, hearts);
+    }
+
+    private IEnumerator ReactionSequenceThenLeave(string immediateLine, string exitLine, int hearts)
+    {
+        // Show the immediate reaction line.
+        ShowReactionBubble(immediateLine);
+
         yield return new WaitForSeconds(1.2f);
 
-        // 9) ¸»Ç³¼± Á¦°Å
         ClearDialogueBubble();
 
-        // 10) ¸¶Áö¸· ÅÒ
+        yield return new WaitForSeconds(0.5f);
+
+        // Show heart feedback. ShowHearts skips the popup when hearts is 0.
+        ShowHearts(hearts);
+
+        yield return new WaitForSeconds(1.0f);
+
+        // Show the exit line when one is available, then leave after the normal pause.
+        ShowReactionBubble(exitLine);
+
+        yield return new WaitForSeconds(1.2f);
+
+        ClearDialogueBubble();
+
         yield return new WaitForSeconds(0.3f);
 
         state = State.Leaving;
@@ -451,7 +441,7 @@ public class CustomerController : MonoBehaviour
     private string BuildHintLine()
     {
         if (emotionRequest == null)
-            return "¿À´ÃÀº ¾î¶² ÇÑ ÀÜÀÌ ÁÁÀ»±î¿ä.";
+            return "ì†ë‹˜ì´ ì–´ë–¤ ë§›ì„ ì›í•˜ëŠ”ì§€ ì•„ì§ ëª¨ë¥´ê² ìŠµë‹ˆë‹¤.";
 
         string primary = GetHintSentence(emotionRequest.primaryTag);
         string secondary = GetHintSentence(emotionRequest.secondaryTag);
@@ -459,7 +449,7 @@ public class CustomerController : MonoBehaviour
         if (string.IsNullOrEmpty(secondary))
             return primary;
 
-        return $"{primary}\n±×¸®°í¡¦ {secondary}";
+        return $"{primary}\nê·¸ë¦¬ê³  {secondary}";
     }
 
     private void ClearDialogueBubble()
@@ -475,17 +465,32 @@ public class CustomerController : MonoBehaviour
     {
         return tag switch
         {
-            EmotionTag.Loneliness => "Á¶¿ëÇÑ ÂÊÀÌ¸é ÁÁ°Ú¾î¿ä.",
-            EmotionTag.Comfort => "Á¶±İ ºÎµå·¯¿î ÂÊÀÌ¸é ÁÁ°Ú¾î¿ä.",
-            EmotionTag.Awakening => "¸Ó¸®°¡ ¸¼¾ÆÁö´Â ´À³¦ÀÌ¸é ÁÁ°Ú³×¿ä.",
-            EmotionTag.Softness => "³Ê¹« ³¯Ä«·ÓÁö ¾ÊÀº ÂÊÀÌ ÁÁ¾Æ¿ä.",
-            EmotionTag.Bitterness => "Á¶±İ ¾¹¾µÇØµµ ±¦Âú¾Æ¿ä.",
-            EmotionTag.Heavy => "°¡º±Áö ¾ÊÀº ÂÊÀÌ ¿À´ÃÀº ¸ÂÀ» °Í °°¾Æ¿ä.",
-            EmotionTag.Clarity => "º¹ÀâÇÏÁö ¾Ê°í ¸¼Àº ÂÊÀÌ ÇÊ¿äÇØ¿ä.",
-            EmotionTag.Warmth => "Á¶±İ µû¶æÇÑ ±âºĞÀÌ µé¸é ÁÁ°Ú¾î¿ä.",
-            EmotionTag.Regret => "½±°Ô ´Ş·¡´Â ¸ÀÀº ¾Æ´Ï¾úÀ¸¸é ÇØ¿ä.",
-            EmotionTag.Longing => "Á¶±İ ¿À·¡ ³²´Â ´À³¦ÀÌ¸é ÁÁ°Ú¾î¿ä.",
-            _ => "¿À´ÃÀº ¾î¶² ÇÑ ÀÜÀÌ ÁÁÀ»±î¿ä."
+            EmotionTag.Loneliness => "í˜¼ì ë‚¨ê²¨ì§„ ë“¯í•œ ë§›ì„ ì°¾ê³  ìˆì–´ìš”.",
+            EmotionTag.Comfort => "ì¡°ê¸ˆ ë¶€ë“œëŸ½ê³  í¸ì•ˆí•œ ë§›ì„ ì›í•´ìš”.",
+            EmotionTag.Awakening => "ì ì—ì„œ ê¹¨ì–´ë‚˜ëŠ” ë“¯í•œ ì„ ëª…í•¨ì„ ì›í•´ìš”.",
+            EmotionTag.Softness => "ë„ˆë¬´ ë‚ ì¹´ë¡­ì§€ ì•Šì€ ë¶€ë“œëŸ¬ìš´ ë§›ì´ ì¢‹ê² ì–´ìš”.",
+            EmotionTag.Bitterness => "ì•½ê°„ì˜ ì“´ë§›ë„ ê´œì°®ì„ ê²ƒ ê°™ì•„ìš”.",
+            EmotionTag.Heavy => "ê°€ë³ê¸°ë³´ë‹¤ëŠ” ë¬µì§í•˜ê²Œ ë‚¨ëŠ” ë§›ì„ ì›í•´ìš”.",
+            EmotionTag.Clarity => "íë¦¬ì§€ ì•Šê³  ë§‘ê²Œ ì •ë¦¬ë˜ëŠ” ë§›ì´ í•„ìš”í•´ìš”.",
+            EmotionTag.Warmth => "ì°¨ê°€ìš´ ë°¤ì„ ë°ì›Œì¤„ ë”°ëœ»í•œ ë§›ì„ ì›í•´ìš”.",
+            EmotionTag.Regret => "ì¡°ê¸ˆì€ ì”ì“¸í•œ ì—¬ìš´ì´ ë‚¨ì•„ë„ ê´œì°®ì•„ìš”.",
+            EmotionTag.Longing => "ë©€ë¦¬ ìˆëŠ” ë¬´ì–¸ê°€ê°€ ë– ì˜¤ë¥´ëŠ” ë§›ì„ ì›í•´ìš”.",
+            _ => "ì†ë‹˜ì´ ì–´ë–¤ ë§›ì„ ì›í•˜ëŠ”ì§€ ì•„ì§ ëª¨ë¥´ê² ìŠµë‹ˆë‹¤."
         };
+    }
+    
+    private string GetRandomUnknownReactionLine(bool miniGameSuccess)
+    {
+        string fallbackLine = miniGameSuccess
+            ? "ì´ë¦„ì€ ëª¨ë¥´ê² ì§€ë§Œ, ë¬˜í•˜ê²Œ ë‚¨ëŠ” ë§›ì´ë„¤ìš”."
+            : "ì•„ì§ì€ ì¡°ê¸ˆ í”ë“¤ë¦¬ëŠ” ë§›ì´ë„¤ìš”.";
+
+        string[] lines = miniGameSuccess ? unknownSuccessLines : unknownFailLines;
+
+        if (lines == null || lines.Length == 0)
+            return fallbackLine;
+
+        string line = lines[Random.Range(0, lines.Length)];
+        return string.IsNullOrEmpty(line) ? fallbackLine : line;
     }
 }
