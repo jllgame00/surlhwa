@@ -97,6 +97,17 @@ public class CustomerController : MonoBehaviour
         Debug.Log($"[Customer] Emotion Assigned -> {emotionRequest.primaryTag} + {emotionRequest.secondaryTag}");
     }
 
+    public void ForceEmotionRequestForDebug(EmotionTag primaryTag, EmotionTag secondaryTag)
+    {
+        if (emotionRequest == null)
+            emotionRequest = new GuestEmotionRequest();
+
+        emotionRequest.Set(primaryTag, secondaryTag);
+        lastGeneralGuestPrimaryTag = primaryTag;
+
+        Debug.Log($"[Customer] Debug Emotion Forced -> {primaryTag} + {secondaryTag}");
+    }
+
     void Update()
     {
         switch (state)

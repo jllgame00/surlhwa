@@ -29,6 +29,13 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private OrderData testBuildOrder;
     [SerializeField] private OrderData testFloatOrder;
 
+    [Header("Debug First Customer Route")]
+    [SerializeField] private bool forceFirstCustomerRoute = false;
+    [SerializeField] private MiniGameType forcedFirstCustomerMethod = MiniGameType.Stir;
+    [SerializeField] private EmotionTag forcedFirstCustomerPrimaryTag = EmotionTag.Loneliness;
+    [SerializeField] private EmotionTag forcedFirstCustomerSecondaryTag = EmotionTag.Warmth;
+    [SerializeField] private bool autoSelectForcedMethodOnBrew = true;
+
     [Header("Follow")]
     [SerializeField] private Camera worldCamera;
     [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.2f, 0f);
@@ -45,6 +52,8 @@ public class InteractionUIController : MonoBehaviour
     private MiniGameType selectedMethod;
     private bool hasMethodSelected;
     private bool wantsEllipsisVisible;
+    private bool forcedFirstCustomerRouteConsumed;
+    private bool activeCustomerUsesForcedRoute;
 
     private void Awake()
     {
@@ -85,6 +94,7 @@ public class InteractionUIController : MonoBehaviour
         activeCustomer = customer;
         hasMethodSelected = false;
         wantsEllipsisVisible = customer != null;
+        activeCustomerUsesForcedRoute = TryApplyFirstCustomerRoute(customer);
 
         ClosePanels(wantsEllipsisVisible);
         RefreshMethodVisuals();
@@ -103,6 +113,7 @@ public class InteractionUIController : MonoBehaviour
         activeCustomer = null;
         hasMethodSelected = false;
         wantsEllipsisVisible = false;
+        activeCustomerUsesForcedRoute = false;
 
         ClosePanels(false);
         RefreshMethodVisuals();
@@ -173,10 +184,22 @@ public class InteractionUIController : MonoBehaviour
         hasMethodSelected = false;
         RefreshMethodVisuals();
         RefreshConfirmState();
+
+        if (activeCustomerUsesForcedRoute && autoSelectForcedMethodOnBrew)
+            SelectMethod(forcedFirstCustomerMethod);
     }
 
     private void SelectMethod(MiniGameType type)
     {
+        if (activeCustomerUsesForcedRoute && type != forcedFirstCustomerMethod)
+        {
+            Debug.Log(
+                $"[InteractionUI] Debug first route locks method to {forcedFirstCustomerMethod}. " +
+                $"Ignoring requested method={type}."
+            );
+
+            type = forcedFirstCustomerMethod;
+        }
         selectedMethod = type;
         hasMethodSelected = true;
 
@@ -270,6 +293,42 @@ public class InteractionUIController : MonoBehaviour
             MiniGameType.Float => testFloatOrder,
             _ => null
         };
+    }
+
+    private bool TryApplyFirstCustomerRoute(CustomerController customer)
+    {
+        if (!forceFirstCustomerRoute)
+            return false;
+
+        if (forcedFirstCustomerRouteConsumed)
+            return false;
+
+        if (customer == null)
+            return false;
+
+        OrderData forcedOrder = GetTestOrder(forcedFirstCustomerMethod);
+        if (forcedOrder == null)
+        {
+            Debug.LogWarning(
+                $"[InteractionUI] Debug first route requested {forcedFirstCustomerMethod}, but no test order is assigned."
+            );
+            return false;
+        }
+
+        customer.ForceEmotionRequestForDebug(
+            forcedFirstCustomerPrimaryTag,
+            forcedFirstCustomerSecondaryTag
+        );
+
+        forcedFirstCustomerRouteConsumed = true;
+
+        Debug.Log(
+            $"[InteractionUI] Debug first route armed -> " +
+            $"Method={forcedFirstCustomerMethod}, Order={forcedOrder.orderName}, " +
+            $"Emotion={forcedFirstCustomerPrimaryTag}+{forcedFirstCustomerSecondaryTag}"
+        );
+
+        return true;
     }
 
     private void OnClickCancel()
