@@ -6,6 +6,9 @@ public class OrderManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool verboseLogging = false;
     [SerializeField] private bool allowPlayWithoutCustomer = true;
+    
+    [Header("Result Toast")]
+    [SerializeField] private ResultToastController resultToast;
 
     // ====== Runtime State ======
     private CustomerController _currentCustomer;
@@ -50,6 +53,9 @@ public class OrderManager : MonoBehaviour
 
         if (miniGameManager == null)
             miniGameManager = FindFirstObjectByType<MiniGameManager>();
+        
+        if (resultToast == null)
+            resultToast = FindFirstObjectByType<ResultToastController>();
 
         recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
 
@@ -66,10 +72,10 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        // ÀÌ¹Ì ÁÖ¹®ÀÌ ÀÖÀ¸¸é ¹Ýº¹ ¹ß±Þ ¹æÁö
+        // ï¿½Ì¹ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ýºï¿½ ï¿½ß±ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (HasActiveOrder)
         {
-            if (currentCustomer == cc) return; // °°Àº ¼Õ´ÔÀÌ °è¼Ó Update¿¡¼­ È£ÃâÇÏ´Â °Å ¹«½Ã
+            if (currentCustomer == cc) return; // ï¿½ï¿½ï¿½ï¿½ ï¿½Õ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Updateï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Debug.LogWarning($"[OrderManager] Another order is already active (order={currentOrder?.orderName}). Ignoring new issue from {cc.name}");
             return;
         }
@@ -92,7 +98,7 @@ public class OrderManager : MonoBehaviour
         }
     }
 
-    // UI ¹öÆ°¿¡¼­ È£Ãâ
+    // UI ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     public void ResolveServe()
     {
         Debug.Log($"[OrderManager] ResolveServe id={GetInstanceID()} called");
@@ -146,6 +152,7 @@ public class OrderManager : MonoBehaviour
 
         CocktailData servedCocktail = null;
         CocktailRecipeData matchedRecipe = null;
+        bool unlockedNewRecipe = false;
 
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
@@ -170,6 +177,8 @@ public class OrderManager : MonoBehaviour
 
                     if (newlyUnlocked)
                     {
+                        unlockedNewRecipe = true;
+
                         Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {matchedRecipe.displayName}");
 
                         if (unlockPopup != null)
@@ -186,6 +195,8 @@ public class OrderManager : MonoBehaviour
                 );
             }
         }
+        
+        ShowResultToast(matchedRecipe, unlockedNewRecipe);
 
         if (servedCocktail == null && currentOrder != null)
         {
@@ -197,7 +208,17 @@ public class OrderManager : MonoBehaviour
             );
         }
 
-        // ÆòÆÇ Ã³¸®
+        if (servedCocktail == null && currentOrder != null)
+        {
+            servedCocktail = currentOrder.targetCocktail;
+
+            Debug.Log(
+                $"[OrderManager] Fallback Served Cocktail = " +
+                $"{(servedCocktail != null ? servedCocktail.name : "None")}"
+            );
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
         if (gm != null)
         {
             if (result.success)
@@ -213,11 +234,11 @@ public class OrderManager : MonoBehaviour
             }
         }
 
-        // »õ ¹ÝÀÀ ½Ã½ºÅÛ È£Ãâ
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
         if (currentCustomer != null)
             currentCustomer.OnServedWithReaction(servedCocktail, result);
 
-        // »óÅÂ ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         currentCustomer = null;
         currentOrder = null;
 
@@ -226,6 +247,29 @@ public class OrderManager : MonoBehaviour
             Debug.Log("[OrderManager] OnMiniGameDone -> resetting ORDER text to -");
             ui.SetOrderText("ORDER: -");
         }
+    }
+    
+    private void ShowResultToast(CocktailRecipeData matchedRecipe, bool unlockedNewRecipe)
+    {
+        if (resultToast == null)
+            resultToast = FindFirstObjectByType<ResultToastController>();
+
+        if (resultToast == null)
+            return;
+
+        if (matchedRecipe == null)
+        {
+            resultToast.ShowUnknownCocktail();
+            return;
+        }
+
+        if (unlockedNewRecipe)
+        {
+            resultToast.ShowRecipeUnlocked(matchedRecipe.displayName);
+            return;
+        }
+
+        resultToast.ShowRecipeMatched(matchedRecipe.displayName);
     }
 
     public void ForceClearOrder()
