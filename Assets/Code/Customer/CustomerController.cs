@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class CustomerController : MonoBehaviour
 {
+    private const string UnknownCocktailReactionLine = "이름은 모르겠지만, 묘하게 남는 맛이네요.";
+
     public float moveSpeed = 2.0f;
     public Vector2 arriveThreshold = new Vector2(0.05f, 0.05f);
 
@@ -204,7 +206,21 @@ public class CustomerController : MonoBehaviour
             ? emotionRequest.ToArray()
             : System.Array.Empty<EmotionTag>();
 
-        EmotionTag[] servedTags = (servedCocktail != null && servedCocktail.emotionTags != null)
+        if (servedCocktail == null)
+        {
+            int unknownHearts = result.success ? 1 : 0;
+
+            Debug.Log(
+                $"[Customer] ServedCocktail=NULL / " +
+                $"Hearts={unknownHearts}"
+            );
+
+            StopAllCoroutines();
+            StartCoroutine(UnknownCocktailReactionSequenceThenLeave(desiredTags, unknownHearts));
+            return;
+        }
+
+        EmotionTag[] servedTags = servedCocktail.emotionTags != null
             ? servedCocktail.emotionTags
             : System.Array.Empty<EmotionTag>();
 
@@ -223,6 +239,35 @@ public class CustomerController : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(ReactionSequenceThenLeave(desiredTags, hearts));
+    }
+
+    private IEnumerator UnknownCocktailReactionSequenceThenLeave(EmotionTag[] desiredTags, int hearts)
+    {
+        ShowReactionBubble(UnknownCocktailReactionLine);
+
+        yield return new WaitForSeconds(1.2f);
+
+        ClearDialogueBubble();
+
+        yield return new WaitForSeconds(0.5f);
+
+        ShowHearts(hearts);
+
+        yield return new WaitForSeconds(1.0f);
+
+        string exitLine = reactionDatabase != null
+            ? reactionDatabase.GetRandomLine(desiredTags, hearts, ReactionPhase.Exit)
+            : "...";
+
+        ShowReactionBubble(exitLine);
+
+        yield return new WaitForSeconds(1.2f);
+
+        ClearDialogueBubble();
+
+        yield return new WaitForSeconds(0.3f);
+
+        state = State.Leaving;
     }
 
     private IEnumerator ReactionSequenceThenLeave(EmotionTag[] desiredTags, int hearts)
