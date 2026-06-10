@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
   m_Name: TestShake
   m_EditorClassIdentifier: 
-  orderName: TestShake
+  orderName: 여명
   reputationReward: 1
   miniGameType: 3
   steps:

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Recipe_TestShake
   m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
   recipeId: recipe_test_shake
-  displayName: Test Shake Recipe
+  displayName: 여명
   method: 3
   targetCocktail: {fileID: 11400000, guid: eaf3c1c51f1c2994b81628220af5e330, type: 2}
   ingredients:

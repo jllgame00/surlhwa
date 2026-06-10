@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Recipe_TestStir
   m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
   recipeId: recipe_test_stir
-  displayName: Test Stir Recipe
+  displayName: 설야
   method: 2
   targetCocktail: {fileID: 11400000, guid: 33507b543d53e214f9077f528a3acd5d, type: 2}
   ingredients:
