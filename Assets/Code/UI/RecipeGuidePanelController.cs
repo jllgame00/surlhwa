@@ -36,6 +36,9 @@ public class RecipeGuidePanelController : MonoBehaviour
     [SerializeField] private TMP_Text recipeMethodText;
     [SerializeField] private TMP_Text recipeIngredientText;
 
+    [Header("Debug")]
+    [SerializeField] private bool verboseLogging = false;
+
     private readonly List<Button> spawnedButtons = new();
     private readonly Dictionary<Button, CocktailRecipeData> buttonRecipes = new();
     private MiniGameType currentMethod;
@@ -112,23 +115,26 @@ public class RecipeGuidePanelController : MonoBehaviour
             return;
         }
 
-        List<CocktailRecipeData> allRecipes = recipeUnlockManager.GetAllRecipes();
-        Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, totalRecipes={allRecipes.Count}");
-
-        foreach (CocktailRecipeData recipe in allRecipes)
+        if (verboseLogging)
         {
-            if (recipe == null)
-            {
-                Debug.Log("[RecipeGuidePanel] Recipe=NULL");
-                continue;
-            }
+            List<CocktailRecipeData> allRecipes = recipeUnlockManager.GetAllRecipes();
+            Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, totalRecipes={allRecipes.Count}");
 
-            bool unlocked = recipeUnlockManager.IsUnlocked(recipe);
-            Debug.Log(
-                $"[RecipeGuidePanel] Recipe Candidate -> " +
-                $"name={recipe.displayName}, id={recipe.recipeId}, method={recipe.method}, " +
-                $"unlocked={unlocked}, methodMatch={recipe.method == currentMethod}"
-            );
+            foreach (CocktailRecipeData recipe in allRecipes)
+            {
+                if (recipe == null)
+                {
+                    Debug.Log("[RecipeGuidePanel] Recipe=NULL");
+                    continue;
+                }
+
+                bool unlocked = recipeUnlockManager.IsUnlocked(recipe);
+                Debug.Log(
+                    $"[RecipeGuidePanel] Recipe Candidate -> " +
+                    $"name={recipe.displayName}, id={recipe.recipeId}, method={recipe.method}, " +
+                    $"unlocked={unlocked}, methodMatch={recipe.method == currentMethod}"
+                );
+            }
         }
 
         List<CocktailRecipeData> recipes = recipeUnlockManager.GetUnlockedRecipesByMethod(currentMethod);
@@ -158,11 +164,14 @@ public class RecipeGuidePanelController : MonoBehaviour
 
         RefreshButtonVisuals();
 
-        Debug.Log(
-            $"[RecipeGuidePanel] RefreshRecipeList complete -> " +
-            $"method={currentMethod}, unlockedForMethod={recipes.Count}, buttons={instantiatedCount}, " +
-            $"parent={recipeListParent.name}, parentActive={recipeListParent.gameObject.activeInHierarchy}"
-        );
+        if (verboseLogging)
+        {
+            Debug.Log(
+                $"[RecipeGuidePanel] RefreshRecipeList complete -> " +
+                $"method={currentMethod}, unlockedForMethod={recipes.Count}, buttons={instantiatedCount}, " +
+                $"parent={recipeListParent.name}, parentActive={recipeListParent.gameObject.activeInHierarchy}"
+            );
+        }
     }
 
     private void SelectRecipe(CocktailRecipeData recipe)
