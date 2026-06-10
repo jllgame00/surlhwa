@@ -6,6 +6,7 @@ public class CocktailRecipeData : ScriptableObject
     [Header("Identity")]
     public string recipeId;
     public string displayName;
+    [TextArea(2, 4)] public string description;
 
     [Header("Link")]
     public MiniGameType method;

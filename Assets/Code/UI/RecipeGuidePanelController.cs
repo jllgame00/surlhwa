@@ -194,10 +194,24 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private string BuildIngredientText(CocktailRecipeData recipe)
     {
-        if (recipe == null || recipe.ingredients == null || recipe.ingredients.Length == 0)
+        if (recipe == null)
             return "재료 정보 없음";
 
         System.Text.StringBuilder sb = new();
+
+        if (!string.IsNullOrWhiteSpace(recipe.description))
+        {
+            sb.AppendLine(recipe.description.Trim());
+            sb.AppendLine();
+        }
+
+        if (recipe.ingredients == null || recipe.ingredients.Length == 0)
+        {
+            if (sb.Length > 0)
+                return sb.ToString().TrimEnd();
+
+            return "재료 정보 없음";
+        }
 
         for (int i = 0; i < recipe.ingredients.Length; i++)
         {
