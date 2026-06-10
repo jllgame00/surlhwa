@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ResultToastController : MonoBehaviour
 {
+    private const float SecondRouteUnlockToastDelay = 2.8f;
+
     [Header("UI")]
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Text titleText;
@@ -31,16 +33,25 @@ public class ResultToastController : MonoBehaviour
             return;
         }
 
-        if (titleText != null)
-            titleText.text = title;
+        if (showRoutine != null)
+            StopCoroutine(showRoutine);
 
-        if (messageText != null)
-            messageText.text = message;
+        SetContent(title, message);
+        showRoutine = StartCoroutine(ShowRoutine());
+    }
+
+    public void ShowDelayed(string title, string message, float delay)
+    {
+        if (canvasGroup == null)
+        {
+            Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
+            return;
+        }
 
         if (showRoutine != null)
             StopCoroutine(showRoutine);
 
-        showRoutine = StartCoroutine(ShowRoutine());
+        showRoutine = StartCoroutine(ShowDelayedRoutine(title, message, delay));
     }
 
     public void ShowRecipeMatched(string recipeName)
@@ -84,12 +95,30 @@ public class ResultToastController : MonoBehaviour
         );
     }
 
+    public void ShowSecondRouteRecipeUnlocked()
+    {
+        ShowDelayed(
+            "새로운 한 잔",
+            "손님의 감정이 레시피북에 조용히 남았습니다.",
+            SecondRouteUnlockToastDelay
+        );
+    }
+
     public void ShowUnknownCocktail()
     {
         Show(
             "이름 붙이기 어려운 한 잔",
             "레시피를 다시 확인해보세요."
         );
+    }
+
+    private IEnumerator ShowDelayedRoutine(string title, string message, float delay)
+    {
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        SetContent(title, message);
+        yield return ShowRoutine();
     }
 
     private IEnumerator ShowRoutine()
@@ -104,6 +133,15 @@ public class ResultToastController : MonoBehaviour
         yield return FadeTo(0f);
 
         showRoutine = null;
+    }
+
+    private void SetContent(string title, string message)
+    {
+        if (titleText != null)
+            titleText.text = title;
+
+        if (messageText != null)
+            messageText.text = message;
     }
 
     private IEnumerator FadeTo(float targetAlpha)

@@ -153,6 +153,8 @@ public class OrderManager : MonoBehaviour
         CocktailData servedCocktail = null;
         CocktailRecipeData matchedRecipe = null;
         bool unlockedNewRecipe = false;
+        bool firstCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
+        bool secondCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedSecondCustomerRoute();
 
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
@@ -182,7 +184,20 @@ public class OrderManager : MonoBehaviour
                         Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {matchedRecipe.displayName}");
 
                         if (unlockPopup != null)
-                            unlockPopup.Show(matchedRecipe);
+                        {
+                            if (secondCustomerRoute)
+                            {
+                                unlockPopup.Show(
+                                    matchedRecipe,
+                                    "새 레시피가 피어났습니다",
+                                    "선명한 끝맛이 레시피북에 남았습니다."
+                                );
+                            }
+                            else
+                            {
+                                unlockPopup.Show(matchedRecipe);
+                            }
+                        }
                     }
                 }
             }
@@ -196,8 +211,7 @@ public class OrderManager : MonoBehaviour
             }
         }
         
-        bool firstCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
-        ShowResultToast(matchedRecipe, unlockedNewRecipe, result, firstCustomerRoute);
+        ShowResultToast(matchedRecipe, unlockedNewRecipe, result, firstCustomerRoute, secondCustomerRoute);
 
         if (matchedRecipe == null)
         {
@@ -238,7 +252,8 @@ public class OrderManager : MonoBehaviour
         CocktailRecipeData matchedRecipe,
         bool unlockedNewRecipe,
         MiniGameResult result,
-        bool firstCustomerRoute
+        bool firstCustomerRoute,
+        bool secondCustomerRoute
     )
     {
         if (resultToast == null)
@@ -259,7 +274,11 @@ public class OrderManager : MonoBehaviour
 
         if (unlockedNewRecipe)
         {
-            resultToast.ShowRecipeUnlocked(matchedRecipe.displayName);
+            if (secondCustomerRoute)
+                resultToast.ShowSecondRouteRecipeUnlocked();
+            else
+                resultToast.ShowRecipeUnlocked(matchedRecipe.displayName);
+
             return;
         }
 

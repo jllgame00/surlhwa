@@ -32,18 +32,23 @@ public class RecipeUnlockPopupController : MonoBehaviour
 
     public void Show(CocktailRecipeData recipe)
     {
+        Show(recipe, null, null);
+    }
+
+    public void Show(CocktailRecipeData recipe, string titleOverride, string messageOverride)
+    {
         if (recipe == null || popupRoot == null)
             return;
 
         if (popupRoutine != null)
             StopCoroutine(popupRoutine);
 
-        popupRoutine = StartCoroutine(ShowRoutine(recipe));
+        popupRoutine = StartCoroutine(ShowRoutine(recipe, titleOverride, messageOverride));
     }
 
-    private IEnumerator ShowRoutine(CocktailRecipeData recipe)
+    private IEnumerator ShowRoutine(CocktailRecipeData recipe, string titleOverride, string messageOverride)
     {
-        SetupContent(recipe);
+        SetupContent(recipe, titleOverride, messageOverride);
 
         popupRoot.gameObject.SetActive(true);
         popupRoot.anchoredPosition = hiddenPosition;
@@ -58,13 +63,17 @@ public class RecipeUnlockPopupController : MonoBehaviour
         popupRoutine = null;
     }
 
-    private void SetupContent(CocktailRecipeData recipe)
+    private void SetupContent(CocktailRecipeData recipe, string titleOverride, string messageOverride)
     {
         if (titleText != null)
-            titleText.text = recipe.displayName;
+            titleText.text = !string.IsNullOrEmpty(titleOverride)
+                ? titleOverride
+                : recipe.displayName;
 
         if (messageText != null)
-            messageText.text = "ÀÌ ÇØ±İµÇ¾ú½À´Ï´Ù!";
+            messageText.text = !string.IsNullOrEmpty(messageOverride)
+                ? messageOverride
+                : "ìƒˆ ë ˆì‹œí”¼ê°€ í•´ê¸ˆë˜ì—ˆìŠµë‹ˆë‹¤.";
 
         if (cocktailImage != null)
         {
@@ -88,7 +97,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / slideDuration);
 
-            // ºÎµå·¯¿î ease-out
+            // Smooth ease-out.
             float eased = 1f - Mathf.Pow(1f - t, 3f);
 
             popupRoot.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, eased);

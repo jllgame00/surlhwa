@@ -62,9 +62,11 @@ public class InteractionUIController : MonoBehaviour
     private bool forcedSecondCustomerRouteConsumed;
     private bool activeCustomerUsesForcedRoute;
     private bool activeCustomerUsesFirstCustomerRoute;
+    private bool activeCustomerUsesSecondCustomerRoute;
     private MiniGameType activeForcedMethod = MiniGameType.Stir;
 
     public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesFirstCustomerRoute;
+    public bool IsForcedSecondCustomerRouteActive => activeCustomerUsesSecondCustomerRoute;
 
     private void Awake()
     {
@@ -107,6 +109,7 @@ public class InteractionUIController : MonoBehaviour
         wantsEllipsisVisible = customer != null;
         activeCustomerUsesForcedRoute = false;
         activeCustomerUsesFirstCustomerRoute = false;
+        activeCustomerUsesSecondCustomerRoute = false;
         activeForcedMethod = MiniGameType.Stir;
 
         if (TryApplyFirstCustomerRoute(customer))
@@ -118,6 +121,7 @@ public class InteractionUIController : MonoBehaviour
         else if (TryApplySecondCustomerRoute(customer))
         {
             activeCustomerUsesForcedRoute = true;
+            activeCustomerUsesSecondCustomerRoute = true;
             activeForcedMethod = forcedSecondCustomerMethod;
         }
 
@@ -140,6 +144,7 @@ public class InteractionUIController : MonoBehaviour
         wantsEllipsisVisible = false;
         activeCustomerUsesForcedRoute = false;
         activeCustomerUsesFirstCustomerRoute = false;
+        activeCustomerUsesSecondCustomerRoute = false;
         activeForcedMethod = MiniGameType.Stir;
 
         ClosePanels(false);
