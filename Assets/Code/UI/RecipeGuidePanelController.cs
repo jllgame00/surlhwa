@@ -8,6 +8,14 @@ public class RecipeGuidePanelController : MonoBehaviour
     private const string FirstRecipeRevealShownKey = "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN";
     private const string FirstRecipeRevealTitle = "레시피북의 첫 장";
     private const string FirstRecipeRevealMessage = "차가운 밤을 데울 한 잔이 조용히 기록되었습니다.";
+    private const float RecipeButtonWidth = 240f;
+    private const float RecipeButtonHeight = 54f;
+    private static readonly Color RecipeButtonNormalColor = new(1f, 0.96f, 0.86f, 0.18f);
+    private static readonly Color RecipeButtonHighlightedColor = new(1f, 0.93f, 0.72f, 0.28f);
+    private static readonly Color RecipeButtonPressedColor = new(1f, 0.86f, 0.55f, 0.36f);
+    private static readonly Color RecipeButtonSelectedColor = new(1f, 0.88f, 0.55f, 0.38f);
+    private static readonly Color RecipeButtonNormalTextColor = new(0.22f, 0.18f, 0.13f, 1f);
+    private static readonly Color RecipeButtonSelectedTextColor = new(0.1f, 0.08f, 0.05f, 1f);
 
     [Header("Managers")]
     [SerializeField] private RecipeUnlockManager recipeUnlockManager;
@@ -29,11 +37,15 @@ public class RecipeGuidePanelController : MonoBehaviour
     [SerializeField] private TMP_Text recipeIngredientText;
 
     private readonly List<Button> spawnedButtons = new();
+    private readonly Dictionary<Button, CocktailRecipeData> buttonRecipes = new();
     private MiniGameType currentMethod;
     private CocktailRecipeData selectedRecipe;
+    private bool missingTitleWarningLogged;
 
     private void Awake()
     {
+        ResolveDetailTextReferences();
+
         if (recipeUnlockManager == null)
             recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
 
@@ -90,9 +102,37 @@ public class RecipeGuidePanelController : MonoBehaviour
         ClearRecipeButtons();
 
         if (recipeUnlockManager == null || recipeListParent == null || recipeButtonPrefab == null)
+        {
+            Debug.LogWarning(
+                $"[RecipeGuidePanel] Cannot refresh list. " +
+                $"UnlockManager={(recipeUnlockManager != null ? "OK" : "NULL")} / " +
+                $"ListParent={(recipeListParent != null ? "OK" : "NULL")} / " +
+                $"ButtonPrefab={(recipeButtonPrefab != null ? "OK" : "NULL")}"
+            );
             return;
+        }
+
+        List<CocktailRecipeData> allRecipes = recipeUnlockManager.GetAllRecipes();
+        Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, totalRecipes={allRecipes.Count}");
+
+        foreach (CocktailRecipeData recipe in allRecipes)
+        {
+            if (recipe == null)
+            {
+                Debug.Log("[RecipeGuidePanel] Recipe=NULL");
+                continue;
+            }
+
+            bool unlocked = recipeUnlockManager.IsUnlocked(recipe);
+            Debug.Log(
+                $"[RecipeGuidePanel] Recipe Candidate -> " +
+                $"name={recipe.displayName}, id={recipe.recipeId}, method={recipe.method}, " +
+                $"unlocked={unlocked}, methodMatch={recipe.method == currentMethod}"
+            );
+        }
 
         List<CocktailRecipeData> recipes = recipeUnlockManager.GetUnlockedRecipesByMethod(currentMethod);
+        int instantiatedCount = 0;
 
         foreach (var recipe in recipes)
         {
@@ -103,11 +143,26 @@ public class RecipeGuidePanelController : MonoBehaviour
 
             TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
             if (label != null)
+            {
                 label.text = recipe.displayName;
+                ConfigureRecipeButtonText(label);
+            }
+
+            ConfigureRecipeButtonFrame(btn);
+            buttonRecipes[btn] = recipe;
 
             CocktailRecipeData capturedRecipe = recipe;
             btn.onClick.AddListener(() => SelectRecipe(capturedRecipe));
+            instantiatedCount++;
         }
+
+        RefreshButtonVisuals();
+
+        Debug.Log(
+            $"[RecipeGuidePanel] RefreshRecipeList complete -> " +
+            $"method={currentMethod}, unlockedForMethod={recipes.Count}, buttons={instantiatedCount}, " +
+            $"parent={recipeListParent.name}, parentActive={recipeListParent.gameObject.activeInHierarchy}"
+        );
     }
 
     private void SelectRecipe(CocktailRecipeData recipe)
@@ -119,6 +174,8 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void RefreshDetail()
     {
+        ResolveDetailTextReferences();
+
         if (selectedRecipe == null)
         {
             ClearDetail();
@@ -192,8 +249,15 @@ public class RecipeGuidePanelController : MonoBehaviour
             TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
             if (label == null) continue;
 
-            bool selected = selectedRecipe != null && label.text == selectedRecipe.displayName;
-            btn.image.color = selected ? new Color(1f, 0.9f, 0.6f, 1f) : Color.white;
+            bool selected = selectedRecipe != null
+                && buttonRecipes.TryGetValue(btn, out CocktailRecipeData recipe)
+                && recipe == selectedRecipe;
+
+            if (btn.image != null)
+                btn.image.color = selected ? RecipeButtonSelectedColor : RecipeButtonNormalColor;
+
+            label.color = selected ? RecipeButtonSelectedTextColor : RecipeButtonNormalTextColor;
+            label.fontStyle = selected ? FontStyles.Bold : FontStyles.Normal;
         }
     }
 
@@ -206,6 +270,82 @@ public class RecipeGuidePanelController : MonoBehaviour
         }
 
         spawnedButtons.Clear();
+        buttonRecipes.Clear();
+    }
+
+    private void ConfigureRecipeButtonFrame(Button btn)
+    {
+        if (btn == null)
+            return;
+
+        RectTransform rect = btn.GetComponent<RectTransform>();
+        if (rect != null)
+            rect.sizeDelta = new Vector2(RecipeButtonWidth, RecipeButtonHeight);
+
+        LayoutElement layout = btn.GetComponent<LayoutElement>();
+        if (layout == null)
+            layout = btn.gameObject.AddComponent<LayoutElement>();
+
+        layout.minWidth = RecipeButtonWidth;
+        layout.preferredWidth = RecipeButtonWidth;
+        layout.minHeight = RecipeButtonHeight;
+        layout.preferredHeight = RecipeButtonHeight;
+        layout.flexibleWidth = 0f;
+        layout.flexibleHeight = 0f;
+
+        if (btn.image != null)
+            btn.image.color = RecipeButtonNormalColor;
+
+        ColorBlock colors = btn.colors;
+        colors.normalColor = RecipeButtonNormalColor;
+        colors.highlightedColor = RecipeButtonHighlightedColor;
+        colors.pressedColor = RecipeButtonPressedColor;
+        colors.selectedColor = RecipeButtonSelectedColor;
+        colors.colorMultiplier = 1f;
+        btn.colors = colors;
+    }
+
+    private static void ConfigureRecipeButtonText(TMP_Text label)
+    {
+        label.alignment = TextAlignmentOptions.MidlineLeft;
+        label.margin = new Vector4(16f, 0f, 16f, 0f);
+        label.enableAutoSizing = true;
+        label.fontSizeMin = 16f;
+        label.fontSizeMax = 24f;
+        label.textWrappingMode = TextWrappingModes.NoWrap;
+        label.overflowMode = TextOverflowModes.Ellipsis;
+        label.color = RecipeButtonNormalTextColor;
+    }
+
+    private void ResolveDetailTextReferences()
+    {
+        if (recipeNameText != null && recipeNameText != recipeMethodText)
+            return;
+
+        TMP_Text fallback = FindChildTextByName("RecipeNameText");
+        if (fallback != null)
+        {
+            recipeNameText = fallback;
+            return;
+        }
+
+        if (!missingTitleWarningLogged)
+        {
+            Debug.LogWarning("[RecipeGuidePanel] RecipeNameText reference is missing or points to the method text.");
+            missingTitleWarningLogged = true;
+        }
+    }
+
+    private TMP_Text FindChildTextByName(string objectName)
+    {
+        TMP_Text[] texts = GetComponentsInChildren<TMP_Text>(true);
+        foreach (TMP_Text text in texts)
+        {
+            if (text != null && text.gameObject.name == objectName)
+                return text;
+        }
+
+        return null;
     }
 
     private void TryShowFirstRecipeReveal()

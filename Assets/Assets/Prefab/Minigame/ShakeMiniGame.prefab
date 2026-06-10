@@ -252,7 +252,7 @@ MonoBehaviour:
   closeButton: {fileID: 6577891076950340680}
   recipeListParent: {fileID: 8854416249012698446}
   recipeButtonPrefab: {fileID: 9058992205661850971, guid: 24ef0e595a45a114aa2b8b1b5102ae7a, type: 3}
-  recipeNameText: {fileID: 8089513735980847036}
+  recipeNameText: {fileID: 2210050856488556764}
   recipeMethodText: {fileID: 8089513735980847036}
   recipeIngredientText: {fileID: 868052635234270379}
 --- !u!1 &283686192470239530
@@ -3232,7 +3232,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 24, y: -70}
-  m_SizeDelta: {x: 220, y: 540}
+  m_SizeDelta: {x: 260, y: 540}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3010335773868502033
 MonoBehaviour:
