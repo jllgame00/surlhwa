@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225203d2ff5ca044ebcc044a58765f2a, type: 3}
   m_Name: TestShakeCocktail
   m_EditorClassIdentifier: Assembly-CSharp::CocktailData
-  cocktailName: 여명
+  cocktailName: "\uC5EC\uBA85"
   description: 
   miniGameType: 3
   steps: []
   emotionTags: 0200000004000000
+  cocktailSprite: {fileID: 21300000, guid: 52f209d5b4fa4d8429b26a87fc4d1f92, type: 3}
