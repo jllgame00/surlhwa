@@ -26,6 +26,7 @@ public class RecipeGuidePanelController : MonoBehaviour
     [SerializeField] private GameObject panelRoot;
     [SerializeField] private Button openButton;
     [SerializeField] private Button closeButton;
+    [SerializeField] private bool showOpenButtonOnAwake = true;
 
     [Header("Recipe List")]
     [SerializeField] private Transform recipeListParent;
@@ -55,7 +56,12 @@ public class RecipeGuidePanelController : MonoBehaviour
         if (recipeUnlockManager == null)
             Debug.LogWarning("[RecipeGuidePanel] RecipeUnlockManager not found in scene");
 
-        if (openButton != null) openButton.onClick.AddListener(OpenPanel);
+        if (openButton != null)
+        {
+            openButton.onClick.AddListener(OpenPanel);
+            openButton.gameObject.SetActive(showOpenButtonOnAwake);
+        }
+
         if (closeButton != null) closeButton.onClick.AddListener(ClosePanel);
 
         if (panelRoot != null)

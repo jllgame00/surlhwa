@@ -2013,11 +2013,13 @@ MonoBehaviour:
   panelRoot: {fileID: 1611502928}
   openButton: {fileID: 1684445065}
   closeButton: {fileID: 74076974}
+  showOpenButtonOnAwake: 0
   recipeListParent: {fileID: 1537576942}
   recipeButtonPrefab: {fileID: 9058992205661850971, guid: 24ef0e595a45a114aa2b8b1b5102ae7a, type: 3}
   recipeNameText: {fileID: 1641250392}
   recipeMethodText: {fileID: 868404843}
   recipeIngredientText: {fileID: 1535084067}
+  verboseLogging: 0
 --- !u!114 &250191728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11897,7 +11899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1684445065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13385,6 +13387,10 @@ MonoBehaviour:
   forcedFirstCustomerPrimaryTag: 0
   forcedFirstCustomerSecondaryTag: 7
   autoSelectForcedMethodOnBrew: 1
+  forceSecondCustomerRoute: 1
+  forcedSecondCustomerMethod: 3
+  forcedSecondCustomerPrimaryTag: 2
+  forcedSecondCustomerSecondaryTag: 6
   worldCamera: {fileID: 519420031}
   worldOffset: {x: 0, y: 1.2, z: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
