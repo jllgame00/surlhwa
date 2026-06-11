@@ -1,62 +1,213 @@
+using System.Collections;
 using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    public GameObject customerPrefab;
-    public Transform spawnPoint;
-    public SeatManager seatManager;
-    public Transform defaultExitPoint;
-    public SpecialGuestData[] specialGuests;
+    [Header("Spawn")]
+    [SerializeField] private GameObject customerPrefab;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private SeatManager seatManager;
+    [SerializeField] private Transform defaultExitPoint;
+    [SerializeField] private float spawnDelay = 1.5f;
+    [SerializeField] private int maxCustomersServed = 0;
+    [SerializeField] private bool autoStart = true;
+
+    [Header("Debug")]
+    [SerializeField] private bool debugSpawnWithKey = false;
+    [SerializeField] private KeyCode debugSpawnKey = KeyCode.Space;
+
+    [Header("Special Guests")]
+    [SerializeField] private SpecialGuestData[] specialGuests;
+
     private GameManager gm;
     [SerializeField] private MiniGameManager miniGameManager;
 
+    private CustomerController activeCustomer;
+    private int servedCount;
+    private Coroutine spawnRoutine;
 
-    void Update()
-    {   
-        if (miniGameManager != null && miniGameManager.IsPlaying)
-            return;
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            SpawnCustomer();
-    }
-
-    void SpawnCustomer()
-    {
-        if (customerPrefab == null || spawnPoint == null) return;
-
-        GameObject prefabToSpawn = customerPrefab;
-
-        // 특별 손님 체크
-        if (gm != null && specialGuests != null)
-        {
-            foreach (var guest in specialGuests)
-            {
-                if (gm.reputation >= guest.requiredReputation)
-                {
-                    prefabToSpawn = guest.prefab;
-                    break; // 지금은 1명만
-                }
-            }
-        }
-
-        var go = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
-
-        var cc = go.GetComponent<CustomerController>();
-        Debug.Log($"[Spawner] cc={(cc ? "OK" : "NULL")}");
-        if (cc != null && seatManager != null)
-        {
-            var seat = seatManager.GetFreeSeat(cc);
-            Debug.Log($"[Spawner] seat={(seat ? seat.name : "NULL")}");
-            cc.AssignSeat(seat);
-        }
-    }
-
-
-    void Awake()
+    private void Awake()
     {
         gm = FindFirstObjectByType<GameManager>();
 
+        if (seatManager == null)
+            seatManager = GetComponent<SeatManager>();
+
+        if (seatManager == null)
+            seatManager = FindFirstObjectByType<SeatManager>();
+
         if (miniGameManager == null)
             miniGameManager = FindFirstObjectByType<MiniGameManager>();
+
+        CustomerSpawner[] spawners = FindObjectsByType<CustomerSpawner>(
+            FindObjectsInactive.Exclude,
+            FindObjectsSortMode.None
+        );
+
+        int activeSpawnerCount = 0;
+        CustomerSpawner firstActiveSpawner = null;
+        foreach (CustomerSpawner spawner in spawners)
+        {
+            if (spawner == null || !spawner.isActiveAndEnabled)
+                continue;
+
+            activeSpawnerCount++;
+            if (firstActiveSpawner == null)
+                firstActiveSpawner = spawner;
+        }
+
+        if (activeSpawnerCount > 1 && firstActiveSpawner == this)
+            Debug.LogWarning($"[CustomerSpawner] {activeSpawnerCount} active CustomerSpawner components found. Use only one active spawner.");
+    }
+
+    private void Start()
+    {
+        if (autoStart)
+            SpawnNextCustomer();
+    }
+
+    private void Update()
+    {
+        if (!debugSpawnWithKey)
+            return;
+
+        if (miniGameManager != null && miniGameManager.IsPlaying)
+            return;
+
+        if (Input.GetKeyDown(debugSpawnKey))
+            SpawnNextCustomer();
+    }
+
+    public void SpawnNextCustomer()
+    {
+        if (activeCustomer != null)
+            return;
+
+        EnsureReferences();
+
+        if (customerPrefab == null)
+        {
+            Debug.LogError("[CustomerSpawner] customerPrefab is not assigned.");
+            return;
+        }
+
+        if (spawnPoint == null)
+        {
+            Debug.LogError("[CustomerSpawner] spawnPoint is not assigned.");
+            return;
+        }
+
+        if (seatManager == null)
+        {
+            Debug.LogError("[CustomerSpawner] SeatManager not found.");
+            return;
+        }
+
+        GameObject prefabToSpawn = ChooseCustomerPrefab();
+        if (prefabToSpawn == null)
+        {
+            Debug.LogError("[CustomerSpawner] Selected customer prefab is null.");
+            return;
+        }
+
+        SeatPoint seat = null;
+        GameObject customerObject = Instantiate(prefabToSpawn, spawnPoint.position, spawnPoint.rotation);
+        CustomerController customer = customerObject.GetComponent<CustomerController>();
+
+        if (customer == null)
+        {
+            if (seat != null)
+                seatManager.ReleaseSeat(seat);
+
+            Debug.LogError("[CustomerSpawner] customerPrefab does not have a CustomerController.");
+            Destroy(customerObject);
+            return;
+        }
+
+        seat = seatManager.GetFreeSeat(customer);
+        if (seat == null)
+        {
+            Destroy(customerObject);
+            ScheduleNextSpawn(spawnDelay);
+            return;
+        }
+
+        activeCustomer = customer;
+        customer.SetLoopManager(this);
+
+        if (defaultExitPoint != null)
+            customer.defaultExitPoint = defaultExitPoint;
+
+        customer.AssignSeat(seat);
+        Debug.Log($"[CustomerSpawner] Spawned customer at seat {seat.name}");
+    }
+
+    public void NotifyCustomerLeft(CustomerController customer)
+    {
+        if (activeCustomer == customer)
+            activeCustomer = null;
+
+        servedCount++;
+        Debug.Log($"[CustomerSpawner] Customer left. Served={servedCount}");
+
+        if (maxCustomersServed > 0 && servedCount >= maxCustomersServed)
+        {
+            Debug.Log($"[CustomerSpawner] maxCustomersServed reached ({maxCustomersServed}). Stopping customer loop.");
+            return;
+        }
+
+        ScheduleNextSpawn(spawnDelay);
+    }
+
+    private void ScheduleNextSpawn(float delay)
+    {
+        if (spawnRoutine != null)
+            StopCoroutine(spawnRoutine);
+
+        spawnRoutine = StartCoroutine(SpawnAfterDelay(delay));
+        Debug.Log($"[CustomerSpawner] Next customer scheduled in {delay:0.##}s");
+    }
+
+    private IEnumerator SpawnAfterDelay(float delay)
+    {
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        spawnRoutine = null;
+        SpawnNextCustomer();
+    }
+
+    private void EnsureReferences()
+    {
+        if (seatManager == null)
+            seatManager = GetComponent<SeatManager>();
+
+        if (seatManager == null)
+            seatManager = FindFirstObjectByType<SeatManager>();
+    }
+
+    private GameObject ChooseCustomerPrefab()
+    {
+        GameObject prefabToSpawn = customerPrefab;
+
+        if (gm == null)
+            gm = FindFirstObjectByType<GameManager>();
+
+        if (gm == null || specialGuests == null)
+            return prefabToSpawn;
+
+        foreach (SpecialGuestData guest in specialGuests)
+        {
+            if (guest == null || guest.prefab == null)
+                continue;
+
+            if (gm.reputation >= guest.requiredReputation)
+            {
+                prefabToSpawn = guest.prefab;
+                break;
+            }
+        }
+
+        return prefabToSpawn;
     }
 }

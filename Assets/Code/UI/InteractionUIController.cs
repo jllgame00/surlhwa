@@ -104,6 +104,17 @@ public class InteractionUIController : MonoBehaviour
 
     public void RegisterCustomer(CustomerController customer)
     {
+        Debug.Log($"[InteractionUI] RegisterCustomer called: {(customer != null ? customer.name : "NULL")}");
+
+        if (customer == null)
+        {
+            Debug.LogWarning("[InteractionUI] customer is NULL");
+            return;
+        }
+
+        Vector3 anchorPos = customer.GetInteractionAnchorPosition();
+        Debug.Log($"[InteractionUI] Anchor world pos: {anchorPos}");
+        
         activeCustomer = customer;
         hasMethodSelected = false;
         wantsEllipsisVisible = customer != null;

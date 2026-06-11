@@ -62,6 +62,7 @@ public class CustomerController : MonoBehaviour
     [Header("Interaction")]
     [SerializeField] private Transform interactionAnchor;
     private InteractionUIController interactionUI;
+    private CustomerSpawner loopManager;
     
     [Header("Unknown Cocktail Reactions")]
     [SerializeField]
@@ -97,6 +98,11 @@ public class CustomerController : MonoBehaviour
     {
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
+    }
+
+    public void SetLoopManager(CustomerSpawner manager)
+    {
+        loopManager = manager;
     }
 
     public void AssignSeat(SeatPoint seat)
@@ -153,8 +159,8 @@ public class CustomerController : MonoBehaviour
         {
             case State.MovingToSeat:
                 {
-                    Vector3 dest = (targetSeat != null && targetSeat.approachMarker != null)
-                        ? targetSeat.approachMarker.position
+                    Vector3 dest = (targetSeat != null && targetSeat.sitMarker != null)
+                        ? targetSeat.sitMarker.position
                         : (targetSeat != null ? targetSeat.transform.position : transform.position);
 
                     MoveToward(dest, onArrive: SitDown);
@@ -166,10 +172,23 @@ public class CustomerController : MonoBehaviour
                 break;
 
             case State.Ordering:
+                Debug.Log($"[Customer] Ordering reached: {name}");
+
+                if (interactionUI == null)
+                {
+                    interactionUI = FindFirstObjectByType<InteractionUIController>();
+                    Debug.Log($"[Customer] Retry find InteractionUI = {(interactionUI != null ? interactionUI.name : "NULL")}");
+                }
+
                 if (interactionUI != null)
+                {
+                    Debug.Log("[Customer] RegisterCustomer called");
                     interactionUI.RegisterCustomer(this);
+                }
                 else
+                {
                     Debug.LogWarning("[Customer] InteractionUIController not found");
+                }
 
                 state = State.Waiting;
                 break;
@@ -427,6 +446,9 @@ public class CustomerController : MonoBehaviour
 
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
+
+        if (loopManager != null)
+            loopManager.NotifyCustomerLeft(this);
 
         Destroy(gameObject);
     }
