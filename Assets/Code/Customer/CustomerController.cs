@@ -63,6 +63,19 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private Transform interactionAnchor;
     private InteractionUIController interactionUI;
     private CustomerSpawner loopManager;
+
+    [Header("Patience")]
+    [SerializeField] private float patienceMin = 10f;
+    [SerializeField] private float patienceMax = 15f;
+    [SerializeField] private int repPenaltyOnTimeout = 1;
+    [SerializeField] private string timeoutLine = "...";
+
+    private GameManager gm;
+    private MiniGameManager miniGameManager;
+    private bool usesPatience;
+    private bool patienceTimerActive;
+    private float patienceDuration;
+    private float patienceRemaining;
     
     [Header("Unknown Cocktail Reactions")]
     [SerializeField]
@@ -92,10 +105,14 @@ public class CustomerController : MonoBehaviour
 
         seatManager = FindFirstObjectByType<SeatManager>();
         interactionUI = FindFirstObjectByType<InteractionUIController>();
+        gm = FindFirstObjectByType<GameManager>();
+        miniGameManager = FindFirstObjectByType<MiniGameManager>();
     }
 
     private void OnDisable()
     {
+        StopPatienceTimer();
+
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
     }
@@ -103,6 +120,11 @@ public class CustomerController : MonoBehaviour
     public void SetLoopManager(CustomerSpawner manager)
     {
         loopManager = manager;
+    }
+
+    public void SetUsesPatience(bool value)
+    {
+        usesPatience = value;
     }
 
     public void AssignSeat(SeatPoint seat)
@@ -190,12 +212,13 @@ public class CustomerController : MonoBehaviour
                     Debug.LogWarning("[Customer] InteractionUIController not found");
                 }
 
-                state = State.Waiting;
+                EnterWaitingState();
                 break;
 
             case State.Waiting:
                 // InteractionUIController handles DialoguePanel -> BrewPanel -> Confirm.
                 // Confirm starts OrderManager.PlaySpecificOrder(); completion calls OnServedWithReaction().
+                UpdatePatienceTimer();
                 break;
 
             case State.Leaving:
@@ -255,9 +278,97 @@ public class CustomerController : MonoBehaviour
         return transform.position + Vector3.left * 3f;
     }
 
+    private void EnterWaitingState()
+    {
+        state = State.Waiting;
+
+        if (usesPatience)
+            StartPatienceTimer();
+        else if (interactionUI != null)
+            interactionUI.SetCustomerWaitUrgency(this, 1f);
+    }
+
+    private void StartPatienceTimer()
+    {
+        float min = Mathf.Max(0.1f, Mathf.Min(patienceMin, patienceMax));
+        float max = Mathf.Max(min, Mathf.Max(patienceMin, patienceMax));
+
+        patienceDuration = Random.Range(min, max);
+        patienceRemaining = patienceDuration;
+        patienceTimerActive = true;
+
+        if (interactionUI != null)
+        {
+            interactionUI.SetCustomerWaitIndicatorVisible(this, true);
+            interactionUI.SetCustomerWaitUrgency(this, 1f);
+        }
+    }
+
+    private void StopPatienceTimer()
+    {
+        patienceTimerActive = false;
+
+        if (interactionUI != null)
+            interactionUI.SetCustomerWaitIndicatorVisible(this, false);
+    }
+
+    private void UpdatePatienceTimer()
+    {
+        if (!patienceTimerActive)
+            return;
+
+        if (miniGameManager == null)
+            miniGameManager = FindFirstObjectByType<MiniGameManager>();
+
+        if (miniGameManager != null && miniGameManager.IsPlaying)
+            return;
+
+        patienceRemaining -= Time.deltaTime;
+
+        if (interactionUI != null)
+            interactionUI.SetCustomerWaitUrgency(this, GetPatienceRemainingNormalized());
+
+        if (patienceRemaining <= 0f)
+            TimeoutAndLeave();
+    }
+
+    private float GetPatienceRemainingNormalized()
+    {
+        if (patienceDuration <= 0f)
+            return 0f;
+
+        return Mathf.Clamp01(patienceRemaining / patienceDuration);
+    }
+
+    private void TimeoutAndLeave()
+    {
+        patienceTimerActive = false;
+
+        if (interactionUI != null)
+        {
+            interactionUI.SetCustomerWaitIndicatorVisible(this, false);
+            interactionUI.ClearCustomer(this);
+        }
+
+        if (gm == null)
+            gm = FindFirstObjectByType<GameManager>();
+
+        int penalty = Mathf.Abs(repPenaltyOnTimeout);
+        if (gm != null && penalty > 0)
+            gm.AddReputation(-penalty);
+
+        StopAllCoroutines();
+        ClearDialogueBubble();
+        ShowReactionBubble(timeoutLine);
+
+        state = State.Leaving;
+    }
+
     // Legacy serve path.
     public void OnServed(bool success)
     {
+        StopPatienceTimer();
+
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
 
@@ -283,6 +394,8 @@ public class CustomerController : MonoBehaviour
     // New path: calculate reaction from the actually served CocktailData.
     public void OnServedWithReaction(CocktailData servedCocktail, MiniGameResult result)
     {
+        StopPatienceTimer();
+
         bool firstCustomerRoute = IsInForcedFirstCustomerRoute();
         bool secondCustomerRoute = IsInForcedSecondCustomerRoute();
 
@@ -526,7 +639,12 @@ public class CustomerController : MonoBehaviour
 
     public Vector3 GetInteractionAnchorPosition()
     {
-        return interactionAnchor != null ? interactionAnchor.position : transform.position;
+        return GetInteractionAnchorTransform().position;
+    }
+
+    public Transform GetInteractionAnchorTransform()
+    {
+        return interactionAnchor != null ? interactionAnchor : transform;
     }
 
     public string GetInteractionHintLine()

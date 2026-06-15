@@ -45,6 +45,7 @@ public class InteractionUIController : MonoBehaviour
     [Header("Follow")]
     [SerializeField] private Camera worldCamera;
     [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.2f, 0f);
+    [SerializeField] private CustomerWaitIndicator waitIndicator;
 
     [Header("Method Button Visual")]
     [SerializeField] private Color normalColor = Color.white;
@@ -75,6 +76,12 @@ public class InteractionUIController : MonoBehaviour
         if (brewSelectionController == null && brewPanel != null)
             brewSelectionController = brewPanel.GetComponentInChildren<BrewSelectionController>(true);
 
+        if (waitIndicator == null && ellipsisPrompt != null)
+            waitIndicator = ellipsisPrompt.GetComponentInChildren<CustomerWaitIndicator>(true);
+
+        if (waitIndicator != null)
+            waitIndicator.SetWorldCamera(worldCamera);
+
         if (ellipsisButton != null) ellipsisButton.onClick.AddListener(OnClickEllipsis);
         if (brewButton != null) brewButton.onClick.AddListener(OnClickBrew);
 
@@ -98,6 +105,12 @@ public class InteractionUIController : MonoBehaviour
     {
         if (activeCustomer == null || ellipsisPrompt == null)
             return;
+
+        if (!wantsEllipsisVisible)
+        {
+            ellipsisPrompt.gameObject.SetActive(false);
+            return;
+        }
 
         UpdateEllipsisPosition();
     }
@@ -136,7 +149,15 @@ public class InteractionUIController : MonoBehaviour
             activeForcedMethod = forcedSecondCustomerMethod;
         }
 
+        if (waitIndicator != null)
+        {
+            waitIndicator.SetWorldCamera(worldCamera);
+            waitIndicator.SetFollowTarget(customer.GetInteractionAnchorTransform());
+        }
+
         ClosePanels(wantsEllipsisVisible);
+        SetCustomerWaitIndicatorVisible(customer, wantsEllipsisVisible);
+        SetCustomerWaitUrgency(customer, 1f);
         RefreshMethodVisuals();
         RefreshConfirmState();
 
@@ -150,6 +171,8 @@ public class InteractionUIController : MonoBehaviour
 
         Debug.Log($"[InteractionUI] ClearCustomer -> {(customer != null ? customer.name : "NULL")}");
 
+        SetCustomerWaitIndicatorVisible(customer, false);
+
         activeCustomer = null;
         hasMethodSelected = false;
         wantsEllipsisVisible = false;
@@ -161,6 +184,24 @@ public class InteractionUIController : MonoBehaviour
         ClosePanels(false);
         RefreshMethodVisuals();
         RefreshConfirmState();
+    }
+
+    public void SetCustomerWaitIndicatorVisible(CustomerController customer, bool visible)
+    {
+        if (activeCustomer != customer || waitIndicator == null)
+            return;
+
+        bool shouldShow = visible && wantsEllipsisVisible;
+        waitIndicator.SetFollowTarget(shouldShow && customer != null ? customer.GetInteractionAnchorTransform() : null);
+        waitIndicator.SetVisible(shouldShow);
+    }
+
+    public void SetCustomerWaitUrgency(CustomerController customer, float normalizedRemainingTime)
+    {
+        if (activeCustomer != customer || waitIndicator == null)
+            return;
+
+        waitIndicator.SetUrgency(normalizedRemainingTime);
     }
 
     private void UpdateEllipsisPosition()
@@ -437,6 +478,12 @@ public class InteractionUIController : MonoBehaviour
         if (overlayBlocker != null) overlayBlocker.SetActive(false);
 
         if (ellipsisPrompt != null)
-            ellipsisPrompt.gameObject.SetActive(keepEllipsis && activeCustomer != null);
+        {
+            bool showEllipsis = keepEllipsis && activeCustomer != null;
+            ellipsisPrompt.gameObject.SetActive(showEllipsis);
+
+            if (waitIndicator != null)
+                waitIndicator.SetVisible(showEllipsis);
+        }
     }
 }

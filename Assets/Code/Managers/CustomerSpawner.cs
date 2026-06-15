@@ -9,6 +9,9 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private SeatManager seatManager;
     [SerializeField] private Transform defaultExitPoint;
     [SerializeField] private float spawnDelay = 1.5f;
+    [SerializeField] private float postTutorialSpawnDelayMin = 2.5f;
+    [SerializeField] private float postTutorialSpawnDelayMax = 6.0f;
+    [SerializeField] private int tutorialCustomerCount = 2;
     [SerializeField] private int maxCustomersServed = 0;
     [SerializeField] private bool autoStart = true;
 
@@ -24,6 +27,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private CustomerController activeCustomer;
     private int servedCount;
+    private int spawnedCount;
     private Coroutine spawnRoutine;
 
     private void Awake()
@@ -134,6 +138,8 @@ public class CustomerSpawner : MonoBehaviour
 
         activeCustomer = customer;
         customer.SetLoopManager(this);
+        customer.SetUsesPatience(spawnedCount >= tutorialCustomerCount);
+        spawnedCount++;
 
         if (defaultExitPoint != null)
             customer.defaultExitPoint = defaultExitPoint;
@@ -156,7 +162,7 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        ScheduleNextSpawn(spawnDelay);
+        ScheduleNextSpawn(GetNextSpawnDelay());
     }
 
     private void ScheduleNextSpawn(float delay)
@@ -175,6 +181,17 @@ public class CustomerSpawner : MonoBehaviour
 
         spawnRoutine = null;
         SpawnNextCustomer();
+    }
+
+    private float GetNextSpawnDelay()
+    {
+        if (servedCount < tutorialCustomerCount)
+            return spawnDelay;
+
+        float min = Mathf.Min(postTutorialSpawnDelayMin, postTutorialSpawnDelayMax);
+        float max = Mathf.Max(postTutorialSpawnDelayMin, postTutorialSpawnDelayMax);
+
+        return Random.Range(min, max);
     }
 
     private void EnsureReferences()
