@@ -1833,7 +1833,7 @@ MonoBehaviour:
   spawnDelay: 1.5
   postTutorialSpawnDelayMin: 2.5
   postTutorialSpawnDelayMax: 6
-  tutorialCustomerCount: 2
+  tutorialCustomerCount: 3
   maxCustomersServed: 0
   autoStart: 1
   debugSpawnWithKey: 0
@@ -14070,7 +14070,7 @@ MonoBehaviour:
   spawnDelay: 1.5
   postTutorialSpawnDelayMin: 2.5
   postTutorialSpawnDelayMax: 6
-  tutorialCustomerCount: 2
+  tutorialCustomerCount: 3
   maxCustomersServed: 0
   autoStart: 0
   debugSpawnWithKey: 1
@@ -16023,6 +16023,10 @@ MonoBehaviour:
   forcedSecondCustomerMethod: 3
   forcedSecondCustomerPrimaryTag: 2
   forcedSecondCustomerSecondaryTag: 6
+  forceThirdCustomerRoute: 1
+  forcedThirdCustomerMethod: 0
+  forcedThirdCustomerPrimaryTag: 8
+  forcedThirdCustomerSecondaryTag: 1
   worldCamera: {fileID: 519420031}
   worldOffset: {x: 0, y: 1.2, z: 0}
   waitIndicator: {fileID: 571973490}

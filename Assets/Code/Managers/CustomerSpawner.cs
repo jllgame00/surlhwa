@@ -14,7 +14,7 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private float spawnDelay = 1.5f;
     [SerializeField] private float postTutorialSpawnDelayMin = 2.5f;
     [SerializeField] private float postTutorialSpawnDelayMax = 6.0f;
-    [SerializeField] private int tutorialCustomerCount = 2;
+    [SerializeField] private int tutorialCustomerCount = 3;
     [SerializeField] private int maxCustomersServed = 0;
     [SerializeField] private bool autoStart = true;
 

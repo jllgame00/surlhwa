@@ -42,6 +42,12 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private EmotionTag forcedSecondCustomerPrimaryTag = EmotionTag.Awakening;
     [SerializeField] private EmotionTag forcedSecondCustomerSecondaryTag = EmotionTag.Clarity;
 
+    [Header("Debug Third Customer Route")]
+    [SerializeField] private bool forceThirdCustomerRoute = false;
+    [SerializeField] private MiniGameType forcedThirdCustomerMethod = MiniGameType.Build;
+    [SerializeField] private EmotionTag forcedThirdCustomerPrimaryTag = EmotionTag.Regret;
+    [SerializeField] private EmotionTag forcedThirdCustomerSecondaryTag = EmotionTag.Comfort;
+
     [Header("Follow")]
     [SerializeField] private Camera worldCamera;
     [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.2f, 0f);
@@ -61,13 +67,16 @@ public class InteractionUIController : MonoBehaviour
     private bool wantsEllipsisVisible;
     private bool forcedFirstCustomerRouteConsumed;
     private bool forcedSecondCustomerRouteConsumed;
+    private bool forcedThirdCustomerRouteConsumed;
     private bool activeCustomerUsesForcedRoute;
     private bool activeCustomerUsesFirstCustomerRoute;
     private bool activeCustomerUsesSecondCustomerRoute;
+    private bool activeCustomerUsesThirdCustomerRoute;
     private MiniGameType activeForcedMethod = MiniGameType.Stir;
 
     public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesFirstCustomerRoute;
     public bool IsForcedSecondCustomerRouteActive => activeCustomerUsesSecondCustomerRoute;
+    public bool IsForcedThirdCustomerRouteActive => activeCustomerUsesThirdCustomerRoute;
 
     private void Awake()
     {
@@ -134,6 +143,7 @@ public class InteractionUIController : MonoBehaviour
         activeCustomerUsesForcedRoute = false;
         activeCustomerUsesFirstCustomerRoute = false;
         activeCustomerUsesSecondCustomerRoute = false;
+        activeCustomerUsesThirdCustomerRoute = false;
         activeForcedMethod = MiniGameType.Stir;
 
         if (TryApplyFirstCustomerRoute(customer))
@@ -147,6 +157,12 @@ public class InteractionUIController : MonoBehaviour
             activeCustomerUsesForcedRoute = true;
             activeCustomerUsesSecondCustomerRoute = true;
             activeForcedMethod = forcedSecondCustomerMethod;
+        }
+        else if (TryApplyThirdCustomerRoute(customer))
+        {
+            activeCustomerUsesForcedRoute = true;
+            activeCustomerUsesThirdCustomerRoute = true;
+            activeForcedMethod = forcedThirdCustomerMethod;
         }
 
         if (waitIndicator != null)
@@ -179,6 +195,7 @@ public class InteractionUIController : MonoBehaviour
         activeCustomerUsesForcedRoute = false;
         activeCustomerUsesFirstCustomerRoute = false;
         activeCustomerUsesSecondCustomerRoute = false;
+        activeCustomerUsesThirdCustomerRoute = false;
         activeForcedMethod = MiniGameType.Stir;
 
         ClosePanels(false);
@@ -449,6 +466,48 @@ public class InteractionUIController : MonoBehaviour
             $"[InteractionUI] Debug second route armed -> " +
             $"Method={forcedSecondCustomerMethod}, Order={forcedOrder.orderName}, " +
             $"Emotion={forcedSecondCustomerPrimaryTag}+{forcedSecondCustomerSecondaryTag}"
+        );
+
+        return true;
+    }
+
+    private bool TryApplyThirdCustomerRoute(CustomerController customer)
+    {
+        if (!forceThirdCustomerRoute)
+            return false;
+
+        if (!forceFirstCustomerRoute || !forcedFirstCustomerRouteConsumed)
+            return false;
+
+        if (!forceSecondCustomerRoute || !forcedSecondCustomerRouteConsumed)
+            return false;
+
+        if (forcedThirdCustomerRouteConsumed)
+            return false;
+
+        if (customer == null)
+            return false;
+
+        OrderData forcedOrder = GetTestOrder(forcedThirdCustomerMethod);
+        if (forcedOrder == null)
+        {
+            Debug.LogWarning(
+                $"[InteractionUI] Debug third route requested {forcedThirdCustomerMethod}, but no test order is assigned."
+            );
+            return false;
+        }
+
+        customer.ForceEmotionRequestForDebug(
+            forcedThirdCustomerPrimaryTag,
+            forcedThirdCustomerSecondaryTag
+        );
+
+        forcedThirdCustomerRouteConsumed = true;
+
+        Debug.Log(
+            $"[InteractionUI] Debug third route armed -> " +
+            $"Method={forcedThirdCustomerMethod}, Order={forcedOrder.orderName}, " +
+            $"Emotion={forcedThirdCustomerPrimaryTag}+{forcedThirdCustomerSecondaryTag}"
         );
 
         return true;

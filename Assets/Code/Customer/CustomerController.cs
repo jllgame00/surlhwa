@@ -27,6 +27,16 @@ public class CustomerController : MonoBehaviour
     private const string SecondRouteUnknownSuccessLine = "낯선 맛이지만, 어딘가 정신이 맑아지는 느낌이에요.";
     private const string SecondRouteWeakLine = "아직은 흐릿한 밤이 남아 있는 것 같아요.";
 
+    private const string ThirdRouteHintLine =
+        "조금 늦게까지 남아 있는 마음이 있어요.\n" +
+        "가볍게 사라지기보다는, 잔 안에 천천히 쌓이는 맛이면 좋겠어요.\n" +
+        "씁쓸하지만 너무 차갑지는 않은 끝맛을 원해요.";
+
+    private const string ThirdRouteSuccessImmediateLine = "조용히 가라앉네요.";
+    private const string ThirdRouteSuccessExitLine = "남아 있던 마음이 조금은 정리된 것 같아요.";
+    private const string ThirdRouteUnknownSuccessLine = "낯선 맛이지만, 오래 남는 느낌은 나쁘지 않네요.";
+    private const string ThirdRouteWeakLine = "아직은 마음이 조금 흩어지는 것 같아요.";
+
     public float moveSpeed = 2.0f;
     public Vector2 arriveThreshold = new Vector2(0.05f, 0.05f);
 
@@ -186,6 +196,14 @@ public class CustomerController : MonoBehaviour
             interactionUI = FindFirstObjectByType<InteractionUIController>();
 
         return interactionUI != null && interactionUI.IsForcedSecondCustomerRouteActive;
+    }
+
+    public bool IsInForcedThirdCustomerRoute()
+    {
+        if (interactionUI == null)
+            interactionUI = FindFirstObjectByType<InteractionUIController>();
+
+        return interactionUI != null && interactionUI.IsForcedThirdCustomerRouteActive;
     }
 
     void Update()
@@ -448,6 +466,7 @@ public class CustomerController : MonoBehaviour
 
         bool firstCustomerRoute = IsInForcedFirstCustomerRoute();
         bool secondCustomerRoute = IsInForcedSecondCustomerRoute();
+        bool thirdCustomerRoute = IsInForcedThirdCustomerRoute();
 
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
@@ -463,7 +482,9 @@ public class CustomerController : MonoBehaviour
                 ? GetFirstRouteUnknownReactionLine(result.success)
                 : secondCustomerRoute
                     ? GetSecondRouteUnknownReactionLine(result.success)
-                : GetRandomUnknownReactionLine(result.success);
+                    : thirdCustomerRoute
+                        ? GetThirdRouteUnknownReactionLine(result.success)
+                        : GetRandomUnknownReactionLine(result.success);
 
             Debug.Log(
                 $"[Customer] ServedCocktail=NULL / " +
@@ -506,6 +527,14 @@ public class CustomerController : MonoBehaviour
         {
             string immediateLine = result.success ? SecondRouteSuccessImmediateLine : SecondRouteWeakLine;
             string exitLine = result.success ? SecondRouteSuccessExitLine : null;
+            StartCoroutine(ReactionSequenceThenLeave(immediateLine, exitLine, hearts));
+            return;
+        }
+
+        if (thirdCustomerRoute)
+        {
+            string immediateLine = result.success ? ThirdRouteSuccessImmediateLine : ThirdRouteWeakLine;
+            string exitLine = result.success ? ThirdRouteSuccessExitLine : null;
             StartCoroutine(ReactionSequenceThenLeave(immediateLine, exitLine, hearts));
             return;
         }
@@ -710,6 +739,9 @@ public class CustomerController : MonoBehaviour
         if (IsInForcedSecondCustomerRoute())
             return SecondRouteHintLine;
 
+        if (IsInForcedThirdCustomerRoute())
+            return ThirdRouteHintLine;
+
         if (emotionRequest == null)
             return "손님이 어떤 맛을 원하는지 아직 모르겠습니다.";
 
@@ -772,5 +804,10 @@ public class CustomerController : MonoBehaviour
     private string GetSecondRouteUnknownReactionLine(bool miniGameSuccess)
     {
         return miniGameSuccess ? SecondRouteUnknownSuccessLine : SecondRouteWeakLine;
+    }
+
+    private string GetThirdRouteUnknownReactionLine(bool miniGameSuccess)
+    {
+        return miniGameSuccess ? ThirdRouteUnknownSuccessLine : ThirdRouteWeakLine;
     }
 }
