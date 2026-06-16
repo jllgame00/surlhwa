@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
     [Header("Spawn")]
     [SerializeField] private GameObject customerPrefab;
+    [SerializeField] private GameObject[] generalCustomerPrefabs;
+    [SerializeField] private bool avoidSameCustomerPrefabTwice = true;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private SeatManager seatManager;
     [SerializeField] private Transform defaultExitPoint;
@@ -28,6 +31,7 @@ public class CustomerSpawner : MonoBehaviour
     private CustomerController activeCustomer;
     private int servedCount;
     private int spawnedCount;
+    private GameObject lastSpawnedPrefab;
     private Coroutine spawnRoutine;
 
     private void Awake()
@@ -107,7 +111,7 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        GameObject prefabToSpawn = ChooseCustomerPrefab();
+        GameObject prefabToSpawn = GetCustomerPrefabForNextSpawn();
         if (prefabToSpawn == null)
         {
             Debug.LogError("[CustomerSpawner] Selected customer prefab is null.");
@@ -123,7 +127,7 @@ public class CustomerSpawner : MonoBehaviour
             if (seat != null)
                 seatManager.ReleaseSeat(seat);
 
-            Debug.LogError("[CustomerSpawner] customerPrefab does not have a CustomerController.");
+            Debug.LogError($"[CustomerSpawner] Selected customer prefab '{prefabToSpawn.name}' does not have a CustomerController.");
             Destroy(customerObject);
             return;
         }
@@ -140,6 +144,7 @@ public class CustomerSpawner : MonoBehaviour
         customer.SetLoopManager(this);
         customer.SetUsesPatience(spawnedCount >= tutorialCustomerCount);
         spawnedCount++;
+        lastSpawnedPrefab = prefabToSpawn;
 
         if (defaultExitPoint != null)
             customer.defaultExitPoint = defaultExitPoint;
@@ -201,6 +206,40 @@ public class CustomerSpawner : MonoBehaviour
 
         if (seatManager == null)
             seatManager = FindFirstObjectByType<SeatManager>();
+    }
+
+    private GameObject GetCustomerPrefabForNextSpawn()
+    {
+        if (spawnedCount < tutorialCustomerCount)
+            return customerPrefab;
+
+        if (generalCustomerPrefabs == null || generalCustomerPrefabs.Length == 0)
+            return customerPrefab;
+
+        List<GameObject> candidates = new List<GameObject>();
+        foreach (GameObject prefab in generalCustomerPrefabs)
+        {
+            if (prefab != null)
+                candidates.Add(prefab);
+        }
+
+        if (candidates.Count == 0)
+            return customerPrefab;
+
+        if (avoidSameCustomerPrefabTwice && candidates.Count > 1 && lastSpawnedPrefab != null)
+        {
+            List<GameObject> alternateCandidates = new List<GameObject>();
+            foreach (GameObject candidate in candidates)
+            {
+                if (candidate != lastSpawnedPrefab)
+                    alternateCandidates.Add(candidate);
+            }
+
+            if (alternateCandidates.Count > 0)
+                candidates = alternateCandidates;
+        }
+
+        return candidates[Random.Range(0, candidates.Count)];
     }
 
     private GameObject ChooseCustomerPrefab()

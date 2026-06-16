@@ -69,9 +69,21 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private float patienceMax = 15f;
     [SerializeField] private int repPenaltyOnTimeout = 1;
     [SerializeField] private string timeoutLine = "...";
+    [SerializeField]
+    private string[] timeoutLines =
+    {
+        "기다림이 조금 길었네요.",
+        "마음이 식기 전에 마시고 싶었는데요.",
+        "오늘은 이만 돌아가볼게요.",
+        "잔이 비어 있는 시간이 너무 길었어요.",
+        "다음에는 조금 더 빠르게 만날 수 있으면 좋겠어요."
+    };
+    [SerializeField] private string timeoutToastTitle = "평판 하락";
+    [SerializeField] private string timeoutToastMessageFormat = "손님이 오래 기다리다 자리를 떠났습니다. Rep -{0}";
 
     private GameManager gm;
     private MiniGameManager miniGameManager;
+    private ResultToastController resultToast;
     private bool usesPatience;
     private bool patienceTimerActive;
     private float patienceDuration;
@@ -107,6 +119,7 @@ public class CustomerController : MonoBehaviour
         interactionUI = FindFirstObjectByType<InteractionUIController>();
         gm = FindFirstObjectByType<GameManager>();
         miniGameManager = FindFirstObjectByType<MiniGameManager>();
+        resultToast = FindFirstObjectByType<ResultToastController>();
     }
 
     private void OnDisable()
@@ -357,11 +370,48 @@ public class CustomerController : MonoBehaviour
         if (gm != null && penalty > 0)
             gm.AddReputation(-penalty);
 
-        StopAllCoroutines();
-        ClearDialogueBubble();
-        ShowReactionBubble(timeoutLine);
+        ShowTimeoutReputationFeedback(penalty);
 
+        StopAllCoroutines();
+        StartCoroutine(TimeoutReactionThenLeave());
+    }
+
+    private IEnumerator TimeoutReactionThenLeave()
+    {
+        ClearDialogueBubble();
+        ShowReactionBubble(GetRandomTimeoutLine());
+
+        yield return new WaitForSeconds(1.2f);
+
+        ClearDialogueBubble();
         state = State.Leaving;
+    }
+
+    private string GetRandomTimeoutLine()
+    {
+        if (timeoutLines == null || timeoutLines.Length == 0)
+            return timeoutLine;
+
+        string line = timeoutLines[Random.Range(0, timeoutLines.Length)];
+        return string.IsNullOrEmpty(line) ? timeoutLine : line;
+    }
+
+    private void ShowTimeoutReputationFeedback(int penalty)
+    {
+        if (penalty <= 0)
+            return;
+
+        if (resultToast == null)
+            resultToast = FindFirstObjectByType<ResultToastController>();
+
+        if (resultToast == null)
+            return;
+
+        string message = string.IsNullOrEmpty(timeoutToastMessageFormat)
+            ? $"Rep -{penalty}"
+            : timeoutToastMessageFormat.Replace("{0}", penalty.ToString());
+
+        resultToast.Show(timeoutToastTitle, message);
     }
 
     // Legacy serve path.
