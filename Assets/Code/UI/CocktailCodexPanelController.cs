@@ -67,7 +67,14 @@ public class CocktailCodexPanelController : MonoBehaviour
     public void Open()
     {
         if (panelRoot != null)
+        {
             panelRoot.SetActive(true);
+            panelRoot.transform.SetAsLastSibling();
+        }
+        else
+        {
+            transform.SetAsLastSibling();
+        }
 
         selectedRecipe = null;
         ShowGridPage();

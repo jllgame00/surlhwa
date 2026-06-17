@@ -173,7 +173,7 @@ public class OrderManager : MonoBehaviour
 
                 bool wasUnlocked = recipeUnlockManager.IsUnlocked(matchedRecipe);
 
-                if (!wasUnlocked)
+                if (result.success && !wasUnlocked)
                 {
                     bool newlyUnlocked = recipeUnlockManager.UnlockRecipe(matchedRecipe);
 

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb55097d4deeb34c852231a8dc386d7, type: 3}
   m_Name: Recipe_TestFloat
   m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
-  recipeId: recipe_test_float
-  displayName: Test Float Recipe
+  recipeId: recipe_manwol
+  displayName: 만월
+  description: "잔 위로 조용히 떠오르는 달빛 같은 한 잔.\n가라앉은 마음 위에 맑은 그리움을 띄운다."
   method: 1
   targetCocktail: {fileID: 11400000, guid: c45c5194c56c1de45a5cd0061e701a27, type: 2}
   ingredients:

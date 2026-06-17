@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225203d2ff5ca044ebcc044a58765f2a, type: 3}
   m_Name: TestBuildCocktail
   m_EditorClassIdentifier: Assembly-CSharp::CocktailData
-  cocktailName: 잔설
-  description: "잔 끝에 남은 눈처럼 조용히 쌓이는 한 잔.\n늦게 사라지는 마음을 부드럽게 눌러 담는다."
+  cocktailName: "\uC794\uC124"
+  description: "\uC794 \uB05D\uC5D0 \uB0A8\uC740 \uB208\uCC98\uB7FC \uC870\uC6A9\uD788
+    \uC313\uC774\uB294 \uD55C \uC794.\n\uB2A6\uAC8C \uC0AC\uB77C\uC9C0\uB294 \uB9C8\uC74C\uC744
+    \uBD80\uB4DC\uB7FD\uAC8C \uB20C\uB7EC \uB2F4\uB294\uB2E4."
   miniGameType: 0
   steps: []
   emotionTags: 0800000001000000
-  cocktailSprite: {fileID: 0}
+  cocktailSprite: {fileID: 21300000, guid: 6e49f540af23654438f79281073e31c2, type: 3}

@@ -14,7 +14,7 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private float spawnDelay = 1.5f;
     [SerializeField] private float postTutorialSpawnDelayMin = 2.5f;
     [SerializeField] private float postTutorialSpawnDelayMax = 6.0f;
-    [SerializeField] private int tutorialCustomerCount = 3;
+    [SerializeField] private int tutorialCustomerCount = 4;
     [SerializeField] private int maxCustomersServed = 0;
     [SerializeField] private bool autoStart = true;
 
@@ -27,6 +27,7 @@ public class CustomerSpawner : MonoBehaviour
 
     private GameManager gm;
     [SerializeField] private MiniGameManager miniGameManager;
+    [SerializeField] private BusinessDayManager businessDayManager;
 
     private CustomerController activeCustomer;
     private int servedCount;
@@ -46,6 +47,8 @@ public class CustomerSpawner : MonoBehaviour
 
         if (miniGameManager == null)
             miniGameManager = FindFirstObjectByType<MiniGameManager>();
+
+        ResolveBusinessDayManager(false);
 
         CustomerSpawner[] spawners = FindObjectsByType<CustomerSpawner>(
             FindObjectsInactive.Exclude,
@@ -92,6 +95,10 @@ public class CustomerSpawner : MonoBehaviour
             return;
 
         EnsureReferences();
+        ResolveBusinessDayManager(true);
+
+        if (businessDayManager != null && !businessDayManager.CanSpawnMoreCustomers())
+            return;
 
         if (customerPrefab == null)
         {
@@ -161,6 +168,15 @@ public class CustomerSpawner : MonoBehaviour
         servedCount++;
         Debug.Log($"[CustomerSpawner] Customer left. Served={servedCount}");
 
+        ResolveBusinessDayManager(false);
+        if (businessDayManager != null)
+        {
+            businessDayManager.NotifyCustomerServedOrLeft();
+
+            if (!businessDayManager.CanSpawnMoreCustomers())
+                return;
+        }
+
         if (maxCustomersServed > 0 && servedCount >= maxCustomersServed)
         {
             Debug.Log($"[CustomerSpawner] maxCustomersServed reached ({maxCustomersServed}). Stopping customer loop.");
@@ -206,6 +222,15 @@ public class CustomerSpawner : MonoBehaviour
 
         if (seatManager == null)
             seatManager = FindFirstObjectByType<SeatManager>();
+    }
+
+    private void ResolveBusinessDayManager(bool createIfMissing)
+    {
+        if (businessDayManager == null)
+            businessDayManager = FindFirstObjectByType<BusinessDayManager>();
+
+        if (businessDayManager == null && createIfMissing)
+            businessDayManager = gameObject.AddComponent<BusinessDayManager>();
     }
 
     private GameObject GetCustomerPrefabForNextSpawn()
