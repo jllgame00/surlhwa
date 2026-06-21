@@ -24,6 +24,7 @@ public class CustomerSpawner : MonoBehaviour
 
     [Header("Special Guests")]
     [SerializeField] private SpecialGuestData[] specialGuests;
+    [SerializeField] private GameObject littlePrincePrefab;
 
     private GameManager gm;
     [SerializeField] private MiniGameManager miniGameManager;
@@ -33,7 +34,9 @@ public class CustomerSpawner : MonoBehaviour
     private int servedCount;
     private int spawnedCount;
     private GameObject lastSpawnedPrefab;
+    private bool activeCustomerIsLittlePrinceFirstVisit;
     private Coroutine spawnRoutine;
+    private const string LittlePrinceFirstVisitCompletedKey = "littlePrinceFirstVisitCompleted";
 
     private void Awake()
     {
@@ -148,6 +151,8 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         activeCustomer = customer;
+        activeCustomerIsLittlePrinceFirstVisit =
+            prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFirstVisit();
         customer.SetLoopManager(this);
         customer.SetUsesPatience(spawnedCount >= tutorialCustomerCount);
         spawnedCount++;
@@ -163,7 +168,16 @@ public class CustomerSpawner : MonoBehaviour
     public void NotifyCustomerLeft(CustomerController customer)
     {
         if (activeCustomer == customer)
+        {
+            if (activeCustomerIsLittlePrinceFirstVisit)
+            {
+                PlayerPrefs.SetInt(LittlePrinceFirstVisitCompletedKey, 1);
+                PlayerPrefs.Save();
+            }
+
             activeCustomer = null;
+            activeCustomerIsLittlePrinceFirstVisit = false;
+        }
 
         servedCount++;
         Debug.Log($"[CustomerSpawner] Customer left. Served={servedCount}");
@@ -235,6 +249,9 @@ public class CustomerSpawner : MonoBehaviour
 
     private GameObject GetCustomerPrefabForNextSpawn()
     {
+        if (ShouldSpawnLittlePrinceFirstVisit())
+            return littlePrincePrefab;
+
         if (spawnedCount < tutorialCustomerCount)
             return customerPrefab;
 
@@ -265,6 +282,15 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         return candidates[Random.Range(0, candidates.Count)];
+    }
+
+    private bool ShouldSpawnLittlePrinceFirstVisit()
+    {
+        return businessDayManager != null
+            && businessDayManager.CurrentDay == 2
+            && spawnedCount == 0
+            && PlayerPrefs.GetInt(LittlePrinceFirstVisitCompletedKey, 0) == 0
+            && littlePrincePrefab != null;
     }
 
     private GameObject ChooseCustomerPrefab()

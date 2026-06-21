@@ -3,21 +3,27 @@ using UnityEngine;
 
 public class BusinessDayManager : MonoBehaviour
 {
+    private const string CurrentDayKey = "currentDay";
+
     [SerializeField] private int maxCustomersPerDay = 8;
     [SerializeField] private bool endDayWhenMaxCustomersServed = true;
     [SerializeField] private DayResultPanelController resultPanel;
+    [SerializeField, Min(1)] private int startingDay = 1;
 
     private int servedCustomerCount;
     private bool dayEnded;
+    private int currentDay;
     private GameManager gameManager;
     private RecipeUnlockManager recipeUnlockManager;
 
     public int ServedCustomerCount => servedCustomerCount;
     public int MaxCustomersPerDay => Mathf.Max(1, maxCustomersPerDay);
     public bool IsDayEnded => dayEnded;
+    public int CurrentDay => Mathf.Max(1, currentDay);
 
     private void Awake()
     {
+        currentDay = Mathf.Max(1, PlayerPrefs.GetInt(CurrentDayKey, startingDay));
         ResolveReferences();
     }
 
@@ -49,6 +55,9 @@ public class BusinessDayManager : MonoBehaviour
             return;
 
         dayEnded = true;
+        currentDay = CurrentDay + 1;
+        PlayerPrefs.SetInt(CurrentDayKey, currentDay);
+        PlayerPrefs.Save();
         ResolveReferences();
 
         if (resultPanel == null)
