@@ -129,25 +129,146 @@ Status:
 | B2.6 | Direct Main Scene Move | SUPERSEDED |
 
 B2.5/B2.6은 asset 이동 실패가 아니라 architecture decision 변경으로 대체됐다.
-Scene path와 naming은 Phase C에서 boundary를 확정한 뒤 Phase D에서 처리한다.
+Scene path와 naming은 C0 Boundary Audit 결과에 따라 처리한다. Canonical production
+BarScene identity/path migration은 C1에서 완료됐으며, 이후 hierarchy와 remaining Scene
+cleanup은 Phase D에서 다룬다.
 
 ### PHASE C — Architecture Rebuild
 
-현재 진행할 다음 Phase다.
+Current active roadmap은 C0 Architecture Audit에서 확정한 아래 sequence 하나다.
+이전 C1 Final Scene Architecture, C2 Bootstrap / Scene Flow, C3 BarScene
+canonicalization, C4 BartendingScene extraction, C5 additive flow, C6 regression
+numbering은 `SUPERSEDED BY C0 ARCHITECTURE AUDIT`이며 active roadmap이 아니다.
 
-| Step | Goal |
-| --- | --- |
-| C0 | Full Architecture Boundary Audit |
-| C1 | Final Scene Architecture 확정 |
-| C2 | Bootstrap / Scene Flow 최소 구현 |
-| C3 | BarScene canonicalization |
-| C4 | BartendingScene extraction |
-| C5 | Bar ↔ Bartending additive flow와 최소 contract |
-| C6 | Scene boundary regression |
+| Step | Goal | Status |
+| --- | --- | --- |
+| C0 | Full Architecture Boundary Audit | COMPLETE |
+| C1 | Canonical BarScene Name and Path | COMPLETE |
+| C2 | Bartending Boundary Preparation in Current Single Scene | NEXT |
+| C3 | Minimal BartendingScene Shell | PENDING |
+| C4 | Additive Load / Run / Unload / Result Return | PENDING |
+| C5 | UI / Runtime Ownership / Progression Boundary Hardening | PENDING |
+| C6 | Full Scene Architecture Regression | PENDING |
 
-C0에서는 current Scene ownership, runtime lifetime, lookup, serialized reference,
-persistent/runtime state를 먼저 증명한다. 구현 전 `BartendingSession`과
-`MiniGameResult` contract의 최소 범위를 결정한다.
+#### C0 — Full Architecture Boundary Audit
+
+Status: `COMPLETE`
+
+Current runtime dependency, Scene/domain boundary, lifetime, lookup, serialized
+reference, persistent/runtime state를 분석하고 실제 migration sequence를 확정했다.
+C0은 implementation phase가 아니라 audit phase다.
+
+#### C1 — Canonical BarScene Name and Path
+
+Status: `COMPLETE`
+
+```text
+Assets/Scenes/SampleScene.unity
+→ Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity
+```
+
+C1은 GUID-preserving canonical production Scene migration이다. Scene GUID와 YAML
+content가 보존됐고, Build Settings와 `templateDefaultScene`이 align됐으며 runtime
+behavior도 유지됐다. C1은 hierarchy, component, runtime architecture behavior를
+refactor하지 않았다.
+
+#### C2 — Bartending Boundary Preparation in Current Single Scene
+
+Status: `NEXT`
+
+BarScene 하나 안에서 `BartendingSession`과 result seam을 먼저 증명한다.
+
+- Bar-side coordinator/facade를 준비한다.
+- 기존 `MiniGameManager` local execution을 유지한다.
+- result completion이 exactly-once로 처리되도록 한다.
+- `CustomerController`와 `CustomerSpawner`의 direct MiniGameManager dependency를
+  줄이는 방향을 준비한다.
+
+C2에서는 BartendingScene 생성, additive loading, MiniGame Scene extraction, camera
+architecture change, persistence refactor, Data responsibility refactor를 하지 않는다.
+
+#### C3 — Minimal BartendingScene Shell
+
+Status: `PENDING`
+
+Production path를 아직 전환하지 않은 상태에서 Bartending-local Scene environment를
+생성한다.
+
+```text
+BartendingScene
+├─ _SYSTEMS
+├─ _GAMEPLAY
+├─ _UI
+└─ _CAMERA
+```
+
+Stir, Shake, Build, Float는 각각 Scene이 아니라 existing Production MiniGame Prefab으로
+유지한다.
+
+#### C4 — Additive Load / Run / Unload / Result Return
+
+Status: `PENDING`
+
+```text
+Bar begin
+→ BartendingScene Additive Load
+→ session 전달
+→ MiniGame
+→ result capture
+→ BartendingScene Unload
+→ Bar restore
+→ result apply exactly once
+```
+
+C4는 Architecture Phase의 highest-risk transition이다. BarScene은 unload하지 않아
+current Customer, seat state, Business Day state를 유지한다.
+
+#### C5 — UI / Runtime Ownership / Progression Boundary Hardening
+
+Status: `PENDING`
+
+- RecipeGuide의 hidden Bar lookup을 정리한다.
+- Bar/Bartending runtime object parent ownership을 명확히 한다.
+- Canvas sorting과 one EventSystem policy를 검증한다.
+- camera / AudioListener transition을 harden한다.
+- Scene MiniGameCanvas와 BrewSelection responsibility를 review한다.
+
+`REVIEW` 항목은 evidence 없이 삭제하지 않는다.
+
+#### C6 — Full Scene Architecture Regression
+
+Status: `PENDING`
+
+최소 regression:
+
+```text
+Bar start
+Customer spawn
+Seat
+Interaction
+Stir
+Shake
+Build
+Float
+Bar return
+Seat release
+Next spawn
+Day end
+Result
+Codex
+Next Night
+Day 2 Little Prince
+No tutorial repeat
+Repeated Bartending entry
+No duplicate Scene
+No duplicate Camera
+No duplicate AudioListener
+No orphan runtime objects
+```
+
+Bootstrap은 `CREATE_LATER`, MainMenu는 `CREATE_LATER`, EndingScene은 `DEFER`다.
+SaveManager와 AudioManager는 아직 구현되지 않았고, Bartending additive flow는 initially
+Bar-local coordinator로 시작할 수 있으므로 C1~C6의 blocker가 아니다.
 
 ### PHASE D — Scene Structure
 
@@ -157,7 +278,7 @@ persistent/runtime state를 먼저 증명한다. 구현 전 `BartendingSession`�
 | D2 | BartendingScene hierarchy |
 | D3 | MainMenu structure |
 | D4 | Development Scene 분류와 유지 정책 |
-| D5 | Scene naming / path cleanup |
+| D5 | Remaining Scene naming / path cleanup |
 
 Scene 이동과 hierarchy 변경은 한 Commit에 섞지 않는다. world transform,
 PrefabInstance link, serialized reference를 각 step마다 검증한다.

@@ -22,7 +22,8 @@ Core Gameplay Prototype
 → Runtime Baseline Stabilization
 → Production Asset Migration B2.1~B2.4
 → Architecture Documentation Checkpoint
-→ Full Architecture Boundary Audit
+→ Phase C0 — Full Architecture Boundary Audit
+→ Phase C1 — Canonical BarScene Name and Path
 ```
 
 현재 Branch는 `refactor/project-rebuild`다.
@@ -31,6 +32,20 @@ Runtime Baseline Stabilization은 완료됐다. canonical `CustomerSpawner`와
 `BusinessDayManager`를 각각 하나로 확정했고, automatic customer loop와 Day 1
 Tutorial, Day 2 Tutorial repetition 차단, Day 2 Little Prince first spawn을 Manual
 Regression으로 확인했다.
+
+### Architecture Boundary and Canonical Scene
+
+| Phase | Scope | Status |
+| --- | --- | --- |
+| C0 | Full Architecture Boundary Audit | COMPLETE |
+| C1 | Canonical BarScene Name and Path | COMPLETE |
+
+C1은 current production Scene의 identity와 path만 바꿨다. Scene GUID와 YAML
+content, hierarchy, serialized reference, runtime C# 및 playable behavior는 보존됐다.
+Manual smoke regression도 PASS했다.
+현재 canonical production Scene은
+`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`이며 Build Settings index 0의 유일한
+enabled production Scene이다.
 
 ### Production Asset Migration
 
@@ -49,9 +64,10 @@ Assets/_SURLHWA/Data
 Assets/_SURLHWA/Prefabs
 ```
 
-다음 단계는 기존 계획의 단순 Scene 이동이 아니라 `C0 — Full Architecture
-Boundary Audit`이다. Scene, Code, Data, Presentation, Persistence 경계를 먼저
-증명한 뒤 구조 변경 범위를 확정한다.
+다음 단계는 `C2 — Bartending Boundary Preparation in Current Single Scene`이다.
+현재 BarScene 하나 안에서 Bar와 Bartending 사이의 최소 session/result contract를
+먼저 준비한다. BartendingScene 생성, additive loading, MiniGame Scene extraction은
+아직 시작하지 않았다.
 
 ---
 
@@ -98,11 +114,16 @@ spawn과 tutorial repetition 차단을 확인했다.
 
 ## 3. Current Scene
 
-현재 Main Scene:
+현재 canonical production Scene:
 
-`Assets/Scenes/SampleScene.unity`
+`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`
 
-Front-facing Bar Layout이 적용되어 있다.
+Build Settings index 0의 enabled production Scene은 BarScene 하나다. Front-facing Bar
+Layout이 적용되어 있으며, current runtime architecture는 여전히 Bar와 Bartending
+execution이 함께 있는 single-Scene 구조다.
+
+기존 `Assets/Scenes/SampleScene.unity`는 C1에서 canonical BarScene path로 이동됐으며
+더 이상 current production Scene이 아니다.
 
 별도 Layout Test Scene이 존재한다.
 
@@ -388,7 +409,7 @@ serialized reference는 각 B2 batch에서 보존 검증했다.
 - legacy minigame JPG assets
 - Fonts / TextMesh Pro assets
 - `Assets/Code/` 전체
-- `Assets/Scenes/` 및 `Assets/BarScene_LayoutTest.unity`
+- legacy source folder `Assets/Scenes/` 및 `Assets/BarScene_LayoutTest.unity`
 - 비어 있거나 legacy asset만 남은 기존 source folder
 
 이 항목은 사용 관계와 architecture boundary를 재검증하기 전 이동하거나 삭제하지
@@ -463,17 +484,20 @@ serialized reference는 각 B2 batch에서 보존 검증했다.
 
 현재 최우선 목표:
 
-**C0 — Full Architecture Boundary Audit**
+**C2 — Bartending Boundary Preparation in Current Single Scene**
 
-다음을 실제 current repository 기준으로 조사한 뒤 Scene 구조 변경을 시작한다.
+현재 BarScene을 유지한 채 다음 최소 boundary를 먼저 준비한다.
 
-- global lifetime과 scene-local lifetime
-- BarScene과 BartendingScene의 최소 contract
-- runtime state와 persistent state
-- Story logic과 Special Guest presentation
-- Scene lookup과 serialized dependency
-- MainMenu / Bootstrap / optional Ending의 실제 필요 범위
+- Bar → Bartending start session
+- Bartending → Bar result return
+- current Customer와 Business Day state의 BarScene ownership
+- Bartending active-state, camera, input transition boundary
+- existing direct MiniGameManager dependency를 contract 뒤로 옮길 준비
 
-기존 B2.5 Development Scene 이동과 B2.6 Main Scene 이동 계획은
-`SUPERSEDED`다. Architecture Phase C 이후 검증된 구조에 따라 Scene 이동과 naming을
-수행한다.
+BartendingScene 생성, additive loading, MiniGame execution Scene extraction은 C2의
+범위가 아니다. Bootstrap은 `CREATE_LATER`, MainMenu는 `CREATE_LATER`, EndingScene은
+`DEFER`, Special Guest Architecture는 Phase G, Persistence centralization은 Phase H,
+AudioManager는 실제 global requirement가 확인될 때까지 deferred 상태를 유지한다.
+
+`BarScene_LayoutTest.unity`는 여전히 `DEVELOPMENT / UPDATE_AFTER_BAR_REBUILD`다.
+C1에서 canonical BarScene으로 대체되거나 동기화되지 않았다.

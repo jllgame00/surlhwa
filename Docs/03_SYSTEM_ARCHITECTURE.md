@@ -21,11 +21,13 @@ Last Updated: 2026-08-11
 
 `Docs/08_PROJECT_AUDIT.md`는 Rebuild 시작 시점의 historical snapshot이다. Audit
 이후 canonical CustomerSpawner / BusinessDayManager 확정, automatic spawn 복구,
-Day 1-only Tutorial gate, Production Asset Migration B2.1~B2.4가 완료됐다.
+Day 1-only Tutorial gate, Production Asset Migration B2.1~B2.4, C0 Full Architecture
+Boundary Audit, C1 Canonical BarScene Name and Path migration이 완료됐다.
 
-현재 runtime은 아직 `SampleScene.unity` 한 Scene에 Bar, Bartending, UI,
-Progression 책임이 함께 존재한다. 아래 Target Scene Architecture는 구현 완료 상태가
-아니며 C0 Boundary Audit 이후 단계적으로 적용한다.
+현재 runtime은 `Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity` 한 Scene에 Bar,
+Bartending, UI, Progression 책임이 함께 존재한다. C1은 Scene identity/path만
+canonicalized 했으며, BartendingScene 분리나 additive loading은 아직 구현하지 않았다.
+아래 Target Scene Architecture는 구현 완료 상태가 아니며 C2 이후 단계적으로 적용한다.
 
 ## 2. Current Runtime Flow
 
@@ -178,9 +180,11 @@ Code path 이동과 logic refactor를 같은 작업으로 처리하지 않는다
 
 ## 8. Target Scene Architecture
 
-현재 Production Scene은 `Assets/Scenes/SampleScene.unity` 하나에 Bar gameplay,
-Bartending, UI, Progression이 함께 있다. 다음 구조는 현재 구현 상태가 아니라 C0
-Audit 이후 단계적으로 도달할 Target이다.
+현재 canonical production Scene은
+`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`이며 Build Settings index 0의 enabled
+production Scene이다. Bar gameplay, Bartending execution, UI, Progression은 아직 이
+하나의 BarScene에 함께 있다. 다음 구조는 현재 구현 상태가 아니라 C2 이후 단계적으로
+도달할 Target이다.
 
 ```text
 Scenes/
@@ -253,8 +257,8 @@ BarScene
 BarScene을 unload하지 않아 current customer, seat occupancy, Business Day state,
 served count, Special Guest state와 current Bar runtime state를 유지한다.
 BartendingScene은 BarScene 내부 구현을 직접 알지 않고 최소 contract만 사용한다.
-`BartendingSession`과 `MiniGameResult`는 conceptual model이며 구체 API는 C0 Audit
-이후 결정한다.
+`BartendingSession`과 `MiniGameResult`는 conceptual model이며 C2에서 current
+single-Scene runtime 안에서 최소 API boundary를 먼저 준비한다.
 
 ### MainMenu, Ending, ACT and Guest Scenes
 
@@ -274,8 +278,10 @@ Progression, Story State가 결정하고 모든 Special Guest는 canonical BarSc
 목표 예시:
 
 현재 `Art`, `Data`, `Prefabs` production asset은 `Assets/_SURLHWA/` 아래로 이동
-완료됐다. `Code`와 `Scenes`는 아직 기존 위치에 있으며 C/E Phase 전에는 target
-path를 구현 완료 상태로 해석하지 않는다.
+완료됐다. C1에서 canonical production BarScene도
+`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`로 이동됐다. `Code`는 아직 기존
+위치에 있으며 BartendingScene, Bootstrap, MainMenu, EndingScene과 Scene hierarchy
+target은 아직 구현 완료 상태로 해석하지 않는다.
 
 Assets/
 └─ \_SURLHWA/
