@@ -319,3 +319,27 @@ Codex가 판단할 수 없는 항목은
 - 기존 Gameplay Loop가 갑자기 작동하지 않음
 
 원인을 분석한 뒤 다음 작업을 결정한다.
+
+---
+
+# 20. ARCHITECTURE BOUNDARY RULES
+
+- MiniGame마다 Scene을 만들지 않는다. 하나의 BartendingScene과 method-specific
+  Prefab을 사용한다.
+- ACT마다 Scene을 만들지 않는다.
+- Special Guest마다 Scene을 만들지 않는다. Guest content는 canonical BarScene에서
+  진행한다.
+- Gameplay logic과 Presentation 책임을 분리한다.
+- Scene 연결을 쉽게 만들기 위해 scene-local gameplay system을 global singleton으로
+  승격하지 않는다.
+- Bar ↔ Bartending, Story ↔ Presentation, Persistence ↔ Gameplay 경계는 hidden
+  cross-scene Find가 아니라 최소한의 명시적 contract를 우선한다.
+- 책임 refactor 전에 현재 runtime baseline과 serialized ownership을 보존한다.
+- Asset Move, Namespace Change, Logic Refactor, Persistence Migration을 하나의
+  Commit에 섞지 않는다.
+- Code file move를 먼저 Compile / Commit하고 Namespace 변경은 다음 Commit에서
+  수행한다.
+- 하나의 Commit은 하나의 structural purpose만 가진다.
+- 현재 규모에서는 asmdef 세분화를 기본 해결책으로 도입하지 않는다.
+- 빈 Bootstrap, Ending, Guest, ACT Scene을 target tree를 맞추기 위해 미리 만들지
+  않는다.

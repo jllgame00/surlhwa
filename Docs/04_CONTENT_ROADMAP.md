@@ -425,7 +425,19 @@ Revisit 조건을 클릭 횟수, Recipe 종류, 날짜, 대화 선택, 또는 �
 Prince Vertical Slice에서 먼저 확정한다. 현재 Prototype asset의 존재만으로
 runtime 연결을 가정하지 않는다.
 
-## 15. Content Implementation Order
+## 15. Content Architecture Note
+
+모든 Special Guest ACT와 Revisit는 canonical BarScene에서 진행한다. Little Prince,
+Chunhyang, Don Quixote 등 Guest별 Scene이나 ACT별 Scene을 만들지 않는다.
+
+Guest-specific entrance, exit, VFX, SFX, camera, lighting, environment effect는 Story
+progression 자체가 아니라 Presentation 책임이다. Hamlet과 Faust의 공간 연출도
+alternate Scene이 아닌 BarScene environment override로 구현하는 방향을 따른다.
+
+이 경계는 Narrative 내용을 축소하려는 것이 아니라, 같은 설원의 바가 모든 이야기와
+기억을 축적하는 canonical story space로 남도록 하기 위한 것이다.
+
+## 16. Content Implementation Order
 
 전체 ACT를 동시에 구현하지 않는다. Rebuild 완료 뒤 첫 Narrative Vertical Slice는
 Little Prince ACT 1이다.

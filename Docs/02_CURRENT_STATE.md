@@ -3,7 +3,7 @@
 Last Updated: 2026-08-11
 
 Status:
-ACTIVE DEVELOPMENT / PRE-REBUILD
+ACTIVE DEVELOPMENT / ARCHITECTURE REBUILD
 
 이 문서는 현재 실제 구현 상태를 기록한다.
 
@@ -16,13 +16,42 @@ Audit 이후 실제 Repository와 충돌하는 내용이 발견되면
 
 현재 단계:
 
+```text
 Core Gameplay Prototype
-→ Main Bar Layout Revision
-→ Special Guest Prototype
-→ Project Rebuild 준비
+→ Full Project Audit
+→ Runtime Baseline Stabilization
+→ Production Asset Migration B2.1~B2.4
+→ Architecture Documentation Checkpoint
+→ Full Architecture Boundary Audit
+```
 
-특별 손님 콘텐츠를 대량으로 추가하기 전에
-프로젝트 구조와 데이터 구조를 정리하려는 단계다.
+현재 Branch는 `refactor/project-rebuild`다.
+
+Runtime Baseline Stabilization은 완료됐다. canonical `CustomerSpawner`와
+`BusinessDayManager`를 각각 하나로 확정했고, automatic customer loop와 Day 1
+Tutorial, Day 2 Tutorial repetition 차단, Day 2 Little Prince first spawn을 Manual
+Regression으로 확인했다.
+
+### Production Asset Migration
+
+| Batch | Scope | Status |
+| --- | --- | --- |
+| B2.1 | Production Art | COMPLETE |
+| B2.2 | Environment Tiles | COMPLETE |
+| B2.3 | Gameplay ScriptableObject Data | COMPLETE |
+| B2.4 | Production Prefabs | COMPLETE |
+
+현재 canonical production asset root는 다음과 같다.
+
+```text
+Assets/_SURLHWA/Art
+Assets/_SURLHWA/Data
+Assets/_SURLHWA/Prefabs
+```
+
+다음 단계는 기존 계획의 단순 Scene 이동이 아니라 `C0 — Full Architecture
+Boundary Audit`이다. Scene, Code, Data, Presentation, Persistence 경계를 먼저
+증명한 뒤 구조 변경 범위를 확정한다.
 
 ---
 
@@ -61,7 +90,9 @@ Codex
 ↓
 Next Day
 
-최근 Main Scene에서 전체 흐름이 정상 동작하는 것을 직접 테스트했다.
+Phase A Manual Regression에서 automatic spawn, seat, interaction, customer leave,
+next spawn, Day 1의 Stir → Shake → Build → Float, Day 2 Little Prince first
+spawn과 tutorial repetition 차단을 확인했다.
 
 ---
 
@@ -192,12 +223,15 @@ Stir:
 - 실제 Play Loop에서 사용
 - Perfect / Good / Fail 평가 구조가 존재하는 것으로 확인
 
-### Needs Audit Verification
+### Confirmed Runtime Baseline
 
-Shake / Build / Float:
+Stir / Shake / Build / Float:
 
-- 관련 구현 및 Data가 존재한 개발 이력이 있음
-- 현재 Repository 기준 정확한 완성도와 사용 파일은 Audit에서 다시 확인한다
+- 네 조주법 모두 Production Prefab과 runtime 진입 경로가 존재한다.
+- Day 1 Manual Regression에서 Stir → Shake → Build → Float 순서로 진입을
+  확인했다.
+- 향후 BartendingScene 분리는 동작 변경이 아니라 Scene boundary 재구축으로
+  진행한다.
 
 중요:
 
@@ -283,6 +317,9 @@ Result 화면이 유지되도록 개선되어 있다.
 
 Day 2 첫 손님으로 Little Prince Prefab이 등장하는 것을 확인함.
 
+Little Prince 전용 DialogueData / OrderData asset과 Prefab reference는 존재하지만,
+현재 interaction runtime에서 전용 Data를 소비하지 않는 Known Issue는 남아 있다.
+
 ---
 
 ## 14. Known Special Guest Architecture Problem
@@ -302,44 +339,34 @@ CustomerSpawner
 
 ---
 
-## 15. Known Tutorial / Day Problem
+## 15. Tutorial / Day Stabilization
 
-최근 발견된 문제:
+Phase A2에서 Tutorial eligibility를 Business Day 기준과 연결했다.
 
-Day 2가 되었음에도
-Tutorial 기반 고정 조주 흐름이 다시 적용되는 현상이 있었다.
+```text
+Day 1 AND tutorial progression not finished
+→ forced Stir / Shake / Build / Float route 허용
 
-예상 원인:
-
-`spawnedCount`가 Scene Reload 후 0으로 초기화되면서
-
-`spawnedCount < tutorialCustomerCount`
-
-조건이 다음 Day에서도 다시 참이 되는 구조.
-
-목표 조건:
-
-`currentDay == 1 && spawnedCount < tutorialCustomerCount`
-
-현재 이 수정이 Repository에 최종 반영되었는지,
-그리고 실제 Play Test를 통과했는지는 Audit / Regression Test에서 확인한다.
+Day 2+
+→ forced Tutorial route 차단
+```
 
 Status:
 
-NEEDS VERIFICATION
+`COMPLETE / MANUAL REGRESSION PASS`
 
 ---
 
 ## 16. Save / Progress
 
-현재 저장은 여러 System에서 PlayerPrefs를 직접 사용할 가능성이 있다.
+현재 저장은 여러 System에서 PlayerPrefs를 직접 사용한다.
 
 확인된 Key:
 
 - currentDay
 - littlePrinceFirstVisitCompleted
-
-Recipe Unlock 관련 저장 위치 및 Key는 Audit에서 확인한다.
+- SURLHWA_UNLOCKED_RECIPES
+- SURLHWA_FIRST_RECIPE_REVEAL_SHOWN
 
 Target:
 
@@ -350,18 +377,22 @@ SaveManager 또는 이에 준하는 Persistence Layer를 만들어
 
 ## 17. Current Folder / Asset State
 
-현재 프로젝트가 여러 Prototype과 기능 추가를 거치면서
-다음 문제가 있다고 판단하고 있다.
+Production Art, Environment Tiles, Gameplay Data, Production Prefab은
+`Assets/_SURLHWA/` 아래 canonical domain path로 이동됐다. 이동된 asset의 GUID와
+serialized reference는 각 B2 batch에서 보존 검증했다.
 
-- 파일 위치가 일관되지 않음
-- Prototype / Production Asset 혼재 가능성
-- Test Scene 존재
-- Manager 폴더에 다른 Domain 코드 혼재 가능성
-- Legacy 파일 존재 가능성
-- Data / Prefab / Art 위치 규칙 불명확
-- 사용 여부를 즉시 판단하기 어려운 파일 존재
+다음 deferred / legacy 항목은 아직 기존 위치에 남아 있다.
 
-정확한 내용은 `08_PROJECT_AUDIT.md`에서 확인한다.
+- `Assets/Assets/Prefab/Character/Customer_B.prefab`
+- `Assets/texture/Tiles/Table.prefab`, `wall.prefab`, `Floor.asset`
+- legacy minigame JPG assets
+- Fonts / TextMesh Pro assets
+- `Assets/Code/` 전체
+- `Assets/Scenes/` 및 `Assets/BarScene_LayoutTest.unity`
+- 비어 있거나 legacy asset만 남은 기존 source folder
+
+이 항목은 사용 관계와 architecture boundary를 재검증하기 전 이동하거나 삭제하지
+않는다.
 
 ---
 
@@ -390,23 +421,21 @@ SaveManager 또는 이에 준하는 Persistence Layer를 만들어
 
 ---
 
-## 19. Needs Audit Verification
+## 19. Audit Resolution
 
-- Shake 현재 완성도
-- Build 현재 완성도
-- Float 현재 완성도
-- 정확한 RecipeData 구조
-- 정확한 OrderData 구조
-- 모든 ScriptableObject 종류
-- 모든 PlayerPrefs Key
-- 사용하지 않는 Legacy Script
-- Test / Backup Scene
-- Duplicate Prefab
-- Dead Code
-- SpecialGuestData 기존 구조
-- `ChooseCustomerPrefab()` 사용 여부
-- BusinessDayManager의 Runtime Component Fallback 여부
-- 실제 Scene Serialized Reference 상태
+위 초기 질문은 Full Project Audit에서 정적 증거 기준으로 조사됐다. 역사적 기준점과
+세부 결과는 `Docs/08_PROJECT_AUDIT.md`에 보존한다. 이후 Phase A와 B에서 변경된
+현재 상태는 이 문서와 현재 Repository를 우선한다.
+
+아직 후속 Architecture Phase에서 다룰 Known Issues:
+
+- Little Prince Dialogue / Order runtime 미사용
+- general customer pool 비어 있음과 `Customer_B` 미사용
+- Cocktail / Recipe / Order 책임 중복과 TestShake mismatch
+- PlayerPrefs 접근 분산
+- Managers 중심 Code 분류와 scene lookup dependency
+- Encoding / TMP / Korean glyph coverage
+- Scene hierarchy와 Scene boundary 미분리
 
 ---
 
@@ -434,16 +463,17 @@ SaveManager 또는 이에 준하는 Persistence Layer를 만들어
 
 현재 최우선 목표:
 
-**Project Rebuild**
+**C0 — Full Architecture Boundary Audit**
 
-기존 정상 기능을 보존하면서
+다음을 실제 current repository 기준으로 조사한 뒤 Scene 구조 변경을 시작한다.
 
-- Project Structure
-- Data Structure
-- Code Responsibility
-- Save / Progress
-- Special Guest Architecture
+- global lifetime과 scene-local lifetime
+- BarScene과 BartendingScene의 최소 contract
+- runtime state와 persistent state
+- Story logic과 Special Guest presentation
+- Scene lookup과 serialized dependency
+- MainMenu / Bootstrap / optional Ending의 실제 필요 범위
 
-를 정리한다.
-
-Rebuild 완료 후 Little Prince Story 개발을 재개한다.
+기존 B2.5 Development Scene 이동과 B2.6 Main Scene 이동 계획은
+`SUPERSEDED`다. Architecture Phase C 이후 검증된 구조에 따라 Scene 이동과 naming을
+수행한다.
