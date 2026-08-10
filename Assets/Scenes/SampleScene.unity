@@ -2052,6 +2052,7 @@ MonoBehaviour:
   debugSpawnWithKey: 0
   debugSpawnKey: 32
   specialGuests: []
+  littlePrincePrefab: {fileID: 0}
   miniGameManager: {fileID: 0}
   businessDayManager: {fileID: 0}
 --- !u!4 &202206313
@@ -13164,6 +13165,7 @@ MonoBehaviour:
   maxCustomersPerDay: 8
   endDayWhenMaxCustomersServed: 0
   resultPanel: {fileID: 2069170614}
+  startingDay: 1
 --- !u!1 &1537576941
 GameObject:
   m_ObjectHideFlags: 0
@@ -16467,6 +16469,7 @@ MonoBehaviour:
   debugSpawnWithKey: 1
   debugSpawnKey: 32
   specialGuests: []
+  littlePrincePrefab: {fileID: 4898275966391150351, guid: 535a93265c6e52046a3db76a55363aaf, type: 3}
   miniGameManager: {fileID: 0}
   businessDayManager: {fileID: 1712809651}
 --- !u!114 &1712809651
@@ -16484,6 +16487,7 @@ MonoBehaviour:
   maxCustomersPerDay: 8
   endDayWhenMaxCustomersServed: 1
   resultPanel: {fileID: 0}
+  startingDay: 1
 --- !u!1 &1713744115
 GameObject:
   m_ObjectHideFlags: 0

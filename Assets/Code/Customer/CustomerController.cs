@@ -69,6 +69,9 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private DialogueData dialogueData;
     [SerializeField] private GameObject dialogueBubblePrefab;
 
+    [Header("Order")]
+    [SerializeField] private OrderData orderData;
+
     private GameObject currentDialogueBubble;
 
     [Header("Emotion Reaction")]

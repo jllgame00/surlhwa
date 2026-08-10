@@ -141,8 +141,9 @@ MonoBehaviour:
   standSprite: {fileID: 0}
   sitSprite: {fileID: 0}
   defaultExitPoint: {fileID: 0}
-  dialogueData: {fileID: 11400000, guid: 853114293df87424fb4855a2bea215be, type: 2}
+  dialogueData: {fileID: 11400000, guid: 4c2a9d870f1e4f9ab6d27c8e53109a42, type: 2}
   dialogueBubblePrefab: {fileID: 6878723193407893406, guid: 5e1bead4382e36a4e82ba6bcf17e1432, type: 3}
+  orderData: {fileID: 11400000, guid: b7e31a6c5d8f4a2390cb17e642fd9851, type: 2}
   reactionDatabase: {fileID: 11400000, guid: 69bb3d3dde54fd9489e61196d4cad9e7, type: 2}
   emotionRequest:
     primaryTag: 0

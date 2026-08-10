@@ -154,7 +154,7 @@ public class CustomerSpawner : MonoBehaviour
         activeCustomerIsLittlePrinceFirstVisit =
             prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFirstVisit();
         customer.SetLoopManager(this);
-        customer.SetUsesPatience(spawnedCount >= tutorialCustomerCount);
+        customer.SetUsesPatience(!IsTutorialSpawn());
         spawnedCount++;
         lastSpawnedPrefab = prefabToSpawn;
 
@@ -252,7 +252,7 @@ public class CustomerSpawner : MonoBehaviour
         if (ShouldSpawnLittlePrinceFirstVisit())
             return littlePrincePrefab;
 
-        if (spawnedCount < tutorialCustomerCount)
+        if (IsTutorialSpawn())
             return customerPrefab;
 
         if (generalCustomerPrefabs == null || generalCustomerPrefabs.Length == 0)
@@ -282,6 +282,15 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         return candidates[Random.Range(0, candidates.Count)];
+    }
+
+    private bool IsTutorialSpawn()
+    {
+        int currentDay = businessDayManager != null
+            ? businessDayManager.CurrentDay
+            : PlayerPrefs.GetInt("currentDay", 1);
+
+        return currentDay == 1 && spawnedCount < tutorialCustomerCount;
     }
 
     private bool ShouldSpawnLittlePrinceFirstVisit()
