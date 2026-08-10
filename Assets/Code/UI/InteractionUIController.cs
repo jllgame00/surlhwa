@@ -66,6 +66,7 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private BrewSelectionController brewSelectionController;
 
     private OrderManager orderManager;
+    private BusinessDayManager businessDayManager;
     private CustomerController activeCustomer;
 
     private MiniGameType selectedMethod;
@@ -90,6 +91,7 @@ public class InteractionUIController : MonoBehaviour
     private void Awake()
     {
         orderManager = FindFirstObjectByType<OrderManager>();
+        businessDayManager = FindFirstObjectByType<BusinessDayManager>();
 
         if (brewSelectionController == null && brewPanel != null)
             brewSelectionController = brewPanel.GetComponentInChildren<BrewSelectionController>(true);
@@ -156,25 +158,26 @@ public class InteractionUIController : MonoBehaviour
         activeCustomerUsesFourthCustomerRoute = false;
         activeForcedMethod = MiniGameType.Stir;
 
-        if (TryApplyFirstCustomerRoute(customer))
+        bool canApplyTutorialRoute = IsTutorialDay();
+        if (canApplyTutorialRoute && TryApplyFirstCustomerRoute(customer))
         {
             activeCustomerUsesForcedRoute = true;
             activeCustomerUsesFirstCustomerRoute = true;
             activeForcedMethod = forcedFirstCustomerMethod;
         }
-        else if (TryApplySecondCustomerRoute(customer))
+        else if (canApplyTutorialRoute && TryApplySecondCustomerRoute(customer))
         {
             activeCustomerUsesForcedRoute = true;
             activeCustomerUsesSecondCustomerRoute = true;
             activeForcedMethod = forcedSecondCustomerMethod;
         }
-        else if (TryApplyThirdCustomerRoute(customer))
+        else if (canApplyTutorialRoute && TryApplyThirdCustomerRoute(customer))
         {
             activeCustomerUsesForcedRoute = true;
             activeCustomerUsesThirdCustomerRoute = true;
             activeForcedMethod = forcedThirdCustomerMethod;
         }
-        else if (TryApplyFourthCustomerRoute(customer))
+        else if (canApplyTutorialRoute && TryApplyFourthCustomerRoute(customer))
         {
             activeCustomerUsesForcedRoute = true;
             activeCustomerUsesFourthCustomerRoute = true;
@@ -411,6 +414,14 @@ public class InteractionUIController : MonoBehaviour
             MiniGameType.Float => testFloatOrder,
             _ => null
         };
+    }
+
+    private bool IsTutorialDay()
+    {
+        if (businessDayManager == null)
+            businessDayManager = FindFirstObjectByType<BusinessDayManager>();
+
+        return businessDayManager != null && businessDayManager.CurrentDay == 1;
     }
 
     private bool TryApplyFirstCustomerRoute(CustomerController customer)
