@@ -37,8 +37,8 @@ public class OrderManager : MonoBehaviour
     [Header("Orders")]
     public OrderData[] orderPool;
 
-    [Header("MiniGame")]
-    [SerializeField] private MiniGameManager miniGameManager;
+    [Header("Bartending")]
+    [SerializeField] private BartendingFlowCoordinator bartendingFlowCoordinator;
 
     private RecipeUnlockManager recipeUnlockManager;
 
@@ -51,8 +51,11 @@ public class OrderManager : MonoBehaviour
         ui = FindFirstObjectByType<UIManager>();
         gm = FindFirstObjectByType<GameManager>();
 
-        if (miniGameManager == null)
-            miniGameManager = FindFirstObjectByType<MiniGameManager>();
+        if (bartendingFlowCoordinator == null)
+            bartendingFlowCoordinator = GetComponent<BartendingFlowCoordinator>();
+
+        if (bartendingFlowCoordinator == null)
+            bartendingFlowCoordinator = FindFirstObjectByType<BartendingFlowCoordinator>();
         
         if (resultToast == null)
             resultToast = FindFirstObjectByType<ResultToastController>();
@@ -109,9 +112,9 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        if (miniGameManager == null)
+        if (bartendingFlowCoordinator == null)
         {
-            Debug.LogError("[OrderManager] miniGameManager is NULL (assign it in Inspector or place it in the scene)");
+            Debug.LogError("[OrderManager] BartendingFlowCoordinator is NULL");
             return;
         }
 
@@ -125,8 +128,7 @@ public class OrderManager : MonoBehaviour
             Debug.LogWarning("[OrderManager] allowPlayWithoutCustomer=true -> still playing minigame for debugging");
         }
 
-        Debug.Log($"[OrderManager] -> MiniGameManager.Play({currentOrder.orderName})");
-        miniGameManager.Play(currentOrder, OnMiniGameDone);
+        BeginCurrentOrderBartending(currentOrder.defaultBrewSession);
     }
 
     private void OnMiniGameDone(MiniGameResult result)
@@ -318,12 +320,15 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        if (miniGameManager == null)
-            miniGameManager = FindFirstObjectByType<MiniGameManager>();
-
-        if (miniGameManager == null)
+        if (bartendingFlowCoordinator == null)
         {
-            Debug.LogError("[OrderManager] miniGameManager is NULL");
+            Debug.LogError("[OrderManager] BartendingFlowCoordinator is NULL");
+            return;
+        }
+
+        if (bartendingFlowCoordinator.IsBartendingActive)
+        {
+            Debug.LogWarning("[OrderManager] PlaySpecificOrder ignored because Bartending is already active.");
             return;
         }
 
@@ -345,6 +350,28 @@ public class OrderManager : MonoBehaviour
             $"SelectedSession={(selectedSession != null)}"
         );
 
-        miniGameManager.Play(currentOrder, sessionToUse, OnMiniGameDone);
+        BeginCurrentOrderBartending(sessionToUse);
+    }
+
+    private void BeginCurrentOrderBartending(BrewSessionData sessionToUse)
+    {
+        if (currentOrder == null)
+        {
+            Debug.LogError("[OrderManager] Cannot begin Bartending without a current order.");
+            return;
+        }
+
+        if (bartendingFlowCoordinator == null)
+        {
+            Debug.LogError("[OrderManager] BartendingFlowCoordinator is NULL");
+            return;
+        }
+
+        BartendingSession session = BartendingSession.FromOrder(currentOrder, sessionToUse);
+
+        if (!bartendingFlowCoordinator.BeginBartending(session, OnMiniGameDone))
+        {
+            Debug.LogWarning("[OrderManager] Bartending request was not started.");
+        }
     }
 }

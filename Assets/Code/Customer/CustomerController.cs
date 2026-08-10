@@ -105,7 +105,7 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private string timeoutToastMessageFormat = "손님이 오래 기다리다 자리를 떠났습니다. Rep -{0}";
 
     private GameManager gm;
-    private MiniGameManager miniGameManager;
+    private BartendingFlowCoordinator bartendingFlowCoordinator;
     private ResultToastController resultToast;
     private bool usesPatience;
     private bool patienceTimerActive;
@@ -141,7 +141,7 @@ public class CustomerController : MonoBehaviour
         seatManager = FindFirstObjectByType<SeatManager>();
         interactionUI = FindFirstObjectByType<InteractionUIController>();
         gm = FindFirstObjectByType<GameManager>();
-        miniGameManager = FindFirstObjectByType<MiniGameManager>();
+        bartendingFlowCoordinator = FindFirstObjectByType<BartendingFlowCoordinator>();
         resultToast = FindFirstObjectByType<ResultToastController>();
     }
 
@@ -369,10 +369,7 @@ public class CustomerController : MonoBehaviour
         if (!patienceTimerActive)
             return;
 
-        if (miniGameManager == null)
-            miniGameManager = FindFirstObjectByType<MiniGameManager>();
-
-        if (miniGameManager != null && miniGameManager.IsPlaying)
+        if (bartendingFlowCoordinator != null && bartendingFlowCoordinator.IsBartendingActive)
             return;
 
         patienceRemaining -= Time.deltaTime;

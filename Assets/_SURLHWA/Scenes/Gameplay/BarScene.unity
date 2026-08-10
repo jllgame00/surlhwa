@@ -16390,7 +16390,6 @@ MonoBehaviour:
   debugSpawnKey: 32
   specialGuests: []
   littlePrincePrefab: {fileID: 4898275966391150351, guid: 535a93265c6e52046a3db76a55363aaf, type: 3}
-  miniGameManager: {fileID: 0}
   businessDayManager: {fileID: 1712809651}
 --- !u!114 &1712809651
 MonoBehaviour:
@@ -16743,6 +16742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1780158366}
   - component: {fileID: 1780158365}
+  - component: {fileID: 1780158367}
   m_Layer: 0
   m_Name: OrderManager
   m_TagString: Untagged
@@ -16770,7 +16770,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 66261992cc3b0ba4a8b749fb5420c826, type: 2}
   - {fileID: 11400000, guid: f909fd19d3ea67346a83440c9d7014fb, type: 2}
   - {fileID: 11400000, guid: 3f4b958e96f99024fb45beff5cb1cf4c, type: 2}
-  miniGameManager: {fileID: 4119505}
+  bartendingFlowCoordinator: {fileID: 1780158367}
 --- !u!4 &1780158366
 Transform:
   m_ObjectHideFlags: 0
@@ -16786,6 +16786,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 562288467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1780158367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780158364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beced2cda569b0840abf53fd7e0c6039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BartendingFlowCoordinator
+  miniGameManager: {fileID: 4119505}
 --- !u!1 &1787717737
 GameObject:
   m_ObjectHideFlags: 0

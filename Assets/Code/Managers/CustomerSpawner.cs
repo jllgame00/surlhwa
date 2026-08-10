@@ -27,7 +27,7 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private GameObject littlePrincePrefab;
 
     private GameManager gm;
-    [SerializeField] private MiniGameManager miniGameManager;
+    private BartendingFlowCoordinator bartendingFlowCoordinator;
     [SerializeField] private BusinessDayManager businessDayManager;
 
     private CustomerController activeCustomer;
@@ -48,8 +48,7 @@ public class CustomerSpawner : MonoBehaviour
         if (seatManager == null)
             seatManager = FindFirstObjectByType<SeatManager>();
 
-        if (miniGameManager == null)
-            miniGameManager = FindFirstObjectByType<MiniGameManager>();
+        bartendingFlowCoordinator = FindFirstObjectByType<BartendingFlowCoordinator>();
 
         ResolveBusinessDayManager(false);
 
@@ -85,7 +84,7 @@ public class CustomerSpawner : MonoBehaviour
         if (!debugSpawnWithKey)
             return;
 
-        if (miniGameManager != null && miniGameManager.IsPlaying)
+        if (bartendingFlowCoordinator != null && bartendingFlowCoordinator.IsBartendingActive)
             return;
 
         if (Input.GetKeyDown(debugSpawnKey))
