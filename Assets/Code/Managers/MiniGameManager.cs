@@ -31,7 +31,10 @@ public class MiniGameManager : MonoBehaviour
 
     public bool IsPlaying => currentMiniGame != null;
 
-    private void SetupRecipeGuide(GameObject miniGameRoot, GameObject selectedPrefab, OrderData order)
+    private void SetupRecipeGuide(
+        GameObject miniGameRoot,
+        RecipeGuideContext recipeGuideContext,
+        Action<string, string> firstRecipeRevealRequested)
     {
         if (miniGameRoot == null)
             return;
@@ -45,10 +48,9 @@ public class MiniGameManager : MonoBehaviour
             return;
         }
 
-        MiniGameType method = ResolveMethodForGuide(selectedPrefab, order);
-        guide.SetMethod(method);
+        guide.Initialize(recipeGuideContext, firstRecipeRevealRequested);
 
-        Debug.Log($"[MiniGameManager] Recipe guide method set -> {method}");
+        Debug.Log("[MiniGameManager] Recipe guide initialized");
     }
 
     private MiniGameType ResolveMethodForGuide(GameObject selectedPrefab, OrderData order)
@@ -90,6 +92,16 @@ public class MiniGameManager : MonoBehaviour
 
     public void Play(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
     {
+        Play(order, brewSession, null, null, onDone);
+    }
+
+    public void Play(
+        OrderData order,
+        BrewSessionData brewSession,
+        RecipeGuideContext recipeGuideContext,
+        Action<string, string> firstRecipeRevealRequested,
+        Action<MiniGameResult> onDone)
+    {
         Debug.Log(
             $"[MiniGameManager] Play() called\n" +
             $" order = {(order != null ? order.orderName : "NULL")}\n" +
@@ -118,7 +130,7 @@ public class MiniGameManager : MonoBehaviour
         currentMiniGame = Instantiate(prefab, transform);
 
         // 레시피 가이드 패널에 현재 조주 방식 전달
-        SetupRecipeGuide(currentMiniGame, selectedPrefab: prefab, order: order);
+        SetupRecipeGuide(currentMiniGame, recipeGuideContext, firstRecipeRevealRequested);
 
         var game = currentMiniGame.GetComponentInChildren<IMiniGame>(true);
         if (game == null)

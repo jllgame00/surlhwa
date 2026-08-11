@@ -353,7 +353,12 @@ public class BartendingFlowCoordinator : MonoBehaviour
         Exception playException = null;
         try
         {
-            runner.Play(session.Order, session.InitialSession, result =>
+            runner.Play(
+                session.Order,
+                session.InitialSession,
+                session.RecipeGuideContext,
+                session.FirstRecipeRevealRequested,
+                result =>
             {
                 if (!TryCaptureCompletion(generation, "BartendingScene MiniGame callback"))
                     return;

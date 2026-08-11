@@ -44,6 +44,47 @@ public class OrderManager : MonoBehaviour
 
     private RecipeUnlockPopupController unlockPopup;
 
+    private RecipeGuideContext BuildRecipeGuideContext()
+    {
+        if (currentOrder == null || recipeUnlockManager == null)
+            return null;
+
+        MiniGameType method = currentOrder.miniGameType;
+        bool isForcedFirstCustomerRouteActive =
+            currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
+
+        return new RecipeGuideContext(
+            method,
+            recipeUnlockManager.GetUnlockedRecipesByMethod(method),
+            isForcedFirstCustomerRouteActive);
+    }
+
+    private void HandleFirstRecipeRevealRequest(
+        RecipeGuideContext context,
+        string title,
+        string message)
+    {
+        if (context == null || !context.IsForcedFirstCustomerRouteActive)
+            return;
+
+        if (recipeUnlockManager == null || recipeUnlockManager.HasShownFirstRecipeReveal())
+            return;
+
+        if (resultToast == null)
+            resultToast = FindFirstObjectByType<ResultToastController>();
+
+        if (resultToast == null)
+        {
+            Debug.LogWarning("[OrderManager] Cannot show first recipe reveal: ResultToastController not found.");
+            return;
+        }
+
+        resultToast.Show(title, message);
+
+        if (recipeUnlockManager.TryMarkFirstRecipeRevealShown())
+            Debug.Log("[OrderManager] First recipe reveal shown");
+    }
+
     private bool HasActiveOrder => currentOrder != null;
 
     public event Action<BartendingFlowFailure> BartendingFlowFailed;
@@ -378,7 +419,12 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        BartendingSession session = BartendingSession.FromOrder(currentOrder, sessionToUse);
+        RecipeGuideContext recipeGuideContext = BuildRecipeGuideContext();
+        BartendingSession session = BartendingSession.FromOrder(
+            currentOrder,
+            sessionToUse,
+            recipeGuideContext,
+            (title, message) => HandleFirstRecipeRevealRequest(recipeGuideContext, title, message));
 
         bool accepted = bartendingFlowCoordinator.BeginBartending(
             session,

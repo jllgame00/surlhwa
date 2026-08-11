@@ -4,6 +4,7 @@ using UnityEngine;
 public class RecipeUnlockManager : MonoBehaviour
 {
     private const string SaveKey = "SURLHWA_UNLOCKED_RECIPES";
+    private const string FirstRecipeRevealShownKey = "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN";
 
     [Header("All Recipe Data")]
     [SerializeField] private CocktailRecipeData[] allRecipes;
@@ -109,6 +110,21 @@ public class RecipeUnlockManager : MonoBehaviour
         return result;
     }
 
+    public bool HasShownFirstRecipeReveal()
+    {
+        return PlayerPrefs.GetInt(FirstRecipeRevealShownKey, 0) == 1;
+    }
+
+    public bool TryMarkFirstRecipeRevealShown()
+    {
+        if (HasShownFirstRecipeReveal())
+            return false;
+
+        PlayerPrefs.SetInt(FirstRecipeRevealShownKey, 1);
+        PlayerPrefs.Save();
+        return true;
+    }
+
     private void SaveUnlocks()
     {
         string data = string.Join("|", unlockedRecipeIds);
@@ -145,7 +161,7 @@ public class RecipeUnlockManager : MonoBehaviour
     public void ClearSavedUnlocks()
     {
         PlayerPrefs.DeleteKey(SaveKey);
-        RecipeGuidePanelController.ClearSavedFirstRecipeRevealFlag();
+        PlayerPrefs.DeleteKey(FirstRecipeRevealShownKey);
         PlayerPrefs.Save();
 
         unlockedRecipeIds.Clear();

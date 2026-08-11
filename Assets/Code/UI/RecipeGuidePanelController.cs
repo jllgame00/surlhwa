@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RecipeGuidePanelController : MonoBehaviour
 {
-    private const string FirstRecipeRevealShownKey = "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN";
     private const string FirstRecipeRevealTitle = "레시피북의 첫 장";
     private const string FirstRecipeRevealMessage = "차가운 밤을 데울 한 잔이 조용히 기록되었습니다.";
     private const float RecipeButtonWidth = 240f;
@@ -16,11 +16,6 @@ public class RecipeGuidePanelController : MonoBehaviour
     private static readonly Color RecipeButtonSelectedColor = new(1f, 0.88f, 0.55f, 0.38f);
     private static readonly Color RecipeButtonNormalTextColor = new(0.22f, 0.18f, 0.13f, 1f);
     private static readonly Color RecipeButtonSelectedTextColor = new(0.1f, 0.08f, 0.05f, 1f);
-
-    [Header("Managers")]
-    [SerializeField] private RecipeUnlockManager recipeUnlockManager;
-    [SerializeField] private InteractionUIController interactionUIController;
-    [SerializeField] private ResultToastController resultToast;
 
     [Header("UI")]
     [SerializeField] private GameObject panelRoot;
@@ -45,16 +40,13 @@ public class RecipeGuidePanelController : MonoBehaviour
     private MiniGameType currentMethod;
     private CocktailRecipeData selectedRecipe;
     private bool missingTitleWarningLogged;
+    private RecipeGuideContext recipeGuideContext;
+    private Action<string, string> firstRecipeRevealRequested;
+    private bool missingContextWarningLogged;
 
     private void Awake()
     {
         ResolveDetailTextReferences();
-
-        if (recipeUnlockManager == null)
-            recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
-
-        if (recipeUnlockManager == null)
-            Debug.LogWarning("[RecipeGuidePanel] RecipeUnlockManager not found in scene");
 
         if (openButton != null)
         {
@@ -68,9 +60,13 @@ public class RecipeGuidePanelController : MonoBehaviour
             panelRoot.SetActive(false);
     }
 
-    public void SetMethod(MiniGameType method)
+    public void Initialize(
+        RecipeGuideContext context,
+        Action<string, string> onFirstRecipeRevealRequested)
     {
-        currentMethod = method;
+        recipeGuideContext = context;
+        firstRecipeRevealRequested = onFirstRecipeRevealRequested;
+        currentMethod = context != null ? context.Method : MiniGameType.Stir;
         selectedRecipe = null;
 
         RefreshRecipeList();
@@ -84,12 +80,14 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void OpenPanel()
     {
-        if (recipeUnlockManager == null)
-            recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
-
-        if (recipeUnlockManager == null)
+        if (recipeGuideContext == null)
         {
-            Debug.LogWarning("[RecipeGuidePanel] Cannot open: RecipeUnlockManager is null");
+            if (!missingContextWarningLogged)
+            {
+                Debug.LogWarning("[RecipeGuidePanel] Cannot open without a RecipeGuideContext.");
+                missingContextWarningLogged = true;
+            }
+
             return;
         }
 
@@ -110,11 +108,11 @@ public class RecipeGuidePanelController : MonoBehaviour
     {
         ClearRecipeButtons();
 
-        if (recipeUnlockManager == null || recipeListParent == null || recipeButtonPrefab == null)
+        if (recipeGuideContext == null || recipeListParent == null || recipeButtonPrefab == null)
         {
             Debug.LogWarning(
                 $"[RecipeGuidePanel] Cannot refresh list. " +
-                $"UnlockManager={(recipeUnlockManager != null ? "OK" : "NULL")} / " +
+                $"Context={(recipeGuideContext != null ? "OK" : "NULL")} / " +
                 $"ListParent={(recipeListParent != null ? "OK" : "NULL")} / " +
                 $"ButtonPrefab={(recipeButtonPrefab != null ? "OK" : "NULL")}"
             );
@@ -123,8 +121,8 @@ public class RecipeGuidePanelController : MonoBehaviour
 
         if (verboseLogging)
         {
-            List<CocktailRecipeData> allRecipes = recipeUnlockManager.GetAllRecipes();
-            Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, totalRecipes={allRecipes.Count}");
+            IReadOnlyList<CocktailRecipeData> allRecipes = recipeGuideContext.AvailableRecipes;
+            Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, unlockedRecipes={allRecipes.Count}");
 
             foreach (CocktailRecipeData recipe in allRecipes)
             {
@@ -134,16 +132,15 @@ public class RecipeGuidePanelController : MonoBehaviour
                     continue;
                 }
 
-                bool unlocked = recipeUnlockManager.IsUnlocked(recipe);
                 Debug.Log(
                     $"[RecipeGuidePanel] Recipe Candidate -> " +
                     $"name={recipe.displayName}, id={recipe.recipeId}, method={recipe.method}, " +
-                    $"unlocked={unlocked}, methodMatch={recipe.method == currentMethod}"
+                    $"methodMatch={recipe.method == currentMethod}"
                 );
             }
         }
 
-        List<CocktailRecipeData> recipes = recipeUnlockManager.GetUnlockedRecipesByMethod(currentMethod);
+        IReadOnlyList<CocktailRecipeData> recipes = recipeGuideContext.AvailableRecipes;
         int instantiatedCount = 0;
 
         foreach (var recipe in recipes)
@@ -379,48 +376,11 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void TryShowFirstRecipeReveal()
     {
-        if (PlayerPrefs.GetInt(FirstRecipeRevealShownKey, 0) == 1)
+        if (recipeGuideContext == null ||
+            !recipeGuideContext.IsForcedFirstCustomerRouteActive ||
+            firstRecipeRevealRequested == null)
             return;
 
-        if (!IsForcedFirstCustomerRouteActive())
-            return;
-
-        if (resultToast == null)
-            resultToast = FindFirstObjectByType<ResultToastController>();
-
-        if (resultToast == null)
-        {
-            Debug.LogWarning("[RecipeGuidePanel] Cannot show first recipe reveal: ResultToastController not found");
-            return;
-        }
-
-        resultToast.Show(FirstRecipeRevealTitle, FirstRecipeRevealMessage);
-
-        PlayerPrefs.SetInt(FirstRecipeRevealShownKey, 1);
-        PlayerPrefs.Save();
-
-        Debug.Log("[RecipeGuidePanel] First recipe reveal shown");
-    }
-
-    private bool IsForcedFirstCustomerRouteActive()
-    {
-        if (interactionUIController == null)
-            interactionUIController = FindFirstObjectByType<InteractionUIController>();
-
-        return interactionUIController != null && interactionUIController.IsForcedFirstCustomerRouteActive;
-    }
-
-    public static void ClearSavedFirstRecipeRevealFlag()
-    {
-        PlayerPrefs.DeleteKey(FirstRecipeRevealShownKey);
-        PlayerPrefs.Save();
-
-        Debug.Log("[RecipeGuidePanel] Cleared first recipe reveal flag");
-    }
-
-    [ContextMenu("Debug/Clear First Recipe Reveal Flag")]
-    private void ClearFirstRecipeRevealFlagForDebug()
-    {
-        ClearSavedFirstRecipeRevealFlag();
+        firstRecipeRevealRequested.Invoke(FirstRecipeRevealTitle, FirstRecipeRevealMessage);
     }
 }
