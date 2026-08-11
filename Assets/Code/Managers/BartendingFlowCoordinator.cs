@@ -5,6 +5,34 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
+/// Infrastructure-only Bartending failure categories. None of these represent a
+/// MiniGame gameplay result and none are forwarded to OrderManager as one.
+/// </summary>
+public enum BartendingFlowFailure
+{
+    BeginRejected,
+    LoadFailed,
+    SceneInvalid,
+    RunnerInvalid,
+    StartFailed,
+    PresentationFailed,
+    UnloadFailedAfterResult,
+    CleanupFailed,
+    UnexpectedFailure
+}
+
+#if UNITY_EDITOR
+public enum BartendingFailureInjection
+{
+    None,
+    LoadFailure,
+    RunnerFailure,
+    StartFailure,
+    UnloadFailureAfterResult
+}
+#endif
+
+/// <summary>
 /// BAR_LOCAL boundary between Bar-side order ownership and MiniGame execution.
 /// Production execution loads BartendingScene additively while BarScene retains
 /// the order, customer, and active Scene ownership.
@@ -21,6 +49,11 @@ public class BartendingFlowCoordinator : MonoBehaviour
     private int activeSessionGeneration;
     private bool completionCaptured;
     private bool completionFinalized;
+    private Action<BartendingFlowFailure> activeFailureHandler;
+
+#if UNITY_EDITOR
+    private BartendingFailureInjection editorFailureInjection;
+#endif
 
     public bool IsBartendingActive => isBartendingActive;
 
@@ -34,6 +67,19 @@ public class BartendingFlowCoordinator : MonoBehaviour
     /// BarScene runner, but production execution is scoped to BartendingScene.
     /// </summary>
     public bool BeginBartending(BartendingSession session, Action<MiniGameResult> onCompleted)
+    {
+        return BeginBartending(session, onCompleted, null);
+    }
+
+    /// <summary>
+    /// Production Bartending request with a Bar-side infrastructure failure seam.
+    /// Completion is reserved for an actual MiniGameResult; onFailed is invoked
+    /// only after additive cleanup, Bar presentation restore, and finalization.
+    /// </summary>
+    public bool BeginBartending(
+        BartendingSession session,
+        Action<MiniGameResult> onCompleted,
+        Action<BartendingFlowFailure> onFailed)
     {
         if (session == null || session.Order == null)
         {
@@ -57,7 +103,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
         if (!TryResolveBarAudioListener(out AudioListener barAudioListener))
             return false;
 
-        int generation = BeginAcceptedSession();
+        int generation = BeginAcceptedSession(onFailed);
         StartCoroutine(RunAdditiveBartending(generation, session, onCompleted, barAudioListener));
 
         Debug.Log(
@@ -77,6 +123,22 @@ public class BartendingFlowCoordinator : MonoBehaviour
         bool barPresentationCaptured = false;
         bool barCameraWasEnabled = false;
         bool barAudioListenerWasEnabled = false;
+
+#if UNITY_EDITOR
+        if (ConsumeEditorFailureInjection(BartendingFailureInjection.LoadFailure))
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "EDITOR_INJECTED_LOAD_FAILURE",
+                "Editor injected a load failure before LoadSceneAsync.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+#endif
 
         AsyncOperation loadOperation = null;
         Exception loadException = null;
@@ -182,7 +244,47 @@ public class BartendingFlowCoordinator : MonoBehaviour
             yield break;
         }
 
-        List<MiniGameManager> runners = FindMiniGameManagersInScene(bartendingScene);
+#if UNITY_EDITOR
+        if (ConsumeEditorFailureInjection(BartendingFailureInjection.RunnerFailure))
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "EDITOR_INJECTED_RUNNER_FAILURE",
+                "Editor injected a runner-resolution failure after BartendingScene load.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+#endif
+
+        List<MiniGameManager> runners = null;
+        Exception runnerDiscoveryException = null;
+        try
+        {
+            runners = FindMiniGameManagersInScene(bartendingScene);
+        }
+        catch (Exception exception)
+        {
+            runnerDiscoveryException = exception;
+        }
+
+        if (runnerDiscoveryException != null)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "RUNNER_DISCOVERY_EXCEPTION",
+                "Scene-scoped MiniGameManager discovery threw: " + runnerDiscoveryException.Message,
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
         if (runners.Count != 1)
         {
             yield return FailAdditiveBartendingWithCleanup(
@@ -230,6 +332,23 @@ public class BartendingFlowCoordinator : MonoBehaviour
         }
 
         barPresentationCaptured = true;
+
+#if UNITY_EDITOR
+        if (ConsumeEditorFailureInjection(BartendingFailureInjection.StartFailure))
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "EDITOR_INJECTED_START_FAILURE",
+                "Editor injected a start failure after Bar presentation was disabled.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+#endif
+
         MiniGameResult capturedResult = default;
         Exception playException = null;
         try
@@ -284,6 +403,22 @@ public class BartendingFlowCoordinator : MonoBehaviour
             yield break;
         }
 
+#if UNITY_EDITOR
+        if (ConsumeEditorFailureInjection(BartendingFailureInjection.UnloadFailureAfterResult))
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "EDITOR_INJECTED_UNLOAD_FAILURE_AFTER_RESULT",
+                "Editor injected an unload failure after MiniGameResult capture.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+#endif
+
         AsyncOperation unloadOperation = null;
         Exception unloadException = null;
         try
@@ -299,8 +434,8 @@ public class BartendingFlowCoordinator : MonoBehaviour
         {
             yield return FailAdditiveBartendingWithCleanup(
                 generation,
-                "UNLOAD_OPERATION_NULL",
-                "UnloadSceneAsync threw: " + unloadException.Message,
+                "UNLOAD_FAILED_AFTER_RESULT",
+                "UnloadSceneAsync threw after MiniGameResult capture; the result will not be applied: " + unloadException.Message,
                 bartendingScene,
                 barAudioListener,
                 barPresentationCaptured,
@@ -313,8 +448,8 @@ public class BartendingFlowCoordinator : MonoBehaviour
         {
             yield return FailAdditiveBartendingWithCleanup(
                 generation,
-                "UNLOAD_OPERATION_NULL",
-                "UnloadSceneAsync returned null.",
+                "UNLOAD_FAILED_AFTER_RESULT",
+                "UnloadSceneAsync returned null after MiniGameResult capture; the result will not be applied.",
                 bartendingScene,
                 barAudioListener,
                 barPresentationCaptured,
@@ -336,8 +471,8 @@ public class BartendingFlowCoordinator : MonoBehaviour
         {
             yield return FailAdditiveBartendingWithCleanup(
                 generation,
-                "SCENE_STILL_LOADED",
-                "BartendingScene remains loaded after UnloadSceneAsync completion.",
+                "UNLOAD_FAILED_AFTER_RESULT",
+                "BartendingScene remains loaded after unload completion; the captured result will not be applied.",
                 postUnloadScene,
                 barAudioListener,
                 barPresentationCaptured,
@@ -350,8 +485,8 @@ public class BartendingFlowCoordinator : MonoBehaviour
         {
             yield return FailAdditiveBartendingWithCleanup(
                 generation,
-                "ACTIVE_SCENE_CHANGED",
-                "BarScene did not remain active after BartendingScene unload.",
+                "ACTIVE_SCENE_CHANGED_AFTER_RESULT",
+                "BarScene did not remain active after unload; the captured result will not be applied.",
                 default,
                 barAudioListener,
                 barPresentationCaptured,
@@ -369,6 +504,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
         if (!TryFinalizeSession(generation, "BartendingScene additive lifecycle"))
             yield break;
 
+        activeFailureHandler = null;
         onCompleted?.Invoke(capturedResult);
     }
 
@@ -398,6 +534,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
                 sceneToCleanup = resolvedScene;
         }
 
+        bool cleanupSucceeded = true;
         if (sceneToCleanup.IsValid() && sceneToCleanup.isLoaded)
         {
             AsyncOperation cleanupOperation = null;
@@ -414,10 +551,12 @@ public class BartendingFlowCoordinator : MonoBehaviour
             if (cleanupException != null)
             {
                 ReportAdditiveFailure("UNLOAD_OPERATION_NULL", "Failure cleanup threw: " + cleanupException.Message);
+                cleanupSucceeded = false;
             }
             else if (cleanupOperation == null)
             {
                 ReportAdditiveFailure("UNLOAD_OPERATION_NULL", "Failure cleanup could not start unload.");
+                cleanupSucceeded = false;
             }
             else
             {
@@ -425,7 +564,10 @@ public class BartendingFlowCoordinator : MonoBehaviour
 
                 Scene postCleanupScene = SceneManager.GetSceneByPath(BartendingScenePath);
                 if (postCleanupScene.IsValid() && postCleanupScene.isLoaded)
+                {
                     ReportAdditiveFailure("SCENE_STILL_LOADED", "Failure cleanup left BartendingScene loaded.");
+                    cleanupSucceeded = false;
+                }
             }
         }
 
@@ -435,7 +577,16 @@ public class BartendingFlowCoordinator : MonoBehaviour
             barCameraWasEnabled,
             barAudioListenerWasEnabled);
 
-        TryFinalizeSession(generation, "additive Bartending failure: " + code);
+        BartendingFlowFailure failure = cleanupSucceeded
+            ? ClassifyAdditiveFailure(code)
+            : BartendingFlowFailure.CleanupFailed;
+        Action<BartendingFlowFailure> failureHandler = activeFailureHandler;
+
+        if (!TryFinalizeSession(generation, "additive Bartending failure: " + code))
+            yield break;
+
+        activeFailureHandler = null;
+        failureHandler?.Invoke(failure);
     }
 
     private bool TryResolveBarAudioListener(out AudioListener barAudioListener)
@@ -507,7 +658,60 @@ public class BartendingFlowCoordinator : MonoBehaviour
         Debug.LogError("[BartendingFlowCoordinator][" + code + "] " + detail);
     }
 
+    private BartendingFlowFailure ClassifyAdditiveFailure(string code)
+    {
+        if (code == "LOAD_OPERATION_NULL" || code == "EDITOR_INJECTED_LOAD_FAILURE")
+            return BartendingFlowFailure.LoadFailed;
+
+        if (code == "RUNNER_COUNT_MISMATCH" ||
+            code == "RUNNER_SCENE_MISMATCH" ||
+            code == "EDITOR_INJECTED_RUNNER_FAILURE")
+            return BartendingFlowFailure.RunnerInvalid;
+
+        if (code == "RUNNER_DID_NOT_START" ||
+            code == "RUNNER_PLAY_EXCEPTION" ||
+            code == "EDITOR_INJECTED_START_FAILURE")
+        {
+            return BartendingFlowFailure.StartFailed;
+        }
+
+        if (code == "BAR_PRESENTATION_INVALID")
+            return BartendingFlowFailure.PresentationFailed;
+
+        if (code == "UNLOAD_FAILED_AFTER_RESULT" ||
+            code == "EDITOR_INJECTED_UNLOAD_FAILURE_AFTER_RESULT" ||
+            code == "ACTIVE_SCENE_CHANGED_AFTER_RESULT" ||
+            (code == "ACTIVE_SCENE_CHANGED" && completionCaptured))
+        {
+            return BartendingFlowFailure.UnloadFailedAfterResult;
+        }
+
+        if (code == "SCENE_INVALID" ||
+            code == "SCENE_NOT_LOADED" ||
+            code == "SCENE_PATH_MISMATCH" ||
+            code == "ACTIVE_SCENE_CHANGED")
+        {
+            return BartendingFlowFailure.SceneInvalid;
+        }
+
+        return BartendingFlowFailure.UnexpectedFailure;
+    }
+
 #if UNITY_EDITOR
+    public void SetEditorFailureInjection(BartendingFailureInjection failureInjection)
+    {
+        editorFailureInjection = failureInjection;
+    }
+
+    private bool ConsumeEditorFailureInjection(BartendingFailureInjection expectedFailure)
+    {
+        if (editorFailureInjection != expectedFailure)
+            return false;
+
+        editorFailureInjection = BartendingFailureInjection.None;
+        return true;
+    }
+
     /// <summary>
     /// Editor-only C4.2 probe. It exercises coordinator-owned additive lifecycle
     /// state without starting a MiniGame or changing the production execution path.
@@ -796,12 +1000,13 @@ public class BartendingFlowCoordinator : MonoBehaviour
     }
 #endif
 
-    private int BeginAcceptedSession()
+    private int BeginAcceptedSession(Action<BartendingFlowFailure> onFailed = null)
     {
         sessionGeneration++;
         activeSessionGeneration = sessionGeneration;
         completionCaptured = false;
         completionFinalized = false;
+        activeFailureHandler = onFailed;
         isBartendingActive = true;
         return activeSessionGeneration;
     }

@@ -46,6 +46,8 @@ public class OrderManager : MonoBehaviour
 
     private bool HasActiveOrder => currentOrder != null;
 
+    public event Action<BartendingFlowFailure> BartendingFlowFailed;
+
     void Awake()
     {
         ui = FindFirstObjectByType<UIManager>();
@@ -129,6 +131,15 @@ public class OrderManager : MonoBehaviour
         }
 
         BeginCurrentOrderBartending(currentOrder.defaultBrewSession);
+    }
+
+    private void NotifyBartendingFlowFailed(BartendingFlowFailure failure)
+    {
+        Debug.LogError(
+            "[OrderManager] Bartending infrastructure failure -> " + failure + ". " +
+            "Current order and customer remain owned by BarScene.");
+
+        BartendingFlowFailed?.Invoke(failure);
     }
 
     private void OnMiniGameDone(MiniGameResult result)
@@ -369,9 +380,17 @@ public class OrderManager : MonoBehaviour
 
         BartendingSession session = BartendingSession.FromOrder(currentOrder, sessionToUse);
 
-        if (!bartendingFlowCoordinator.BeginBartending(session, OnMiniGameDone))
+        bool accepted = bartendingFlowCoordinator.BeginBartending(
+            session,
+            OnMiniGameDone,
+            NotifyBartendingFlowFailed);
+
+        if (!accepted)
         {
             Debug.LogWarning("[OrderManager] Bartending request was not started.");
+
+            if (!bartendingFlowCoordinator.IsBartendingActive)
+                NotifyBartendingFlowFailed(BartendingFlowFailure.BeginRejected);
         }
     }
 }

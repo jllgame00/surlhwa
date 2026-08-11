@@ -93,6 +93,9 @@ public class InteractionUIController : MonoBehaviour
         orderManager = FindFirstObjectByType<OrderManager>();
         businessDayManager = FindFirstObjectByType<BusinessDayManager>();
 
+        if (orderManager != null)
+            orderManager.BartendingFlowFailed += RestoreAfterBartendingFailure;
+
         if (brewSelectionController == null && brewPanel != null)
             brewSelectionController = brewPanel.GetComponentInChildren<BrewSelectionController>(true);
 
@@ -119,6 +122,12 @@ public class InteractionUIController : MonoBehaviour
         ClosePanels(false);
         RefreshMethodVisuals();
         RefreshConfirmState();
+    }
+
+    private void OnDestroy()
+    {
+        if (orderManager != null)
+            orderManager.BartendingFlowFailed -= RestoreAfterBartendingFailure;
     }
 
     private void LateUpdate()
@@ -221,6 +230,42 @@ public class InteractionUIController : MonoBehaviour
         ClosePanels(false);
         RefreshMethodVisuals();
         RefreshConfirmState();
+    }
+
+    /// <summary>
+    /// Reopens only the existing Brew UI after a retry-safe additive
+    /// infrastructure failure. It does not re-register the customer or reapply
+    /// tutorial routing, so the current method and ingredient selection remain.
+    /// </summary>
+    public void RestoreAfterBartendingFailure(BartendingFlowFailure failure)
+    {
+        if (failure == BartendingFlowFailure.CleanupFailed)
+        {
+            Debug.LogError(
+                "[InteractionUI] Bartending failure is not retry-safe in the current session -> " + failure);
+            return;
+        }
+
+        if (activeCustomer == null)
+        {
+            Debug.LogWarning(
+                "[InteractionUI] Bartending failure retry UI was ignored because there is no active customer.");
+            return;
+        }
+
+        wantsEllipsisVisible = false;
+
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        if (brewPanel != null) brewPanel.SetActive(true);
+        if (overlayBlocker != null) overlayBlocker.SetActive(true);
+        if (ellipsisPrompt != null) ellipsisPrompt.gameObject.SetActive(false);
+        if (waitIndicator != null) waitIndicator.SetVisible(false);
+
+        RefreshMethodVisuals();
+        RefreshConfirmState();
+
+        Debug.Log(
+            "[InteractionUI] Restored Brew panel after retry-safe Bartending failure -> " + failure);
     }
 
     public void SetCustomerWaitIndicatorVisible(CustomerController customer, bool visible)
