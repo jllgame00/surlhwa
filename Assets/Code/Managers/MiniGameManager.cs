@@ -54,17 +54,17 @@ public class MiniGameManager : MonoBehaviour
 
     private MiniGameType ResolveMethodForGuide(GameObject selectedPrefab, OrderData order)
     {
-        // µğ¹ö±× °­Á¦ ¸ğµåÀÏ ¶§´Â ½ÇÁ¦·Î ¶ç¿î ÇÁ¸®ÆÕ ±âÁØÀ¸·Î ¸ÂÃçÁÜ
+        // ë””ë²„ê·¸ ê°•ì œ ëª¨ë“œì¼ ë•ŒëŠ” ì‹¤ì œë¡œ ë„ìš´ í”„ë¦¬íŒ¹ ê¸°ì¤€ìœ¼ë¡œ ë§ì¶°ì¤Œ
         if (selectedPrefab == stirPrefab) return MiniGameType.Stir;
         if (selectedPrefab == shakePrefab) return MiniGameType.Shake;
         if (selectedPrefab == buildPrefab) return MiniGameType.Build;
         if (selectedPrefab == floatPrefab) return MiniGameType.Float;
 
-        // ÀÏ¹İ ¸ğµå¸é ÁÖ¹® µ¥ÀÌÅÍ ±âÁØ
+        // ì¼ë°˜ ëª¨ë“œë©´ ì£¼ë¬¸ ë°ì´í„° ê¸°ì¤€
         if (order != null)
             return order.miniGameType;
 
-        // ÃÖÈÄ fallback
+        // ìµœí›„ fallback
         return MiniGameType.Stir;
     }
 
@@ -122,7 +122,7 @@ public class MiniGameManager : MonoBehaviour
 
         currentMiniGame = Instantiate(prefab, transform);
 
-        // ·¹½ÃÇÇ °¡ÀÌµå ÆĞ³Î¿¡ ÇöÀç Á¶ÁÖ ¹æ½Ä Àü´Ş
+        // ë ˆì‹œí”¼ ê°€ì´ë“œ íŒ¨ë„ì— í˜„ì¬ ì¡°ì£¼ ë°©ì‹ ì „ë‹¬
         SetupRecipeGuide(currentMiniGame, selectedPrefab: prefab, order: order);
 
         var game = currentMiniGame.GetComponentInChildren<IMiniGame>(true);
