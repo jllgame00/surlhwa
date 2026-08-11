@@ -59,6 +59,11 @@ Analyze
 - B2.2 — Environment Tile Migration
 - B2.3 — Gameplay ScriptableObject Data Migration
 - B2.4 — Production Prefab Migration
+- C0 — Full Architecture Boundary Audit
+- C1 — Canonical BarScene Name and Path
+- C2 — Bartending Boundary Preparation in Current Single Scene
+- C3 — Minimal BartendingScene Shell
+- C4 — Additive Load / Run / Unload / Result Return
 
 ### Runtime Baseline Result
 
@@ -98,13 +103,13 @@ Legacy, unknown, Font/TMP, Code, Scene은 아직 후속 Phase 대상이다.
 
 ### Immediate Next Step
 
-`C4.1 — Additive Lifecycle Smoke`
+`C5 — UI / Runtime Ownership / Progression Boundary Hardening`
 
-C0 Architecture Audit, C1 canonical BarScene migration, C2 Bartending boundary
-preparation, C3 BartendingScene shell, C4.0 additive-flow preflight audit이 완료됐다.
-Production MiniGame execution을 전환하기 전에 BartendingScene additive load,
-scene-scoped runner discovery, immediate unload, BarScene active-state preservation을
-먼저 증명한다.
+C4는 production additive Bartending execution과 failure/retry hardening, full manual
+regression까지 완료했다. C5는 RecipeGuide hidden Bar dependency, runtime parent ownership,
+Canvas sorting / overlap, EventSystem final ownership, Camera / AudioListener ownership,
+MiniGameCanvas와 BrewSelection responsibility를 harden한다. C4 additive lifecycle 자체를
+다시 설계하지 않는다.
 
 ## 4. Canonical Rebuild Roadmap
 
@@ -148,8 +153,8 @@ numbering은 `SUPERSEDED BY C0 ARCHITECTURE AUDIT`이며 active roadmap이 아�
 | C1 | Canonical BarScene Name and Path | COMPLETE |
 | C2 | Bartending Boundary Preparation in Current Single Scene | COMPLETE |
 | C3 | Minimal BartendingScene Shell | COMPLETE |
-| C4 | Additive Load / Run / Unload / Result Return | NEXT / IN PREPARATION |
-| C5 | UI / Runtime Ownership / Progression Boundary Hardening | PENDING |
+| C4 | Additive Load / Run / Unload / Result Return | COMPLETE |
+| C5 | UI / Runtime Ownership / Progression Boundary Hardening | NEXT |
 | C6 | Full Scene Architecture Regression | PENDING |
 
 #### C0 — Full Architecture Boundary Audit
@@ -212,14 +217,16 @@ Production runtime flow는 아직 BarScene runner를 사용한다.
 
 #### C4 — Additive Load / Run / Unload / Result Return
 
-Status: `NEXT / IN PREPARATION`
+Status: `COMPLETE`
 
-C4.0 Additive Flow Preflight Audit은 `COMPLETE`다. C4.0은 implementation이 아닌
-read-only preflight audit이며, OrderManager가 Bar-local로 남고 `BartendingSession` field
-expansion이 필요 없음을 확인했다. BarScene은 additive flow 중에도 active 상태를 유지한다.
-Bartending runner discovery는 loaded Scene의 `GetRootGameObjects()`와
-`GetComponentsInChildren<MiniGameManager>(true)`를 사용해 exactly one runner를 요구한다.
-Global `MiniGameManager` Find와 cross-scene serialized reference는 사용하지 않는다.
+C4.0 Additive Flow Preflight Audit, C4.1 lifecycle smoke, C4.2 coordinator async lifecycle
+preparation, C4.3 happy-path production switch, C4.4 failure/retry hardening, C4.5 full
+additive regression을 완료했다. `OrderManager`는 Bar-local로 남고
+`BartendingSession` field expansion은 필요하지 않았다. BarScene은 additive lifecycle
+전체에서 loaded 및 active 상태를 유지한다. Bartending runner discovery는 loaded Scene의
+`GetRootGameObjects()`와 `GetComponentsInChildren<MiniGameManager>(true)`를 사용해 exactly
+one runner를 요구한다. Global `MiniGameManager` Find와 cross-scene serialized reference는
+사용하지 않는다.
 
 ```text
 Begin Bartending
@@ -230,47 +237,63 @@ Begin Bartending
 → MiniGameResult capture once
 → BartendingScene unload
 → wait for unload completion
-→ Bar camera restore
-→ active state clear
-→ OrderManager result callback once
+→ Bar Camera / AudioListener restore
+→ coordinator finalize
+→ IsBartendingActive = false
+→ OrderManager.OnMiniGameDone once
 ```
 
-C4는 Architecture Phase의 highest-risk transition이다. BarScene은 unload하지 않아
+C4는 Architecture Phase의 highest-risk transition이었다. BarScene은 unload하지 않아
 current Customer, seat state, Business Day state를 유지한다. Scene identifier는
-`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity` path다. 위 happy path는 아직
-구현되지 않았다.
+`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity` path다. production code는
+BartendingScene을 active Scene으로 만들지 않으며, BartendingScene은 Bar-side gameplay
+result application 전에 unload된다.
+
+Infrastructure failure는 gameplay failure가 아니므로 fake `MiniGameResult`를
+`OrderManager`에 전달하지 않는다. C4.4 recovery는 load, runner resolution, runner start,
+unload failure를 contain한다. Recoverable infrastructure failure에서는 Customer와 Order를
+유지하고 reputation, recipe unlock, customer reaction, seat release를 적용하지 않으며,
+Bar presentation과 Brew retry UI를 복원한다. Bar legacy `MiniGameManager` fallback은
+사용하지 않는다. Captured result 뒤 unload failure는 result를 적용하지 않는 containment
+case다.
+
+C4.5 manual regression은 Day 1 Stir / Shake / Build / Float, BartendingScene load/unload,
+BarScene active preservation, Camera / AudioListener lifecycle, Customer loop, seat release,
+patience, debug spawn guard, re-entry, load/runner/start failure + retry, unload failure
+containment, Day 2 Little Prince, Day 1 tutorial non-replay을 확인했다. C4 관련 blocking
+runtime error는 Console에서 확인되지 않았다.
 
 ##### C4.1 — Additive Lifecycle Smoke
 
-Status: `NEXT`
+Status: `COMPLETE`
 
-Production MiniGame execution을 전환하지 않고 BartendingScene additive load,
-scene-scoped runner discovery, immediate unload, BarScene active-state preservation을 먼저 증명한다.
+Production switch 이전에 BartendingScene additive load, scene-scoped runner discovery,
+immediate unload, BarScene active-state preservation을 증명했다.
 
 ##### C4.2 — Coordinator Async Lifecycle Preparation
 
-Status: `PENDING`
+Status: `COMPLETE`
 
 ##### C4.3 — Switch Happy-Path Production Execution
 
-Status: `PENDING`
+Status: `COMPLETE`
 
 ##### C4.4 — Failure / Retry Hardening
 
-Status: `PENDING`
+Status: `COMPLETE`
 
 ##### C4.5 — Full Additive Regression
 
-Status: `PENDING`
+Status: `COMPLETE`
 
 #### C5 — UI / Runtime Ownership / Progression Boundary Hardening
 
-Status: `PENDING`
+Status: `NEXT`
 
 - RecipeGuide의 hidden Bar lookup을 정리한다.
 - Bar/Bartending runtime object parent ownership을 명확히 한다.
 - Canvas sorting과 one EventSystem policy를 검증한다.
-- camera / AudioListener transition을 harden한다.
+- Camera / AudioListener ownership을 harden한다.
 - Scene MiniGameCanvas와 BrewSelection responsibility를 review한다.
 
 `REVIEW` 항목은 evidence 없이 삭제하지 않는다.

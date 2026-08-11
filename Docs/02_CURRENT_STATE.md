@@ -26,7 +26,7 @@ Core Gameplay Prototype
 → Phase C1 — Canonical BarScene Name and Path
 → Phase C2 — Bartending Boundary Preparation in Current Single Scene
 → Phase C3 — Minimal BartendingScene Shell
-→ Phase C4.0 — Additive Flow Preflight Audit
+→ Phase C4 — Additive Load / Run / Unload / Result Return
 ```
 
 현재 Branch는 `refactor/project-rebuild`다.
@@ -44,14 +44,17 @@ Regression으로 확인했다.
 | C1 | Canonical BarScene Name and Path | COMPLETE |
 | C2 | Bartending Boundary Preparation in Current Single Scene | COMPLETE |
 | C3 | Minimal BartendingScene Shell | COMPLETE |
-| C4 | Additive Load / Run / Unload / Result Return | NEXT / IN PREPARATION |
+| C4 | Additive Load / Run / Unload / Result Return | COMPLETE |
+| C5 | UI / Runtime Ownership / Progression Boundary Hardening | NEXT |
+| C6 | Full Scene Architecture Regression | PENDING |
 
 C1은 current production Scene의 identity와 path만 바꿨다. Scene GUID와 YAML
 content, hierarchy, serialized reference, runtime C# 및 playable behavior는 보존됐다.
 Manual smoke regression도 PASS했다. C2는 current single-Scene runtime 안에서
 `BartendingSession`과 `BartendingFlowCoordinator` seam을 만들었고, C3는 additive
-execution을 위한 isolated BartendingScene shell을 추가했다. C4.0은 implementation이
-아닌 read-only additive-flow preflight audit으로 완료되었다.
+execution을 위한 isolated BartendingScene shell을 추가했다. C4.0 preflight audit,
+C4.1 lifecycle smoke, C4.2 coordinator async lifecycle preparation, C4.3 production
+switch, C4.4 failure/retry hardening, C4.5 full additive regression을 완료했다.
 
 ### Production Asset Migration
 
@@ -70,10 +73,10 @@ Assets/_SURLHWA/Data
 Assets/_SURLHWA/Prefabs
 ```
 
-다음 단계는 `C4.1 — Additive Lifecycle Smoke`이다. C3에서 생성한 BartendingScene은
-Build Settings에 등록된 isolated shell이며 production runtime에서 아직 load되지 않는다.
-C4.1 이전에는 production execution을 전환하지 않고 additive load, scene-scoped runner
-discovery, immediate unload lifecycle을 먼저 증명한다.
+다음 단계는 `C5 — UI / Runtime Ownership / Progression Boundary Hardening`이다.
+C5는 RecipeGuide의 hidden Bar dependency, runtime parent ownership, Canvas sorting,
+EventSystem, Camera / AudioListener ownership, MiniGameCanvas와 BrewSelection의
+responsibility를 검토한다. C4 additive flow 자체를 다시 설계하지 않는다.
 
 ---
 
@@ -126,14 +129,47 @@ spawn과 tutorial repetition 차단을 확인했다.
 
 Build Settings index 0의 enabled production start Scene은 BarScene이다.
 
-현재 BartendingScene shell:
+현재 production BartendingScene:
 
 `Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity`
 
 BartendingScene은 Build Settings index 1의 enabled additive target이다.
-`templateDefaultScene`은 계속 BarScene을 가리킨다. Front-facing Bar Layout이 적용되어
-있으며 current production runtime architecture는 여전히 Bar와 Bartending execution을
-함께 담는 single-Scene 구조다. BartendingScene runtime usage는 아직 구현되지 않았다.
+`templateDefaultScene`은 계속 BarScene을 가리킨다. Bartending 중에만 additive로 load되며,
+BarScene은 loaded 및 active 상태를 유지한다. BartendingScene은 Bar-side gameplay result
+application 전에 unload된다.
+
+현재 production Scene architecture:
+
+```text
+BarScene
+├─ Customer / Seat
+├─ CustomerSpawner
+├─ BusinessDayManager
+├─ OrderManager
+├─ InteractionUIController
+├─ BartendingFlowCoordinator
+├─ Bar Camera / AudioListener
+└─ EventSystem
+
+        │ BartendingSession
+        ▼
+
+BartendingScene [Additive]
+├─ MiniGameManager
+└─ Runtime MiniGame
+    ├─ Camera
+    ├─ AudioListener
+    ├─ UI
+    └─ Input
+
+        │ MiniGameResult
+        ▼
+
+BartendingFlowCoordinator
+→ unload BartendingScene
+→ restore Bar
+→ OrderManager.OnMiniGameDone
+```
 
 기존 `Assets/Scenes/SampleScene.unity`는 C1에서 canonical BarScene path로 이동됐으며
 더 이상 current production Scene이 아니다.
@@ -257,15 +293,48 @@ Stir:
 - 실제 Play Loop에서 사용
 - Perfect / Good / Fail 평가 구조가 존재하는 것으로 확인
 
-### Confirmed Runtime Baseline
+### Confirmed Production Runtime
 
 Stir / Shake / Build / Float:
 
 - 네 조주법 모두 Production Prefab과 runtime 진입 경로가 존재한다.
-- Day 1 Manual Regression에서 Stir → Shake → Build → Float 순서로 진입을
-  확인했다.
-- 향후 BartendingScene 분리는 동작 변경이 아니라 Scene boundary 재구축으로
-  진행한다.
+- Day 1 Manual Regression에서 Stir → Shake → Build → Float 순서의 additive
+  Bartending execution을 확인했다.
+- `BartendingFlowCoordinator`가 BartendingScene을 additive load하고 loaded Scene scope에서
+  exactly one `MiniGameManager`를 찾아 실행한다.
+- `MiniGameResult`는 capture-only 후 BartendingScene unload, Bar Camera / AudioListener
+  restore, coordinator finalization 순으로 처리되며, 이후 `OrderManager.OnMiniGameDone`에
+  전달된다.
+- BarScene legacy `MiniGameManager`는 `PRESENT / NOT PRODUCTION EXECUTION TARGET /
+  DEFER_REMOVAL` 상태다.
+
+Production result ordering:
+
+```text
+MiniGameResult capture
+→ BartendingScene unload
+→ Bar Camera / AudioListener restore
+→ Coordinator finalize
+→ IsBartendingActive = false
+→ OrderManager.OnMiniGameDone
+```
+
+### Additive Failure Recovery
+
+C4.4는 load, runner resolution, runner start, unload infrastructure failure에 대해
+containment/recovery를 제공한다. Infrastructure failure는 fake `MiniGameResult`로
+위조하지 않는다. Recoverable failure에서는 Customer와 Order를 유지하고, reputation,
+recipe unlock, customer reaction, seat release를 적용하지 않으며, Bar presentation을
+복원하고 coordinator active state를 finalization한 뒤 Brew retry UI를 복원한다.
+Legacy Bar runner fallback은 사용하지 않는다.
+
+### C4 Manual Regression
+
+C4.5 manual regression은 Day 1 Stir / Shake / Build / Float, BartendingScene load/unload,
+BarScene active preservation, Camera / AudioListener lifecycle, Customer loop, seat release,
+patience, debug spawn guard, re-entry, load / runner / start failure + retry, unload failure
+containment, Day 2 Little Prince, Day 1 tutorial non-replay을 확인했다. Console에는 C4 관련
+blocking runtime error가 없었다.
 
 중요:
 
@@ -452,6 +521,7 @@ serialized reference는 각 B2 batch에서 보존 검증했다.
 - Current Day Persistence Prototype
 - Front-facing Main Bar Layout
 - Little Prince Day 2 Spawn Prototype
+- Additive Bartending production execution and failure recovery
 
 ---
 
@@ -497,21 +567,16 @@ serialized reference는 각 B2 batch에서 보존 검증했다.
 
 현재 최우선 목표:
 
-**C4.1 — Additive Lifecycle Smoke**
+**C5 — UI / Runtime Ownership / Progression Boundary Hardening**
 
-Production MiniGame execution을 전환하지 않은 채 다음 lifecycle을 먼저 증명한다.
+C5는 C4의 additive load/run/unload/result-return lifecycle을 다시 설계하지 않는다.
+대상은 RecipeGuide의 hidden Bar dependency, runtime parent ownership, Canvas sorting /
+overlap ownership, one EventSystem final ownership verification, Camera / AudioListener
+ownership hardening, MiniGameCanvas와 BrewSelection responsibility review다.
 
-- BarScene remains active
-- BartendingScene additive load
-- loaded Scene 안에서 exactly one `MiniGameManager` scene-scoped discovery
-- immediate unload 및 BarScene active-state preservation
-
-C4.1은 `Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity` path를 사용하며
-global `MiniGameManager` Find와 cross-scene serialized reference를 만들지 않는다.
-`BartendingSession` field 확장, production MiniGame execution switch, camera/input
-transition, result return은 후속 C4 slices의 범위다. Bootstrap은 `CREATE_LATER`, MainMenu는 `CREATE_LATER`, EndingScene은
-`DEFER`, Special Guest Architecture는 Phase G, Persistence centralization은 Phase H,
-AudioManager는 실제 global requirement가 확인될 때까지 deferred 상태를 유지한다.
+Bootstrap은 `CREATE_LATER`, MainMenu는 `CREATE_LATER`, EndingScene은 `DEFER`, Special
+Guest Architecture는 Phase G, Persistence는 Phase H, AudioManager는 `DEFER` 상태를
+유지한다.
 
 `BarScene_LayoutTest.unity`는 여전히 `DEVELOPMENT / UPDATE_AFTER_BAR_REBUILD`다.
 C1에서 canonical BarScene으로 대체되거나 동기화되지 않았다.
