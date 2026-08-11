@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// BAR_LOCAL boundary between Bar-side order ownership and MiniGame execution.
-/// C4.2 keeps production execution on the legacy BarScene MiniGameManager while
-/// preparing coordinator-owned state for a later additive Scene handoff.
+/// Production execution loads BartendingScene additively while BarScene retains
+/// the order, customer, and active Scene ownership.
 /// </summary>
 public class BartendingFlowCoordinator : MonoBehaviour
 {
@@ -30,8 +30,8 @@ public class BartendingFlowCoordinator : MonoBehaviour
     }
 
     /// <summary>
-    /// Production C2 contract. C4.2 intentionally continues to execute on the
-    /// serialized BarScene legacy runner; it does not load BartendingScene.
+    /// Bar-facing contract. The serialized MiniGameManager remains the legacy
+    /// BarScene runner, but production execution is scoped to BartendingScene.
     /// </summary>
     public bool BeginBartending(BartendingSession session, Action<MiniGameResult> onCompleted)
     {
@@ -47,37 +47,464 @@ public class BartendingFlowCoordinator : MonoBehaviour
             return false;
         }
 
-        if (!ResolveLegacyBarMiniGameManager())
+        Scene existingBartendingScene = SceneManager.GetSceneByPath(BartendingScenePath);
+        if (existingBartendingScene.IsValid() && existingBartendingScene.isLoaded)
         {
-            Debug.LogError("[BartendingFlowCoordinator] Legacy BarScene MiniGameManager is NULL or ambiguous.");
+            Debug.LogError("[BartendingFlowCoordinator] BeginBartending requires BartendingScene to be unloaded before a new session starts.");
             return false;
         }
+
+        if (!TryResolveBarAudioListener(out AudioListener barAudioListener))
+            return false;
 
         int generation = BeginAcceptedSession();
-
-        miniGameManager.Play(session.Order, session.InitialSession, result =>
-        {
-            if (!TryCaptureCompletion(generation, "legacy MiniGame callback"))
-                return;
-
-            if (!TryFinalizeSession(generation, "legacy MiniGame callback"))
-                return;
-
-            onCompleted?.Invoke(result);
-        });
-
-        if (IsCurrentSession(generation) && !completionCaptured && !miniGameManager.IsPlaying)
-        {
-            Debug.LogError("[BartendingFlowCoordinator] MiniGameManager did not start Bartending.");
-            TryFinalizeSession(generation, "legacy MiniGame start failure");
-            return false;
-        }
+        StartCoroutine(RunAdditiveBartending(generation, session, onCompleted, barAudioListener));
 
         Debug.Log(
-            "[BartendingFlowCoordinator] BeginBartending -> " +
+            "[BartendingFlowCoordinator] BeginBartending additive -> " +
             session.Order.orderName + " / " + session.Method + " / generation=" + generation);
 
         return true;
+    }
+
+    private IEnumerator RunAdditiveBartending(
+        int generation,
+        BartendingSession session,
+        Action<MiniGameResult> onCompleted,
+        AudioListener barAudioListener)
+    {
+        Scene bartendingScene = default;
+        bool barPresentationCaptured = false;
+        bool barCameraWasEnabled = false;
+        bool barAudioListenerWasEnabled = false;
+
+        AsyncOperation loadOperation = null;
+        Exception loadException = null;
+        try
+        {
+            loadOperation = SceneManager.LoadSceneAsync(BartendingScenePath, LoadSceneMode.Additive);
+        }
+        catch (Exception exception)
+        {
+            loadException = exception;
+        }
+
+        if (loadException != null)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "LOAD_OPERATION_NULL",
+                "LoadSceneAsync threw: " + loadException.Message,
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (loadOperation == null)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "LOAD_OPERATION_NULL",
+                "LoadSceneAsync returned null.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        yield return loadOperation;
+
+        if (!IsCurrentSession(generation))
+        {
+            ReportAdditiveFailure("STALE_GENERATION", "Load completion belongs to stale generation " + generation + ".");
+            yield break;
+        }
+
+        bartendingScene = SceneManager.GetSceneByPath(BartendingScenePath);
+        if (!bartendingScene.IsValid())
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "SCENE_INVALID",
+                "GetSceneByPath returned an invalid BartendingScene.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (!bartendingScene.isLoaded)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "SCENE_NOT_LOADED",
+                "BartendingScene is not loaded after additive load completion.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (bartendingScene.path != BartendingScenePath)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "SCENE_PATH_MISMATCH",
+                "Loaded BartendingScene path does not match the canonical path: " + bartendingScene.path,
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (SceneManager.GetActiveScene().path != gameObject.scene.path)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "ACTIVE_SCENE_CHANGED",
+                "BarScene did not remain active during additive load.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        List<MiniGameManager> runners = FindMiniGameManagersInScene(bartendingScene);
+        if (runners.Count != 1)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "RUNNER_COUNT_MISMATCH",
+                "Expected exactly one BartendingScene MiniGameManager. Actual: " + runners.Count,
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        MiniGameManager runner = runners[0];
+        if (runner == null || runner.gameObject.scene != bartendingScene)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "RUNNER_SCENE_MISMATCH",
+                "Discovered MiniGameManager does not belong to the loaded BartendingScene.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (!TryCaptureAndDisableBarPresentation(
+                barAudioListener,
+                out barCameraWasEnabled,
+                out barAudioListenerWasEnabled))
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "BAR_PRESENTATION_INVALID",
+                "Bar camera or AudioListener could not be captured before MiniGame start.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        barPresentationCaptured = true;
+        MiniGameResult capturedResult = default;
+        Exception playException = null;
+        try
+        {
+            runner.Play(session.Order, session.InitialSession, result =>
+            {
+                if (!TryCaptureCompletion(generation, "BartendingScene MiniGame callback"))
+                    return;
+
+                capturedResult = result;
+            });
+        }
+        catch (Exception exception)
+        {
+            playException = exception;
+        }
+
+        if (playException != null)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "RUNNER_PLAY_EXCEPTION",
+                "BartendingScene MiniGameManager.Play threw: " + playException.Message,
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (IsCurrentSession(generation) && !completionCaptured && !runner.IsPlaying)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "RUNNER_DID_NOT_START",
+                "BartendingScene MiniGameManager.Play completed without starting a MiniGame.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        while (IsCurrentSession(generation) && !completionCaptured)
+            yield return null;
+
+        if (!IsCurrentSession(generation))
+        {
+            ReportAdditiveFailure("STALE_GENERATION", "MiniGame completion belongs to stale generation " + generation + ".");
+            yield break;
+        }
+
+        AsyncOperation unloadOperation = null;
+        Exception unloadException = null;
+        try
+        {
+            unloadOperation = SceneManager.UnloadSceneAsync(bartendingScene);
+        }
+        catch (Exception exception)
+        {
+            unloadException = exception;
+        }
+
+        if (unloadException != null)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "UNLOAD_OPERATION_NULL",
+                "UnloadSceneAsync threw: " + unloadException.Message,
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (unloadOperation == null)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "UNLOAD_OPERATION_NULL",
+                "UnloadSceneAsync returned null.",
+                bartendingScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        yield return unloadOperation;
+
+        if (!IsCurrentSession(generation))
+        {
+            ReportAdditiveFailure("STALE_GENERATION", "Unload completion belongs to stale generation " + generation + ".");
+            yield break;
+        }
+
+        Scene postUnloadScene = SceneManager.GetSceneByPath(BartendingScenePath);
+        if (postUnloadScene.IsValid() && postUnloadScene.isLoaded)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "SCENE_STILL_LOADED",
+                "BartendingScene remains loaded after UnloadSceneAsync completion.",
+                postUnloadScene,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        if (SceneManager.GetActiveScene().path != gameObject.scene.path)
+        {
+            yield return FailAdditiveBartendingWithCleanup(
+                generation,
+                "ACTIVE_SCENE_CHANGED",
+                "BarScene did not remain active after BartendingScene unload.",
+                default,
+                barAudioListener,
+                barPresentationCaptured,
+                barCameraWasEnabled,
+                barAudioListenerWasEnabled);
+            yield break;
+        }
+
+        RestoreBarPresentation(
+            barAudioListener,
+            barPresentationCaptured,
+            barCameraWasEnabled,
+            barAudioListenerWasEnabled);
+
+        if (!TryFinalizeSession(generation, "BartendingScene additive lifecycle"))
+            yield break;
+
+        onCompleted?.Invoke(capturedResult);
+    }
+
+    private IEnumerator FailAdditiveBartendingWithCleanup(
+        int generation,
+        string code,
+        string detail,
+        Scene loadedBartendingScene,
+        AudioListener barAudioListener,
+        bool barPresentationCaptured,
+        bool barCameraWasEnabled,
+        bool barAudioListenerWasEnabled)
+    {
+        ReportAdditiveFailure(code, detail);
+
+        if (!IsCurrentSession(generation))
+        {
+            ReportAdditiveFailure("STALE_GENERATION", "Failure handling belongs to stale generation " + generation + ".");
+            yield break;
+        }
+
+        Scene sceneToCleanup = loadedBartendingScene;
+        if (!sceneToCleanup.IsValid() || !sceneToCleanup.isLoaded)
+        {
+            Scene resolvedScene = SceneManager.GetSceneByPath(BartendingScenePath);
+            if (resolvedScene.IsValid() && resolvedScene.isLoaded)
+                sceneToCleanup = resolvedScene;
+        }
+
+        if (sceneToCleanup.IsValid() && sceneToCleanup.isLoaded)
+        {
+            AsyncOperation cleanupOperation = null;
+            Exception cleanupException = null;
+            try
+            {
+                cleanupOperation = SceneManager.UnloadSceneAsync(sceneToCleanup);
+            }
+            catch (Exception exception)
+            {
+                cleanupException = exception;
+            }
+
+            if (cleanupException != null)
+            {
+                ReportAdditiveFailure("UNLOAD_OPERATION_NULL", "Failure cleanup threw: " + cleanupException.Message);
+            }
+            else if (cleanupOperation == null)
+            {
+                ReportAdditiveFailure("UNLOAD_OPERATION_NULL", "Failure cleanup could not start unload.");
+            }
+            else
+            {
+                yield return cleanupOperation;
+
+                Scene postCleanupScene = SceneManager.GetSceneByPath(BartendingScenePath);
+                if (postCleanupScene.IsValid() && postCleanupScene.isLoaded)
+                    ReportAdditiveFailure("SCENE_STILL_LOADED", "Failure cleanup left BartendingScene loaded.");
+            }
+        }
+
+        RestoreBarPresentation(
+            barAudioListener,
+            barPresentationCaptured,
+            barCameraWasEnabled,
+            barAudioListenerWasEnabled);
+
+        TryFinalizeSession(generation, "additive Bartending failure: " + code);
+    }
+
+    private bool TryResolveBarAudioListener(out AudioListener barAudioListener)
+    {
+        barAudioListener = null;
+
+        if (barMainCamera == null)
+        {
+            Debug.LogError("[BartendingFlowCoordinator] BeginBartending requires the serialized Bar Main Camera.");
+            return false;
+        }
+
+        if (barMainCamera.gameObject.scene != gameObject.scene)
+        {
+            Debug.LogError("[BartendingFlowCoordinator] Serialized Bar Main Camera does not belong to the coordinator's BarScene.");
+            return false;
+        }
+
+        AudioListener[] listeners = barMainCamera.GetComponents<AudioListener>();
+        if (listeners.Length != 1 || listeners[0] == null)
+        {
+            Debug.LogError(
+                "[BartendingFlowCoordinator] Expected exactly one AudioListener on the serialized Bar Main Camera. Actual: " +
+                listeners.Length);
+            return false;
+        }
+
+        barAudioListener = listeners[0];
+        return true;
+    }
+
+    private bool TryCaptureAndDisableBarPresentation(
+        AudioListener barAudioListener,
+        out bool barCameraWasEnabled,
+        out bool barAudioListenerWasEnabled)
+    {
+        barCameraWasEnabled = false;
+        barAudioListenerWasEnabled = false;
+
+        if (barMainCamera == null || barAudioListener == null)
+            return false;
+
+        barCameraWasEnabled = barMainCamera.enabled;
+        barAudioListenerWasEnabled = barAudioListener.enabled;
+
+        barAudioListener.enabled = false;
+        barMainCamera.enabled = false;
+        return true;
+    }
+
+    private void RestoreBarPresentation(
+        AudioListener barAudioListener,
+        bool barPresentationCaptured,
+        bool barCameraWasEnabled,
+        bool barAudioListenerWasEnabled)
+    {
+        if (!barPresentationCaptured)
+            return;
+
+        if (barMainCamera != null)
+            barMainCamera.enabled = barCameraWasEnabled;
+
+        if (barAudioListener != null)
+            barAudioListener.enabled = barAudioListenerWasEnabled;
+    }
+
+    private static void ReportAdditiveFailure(string code, string detail)
+    {
+        Debug.LogError("[BartendingFlowCoordinator][" + code + "] " + detail);
     }
 
 #if UNITY_EDITOR
