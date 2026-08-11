@@ -28,7 +28,6 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] private Camera mainCamera;
 
     private GameObject currentMiniGame;
-    private UIManager ui;
 
     public bool IsPlaying => currentMiniGame != null;
 
@@ -70,16 +69,13 @@ public class MiniGameManager : MonoBehaviour
 
     private void Awake()
     {
-        ui = FindFirstObjectByType<UIManager>();
-
         Debug.Log(
             $"[MiniGameManager] Awake\n" +
             $" debugPlayMode = {debugPlayMode}\n" +
             $" stirPrefab = {(stirPrefab != null ? stirPrefab.name : "NULL")}\n" +
             $" shakePrefab = {(shakePrefab != null ? shakePrefab.name : "NULL")}\n" +
             $" buildPrefab = {(buildPrefab != null ? buildPrefab.name : "NULL")}\n" +
-            $" floatPrefab = {(floatPrefab != null ? floatPrefab.name : "NULL")}\n" +
-            $" ui = {(ui != null ? ui.name : "NULL")}"
+            $" floatPrefab = {(floatPrefab != null ? floatPrefab.name : "NULL")}"
         );
     }
 
@@ -117,7 +113,6 @@ public class MiniGameManager : MonoBehaviour
             return;
         }
 
-        UpdateDebugOrderLabel(prefab, order);
         SetMainSceneActive(false);
 
         currentMiniGame = Instantiate(prefab, transform);
@@ -180,34 +175,6 @@ public class MiniGameManager : MonoBehaviour
 
                 return GetPrefab(order.miniGameType);
         }
-    }
-
-    private void UpdateDebugOrderLabel(GameObject selectedPrefab, OrderData order)
-    {
-        if (ui == null)
-            ui = FindFirstObjectByType<UIManager>();
-
-        if (ui == null) return;
-
-        string label = order != null ? order.orderName : "-";
-
-        if (debugPlayMode == DebugPlayMode.RandomStirShake ||
-            debugPlayMode == DebugPlayMode.ForceStir ||
-            debugPlayMode == DebugPlayMode.ForceShake ||
-            debugPlayMode == DebugPlayMode.ForceFloat ||
-            debugPlayMode == DebugPlayMode.ForceBuild)
-        {
-            if (selectedPrefab == stirPrefab)
-                label = "TestStir";
-            else if (selectedPrefab == shakePrefab)
-                label = "TestShake";
-            else if (selectedPrefab == buildPrefab)
-                label = "TestBuild";
-            else if (selectedPrefab == floatPrefab)
-                label = "TestFloat";
-        }
-
-        ui.SetOrderText($"ORDER: {label}");
     }
 
     private void SetMainSceneActive(bool active)
