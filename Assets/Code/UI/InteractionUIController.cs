@@ -426,13 +426,6 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        BrewSessionData selectedSession = null;
-
-        if (brewSelectionController != null && brewSelectionController.HasAnySelectedIngredient())
-        {
-            selectedSession = brewSelectionController.BuildSelectedSession();
-        }
-
         ClosePanels(false);
 
         if (orderManager == null)
@@ -444,9 +437,9 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / {order.orderName} / HasSelectedSession={selectedSession != null}");
+        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / {order.orderName} / IngredientAuthority=BartendingShelf");
 
-        orderManager.PlaySpecificOrder(order, activeCustomer, selectedSession);
+        orderManager.PlaySpecificOrder(order, activeCustomer);
     }
 
     private OrderData GetTestOrder(MiniGameType type)
