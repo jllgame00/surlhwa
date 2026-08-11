@@ -24,6 +24,9 @@ Core Gameplay Prototype
 → Architecture Documentation Checkpoint
 → Phase C0 — Full Architecture Boundary Audit
 → Phase C1 — Canonical BarScene Name and Path
+→ Phase C2 — Bartending Boundary Preparation in Current Single Scene
+→ Phase C3 — Minimal BartendingScene Shell
+→ Phase C4.0 — Additive Flow Preflight Audit
 ```
 
 현재 Branch는 `refactor/project-rebuild`다.
@@ -39,13 +42,16 @@ Regression으로 확인했다.
 | --- | --- | --- |
 | C0 | Full Architecture Boundary Audit | COMPLETE |
 | C1 | Canonical BarScene Name and Path | COMPLETE |
+| C2 | Bartending Boundary Preparation in Current Single Scene | COMPLETE |
+| C3 | Minimal BartendingScene Shell | COMPLETE |
+| C4 | Additive Load / Run / Unload / Result Return | NEXT / IN PREPARATION |
 
 C1은 current production Scene의 identity와 path만 바꿨다. Scene GUID와 YAML
 content, hierarchy, serialized reference, runtime C# 및 playable behavior는 보존됐다.
-Manual smoke regression도 PASS했다.
-현재 canonical production Scene은
-`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`이며 Build Settings index 0의 유일한
-enabled production Scene이다.
+Manual smoke regression도 PASS했다. C2는 current single-Scene runtime 안에서
+`BartendingSession`과 `BartendingFlowCoordinator` seam을 만들었고, C3는 additive
+execution을 위한 isolated BartendingScene shell을 추가했다. C4.0은 implementation이
+아닌 read-only additive-flow preflight audit으로 완료되었다.
 
 ### Production Asset Migration
 
@@ -64,10 +70,10 @@ Assets/_SURLHWA/Data
 Assets/_SURLHWA/Prefabs
 ```
 
-다음 단계는 `C2 — Bartending Boundary Preparation in Current Single Scene`이다.
-현재 BarScene 하나 안에서 Bar와 Bartending 사이의 최소 session/result contract를
-먼저 준비한다. BartendingScene 생성, additive loading, MiniGame Scene extraction은
-아직 시작하지 않았다.
+다음 단계는 `C4.1 — Additive Lifecycle Smoke`이다. C3에서 생성한 BartendingScene은
+Build Settings에 등록된 isolated shell이며 production runtime에서 아직 load되지 않는다.
+C4.1 이전에는 production execution을 전환하지 않고 additive load, scene-scoped runner
+discovery, immediate unload lifecycle을 먼저 증명한다.
 
 ---
 
@@ -118,9 +124,16 @@ spawn과 tutorial repetition 차단을 확인했다.
 
 `Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`
 
-Build Settings index 0의 enabled production Scene은 BarScene 하나다. Front-facing Bar
-Layout이 적용되어 있으며, current runtime architecture는 여전히 Bar와 Bartending
-execution이 함께 있는 single-Scene 구조다.
+Build Settings index 0의 enabled production start Scene은 BarScene이다.
+
+현재 BartendingScene shell:
+
+`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity`
+
+BartendingScene은 Build Settings index 1의 enabled additive target이다.
+`templateDefaultScene`은 계속 BarScene을 가리킨다. Front-facing Bar Layout이 적용되어
+있으며 current production runtime architecture는 여전히 Bar와 Bartending execution을
+함께 담는 single-Scene 구조다. BartendingScene runtime usage는 아직 구현되지 않았다.
 
 기존 `Assets/Scenes/SampleScene.unity`는 C1에서 canonical BarScene path로 이동됐으며
 더 이상 current production Scene이 아니다.
@@ -484,18 +497,19 @@ serialized reference는 각 B2 batch에서 보존 검증했다.
 
 현재 최우선 목표:
 
-**C2 — Bartending Boundary Preparation in Current Single Scene**
+**C4.1 — Additive Lifecycle Smoke**
 
-현재 BarScene을 유지한 채 다음 최소 boundary를 먼저 준비한다.
+Production MiniGame execution을 전환하지 않은 채 다음 lifecycle을 먼저 증명한다.
 
-- Bar → Bartending start session
-- Bartending → Bar result return
-- current Customer와 Business Day state의 BarScene ownership
-- Bartending active-state, camera, input transition boundary
-- existing direct MiniGameManager dependency를 contract 뒤로 옮길 준비
+- BarScene remains active
+- BartendingScene additive load
+- loaded Scene 안에서 exactly one `MiniGameManager` scene-scoped discovery
+- immediate unload 및 BarScene active-state preservation
 
-BartendingScene 생성, additive loading, MiniGame execution Scene extraction은 C2의
-범위가 아니다. Bootstrap은 `CREATE_LATER`, MainMenu는 `CREATE_LATER`, EndingScene은
+C4.1은 `Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity` path를 사용하며
+global `MiniGameManager` Find와 cross-scene serialized reference를 만들지 않는다.
+`BartendingSession` field 확장, production MiniGame execution switch, camera/input
+transition, result return은 후속 C4 slices의 범위다. Bootstrap은 `CREATE_LATER`, MainMenu는 `CREATE_LATER`, EndingScene은
 `DEFER`, Special Guest Architecture는 Phase G, Persistence centralization은 Phase H,
 AudioManager는 실제 global requirement가 확인될 때까지 deferred 상태를 유지한다.
 

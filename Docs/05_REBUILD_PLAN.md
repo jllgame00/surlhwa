@@ -98,11 +98,13 @@ Legacy, unknown, Font/TMP, Code, Scene은 아직 후속 Phase 대상이다.
 
 ### Immediate Next Step
 
-`C0 — Full Architecture Boundary Audit`
+`C4.1 — Additive Lifecycle Smoke`
 
-기존 B2.5 Development Scene 단순 이동과 B2.6 Main Scene 단순 이동 계획은
-`SUPERSEDED`다. Scene을 이동하기 전에 global/scene-local lifetime, Bar ↔
-Bartending contract, presentation, persistence boundary를 먼저 확정한다.
+C0 Architecture Audit, C1 canonical BarScene migration, C2 Bartending boundary
+preparation, C3 BartendingScene shell, C4.0 additive-flow preflight audit이 완료됐다.
+Production MiniGame execution을 전환하기 전에 BartendingScene additive load,
+scene-scoped runner discovery, immediate unload, BarScene active-state preservation을
+먼저 증명한다.
 
 ## 4. Canonical Rebuild Roadmap
 
@@ -144,9 +146,9 @@ numbering은 `SUPERSEDED BY C0 ARCHITECTURE AUDIT`이며 active roadmap이 아�
 | --- | --- | --- |
 | C0 | Full Architecture Boundary Audit | COMPLETE |
 | C1 | Canonical BarScene Name and Path | COMPLETE |
-| C2 | Bartending Boundary Preparation in Current Single Scene | NEXT |
-| C3 | Minimal BartendingScene Shell | PENDING |
-| C4 | Additive Load / Run / Unload / Result Return | PENDING |
+| C2 | Bartending Boundary Preparation in Current Single Scene | COMPLETE |
+| C3 | Minimal BartendingScene Shell | COMPLETE |
+| C4 | Additive Load / Run / Unload / Result Return | NEXT / IN PREPARATION |
 | C5 | UI / Runtime Ownership / Progression Boundary Hardening | PENDING |
 | C6 | Full Scene Architecture Regression | PENDING |
 
@@ -174,25 +176,24 @@ refactor하지 않았다.
 
 #### C2 — Bartending Boundary Preparation in Current Single Scene
 
-Status: `NEXT`
+Status: `COMPLETE`
 
-BarScene 하나 안에서 `BartendingSession`과 result seam을 먼저 증명한다.
+BarScene 하나 안에서 `BartendingSession`과 result seam을 먼저 증명했다.
 
-- Bar-side coordinator/facade를 준비한다.
+- Bar-side `BartendingFlowCoordinator`를 추가했다.
 - 기존 `MiniGameManager` local execution을 유지한다.
-- result completion이 exactly-once로 처리되도록 한다.
+- result completion을 exactly-once로 처리하고 re-entry를 guard한다.
 - `CustomerController`와 `CustomerSpawner`의 direct MiniGameManager dependency를
-  줄이는 방향을 준비한다.
+  coordinator active-state boundary로 줄였다.
 
 C2에서는 BartendingScene 생성, additive loading, MiniGame Scene extraction, camera
 architecture change, persistence refactor, Data responsibility refactor를 하지 않는다.
 
 #### C3 — Minimal BartendingScene Shell
 
-Status: `PENDING`
+Status: `COMPLETE`
 
-Production path를 아직 전환하지 않은 상태에서 Bartending-local Scene environment를
-생성한다.
+Production path를 전환하지 않은 상태에서 Bartending-local Scene environment를 생성했다.
 
 ```text
 BartendingScene
@@ -202,26 +203,65 @@ BartendingScene
 └─ _CAMERA
 ```
 
-Stir, Shake, Build, Float는 각각 Scene이 아니라 existing Production MiniGame Prefab으로
-유지한다.
+`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity`는 Build Settings index 1에 enabled로
+등록되어 있다. Scene은 one `MiniGameManager`와 four production MiniGame Prefab references를
+가진 isolated shell이며 Bar systems, EventSystem, scene-level Camera, scene-level
+AudioListener, cross-scene serialized references를 포함하지 않는다. Stir, Shake, Build,
+Float는 각각 Scene이 아니라 existing Production MiniGame Prefab으로 유지한다.
+Production runtime flow는 아직 BarScene runner를 사용한다.
 
 #### C4 — Additive Load / Run / Unload / Result Return
 
-Status: `PENDING`
+Status: `NEXT / IN PREPARATION`
+
+C4.0 Additive Flow Preflight Audit은 `COMPLETE`다. C4.0은 implementation이 아닌
+read-only preflight audit이며, OrderManager가 Bar-local로 남고 `BartendingSession` field
+expansion이 필요 없음을 확인했다. BarScene은 additive flow 중에도 active 상태를 유지한다.
+Bartending runner discovery는 loaded Scene의 `GetRootGameObjects()`와
+`GetComponentsInChildren<MiniGameManager>(true)`를 사용해 exactly one runner를 요구한다.
+Global `MiniGameManager` Find와 cross-scene serialized reference는 사용하지 않는다.
 
 ```text
-Bar begin
-→ BartendingScene Additive Load
-→ session 전달
-→ MiniGame
-→ result capture
-→ BartendingScene Unload
-→ Bar restore
-→ result apply exactly once
+Begin Bartending
+→ BartendingScene additive load
+→ scene-scoped runner discovery (exactly one MiniGameManager)
+→ Bar camera / listener disable
+→ MiniGame run
+→ MiniGameResult capture once
+→ BartendingScene unload
+→ wait for unload completion
+→ Bar camera restore
+→ active state clear
+→ OrderManager result callback once
 ```
 
 C4는 Architecture Phase의 highest-risk transition이다. BarScene은 unload하지 않아
-current Customer, seat state, Business Day state를 유지한다.
+current Customer, seat state, Business Day state를 유지한다. Scene identifier는
+`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity` path다. 위 happy path는 아직
+구현되지 않았다.
+
+##### C4.1 — Additive Lifecycle Smoke
+
+Status: `NEXT`
+
+Production MiniGame execution을 전환하지 않고 BartendingScene additive load,
+scene-scoped runner discovery, immediate unload, BarScene active-state preservation을 먼저 증명한다.
+
+##### C4.2 — Coordinator Async Lifecycle Preparation
+
+Status: `PENDING`
+
+##### C4.3 — Switch Happy-Path Production Execution
+
+Status: `PENDING`
+
+##### C4.4 — Failure / Retry Hardening
+
+Status: `PENDING`
+
+##### C4.5 — Full Additive Regression
+
+Status: `PENDING`
 
 #### C5 — UI / Runtime Ownership / Progression Boundary Hardening
 

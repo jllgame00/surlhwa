@@ -22,12 +22,14 @@ Last Updated: 2026-08-11
 `Docs/08_PROJECT_AUDIT.md`는 Rebuild 시작 시점의 historical snapshot이다. Audit
 이후 canonical CustomerSpawner / BusinessDayManager 확정, automatic spawn 복구,
 Day 1-only Tutorial gate, Production Asset Migration B2.1~B2.4, C0 Full Architecture
-Boundary Audit, C1 Canonical BarScene Name and Path migration이 완료됐다.
+Boundary Audit, C1 Canonical BarScene migration, C2 Bartending boundary preparation,
+C3 Minimal BartendingScene Shell, C4.0 Additive Flow Preflight Audit이 완료됐다.
 
-현재 runtime은 `Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity` 한 Scene에 Bar,
-Bartending, UI, Progression 책임이 함께 존재한다. C1은 Scene identity/path만
-canonicalized 했으며, BartendingScene 분리나 additive loading은 아직 구현하지 않았다.
-아래 Target Scene Architecture는 구현 완료 상태가 아니며 C2 이후 단계적으로 적용한다.
+현재 production runtime은 `Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity` 안에서
+Bar, Bartending execution, UI, Progression 책임을 함께 실행한다. C3에서
+`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity` shell을 Build Settings index 1에
+등록했지만 production runtime은 아직 이 Scene을 load하지 않는다. 아래 Target Scene
+Architecture는 C4 이후 단계적으로 적용한다.
 
 ## 2. Current Runtime Flow
 
@@ -39,17 +41,21 @@ SeatManager
 ↓
 CustomerController
 ↓
-Interaction
+InteractionUIController
 ↓
-Order
+OrderManager
 ↓
-MiniGameManager
+BartendingFlowCoordinator
 ↓
-Bartending Mini Game
+BarScene MiniGameManager
 ↓
-Result
+Bartending MiniGame
 ↓
-Recipe / Unlock
+MiniGameResult
+↓
+BartendingFlowCoordinator
+↓
+OrderManager result application / Recipe Unlock
 ↓
 BusinessDayManager
 ↓
@@ -180,11 +186,12 @@ Code path 이동과 logic refactor를 같은 작업으로 처리하지 않는다
 
 ## 8. Target Scene Architecture
 
-현재 canonical production Scene은
-`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`이며 Build Settings index 0의 enabled
-production Scene이다. Bar gameplay, Bartending execution, UI, Progression은 아직 이
-하나의 BarScene에 함께 있다. 다음 구조는 현재 구현 상태가 아니라 C2 이후 단계적으로
-도달할 Target이다.
+현재 canonical production start Scene은
+`Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity`이며 Build Settings index 0에서 enabled다.
+`Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity`는 Build Settings index 1의 enabled
+additive target shell이다. Bar gameplay, current Bartending execution, UI, Progression은
+아직 하나의 BarScene에 함께 있고 BartendingScene runtime usage는 구현되지 않았다.
+다음 구조는 C4 이후 단계적으로 완성할 Target이다.
 
 ```text
 Scenes/
@@ -233,6 +240,15 @@ Target hierarchy concept는 `_SYSTEMS`, `_WORLD`, `_RUNTIME`, `_UI`, `_CAMERA`�
 세부 hierarchy는 C0와 Scene Structure Phase에서 current serialized dependency를
 분석한 뒤 결정한다.
 
+### C3 Current BartendingScene Shell
+
+C3에서 `Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity`를 생성하고 Build Settings
+index 1에 등록했다. Scene은 `_SYSTEMS`, `_GAMEPLAY/MiniGameRoot`, `_UI`, `_CAMERA` roots와
+one `MiniGameManager`를 가진다. Runner는 Stir, Shake, Build, Float production Prefab을
+참조하며 Bar systems, EventSystem, scene-level Camera, scene-level AudioListener, cross-scene
+serialized reference를 포함하지 않는다. 이 shell은 future additive runner environment이며
+production flow는 아직 BarScene의 existing `MiniGameManager`를 사용한다.
+
 ### BartendingScene
 
 BartendingScene은 조주 gameplay 공간을 담당한다. Target hierarchy concept는
@@ -257,8 +273,10 @@ BarScene
 BarScene을 unload하지 않아 current customer, seat occupancy, Business Day state,
 served count, Special Guest state와 current Bar runtime state를 유지한다.
 BartendingScene은 BarScene 내부 구현을 직접 알지 않고 최소 contract만 사용한다.
-`BartendingSession`과 `MiniGameResult`는 conceptual model이며 C2에서 current
-single-Scene runtime 안에서 최소 API boundary를 먼저 준비한다.
+`BartendingSession`과 `MiniGameResult`는 minimal contract다. C4.0 audit은 current
+`BartendingSession` field expansion이 필요 없음을 확인했다. C4 target flow는 아직 구현되지
+않았으며 BarScene은 active 상태를 유지하고 BartendingScene runner는 loaded Scene scope에서
+exactly one `MiniGameManager`를 찾아야 한다.
 
 ### MainMenu, Ending, ACT and Guest Scenes
 
