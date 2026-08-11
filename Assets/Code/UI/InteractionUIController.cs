@@ -63,8 +63,6 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color selectedColor = new Color(1f, 0.9f, 0.6f, 1f);
 
-    [SerializeField] private BrewSelectionController brewSelectionController;
-
     private OrderManager orderManager;
     private BusinessDayManager businessDayManager;
     private CustomerController activeCustomer;
@@ -95,9 +93,6 @@ public class InteractionUIController : MonoBehaviour
 
         if (orderManager != null)
             orderManager.BartendingFlowFailed += RestoreAfterBartendingFailure;
-
-        if (brewSelectionController == null && brewPanel != null)
-            brewSelectionController = brewPanel.GetComponentInChildren<BrewSelectionController>(true);
 
         if (waitIndicator == null && ellipsisPrompt != null)
             waitIndicator = ellipsisPrompt.GetComponentInChildren<CustomerWaitIndicator>(true);
@@ -368,14 +363,6 @@ public class InteractionUIController : MonoBehaviour
         }
         selectedMethod = type;
         hasMethodSelected = true;
-
-        OrderData order = GetTestOrder(selectedMethod);
-
-        if (brewSelectionController != null)
-        {
-            brewSelectionController.Begin(order);
-            brewSelectionController.SetMethod(type);
-        }
 
         Debug.Log($"[InteractionUI] SelectMethod -> {type}");
 
