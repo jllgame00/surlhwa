@@ -216,10 +216,8 @@ public static class SURLHWARaycastCleanup_C5_4_3b
         Require(dayResult.GetComponentsInChildren<Button>(true).Length >= 2,
             "DayResult must retain its button controls.");
 
-        GameObject legacyMiniGameCanvas = FindExactGameObject(scene, "MiniGameCanvas");
-        Require(RequireSingleCanvas(legacyMiniGameCanvas, "MiniGameCanvas").sortingOrder == 0 &&
-                legacyMiniGameCanvas.GetComponents<GraphicRaycaster>().Length == 1,
-            "Legacy MiniGameCanvas changed unexpectedly; it is deferred to C5.5.");
+        Require(FindSceneGameObjectsAtPath(scene, "MiniGameCanvas").Count == 0,
+            "Legacy MiniGameCanvas must be absent after C5.5.1 cleanup.");
 
         Require(FindSceneComponents<EventSystem>(scene).Count == 1,
             "BarScene must retain exactly one EventSystem.");
@@ -413,6 +411,18 @@ public static class SURLHWARaycastCleanup_C5_4_3b
         Require(match != null,
             "Expected GameObject is missing at " + hierarchyPath + " in " + scene.path + ".");
         return match;
+    }
+
+    private static List<GameObject> FindSceneGameObjectsAtPath(Scene scene, string hierarchyPath)
+    {
+        List<GameObject> matches = new List<GameObject>();
+        foreach (GameObject gameObject in FindSceneGameObjects(scene))
+        {
+            if (GetHierarchyPath(gameObject.transform) == hierarchyPath)
+                matches.Add(gameObject);
+        }
+
+        return matches;
     }
 
     private static GameObject FindDescendantByPath(GameObject root, string hierarchyPath)
