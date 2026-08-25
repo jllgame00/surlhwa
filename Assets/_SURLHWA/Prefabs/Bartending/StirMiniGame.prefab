@@ -325,7 +325,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &5416262254863243119
 MonoBehaviour:
@@ -379,15 +379,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f050a4f5c2af67741ab9b62e840a9eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeGuidePanelController
-  recipeUnlockManager: {fileID: 0}
   panelRoot: {fileID: 3321048445216451908}
   openButton: {fileID: 4110675742986677295}
   closeButton: {fileID: 5332723243803283102}
+  showOpenButtonOnAwake: 1
   recipeListParent: {fileID: 5815033098450626892}
   recipeButtonPrefab: {fileID: 9058992205661850971, guid: 24ef0e595a45a114aa2b8b1b5102ae7a, type: 3}
   recipeNameText: {fileID: 8814588753906653572}
   recipeMethodText: {fileID: 413333709860021731}
   recipeIngredientText: {fileID: 120777301419537302}
+  verboseLogging: 0
 --- !u!1 &877948118326230929
 GameObject:
   m_ObjectHideFlags: 0

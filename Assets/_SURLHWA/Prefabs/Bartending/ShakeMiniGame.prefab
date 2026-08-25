@@ -192,7 +192,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &263476109252688947
 MonoBehaviour:
@@ -246,15 +246,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f050a4f5c2af67741ab9b62e840a9eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeGuidePanelController
-  recipeUnlockManager: {fileID: 0}
   panelRoot: {fileID: 3267634933785123917}
   openButton: {fileID: 4308406802063763832}
   closeButton: {fileID: 6577891076950340680}
+  showOpenButtonOnAwake: 1
   recipeListParent: {fileID: 8854416249012698446}
   recipeButtonPrefab: {fileID: 9058992205661850971, guid: 24ef0e595a45a114aa2b8b1b5102ae7a, type: 3}
   recipeNameText: {fileID: 2210050856488556764}
   recipeMethodText: {fileID: 8089513735980847036}
   recipeIngredientText: {fileID: 868052635234270379}
+  verboseLogging: 0
 --- !u!1 &283686192470239530
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,6 +1729,7 @@ MonoBehaviour:
   returnDuration: 0.08
   recipeGuide: {fileID: 0}
   ingredientShelf: {fileID: 0}
+  jiggerPanel: {fileID: 0}
 --- !u!1 &3267634933785123917
 GameObject:
   m_ObjectHideFlags: 0
