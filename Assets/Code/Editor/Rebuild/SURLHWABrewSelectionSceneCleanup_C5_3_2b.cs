@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -98,7 +99,7 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
     {
         Require(!EditorApplication.isPlayingOrWillChangePlaymode,
             "Scene cleanup cannot run while entering or using Play Mode.");
-        ValidateSourceAsset();
+        ValidateScriptAssetState();
 
         SceneSetup[] originalSetup = EditorSceneManager.GetSceneManagerSetup();
         bool removedAny = false;
@@ -117,10 +118,10 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
             {
                 Scene scene = OpenTargetScene(scenePath);
                 GameObject brewPanel = ValidateScene(scene, true);
-                BrewSelectionController[] components =
-                    brewPanel.GetComponents<BrewSelectionController>();
+                List<MonoBehaviour> components =
+                    FindSceneComponentsWithScriptGuid(scene, ScriptGuid);
 
-                if (components.Length == 0)
+                if (components.Count == 0)
                 {
                     Debug.Log(
                         "[SURLHWA C5.3.2b][ALREADY_MIGRATED] " + scenePath +
@@ -165,7 +166,7 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
     {
         Require(!EditorApplication.isPlayingOrWillChangePlaymode,
             "Scene verification cannot run while entering or using Play Mode.");
-        ValidateSourceAsset();
+        ValidateScriptAssetState();
 
         SceneSetup[] originalSetup = EditorSceneManager.GetSceneManagerSetup();
 
@@ -215,21 +216,21 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
             "BrewPanel hierarchy changed in " + scene.path + ". Actual: " +
             GetHierarchyPath(brewPanel.transform));
 
-        List<BrewSelectionController> sceneComponents =
-            FindSceneComponents<BrewSelectionController>(scene);
-        BrewSelectionController[] panelComponents =
-            brewPanel.GetComponents<BrewSelectionController>();
+        List<MonoBehaviour> sceneComponents =
+            FindSceneComponentsWithScriptGuid(scene, ScriptGuid);
+        List<MonoBehaviour> panelComponents = sceneComponents.FindAll(
+            component => component.gameObject == brewPanel);
 
-        Require(sceneComponents.Count == panelComponents.Length,
+        Require(sceneComponents.Count == panelComponents.Count,
             "A BrewSelectionController exists outside " + BrewPanelPath + " in " +
             scene.path + ".");
-        Require(panelComponents.Length <= 1,
+        Require(panelComponents.Count <= 1,
             "Expected at most one BrewSelectionController on " + BrewPanelPath +
-            " in " + scene.path + ". Actual: " + panelComponents.Length);
+            " in " + scene.path + ". Actual: " + panelComponents.Count);
 
         if (!allowLegacyComponent)
         {
-            Require(panelComponents.Length == 0,
+            Require(panelComponents.Count == 0,
                 "BrewSelectionController remains on " + BrewPanelPath + " in " +
                 scene.path + ".");
         }
@@ -255,12 +256,35 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
         return brewPanel;
     }
 
-    private static void ValidateSourceAsset()
+    private static void ValidateScriptAssetState()
     {
+        bool sourceExists = File.Exists(ScriptPath);
+        bool metaExists = File.Exists(ScriptPath + ".meta");
+        Require(sourceExists == metaExists,
+            "BrewSelectionController source and meta must exist or be removed together.");
+
         MonoScript script = AssetDatabase.LoadAssetAtPath<MonoScript>(ScriptPath);
-        Require(script != null, "BrewSelectionController source must remain at " + ScriptPath + ".");
+        string guidAssetPath = AssetDatabase.GUIDToAssetPath(ScriptGuid);
+
+        if (!sourceExists)
+        {
+            Require(script == null,
+                "Deleted BrewSelectionController source still resolves as a MonoScript asset.");
+            Require(string.IsNullOrEmpty(guidAssetPath) ||
+                    AssetDatabase.LoadMainAssetAtPath(guidAssetPath) == null,
+                "Deleted BrewSelectionController GUID still resolves to a loadable asset: " +
+                guidAssetPath);
+            Debug.Log(
+                "[SURLHWA C5.3.2b][SCRIPT_REMOVED] BrewSelectionController source and meta " +
+                "are absent as expected by C5.3.2c.");
+            return;
+        }
+
+        Require(script != null, "BrewSelectionController source could not be loaded at " + ScriptPath + ".");
         Require(AssetDatabase.AssetPathToGUID(ScriptPath) == ScriptGuid,
             "BrewSelectionController script GUID changed unexpectedly.");
+        Require(guidAssetPath == ScriptPath,
+            "BrewSelectionController GUID resolves to an unexpected asset: " + guidAssetPath);
     }
 
     private static void ValidateNoMissingScripts(Scene scene)
@@ -293,7 +317,7 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
                     "Missing Script found while capturing Scene semantics at " +
                     GetHierarchyPath(gameObject.transform) + " in " + scene.path + ".");
 
-                if (component is BrewSelectionController)
+                if (ComponentHasScriptGuid(component, ScriptGuid))
                     continue;
 
                 snapshot.Append(component.GetType().AssemblyQualifiedName);
@@ -318,6 +342,38 @@ public static class SURLHWABrewSelectionSceneCleanup_C5_3_2b
         }
 
         return matches;
+    }
+
+    private static List<MonoBehaviour> FindSceneComponentsWithScriptGuid(
+        Scene scene,
+        string scriptGuid)
+    {
+        List<MonoBehaviour> matches = new List<MonoBehaviour>();
+        foreach (GameObject gameObject in FindSceneGameObjects(scene))
+        {
+            foreach (MonoBehaviour component in gameObject.GetComponents<MonoBehaviour>())
+            {
+                if (ComponentHasScriptGuid(component, scriptGuid))
+                    matches.Add(component);
+            }
+        }
+
+        return matches;
+    }
+
+    private static bool ComponentHasScriptGuid(Component component, string scriptGuid)
+    {
+        MonoBehaviour monoBehaviour = component as MonoBehaviour;
+        if (monoBehaviour == null)
+            return false;
+
+        MonoScript monoScript = MonoScript.FromMonoBehaviour(monoBehaviour);
+        if (monoScript == null)
+            return false;
+
+        string scriptPath = AssetDatabase.GetAssetPath(monoScript);
+        return !string.IsNullOrEmpty(scriptPath) &&
+            AssetDatabase.AssetPathToGUID(scriptPath) == scriptGuid;
     }
 
     private static List<GameObject> FindSceneGameObjectsNamed(Scene scene, string name)
