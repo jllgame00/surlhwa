@@ -2326,9 +2326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f050a4f5c2af67741ab9b62e840a9eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeGuidePanelController
-  recipeUnlockManager: {fileID: 882522457}
-  interactionUIController: {fileID: 0}
-  resultToast: {fileID: 0}
   panelRoot: {fileID: 1611502928}
   openButton: {fileID: 1684445065}
   closeButton: {fileID: 74076974}
@@ -18460,7 +18457,6 @@ GameObject:
   - component: {fileID: 1959601547}
   - component: {fileID: 1959601549}
   - component: {fileID: 1959601548}
-  - component: {fileID: 1959601550}
   m_Layer: 5
   m_Name: BrewPanel
   m_TagString: Untagged
@@ -18530,35 +18526,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959601546}
   m_CullTransparentMesh: 1
---- !u!114 &1959601550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959601546}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0da268c07346a44ae16f86597c5b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BrewSelectionController
-  allIngredients:
-  - {fileID: 11400000, guid: e00d4a7e4e940b74297043ec0154e4c1, type: 2}
-  - {fileID: 11400000, guid: 02f6eceda66c83e4d901b2dc701c2d3a, type: 2}
-  - {fileID: 11400000, guid: 3d52aad9ecb349940ba46b3879093ef9, type: 2}
-  - {fileID: 11400000, guid: 651da93143613fc438aba4d27103e826, type: 2}
-  - {fileID: 11400000, guid: 4796b4d769970e04197b73ff1d478d40, type: 2}
-  - {fileID: 11400000, guid: b2678bda85aeb604aa41aec9d0c76d24, type: 2}
-  - {fileID: 11400000, guid: a508b9d06b9611c47939e79f2eef61f4, type: 2}
-  - {fileID: 11400000, guid: e9ac86382740b8840a3452bdb748cf69, type: 2}
-  - {fileID: 11400000, guid: 47193433f59ce804fb70332e10afaf72, type: 2}
-  - {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
-  - {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
-  - {fileID: 11400000, guid: db5a42e5ddc8daf49ba26a334aafe62a, type: 2}
-  ingredientListRoot: {fileID: 0}
-  ingredientOptionPrefab: {fileID: 0}
-  selectedMethodText: {fileID: 0}
-  summaryText: {fileID: 0}
 --- !u!1 &1974291840
 GameObject:
   m_ObjectHideFlags: 0
@@ -18754,7 +18721,6 @@ MonoBehaviour:
   waitIndicator: {fileID: 571973490}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   selectedColor: {r: 1, g: 0.9, b: 0.6, a: 1}
-  brewSelectionController: {fileID: 0}
 --- !u!1 &1983688730
 GameObject:
   m_ObjectHideFlags: 0
