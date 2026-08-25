@@ -41,7 +41,6 @@ public class BartendingFlowCoordinator : MonoBehaviour
 {
     private const string BartendingScenePath = "Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity";
 
-    [SerializeField] private MiniGameManager miniGameManager;
     [SerializeField] private Camera barMainCamera;
 
     private bool isBartendingActive;
@@ -57,14 +56,8 @@ public class BartendingFlowCoordinator : MonoBehaviour
 
     public bool IsBartendingActive => isBartendingActive;
 
-    private void Awake()
-    {
-        ResolveLegacyBarMiniGameManager();
-    }
-
     /// <summary>
-    /// Bar-facing contract. The serialized MiniGameManager remains the legacy
-    /// BarScene runner, but production execution is scoped to BartendingScene.
+    /// Bar-facing contract. Production execution is scoped to BartendingScene.
     /// </summary>
     public bool BeginBartending(BartendingSession session, Action<MiniGameResult> onCompleted)
     {
@@ -1064,24 +1057,6 @@ public class BartendingFlowCoordinator : MonoBehaviour
     private bool IsCurrentSession(int generation)
     {
         return isBartendingActive && activeSessionGeneration == generation;
-    }
-
-    private bool ResolveLegacyBarMiniGameManager()
-    {
-        if (miniGameManager != null && miniGameManager.gameObject.scene == gameObject.scene)
-            return true;
-
-        List<MiniGameManager> candidates = FindMiniGameManagersInScene(gameObject.scene);
-        if (candidates.Count != 1)
-        {
-            Debug.LogError(
-                "[BartendingFlowCoordinator] Expected exactly one legacy MiniGameManager in the coordinator's BarScene. Actual: " +
-                candidates.Count);
-            return false;
-        }
-
-        miniGameManager = candidates[0];
-        return true;
     }
 
     private static List<MiniGameManager> FindMiniGameManagersInScene(Scene scene)
