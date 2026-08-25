@@ -450,33 +450,6 @@ public class CustomerController : MonoBehaviour
         resultToast.Show(timeoutToastTitle, message);
     }
 
-    // Legacy serve path.
-    public void OnServed(bool success)
-    {
-        StopPatienceTimer();
-
-        if (interactionUI != null)
-            interactionUI.ClearCustomer(this);
-
-        if (dialogueData != null)
-        {
-            string[] lines = success ? dialogueData.onSuccessLines : dialogueData.onFailLines;
-            SayRandom(lines);
-        }
-
-        state = State.Leaving;
-    }
-
-    // Kept for older OrderData-based callers.
-    public void OnServedWithReaction(OrderData servedOrder, MiniGameResult result)
-    {
-        CocktailData fallbackCocktail = servedOrder != null
-            ? servedOrder.targetCocktail
-            : null;
-
-        OnServedWithReaction(fallbackCocktail, result);
-    }
-
     // New path: calculate reaction from the actually served CocktailData.
     public void OnServedWithReaction(CocktailData servedCocktail, MiniGameResult result)
     {
