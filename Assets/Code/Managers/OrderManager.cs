@@ -5,7 +5,6 @@ public class OrderManager : MonoBehaviour
 {
     [Header("Debug")]
     [SerializeField] private bool verboseLogging = false;
-    [SerializeField] private bool allowPlayWithoutCustomer = true;
     
     [Header("Result Toast")]
     [SerializeField] private ResultToastController resultToast;
@@ -145,35 +144,6 @@ public class OrderManager : MonoBehaviour
     }
 
     // UI ��ư���� ȣ��
-    public void ResolveServe()
-    {
-        Debug.Log($"[OrderManager] ResolveServe id={GetInstanceID()} called");
-
-        if (currentOrder == null)
-        {
-            Debug.LogError("[OrderManager] currentOrder is NULL (no active order)");
-            return;
-        }
-
-        if (bartendingFlowCoordinator == null)
-        {
-            Debug.LogError("[OrderManager] BartendingFlowCoordinator is NULL");
-            return;
-        }
-
-        if (currentCustomer == null)
-        {
-            Debug.LogWarning("[OrderManager] currentCustomer is NULL (no active customer)");
-
-            if (!allowPlayWithoutCustomer)
-                return;
-
-            Debug.LogWarning("[OrderManager] allowPlayWithoutCustomer=true -> still playing minigame for debugging");
-        }
-
-        BeginCurrentOrderBartending(currentOrder.defaultBrewSession);
-    }
-
     private void NotifyBartendingFlowFailed(BartendingFlowFailure failure)
     {
         Debug.LogError(

@@ -338,7 +338,6 @@ MonoBehaviour:
   moneyText: {fileID: 0}
   repText: {fileID: 0}
   orderText: {fileID: 0}
-  orderManager: {fileID: 1780158365}
   dialogueText: {fileID: 0}
   verboseLogging: 0
 --- !u!4 &24854275
@@ -15499,7 +15498,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verboseLogging: 0
-  allowPlayWithoutCustomer: 1
   resultToast: {fileID: 0}
   orderPool:
   - {fileID: 11400000, guid: 3cd1d69284df4ed4facab04626ad1f41, type: 2}
