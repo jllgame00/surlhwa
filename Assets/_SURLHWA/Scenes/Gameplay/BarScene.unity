@@ -15068,7 +15068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCustomersPerDay: 8
   endDayWhenMaxCustomersServed: 1
-  resultPanel: {fileID: 0}
+  resultPanel: {fileID: 2069170614}
   startingDay: 1
 --- !u!1 &1713744115
 GameObject:
