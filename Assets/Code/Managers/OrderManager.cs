@@ -84,8 +84,6 @@ public class OrderManager : MonoBehaviour
             Debug.Log("[OrderManager] First recipe reveal shown");
     }
 
-    private bool HasActiveOrder => currentOrder != null;
-
     public event Action<BartendingFlowFailure> BartendingFlowFailed;
 
     void Awake()
@@ -107,40 +105,6 @@ public class OrderManager : MonoBehaviour
         unlockPopup = FindFirstObjectByType<RecipeUnlockPopupController>();
 
         Debug.Log($"[OrderManager] Awake name={name} id={GetInstanceID()}");
-    }
-
-    public void IssueOrderTo(CustomerController cc)
-    {
-        if (cc == null)
-        {
-            Debug.LogError("[OrderManager] IssueOrderTo called with NULL customer");
-            return;
-        }
-
-        // �̹� �ֹ��� ������ �ݺ� �߱� ����
-        if (HasActiveOrder)
-        {
-            if (currentCustomer == cc) return; // ���� �մ��� ��� Update���� ȣ���ϴ� �� ����
-            Debug.LogWarning($"[OrderManager] Another order is already active (order={currentOrder?.orderName}). Ignoring new issue from {cc.name}");
-            return;
-        }
-
-        if (orderPool == null || orderPool.Length == 0)
-        {
-            Debug.LogError("[OrderManager] orderPool is empty!");
-            return;
-        }
-
-        currentCustomer = cc;
-        currentOrder = orderPool[UnityEngine.Random.Range(0, orderPool.Length)];
-
-        Debug.Log($"[OrderManager] IssueOrderTo SET customer={currentCustomer.name} order={currentOrder.orderName}");
-
-        if (ui != null)
-        {
-            Debug.Log($"[OrderManager] IssueOrderTo -> setting ORDER text = {currentOrder.orderName}");
-            ui.SetOrderText($"ORDER: {currentOrder.orderName}");
-        }
     }
 
     // UI ��ư���� ȣ��
@@ -313,14 +277,6 @@ public class OrderManager : MonoBehaviour
         }
 
         resultToast.ShowRecipeMatched(matchedRecipe.displayName);
-    }
-
-    public void ForceClearOrder()
-    {
-        Debug.LogWarning("[OrderManager] ForceClearOrder()");
-        currentCustomer = null;
-        currentOrder = null;
-        if (ui != null) ui.SetOrderText("ORDER: -");
     }
 
     public void PlaySpecificOrder(OrderData order, CustomerController customer)

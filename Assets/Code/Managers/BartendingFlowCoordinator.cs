@@ -93,7 +93,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
 
         Debug.Log(
             "[BartendingFlowCoordinator] BeginBartending additive -> " +
-            session.Order.orderName + " / " + session.Method + " / generation=" + generation);
+            session.Order.orderName + " / " + session.Order.miniGameType + " / generation=" + generation);
 
         return true;
     }
