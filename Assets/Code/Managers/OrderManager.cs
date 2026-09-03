@@ -352,22 +352,18 @@ public class OrderManager : MonoBehaviour
         currentCustomer = customer;
         currentOrder = order;
 
-        BrewSessionData sessionToUse = currentOrder.defaultBrewSession;
-
         if (ui != null)
             ui.SetOrderText($"ORDER: {currentOrder.orderName}");
 
         Debug.Log(
             $"[OrderManager] PlaySpecificOrder -> " +
-            $"{currentOrder.orderName} / " +
-            $"SessionMethod={(sessionToUse != null ? sessionToUse.method.ToString() : "NULL")} / " +
-            "SelectedSession=False"
+            currentOrder.orderName
         );
 
-        BeginCurrentOrderBartending(sessionToUse);
+        BeginCurrentOrderBartending();
     }
 
-    private void BeginCurrentOrderBartending(BrewSessionData sessionToUse)
+    private void BeginCurrentOrderBartending()
     {
         if (currentOrder == null)
         {
@@ -384,7 +380,6 @@ public class OrderManager : MonoBehaviour
         RecipeGuideContext recipeGuideContext = BuildRecipeGuideContext();
         BartendingSession session = BartendingSession.FromOrder(
             currentOrder,
-            sessionToUse,
             recipeGuideContext,
             (title, message) => HandleFirstRecipeRevealRequest(recipeGuideContext, title, message));
 

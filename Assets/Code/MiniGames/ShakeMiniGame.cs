@@ -59,7 +59,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
+    public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
         onDone = done;
 
@@ -70,17 +70,17 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
 
-        currentBrewSession = ingredientShelf != null
-            ? null
-            : brewSession;
+        currentBrewSession = null;
 
-        if (ingredientShelf != null)
-            ingredientShelf.Initialize(MiniGameType.Shake, null);
+        if (ingredientShelf == null)
+            throw new InvalidOperationException("[ShakeMiniGame] IngredientShelfController is required.");
+
+        ingredientShelf.Initialize(MiniGameType.Shake);
 
         if (jiggerPanel == null)
             jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
 
-        if (ingredientShelf != null && jiggerPanel != null)
+        if (jiggerPanel != null)
         {
             jiggerPanel.Initialize(ingredientShelf);
             ingredientShelf.SetJiggerPanel(jiggerPanel);
@@ -140,25 +140,22 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && !ingredientShelf.HasAnySelectedIngredient())
+        if (!ingredientShelf.HasAnySelectedIngredient())
         {
             SetHint("Pour at least one ingredient first.");
             Debug.LogWarning("[ShakeMiniGame] Cannot start. No ingredients poured.");
             return;
         }
 
-        if (ingredientShelf != null)
-        {
-            currentBrewSession = ingredientShelf.BuildSession();
+        currentBrewSession = ingredientShelf.BuildSession();
 
-            Debug.Log(
-                $"[{nameof(ShakeMiniGame)}] BrewSession built from ingredient shelf / " +
-                $"Method={currentBrewSession.method} / " +
-                $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
-            );
+        Debug.Log(
+            $"[{nameof(ShakeMiniGame)}] BrewSession built from ingredient shelf / " +
+            $"Method={currentBrewSession.method} / " +
+            $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+        );
 
-            ingredientShelf.SetVisible(false);
-        }
+        ingredientShelf.SetVisible(false);
 
         if (jiggerPanel != null)
             jiggerPanel.gameObject.SetActive(false);

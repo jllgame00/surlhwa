@@ -62,7 +62,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
+    public void StartGame(OrderData order, Action<MiniGameResult> onDone)
     {
         this.onDone = onDone;
 
@@ -71,17 +71,17 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
 
-        currentBrewSession = ingredientShelf != null
-            ? null
-            : brewSession;
+        currentBrewSession = null;
 
-        if (ingredientShelf != null)
-            ingredientShelf.Initialize(MiniGameType.Float, null);
+        if (ingredientShelf == null)
+            throw new InvalidOperationException("[FloatMiniGame] IngredientShelfController is required.");
+
+        ingredientShelf.Initialize(MiniGameType.Float);
 
         if (jiggerPanel == null)
             jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
 
-        if (ingredientShelf != null && jiggerPanel != null)
+        if (jiggerPanel != null)
         {
             jiggerPanel.Initialize(ingredientShelf);
             ingredientShelf.SetJiggerPanel(jiggerPanel);
@@ -138,25 +138,22 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && !ingredientShelf.HasAnySelectedIngredient())
+        if (!ingredientShelf.HasAnySelectedIngredient())
         {
             SetHint("Pour at least one ingredient first.");
             Debug.LogWarning("[FloatMiniGame] Cannot start. No ingredients poured.");
             return;
         }
 
-        if (ingredientShelf != null)
-        {
-            currentBrewSession = ingredientShelf.BuildSession();
+        currentBrewSession = ingredientShelf.BuildSession();
 
-            Debug.Log(
-                $"[{nameof(FloatMiniGame)}] BrewSession built from ingredient shelf / " +
-                $"Method={currentBrewSession.method} / " +
-                $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
-            );
+        Debug.Log(
+            $"[{nameof(FloatMiniGame)}] BrewSession built from ingredient shelf / " +
+            $"Method={currentBrewSession.method} / " +
+            $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+        );
 
-            ingredientShelf.SetVisible(false);
-        }
+        ingredientShelf.SetVisible(false);
 
         if (jiggerPanel != null)
             jiggerPanel.gameObject.SetActive(false);

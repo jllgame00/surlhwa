@@ -340,7 +340,6 @@ public class BartendingFlowCoordinator : MonoBehaviour
         {
             runner.Play(
                 session.Order,
-                session.InitialSession,
                 session.RecipeGuideContext,
                 session.FirstRecipeRevealRequested,
                 result =>

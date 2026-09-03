@@ -65,29 +65,26 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Jigger Panel")]
     [SerializeField] private JiggerPanelController jiggerPanel;
 
-    public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
+    public void StartGame(OrderData order, Action<MiniGameResult> done)
     {
         onDone = done;
         AutoBindIfMissing();
 
         currentOrder = order;
-
-        currentBrewSession = brewSession != null
-            ? brewSession
-            : order != null
-                ? order.defaultBrewSession
-                : null;
+        currentBrewSession = null;
 
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
 
-        if (ingredientShelf != null)
-            ingredientShelf.Initialize(MiniGameType.Stir, currentBrewSession);
+        if (ingredientShelf == null)
+            throw new InvalidOperationException("[StirMiniGame] IngredientShelfController is required.");
+
+        ingredientShelf.Initialize(MiniGameType.Stir);
 
         if (jiggerPanel == null)
             jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
 
-        if (ingredientShelf != null && jiggerPanel != null)
+        if (jiggerPanel != null)
         {
             jiggerPanel.Initialize(ingredientShelf);
             ingredientShelf.SetJiggerPanel(jiggerPanel);
@@ -158,25 +155,22 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        if (ingredientShelf != null && !ingredientShelf.HasAnySelectedIngredient())
+        if (!ingredientShelf.HasAnySelectedIngredient())
         {
             SetHint("Pour at least one ingredient first.");
             Debug.LogWarning("[StirMiniGame] Cannot start. No ingredients poured.");
             return;
         }
 
-        if (ingredientShelf != null)
-        {
-            currentBrewSession = ingredientShelf.BuildSession();
+        currentBrewSession = ingredientShelf.BuildSession();
 
-            Debug.Log(
-                $"[{nameof(StirMiniGame)}] BrewSession built from ingredient shelf / " +
-                $"Method={currentBrewSession.method} / " +
-                $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
-            );
+        Debug.Log(
+            $"[{nameof(StirMiniGame)}] BrewSession built from ingredient shelf / " +
+            $"Method={currentBrewSession.method} / " +
+            $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+        );
 
-            ingredientShelf.SetVisible(false);
-        }
+        ingredientShelf.SetVisible(false);
 
         if (jiggerPanel != null)
             jiggerPanel.gameObject.SetActive(false);

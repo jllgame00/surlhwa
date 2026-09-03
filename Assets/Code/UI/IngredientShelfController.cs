@@ -22,7 +22,7 @@ public class IngredientShelfController : MonoBehaviour
     private readonly Dictionary<IngredientData, float> selectedAmounts = new Dictionary<IngredientData, float>();
     private readonly List<BrewIngredientOptionView> optionViews = new List<BrewIngredientOptionView>();
 
-    public void Initialize(MiniGameType method, BrewSessionData initialSession)
+    public void Initialize(MiniGameType method)
     {
         currentMethod = method;
         selectedIngredient = null;
