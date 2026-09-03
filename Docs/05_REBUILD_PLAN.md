@@ -372,6 +372,30 @@ Code path move와 Namespace 변경은 별도 Commit이다. asmdef 세분화는 �
 
 Data responsibility 변경, asset rename, serialized migration을 한 번에 수행하지 않는다.
 
+#### F1.5 — Cocktail Catalog Direction Documentation
+
+Status: `COMPLETE`
+
+F1.5는 real-cocktail-first product direction과 future catalog/data constraints를
+documentation으로만 기록한다. 이는 implementation 또는 asset migration이 아니다.
+
+Phase F2는 F1 audit에서 proven safe로 분류된 Bartending compatibility surface만 작게
+정리한다. F2의 scope는 legacy session/manager/interface forwarding을 단순화하고 이후
+recipe/catalog replacement를 쉽게 만드는 데 있다.
+
+F2는 다음을 하지 않는다.
+
+- 설야, 여명 또는 다른 prototype cocktail의 rename/delete/replacement
+- IBA, classic, Korean-local recipe 추가
+- `RecipeMatchService` 또는 `CocktailRecipeData` redesign
+- catalog enum/schema 도입
+- `OrderData.defaultBrewSession` 제거 또는 serialized migration
+- product-content migration을 compatibility cleanup에 혼합
+
+현재 계획표의 TestShake mismatch 해결은 canonical recipe/catalog authority가 별도
+Data Architecture 단계에서 결정된 뒤에만 다룬다. F2 compatibility cleanup이 data
+authority 또는 content migration을 선행 확정하지 않는다.
+
 ### PHASE G — Special Guest Architecture
 
 | Step | Goal |

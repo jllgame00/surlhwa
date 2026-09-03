@@ -463,3 +463,85 @@ Next Visit
 
 한 Character에서 spawn, dialogue, order, response, save, revisit, persistent
 environment의 최소 연결을 검증한 뒤 다른 Character로 확장한다.
+
+---
+
+## 17. Cocktail Catalog Direction
+
+Status: LOCKED DIRECTION / FUTURE CONTENT ARCHITECTURE
+
+설화의 fiction은 손님, dialogue, story, atmosphere, progression, 그리고 bar 자체가
+주로 담당한다. 칵테일 catalog는 그 fiction을 무한히 늘리는 기본 재료가 아니라,
+현실의 칵테일 문화에 닿는 grounded한 play space가 되어야 한다.
+
+플레이어가 설화를 하면서 실제 칵테일 이름, 재료, technique, 기본 문화를 더
+친숙하게 느끼는 것이 product goal이다. 이는 교육용 simulation 수준의 정확성을
+요구하지 않으며, gameplay readability와 설화의 tone을 유지한다.
+
+### 17.1 Locked Catalog Direction
+
+```text
+Cocktail Catalog
+├─ Established / IBA
+├─ Established Classic
+├─ Korean Local
+└─ SURLHWA Original
+```
+
+이 분류는 현재의 conceptual content map이며 code enum이나 serialized schema가 아니다.
+정확한 taxonomy는 Data Architecture에서 변경될 수 있다.
+
+- Established real-world cocktails가 future catalog의 majority다. 현재 IBA-recognized
+  cocktails는 적절한 경우 중요한 reference/base catalog가 되며, IBA list 밖의
+  established classic도 포함할 수 있다.
+- Korean Local은 작은 curated category다. 도화, 동해 등은 검토 대상이며, 목표는
+  대규모 parallel catalog가 아닌 약 4–5개의 recipe다.
+- SURLHWA Original은 narrative하게 의미 있는 드문 예외다. 목표는 약 2–5개이며,
+  기본 catalog를 대체하지 않는다.
+- 설야, 여명 및 현재 prototype drinks는 development content로 유지한다. 이들은
+  삭제/rename 대상이 아니지만 final catalog가 보장된 content도 아니다.
+
+### 17.2 Recipe Standard / Source Policy
+
+Real cocktail은 이후 각 recipe가 의도적으로 선택된 documented standard/source를
+가져야 한다. 현재 IBA specification은 해당되는 경우 사용할 수 있고, established
+non-IBA classic은 다른 documented standard를 선택할 수 있다.
+
+Korean-local cocktail은 단 하나의 universally authoritative specification이 없을 수
+있다. 이런 경우 설화는 하나의 documented in-game **SURLHWA standard**를 선택할 수
+있으며, 그것을 보편적으로 유일한 official recipe인 것처럼 주장하지 않는다.
+
+이 문서는 실제 recipe를 조사·수록하거나 외부 recipe text를 복사하지 않는다.
+
+### 17.3 Future Data Requirements
+
+Future Data Architecture는 prototype content를 real cocktail content로 교체해도
+cocktail별 runtime code 변경이 필요하지 않도록 해야 한다. 향후 data는 최소한 다음
+관심사를 구분할 수 있어야 한다.
+
+- cocktail identity
+- preparation method
+- ingredient specification
+- garnish, glassware, presentation metadata
+- source / recipe-standard metadata
+- catalog classification
+
+이는 미래의 data requirement이며, 현재 schema, enum, ScriptableObject를 변경하는
+지시는 아니다. IBA status도 eventual metadata/reference information이어야 하며,
+gameplay behavior를 바꾸는 hardcoded rule이 되어서는 안 된다.
+
+### 17.4 Staged Prototype-to-Final Transition
+
+```text
+A. Keep prototype content while architecture is rebuilt.
+B. Establish canonical recipe/catalog data architecture.
+C. Add a small verified real-cocktail starter catalog.
+D. Replace prototype progression/order dependencies.
+E. Add Korean-local recipes.
+F. Add the small SURLHWA-original set.
+G. Remove prototype assets only after no runtime or serialized reference remains.
+```
+
+순서와 실제 catalog는 planning target이며 launch requirement나 final recipe list가
+아니다. 총 칵테일 수, exact IBA/classic list, exact Korean-local/original list, 그리고
+설화라는 이름의 cocktail이 late-game/ending 역할을 가질지는 아직 확정하지 않는다.

@@ -685,6 +685,80 @@ Bootstrap / Bar / Bartending boundary로 잘못 고정할 수 있다.
 
 ---
 
+# ADR-028 — Real-Cocktail-First Catalog
+
+Status:
+ACCEPTED / FUTURE DATA ARCHITECTURE
+
+## Context
+
+현재 repository의 설야, 여명, 잔설, 만월과 `testStirOrder` /
+`testShakeOrder` / `testBuildOrder` / `testFloatOrder`는 prototype catalog coupling이다.
+F1 bartending compatibility audit은 `OrderData.defaultBrewSession`이 legacy transport
+path를 통과하지만 normal shelf-backed gameplay의 recipe authority가 아님을 확인했다.
+실제 player composition은 IngredientShelf가 만들고, recipe matching은
+`CocktailRecipeData` candidate와 비교하며, served cocktail은 matched
+`CocktailRecipeData.targetCocktail`에서 나온다.
+
+따라서 current implementation을 final catalog design으로 고정하지 않고, content
+replacement가 gameplay code의 cocktail-name-specific branching을 만들지 않도록 해야
+한다.
+
+## Decision
+
+다음 방향은 locked다.
+
+- Established real-world cocktails가 future catalog의 primary direction이다.
+- Fictional cocktail은 catalog를 지배하지 않으며, SURLHWA Original은 narrative하게
+  의미 있는 드문 set으로 남긴다.
+- Korean/local recipe는 작은 curated category로 포함한다.
+- 현재 prototype drinks는 temporary development content이며 final inclusion이 보장되지
+  않는다.
+- Future recipe/catalog data에는 하나의 명확한 canonical source of truth가 있어야
+  한다.
+
+F1의 current evidence는 `CocktailRecipeData` / recipe catalog layer를 stronger
+candidate로 가리키지만, final source-of-truth type, ScriptableObject ownership, metadata
+schema는 Data Architecture phase가 명시적으로 결정하고 기록한다.
+
+## Consequences
+
+Future Data Architecture는 다음을 피한다.
+
+- cocktail-name-specific runtime logic
+- preparation technique마다 하나의 hardcoded `OrderData` slot
+- `OrderData`, `defaultBrewSession`, `CocktailRecipeData`, UI-specific data 사이의
+  duplicate recipe definition
+- preparation technique가 cocktail identity를 결정한다는 가정
+- IBA membership이 recipe matching behavior를 바꾼다는 가정
+
+Future metadata may include display/localized Korean name, origin/category, preparation
+technique, ingredients/amounts, garnish, glassware, description, recipe-standard/source,
+and catalog classification. 이는 field나 enum을 지금 추가하라는 결정이 아니다.
+
+Stir, Shake, Build, Float는 protected gameplay system으로 유지한다. Future real content는
+네 technique를 의미 있게 cover할 수 있도록 curated하되, 균등한 수를 맞추기 위해
+real recipe를 왜곡하지 않는다.
+
+## Planning Targets Not Locked
+
+- total cocktail count
+- exact IBA/classic list
+- exact Korean-local list 및 도화/동해의 selected standard
+- exact SURLHWA-original list
+- Korean/local recipe의 final source text
+- "설화" cocktail의 late-game 또는 ending 역할
+- final metadata schema 및 ScriptableObject ownership
+
+## Phase F Boundary
+
+Phase F compatibility cleanup은 proven-safe forwarding/transport surface를 정리할 수
+있지만 catalog migration은 하지 않는다. 특히 `defaultBrewSession`은 별도의 approved
+serialized migration 전까지 제거하지 않으며, prototype content replacement와
+compatibility cleanup을 같은 change에 섞지 않는다.
+
+---
+
 # OPEN DECISIONS
 
 ## OD-001 — Save Format

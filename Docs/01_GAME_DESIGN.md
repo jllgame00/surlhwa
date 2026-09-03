@@ -265,6 +265,12 @@ Result
 
 코드에 개별 Cocktail 조건을 Hard Coding하는 방식은 지양한다.
 
+최종 카탈로그는 특정 prototype 칵테일 이름이나 한 조주 방식당 하나의 고정 Order에
+의존하지 않는다. 실제 칵테일은 Stir, Shake, Build, Float의 네 gameplay를 의미 있게
+보여 줄 수 있도록 선정하되, technique 수를 맞추기 위해 실제 recipe를 왜곡하지
+않는다. 카탈로그와 gameplay의 균형은 이후 Data Architecture와 content curation에서
+결정한다.
+
 ---
 
 ## 9. 초기 칵테일
@@ -277,6 +283,10 @@ Result
 - 만월
 
 각 칵테일은 1일차 조주 Tutorial과 연결된다.
+
+이 네 asset은 현재 prototype/tutorial baseline이다. 설야, 여명, 잔설, 만월은
+삭제하거나 rename하지 않지만, 최종 catalog에 반드시 남는다는 design requirement로
+취급하지 않는다. 최종 카탈로그 방향은 `04_CONTENT_ROADMAP.md`와 ADR-028을 따른다.
 
 ---
 
