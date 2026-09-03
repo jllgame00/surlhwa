@@ -65,15 +65,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Jigger Panel")]
     [SerializeField] private JiggerPanelController jiggerPanel;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> done)
-    {
-        BrewSessionData fallbackSession = order != null
-            ? order.defaultBrewSession
-            : null;
-
-        StartGame(order, fallbackSession, done);
-    }
-
     public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
     {
         onDone = done;

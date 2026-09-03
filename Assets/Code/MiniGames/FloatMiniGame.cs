@@ -62,11 +62,6 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> onDone)
-    {
-        StartGame(order, null, onDone);
-    }
-
     public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
     {
         this.onDone = onDone;

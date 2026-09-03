@@ -53,11 +53,6 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> done)
-    {
-        StartGame(order, null, done);
-    }
-
     public void StartGame(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> done)
     {
         onDone = done;

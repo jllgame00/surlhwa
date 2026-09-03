@@ -65,20 +65,6 @@ public class MiniGameManager : MonoBehaviour
         );
     }
 
-    public void Play(OrderData order, Action<MiniGameResult> onDone)
-    {
-        BrewSessionData fallbackSession = order != null
-            ? order.defaultBrewSession
-            : null;
-
-        Play(order, fallbackSession, onDone);
-    }
-
-    public void Play(OrderData order, BrewSessionData brewSession, Action<MiniGameResult> onDone)
-    {
-        Play(order, brewSession, null, null, onDone);
-    }
-
     public void Play(
         OrderData order,
         BrewSessionData brewSession,

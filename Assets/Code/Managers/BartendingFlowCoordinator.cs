@@ -57,14 +57,6 @@ public class BartendingFlowCoordinator : MonoBehaviour
     public bool IsBartendingActive => isBartendingActive;
 
     /// <summary>
-    /// Bar-facing contract. Production execution is scoped to BartendingScene.
-    /// </summary>
-    public bool BeginBartending(BartendingSession session, Action<MiniGameResult> onCompleted)
-    {
-        return BeginBartending(session, onCompleted, null);
-    }
-
-    /// <summary>
     /// Production Bartending request with a Bar-side infrastructure failure seam.
     /// Completion is reserved for an actual MiniGameResult; onFailed is invoked
     /// only after additive cleanup, Bar presentation restore, and finalization.
