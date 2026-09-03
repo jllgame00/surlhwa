@@ -72,20 +72,6 @@ public class IngredientShelfController : MonoBehaviour
         gameObject.SetActive(visible);
     }
 
-    private void SeedFromSession(BrewSessionData session)
-    {
-        if (session == null || session.ingredients == null)
-            return;
-
-        foreach (BrewSessionIngredient entry in session.ingredients)
-        {
-            if (entry == null || entry.ingredient == null)
-                continue;
-
-            selectedAmounts[entry.ingredient] = Mathf.Max(0f, entry.amount);
-        }
-    }
-
     private void RebuildIngredientList()
     {
         if (ingredientListRoot == null || ingredientOptionPrefab == null)

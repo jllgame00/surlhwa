@@ -53,22 +53,6 @@ public class MiniGameManager : MonoBehaviour
         Debug.Log("[MiniGameManager] Recipe guide initialized");
     }
 
-    private MiniGameType ResolveMethodForGuide(GameObject selectedPrefab, OrderData order)
-    {
-        // 디버그 강제 모드일 때는 실제로 띄운 프리팹 기준으로 맞춰줌
-        if (selectedPrefab == stirPrefab) return MiniGameType.Stir;
-        if (selectedPrefab == shakePrefab) return MiniGameType.Shake;
-        if (selectedPrefab == buildPrefab) return MiniGameType.Build;
-        if (selectedPrefab == floatPrefab) return MiniGameType.Float;
-
-        // 일반 모드면 주문 데이터 기준
-        if (order != null)
-            return order.miniGameType;
-
-        // 최후 fallback
-        return MiniGameType.Stir;
-    }
-
     private void Awake()
     {
         Debug.Log(
