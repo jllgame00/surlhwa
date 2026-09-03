@@ -15,6 +15,4 @@ public class OrderData : ScriptableObject
     [Header("Cocktail")]
     public CocktailData targetCocktail;
 
-    [Header("Brew Session")]
-    public BrewSessionData defaultBrewSession;
 }

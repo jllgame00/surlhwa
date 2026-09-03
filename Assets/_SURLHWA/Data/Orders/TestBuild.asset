@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
   m_Name: TestBuild
   m_EditorClassIdentifier: 
-  orderName: 잔설
+  orderName: "\uC794\uC124"
   reputationReward: 1
   miniGameType: 0
   steps:
@@ -25,12 +25,3 @@ MonoBehaviour:
     targetMax01: 0
     gaugeSpeed: 0
   targetCocktail: {fileID: 11400000, guid: 8a3f737b97c166c46a882a94edbbd8b4, type: 2}
-  defaultBrewSession:
-    method: 0
-    ingredients:
-    - ingredient: {fileID: 11400000, guid: 3d52aad9ecb349940ba46b3879093ef9, type: 2}
-      amount: 2
-    - ingredient: {fileID: 11400000, guid: e9ac86382740b8840a3452bdb748cf69, type: 2}
-      amount: 1
-    - ingredient: {fileID: 11400000, guid: 651da93143613fc438aba4d27103e826, type: 2}
-      amount: 0.5

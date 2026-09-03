@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
   m_Name: TestShake
   m_EditorClassIdentifier: 
-  orderName: 여명
+  orderName: "\uC5EC\uBA85"
   reputationReward: 1
   miniGameType: 3
   steps:
@@ -25,12 +25,3 @@ MonoBehaviour:
     targetMax01: 0
     gaugeSpeed: 0
   targetCocktail: {fileID: 11400000, guid: eaf3c1c51f1c2994b81628220af5e330, type: 2}
-  defaultBrewSession:
-    method: 0
-    ingredients:
-    - ingredient: {fileID: 11400000, guid: b2678bda85aeb604aa41aec9d0c76d24, type: 2}
-      amount: 2
-    - ingredient: {fileID: 11400000, guid: 4796b4d769970e04197b73ff1d478d40, type: 2}
-      amount: 1
-    - ingredient: {fileID: 11400000, guid: a508b9d06b9611c47939e79f2eef61f4, type: 2}
-      amount: 1

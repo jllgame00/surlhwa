@@ -11,13 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
   m_Name: LittlePrinceFirstVisitOrder
-  m_EditorClassIdentifier:
-  orderName: 만월
+  m_EditorClassIdentifier: 
+  orderName: "\uB9CC\uC6D4"
   reputationReward: 1
   miniGameType: 1
   steps:
   - type: 2
-    ingredientName:
+    ingredientName: 
     targetAmount01: 0
     tolerance01: 0
     maxPourSpeed: 0
@@ -25,12 +25,3 @@ MonoBehaviour:
     targetMax01: 0
     gaugeSpeed: 0
   targetCocktail: {fileID: 11400000, guid: c45c5194c56c1de45a5cd0061e701a27, type: 2}
-  defaultBrewSession:
-    method: 1
-    ingredients:
-    - ingredient: {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
-      amount: 2
-    - ingredient: {fileID: 11400000, guid: e00d4a7e4e940b74297043ec0154e4c1, type: 2}
-      amount: 1
-    - ingredient: {fileID: 11400000, guid: 02f6eceda66c83e4d901b2dc701c2d3a, type: 2}
-      amount: 1

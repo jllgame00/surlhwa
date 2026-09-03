@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
   m_Name: TestStir
   m_EditorClassIdentifier: 
-  orderName: 설야
+  orderName: "\uC124\uC57C"
   reputationReward: 1
   miniGameType: 2
   steps:
@@ -25,12 +25,3 @@ MonoBehaviour:
     targetMax01: 0
     gaugeSpeed: 0
   targetCocktail: {fileID: 11400000, guid: 33507b543d53e214f9077f528a3acd5d, type: 2}
-  defaultBrewSession:
-    method: 2
-    ingredients:
-    - ingredient: {fileID: 11400000, guid: db5a42e5ddc8daf49ba26a334aafe62a, type: 2}
-      amount: 2
-    - ingredient: {fileID: 11400000, guid: 47193433f59ce804fb70332e10afaf72, type: 2}
-      amount: 1
-    - ingredient: {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
-      amount: 1
