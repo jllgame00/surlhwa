@@ -1015,11 +1015,49 @@ The result is transient and must not alter the existing technical consequences:
 - `requestedCocktail` does not cross into Bartending or influence route,
   candidate selection, threshold, score, or recipe lookup.
 
-Whether `reputationReward` requires `Satisfied`, whether an unsatisfied
-specific request has a penalty or distinct feedback, and whether a Little
-Prince visit-completion flag should depend on request outcome remain product
-and story decisions. They are intentionally not decided by this ownership ADR
-or by the first evaluation-core slice.
+### G5J specific-cocktail outcome policy
+
+`OrderData.reputationReward` is a **request-completion reward**, not a
+recipe-discovery reward or a mechanical-performance score. Its existing
+eligibility gates remain the mechanical and technical ones:
+
+```text
+MiniGameResult.success
+&& RecipeMatchResult.success
+&& matched recipe exists
+&& active OrderData exists
+```
+
+For a request with a completed evaluation, the reward policy is:
+
+| `RequestEvaluationStatus` | `reputationReward` policy |
+| --- | --- |
+| `NotApplicable` | Preserve the legacy eligibility gate. Generic technique requests must not regress. |
+| `Satisfied` | Preserve the legacy eligibility gate. A specific request needs mechanical success, a technical match, and `Satisfied`. |
+| `Unsatisfied` | Do not grant the request-completion reward. This adds no numeric penalty. A technical no-match already fails the existing technical gate; the changed case is a mechanically successful, technically valid, wrong cocktail. |
+| `InvalidData` | Log diagnostics and preserve the player-safe legacy eligibility gate. Authored/runtime data failure is never player failure. |
+
+`MiniGameResult.repDelta` remains exclusively mechanical and is never changed
+by request status. Recipe unlock/discovery remains attached to the actual
+technically matched recipe and the existing mini-game-success gate; an
+unsatisfied request can still unlock the cocktail actually served. Customer
+reaction remains based on that actual cocktail's `emotionTags` and the
+mini-game result.
+
+When an `Unsatisfied` specific request changes the reward outcome, it needs
+explicit Bar-side player feedback. The existing `ResultToastController` is the
+first implementation seam: it can report request mismatch while the existing
+unlock popup continues to report an actual recipe discovery. This feedback is
+separate from character emotion reaction; it does not invent or replace special
+guest dialogue. `InvalidData` remains developer-facing diagnostics plus the
+legacy player-safe result presentation.
+
+Little Prince first-visit completion remains the current departure-based
+prototype/encounter state for now. It is not coupled to the transient
+`RequestEvaluationResult`. Any later story branch must define and persist a
+meaningful derived story outcome rather than persist the raw generic evaluation
+result. Authored correct/wrong Little Prince response content and final
+story-completion semantics remain deferred to the narrative vertical slice.
 
 ### Method and runtime boundary
 
