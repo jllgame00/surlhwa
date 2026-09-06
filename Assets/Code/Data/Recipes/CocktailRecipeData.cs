@@ -15,7 +15,6 @@ public class CocktailRecipeData : ScriptableObject
 
     [Header("Discovery")]
     [Range(0f, 1f)] public float matchThreshold = 0.85f;
-    public bool unlockedByDefault = false;
     public bool discoverable = true;
 }
 
