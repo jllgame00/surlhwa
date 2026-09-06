@@ -17339,6 +17339,7 @@ MonoBehaviour:
   overlayBlocker: {fileID: 954143926}
   dialogueText: {fileID: 1902416506}
   ellipsisButton: {fileID: 693251334}
+  nextButton: {fileID: 146891488}
   brewButton: {fileID: 131134889}
   stirButton: {fileID: 824565302}
   shakeButton: {fileID: 1706943715}

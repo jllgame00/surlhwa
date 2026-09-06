@@ -13,6 +13,7 @@ public class InteractionUIController : MonoBehaviour
     [Header("Dialogue")]
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private Button ellipsisButton;
+    [SerializeField] private Button nextButton;
     [SerializeField] private Button brewButton;
 
     [Header("Brew")]
@@ -77,6 +78,9 @@ public class InteractionUIController : MonoBehaviour
     private bool activeCustomerUsesThirdCustomerRoute;
     private bool activeCustomerUsesFourthCustomerRoute;
     private MiniGameType activeForcedMethod = MiniGameType.Stir;
+    private string[] activePreRequestLines;
+    private int activePreRequestLineIndex;
+    private bool isPreRequestDialogueActive;
 
     public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesFirstCustomerRoute;
     public bool IsForcedSecondCustomerRouteActive => activeCustomerUsesSecondCustomerRoute;
@@ -98,6 +102,7 @@ public class InteractionUIController : MonoBehaviour
             waitIndicator.SetWorldCamera(worldCamera);
 
         if (ellipsisButton != null) ellipsisButton.onClick.AddListener(OnClickEllipsis);
+        if (nextButton != null) nextButton.onClick.AddListener(OnClickNextDialogueLine);
         if (brewButton != null) brewButton.onClick.AddListener(OnClickBrew);
 
         if (stirButton != null) stirButton.onClick.AddListener(() => SelectMethod(MiniGameType.Stir));
@@ -212,6 +217,7 @@ public class InteractionUIController : MonoBehaviour
         activeCustomer = null;
         hasMethodSelected = false;
         wantsEllipsisVisible = false;
+        ResetPreRequestDialogue();
         activeCustomerUsesForcedRoute = false;
         activeCustomerUsesFirstCustomerRoute = false;
         activeCustomerUsesSecondCustomerRoute = false;
@@ -308,11 +314,68 @@ public class InteractionUIController : MonoBehaviour
 
         ClosePanels(false);
 
+        if (TryOpenDedicatedPreRequestDialogue())
+            return;
+
         string line = activeCustomer.GetInteractionHintLine();
         OpenDialogue(line);
     }
 
     private void OpenDialogue(string line)
+    {
+        ResetPreRequestDialogue();
+        ShowDialogue(line, false);
+    }
+
+    private bool TryOpenDedicatedPreRequestDialogue()
+    {
+        if (activeCustomer == null || activeCustomerUsesForcedRoute)
+            return false;
+
+        if (!activeCustomer.TryGetDedicatedRequest(out _) ||
+            !activeCustomer.TryGetDialogueData(out DialogueData dialogue) ||
+            dialogue.onEnterLines == null || dialogue.onEnterLines.Length == 0)
+        {
+            return false;
+        }
+
+        if (nextButton == null)
+        {
+            Debug.LogError(
+                "[InteractionUI] Dedicated pre-request dialogue cannot start because NextButton is not assigned.");
+            return false;
+        }
+
+        activePreRequestLines = dialogue.onEnterLines;
+        activePreRequestLineIndex = 0;
+        isPreRequestDialogueActive = true;
+        ShowDialogue(activePreRequestLines[activePreRequestLineIndex], true);
+
+        Debug.Log(
+            $"[InteractionUI] Dedicated pre-request dialogue -> {activeCustomer.name} / " +
+            $"lines={activePreRequestLines.Length}"
+        );
+        return true;
+    }
+
+    private void OnClickNextDialogueLine()
+    {
+        if (!isPreRequestDialogueActive || activePreRequestLines == null)
+            return;
+
+        activePreRequestLineIndex++;
+        if (activePreRequestLineIndex < activePreRequestLines.Length)
+        {
+            if (dialogueText != null)
+                dialogueText.text = activePreRequestLines[activePreRequestLineIndex];
+
+            return;
+        }
+
+        ResetPreRequestDialogue();
+    }
+
+    private void ShowDialogue(string line, bool showNext)
     {
         wantsEllipsisVisible = false;
         hasMethodSelected = false;
@@ -326,13 +389,35 @@ public class InteractionUIController : MonoBehaviour
         if (dialoguePanel != null) dialoguePanel.SetActive(true);
         if (ellipsisPrompt != null) ellipsisPrompt.gameObject.SetActive(false);
 
+        SetDialogueActionVisibility(showNext);
+
         RefreshMethodVisuals();
         RefreshConfirmState();
+    }
+
+    private void SetDialogueActionVisibility(bool showNext)
+    {
+        if (nextButton != null)
+            nextButton.gameObject.SetActive(showNext);
+
+        if (brewButton != null)
+            brewButton.gameObject.SetActive(!showNext);
+    }
+
+    private void ResetPreRequestDialogue()
+    {
+        activePreRequestLines = null;
+        activePreRequestLineIndex = 0;
+        isPreRequestDialogueActive = false;
+        SetDialogueActionVisibility(false);
     }
 
     private void OnClickBrew()
     {
         if (activeCustomer == null)
+            return;
+
+        if (isPreRequestDialogueActive)
             return;
 
         if (TryStartDedicatedRequest())
@@ -684,6 +769,8 @@ public class InteractionUIController : MonoBehaviour
     private void OnClickCancel()
     {
         // BrewPanel에서 취소하면 DialoguePanel로 복귀
+        ResetPreRequestDialogue();
+
         if (brewPanel != null && brewPanel.activeSelf)
         {
             string line = activeCustomer != null ? activeCustomer.GetInteractionHintLine() : "";
@@ -698,6 +785,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void ClosePanels(bool keepEllipsis)
     {
+        ResetPreRequestDialogue();
         wantsEllipsisVisible = keepEllipsis;
 
         if (dialoguePanel != null) dialoguePanel.SetActive(false);

@@ -164,6 +164,12 @@ public class CustomerController : MonoBehaviour
         return request != null;
     }
 
+    public bool TryGetDialogueData(out DialogueData dialogue)
+    {
+        dialogue = dialogueData;
+        return dialogue != null;
+    }
+
     public void SetUsesPatience(bool value)
     {
         usesPatience = value;
