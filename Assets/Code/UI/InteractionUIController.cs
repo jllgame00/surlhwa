@@ -23,11 +23,8 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
 
-    [Header("Test Orders")]
-    [SerializeField] private OrderData testStirOrder;
-    [SerializeField] private OrderData testShakeOrder;
-    [SerializeField] private OrderData testBuildOrder;
-    [SerializeField] private OrderData testFloatOrder;
+    [Header("Prototype Technique Requests")]
+    [SerializeField] private OrderData[] prototypeTechniqueOrders;
 
     [Header("Debug First Customer Route")]
     [SerializeField] private bool forceFirstCustomerRoute = false;
@@ -406,10 +403,9 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        OrderData order = GetTestOrder(selectedMethod);
+        OrderData order = FindPrototypeOrder(selectedMethod);
         if (order == null)
         {
-            Debug.LogError($"[InteractionUI] Test order missing for method={selectedMethod}");
             return;
         }
 
@@ -429,16 +425,59 @@ public class InteractionUIController : MonoBehaviour
         orderManager.PlaySpecificOrder(order, activeCustomer);
     }
 
-    private OrderData GetTestOrder(MiniGameType type)
+    private OrderData FindPrototypeOrder(MiniGameType type)
     {
-        return type switch
+        if (prototypeTechniqueOrders == null || prototypeTechniqueOrders.Length == 0)
         {
-            MiniGameType.Stir => testStirOrder,
-            MiniGameType.Shake => testShakeOrder,
-            MiniGameType.Build => testBuildOrder,
-            MiniGameType.Float => testFloatOrder,
-            _ => null
-        };
+            Debug.LogError(
+                $"[InteractionUI] Prototype technique request collection is empty for method={type} on {name}."
+            );
+            return null;
+        }
+
+        OrderData match = null;
+        int matchCount = 0;
+        int nullEntryCount = 0;
+
+        foreach (OrderData candidate in prototypeTechniqueOrders)
+        {
+            if (candidate == null)
+            {
+                nullEntryCount++;
+                continue;
+            }
+
+            if (candidate.miniGameType != type)
+                continue;
+
+            match = candidate;
+            matchCount++;
+        }
+
+        if (nullEntryCount > 0)
+        {
+            Debug.LogError(
+                $"[InteractionUI] Prototype technique request collection has {nullEntryCount} null entry/entries on {name}."
+            );
+        }
+
+        if (matchCount == 1)
+            return match;
+
+        if (matchCount == 0)
+        {
+            Debug.LogError(
+                $"[InteractionUI] Prototype technique request missing for method={type} on {name}."
+            );
+        }
+        else
+        {
+            Debug.LogError(
+                $"[InteractionUI] Prototype technique request is ambiguous for method={type} on {name}. Matches={matchCount}."
+            );
+        }
+
+        return null;
     }
 
     private bool IsTutorialDay()
@@ -460,11 +499,11 @@ public class InteractionUIController : MonoBehaviour
         if (customer == null)
             return false;
 
-        OrderData forcedOrder = GetTestOrder(forcedFirstCustomerMethod);
+        OrderData forcedOrder = FindPrototypeOrder(forcedFirstCustomerMethod);
         if (forcedOrder == null)
         {
             Debug.LogWarning(
-                $"[InteractionUI] Debug first route requested {forcedFirstCustomerMethod}, but no test order is assigned."
+                $"[InteractionUI] Debug first route requested {forcedFirstCustomerMethod}, but no prototype order is assigned."
             );
             return false;
         }
@@ -499,11 +538,11 @@ public class InteractionUIController : MonoBehaviour
         if (customer == null)
             return false;
 
-        OrderData forcedOrder = GetTestOrder(forcedSecondCustomerMethod);
+        OrderData forcedOrder = FindPrototypeOrder(forcedSecondCustomerMethod);
         if (forcedOrder == null)
         {
             Debug.LogWarning(
-                $"[InteractionUI] Debug second route requested {forcedSecondCustomerMethod}, but no test order is assigned."
+                $"[InteractionUI] Debug second route requested {forcedSecondCustomerMethod}, but no prototype order is assigned."
             );
             return false;
         }
@@ -541,11 +580,11 @@ public class InteractionUIController : MonoBehaviour
         if (customer == null)
             return false;
 
-        OrderData forcedOrder = GetTestOrder(forcedThirdCustomerMethod);
+        OrderData forcedOrder = FindPrototypeOrder(forcedThirdCustomerMethod);
         if (forcedOrder == null)
         {
             Debug.LogWarning(
-                $"[InteractionUI] Debug third route requested {forcedThirdCustomerMethod}, but no test order is assigned."
+                $"[InteractionUI] Debug third route requested {forcedThirdCustomerMethod}, but no prototype order is assigned."
             );
             return false;
         }
@@ -586,11 +625,11 @@ public class InteractionUIController : MonoBehaviour
         if (customer == null)
             return false;
 
-        OrderData forcedOrder = GetTestOrder(forcedFourthCustomerMethod);
+        OrderData forcedOrder = FindPrototypeOrder(forcedFourthCustomerMethod);
         if (forcedOrder == null)
         {
             Debug.LogWarning(
-                $"[InteractionUI] Debug fourth route requested {forcedFourthCustomerMethod}, but no test order is assigned."
+                $"[InteractionUI] Debug fourth route requested {forcedFourthCustomerMethod}, but no prototype order is assigned."
             );
             return false;
         }
