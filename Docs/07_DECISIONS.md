@@ -969,6 +969,58 @@ existing generic prototype technique-selection flow. Day 1 forced tutorial
 routes retain precedence and continue to resolve their generic prototype
 requests. This selection rule does not read or enforce `requestedCocktail`.
 
+### Specific-cocktail post-match evaluation
+
+`requestedCocktail` is evaluated only after the technical result is known.
+The boundary is deliberately:
+
+```text
+BrewComposition + candidate CocktailRecipeData -> RecipeMatchResult
+current OrderData + RecipeMatchResult            -> RequestEvaluationResult
+```
+
+`RecipeMatchService` remains the first, technical operation and does not
+receive an order, customer, or request constraint. The Bar-side `OrderManager`
+owns invocation because it owns the active request and processes the returned
+result. A small pure helper/value type may own the comparison itself; it is not
+a global request service or a Bartending dependency.
+
+The first evaluation result is deliberately a constraint result, not a new
+overall-order-success flag:
+
+```text
+RequestEvaluationStatus
+  NotApplicable  // requestedCocktail is null
+  Satisfied      // a successful technical match serves the requested cocktail
+  Unsatisfied    // no successful technical match, or a different valid cocktail
+  InvalidData    // missing active request or required cocktail identity/link
+```
+
+`CocktailData.cocktailId`, after non-empty identity validation, is the
+comparison key. Direct asset references remain the authored links, but object
+reference equality is not the runtime identity contract. A failed
+`RecipeMatchResult` is a normal `Unsatisfied` outcome for a specific cocktail
+constraint; a successful match with a missing target cocktail or a missing
+identity is `InvalidData`, not an ordinary request failure.
+
+The result is transient and must not alter the existing technical consequences:
+
+- recipe unlock/discovery remains based on the technically matched recipe and
+  the existing mini-game-success gate, even when a specific request is
+  unsatisfied;
+- the actual served cocktail remains `matchedRecipe.targetCocktail`, and
+  customer emotion reaction continues to use that cocktail's `emotionTags`;
+- `MiniGameResult.success` remains mechanical performance, separate from this
+  cocktail-identity constraint result; and
+- `requestedCocktail` does not cross into Bartending or influence route,
+  candidate selection, threshold, score, or recipe lookup.
+
+Whether `reputationReward` requires `Satisfied`, whether an unsatisfied
+specific request has a penalty or distinct feedback, and whether a Little
+Prince visit-completion flag should depend on request outcome remain product
+and story decisions. They are intentionally not decided by this ownership ADR
+or by the first evaluation-core slice.
+
 ### Method and runtime boundary
 
 `OrderData.miniGameType` is the authored request-route requirement. It is
@@ -997,7 +1049,7 @@ slice, but is not introduced by G5B merely to remove legacy data.
 | `reputationReward` | KEEP | Request-completion reward, currently gated by mini-game success and recipe match. |
 | `miniGameType` | KEEP | Active request route for guide context and prefab selection. |
 | `steps` | REMOVE_AFTER_G5B | Empty prototype residue; only its length affects a Build display suffix. |
-| `requestedCocktail` | KEEP (OPTIONAL CONSTRAINT) | Optional explicitly requested `CocktailData` identity. G5F normalizes generic technique requests to null and preserves the dormant Little Prince `cocktail_manwol` constraint. It has no active reader and is not a route, recipe, matching, served-cocktail, or evaluation authority. |
+| `requestedCocktail` | KEEP (OPTIONAL CONSTRAINT) | Optional explicitly requested `CocktailData` identity. G5F normalizes generic technique requests to null and preserves the Little Prince `cocktail_manwol` constraint. It is currently unread; the next post-match slice may use it only as the Bar-side input to `RequestEvaluationResult`, never as a route, recipe, technical matching, or served-cocktail authority. |
 
 `OrderManager.orderPool` has no C# reader. It is a dead scene-local duplicate
 of the four test assets and must be removed in a later small scene-authoring
