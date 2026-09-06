@@ -150,6 +150,11 @@ public class OrderManager : MonoBehaviour
 
         RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentOrder, matchResult);
         LogRequestEvaluation(currentOrder, matchResult, requestEvaluation);
+        bool isWrongValidRequestMismatch = IsWrongValidRequestMismatch(
+            currentOrder,
+            result,
+            matchResult,
+            requestEvaluation);
 
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
@@ -203,7 +208,13 @@ public class OrderManager : MonoBehaviour
             }
         }
         
-        ShowResultToast(matchedRecipe, unlockedNewRecipe, result, firstCustomerRoute, secondCustomerRoute);
+        ShowResultToast(
+            matchedRecipe,
+            unlockedNewRecipe,
+            result,
+            firstCustomerRoute,
+            secondCustomerRoute,
+            isWrongValidRequestMismatch);
 
         if (matchedRecipe == null)
         {
@@ -216,7 +227,12 @@ public class OrderManager : MonoBehaviour
             if (result.success)
             {
                 int totalRep = result.repDelta;
-                if (matchedRecipe != null && currentOrder != null) totalRep += currentOrder.reputationReward;
+                if (matchedRecipe != null &&
+                    currentOrder != null &&
+                    ShouldGrantRequestReward(requestEvaluation))
+                {
+                    totalRep += currentOrder.reputationReward;
+                }
                 gm.AddReputation(totalRep);
             }
             else
@@ -278,7 +294,8 @@ public class OrderManager : MonoBehaviour
         bool unlockedNewRecipe,
         MiniGameResult result,
         bool firstCustomerRoute,
-        bool secondCustomerRoute
+        bool secondCustomerRoute,
+        bool isWrongValidRequestMismatch
     )
     {
         if (resultToast == null)
@@ -294,6 +311,15 @@ public class OrderManager : MonoBehaviour
             else
                 resultToast.ShowUnknownCocktail();
 
+            return;
+        }
+
+        if (isWrongValidRequestMismatch)
+        {
+            resultToast.Show(
+                $"{GetCocktailDisplayName(matchedRecipe)} 완성",
+                "손님이 요청한 칵테일과 일치하지 않습니다."
+            );
             return;
         }
 
@@ -314,6 +340,24 @@ public class OrderManager : MonoBehaviour
         }
 
         resultToast.ShowRecipeMatched(GetCocktailDisplayName(matchedRecipe));
+    }
+
+    private static bool ShouldGrantRequestReward(RequestEvaluationResult evaluation)
+    {
+        return evaluation.Status != RequestEvaluationStatus.Unsatisfied;
+    }
+
+    private static bool IsWrongValidRequestMismatch(
+        OrderData request,
+        MiniGameResult result,
+        RecipeMatchResult matchResult,
+        RequestEvaluationResult evaluation)
+    {
+        return request != null &&
+               request.requestedCocktail != null &&
+               result.success &&
+               matchResult.success &&
+               evaluation.Status == RequestEvaluationStatus.Unsatisfied;
     }
 
     private static string GetCocktailDisplayName(CocktailRecipeData recipe)
