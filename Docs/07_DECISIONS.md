@@ -1059,6 +1059,37 @@ meaningful derived story outcome rather than persist the raw generic evaluation
 result. Authored correct/wrong Little Prince response content and final
 story-completion semantics remain deferred to the narrative vertical slice.
 
+### G5L first-visit dialogue sequencing
+
+The G5L audit confirms that `LittlePrinceFirstVisitDialogue` contains only
+`onEnterLines`: an introduction/request presentation. Its `onSuccessLines` and
+`onFailLines` are empty. The next Little Prince slice may therefore activate
+only an optional, linear **pre-request** dialogue sequence:
+
+```text
+spawn -> seat -> normal interaction prompt -> dedicated pre-request dialogue
+-> Brew -> dedicated request -> Bartending -> existing result/reaction -> leave
+```
+
+`CustomerController` remains the owner of its optional serialized
+`DialogueData` reference. `InteractionUIController` is the smallest owner of
+the interaction-panel playback and Brew gate, because it already owns the
+active customer, the dialogue panel, and dedicated-request start. Neither
+`CustomerSpawner` nor `OrderManager` should acquire dialogue sequencing for
+this slice. A dedicated dialogue and a dedicated request remain independently
+optional.
+
+There is no authored or runtime-ready first-visit outcome dialogue. The
+existing result toast communicates request correctness, and customer reaction
+continues to communicate the actual served cocktail/quality. A future story
+branch must derive a meaningful serving outcome from the independent mechanical,
+technical, and request-evaluation axes when content requires it; it must not
+persist `RequestEvaluationResult` itself.
+
+`littlePrinceFirstVisitCompleted` remains a departure flag for the prototype
+encounter, not request success or narrative completion. Retry and final story
+completion semantics remain deferred.
+
 ### Method and runtime boundary
 
 `OrderData.miniGameType` is the authored request-route requirement. It is
