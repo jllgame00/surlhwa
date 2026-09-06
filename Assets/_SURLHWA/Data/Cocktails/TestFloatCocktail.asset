@@ -17,7 +17,5 @@ MonoBehaviour:
   description: "\uC794 \uC704\uB85C \uC870\uC6A9\uD788 \uB5A0\uC624\uB974\uB294 \uB2EC\uBE5B
     \uAC19\uC740 \uD55C \uC794.\n\uAC00\uB77C\uC549\uC740 \uB9C8\uC74C \uC704\uC5D0
     \uB9D1\uC740 \uADF8\uB9AC\uC6C0\uC744 \uB744\uC6B4\uB2E4."
-  miniGameType: 1
-  steps: []
   emotionTags: 0900000006000000
   cocktailSprite: {fileID: 4527184514431334382, guid: ad7f718406ab075418f392d94cfeee69, type: 3}

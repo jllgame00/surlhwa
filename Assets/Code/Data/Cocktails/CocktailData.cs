@@ -12,10 +12,6 @@ public class CocktailData : ScriptableObject
     [TextArea(2, 5)]
     public string description;
 
-    [Header("Recipe / Play")]
-    public MiniGameType miniGameType;
-    public RecipeStep[] steps;
-
     [Header("Emotion Tags")]
     public EmotionTag[] emotionTags;
 
