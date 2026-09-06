@@ -22,8 +22,7 @@ public class CocktailRecipeData : ScriptableObject
 [System.Serializable]
 public class RecipeIngredientEntry
 {
-    public string ingredientId;
-    public IngredientCategory category;
+    public IngredientData ingredient;
     [Tooltip("Displayed to players as ounces (oz). Recipe matching may normalize this value and compare relative proportions.")]
     public float ratio;
 }

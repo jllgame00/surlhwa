@@ -339,7 +339,14 @@ public class CocktailCodexPanelController : MonoBehaviour
             if (entry == null)
                 continue;
 
-            sb.AppendLine($"{FormatIngredientName(entry.ingredientId)} {entry.ratio:0.##} oz");
+            if (entry.ingredient == null)
+            {
+                Debug.LogError($"[CocktailCodex] Recipe '{recipe.recipeId}' has a null ingredient reference.");
+                sb.AppendLine("Missing Ingredient Data");
+                continue;
+            }
+
+            sb.AppendLine($"{entry.ingredient.displayName} {entry.ratio:0.##} oz");
         }
 
         return sb.Length > 0
@@ -347,21 +354,4 @@ public class CocktailCodexPanelController : MonoBehaviour
             : "No ingredient data.";
     }
 
-    private static string FormatIngredientName(string ingredientId)
-    {
-        if (string.IsNullOrWhiteSpace(ingredientId))
-            return "Unknown";
-
-        string[] words = ingredientId.Split(new[] { '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < words.Length; i++)
-        {
-            if (words[i].Length == 0)
-                continue;
-
-            string lower = words[i].ToLowerInvariant();
-            words[i] = char.ToUpperInvariant(lower[0]) + lower.Substring(1);
-        }
-
-        return string.Join(" ", words);
-    }
 }

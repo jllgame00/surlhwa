@@ -16,14 +16,11 @@ MonoBehaviour:
   method: 1
   targetCocktail: {fileID: 11400000, guid: c45c5194c56c1de45a5cd0061e701a27, type: 2}
   ingredients:
-  - ingredientId: vodka
-    category: 0
+  - ingredient: {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
     ratio: 2
-  - ingredientId: coffee_liqueur
-    category: 1
+  - ingredient: {fileID: 11400000, guid: e00d4a7e4e940b74297043ec0154e4c1, type: 2}
     ratio: 1
-  - ingredientId: cream
-    category: 2
+  - ingredient: {fileID: 11400000, guid: 02f6eceda66c83e4d901b2dc701c2d3a, type: 2}
     ratio: 1
   matchThreshold: 0.85
   unlockedByDefault: 0

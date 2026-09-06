@@ -16,14 +16,11 @@ MonoBehaviour:
   method: 2
   targetCocktail: {fileID: 11400000, guid: 33507b543d53e214f9077f528a3acd5d, type: 2}
   ingredients:
-  - ingredientId: whiskey
-    category: 0
+  - ingredient: {fileID: 11400000, guid: db5a42e5ddc8daf49ba26a334aafe62a, type: 2}
     ratio: 2
-  - ingredientId: vermouth
-    category: 1
+  - ingredient: {fileID: 11400000, guid: 47193433f59ce804fb70332e10afaf72, type: 2}
     ratio: 1
-  - ingredientId: water
-    category: 2
+  - ingredient: {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
     ratio: 1
   matchThreshold: 0.85
   unlockedByDefault: 1

@@ -252,15 +252,15 @@ public static class RecipeMatchService
         foreach (var entry in recipe.ingredients)
         {
             if (entry == null) continue;
-            if (string.IsNullOrEmpty(entry.ingredientId)) continue;
+            if (entry.ingredient == null || string.IsNullOrEmpty(entry.ingredient.ingredientId)) continue;
 
             float amount = Mathf.Max(0f, entry.ratio);
             if (amount <= 0f) continue;
 
-            if (!amounts.ContainsKey(entry.ingredientId))
-                amounts[entry.ingredientId] = 0f;
+            if (!amounts.ContainsKey(entry.ingredient.ingredientId))
+                amounts[entry.ingredient.ingredientId] = 0f;
 
-            amounts[entry.ingredientId] += amount;
+            amounts[entry.ingredient.ingredientId] += amount;
         }
 
         return amounts;
@@ -303,7 +303,9 @@ public static class RecipeMatchService
             if (sb.Length > 0)
                 sb.Append(", ");
 
-            sb.Append(string.IsNullOrEmpty(entry.ingredientId) ? "Unknown" : entry.ingredientId);
+            sb.Append(entry.ingredient == null || string.IsNullOrEmpty(entry.ingredient.ingredientId)
+                ? "Unknown"
+                : entry.ingredient.ingredientId);
             sb.Append("=");
             sb.Append(Mathf.Max(0f, entry.ratio).ToString("0.##"));
             sb.Append("oz");
