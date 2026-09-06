@@ -137,6 +137,7 @@ public class OrderManager : MonoBehaviour
 
         CocktailData servedCocktail = null;
         CocktailRecipeData matchedRecipe = null;
+        RecipeMatchResult matchResult = default;
         bool unlockedNewRecipe = false;
         bool firstCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
         bool secondCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedSecondCustomerRoute();
@@ -144,8 +145,14 @@ public class OrderManager : MonoBehaviour
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
             var candidates = recipeUnlockManager.GetAllRecipesByMethod(result.brewedComposition.method);
-            RecipeMatchResult matchResult = RecipeMatchService.FindBestMatch(result.brewedComposition, candidates);
+            matchResult = RecipeMatchService.FindBestMatch(result.brewedComposition, candidates);
+        }
 
+        RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentOrder, matchResult);
+        LogRequestEvaluation(currentOrder, matchResult, requestEvaluation);
+
+        if (recipeUnlockManager != null && result.brewedComposition != null)
+        {
             if (matchResult.success && matchResult.matchedRecipe != null)
             {
                 matchedRecipe = matchResult.matchedRecipe;
@@ -231,6 +238,39 @@ public class OrderManager : MonoBehaviour
             Debug.Log("[OrderManager] OnMiniGameDone -> resetting ORDER text to -");
             ui.SetOrderText("ORDER: -");
         }
+    }
+
+    private void LogRequestEvaluation(
+        OrderData request,
+        RecipeMatchResult matchResult,
+        RequestEvaluationResult evaluation)
+    {
+        if (!verboseLogging && evaluation.Status != RequestEvaluationStatus.InvalidData)
+            return;
+
+        string requestedCocktailId = request != null && request.requestedCocktail != null
+            ? request.requestedCocktail.cocktailId
+            : "None";
+        string actualCocktailId = matchResult.success &&
+                                  matchResult.matchedRecipe != null &&
+                                  matchResult.matchedRecipe.targetCocktail != null
+            ? matchResult.matchedRecipe.targetCocktail.cocktailId
+            : "None";
+        string matchedRecipeId = matchResult.matchedRecipe != null
+            ? matchResult.matchedRecipe.recipeId
+            : "None";
+        string message =
+            $"[OrderManager] Request Evaluation -> " +
+            $"order={request?.name ?? "NULL"} / " +
+            $"status={evaluation.Status} / " +
+            $"requested={requestedCocktailId} / " +
+            $"recipe={matchedRecipeId} / " +
+            $"actual={actualCocktailId}";
+
+        if (evaluation.Status == RequestEvaluationStatus.InvalidData)
+            Debug.LogWarning(message);
+        else if (verboseLogging)
+            Debug.Log(message);
     }
     
     private void ShowResultToast(
