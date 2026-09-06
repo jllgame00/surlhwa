@@ -9,7 +9,7 @@ public class OrderData : ScriptableObject
     [Header("MiniGame")]
     public MiniGameType miniGameType;
 
-    [Header("Cocktail")]
-    public CocktailData targetCocktail;
+    [Header("Cocktail Request Constraint")]
+    public CocktailData requestedCocktail;
 
 }

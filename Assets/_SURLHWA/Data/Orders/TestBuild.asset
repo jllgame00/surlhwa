@@ -15,4 +15,4 @@ MonoBehaviour:
   orderName: "\uC794\uC124"
   reputationReward: 1
   miniGameType: 0
-  targetCocktail: {fileID: 11400000, guid: 8a3f737b97c166c46a882a94edbbd8b4, type: 2}
+  requestedCocktail: {fileID: 0}

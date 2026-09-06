@@ -909,8 +909,10 @@ asset, but its prototype fields have different meanings:
 - `steps` is not recipe authoring. All five current assets contain one empty,
   default `StirGauge` step, and only `BuildMiniGame` reads its length to append
   `"(1 step)"` to a display title;
-- `targetCocktail` has no active C# reader. It is serialized on the four
-  technique-test orders and the dormant Little Prince order.
+- The legacy `targetCocktail` field had no active C# reader. In G5F it is
+  normalized as `requestedCocktail`: it is null on the four technique-test
+  orders and retains the authored cocktail constraint on the dormant Little
+  Prince order.
 
 The current Day 1 flow is intentionally prototype/tutorial coupling:
 `InteractionUIController` selects one of four serialized technique slots and
@@ -950,11 +952,12 @@ It does not receive `OrderData`. The served cocktail remains
 | Open/emotional/story | REQUIRED_LATER; current customer emotion responses are only a partial prototype | request/story presentation and later evaluation metadata | May accept any fitting served cocktail; it does not duplicate a technical recipe. |
 | Tutorial/prototype route | REQUIRED_NOW, PROTOTYPE_ONLY | the four technique test slots and forced route state | Must not become the production order-selection architecture. |
 
-An optional specific-cocktail target is a request constraint, not cocktail
-identity authority and not the identity of the cocktail actually served. If a
-future request needs a particular technical standard, it must carry that direct
-recipe-standard reference; it must never obtain one by reverse-looking up a
-`CocktailData` from the catalog.
+An optional `OrderData.requestedCocktail` is a request constraint, not cocktail
+identity authority and not the identity of the cocktail actually served. A null
+value means the request has no explicit cocktail constraint. It must not select
+a route or recipe, participate in technical matching, or be obtained through a
+cocktail-to-recipe reverse lookup. If a future request needs a particular
+technical standard, it must carry that direct recipe-standard reference.
 
 ### Method and runtime boundary
 
@@ -984,7 +987,7 @@ slice, but is not introduced by G5B merely to remove legacy data.
 | `reputationReward` | KEEP | Request-completion reward, currently gated by mini-game success and recipe match. |
 | `miniGameType` | KEEP | Active request route for guide context and prefab selection. |
 | `steps` | REMOVE_AFTER_G5B | Empty prototype residue; only its length affects a Build display suffix. |
-| `targetCocktail` | TEMPORARY_COMPATIBILITY | No active reader, but it is the only retained serialized hint of a future optional specific-cocktail request, including the dormant Little Prince asset. It is not a current target/evaluation authority. Re-author it as an explicit optional request constraint only when that request semantic is implemented. |
+| `requestedCocktail` | KEEP (OPTIONAL CONSTRAINT) | Optional explicitly requested `CocktailData` identity. G5F normalizes generic technique requests to null and preserves the dormant Little Prince `cocktail_manwol` constraint. It has no active reader and is not a route, recipe, matching, served-cocktail, or evaluation authority. |
 
 `OrderManager.orderPool` has no C# reader. It is a dead scene-local duplicate
 of the four test assets and must be removed in a later small scene-authoring
