@@ -66,9 +66,9 @@ public class BartendingFlowCoordinator : MonoBehaviour
         Action<MiniGameResult> onCompleted,
         Action<BartendingFlowFailure> onFailed)
     {
-        if (session == null || session.Order == null)
+        if (session == null || session.Request == null)
         {
-            Debug.LogError("[BartendingFlowCoordinator] BeginBartending requires an OrderData session.");
+            Debug.LogError("[BartendingFlowCoordinator] BeginBartending requires a BartendingRequestContext session.");
             return false;
         }
 
@@ -93,7 +93,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
 
         Debug.Log(
             "[BartendingFlowCoordinator] BeginBartending additive -> " +
-            session.Order.orderName + " / " + session.Order.miniGameType + " / generation=" + generation);
+            session.Request.DisplayTitle + " / " + session.Request.Route + " / generation=" + generation);
 
         return true;
     }
@@ -339,7 +339,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
         try
         {
             runner.Play(
-                session.Order,
+                session.Request,
                 session.RecipeGuideContext,
                 session.FirstRecipeRevealRequested,
                 result =>

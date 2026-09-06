@@ -66,15 +66,15 @@ public class MiniGameManager : MonoBehaviour
     }
 
     public void Play(
-        OrderData order,
+        BartendingRequestContext request,
         RecipeGuideContext recipeGuideContext,
         Action<string, string> firstRecipeRevealRequested,
         Action<MiniGameResult> onDone)
     {
         Debug.Log(
             $"[MiniGameManager] Play() called\n" +
-            $" order = {(order != null ? order.orderName : "NULL")}\n" +
-            $" order.miniGameType = {(order != null ? order.miniGameType.ToString() : "NULL")}\n" +
+            $" request.DisplayTitle = {(request != null ? request.DisplayTitle : "NULL")}\n" +
+            $" request.Route = {(request != null ? request.Route.ToString() : "NULL")}\n" +
             $" currentMiniGame = {(currentMiniGame != null ? currentMiniGame.name : "NULL")}\n" +
             $" debugPlayMode = {debugPlayMode}"
         );
@@ -85,7 +85,7 @@ public class MiniGameManager : MonoBehaviour
             currentMiniGame = null;
         }
 
-        GameObject prefab = GetPrefabForPlay(order);
+        GameObject prefab = GetPrefabForPlay(request);
 
         if (prefab == null)
         {
@@ -110,7 +110,10 @@ public class MiniGameManager : MonoBehaviour
             return;
         }
 
-        game.StartGame(order, result =>
+        if (game is IRequestDisplayTitleReceiver titleReceiver)
+            titleReceiver.SetRequestDisplayTitle(request != null ? request.DisplayTitle : null);
+
+        game.StartGame(result =>
         {
             if (currentMiniGame != null)
             {
@@ -123,7 +126,7 @@ public class MiniGameManager : MonoBehaviour
         });
     }
 
-    private GameObject GetPrefabForPlay(OrderData order)
+    private GameObject GetPrefabForPlay(BartendingRequestContext request)
     {
         switch (debugPlayMode)
         {
@@ -147,13 +150,13 @@ public class MiniGameManager : MonoBehaviour
 
             case DebugPlayMode.OrderBased:
             default:
-                if (order == null)
+                if (request == null)
                 {
-                    Debug.LogError("[MiniGameManager] Order is NULL in OrderBased mode");
+                    Debug.LogError("[MiniGameManager] BartendingRequestContext is NULL in OrderBased mode");
                     return null;
                 }
 
-                return GetPrefab(order.miniGameType);
+                return GetPrefab(request.Route);
         }
     }
 

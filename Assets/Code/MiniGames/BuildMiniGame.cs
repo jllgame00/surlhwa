@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static ShakeMiniGame;
 
-public class BuildMiniGame : MonoBehaviour, IMiniGame
+public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver
 {
     public enum BuildState { Preview, Pouring, Result }
 
@@ -42,7 +42,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     [Header("Jigger Panel")]
     [SerializeField] private JiggerPanelController jiggerPanel;
 
-    private OrderData currentOrder;
+    private string requestDisplayTitle;
 
     private float remainTime;
     private float currentFillHeight;
@@ -52,13 +52,16 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> done)
+    public void SetRequestDisplayTitle(string displayTitle)
+    {
+        requestDisplayTitle = displayTitle;
+    }
+
+    public void StartGame(Action<MiniGameResult> done)
     {
         onDone = done;
 
         AutoBindIfMissing();
-
-        currentOrder = order;
 
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
@@ -303,11 +306,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
 
     private string GetDisplayTitle()
     {
-        if (currentOrder == null)
-            return "Build";
-
-        if (!string.IsNullOrEmpty(currentOrder.orderName))
-            return currentOrder.orderName;
+        if (!string.IsNullOrEmpty(requestDisplayTitle))
+            return requestDisplayTitle;
 
         return "Build";
     }

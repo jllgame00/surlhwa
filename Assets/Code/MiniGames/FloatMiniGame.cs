@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FloatMiniGame : MonoBehaviour, IMiniGame
+public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver
 {
     public enum FloatState { Preview, Pouring, Result }
 
@@ -39,7 +39,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
     private FloatState state = FloatState.Preview;
 
     private Action<MiniGameResult> onDone;
-    private OrderData currentOrder;
+    private string requestDisplayTitle;
 
     [Header("Recipe Guide")]
     [SerializeField] private RecipeGuidePanelController recipeGuide;
@@ -62,11 +62,14 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> onDone)
+    public void SetRequestDisplayTitle(string displayTitle)
+    {
+        requestDisplayTitle = displayTitle;
+    }
+
+    public void StartGame(Action<MiniGameResult> onDone)
     {
         this.onDone = onDone;
-
-        currentOrder = order;
 
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
@@ -342,10 +345,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame
 
     private string GetDisplayTitle()
     {
-        if (currentOrder == null) return defaultDisplayName;
-
-        if (!string.IsNullOrEmpty(currentOrder.orderName))
-            return currentOrder.orderName;
+        if (!string.IsNullOrEmpty(requestDisplayTitle))
+            return requestDisplayTitle;
 
         return defaultDisplayName;
     }

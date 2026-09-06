@@ -342,9 +342,12 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
+        BartendingRequestContext request = new BartendingRequestContext(
+            currentOrder.miniGameType,
+            currentOrder.orderName);
         RecipeGuideContext recipeGuideContext = BuildRecipeGuideContext();
-        BartendingSession session = BartendingSession.FromOrder(
-            currentOrder,
+        BartendingSession session = new BartendingSession(
+            request,
             recipeGuideContext,
             (title, message) => HandleFirstRecipeRevealRequest(recipeGuideContext, title, message));
 

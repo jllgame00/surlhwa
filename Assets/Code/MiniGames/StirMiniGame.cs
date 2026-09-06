@@ -45,8 +45,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Spoon Pose")]
     public float spoonBaseAngleDeg = 90f;
 
-    private OrderData currentOrder;
-
     float t;
     float targetMin, targetMax;
     float perfectMin, perfectMax;
@@ -65,12 +63,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Jigger Panel")]
     [SerializeField] private JiggerPanelController jiggerPanel;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> done)
+    public void StartGame(Action<MiniGameResult> done)
     {
         onDone = done;
         AutoBindIfMissing();
 
-        currentOrder = order;
         currentBrewSession = null;
 
         if (ingredientShelf == null)

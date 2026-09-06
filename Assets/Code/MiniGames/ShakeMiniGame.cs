@@ -46,8 +46,6 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
     private Action<MiniGameResult> onDone;
 
-    private OrderData currentOrder;
-
     [Header("Recipe Guide")]
     [SerializeField] private RecipeGuidePanelController recipeGuide;
 
@@ -59,13 +57,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
     private BrewSessionData currentBrewSession;
 
-    public void StartGame(OrderData order, Action<MiniGameResult> done)
+    public void StartGame(Action<MiniGameResult> done)
     {
         onDone = done;
 
         AutoBindIfMissing();
-
-        currentOrder = order;
 
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
