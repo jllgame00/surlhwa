@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Surlhwa/Cocktail")]
 public class CocktailData : ScriptableObject
 {
+    [Header("Identity")]
+    public string cocktailId;
+
     [Header("Basic Info")]
     public string cocktailName;
 

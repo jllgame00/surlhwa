@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225203d2ff5ca044ebcc044a58765f2a, type: 3}
   m_Name: TestFloatCocktail
   m_EditorClassIdentifier: Assembly-CSharp::CocktailData
+  cocktailId: cocktail_manwol
   cocktailName: "\uB9CC\uC6D4"
   description: "\uC794 \uC704\uB85C \uC870\uC6A9\uD788 \uB5A0\uC624\uB974\uB294 \uB2EC\uBE5B
     \uAC19\uC740 \uD55C \uC794.\n\uAC00\uB77C\uC549\uC740 \uB9C8\uC74C \uC704\uC5D0

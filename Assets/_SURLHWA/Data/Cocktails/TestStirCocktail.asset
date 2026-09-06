@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225203d2ff5ca044ebcc044a58765f2a, type: 3}
   m_Name: TestStirCocktail
   m_EditorClassIdentifier: Assembly-CSharp::CocktailData
+  cocktailId: cocktail_seolya
   cocktailName: "\uC124\uC57C"
-  description: 
+  description: "\uCC28\uAC00\uC6B4 \uBC24\uC744 \uCC9C\uCC9C\uD788 \uB370\uC6B0\uB294
+    \uCCAB \uC794.\n\uC678\uB85C\uC6C0\uACFC \uC628\uAE30\uB97C \uD568\uAED8 \uB2F4\uB294\uB2E4."
   miniGameType: 2
   steps: []
   emotionTags: 0300000007000000

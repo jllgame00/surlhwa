@@ -298,38 +298,33 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     private static Sprite GetRecipeSprite(CocktailRecipeData recipe)
     {
-        if (recipe == null || recipe.targetCocktail == null)
-            return null;
-
-        return recipe.targetCocktail.cocktailSprite;
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null ? cocktail.cocktailSprite : null;
     }
 
     private static string GetRecipeDisplayName(CocktailRecipeData recipe)
     {
-        if (recipe == null)
-            return "Unknown";
-
-        if (!string.IsNullOrWhiteSpace(recipe.displayName))
-            return recipe.displayName;
-
-        if (recipe.targetCocktail != null && !string.IsNullOrWhiteSpace(recipe.targetCocktail.cocktailName))
-            return recipe.targetCocktail.cocktailName;
-
-        return recipe.name;
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.cocktailName)
+            ? cocktail.cocktailName
+            : "Missing Cocktail Data";
     }
 
     private static string GetDescription(CocktailRecipeData recipe)
     {
-        if (recipe == null)
-            return "";
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.description)
+            ? cocktail.description.Trim()
+            : "No description.";
+    }
 
-        if (!string.IsNullOrWhiteSpace(recipe.description))
-            return recipe.description.Trim();
+    private static CocktailData GetTargetCocktail(CocktailRecipeData recipe)
+    {
+        if (recipe != null && recipe.targetCocktail != null)
+            return recipe.targetCocktail;
 
-        if (recipe.targetCocktail != null && !string.IsNullOrWhiteSpace(recipe.targetCocktail.description))
-            return recipe.targetCocktail.description.Trim();
-
-        return "No description.";
+        Debug.LogError($"[CocktailCodex] Recipe '{recipe?.recipeId ?? "NULL"}' has no targetCocktail.");
+        return null;
     }
 
     private static string BuildIngredientText(CocktailRecipeData recipe)

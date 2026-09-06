@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Recipe_TestStir
   m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
   recipeId: recipe_test_stir
-  displayName: 설야
-  description: "차가운 밤을 천천히 데우는 첫 잔.\n외로움과 온기를 함께 담는다."
   method: 2
   targetCocktail: {fileID: 11400000, guid: 33507b543d53e214f9077f528a3acd5d, type: 2}
   ingredients:

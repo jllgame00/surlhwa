@@ -274,23 +274,24 @@ public class CocktailCodexCardView : MonoBehaviour
 
     private static Sprite GetRecipeSprite(CocktailRecipeData recipe)
     {
-        if (recipe == null || recipe.targetCocktail == null)
-            return null;
-
-        return recipe.targetCocktail.cocktailSprite;
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null ? cocktail.cocktailSprite : null;
     }
 
     private static string GetRecipeDisplayName(CocktailRecipeData recipe)
     {
-        if (recipe == null)
-            return "Unknown";
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.cocktailName)
+            ? cocktail.cocktailName
+            : "Missing Cocktail Data";
+    }
 
-        if (!string.IsNullOrWhiteSpace(recipe.displayName))
-            return recipe.displayName;
+    private static CocktailData GetTargetCocktail(CocktailRecipeData recipe)
+    {
+        if (recipe != null && recipe.targetCocktail != null)
+            return recipe.targetCocktail;
 
-        if (recipe.targetCocktail != null && !string.IsNullOrWhiteSpace(recipe.targetCocktail.cocktailName))
-            return recipe.targetCocktail.cocktailName;
-
-        return recipe.name;
+        Debug.LogError($"[CocktailCodexCard] Recipe '{recipe?.recipeId ?? "NULL"}' has no targetCocktail.");
+        return null;
     }
 }

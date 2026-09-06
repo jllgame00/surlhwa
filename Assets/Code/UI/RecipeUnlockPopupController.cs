@@ -68,7 +68,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
         if (titleText != null)
             titleText.text = !string.IsNullOrEmpty(titleOverride)
                 ? titleOverride
-                : recipe.displayName;
+                : GetCocktailDisplayName(recipe);
 
         if (messageText != null)
             messageText.text = !string.IsNullOrEmpty(messageOverride)
@@ -77,10 +77,8 @@ public class RecipeUnlockPopupController : MonoBehaviour
 
         if (cocktailImage != null)
         {
-            Sprite sprite = null;
-
-            if (recipe.targetCocktail != null)
-                sprite = recipe.targetCocktail.cocktailSprite;
+            CocktailData cocktail = GetTargetCocktail(recipe);
+            Sprite sprite = cocktail != null ? cocktail.cocktailSprite : null;
 
             cocktailImage.sprite = sprite;
             cocktailImage.gameObject.SetActive(sprite != null);
@@ -105,5 +103,22 @@ public class RecipeUnlockPopupController : MonoBehaviour
         }
 
         popupRoot.anchoredPosition = targetPosition;
+    }
+
+    private static CocktailData GetTargetCocktail(CocktailRecipeData recipe)
+    {
+        if (recipe != null && recipe.targetCocktail != null)
+            return recipe.targetCocktail;
+
+        Debug.LogError($"[RecipeUnlockPopup] Recipe '{recipe?.recipeId ?? "NULL"}' has no targetCocktail.");
+        return null;
+    }
+
+    private static string GetCocktailDisplayName(CocktailRecipeData recipe)
+    {
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.cocktailName)
+            ? cocktail.cocktailName
+            : "Missing Cocktail Data";
     }
 }

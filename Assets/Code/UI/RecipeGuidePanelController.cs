@@ -134,7 +134,7 @@ public class RecipeGuidePanelController : MonoBehaviour
 
                 Debug.Log(
                     $"[RecipeGuidePanel] Recipe Candidate -> " +
-                    $"name={recipe.displayName}, id={recipe.recipeId}, method={recipe.method}, " +
+                    $"name={GetCocktailDisplayName(recipe)}, id={recipe.recipeId}, method={recipe.method}, " +
                     $"methodMatch={recipe.method == currentMethod}"
                 );
             }
@@ -153,7 +153,7 @@ public class RecipeGuidePanelController : MonoBehaviour
             TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
             if (label != null)
             {
-                label.text = recipe.displayName;
+                label.text = GetCocktailDisplayName(recipe);
                 ConfigureRecipeButtonText(label);
             }
 
@@ -195,7 +195,7 @@ public class RecipeGuidePanelController : MonoBehaviour
         }
 
         if (recipeNameText != null)
-            recipeNameText.text = selectedRecipe.displayName;
+            recipeNameText.text = GetCocktailDisplayName(selectedRecipe);
 
         if (recipeMethodText != null)
             recipeMethodText.text = $"Method: {selectedRecipe.method}";
@@ -211,9 +211,10 @@ public class RecipeGuidePanelController : MonoBehaviour
 
         System.Text.StringBuilder sb = new();
 
-        if (!string.IsNullOrWhiteSpace(recipe.description))
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        if (cocktail != null && !string.IsNullOrWhiteSpace(cocktail.description))
         {
-            sb.AppendLine(recipe.description.Trim());
+            sb.AppendLine(cocktail.description.Trim());
             sb.AppendLine();
         }
 
@@ -252,6 +253,23 @@ public class RecipeGuidePanelController : MonoBehaviour
         }
 
         return string.Join(" ", words);
+    }
+
+    private static CocktailData GetTargetCocktail(CocktailRecipeData recipe)
+    {
+        if (recipe != null && recipe.targetCocktail != null)
+            return recipe.targetCocktail;
+
+        Debug.LogError($"[RecipeGuidePanel] Recipe '{recipe?.recipeId ?? "NULL"}' has no targetCocktail.");
+        return null;
+    }
+
+    private static string GetCocktailDisplayName(CocktailRecipeData recipe)
+    {
+        CocktailData cocktail = GetTargetCocktail(recipe);
+        return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.cocktailName)
+            ? cocktail.cocktailName
+            : "Missing Cocktail Data";
     }
 
     private void ClearDetail()

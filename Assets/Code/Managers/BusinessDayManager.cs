@@ -97,12 +97,16 @@ public class BusinessDayManager : MonoBehaviour
             if (recipe == null || !recipeUnlockManager.IsUnlocked(recipe))
                 continue;
 
-            string displayName = string.IsNullOrWhiteSpace(recipe.displayName)
-                ? recipe.recipeId
-                : recipe.displayName;
+            CocktailData cocktail = recipe.targetCocktail;
+            if (cocktail == null || string.IsNullOrWhiteSpace(cocktail.cocktailName))
+            {
+                Debug.LogError(
+                    $"[BusinessDayManager] Recipe '{recipe.recipeId}' has no valid targetCocktail display data.");
+                continue;
+            }
 
-            if (!string.IsNullOrWhiteSpace(displayName) && !names.Contains(displayName))
-                names.Add(displayName);
+            if (!names.Contains(cocktail.cocktailName))
+                names.Add(cocktail.cocktailName);
         }
 
         return names;

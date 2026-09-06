@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Recipe_TestBuild
   m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
   recipeId: recipe_janseol
-  displayName: 잔설
-  description: "잔 끝에 남은 눈처럼 조용히 쌓이는 한 잔.\n늦게 사라지는 마음을 부드럽게 눌러 담는다."
   method: 0
   targetCocktail: {fileID: 11400000, guid: 8a3f737b97c166c46a882a94edbbd8b4, type: 2}
   ingredients:

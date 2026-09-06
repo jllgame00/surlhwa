@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225203d2ff5ca044ebcc044a58765f2a, type: 3}
   m_Name: TestBuildCocktail
   m_EditorClassIdentifier: Assembly-CSharp::CocktailData
+  cocktailId: cocktail_janseol
   cocktailName: "\uC794\uC124"
   description: "\uC794 \uB05D\uC5D0 \uB0A8\uC740 \uB208\uCC98\uB7FC \uC870\uC6A9\uD788
     \uC313\uC774\uB294 \uD55C \uC794.\n\uB2A6\uAC8C \uC0AC\uB77C\uC9C0\uB294 \uB9C8\uC74C\uC744

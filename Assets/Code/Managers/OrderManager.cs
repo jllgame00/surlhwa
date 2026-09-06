@@ -156,7 +156,7 @@ public class OrderManager : MonoBehaviour
 
                 Debug.Log(
                     $"[OrderManager] Recipe Match SUCCESS -> " +
-                    $"{matchedRecipe.displayName} / similarity={matchResult.similarity:0.00}"
+                    $"recipeId={matchedRecipe.recipeId} / similarity={matchResult.similarity:0.00}"
                 );
 
                 bool wasUnlocked = recipeUnlockManager.IsUnlocked(matchedRecipe);
@@ -169,7 +169,7 @@ public class OrderManager : MonoBehaviour
                     {
                         unlockedNewRecipe = true;
 
-                        Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {matchedRecipe.displayName}");
+                        Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {GetCocktailDisplayName(matchedRecipe)}");
 
                         if (unlockPopup != null)
                         {
@@ -193,7 +193,7 @@ public class OrderManager : MonoBehaviour
             {
                 Debug.Log(
                     $"[OrderManager] Recipe Match FAIL -> " +
-                    $"best={(matchResult.matchedRecipe != null ? matchResult.matchedRecipe.displayName : "None")} / " +
+                    $"best={(matchResult.matchedRecipe != null ? matchResult.matchedRecipe.recipeId : "None")} / " +
                     $"similarity={matchResult.similarity:0.00}"
                 );
             }
@@ -265,7 +265,7 @@ public class OrderManager : MonoBehaviour
             if (secondCustomerRoute)
                 resultToast.ShowSecondRouteRecipeUnlocked();
             else
-                resultToast.ShowRecipeUnlocked(matchedRecipe.displayName);
+                resultToast.ShowRecipeUnlocked(GetCocktailDisplayName(matchedRecipe));
 
             return;
         }
@@ -276,7 +276,19 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        resultToast.ShowRecipeMatched(matchedRecipe.displayName);
+        resultToast.ShowRecipeMatched(GetCocktailDisplayName(matchedRecipe));
+    }
+
+    private static string GetCocktailDisplayName(CocktailRecipeData recipe)
+    {
+        if (recipe != null && recipe.targetCocktail != null &&
+            !string.IsNullOrWhiteSpace(recipe.targetCocktail.cocktailName))
+        {
+            return recipe.targetCocktail.cocktailName;
+        }
+
+        Debug.LogError($"[OrderManager] Recipe '{recipe?.recipeId ?? "NULL"}' has no valid targetCocktail display data.");
+        return "Missing Cocktail Data";
     }
 
     public void PlaySpecificOrder(OrderData order, CustomerController customer)

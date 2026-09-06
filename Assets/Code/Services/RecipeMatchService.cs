@@ -49,7 +49,7 @@ public static class RecipeMatchService
             float score = breakdown.totalScore;
 
             Debug.Log(
-                $"[RecipeMatch] Candidate={recipe.displayName} / " +
+                $"[RecipeMatch] Candidate={recipe.recipeId} / " +
                 $"Target=[{FormatRecipeIngredients(recipe)}] / " +
                 $"IngredientScore={breakdown.ingredientScore:0.00} ({breakdown.matchedIngredientCount}/{breakdown.recipeIngredientCount}, extraCount={breakdown.extraIngredientCount}) / " +
                 $"AmountScore={breakdown.amountScore:0.00} (maxDiff={breakdown.maxAmountDifference:0.##} oz) / " +
@@ -75,14 +75,14 @@ public static class RecipeMatchService
         if (success)
         {
             Debug.Log(
-                $"[RecipeMatch] SUCCESS / Match={bestRecipe.displayName} / " +
+                $"[RecipeMatch] SUCCESS / Match={bestRecipe.recipeId} / " +
                 $"Similarity={bestScore:0.00} / Threshold={bestRecipe.matchThreshold:0.00}"
             );
         }
         else if (bestRecipe != null)
         {
             Debug.LogWarning(
-                $"[RecipeMatch] FAIL / Best={bestRecipe.displayName} / " +
+                $"[RecipeMatch] FAIL / Best={bestRecipe.recipeId} / " +
                 $"Similarity={bestScore:0.00} / Threshold={bestRecipe.matchThreshold:0.00} / " +
                 $"Reason={BuildFailReason(bestBreakdown, bestRecipe)}"
             );

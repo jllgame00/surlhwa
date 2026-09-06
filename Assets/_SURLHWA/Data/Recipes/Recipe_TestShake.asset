@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Recipe_TestShake
   m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
   recipeId: recipe_test_shake
-  displayName: 여명
-  description: "흐릿한 생각을 맑게 깨우는 한 잔.\n잠에서 깨어나는 듯한 선명함을 남긴다."
   method: 3
   targetCocktail: {fileID: 11400000, guid: eaf3c1c51f1c2994b81628220af5e330, type: 2}
   ingredients:
