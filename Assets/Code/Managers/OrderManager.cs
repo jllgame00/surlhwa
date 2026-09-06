@@ -33,9 +33,6 @@ public class OrderManager : MonoBehaviour
     private UIManager ui;
     private GameManager gm;
 
-    [Header("Orders")]
-    public OrderData[] orderPool;
-
     [Header("Bartending")]
     [SerializeField] private BartendingFlowCoordinator bartendingFlowCoordinator;
 

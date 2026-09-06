@@ -15491,11 +15491,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verboseLogging: 0
   resultToast: {fileID: 0}
-  orderPool:
-  - {fileID: 11400000, guid: 3cd1d69284df4ed4facab04626ad1f41, type: 2}
-  - {fileID: 11400000, guid: 66261992cc3b0ba4a8b749fb5420c826, type: 2}
-  - {fileID: 11400000, guid: f909fd19d3ea67346a83440c9d7014fb, type: 2}
-  - {fileID: 11400000, guid: 3f4b958e96f99024fb45beff5cb1cf4c, type: 2}
   bartendingFlowCoordinator: {fileID: 0}
 --- !u!4 &1780158366
 Transform:
