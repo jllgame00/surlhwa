@@ -891,6 +891,135 @@ recipe ingredient authoring, `OrderData`, or `CocktailData` schema.
 
 ---
 
+# ADR-030 — Customer Request and Bartending Routing Ownership
+
+Status:
+ACCEPTED / G5A ARCHITECTURE DECISION
+
+## Context
+
+The G5A audit confirms that the current `OrderData` is the Bar-side request
+asset, but its prototype fields have different meanings:
+
+- `orderName` is request/minigame presentation;
+- `reputationReward` is awarded only after a successful mini-game result and a
+  successful recipe match;
+- `miniGameType` actively supplies the request route, Recipe Guide context,
+  and `MiniGameManager` prefab selection;
+- `steps` is not recipe authoring. All five current assets contain one empty,
+  default `StirGauge` step, and only `BuildMiniGame` reads its length to append
+  `"(1 step)"` to a display title;
+- `targetCocktail` has no active C# reader. It is serialized on the four
+  technique-test orders and the dormant Little Prince order.
+
+The current Day 1 flow is intentionally prototype/tutorial coupling:
+`InteractionUIController` selects one of four serialized technique slots and
+then calls `OrderManager.PlaySpecificOrder`. It is not the final normal or
+story-request selection model. `LittlePrinceFirstVisitOrder` is serialized on
+the Little Prince prefab, but `CustomerController.orderData` has no runtime
+reader, so the dedicated order is not currently consumed.
+
+## Decision
+
+`OrderData` remains the request-definition type. A rename or split to a new
+`CustomerRequestData` type is not justified before a live consumer needs a
+semantic that `OrderData` cannot express.
+
+An order/request owns request presentation, completion reward, and an explicit
+bartending route when the request is technique-directed. It does not own
+cocktail identity, recipe ingredients or ratios, recipe matching thresholds,
+recipe unlock state, catalog membership, served-cocktail identity, or customer
+reaction tags.
+
+`RecipeMatchService` remains strictly:
+
+```text
+BrewComposition + candidate CocktailRecipeData -> RecipeMatchResult
+```
+
+It does not receive `OrderData`. The served cocktail remains
+`matchedRecipe.targetCocktail`.
+
+### Request semantic categories
+
+| Category | Current status | Required request data | Constraint |
+| --- | --- | --- | --- |
+| Technique-directed | REQUIRED_NOW for the Day 1 prototype/tutorial | explicit `MiniGameType` route | Does not identify a cocktail or a recipe. |
+| Specific cocktail | REQUIRED_LATER when a guest explicitly asks for a cocktail identity | optional `CocktailData` reference | Must not derive a recipe or route through a cocktail-to-recipe reverse lookup. |
+| Specific recipe standard | REQUIRED_LATER only when a request explicitly requires one authored standard | optional `CocktailRecipeData` reference | Direct reference is permitted; ingredients, ratios, and matching rules are still read from the recipe owner. |
+| Open/emotional/story | REQUIRED_LATER; current customer emotion responses are only a partial prototype | request/story presentation and later evaluation metadata | May accept any fitting served cocktail; it does not duplicate a technical recipe. |
+| Tutorial/prototype route | REQUIRED_NOW, PROTOTYPE_ONLY | the four technique test slots and forced route state | Must not become the production order-selection architecture. |
+
+An optional specific-cocktail target is a request constraint, not cocktail
+identity authority and not the identity of the cocktail actually served. If a
+future request needs a particular technical standard, it must carry that direct
+recipe-standard reference; it must never obtain one by reverse-looking up a
+`CocktailData` from the catalog.
+
+### Method and runtime boundary
+
+`OrderData.miniGameType` is the authored request-route requirement. It is
+distinct from:
+
+- `CocktailRecipeData.method`, the authored method of a technical recipe
+  standard;
+- `BrewSessionData.method` and `BrewComposition.method`, which are runtime
+  execution values produced by the active mini-game; and
+- the active mini-game prefab, which is selected from the route (or can be
+  overridden by an editor debug mode).
+
+The Bar owns the active customer and active request. Bartending needs only a
+narrow execution context: route, request display title, the existing
+`RecipeGuideContext`, and callbacks needed for the current flow. Reputation,
+story state, and the full request asset remain Bar-side. The existing
+`BartendingSession` currently transports the full `OrderData`; a small
+`BartendingRequestContext` may replace that transport in a later dedicated
+slice, but is not introduced by G5B merely to remove legacy data.
+
+### Current field disposition
+
+| Field | Disposition | Reason |
+| --- | --- | --- |
+| `orderName` | KEEP | Current request/minigame presentation. It is not cocktail identity. |
+| `reputationReward` | KEEP | Request-completion reward, currently gated by mini-game success and recipe match. |
+| `miniGameType` | KEEP | Active request route for guide context and prefab selection. |
+| `steps` | REMOVE_AFTER_G5B | Empty prototype residue; only its length affects a Build display suffix. |
+| `targetCocktail` | TEMPORARY_COMPATIBILITY | No active reader, but it is the only retained serialized hint of a future optional specific-cocktail request, including the dormant Little Prince asset. It is not a current target/evaluation authority. Re-author it as an explicit optional request constraint only when that request semantic is implemented. |
+
+`OrderManager.orderPool` has no C# reader. It is a dead scene-local duplicate
+of the four test assets and must be removed in a later small scene-authoring
+slice; it is not catalog membership.
+
+### Special guest boundary
+
+Little Prince spawn eligibility and the
+`littlePrinceFirstVisitCompleted` persistence key remain outside this decision.
+The dedicated Little Prince dialogue/order assets stay serialized and dormant.
+Activating them, adding story evaluation, or generalizing special-guest
+progress is a separate vertical slice and must not be bundled with request
+cleanup.
+
+## Compatibility requirements
+
+Later G5 work must preserve:
+
+- the four current technique routes and their method-prefab mapping;
+- `RecipeMatchService` candidate, threshold, and score behavior;
+- `recipeId` unlock persistence and first-recipe-reveal persistence;
+- the matched recipe to `CocktailData.emotionTags` reaction path;
+- the Day 1 forced route sequence; and
+- `currentDay` and Little Prince first-visit persistence semantics.
+
+## G5B boundary
+
+G5B is limited to removing `OrderData.steps` and the dead `RecipeStep`
+representation after changing `BuildMiniGame` to present the request title
+without a fabricated step-count suffix. It does not change request selection,
+`miniGameType`, `targetCocktail`, `orderPool`, Little Prince activation,
+matching, persistence, Scenes, or Prefabs.
+
+---
+
 # OPEN DECISIONS
 
 ## OD-001 — Save Format
