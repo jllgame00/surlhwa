@@ -918,8 +918,9 @@ The current Day 1 flow is intentionally prototype/tutorial coupling:
 `InteractionUIController` selects one of four serialized technique slots and
 then calls `OrderManager.PlaySpecificOrder`. It is not the final normal or
 story-request selection model. `LittlePrinceFirstVisitOrder` is serialized on
-the Little Prince prefab, but `CustomerController.orderData` has no runtime
-reader, so the dedicated order is not currently consumed.
+the Little Prince prefab. G5G consumes that dedicated request at the
+customer-known Brew interaction seam, before generic technique selection is
+shown.
 
 ## Decision
 
@@ -959,6 +960,15 @@ a route or recipe, participate in technical matching, or be obtained through a
 cocktail-to-recipe reverse lookup. If a future request needs a particular
 technical standard, it must carry that direct recipe-standard reference.
 
+### Dedicated request precedence
+
+At the Bar-side Brew interaction seam, a non-forced customer with an authored
+dedicated `OrderData` issues that exact request through
+`OrderManager.PlaySpecificOrder`. A customer without one continues to the
+existing generic prototype technique-selection flow. Day 1 forced tutorial
+routes retain precedence and continue to resolve their generic prototype
+requests. This selection rule does not read or enforce `requestedCocktail`.
+
 ### Method and runtime boundary
 
 `OrderData.miniGameType` is the authored request-route requirement. It is
@@ -997,10 +1007,9 @@ slice; it is not catalog membership.
 
 Little Prince spawn eligibility and the
 `littlePrinceFirstVisitCompleted` persistence key remain outside this decision.
-The dedicated Little Prince dialogue/order assets stay serialized and dormant.
-Activating them, adding story evaluation, or generalizing special-guest
-progress is a separate vertical slice and must not be bundled with request
-cleanup.
+G5G activates the existing Little Prince order through the ordinary Bar-side
+request seam only. Dialogue sequencing, story evaluation, completion semantics,
+and generalized special-guest progress remain separate work.
 
 ## Compatibility requirements
 

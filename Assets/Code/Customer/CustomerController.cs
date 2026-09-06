@@ -158,6 +158,12 @@ public class CustomerController : MonoBehaviour
         loopManager = manager;
     }
 
+    public bool TryGetDedicatedRequest(out OrderData request)
+    {
+        request = orderData;
+        return request != null;
+    }
+
     public void SetUsesPatience(bool value)
     {
         usesPatience = value;

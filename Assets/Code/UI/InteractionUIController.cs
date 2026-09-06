@@ -335,6 +335,9 @@ public class InteractionUIController : MonoBehaviour
         if (activeCustomer == null)
             return;
 
+        if (TryStartDedicatedRequest())
+            return;
+
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (brewPanel != null) brewPanel.SetActive(true);
         if (overlayBlocker != null) overlayBlocker.SetActive(true);
@@ -345,6 +348,34 @@ public class InteractionUIController : MonoBehaviour
 
         if (activeCustomerUsesForcedRoute && autoSelectForcedMethodOnBrew)
             SelectMethod(activeForcedMethod);
+    }
+
+    private bool TryStartDedicatedRequest()
+    {
+        if (activeCustomer == null || activeCustomerUsesForcedRoute)
+            return false;
+
+        if (!activeCustomer.TryGetDedicatedRequest(out OrderData dedicatedRequest))
+            return false;
+
+        if (orderManager == null)
+            orderManager = FindFirstObjectByType<OrderManager>();
+
+        if (orderManager == null)
+        {
+            Debug.LogError("[InteractionUI] OrderManager is NULL for dedicated request.");
+            return true;
+        }
+
+        ClosePanels(false);
+
+        Debug.Log(
+            $"[InteractionUI] Dedicated request -> {activeCustomer.name} / " +
+            $"{dedicatedRequest.orderName} / {dedicatedRequest.miniGameType}"
+        );
+
+        orderManager.PlaySpecificOrder(dedicatedRequest, activeCustomer);
+        return true;
     }
 
     private void SelectMethod(MiniGameType type)
