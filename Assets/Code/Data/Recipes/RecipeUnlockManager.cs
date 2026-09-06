@@ -6,8 +6,8 @@ public class RecipeUnlockManager : MonoBehaviour
     private const string SaveKey = "SURLHWA_UNLOCKED_RECIPES";
     private const string FirstRecipeRevealShownKey = "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN";
 
-    [Header("All Recipe Data")]
-    [SerializeField] private CocktailRecipeData[] allRecipes;
+    [Header("Recipe Catalog")]
+    [SerializeField] private RecipeCatalogData recipeCatalog;
 
     private readonly HashSet<string> unlockedRecipeIds = new();
 
@@ -19,13 +19,16 @@ public class RecipeUnlockManager : MonoBehaviour
 
     private void InitializeDefaultUnlocks()
     {
-        if (allRecipes == null) return;
+        if (recipeCatalog == null) return;
 
-        foreach (var recipe in allRecipes)
+        foreach (RecipeCatalogEntry entry in recipeCatalog.Entries)
         {
+            if (entry == null) continue;
+
+            CocktailRecipeData recipe = entry.Recipe;
             if (recipe == null) continue;
 
-            if (recipe.unlockedByDefault)
+            if (entry.UnlockedByDefault)
                 unlockedRecipeIds.Add(recipe.recipeId);
         }
 
@@ -64,10 +67,13 @@ public class RecipeUnlockManager : MonoBehaviour
     {
         List<CocktailRecipeData> result = new();
 
-        if (allRecipes == null) return result;
+        if (recipeCatalog == null) return result;
 
-        foreach (var recipe in allRecipes)
+        foreach (RecipeCatalogEntry entry in recipeCatalog.Entries)
         {
+            if (entry == null) continue;
+
+            CocktailRecipeData recipe = entry.Recipe;
             if (recipe == null) continue;
             if (recipe.method != method) continue;
             if (!IsUnlocked(recipe)) continue;
@@ -82,10 +88,13 @@ public class RecipeUnlockManager : MonoBehaviour
     {
         List<CocktailRecipeData> result = new();
 
-        if (allRecipes == null) return result;
+        if (recipeCatalog == null) return result;
 
-        foreach (var recipe in allRecipes)
+        foreach (RecipeCatalogEntry entry in recipeCatalog.Entries)
         {
+            if (entry == null) continue;
+
+            CocktailRecipeData recipe = entry.Recipe;
             if (recipe == null) continue;
             result.Add(recipe);
         }
@@ -97,10 +106,13 @@ public class RecipeUnlockManager : MonoBehaviour
     {
         List<CocktailRecipeData> result = new();
 
-        if (allRecipes == null) return result;
+        if (recipeCatalog == null) return result;
 
-        foreach (var recipe in allRecipes)
+        foreach (RecipeCatalogEntry entry in recipeCatalog.Entries)
         {
+            if (entry == null) continue;
+
+            CocktailRecipeData recipe = entry.Recipe;
             if (recipe == null) continue;
             if (recipe.method != method) continue;
 

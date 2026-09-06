@@ -759,6 +759,138 @@ compatibility cleanup을 같은 change에 섞지 않는다.
 
 ---
 
+# ADR-029 — Canonical Cocktail, Recipe, Catalog, and Progression Ownership
+
+Status:
+ACCEPTED / G2 ARCHITECTURE DECISION
+
+## Context
+
+G1 confirmed that the current runtime is already separated more clearly than
+the serialized data model suggests:
+
+- `IngredientShelf` creates the player-authored `BrewSessionData`, which is
+  converted to `BrewComposition` for matching.
+- `RecipeMatchService` receives a brew plus candidate `CocktailRecipeData`
+  values; it does not read `OrderData` or progression state.
+- The served cocktail is `matchedRecipe.targetCocktail`.
+- `OrderData.targetCocktail`, `CocktailData.miniGameType`, and
+  `CocktailData.steps` are not active runtime authorities.
+- `RecipeUnlockManager` currently combines recipe catalog membership, unlock
+  persistence, candidate supply, guide queries, and first-reveal state.
+- `CocktailCodexPanelController` serializes a second recipe-membership list.
+
+The existing prototype catalog must become replaceable with real, Korean-local,
+and rare SURLHWA-original content without cocktail-name-specific gameplay code
+or duplicate recipe definitions.
+
+## Decision
+
+### Ownership
+
+| Owner | Canonical responsibility | Explicit non-responsibility |
+| --- | --- | --- |
+| `IngredientData` | Stable ingredient identity, display/localized identity, category, icon, shelf sorting/presentation. | Recipe ratios and cocktail-specific behavior. |
+| `CocktailData` | Stable cocktail identity, public display name/description, art, reaction metadata, future cocktail-level presentation metadata. | Recipe method and recipe steps. |
+| `CocktailRecipeData` | One technical recipe standard: `recipeId`, target cocktail reference, method, ingredient specification, amounts/ratios, threshold, and discoverability. | Duplicated public cocktail name/description. |
+| `OrderData` | Customer/request presentation, reward, and temporary bartending routing. | Cocktail identity, recipe specification, and recipe-match authority. |
+| Recipe progression service | Unlock state and persistence. | Independent catalog membership. |
+
+`CocktailData.miniGameType` and `CocktailData.steps` are
+`REMOVE_AFTER_MIGRATION`. `CocktailRecipeData.displayName` and `description`
+are `MIGRATE_OR_REMOVE_AFTER_UI_MIGRATION`. `OrderData.targetCocktail` and
+`steps` are `REMOVE_AFTER_REQUEST_MODEL_MIGRATION`.
+
+### Catalog and progression
+
+The future single recipe-membership source is:
+
+```text
+RecipeCatalogData
+  entries[]
+
+RecipeCatalogEntry
+  recipe : CocktailRecipeData
+  unlockedByDefault : bool
+```
+
+`RecipeCatalogData` answers which recipes exist. `RecipeCatalogEntry` owns the
+game-progression default-unlock configuration. The progression service consumes
+that catalog and owns only current unlocked-state persistence. Guide, Codex,
+and match candidate queries must derive from the same catalog source.
+
+`CocktailRecipeData.discoverable` remains technical matching/discovery
+eligibility. It is distinct from whether a recipe is unlocked.
+
+### Ingredient authoring and runtime matching boundary
+
+Future recipe authoring uses an `IngredientData` reference plus `ratio`.
+`RecipeIngredientEntry.category` is `REMOVE_AFTER_MIGRATION` because it has no
+active reader. Runtime `BrewComposition` may continue to carry stable
+`ingredientId` and amount, so RecipeMatchService does not require a premature
+DTO rewrite.
+
+### Method and display policy
+
+`CocktailRecipeData.method` is the canonical authored method of a technical
+recipe. `OrderData.miniGameType` remains temporary request/routing data;
+`BrewSessionData.method`, `BrewComposition.method`, and the active mini-game
+method are runtime-derived/execution contexts. They are intentionally not one
+universal field. `CocktailData.miniGameType` is legacy duplicate data.
+
+`CocktailData` owns public cocktail name, description, and art. Recipe Guide
+and Codex must later migrate from recipe display fallbacks to this owner. A
+future recipe variant/standard label, if needed, is separate from copying the
+cocktail display name.
+
+### Identifier policy
+
+- `IngredientData.ingredientId` is a persistence/data-reference-safe ID.
+- `CocktailRecipeData.recipeId` remains the PlayerPrefs unlock key.
+- A future `CocktailData.cocktailId` is the stable cocktail-identity key.
+- IDs use lowercase ASCII `snake_case` (`[a-z0-9]+(_[a-z0-9]+)*`) and are
+  unique within their identifier domain.
+- Shipped IDs are never casually renamed. Any rename requires an explicit
+  old-to-new migration, including PlayerPrefs migration for `recipeId`.
+
+### Request and story boundary
+
+Special/story requests may later reference `CocktailData` or
+`CocktailRecipeData` when their semantics require a target, but must not copy
+recipe ingredients or ratios. `LittlePrinceFirstVisitOrder` remains untouched;
+its current dormant serialization does not define the final request model.
+
+## Compatibility Requirements
+
+Later migrations must preserve:
+
+- Stir, Shake, Build, and Float production play;
+- matching of all four prototype recipes during transition;
+- existing `recipeId` unlock PlayerPrefs, default Stir unlock, and
+  first-recipe-reveal PlayerPrefs until explicitly migrated;
+- unlocked-guide filtering by technique;
+- locked-but-discoverable recipe matching and unlock popup behavior;
+- Codex lock presentation;
+- customer reactions from matched `CocktailData.emotionTags`; and
+- existing ingredient-ID meaning without silent reinterpretation.
+
+## Deferred Decisions
+
+- Final recipe-standard/source, garnish, glassware, localization, and catalog
+  metadata schema;
+- whether one cocktail identity may expose multiple recipe standards;
+- exact special-customer request model; and
+- final cleanup timing for obsolete Order/Cocktail fields and prototype slots.
+
+## G3 Boundary
+
+G3 begins catalog/progression separation only: introduce the catalog asset and
+entry type, make progression consume it, and remove Codex's independent
+membership list while preserving current IDs and behavior. It does not migrate
+recipe ingredient authoring, `OrderData`, or `CocktailData` schema.
+
+---
+
 # OPEN DECISIONS
 
 ## OD-001 — Save Format

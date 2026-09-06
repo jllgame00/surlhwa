@@ -7594,11 +7594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c2e4595aeeeb44c8bde26730efc153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RecipeUnlockManager
-  allRecipes:
-  - {fileID: 11400000, guid: adb3cfe77a1b3894ca30f4e8033dfb0a, type: 2}
-  - {fileID: 11400000, guid: 2b54330e34efa6c46a19054ea18fc8db, type: 2}
-  - {fileID: 11400000, guid: 955c68b1cac12a64faba38ab72681dc6, type: 2}
-  - {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+  recipeCatalog: {fileID: 11400000, guid: 5babed30d6edba141ba755bc269cc1a4, type: 2}
 --- !u!1 &891507630
 GameObject:
   m_ObjectHideFlags: 0
@@ -11871,11 +11867,7 @@ MonoBehaviour:
   methodText: {fileID: 2137680367}
   ingredientsText: {fileID: 1630288284}
   lockedDetailText: {fileID: 2038369140}
-  recipes:
-  - {fileID: 11400000, guid: 955c68b1cac12a64faba38ab72681dc6, type: 2}
-  - {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
-  - {fileID: 11400000, guid: adb3cfe77a1b3894ca30f4e8033dfb0a, type: 2}
-  - {fileID: 11400000, guid: 2b54330e34efa6c46a19054ea18fc8db, type: 2}
+  recipeCatalog: {fileID: 11400000, guid: 5babed30d6edba141ba755bc269cc1a4, type: 2}
   recipeUnlockManager: {fileID: 882522457}
   placeholderSprite: {fileID: 21300000, guid: cec9e60eee6ab89469aee7dc6b3a472a, type: 3}
   placeholderColor: {r: 0.18, g: 0.17, b: 0.15, a: 1}

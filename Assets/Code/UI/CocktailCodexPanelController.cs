@@ -28,7 +28,7 @@ public class CocktailCodexPanelController : MonoBehaviour
     [SerializeField] private TMP_Text lockedDetailText;
 
     [Header("Data")]
-    [SerializeField] private CocktailRecipeData[] recipes;
+    [SerializeField] private RecipeCatalogData recipeCatalog;
     [SerializeField] private RecipeUnlockManager recipeUnlockManager;
 
     [Header("Fallback Visual")]
@@ -238,12 +238,12 @@ public class CocktailCodexPanelController : MonoBehaviour
     {
         List<CocktailRecipeData> result = new();
 
-        if (recipes != null && recipes.Length > 0)
+        if (recipeCatalog != null)
         {
-            foreach (CocktailRecipeData recipe in recipes)
+            foreach (RecipeCatalogEntry entry in recipeCatalog.Entries)
             {
-                if (recipe != null)
-                    result.Add(recipe);
+                if (entry?.Recipe != null)
+                    result.Add(entry.Recipe);
             }
 
             return result;
@@ -263,7 +263,7 @@ public class CocktailCodexPanelController : MonoBehaviour
         if (recipeUnlockManager != null)
             return recipeUnlockManager.IsUnlocked(recipe);
 
-        return recipe.unlockedByDefault;
+        return recipeCatalog != null && recipeCatalog.IsUnlockedByDefault(recipe);
     }
 
     private void ResolveRecipeUnlockManager()
