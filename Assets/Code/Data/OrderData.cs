@@ -9,9 +9,6 @@ public class OrderData : ScriptableObject
     [Header("MiniGame")]
     public MiniGameType miniGameType;
 
-    [Header("Recipe")]
-    public RecipeStep[] steps;
-
     [Header("Cocktail")]
     public CocktailData targetCocktail;
 

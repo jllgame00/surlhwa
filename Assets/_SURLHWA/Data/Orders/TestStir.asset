@@ -15,13 +15,4 @@ MonoBehaviour:
   orderName: "\uC124\uC57C"
   reputationReward: 1
   miniGameType: 2
-  steps:
-  - type: 2
-    ingredientName: 
-    targetAmount01: 0
-    tolerance01: 0
-    maxPourSpeed: 0
-    targetMin01: 0
-    targetMax01: 0
-    gaugeSpeed: 0
   targetCocktail: {fileID: 11400000, guid: 33507b543d53e214f9077f528a3acd5d, type: 2}

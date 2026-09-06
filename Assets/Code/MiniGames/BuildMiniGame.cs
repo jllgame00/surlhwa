@@ -49,7 +49,6 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
     private float maxFillHeight;
 
     private bool releasedOnce = false;
-    private int stepCount = 0;
 
     private BrewSessionData currentBrewSession;
 
@@ -93,10 +92,6 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
             maxFillHeight = liquidArea.rect.height;
         else
             maxFillHeight = 180f;
-
-        stepCount = (currentOrder != null && currentOrder.steps != null)
-            ? currentOrder.steps.Length
-            : 0;
 
         SetLiquidHeight(0f);
 
@@ -312,11 +307,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame
             return "Build";
 
         if (!string.IsNullOrEmpty(currentOrder.orderName))
-        {
-            if (stepCount > 0)
-                return $"{currentOrder.orderName} ({stepCount} step)";
             return currentOrder.orderName;
-        }
 
         return "Build";
     }
