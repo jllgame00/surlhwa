@@ -24,8 +24,11 @@ It is intentionally more detailed than 01_GAME_DESIGN.md.
 - 08_PROJECT_AUDIT.md remains a historical/static audit with concise
   current-state notes; it is not this design specification.
 
-This document does not claim that the current runtime has already been
-replaced. Existing Stir, Shake, Build, and Float implementations remain
+This document does not claim that the current runtime has already been broadly
+replaced. I1 validates only the first Pour Core proof: Build preparation can
+hold-to-pour into a runtime Serving Glass whose actual liquid amounts are held
+in milliliters and bridged to the existing ounce-authored matcher. Existing
+Stir, Shake, Build scoring, and Float implementations otherwise remain
 prototype/legacy behavior until their replacements pass their own validation
 and reachability audits.
 

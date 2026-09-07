@@ -21,7 +21,7 @@ public class BrewIngredientOptionView : MonoBehaviour
     public IngredientData Ingredient => ingredient;
     
     private IngredientData ingredient;
-    private float currentAmount;
+    private float currentAmountMl;
 
     private Action<IngredientData> onSelected;
 
@@ -36,11 +36,11 @@ public class BrewIngredientOptionView : MonoBehaviour
 
     public void Bind(
         IngredientData ingredientData,
-        float initialAmount,
+        float initialAmountMl,
         Action<IngredientData> selectedCallback = null)
     {
         ingredient = ingredientData;
-        currentAmount = Mathf.Max(0f, initialAmount);
+        currentAmountMl = Mathf.Max(0f, initialAmountMl);
 
         onSelected = selectedCallback;
 
@@ -70,6 +70,12 @@ public class BrewIngredientOptionView : MonoBehaviour
         SetSelectedVisual(false);
     }
 
+    public void SetAmountMl(float amountMl)
+    {
+        currentAmountMl = Mathf.Max(0f, amountMl);
+        Refresh();
+    }
+
     public void Select()
     {
         if (ingredient == null)
@@ -87,9 +93,9 @@ public class BrewIngredientOptionView : MonoBehaviour
     {
         if (amountText != null)
         {
-            amountText.text = currentAmount <= 0f
-                ? "0 oz"
-                : $"{currentAmount:0.##} oz";
+            amountText.text = currentAmountMl <= 0f
+                ? "0 ml"
+                : $"{currentAmountMl:0.0} ml ({BartendingVolume.MillilitersToOunces(currentAmountMl):0.##} oz)";
         }
     }
     

@@ -1098,7 +1098,10 @@ another ownership or persistence refactor, as the next material project risk.
 Bartending 2.0 is therefore the approved next development direction: preparation
 actions must determine the actual drink state, and the four current prototype
 mini-games are reference/fallback implementations until replacements are
-validated. Phase I is planned future work only; no Phase I runtime
-implementation occurred as part of this documentation update. See
+validated. I0-A and I1 are now the only validated Phase I runtime increments:
+dedicated narrative reading pauses patience, and the Build proof records
+hold-to-pour liquid transfer in a runtime Serving Glass using milliliters before
+bridging to the unchanged matcher. No broader Bartending 2.0 replacement,
+recipe-data migration, or Phase I content implementation is implied. See
 `Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
 `Docs/05_REBUILD_PLAN.md`.

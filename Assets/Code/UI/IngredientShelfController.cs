@@ -19,14 +19,22 @@ public class IngredientShelfController : MonoBehaviour
     private MiniGameType currentMethod;
     private IngredientData selectedIngredient;
 
-    private readonly Dictionary<IngredientData, float> selectedAmounts = new Dictionary<IngredientData, float>();
     private readonly List<BrewIngredientOptionView> optionViews = new List<BrewIngredientOptionView>();
 
-    public void Initialize(MiniGameType method)
+    // I1 owns actual liquid state here. The selected ingredient is only the
+    // current source; the target container records what was really transferred.
+    private BartendingContainerState targetContainer;
+
+    public IngredientData SelectedIngredient => selectedIngredient;
+    public BartendingContainerState TargetContainer => targetContainer;
+
+    public void Initialize(
+        MiniGameType method,
+        BartendingContainerType targetContainerType = BartendingContainerType.ServingGlass)
     {
         currentMethod = method;
         selectedIngredient = null;
-        selectedAmounts.Clear();
+        targetContainer = new BartendingContainerState(targetContainerType);
 
         // Do not seed from the recipe/default session.
         // The shelf represents what the player has actually poured.
@@ -40,18 +48,26 @@ public class IngredientShelfController : MonoBehaviour
     {
         List<BrewSessionIngredient> entries = new List<BrewSessionIngredient>();
 
-        foreach (KeyValuePair<IngredientData, float> pair in selectedAmounts)
+        if (targetContainer == null)
+            return new BrewSessionData
+            {
+                method = currentMethod,
+                ingredients = entries.ToArray()
+            };
+
+        foreach (BartendingLiquidEntry entry in targetContainer.LiquidEntries)
         {
-            if (pair.Key == null)
+            if (entry == null || entry.Ingredient == null)
                 continue;
 
-            if (pair.Value <= 0f)
+            float amountOz = BartendingVolume.MillilitersToOunces(entry.AmountMl);
+            if (amountOz <= 0f)
                 continue;
 
             entries.Add(new BrewSessionIngredient
             {
-                ingredient = pair.Key,
-                amount = pair.Value
+                ingredient = entry.Ingredient,
+                amount = amountOz
             });
         }
 
@@ -64,7 +80,22 @@ public class IngredientShelfController : MonoBehaviour
 
     public bool HasAnySelectedIngredient()
     {
-        return selectedAmounts.Any(pair => pair.Key != null && pair.Value > 0f);
+        return targetContainer != null && targetContainer.CurrentLiquidVolumeMl > 0f;
+    }
+
+    /// <summary>
+    /// Returns a result-bound snapshot for the existing recipe matcher. The
+    /// target container remains authoritative until the minigame submits it.
+    /// </summary>
+    public BrewComposition BuildComposition()
+    {
+        return targetContainer != null
+            ? targetContainer.ToLegacyBrewComposition(currentMethod)
+            : new BrewComposition
+            {
+                method = currentMethod,
+                ingredients = System.Array.Empty<BrewIngredientEntry>()
+            };
     }
 
     public void SetVisible(bool visible)
@@ -98,15 +129,15 @@ public class IngredientShelfController : MonoBehaviour
 
         foreach (IngredientData ingredient in sortedIngredients)
         {
-            float amount = selectedAmounts.TryGetValue(ingredient, out float savedAmount)
-                ? savedAmount
+            float amountMl = targetContainer != null
+                ? targetContainer.GetLiquidAmountMl(ingredient)
                 : 0f;
 
             BrewIngredientOptionView option = Instantiate(ingredientOptionPrefab, ingredientListRoot);
 
             option.Bind(
                 ingredient,
-                amount,
+                amountMl,
                 OnIngredientSelected
             );
 
@@ -131,15 +162,19 @@ public class IngredientShelfController : MonoBehaviour
 
         List<string> parts = new List<string>();
 
-        foreach (KeyValuePair<IngredientData, float> pair in selectedAmounts)
+        foreach (BartendingLiquidEntry entry in targetContainer.LiquidEntries)
         {
-            if (pair.Key == null || pair.Value <= 0f)
+            if (entry == null || entry.Ingredient == null || entry.AmountMl <= 0f)
                 continue;
 
-            parts.Add($"{pair.Key.displayName} {pair.Value:0.##} oz");
+            parts.Add(
+                $"{entry.Ingredient.displayName} {entry.AmountMl:0.0} ml " +
+                $"({BartendingVolume.MillilitersToOunces(entry.AmountMl):0.##} oz)");
         }
 
-        summaryText.text = string.Join(" / ", parts);
+        summaryText.text =
+            $"{targetContainer.ContainerType} {targetContainer.CurrentLiquidVolumeMl:0.0} ml: " +
+            string.Join(" / ", parts);
     }
 
     public void SetJiggerPanel(JiggerPanelController jiggerPanel)
@@ -157,11 +192,7 @@ public class IngredientShelfController : MonoBehaviour
         if (ingredient == null)
             return;
 
-        selectedAmounts.TryGetValue(ingredient, out float currentAmount);
-        selectedAmounts[ingredient] = Mathf.Max(0f, currentAmount + amount);
-
-        RebuildIngredientList();
-        RefreshTexts();
+        AddLiquidMl(ingredient, BartendingVolume.OuncesToMilliliters(amount));
     }
 
     public void SetAmount(IngredientData ingredient, float amount)
@@ -169,13 +200,11 @@ public class IngredientShelfController : MonoBehaviour
         if (ingredient == null)
             return;
 
-        if (amount <= 0f)
-            selectedAmounts.Remove(ingredient);
-        else
-            selectedAmounts[ingredient] = amount;
+        if (targetContainer == null)
+            return;
 
-        RebuildIngredientList();
-        RefreshTexts();
+        targetContainer.SetLiquidAmount(ingredient, BartendingVolume.OuncesToMilliliters(amount));
+        RefreshContents();
     }
 
     private void OnIngredientSelected(IngredientData ingredient)
@@ -186,13 +215,8 @@ public class IngredientShelfController : MonoBehaviour
         selectedIngredient = ingredient;
         RefreshSelectedVisuals();
 
-        if (linkedJiggerPanel == null)
-        {
-            Debug.LogWarning($"[IngredientShelf] Selected {ingredient.displayName}, but linkedJiggerPanel is NULL");
-            return;
-        }
-
-        linkedJiggerPanel.SelectIngredient(ingredient);
+        if (linkedJiggerPanel != null)
+            linkedJiggerPanel.SelectIngredient(ingredient);
 
         Debug.Log($"[IngredientShelf] Selected ingredient -> {ingredient.displayName}");
     }
@@ -216,16 +240,46 @@ public class IngredientShelfController : MonoBehaviour
         if (amount <= 0f)
             return;
 
-        selectedAmounts.TryGetValue(ingredient, out float currentAmount);
+        if (targetContainer == null)
+            return;
 
-        float nextAmount = Mathf.Max(0f, currentAmount - amount);
+        targetContainer.RemoveLiquid(ingredient, BartendingVolume.OuncesToMilliliters(amount));
+        RefreshContents();
+    }
 
-        if (nextAmount <= 0f)
-            selectedAmounts.Remove(ingredient);
-        else
-            selectedAmounts[ingredient] = nextAmount;
+    /// <summary>
+    /// Adds the amount actually transferred by a Bartending 2.0 pour action.
+    /// Unlike AddAmount, this API accepts canonical milliliters.
+    /// </summary>
+    public float AddLiquidMl(IngredientData ingredient, float amountMl)
+    {
+        if (targetContainer == null)
+            return 0f;
 
-        RebuildIngredientList();
+        float transferredMl = targetContainer.AddLiquid(ingredient, amountMl);
+        if (transferredMl > 0f)
+            RefreshContents();
+
+        return transferredMl;
+    }
+
+    public float PourSelectedIngredient(float amountMl)
+    {
+        return AddLiquidMl(selectedIngredient, amountMl);
+    }
+
+    private void RefreshContents()
+    {
+        foreach (BrewIngredientOptionView option in optionViews)
+        {
+            if (option == null)
+                continue;
+
+            option.SetAmountMl(targetContainer != null
+                ? targetContainer.GetLiquidAmountMl(option.Ingredient)
+                : 0f);
+        }
+
         RefreshTexts();
     }
 }

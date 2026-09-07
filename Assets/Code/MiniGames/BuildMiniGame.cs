@@ -42,6 +42,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     [Header("Jigger Panel")]
     [SerializeField] private JiggerPanelController jiggerPanel;
 
+    [Header("Pour Core Proof")]
+    [SerializeField] private float previewPourRateMlPerSecond = 30f;
+
     private string requestDisplayTitle;
 
     private float remainTime;
@@ -50,7 +53,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private bool releasedOnce = false;
 
-    private BrewSessionData currentBrewSession;
+    // The Build I1 proof snapshots the real serving-glass contents directly at
+    // the existing matching boundary. I4 will replace this prototype Build
+    // technique score; it is intentionally retained as a temporary fallback.
+    private BrewComposition currentBrewComposition;
+    private bool isPreviewPouring;
 
     public void SetRequestDisplayTitle(string displayTitle)
     {
@@ -66,21 +73,24 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (ingredientShelf == null)
             ingredientShelf = GetComponentInChildren<IngredientShelfController>(true);
 
-        currentBrewSession = null;
+        currentBrewComposition = null;
+        isPreviewPouring = false;
 
         if (ingredientShelf == null)
             throw new InvalidOperationException("[BuildMiniGame] IngredientShelfController is required.");
 
-        ingredientShelf.Initialize(MiniGameType.Build);
+        ingredientShelf.Initialize(MiniGameType.Build, BartendingContainerType.ServingGlass);
 
         if (jiggerPanel == null)
             jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
 
         if (jiggerPanel != null)
         {
-            jiggerPanel.Initialize(ingredientShelf);
-            ingredientShelf.SetJiggerPanel(jiggerPanel);
-            jiggerPanel.gameObject.SetActive(true);
+            // Fixed 0.5/1 oz measurement remains the legacy path for the other
+            // prototype techniques. The I1 Build proof instead pours directly
+            // into the serving-glass state over real input duration.
+            ingredientShelf.SetJiggerPanel(null);
+            jiggerPanel.gameObject.SetActive(false);
         }
 
         if (recipeGuide == null)
@@ -107,7 +117,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "Check the recipe, then start.";
+            startHintText.text = "Select an ingredient, hold SPACE to pour, then start.";
         }
 
         if (startButton != null)
@@ -118,11 +128,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         }
 
         UpdateProgressText();
-        SetHint("Press Start to begin building.");
+        SetHint("Select an ingredient, then hold SPACE to pour into the serving glass.");
 
         Debug.Log(
             $"[BuildMiniGame] Preview ready / " +
-            $"BrewSession={(currentBrewSession != null ? currentBrewSession.method.ToString() : "NULL")} / " +
+            $"Container={(ingredientShelf.TargetContainer != null ? ingredientShelf.TargetContainer.ContainerType.ToString() : "NULL")} / " +
             $"startButton={(startButton != null ? startButton.name : "NULL")} / " +
             $"startHintText={(startHintText != null ? startHintText.name : "NULL")}"
         );
@@ -145,12 +155,13 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        currentBrewSession = ingredientShelf.BuildSession();
+        StopPreviewPour("Build technique started");
+        currentBrewComposition = ingredientShelf.BuildComposition();
 
         Debug.Log(
-            $"[{nameof(BuildMiniGame)}] BrewSession built from ingredient shelf / " +
-            $"Method={currentBrewSession.method} / " +
-            $"Count={(currentBrewSession.ingredients != null ? currentBrewSession.ingredients.Length : 0)}"
+            $"[{nameof(BuildMiniGame)}] Authoritative serving-glass composition captured / " +
+            $"Method={currentBrewComposition.method} / " +
+            $"Count={(currentBrewComposition.ingredients != null ? currentBrewComposition.ingredients.Length : 0)}"
         );
 
         ingredientShelf.SetVisible(false);
@@ -177,7 +188,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void Update()
     {
         if (state == BuildState.Preview)
+        {
+            UpdatePreviewPour();
             return;
+        }
 
         if (state != BuildState.Pouring)
             return;
@@ -273,7 +287,82 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private BrewComposition CreateBrewComposition()
     {
-        return BrewCompositionFactory.FromSession(currentBrewSession, MiniGameType.Build);
+        return currentBrewComposition ?? ingredientShelf?.BuildComposition() ?? new BrewComposition
+        {
+            method = MiniGameType.Build,
+            ingredients = Array.Empty<BrewIngredientEntry>()
+        };
+    }
+
+    private void UpdatePreviewPour()
+    {
+        if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
+        {
+            StopPreviewPour("target container unavailable");
+            return;
+        }
+
+        if (!Input.GetKey(KeyCode.Space))
+        {
+            StopPreviewPour("input released");
+            return;
+        }
+
+        IngredientData ingredient = ingredientShelf.SelectedIngredient;
+        if (ingredient == null)
+        {
+            StopPreviewPour("no ingredient selected");
+            SetHint("Select an ingredient before pouring.");
+            return;
+        }
+
+        float requestedMl = Mathf.Max(0f, previewPourRateMlPerSecond) * Time.deltaTime;
+        float transferredMl = ingredientShelf.PourSelectedIngredient(requestedMl);
+        if (transferredMl <= 0f)
+        {
+            StopPreviewPour("transfer rejected");
+            return;
+        }
+
+        if (!isPreviewPouring)
+        {
+            isPreviewPouring = true;
+            Debug.Log(
+                $"[Pour] Start ingredient={ingredient.ingredientId} target=ServingGlass " +
+                $"rate={previewPourRateMlPerSecond:0.##} ml/s");
+        }
+
+        float ingredientMl = ingredientShelf.TargetContainer.GetLiquidAmountMl(ingredient);
+        float totalMl = ingredientShelf.TargetContainer.CurrentLiquidVolumeMl;
+        SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in serving glass.");
+
+        if (progressText != null)
+            progressText.text = $"Serving Glass {totalMl:0.0} ml";
+    }
+
+    private void StopPreviewPour(string reason)
+    {
+        if (!isPreviewPouring)
+            return;
+
+        isPreviewPouring = false;
+
+        IngredientData ingredient = ingredientShelf != null ? ingredientShelf.SelectedIngredient : null;
+        float ingredientMl = ingredientShelf != null && ingredientShelf.TargetContainer != null && ingredient != null
+            ? ingredientShelf.TargetContainer.GetLiquidAmountMl(ingredient)
+            : 0f;
+        float totalMl = ingredientShelf != null && ingredientShelf.TargetContainer != null
+            ? ingredientShelf.TargetContainer.CurrentLiquidVolumeMl
+            : 0f;
+
+        Debug.Log(
+            $"[Pour] Stop reason={reason} ingredient={(ingredient != null ? ingredient.ingredientId : "NULL")} " +
+            $"ingredientMl={ingredientMl:0.0} totalMl={totalMl:0.0}");
+    }
+
+    private void OnDisable()
+    {
+        StopPreviewPour("BuildMiniGame disabled");
     }
 
     private void SetLiquidHeight(float height)
@@ -290,6 +379,12 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void UpdateProgressText()
     {
         if (progressText == null) return;
+
+        if (state == BuildState.Preview && ingredientShelf != null && ingredientShelf.TargetContainer != null)
+        {
+            progressText.text = $"Serving Glass {ingredientShelf.TargetContainer.CurrentLiquidVolumeMl:0.0} ml";
+            return;
+        }
 
         float percent = maxFillHeight > 0f
             ? Mathf.Clamp01(currentFillHeight / maxFillHeight) * 100f

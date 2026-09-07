@@ -120,9 +120,10 @@ PlayerPrefs storage ownership is centralized without format migration.
 The independent red-team review identified the next material risk as
 player-facing gameplay proof rather than another architecture refactor. The
 current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
-Bartending 2.0**. It is future work at current HEAD; this plan update does not
-claim that the runtime minigames, recipe data, content, or assets have already
-been replaced.
+Bartending 2.0**. I0-A and I1 are now validated incremental runtime work; the
+remaining Phase I work is still future work. This does not claim that the
+prototype minigames, recipe data, content, or assets have already been broadly
+replaced.
 
 ## 4. Canonical Rebuild Roadmap
 
@@ -488,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: CURRENT NEXT PHASE / NOT IMPLEMENTED
+Status: IN PROGRESS — I0-A and I1 validated; I0-B and I2+ remain pending
 
 #### Purpose
 
@@ -539,6 +540,14 @@ Exit criterion:
 
 > A player can physically pour an ingredient into a valid container and the
 > recorded gameplay quantity matches what was actually poured.
+
+Current implementation note (I1): the Build proof uses a runtime Serving Glass
+whose liquid entries and total volume are stored in milliliters. Holding the
+pour input accumulates actual transferred volume, and a result-bound ounce
+conversion snapshot feeds the unchanged legacy recipe-matching boundary. The
+separate prototype Build score remains a temporary fallback until I4; no recipe
+asset migration, container-operation system, or technique replacement is
+claimed by I1.
 
 #### I2 — Amount Variants
 
