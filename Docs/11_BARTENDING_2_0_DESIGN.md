@@ -39,9 +39,11 @@ actual contents for the existing matching/result boundary. Build's detached
 target-zone/timing score is no longer active. I5 makes Stir the second migrated
 route: actual liquid is prepared in the Mixing Glass, explicit ice is required,
 mouse-angle input visibly controls the spoon, and an explicit Strain moves the
-actual liquid to the Serving Glass. Shake and Float otherwise remain
-prototype/legacy behavior until their replacements pass their own validation and
-reachability audits.
+actual liquid to the Serving Glass. I6 makes Shake the third migrated route:
+actual liquid is prepared in the Shaker, explicit ice is required, a bounded
+Left/Right rhythm visibly moves the Shaker, and an explicit Strain moves actual
+liquid to the Serving Glass. Float remains prototype/legacy behavior until its
+replacement passes validation and a reachability audit.
 
 ---
 
@@ -277,10 +279,11 @@ Glass while retaining source ice.
 
 I4 removes those temporary target/ice/transfer/Strain controls from the active
 Build route: Build now owns only direct Serving Glass preparation. I5 then
-adopts the Mixing Glass, explicit ice, and Strain operations for Stir. The
-underlying I3 container APIs remain available for later Shake work. I3 through
-I5 do not add container visuals, ice physics, capacity/overflow rules, recipe
-preparation sequence data, or Shake/Float technique gameplay.
+adopts the Mixing Glass, explicit ice, and Strain operations for Stir; I6
+adopts the Shaker, explicit ice, and Strain operations for Shake. I3's shared
+container APIs remain available for later Float work. I3 through I6 do not add
+container visuals, ice physics, capacity/overflow rules, recipe preparation
+sequence data, or Float technique gameplay.
 
 ---
 
@@ -525,6 +528,23 @@ true`, `repDelta = 1`; `Acceptable` to `success = true`, `repDelta = 0`; and
 `Poor` to `success = false`, `repDelta = 0`. Recipe matching remains a separate
 downstream judgement.
 
+### 10.3 I6 current implementation boundary
+
+Shake begins with the Shaker as its only direct preparation target. The player
+pours actual milliliter contents, explicitly adds ice, and then follows one
+bounded alternating Left/Right eight-note rhythm. A/Left Arrow and D/Right
+Arrow use time-based Perfect (`0.09s`) and Good (`0.20s`) windows against a
+fixed `0.5s` interval after a `0.6s` lead-in. Each input drives the Shaker in
+its selected direction. Every event is consumed once: a wrong direction is a
+Miss, expired events become one Miss, and off-beat/extra inputs earn no hit and
+count only as bounded input errors. The resulting correct-hit accuracy and
+input-error count produce `Good`, `Acceptable`, or `Poor` without inspecting
+expected recipe data. The player then explicitly Strains through the existing
+I3 operation. The Serving Glass snapshot is the only submitted composition.
+As in I5, `Good` maps to `success = true`, `repDelta = 1`; `Acceptable` to
+`success = true`, `repDelta = 0`; and `Poor` to `success = false`, `repDelta =
+0`. Recipe matching remains a separate downstream judgement.
+
 ---
 
 ## 11. Recipe and Preparation Data Direction
@@ -743,7 +763,7 @@ uses the following implementation progression:
 | I3 | Container Operations | Serving Glass, Mixing Glass, Shaker, AddIce, liquid transfer, and Strain can express intermediate preparation |
 | I4 | Build — validated | Direct Serving Glass preparation is manually completed and its actual contents enter the existing matcher/result flow without a detached Build score |
 | I5 | Stir — validated | Mixing Glass direct preparation, explicit ice, mouse-driven spoon motion, and explicit Strain produce a technique result distinct from recipe matching |
-| I6 | Shake Rhythm | Player timing visibly drives Shaker motion and creates a short Shake outcome |
+| I6 | Shake — validated | Shaker direct preparation, explicit ice, an eight-note alternating rhythm, visible input-driven motion, and explicit Strain produce a technique result distinct from recipe matching |
 | I7 | Float / Layering | Player can visibly preserve or destroy a layer through pour control |
 | I8 | Garnish | Minimum garnish action required by representative content |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
