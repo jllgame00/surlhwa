@@ -714,8 +714,11 @@ This set exists to answer:
 - Are Dash, TopUp, Strain, and Float needs represented correctly?
 - Does the recipe interaction remain fun?
 
-The actual cocktail list is deliberately not selected or finalized by this
-document. Do not add 30+ cocktails before this validation passes.
+I9A has now selected an official-IBA eight-cocktail recommendation in
+`Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. That audit is selection and
+capability evidence only: I9B recipe/content implementation, preparation-step
+authoring, and all catalog scale-up remain pending. Do not add 30+ cocktails
+before the selected representative validation passes.
 
 ### 12.2 Shared ingredient principle
 

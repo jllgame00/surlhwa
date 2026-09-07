@@ -720,6 +720,14 @@ progression, and final UI/art remain I9+ work.
 Validate approximately 6–8 real/classic cocktail recipes against the new
 preparation model.
 
+I9A, the official IBA representative-catalog audit, is complete. It selects
+Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, New York Sour,
+and Hanky Panky as the proposed eight-recipe validation set and records the
+official source facts, capability gaps, and owner decisions in
+`Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. I9B implementation remains
+pending: no real recipe/catalog assets, preparation schema, matcher, or
+progression changes are implied by the audit alone.
+
 Do not scale beyond representative validation yet.
 
 #### I10 — Ingredient Progression

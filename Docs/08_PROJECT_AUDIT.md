@@ -1141,3 +1141,11 @@ the liquid `BrewComposition` / `RecipeMatchService` contract, technique grade,
 and persistence. The temporary Lemon Twist, Cherry, and Olive choices are proof
 controls rather than an adopted catalog or unlock system. No I9 content,
 recipe-schema, matcher, or persistence implementation is implied.
+
+I9A is now complete as a documentation-only official IBA representative-catalog
+audit. It proposes eight recipes and records exact official recipe facts,
+current Bartending 2.0 capability coverage, data-authoring limitations, and
+owner decisions in `Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. I9B is still
+pending: no real RecipeData/IngredientData assets, preparation-sequence schema,
+runtime mechanics, matcher changes, or progression implementation have been
+added by I9A.
