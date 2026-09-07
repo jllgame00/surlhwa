@@ -123,8 +123,15 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnDestroy()
     {
+        ResetPreRequestDialogue();
+
         if (orderManager != null)
             orderManager.BartendingFlowFailed -= RestoreAfterBartendingFailure;
+    }
+
+    private void OnDisable()
+    {
+        ResetPreRequestDialogue();
     }
 
     private void LateUpdate()
@@ -214,10 +221,11 @@ public class InteractionUIController : MonoBehaviour
 
         SetCustomerWaitIndicatorVisible(customer, false);
 
+        ResetPreRequestDialogue();
+
         activeCustomer = null;
         hasMethodSelected = false;
         wantsEllipsisVisible = false;
-        ResetPreRequestDialogue();
         activeCustomerUsesForcedRoute = false;
         activeCustomerUsesFirstCustomerRoute = false;
         activeCustomerUsesSecondCustomerRoute = false;
@@ -349,6 +357,7 @@ public class InteractionUIController : MonoBehaviour
         activePreRequestLines = dialogue.onEnterLines;
         activePreRequestLineIndex = 0;
         isPreRequestDialogueActive = true;
+        activeCustomer.SetPatiencePausedForNarrativeDialogue(true);
         ShowDialogue(activePreRequestLines[activePreRequestLineIndex], true);
 
         Debug.Log(
@@ -406,6 +415,9 @@ public class InteractionUIController : MonoBehaviour
 
     private void ResetPreRequestDialogue()
     {
+        if (isPreRequestDialogueActive && activeCustomer != null)
+            activeCustomer.SetPatiencePausedForNarrativeDialogue(false);
+
         activePreRequestLines = null;
         activePreRequestLineIndex = 0;
         isPreRequestDialogueActive = false;

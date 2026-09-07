@@ -109,6 +109,7 @@ public class CustomerController : MonoBehaviour
     private ResultToastController resultToast;
     private bool usesPatience;
     private bool patienceTimerActive;
+    private bool patiencePausedForNarrativeDialogue;
     private float patienceDuration;
     private float patienceRemaining;
     
@@ -173,6 +174,22 @@ public class CustomerController : MonoBehaviour
     public void SetUsesPatience(bool value)
     {
         usesPatience = value;
+    }
+
+    /// <summary>
+    /// Pauses only the patience countdown while an explicit authored narrative
+    /// dialogue sequence is being read. The customer remains in the existing
+    /// waiting state and resumes the ordinary countdown when that sequence ends.
+    /// </summary>
+    public void SetPatiencePausedForNarrativeDialogue(bool value)
+    {
+        if (patiencePausedForNarrativeDialogue == value)
+            return;
+
+        patiencePausedForNarrativeDialogue = value;
+        Debug.Log(
+            $"[Customer] Patience {(value ? "paused" : "resumed")} for narrative dialogue -> {name}"
+        );
     }
 
     public void AssignSeat(SeatPoint seat)
@@ -382,6 +399,9 @@ public class CustomerController : MonoBehaviour
             return;
 
         if (bartendingFlowCoordinator != null && bartendingFlowCoordinator.IsBartendingActive)
+            return;
+
+        if (patiencePausedForNarrativeDialogue)
             return;
 
         patienceRemaining -= Time.deltaTime;
