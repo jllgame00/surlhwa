@@ -21,6 +21,7 @@ public sealed class BartendingLiquidEntry
 {
     public IngredientData Ingredient { get; }
     public float AmountMl { get; private set; }
+    public int DashCount { get; private set; }
 
     internal BartendingLiquidEntry(IngredientData ingredient, float amountMl)
     {
@@ -31,6 +32,12 @@ public sealed class BartendingLiquidEntry
     internal void SetAmountMl(float amountMl)
     {
         AmountMl = Mathf.Max(0f, amountMl);
+    }
+
+    internal void AddDash()
+    {
+        if (DashCount < int.MaxValue)
+            DashCount++;
     }
 }
 
@@ -139,6 +146,44 @@ public sealed class BartendingContainerState
     {
         BartendingLiquidEntry entry = FindEntry(ingredient);
         return entry != null ? entry.AmountMl : 0f;
+    }
+
+    /// <summary>
+    /// Adds one discrete Dash while recording its deterministic gameplay-ml
+    /// equivalent in the same authoritative liquid entry used by the legacy
+    /// composition bridge. The dash count is retained for player feedback and
+    /// future recipe instruction data; it is not a second quantity store.
+    /// </summary>
+    public bool TryAddDash(IngredientData ingredient, float millilitersPerDash, out int totalDashCount)
+    {
+        totalDashCount = GetDashCount(ingredient);
+
+        if (ingredient == null || !IsFinitePositive(millilitersPerDash))
+            return false;
+
+        // I1 does not enforce capacity, but reject an incomplete discrete dash
+        // if a future adopted container supplies one rather than recording a
+        // misleading full dash for a partial transfer.
+        if (CapacityMl > 0f && CurrentLiquidVolumeMl + millilitersPerDash > CapacityMl)
+            return false;
+
+        float transferredMl = AddLiquid(ingredient, millilitersPerDash);
+        if (!Mathf.Approximately(transferredMl, millilitersPerDash))
+            return false;
+
+        BartendingLiquidEntry entry = FindEntry(ingredient);
+        if (entry == null)
+            return false;
+
+        entry.AddDash();
+        totalDashCount = entry.DashCount;
+        return true;
+    }
+
+    public int GetDashCount(IngredientData ingredient)
+    {
+        BartendingLiquidEntry entry = FindEntry(ingredient);
+        return entry != null ? entry.DashCount : 0;
     }
 
     /// <summary>

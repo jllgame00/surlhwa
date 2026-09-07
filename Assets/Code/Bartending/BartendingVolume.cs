@@ -10,6 +10,12 @@ public static class BartendingVolume
 {
     public const float MillilitersPerFluidOunce = 29.57353f;
 
+    // Gameplay compatibility value for the first Dash proof. This is not a
+    // claim about a universal real-world dash size; later authored content may
+    // tune it through a narrow recipe/preparation seam without touching the
+    // legacy matcher.
+    public const float DefaultDashMilliliters = 1f;
+
     public static float OuncesToMilliliters(float ounces)
     {
         if (float.IsNaN(ounces) || float.IsInfinity(ounces))
@@ -24,5 +30,13 @@ public static class BartendingVolume
             return 0f;
 
         return Mathf.Max(0f, milliliters) / MillilitersPerFluidOunce;
+    }
+
+    public static float DashesToMilliliters(int dashCount, float millilitersPerDash = DefaultDashMilliliters)
+    {
+        if (dashCount <= 0 || float.IsNaN(millilitersPerDash) || float.IsInfinity(millilitersPerDash))
+            return 0f;
+
+        return dashCount * Mathf.Max(0f, millilitersPerDash);
     }
 }

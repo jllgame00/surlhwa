@@ -167,9 +167,10 @@ public class IngredientShelfController : MonoBehaviour
             if (entry == null || entry.Ingredient == null || entry.AmountMl <= 0f)
                 continue;
 
+            string dashText = entry.DashCount > 0 ? $" / {entry.DashCount} dash" : string.Empty;
             parts.Add(
                 $"{entry.Ingredient.displayName} {entry.AmountMl:0.0} ml " +
-                $"({BartendingVolume.MillilitersToOunces(entry.AmountMl):0.##} oz)");
+                $"({BartendingVolume.MillilitersToOunces(entry.AmountMl):0.##} oz){dashText}");
         }
 
         summaryText.text =
@@ -266,6 +267,29 @@ public class IngredientShelfController : MonoBehaviour
     public float PourSelectedIngredient(float amountMl)
     {
         return AddLiquidMl(selectedIngredient, amountMl);
+    }
+
+    /// <summary>
+    /// Executes one discrete Dash for the currently selected source ingredient.
+    /// Its ml compatibility amount and dash count both live in the target
+    /// container; this UI controller does not retain a duplicate result.
+    /// </summary>
+    public bool TryDashSelectedIngredient(out int totalDashCount)
+    {
+        totalDashCount = 0;
+
+        if (targetContainer == null || selectedIngredient == null)
+            return false;
+
+        bool added = targetContainer.TryAddDash(
+            selectedIngredient,
+            BartendingVolume.DashesToMilliliters(1),
+            out totalDashCount);
+
+        if (added)
+            RefreshContents();
+
+        return added;
     }
 
     private void RefreshContents()

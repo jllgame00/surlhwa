@@ -120,7 +120,7 @@ PlayerPrefs storage ownership is centralized without format migration.
 The independent red-team review identified the next material risk as
 player-facing gameplay proof rather than another architecture refactor. The
 current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
-Bartending 2.0**. I0-A and I1 are now validated incremental runtime work; the
+Bartending 2.0**. I0-A, I1, and I2 are now validated incremental runtime work; the
 remaining Phase I work is still future work. This does not claim that the
 prototype minigames, recipe data, content, or assets have already been broadly
 replaced.
@@ -489,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A and I1 validated; I0-B and I2+ remain pending
+Status: IN PROGRESS — I0-A, I1, and I2 validated; I0-B and I3+ remain pending
 
 #### Purpose
 
@@ -561,6 +561,16 @@ Exit criterion:
 
 > Representative fixed-volume, dash-based, and top-up ingredients can be
 > expressed without returning to the old fixed increment UI model.
+
+Current implementation note (I2): normal continuous Pour Core transfer remains
+the authority for arbitrary fixed milliliter amounts, including the 0.25 oz
+bridge. A discrete Dash records both one player action and the project gameplay
+compatibility amount of 1 ml in the same container entry; its retained dash
+count is player feedback/instruction data, not a duplicate composition store.
+TopUp currently accepts a runtime recipe-guidance target final volume and
+reports under-target, at-target, or over-target state while the player still
+pours the liquid manually. No recipe asset/schema migration, automatic fill,
+capacity simulation, or I3 container operation is claimed by I2.
 
 #### I3 — Container Operations
 

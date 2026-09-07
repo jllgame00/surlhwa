@@ -59,6 +59,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private BrewComposition currentBrewComposition;
     private bool isPreviewPouring;
 
+    // I2 runtime guidance only. Future recipe preparation data may supply this
+    // instruction, but a TopUp never creates liquid by itself.
+    private BartendingTopUpGuidance topUpGuidance;
+
     public void SetRequestDisplayTitle(string displayTitle)
     {
         requestDisplayTitle = displayTitle;
@@ -75,6 +79,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         currentBrewComposition = null;
         isPreviewPouring = false;
+        topUpGuidance = null;
 
         if (ingredientShelf == null)
             throw new InvalidOperationException("[BuildMiniGame] IngredientShelfController is required.");
@@ -117,7 +122,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "Select an ingredient, hold SPACE to pour, then start.";
+            startHintText.text = "Select an ingredient, hold SPACE to pour, press D for one dash, then start.";
         }
 
         if (startButton != null)
@@ -128,7 +133,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         }
 
         UpdateProgressText();
-        SetHint("Select an ingredient, then hold SPACE to pour into the serving glass.");
+        SetHint("Select an ingredient, then hold SPACE to pour into the serving glass. Press D for one dash.");
 
         Debug.Log(
             $"[BuildMiniGame] Preview ready / " +
@@ -302,9 +307,16 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            TryDispenseDash();
+            return;
+        }
+
         if (!Input.GetKey(KeyCode.Space))
         {
             StopPreviewPour("input released");
+            ShowTopUpGuidance(ingredientShelf.SelectedIngredient);
             return;
         }
 
@@ -334,10 +346,96 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         float ingredientMl = ingredientShelf.TargetContainer.GetLiquidAmountMl(ingredient);
         float totalMl = ingredientShelf.TargetContainer.CurrentLiquidVolumeMl;
-        SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in serving glass.");
+        if (!ShowTopUpGuidance(ingredient))
+        {
+            SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in serving glass.");
+
+            if (progressText != null)
+                progressText.text = $"Serving Glass {totalMl:0.0} ml";
+        }
+    }
+
+    /// <summary>
+    /// Narrow I2 seam for future recipe instruction data and runtime validation.
+    /// It supplies player guidance only; liquid is still added only while the
+    /// player holds the existing Pour Core input.
+    /// </summary>
+    public bool ConfigureTopUpGuidance(IngredientData ingredient, float targetFinalVolumeMl)
+    {
+        BartendingTopUpGuidance guidance = new BartendingTopUpGuidance(ingredient, targetFinalVolumeMl);
+        if (!guidance.IsValid)
+        {
+            Debug.LogWarning("[BuildMiniGame] Ignored invalid TopUp guidance.");
+            return false;
+        }
+
+        topUpGuidance = guidance;
+        ShowTopUpGuidance(ingredientShelf != null ? ingredientShelf.SelectedIngredient : null);
+        return true;
+    }
+
+    public void ClearTopUpGuidance()
+    {
+        topUpGuidance = null;
+    }
+
+    public float GetTopUpSignedRemainingMl()
+    {
+        float currentVolumeMl = ingredientShelf != null && ingredientShelf.TargetContainer != null
+            ? ingredientShelf.TargetContainer.CurrentLiquidVolumeMl
+            : 0f;
+
+        return topUpGuidance != null ? topUpGuidance.GetSignedRemainingMl(currentVolumeMl) : 0f;
+    }
+
+    private void TryDispenseDash()
+    {
+        if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
+        {
+            SetHint("Select an ingredient before adding a dash.");
+            return;
+        }
+
+        if (!ingredientShelf.TryDashSelectedIngredient(out int totalDashCount))
+        {
+            SetHint("That dash could not be added to the serving glass.");
+            return;
+        }
+
+        IngredientData ingredient = ingredientShelf.SelectedIngredient;
+        float ingredientMl = ingredientShelf.TargetContainer.GetLiquidAmountMl(ingredient);
+        SetHint($"{ingredient.displayName} — {totalDashCount} dash ({ingredientMl:0.0} ml).");
 
         if (progressText != null)
-            progressText.text = $"Serving Glass {totalMl:0.0} ml";
+            progressText.text = $"Serving Glass {ingredientShelf.TargetContainer.CurrentLiquidVolumeMl:0.0} ml";
+
+        Debug.Log(
+            $"[Dash] Ingredient={ingredient.ingredientId} count={totalDashCount} " +
+            $"compatibilityMl={ingredientMl:0.###}");
+    }
+
+    private bool ShowTopUpGuidance(IngredientData selectedIngredient)
+    {
+        if (topUpGuidance == null || !topUpGuidance.AppliesTo(selectedIngredient) ||
+            ingredientShelf == null || ingredientShelf.TargetContainer == null)
+            return false;
+
+        float currentMl = ingredientShelf.TargetContainer.CurrentLiquidVolumeMl;
+        float signedRemainingMl = topUpGuidance.GetSignedRemainingMl(currentMl);
+        string status = signedRemainingMl > 0f
+            ? $"{signedRemainingMl:0.0} ml remaining"
+            : signedRemainingMl < 0f
+                ? $"{-signedRemainingMl:0.0} ml over"
+                : "at target";
+
+        SetHint(
+            $"Top up {selectedIngredient.displayName}: {currentMl:0.0} / " +
+            $"{topUpGuidance.TargetFinalVolumeMl:0.0} ml ({status}).");
+
+        if (progressText != null)
+            progressText.text = $"Top Up {currentMl:0.0} / {topUpGuidance.TargetFinalVolumeMl:0.0} ml";
+
+        return true;
     }
 
     private void StopPreviewPour(string reason)

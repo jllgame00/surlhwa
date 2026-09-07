@@ -25,12 +25,14 @@ It is intentionally more detailed than 01_GAME_DESIGN.md.
   current-state notes; it is not this design specification.
 
 This document does not claim that the current runtime has already been broadly
-replaced. I1 validates only the first Pour Core proof: Build preparation can
+replaced. I1 validates the first Pour Core proof: Build preparation can
 hold-to-pour into a runtime Serving Glass whose actual liquid amounts are held
-in milliliters and bridged to the existing ounce-authored matcher. Existing
-Stir, Shake, Build scoring, and Float implementations otherwise remain
-prototype/legacy behavior until their replacements pass their own validation
-and reachability audits.
+in milliliters and bridged to the existing ounce-authored matcher. I2 extends
+that same state with arbitrary fixed amounts, a discrete Dash compatibility
+amount/count, and manual TopUp target guidance; recipe data and the matcher
+remain unchanged. Existing Stir, Shake, Build scoring, and Float implementations
+otherwise remain prototype/legacy behavior until their replacements pass their
+own validation and reachability audits.
 
 ---
 
@@ -348,9 +350,11 @@ Dash is for ingredients such as bitters.
 - A simple initial model may use 1 input = 1 dash.
 - It should not force the player to manually pour microscopic quantities.
 
-The exact ml-equivalent/recipe representation is deferred to representative
-validation. The requirement is that Dash is expressible without pretending it
-is a normal long pour.
+I2 currently uses one project gameplay compatibility amount of 1 ml per dash
+at the container-to-legacy bridge. It is not a universal real-world claim, and
+the serialized recipe representation remains deferred to representative
+validation. Dash is therefore expressible without pretending it is a normal
+long pour.
 
 ### 9.3 TopUp
 
@@ -358,7 +362,10 @@ TopUp uses the common Pour foundation, but its expected completion condition
 is filling the drink/glass appropriately rather than hitting only a
 conventional fixed measured amount.
 
-Possible future representation includes:
+I2 proves the first target-final-volume form: a runtime guidance instruction
+reports current liquid volume against a target, while the player still transfers
+the liquid through Pour Core. It neither auto-fills the target nor introduces a
+glass-capacity rule. Possible later representations include:
 
 - target fill amount;
 - target fill ratio;
