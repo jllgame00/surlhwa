@@ -6,6 +6,11 @@ public static class BusinessDayPersistence
 {
     private const string CurrentDayKey = "currentDay";
 
+    public static bool HasSavedCurrentDay()
+    {
+        return SurlhwaPlayerPrefsStore.HasKey(CurrentDayKey);
+    }
+
     public static int LoadCurrentDay(int defaultDay)
     {
         return SurlhwaPlayerPrefsStore.GetInt(CurrentDayKey, defaultDay);

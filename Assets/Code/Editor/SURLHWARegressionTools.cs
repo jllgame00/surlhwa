@@ -3,18 +3,14 @@ using UnityEngine;
 
 public static class SURLHWARegressionTools
 {
-    private const string CurrentDayKey = "currentDay";
-    private const string LittlePrinceFirstVisitCompletedKey = "littlePrinceFirstVisitCompleted";
-
     [MenuItem("SURLHWA/Rebuild Tests/Prepare Day 1 Tutorial")]
     private static void PrepareDay1Tutorial()
     {
         if (!CanModifyProgress())
             return;
 
-        PlayerPrefs.SetInt(CurrentDayKey, 1);
-        PlayerPrefs.SetInt(LittlePrinceFirstVisitCompletedKey, 0);
-        PlayerPrefs.Save();
+        BusinessDayPersistence.SaveCurrentDay(1);
+        LittlePrinceVisitPersistence.SetFirstVisitCompleted(false);
 
         Debug.Log(
             "[SURLHWA Regression] Prepared Day 1 Tutorial test.\n" +
@@ -29,9 +25,8 @@ public static class SURLHWARegressionTools
         if (!CanModifyProgress())
             return;
 
-        PlayerPrefs.SetInt(CurrentDayKey, 2);
-        PlayerPrefs.SetInt(LittlePrinceFirstVisitCompletedKey, 0);
-        PlayerPrefs.Save();
+        BusinessDayPersistence.SaveCurrentDay(2);
+        LittlePrinceVisitPersistence.SetFirstVisitCompleted(false);
 
         Debug.Log(
             "[SURLHWA Regression] Prepared Day 2 Little Prince test.\n" +
@@ -46,11 +41,11 @@ public static class SURLHWARegressionTools
         if (!CanModifyProgress())
             return;
 
-        bool hasCurrentDay = PlayerPrefs.HasKey(CurrentDayKey);
-        bool hasLittlePrinceCompletion = PlayerPrefs.HasKey(LittlePrinceFirstVisitCompletedKey);
-        int currentDay = PlayerPrefs.GetInt(CurrentDayKey, 1);
+        bool hasCurrentDay = BusinessDayPersistence.HasSavedCurrentDay();
+        bool hasLittlePrinceCompletion = LittlePrinceVisitPersistence.HasSavedFirstVisitState();
+        int currentDay = BusinessDayPersistence.LoadCurrentDay(1);
         bool littlePrinceFirstVisitCompleted =
-            PlayerPrefs.GetInt(LittlePrinceFirstVisitCompletedKey, 0) == 1;
+            LittlePrinceVisitPersistence.IsFirstVisitCompleted();
 
         Debug.Log(
             "[SURLHWA Regression State]\n" +

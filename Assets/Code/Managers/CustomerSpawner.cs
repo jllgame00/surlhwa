@@ -36,7 +36,6 @@ public class CustomerSpawner : MonoBehaviour
     private GameObject lastSpawnedPrefab;
     private bool activeCustomerIsLittlePrinceFirstVisit;
     private Coroutine spawnRoutine;
-    private const string LittlePrinceFirstVisitCompletedKey = "littlePrinceFirstVisitCompleted";
 
     private void Awake()
     {
@@ -170,8 +169,7 @@ public class CustomerSpawner : MonoBehaviour
         {
             if (activeCustomerIsLittlePrinceFirstVisit)
             {
-                PlayerPrefs.SetInt(LittlePrinceFirstVisitCompletedKey, 1);
-                PlayerPrefs.Save();
+                LittlePrinceVisitPersistence.MarkFirstVisitCompleted();
             }
 
             activeCustomer = null;
@@ -297,7 +295,7 @@ public class CustomerSpawner : MonoBehaviour
         return businessDayManager != null
             && businessDayManager.CurrentDay == 2
             && spawnedCount == 0
-            && PlayerPrefs.GetInt(LittlePrinceFirstVisitCompletedKey, 0) == 0
+            && !LittlePrinceVisitPersistence.IsFirstVisitCompleted()
             && littlePrincePrefab != null;
     }
 
