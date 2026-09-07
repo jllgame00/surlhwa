@@ -705,8 +705,15 @@ presentation trees is not required to establish one preparation authority.
 
 #### I8 — Garnish
 
-Add only the minimum garnish interaction needed by the representative cocktail
-set.
+I8 is validated as the final bounded Bartending 2.0 preparation action before
+representative content validation. Once actual liquid reaches the Serving Glass,
+the player may optionally choose one actual garnish identity and one bounded
+placement (`Rim`, `InGlass`, or `Surface`) before manually serving the drink.
+The Serving Glass owns one runtime garnish state; a later selection replaces it,
+and clear/no-garnish submission remains valid. Garnish is deliberately
+non-liquid: it does not enter `BrewComposition`, alter `RecipeMatchService`, or
+modify technique quality. Expected recipe-garnish comparison, inventory,
+progression, and final UI/art remain I9+ work.
 
 #### I9 — Representative Real Cocktail Catalog
 

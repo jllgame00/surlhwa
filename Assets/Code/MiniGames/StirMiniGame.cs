@@ -14,6 +14,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         Preparing,
         Stirring,
         AwaitingStrain,
+        AwaitingGarnish,
         Result
     }
 
@@ -64,6 +65,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     private StirTechniqueTracker techniqueTracker;
     private StirGrade completedGrade;
     private bool isPouring;
+    private ServingGlassGarnishController garnishController;
 
     public float TotalStirRotationDegrees => techniqueTracker != null
         ? techniqueTracker.TotalRotationDegrees
@@ -96,6 +98,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         // Stir owns direct preparation in the Mixing Glass. The I3 preparation
         // state still creates the Serving Glass for the later explicit Strain.
         ingredientShelf.Initialize(MiniGameType.Stir, BartendingContainerType.MixingGlass);
+        ConfigureGarnishController();
 
         state = State.Preparing;
         techniqueTracker = new StirTechniqueTracker(maximumAngularJumpDeg);
@@ -245,12 +248,12 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
-        MiniGameResult result = CreateTechniqueResult(composition);
-        state = State.Result;
+        state = State.AwaitingGarnish;
 
-        SetPrimaryAction(null, string.Empty, false);
-        SetHint("Stir complete.");
+        ingredientShelf.SetVisible(false);
+        garnishController?.BeginSelection();
+        SetPrimaryAction(ServeStir, "Serve Stir", true);
+        SetHint("Stirred drink strained. Garnish is optional; choose one or serve the drink as made.");
         UpdateProgressText();
 
         BartendingContainerState mixingGlass = GetMixingGlass();
@@ -258,7 +261,48 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
             $"[Stir] Strain MixingGlass -> ServingGlass volumeMl={transferredMl:0.###} " +
             $"iceRetained={(mixingGlass != null && mixingGlass.HasIce)}");
 
+    }
+
+    /// <summary>
+    /// Final manual confirmation after the optional I8 garnish step. The
+    /// technique result remains independent from the garnish state.
+    /// </summary>
+    public void ServeStir()
+    {
+        if (state != State.AwaitingGarnish)
+        {
+            Debug.LogWarning($"[Stir] Serve ignored. state={state}");
+            return;
+        }
+
+        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
+        MiniGameResult result = CreateTechniqueResult(composition);
+        result.garnish = ingredientShelf.ServingGlass != null
+            ? ingredientShelf.ServingGlass.Garnish
+            : null;
+        state = State.Result;
+        garnishController?.EndSelection();
+
+        SetPrimaryAction(null, string.Empty, false);
+        SetHint("Stir complete.");
+        UpdateProgressText();
+
+        Debug.Log($"[Stir] Serve garnish={(result.garnish != null ? result.garnish.DisplayName + "/" + result.garnish.Placement : "none")}");
         onDone?.Invoke(result);
+    }
+
+    public bool TryApplyGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
+    {
+        return state == State.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.TryApplyGarnish(garnishId, placement);
+    }
+
+    public bool ClearGarnish()
+    {
+        return state == State.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.ClearGarnish();
     }
 
     /// <summary>
@@ -523,6 +567,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
                 progressText.text = $"Mixing Glass {mixingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml → ready to strain";
                 break;
 
+            case State.AwaitingGarnish:
+                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish optional";
+                break;
+
             case State.Result:
                 progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml";
                 break;
@@ -564,6 +612,21 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     private void OnDisable()
     {
         StopDirectPour("StirMiniGame disabled");
+    }
+
+    private void ConfigureGarnishController()
+    {
+        garnishController = GetComponent<ServingGlassGarnishController>();
+        if (garnishController == null)
+            garnishController = gameObject.AddComponent<ServingGlassGarnishController>();
+
+        // Stir's current prefab has only a Mixing Glass visual. I8 creates a
+        // labelled runtime Serving Glass placeholder instead of decorating the
+        // Mixing Glass after the actual liquid has been strained out of it.
+        garnishController.Initialize(
+            ingredientShelf != null ? ingredientShelf.ServingGlass : null,
+            null,
+            hintText);
     }
 
     private void AutoBindIfMissing()

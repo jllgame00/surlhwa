@@ -49,12 +49,18 @@ public sealed class BartendingLiquidEntry
 public sealed class BartendingContainerState
 {
     private readonly List<BartendingLiquidEntry> liquidEntries = new List<BartendingLiquidEntry>();
+    private BartendingGarnishState garnish;
 
     public BartendingContainerType ContainerType { get; }
     public float CapacityMl { get; }
     public float CurrentLiquidVolumeMl { get; private set; }
     public bool HasIce { get; private set; }
     public IReadOnlyList<BartendingLiquidEntry> LiquidEntries => liquidEntries;
+    /// <summary>
+    /// I8's optional, non-liquid final presentation state. Only a Serving Glass
+    /// may own a garnish; the state is intentionally absent from composition.
+    /// </summary>
+    public BartendingGarnishState Garnish => garnish;
 
     public BartendingContainerState(BartendingContainerType containerType, float capacityMl = 0f)
     {
@@ -196,6 +202,34 @@ public sealed class BartendingContainerState
             return false;
 
         HasIce = true;
+        return true;
+    }
+
+    /// <summary>
+    /// Applies one garnish to the actual final serving container. Applying a
+    /// later garnish intentionally replaces the earlier choice; this is a
+    /// correction affordance, not a multi-decoration system.
+    /// </summary>
+    public bool TryApplyGarnish(
+        BartendingGarnishId garnishId,
+        BartendingGarnishPlacement placement)
+    {
+        if (ContainerType != BartendingContainerType.ServingGlass ||
+            CurrentLiquidVolumeMl <= 0f ||
+            !BartendingGarnishState.IsValid(garnishId) ||
+            !BartendingGarnishState.IsValid(placement))
+            return false;
+
+        garnish = new BartendingGarnishState(garnishId, placement);
+        return true;
+    }
+
+    public bool ClearGarnish()
+    {
+        if (ContainerType != BartendingContainerType.ServingGlass || garnish == null)
+            return false;
+
+        garnish = null;
         return true;
     }
 

@@ -12,6 +12,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     public enum BuildState
     {
         Preparing,
+        AwaitingGarnish,
         Result
     }
 
@@ -35,6 +36,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private Action<MiniGameResult> onDone;
     private string requestDisplayTitle;
     private bool isPouring;
+    private ServingGlassGarnishController garnishController;
 
     // I2 runtime guidance only. It never inserts liquid or completes Build.
     private BartendingTopUpGuidance topUpGuidance;
@@ -61,6 +63,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         // target is the final Serving Glass. I3's other container APIs remain
         // available for later technique routes but are not Build controls.
         ingredientShelf.Initialize(MiniGameType.Build, BartendingContainerType.ServingGlass);
+        ConfigureGarnishController();
 
         state = BuildState.Preparing;
         isPouring = false;
@@ -75,7 +78,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "Build directly in the Serving Glass. Press Complete Build when ready.";
+            startHintText.text = "Build directly in the Serving Glass. Finish Build when the liquid is ready.";
         }
 
         if (startButton != null)
@@ -83,7 +86,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             startButton.gameObject.SetActive(true);
             startButton.onClick.RemoveAllListeners();
             startButton.onClick.AddListener(CompleteBuild);
-            SetCompleteButtonLabel();
+            SetPrimaryActionLabel("Finish Build");
         }
 
         UpdateProgressText();
@@ -95,8 +98,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     }
 
     /// <summary>
-    /// The player, not recipe expectation data, chooses when preparation ends.
-    /// The captured composition is the actual Serving Glass snapshot.
+    /// The player, not recipe expectation data, chooses when liquid preparation
+    /// ends. I8 then gives the player one optional non-liquid garnish step
+    /// before final submission.
     /// </summary>
     public void CompleteBuild()
     {
@@ -113,26 +117,54 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        StopDirectPour("Build completed");
-        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
-        state = BuildState.Result;
+        StopDirectPour("Build liquid preparation finished");
+        state = BuildState.AwaitingGarnish;
 
         if (resultLabel != null)
-            resultLabel.text = "Complete";
+            resultLabel.text = "Liquid Ready";
 
         if (startHintText != null)
             startHintText.gameObject.SetActive(false);
 
-        if (startButton != null)
-            startButton.gameObject.SetActive(false);
-
         ingredientShelf.SetVisible(false);
+        garnishController?.BeginSelection();
+        SetPrimaryAction(ServeBuild, "Serve Build", true);
+        SetHint("Serving Glass ready. Garnish is optional; choose one or serve the drink as made.");
+        UpdateProgressText();
+
+        Debug.Log($"[BuildMiniGame] Liquid preparation ready / ServingMl={ingredientShelf.ServingGlass.CurrentLiquidVolumeMl:0.###}");
+    }
+
+    /// <summary>
+    /// Final manual confirmation after the optional garnish decision. The
+    /// Serving Glass remains the only source of both liquid and garnish truth.
+    /// </summary>
+    public void ServeBuild()
+    {
+        if (state != BuildState.AwaitingGarnish)
+        {
+            Debug.LogWarning($"[BuildMiniGame] Serve ignored. state={state}");
+            return;
+        }
+
+        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
+        BartendingGarnishState garnish = ingredientShelf.ServingGlass != null
+            ? ingredientShelf.ServingGlass.Garnish
+            : null;
+        state = BuildState.Result;
+        garnishController?.EndSelection();
+
+        if (resultLabel != null)
+            resultLabel.text = "Complete";
+
+        SetPrimaryAction(null, string.Empty, false);
 
         Debug.Log(
             $"[BuildMiniGame] Direct Build complete / " +
             $"Method={composition.method} / " +
             $"Count={(composition.ingredients != null ? composition.ingredients.Length : 0)} / " +
-            $"ServingMl={ingredientShelf.ServingGlass.CurrentLiquidVolumeMl:0.###}");
+            $"ServingMl={ingredientShelf.ServingGlass.CurrentLiquidVolumeMl:0.###} / " +
+            $"Garnish={(garnish != null ? garnish.DisplayName + "/" + garnish.Placement : "none")}");
 
         // The shared result contract currently has no distinct
         // TechniqueCompleted state. success therefore means the player
@@ -143,8 +175,23 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             success = true,
             repDelta = 0,
             grade = "Complete",
-            brewedComposition = composition
+            brewedComposition = composition,
+            garnish = garnish
         });
+    }
+
+    public bool TryApplyGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
+    {
+        return state == BuildState.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.TryApplyGarnish(garnishId, placement);
+    }
+
+    public bool ClearGarnish()
+    {
+        return state == BuildState.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.ClearGarnish();
     }
 
     private void Update()
@@ -326,14 +373,25 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         progressText.text = $"Serving Glass {servingGlass.CurrentLiquidVolumeMl:0.0} ml{iceText}";
     }
 
-    private void SetCompleteButtonLabel()
+    private void SetPrimaryAction(Action action, string label, bool visible)
     {
-        TMP_Text buttonText = startButton != null
-            ? startButton.GetComponentInChildren<TMP_Text>(true)
-            : null;
+        if (startButton == null)
+            return;
+
+        startButton.onClick.RemoveAllListeners();
+        if (action != null)
+            startButton.onClick.AddListener(() => action());
+
+        startButton.gameObject.SetActive(visible);
+        SetPrimaryActionLabel(label);
+    }
+
+    private void SetPrimaryActionLabel(string label)
+    {
+        TMP_Text buttonText = startButton != null ? startButton.GetComponentInChildren<TMP_Text>(true) : null;
 
         if (buttonText != null)
-            buttonText.text = "Complete Build";
+            buttonText.text = label;
     }
 
     // The prefab retains the old score-gauge hierarchy while Stir, Shake, and
@@ -362,6 +420,19 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void OnDisable()
     {
         StopDirectPour("BuildMiniGame disabled");
+    }
+
+    private void ConfigureGarnishController()
+    {
+        garnishController = GetComponent<ServingGlassGarnishController>();
+        if (garnishController == null)
+            garnishController = gameObject.AddComponent<ServingGlassGarnishController>();
+
+        RectTransform servingGlassVisual = transform.Find("UI/GlassImage")?.GetComponent<RectTransform>();
+        garnishController.Initialize(
+            ingredientShelf != null ? ingredientShelf.ServingGlass : null,
+            servingGlassVisual,
+            hintText);
     }
 
     private void AutoBindIfMissing()

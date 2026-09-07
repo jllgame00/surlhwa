@@ -510,6 +510,39 @@ simple—such as click or drag/drop—when a representative recipe needs it.
 
 Do not create an unnecessary garnish precision minigame.
 
+#### I8 current implementation boundary
+
+I8 implements the minimum discrete final-preparation proof. Once actual liquid
+has reached the Serving Glass, the player may choose one garnish identity,
+choose `Rim`, `InGlass`, or `Surface`, apply or replace that choice, clear it,
+or leave no garnish before manual serve.
+
+```text
+Serving Glass with actual liquid
+→ choose garnish identity
+→ choose Rim / InGlass / Surface
+→ apply, replace, clear, or leave absent
+→ manually serve
+```
+
+`BartendingContainerState` owns one optional, runtime-only
+`BartendingGarnishState` only for a Serving Glass. It is deliberately
+non-liquid: it does not enter `BrewComposition`, change canonical milliliter
+contents, alter technique quality, or affect the unchanged `RecipeMatchService`.
+`MiniGameResult` carries a result-bound snapshot for later I9 preparation
+evaluation without reconstructing the player's choice.
+
+The current proof controls expose Lemon Twist, Cherry, and Olive plus the three
+placements. They are not a final garnish catalog, inventory, unlock model, or
+recipe requirement. The temporary UI renders from the same runtime state: it
+uses an existing glass visual when present and a labelled runtime Serving Glass
+placeholder where a Stir or Shake prefab has only a source-container visual.
+
+Expected garnish validation belongs to I9 preparation-step authoring. Salt or
+sugar rims are not garnish placement, and peel expression, multi-object
+garnishes, flaming, cutting, and other presentation mechanics remain deferred
+until adopted content proves a need.
+
 ---
 
 ## 10. Method Identities
@@ -808,7 +841,7 @@ uses the following implementation progression:
 | I6 | Shake — validated | Shaker direct preparation, explicit ice, an eight-note alternating rhythm, visible input-driven motion, and explicit Strain produce a technique result distinct from recipe matching |
 | I7 | Float / Layering — validated | Ordered actual Serving Glass additions support layered shots and final floats; each later layer has visible Clean/Partial/Mixed boundary quality while composition remains separate |
 | I7.5 | Legacy Bartending Cleanup — validated | Removes the unreachable fixed-increment Jigger/session/factory runtime path; inactive legacy gauge and target-zone prefab visuals remain deferred asset cleanup |
-| I8 | Garnish | Minimum garnish action required by representative content |
+| I8 | Garnish — validated | One optional actual garnish identity and bounded Serving Glass placement is recorded separately from liquid composition and technique quality before manual serve |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
 | I10 | Ingredient Progression | Staged availability expands recipe space after catalog proof |
 | I11 | Guide / Discovery | Unknown, partially-known, and known learning path works from fresh progress |

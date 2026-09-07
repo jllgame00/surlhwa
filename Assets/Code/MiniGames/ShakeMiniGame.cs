@@ -30,6 +30,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         Preparing,
         Rhythm,
         AwaitingStrain,
+        AwaitingGarnish,
         Result
     }
 
@@ -86,6 +87,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     private int missCount;
     private int wrongDirectionCount;
     private int extraInputCount;
+    private ServingGlassGarnishController garnishController;
 
     public int NoteCount => Mathf.Max(1, defaultPatternNoteCount);
     public int PerfectHitCount => perfectHitCount;
@@ -110,6 +112,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         // Shake owns direct preparation in the Shaker. I3's preparation state
         // still creates the Serving Glass for the later explicit Strain.
         ingredientShelf.Initialize(MiniGameType.Shake, BartendingContainerType.Shaker);
+        ConfigureGarnishController();
 
         state = State.Preparing;
         isPouring = false;
@@ -303,12 +306,12 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             return;
         }
 
-        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
-        MiniGameResult result = CreateTechniqueResult(composition);
-        state = State.Result;
+        state = State.AwaitingGarnish;
 
-        SetPrimaryAction(null, string.Empty, false);
-        SetHint("Shake complete.");
+        ingredientShelf.SetVisible(false);
+        garnishController?.BeginSelection();
+        SetPrimaryAction(ServeShake, "Serve Shake", true);
+        SetHint("Shaken drink strained. Garnish is optional; choose one or serve the drink as made.");
         UpdateProgressText();
 
         BartendingContainerState shakerState = GetShaker();
@@ -316,7 +319,48 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             $"[Shake] Strain Shaker -> ServingGlass volumeMl={transferredMl:0.###} " +
             $"iceRetained={(shakerState != null && shakerState.HasIce)}");
 
+    }
+
+    /// <summary>
+    /// Final manual confirmation after the optional I8 garnish step. Rhythm
+    /// quality remains the existing technique result and is not recalculated.
+    /// </summary>
+    public void ServeShake()
+    {
+        if (state != State.AwaitingGarnish)
+        {
+            Debug.LogWarning($"[Shake] Serve ignored. state={state}");
+            return;
+        }
+
+        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
+        MiniGameResult result = CreateTechniqueResult(composition);
+        result.garnish = ingredientShelf.ServingGlass != null
+            ? ingredientShelf.ServingGlass.Garnish
+            : null;
+        state = State.Result;
+        garnishController?.EndSelection();
+
+        SetPrimaryAction(null, string.Empty, false);
+        SetHint("Shake complete.");
+        UpdateProgressText();
+
+        Debug.Log($"[Shake] Serve garnish={(result.garnish != null ? result.garnish.DisplayName + "/" + result.garnish.Placement : "none")}");
         onDone?.Invoke(result);
+    }
+
+    public bool TryApplyGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
+    {
+        return state == State.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.TryApplyGarnish(garnishId, placement);
+    }
+
+    public bool ClearGarnish()
+    {
+        return state == State.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.ClearGarnish();
     }
 
     private void UpdatePreparationInput()
@@ -610,6 +654,10 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
                     $"{shakerState?.CurrentLiquidVolumeMl ?? 0f:0.0} ml ready to strain";
                 break;
 
+            case State.AwaitingGarnish:
+                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish optional";
+                break;
+
             case State.Result:
                 progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml";
                 break;
@@ -670,6 +718,21 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     {
         StopDirectPour("ShakeMiniGame disabled");
         ResetShakerToOrigin();
+    }
+
+    private void ConfigureGarnishController()
+    {
+        garnishController = GetComponent<ServingGlassGarnishController>();
+        if (garnishController == null)
+            garnishController = gameObject.AddComponent<ServingGlassGarnishController>();
+
+        // The current Shake prefab contains a Shaker but no final-glass visual.
+        // Use I8's clearly labelled runtime Serving Glass placeholder rather
+        // than showing a strained drink's garnish on the source Shaker.
+        garnishController.Initialize(
+            ingredientShelf != null ? ingredientShelf.ServingGlass : null,
+            null,
+            hintText);
     }
 
     private void AutoBindIfMissing()

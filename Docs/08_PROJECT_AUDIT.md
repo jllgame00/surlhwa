@@ -1131,3 +1131,13 @@ order, so order scoring is deliberately deferred to I9. No broader Bartending
 2.0 content implementation is implied. See
 `Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
 `Docs/05_REBUILD_PLAN.md`.
+
+I8 is now validated: the Serving Glass records one optional runtime garnish
+identity and bounded placement (`Rim`, `InGlass`, or `Surface`) after actual
+liquid preparation. The shared proof UI permits selection, replacement, clear,
+and no-garnish submission, and renders from that same state. Garnish is carried
+as a result-bound snapshot for later preparation evaluation but remains outside
+the liquid `BrewComposition` / `RecipeMatchService` contract, technique grade,
+and persistence. The temporary Lemon Twist, Cherry, and Olive choices are proof
+controls rather than an adopted catalog or unlock system. No I9 content,
+recipe-schema, matcher, or persistence implementation is implied.

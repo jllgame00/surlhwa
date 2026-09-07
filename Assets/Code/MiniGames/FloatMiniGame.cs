@@ -21,6 +21,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private enum State
     {
         Preparing,
+        AwaitingGarnish,
         Result
     }
 
@@ -78,6 +79,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private float activeLayerAggressiveDuration;
     private float activeLayerTransferredMl;
     private Vector2 spoonStartPosition;
+    private ServingGlassGarnishController garnishController;
 
     public BartendingLayeredDrinkState LayeredDrinkState => layeredDrinkState;
     public int RenderedLayerCount => layerVisuals.Count;
@@ -101,6 +103,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         // I7 always prepares in the actual Serving Glass.
         ingredientShelf.Initialize(MiniGameType.Float, BartendingContainerType.ServingGlass);
+        ConfigureGarnishController();
 
         state = State.Preparing;
         layeredDrinkState = new BartendingLayeredDrinkState();
@@ -308,24 +311,66 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
         completedGrade = EvaluateTechnique();
-        state = State.Result;
+        state = State.AwaitingGarnish;
 
         if (resultLabel != null)
             resultLabel.text = completedGrade.ToString();
+
+        ingredientShelf.SetVisible(false);
+        garnishController?.BeginSelection();
+        SetPrimaryAction(ServeFloat, "Serve Float", true);
+        SetHint("Float layers complete. Garnish is optional; choose one or serve the drink as made.");
+        UpdateProgressText();
+
+        BartendingContainerState servingGlass = GetServingGlass();
+        Debug.Log("[Float] Layers ready layers=" + layeredDrinkState.Layers.Count +
+                  " boundaries=" + layeredDrinkState.Boundaries.Count +
+                  " grade=" + completedGrade +
+                  " servingMl=" + (servingGlass != null ? servingGlass.CurrentLiquidVolumeMl : 0f).ToString("0.###"));
+    }
+
+    /// <summary>
+    /// Final manual confirmation after optional I8 garnish selection. Existing
+    /// ordered layer and boundary state remains untouched by this action.
+    /// </summary>
+    public void ServeFloat()
+    {
+        if (state != State.AwaitingGarnish)
+        {
+            Debug.LogWarning("[Float] Serve ignored. state=" + state);
+            return;
+        }
+
+        BrewComposition composition = ingredientShelf.BuildServingGlassComposition();
+        MiniGameResult result = CreateTechniqueResult(composition);
+        result.garnish = ingredientShelf.ServingGlass != null
+            ? ingredientShelf.ServingGlass.Garnish
+            : null;
+        state = State.Result;
+        garnishController?.EndSelection();
 
         SetPrimaryAction(null, string.Empty, false);
         SetHint("Float complete. The Serving Glass composition is being evaluated.");
         UpdateProgressText();
 
-        BartendingContainerState servingGlass = GetServingGlass();
-        Debug.Log("[Float] Complete layers=" + layeredDrinkState.Layers.Count +
-                  " boundaries=" + layeredDrinkState.Boundaries.Count +
-                  " grade=" + completedGrade +
-                  " servingMl=" + (servingGlass != null ? servingGlass.CurrentLiquidVolumeMl : 0f).ToString("0.###"));
+        Debug.Log("[Float] Serve garnish=" +
+                  (result.garnish != null ? result.garnish.DisplayName + "/" + result.garnish.Placement : "none"));
+        onDone?.Invoke(result);
+    }
 
-        onDone?.Invoke(CreateTechniqueResult(composition));
+    public bool TryApplyGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
+    {
+        return state == State.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.TryApplyGarnish(garnishId, placement);
+    }
+
+    public bool ClearGarnish()
+    {
+        return state == State.AwaitingGarnish &&
+               garnishController != null &&
+               garnishController.ClearGarnish();
     }
 
     private void UpdatePreparationInput()
@@ -740,6 +785,19 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (layeredDrinkState != null && layeredDrinkState.HasActiveLayer)
             EndActiveLayerPour();
         SetSpoonVisible(false);
+    }
+
+    private void ConfigureGarnishController()
+    {
+        garnishController = GetComponent<ServingGlassGarnishController>();
+        if (garnishController == null)
+            garnishController = gameObject.AddComponent<ServingGlassGarnishController>();
+
+        RectTransform servingGlassVisual = transform.Find("UI/GlassImage")?.GetComponent<RectTransform>();
+        garnishController.Initialize(
+            ingredientShelf != null ? ingredientShelf.ServingGlass : null,
+            servingGlassVisual,
+            hintText);
     }
 
     private void AutoBindIfMissing()
