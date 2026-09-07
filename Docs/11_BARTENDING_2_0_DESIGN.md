@@ -36,9 +36,12 @@ container, full liquid transfer moves actual ingredient amounts and Dash counts,
 and Strain retains source ice. I4 makes Build the first fully migrated route:
 the player pours directly into a fresh Serving Glass and manually confirms its
 actual contents for the existing matching/result boundary. Build's detached
-target-zone/timing score is no longer active. Stir, Shake, and Float otherwise
-remain prototype/legacy behavior until their replacements pass their own
-validation and reachability audits.
+target-zone/timing score is no longer active. I5 makes Stir the second migrated
+route: actual liquid is prepared in the Mixing Glass, explicit ice is required,
+mouse-angle input visibly controls the spoon, and an explicit Strain moves the
+actual liquid to the Serving Glass. Shake and Float otherwise remain
+prototype/legacy behavior until their replacements pass their own validation and
+reachability audits.
 
 ---
 
@@ -273,10 +276,11 @@ accepts only Mixing Glass or Shaker as a source and moves liquid to the Serving
 Glass while retaining source ice.
 
 I4 removes those temporary target/ice/transfer/Strain controls from the active
-Build route: Build now owns only direct Serving Glass preparation. The underlying
-I3 container APIs remain available for later Stir and Shake work. I3/I4 do not
-add container visuals, ice physics, capacity/overflow rules, recipe preparation
-sequence data, or Stir/Shake/Float technique gameplay.
+Build route: Build now owns only direct Serving Glass preparation. I5 then
+adopts the Mixing Glass, explicit ice, and Strain operations for Stir. The
+underlying I3 container APIs remain available for later Shake work. I3 through
+I5 do not add container visuals, ice physics, capacity/overflow rules, recipe
+preparation sequence data, or Shake/Float technique gameplay.
 
 ---
 
@@ -506,6 +510,21 @@ MiniGameResult contract has no separate preparation-complete value, Build emits
 preparation ended, not that a detached timing challenge was passed. Recipe and
 request correctness remain downstream.
 
+### 10.2 I5 current implementation boundary
+
+Stir begins with the Mixing Glass as its only direct preparation target. The
+player pours actual milliliter contents, explicitly adds ice, and then moves the
+mouse around the mixing-glass center. Wrapped angular deltas accumulate valid
+rotation; implausibly large per-sample jumps are rejected; continuity and
+direction stability form a bounded consistency value. This produces
+`Good`, `Acceptable`, or `Poor` technique quality after a short minimum
+interaction, without inspecting expected recipe data. The player then explicitly
+Strains through the existing I3 operation. The Serving Glass snapshot is the
+only submitted composition. `Good` maps to the existing compatible `success =
+true`, `repDelta = 1`; `Acceptable` to `success = true`, `repDelta = 0`; and
+`Poor` to `success = false`, `repDelta = 0`. Recipe matching remains a separate
+downstream judgement.
+
 ---
 
 ## 11. Recipe and Preparation Data Direction
@@ -723,7 +742,7 @@ uses the following implementation progression:
 | I2 | Amount Variants | Arbitrary small amounts, Dash, and TopUp are expressible without fixed increment UI |
 | I3 | Container Operations | Serving Glass, Mixing Glass, Shaker, AddIce, liquid transfer, and Strain can express intermediate preparation |
 | I4 | Build — validated | Direct Serving Glass preparation is manually completed and its actual contents enter the existing matcher/result flow without a detached Build score |
-| I5 | Stir | Player controls a visible spoon and produces technique state connected to preparation |
+| I5 | Stir — validated | Mixing Glass direct preparation, explicit ice, mouse-driven spoon motion, and explicit Strain produce a technique result distinct from recipe matching |
 | I6 | Shake Rhythm | Player timing visibly drives Shaker motion and creates a short Shake outcome |
 | I7 | Float / Layering | Player can visibly preserve or destroy a layer through pour control |
 | I8 | Garnish | Minimum garnish action required by representative content |

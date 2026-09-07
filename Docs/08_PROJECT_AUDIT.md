@@ -1098,7 +1098,7 @@ another ownership or persistence refactor, as the next material project risk.
 Bartending 2.0 is therefore the approved next development direction: preparation
 actions must determine the actual drink state, and the remaining prototype
 mini-games are reference/fallback implementations until their replacements are
-validated. I0-A and I1 through I4 are the currently validated Phase I runtime
+validated. I0-A and I1 through I5 are the currently validated Phase I runtime
 increments: dedicated narrative reading pauses patience; direct Pour Core
 records milliliter liquid transfer in runtime container state before bridging to
 the unchanged matcher; bounded amount variants prove arbitrary fixed quantities,
@@ -1107,8 +1107,11 @@ Glass, Mixing Glass, and Shaker state with target-specific ice, full liquid
 transfer, and non-scored Strain. I4 makes Build the first fully migrated route:
 the player directly prepares the Serving Glass, manually completes preparation,
 and that actual glass snapshot enters the existing result flow without the old
-detached Build timing score. Stir, Shake, and Float remain legacy pending their
-own replacements. No broader Bartending 2.0 content implementation is implied.
-See
+detached Build timing score. I5 makes Stir the second migrated route: direct
+Pour Core feeds the Mixing Glass, ice is explicit, circular mouse movement
+drives spoon motion and a bounded technique result, then non-scored Strain moves
+the actual liquid to the Serving Glass. Technique quality remains independent of
+recipe recognition. Shake and Float remain legacy pending their own
+replacements. No broader Bartending 2.0 content implementation is implied. See
 `Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
 `Docs/05_REBUILD_PLAN.md`.
