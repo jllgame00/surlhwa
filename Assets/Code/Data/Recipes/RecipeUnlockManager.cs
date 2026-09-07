@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class RecipeUnlockManager : MonoBehaviour
 {
-    private const string SaveKey = "SURLHWA_UNLOCKED_RECIPES";
-    private const string FirstRecipeRevealShownKey = "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN";
-
     [Header("Recipe Catalog")]
     [SerializeField] private RecipeCatalogData recipeCatalog;
 
@@ -124,24 +121,18 @@ public class RecipeUnlockManager : MonoBehaviour
 
     public bool HasShownFirstRecipeReveal()
     {
-        return PlayerPrefs.GetInt(FirstRecipeRevealShownKey, 0) == 1;
+        return RecipeProgressPersistence.HasShownFirstRecipeReveal();
     }
 
     public bool TryMarkFirstRecipeRevealShown()
     {
-        if (HasShownFirstRecipeReveal())
-            return false;
-
-        PlayerPrefs.SetInt(FirstRecipeRevealShownKey, 1);
-        PlayerPrefs.Save();
-        return true;
+        return RecipeProgressPersistence.TryMarkFirstRecipeRevealShown();
     }
 
     private void SaveUnlocks()
     {
         string data = string.Join("|", unlockedRecipeIds);
-        PlayerPrefs.SetString(SaveKey, data);
-        PlayerPrefs.Save();
+        RecipeProgressPersistence.SaveUnlockedRecipeIdsRaw(data);
 
         Debug.Log($"[RecipeUnlockManager] SaveUnlocks -> {data}");
     }
@@ -150,7 +141,7 @@ public class RecipeUnlockManager : MonoBehaviour
     {
         unlockedRecipeIds.Clear();
 
-        string data = PlayerPrefs.GetString(SaveKey, "");
+        string data = RecipeProgressPersistence.LoadUnlockedRecipeIdsRaw();
 
         if (string.IsNullOrEmpty(data))
         {
@@ -172,9 +163,7 @@ public class RecipeUnlockManager : MonoBehaviour
     [ContextMenu("Debug/Clear Saved Unlocks")]
     public void ClearSavedUnlocks()
     {
-        PlayerPrefs.DeleteKey(SaveKey);
-        PlayerPrefs.DeleteKey(FirstRecipeRevealShownKey);
-        PlayerPrefs.Save();
+        RecipeProgressPersistence.ClearRecipeProgress();
 
         unlockedRecipeIds.Clear();
         InitializeDefaultUnlocks();
