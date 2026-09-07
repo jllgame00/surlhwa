@@ -583,23 +583,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b3988f592341141aeb953ef7573083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildMiniGame
-  liquidArea: {fileID: 1800419620864160906}
-  liquidFill: {fileID: 7592039200834685672}
-  targetZone: {fileID: 5158042999494845064}
   ingredientText: {fileID: 1780339875137175406}
   progressText: {fileID: 3383877090365656423}
   hintText: {fileID: 421901817452919476}
   resultLabel: {fileID: 2540347659391741200}
   startButton: {fileID: 0}
   startHintText: {fileID: 0}
-  timeLimit: 4.5
-  fillSpeed: 180
-  overflowGrace: 6
-  perfectTolerance: 8
-  goodTolerance: 18
-  recipeGuide: {fileID: 0}
   ingredientShelf: {fileID: 0}
   jiggerPanel: {fileID: 0}
+  previewPourRateMlPerSecond: 30
 --- !u!1 &852217846838288315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,7 +4202,6 @@ GameObject:
   - component: {fileID: 1277352552855636180}
   - component: {fileID: 4847924337589986449}
   - component: {fileID: 3023483155104963755}
-  - component: {fileID: 7862480006633038838}
   - component: {fileID: 3244445342919022870}
   m_Layer: 0
   m_Name: JiggerPanel
@@ -4218,7 +4209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1277352552855636180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4285,34 +4276,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7862480006633038838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6742574431430597770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daf42a97197dbf148910f07ce8ae4bf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JiggerPanelController
-  jiggerImage: {fileID: 5079590034339730904}
-  selectedIngredientText: {fileID: 3867353056412482677}
-  measureText: {fileID: 8970539635606910874}
-  feedbackText: {fileID: 1693677240581311504}
-  addHalfButton: {fileID: 1907185612436666192}
-  addOneButton: {fileID: 5734884494320384064}
-  pourButton: {fileID: 2028565453884173841}
-  clearButton: {fileID: 3954576693627291596}
-  jiggerVisualRoot: {fileID: 3990403992093693486}
-  popScale: 1.12
-  popDuration: 0.08
-  shakeDistance: 8
-  liquidFillImage: {fileID: 3588164499429555272}
-  maxVisualAmount: 2
-  maxJiggerCapacity: 2
-  undoButton: {fileID: 7439980613310444432}
 --- !u!114 &3244445342919022870
 MonoBehaviour:
   m_ObjectHideFlags: 0

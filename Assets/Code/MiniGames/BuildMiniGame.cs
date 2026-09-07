@@ -28,9 +28,6 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
-    [Header("Legacy Jigger")]
-    [SerializeField] private JiggerPanelController jiggerPanel;
-
     [Header("Pour Core")]
     [SerializeField] private float previewPourRateMlPerSecond = 30f;
 
@@ -64,13 +61,6 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         // target is the final Serving Glass. I3's other container APIs remain
         // available for later technique routes but are not Build controls.
         ingredientShelf.Initialize(MiniGameType.Build, BartendingContainerType.ServingGlass);
-        ingredientShelf.SetJiggerPanel(null);
-
-        if (jiggerPanel == null)
-            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
-
-        if (jiggerPanel != null)
-            jiggerPanel.gameObject.SetActive(false);
 
         state = BuildState.Preparing;
         isPouring = false;
@@ -101,7 +91,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         Debug.Log(
             "[BuildMiniGame] Direct Build ready / " +
-            "Target=ServingGlass / Jigger=disabled / Completion=manual");
+            "Target=ServingGlass / Completion=manual");
     }
 
     /// <summary>

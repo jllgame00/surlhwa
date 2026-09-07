@@ -46,7 +46,12 @@ liquid to the Serving Glass. I7 makes Float the fourth migrated route: ordered
 actual additions enter the Serving Glass, each later spoon-assisted layer records
 its own adjacent-boundary quality, and manual completion submits only that actual
 Serving Glass composition. The legacy Float target gauge and Jigger path are no
-longer active.
+longer active. I7.5 removes their proven-dead fixed-increment runtime
+authority: `JiggerPanelController`, `BrewSessionData`,
+`BrewCompositionFactory`, and their shelf/mini-game adapters no longer exist.
+The four Jigger prefab components are removed and their visual roots are
+inactive; `BrewComposition` remains the active compatibility snapshot for the
+unchanged matcher.
 
 ---
 
@@ -802,6 +807,7 @@ uses the following implementation progression:
 | I5 | Stir — validated | Mixing Glass direct preparation, explicit ice, mouse-driven spoon motion, and explicit Strain produce a technique result distinct from recipe matching |
 | I6 | Shake — validated | Shaker direct preparation, explicit ice, an eight-note alternating rhythm, visible input-driven motion, and explicit Strain produce a technique result distinct from recipe matching |
 | I7 | Float / Layering — validated | Ordered actual Serving Glass additions support layered shots and final floats; each later layer has visible Clean/Partial/Mixed boundary quality while composition remains separate |
+| I7.5 | Legacy Bartending Cleanup — validated | Removes the unreachable fixed-increment Jigger/session/factory runtime path; inactive legacy gauge and target-zone prefab visuals remain deferred asset cleanup |
 | I8 | Garnish | Minimum garnish action required by representative content |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
 | I10 | Ingredient Progression | Staged availability expands recipe space after catalog proof |

@@ -65,9 +65,6 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
-    [Header("Legacy Jigger")]
-    [SerializeField] private JiggerPanelController jiggerPanel;
-
     private readonly List<RectTransform> layerVisuals = new List<RectTransform>();
     private readonly List<GameObject> runtimeLayerVisuals = new List<GameObject>();
     private readonly List<GameObject> boundaryVisuals = new List<GameObject>();
@@ -102,16 +99,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (ingredientShelf == null)
             throw new InvalidOperationException("[FloatMiniGame] IngredientShelfController is required.");
 
-        // I7 always prepares in the actual Serving Glass. The Jigger stays
-        // present only as dormant legacy UI for no-longer-migrated assets.
+        // I7 always prepares in the actual Serving Glass.
         ingredientShelf.Initialize(MiniGameType.Float, BartendingContainerType.ServingGlass);
-        ingredientShelf.SetJiggerPanel(null);
-
-        if (jiggerPanel == null)
-            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
-
-        if (jiggerPanel != null)
-            jiggerPanel.gameObject.SetActive(false);
 
         state = State.Preparing;
         layeredDrinkState = new BartendingLayeredDrinkState();
@@ -150,7 +139,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         UpdateLayerVisuals();
         UpdateProgressText();
 
-        Debug.Log("[Float] Preparation ready / Target=ServingGlass / Jigger=disabled / OrderedLayers=enabled");
+        Debug.Log("[Float] Preparation ready / Target=ServingGlass / OrderedLayers=enabled");
     }
 
     private void Update()

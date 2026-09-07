@@ -14,8 +14,6 @@ public class IngredientShelfController : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text summaryText;
 
-    private JiggerPanelController linkedJiggerPanel;
-
     private MiniGameType currentMethod;
     private IngredientData selectedIngredient;
 
@@ -49,40 +47,6 @@ public class IngredientShelfController : MonoBehaviour
         RefreshTexts();
 
         gameObject.SetActive(true);
-    }
-
-    public BrewSessionData BuildSession()
-    {
-        List<BrewSessionIngredient> entries = new List<BrewSessionIngredient>();
-
-        if (targetContainer == null)
-            return new BrewSessionData
-            {
-                method = currentMethod,
-                ingredients = entries.ToArray()
-            };
-
-        foreach (BartendingLiquidEntry entry in targetContainer.LiquidEntries)
-        {
-            if (entry == null || entry.Ingredient == null)
-                continue;
-
-            float amountOz = BartendingVolume.MillilitersToOunces(entry.AmountMl);
-            if (amountOz <= 0f)
-                continue;
-
-            entries.Add(new BrewSessionIngredient
-            {
-                ingredient = entry.Ingredient,
-                amount = amountOz
-            });
-        }
-
-        return new BrewSessionData
-        {
-            method = currentMethod,
-            ingredients = entries.ToArray()
-        };
     }
 
     public bool HasAnySelectedIngredient()
@@ -209,36 +173,6 @@ public class IngredientShelfController : MonoBehaviour
             string.Join(" / ", parts) + iceText;
     }
 
-    public void SetJiggerPanel(JiggerPanelController jiggerPanel)
-    {
-        linkedJiggerPanel = jiggerPanel;
-
-        Debug.Log(
-            $"[IngredientShelf] JiggerPanel linked -> " +
-            $"{(linkedJiggerPanel != null ? linkedJiggerPanel.name : "NULL")}"
-        );
-    }
-
-    public void AddAmount(IngredientData ingredient, float amount)
-    {
-        if (ingredient == null)
-            return;
-
-        AddLiquidMl(ingredient, BartendingVolume.OuncesToMilliliters(amount));
-    }
-
-    public void SetAmount(IngredientData ingredient, float amount)
-    {
-        if (ingredient == null)
-            return;
-
-        if (targetContainer == null)
-            return;
-
-        targetContainer.SetLiquidAmount(ingredient, BartendingVolume.OuncesToMilliliters(amount));
-        RefreshContents();
-    }
-
     private void OnIngredientSelected(IngredientData ingredient)
     {
         if (ingredient == null)
@@ -246,9 +180,6 @@ public class IngredientShelfController : MonoBehaviour
 
         selectedIngredient = ingredient;
         RefreshSelectedVisuals();
-
-        if (linkedJiggerPanel != null)
-            linkedJiggerPanel.SelectIngredient(ingredient);
 
         Debug.Log($"[IngredientShelf] Selected ingredient -> {ingredient.displayName}");
     }
@@ -264,24 +195,9 @@ public class IngredientShelfController : MonoBehaviour
         }
     }
     
-    public void RemoveAmount(IngredientData ingredient, float amount)
-    {
-        if (ingredient == null)
-            return;
-
-        if (amount <= 0f)
-            return;
-
-        if (targetContainer == null)
-            return;
-
-        targetContainer.RemoveLiquid(ingredient, BartendingVolume.OuncesToMilliliters(amount));
-        RefreshContents();
-    }
-
     /// <summary>
     /// Adds the amount actually transferred by a Bartending 2.0 pour action.
-    /// Unlike AddAmount, this API accepts canonical milliliters.
+    /// This API accepts canonical milliliters.
     /// </summary>
     public float AddLiquidMl(IngredientData ingredient, float amountMl)
     {

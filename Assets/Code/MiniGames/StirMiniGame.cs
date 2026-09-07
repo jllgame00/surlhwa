@@ -56,9 +56,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
-    [Header("Legacy Jigger")]
-    [SerializeField] private JiggerPanelController jiggerPanel;
-
     [Header("Pour Core")]
     [SerializeField] private float pourRateMlPerSecond = 30f;
 
@@ -99,13 +96,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         // Stir owns direct preparation in the Mixing Glass. The I3 preparation
         // state still creates the Serving Glass for the later explicit Strain.
         ingredientShelf.Initialize(MiniGameType.Stir, BartendingContainerType.MixingGlass);
-        ingredientShelf.SetJiggerPanel(null);
-
-        if (jiggerPanel == null)
-            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
-
-        if (jiggerPanel != null)
-            jiggerPanel.gameObject.SetActive(false);
 
         state = State.Preparing;
         techniqueTracker = new StirTechniqueTracker(maximumAngularJumpDeg);
@@ -129,7 +119,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         UpdateProgressText();
         SetHint("Select an ingredient and hold SPACE to pour into the Mixing Glass. Press I to add ice.");
 
-        Debug.Log("[Stir] Preparation ready / Target=MixingGlass / Jigger=disabled / Ice=required");
+        Debug.Log("[Stir] Preparation ready / Target=MixingGlass / Ice=required");
     }
 
     private void Update()

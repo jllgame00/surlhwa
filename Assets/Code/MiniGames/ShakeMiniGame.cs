@@ -70,9 +70,6 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
 
-    [Header("Legacy Jigger")]
-    [SerializeField] private JiggerPanelController jiggerPanel;
-
     [Header("Pour Core")]
     [SerializeField] private float pourRateMlPerSecond = 30f;
 
@@ -113,13 +110,6 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         // Shake owns direct preparation in the Shaker. I3's preparation state
         // still creates the Serving Glass for the later explicit Strain.
         ingredientShelf.Initialize(MiniGameType.Shake, BartendingContainerType.Shaker);
-        ingredientShelf.SetJiggerPanel(null);
-
-        if (jiggerPanel == null)
-            jiggerPanel = GetComponentInChildren<JiggerPanelController>(true);
-
-        if (jiggerPanel != null)
-            jiggerPanel.gameObject.SetActive(false);
 
         state = State.Preparing;
         isPouring = false;
@@ -143,7 +133,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         SetHint("Select an ingredient and hold SPACE to pour into the Shaker. Press I to add ice.");
         UpdateProgressText();
 
-        Debug.Log("[Shake] Preparation ready / Target=Shaker / Jigger=disabled / Ice=required");
+        Debug.Log("[Shake] Preparation ready / Target=Shaker / Ice=required");
     }
 
     private void Update()

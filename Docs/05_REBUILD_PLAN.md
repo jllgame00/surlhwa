@@ -120,7 +120,7 @@ PlayerPrefs storage ownership is centralized without format migration.
 The independent red-team review identified the next material risk as
 player-facing gameplay proof rather than another architecture refactor. The
 current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
-Bartending 2.0**. I0-A and I1 through I7 are now validated incremental runtime work; the
+Bartending 2.0**. I0-A and I1 through I7.5 are now validated incremental runtime work; the
 remaining Phase I work is still future work. This does not claim that the
 prototype minigames, recipe data, content, or assets have already been broadly
 replaced.
@@ -489,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A and I1 through I7 validated; I8+ remains pending
+Status: IN PROGRESS — I0-A and I1 through I7.5 validated; I8+ remains pending
 
 #### Purpose
 
@@ -522,7 +522,7 @@ Docs/11_BARTENDING_2_0_DESIGN.md.
 | Step | Goal | Exit criterion |
 | --- | --- | --- |
 | I0-A — Narrative Reading Safety | Prevent dedicated narrative reading from consuming customer patience; preserve existing departure/persistence policy unless separately changed; do not rewrite the broad customer state machine. | Dedicated dialogue can be read without accidentally timing out the encounter. |
-| I0-B — Legacy Minigame Preservation | Retain each legacy technique route as regression/fallback/reference only until its own replacement is validated. Build/Stir detached scores, Shake's command route, and Float's hold/release route are inactive only after I4/I5/I6/I7 validation and reachability proof. | No legacy implementation is deleted before its replacement validation and reachability/reference proof. |
+| I0-B — Legacy Minigame Preservation | Retain each legacy technique route as regression/fallback/reference only until its own replacement is validated. Build/Stir detached scores, Shake's command route, and Float's hold/release route become removable only after I4/I5/I6/I7 validation and reachability proof. | I7.5 may remove a proven dead runtime path while retaining harmless, inactive serialized visual residue for later UI cleanup. |
 
 #### I1 — Pour Core
 
@@ -688,6 +688,20 @@ timer, overflow logic, Jigger authority, and legacy session snapshot are no
 longer active. Current recipe assets do not author an expected layer sequence,
 so actual layer order is preserved but order scoring is deferred to I9
 preparation-step authoring.
+
+#### I7.5 — Legacy Bartending Cleanup
+
+Remove only bartending paths whose lack of consumers is proven after all four
+techniques have migrated. I7.5 removes the fixed-increment Jigger runtime
+authority, `BrewSessionData`, `BrewCompositionFactory`, and their dead shelf/
+mini-game adapters. The four prefab Jigger components are removed and their
+Jigger visual roots are deactivated, so no Missing Script is introduced.
+`BrewComposition`, the milliliter-to-ounce matcher bridge, and all
+Bartending 2.0 preparation/container state remain active.
+
+The legacy gauge/target-zone visual hierarchies remain inactive deferred asset
+cleanup: current routes suppress them, and deleting their wider prefab
+presentation trees is not required to establish one preparation authority.
 
 #### I8 — Garnish
 
