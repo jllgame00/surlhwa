@@ -287,7 +287,7 @@ public class CustomerSpawner : MonoBehaviour
     {
         int currentDay = businessDayManager != null
             ? businessDayManager.CurrentDay
-            : PlayerPrefs.GetInt("currentDay", 1);
+            : BusinessDayPersistence.LoadCurrentDay(1);
 
         return currentDay == 1 && spawnedCount < tutorialCustomerCount;
     }

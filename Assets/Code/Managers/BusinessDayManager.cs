@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class BusinessDayManager : MonoBehaviour
 {
-    private const string CurrentDayKey = "currentDay";
-
     [SerializeField] private int maxCustomersPerDay = 8;
     [SerializeField] private bool endDayWhenMaxCustomersServed = true;
     [SerializeField] private DayResultPanelController resultPanel;
@@ -23,7 +21,7 @@ public class BusinessDayManager : MonoBehaviour
 
     private void Awake()
     {
-        currentDay = Mathf.Max(1, PlayerPrefs.GetInt(CurrentDayKey, startingDay));
+        currentDay = Mathf.Max(1, BusinessDayPersistence.LoadCurrentDay(startingDay));
         ResolveReferences();
     }
 
@@ -56,8 +54,7 @@ public class BusinessDayManager : MonoBehaviour
 
         dayEnded = true;
         currentDay = CurrentDay + 1;
-        PlayerPrefs.SetInt(CurrentDayKey, currentDay);
-        PlayerPrefs.Save();
+        BusinessDayPersistence.SaveCurrentDay(currentDay);
         ResolveReferences();
 
         if (resultPanel == null)
