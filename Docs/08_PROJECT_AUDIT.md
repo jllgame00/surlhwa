@@ -1096,17 +1096,19 @@ independent red-team review identified the player-facing core loop, rather than
 another ownership or persistence refactor, as the next material project risk.
 
 Bartending 2.0 is therefore the approved next development direction: preparation
-actions must determine the actual drink state, and the four current prototype
-mini-games are reference/fallback implementations until replacements are
-validated. I0-A, I1, I2, and I3 are the currently validated Phase I runtime
-increments: dedicated narrative reading pauses patience; the Build proof
-records hold-to-pour liquid transfer in a runtime Serving Glass using
-milliliters before bridging to the unchanged matcher; and bounded amount
-variants prove arbitrary fixed quantities, discrete Dash, and manual TopUp
-guidance without a recipe-data migration. I3 adds separate runtime Serving
-Glass, Mixing Glass, and Shaker state, target-specific bounded ice, full liquid
-transfer, and non-scored Strain while retaining the existing matcher and recipe
-data. No broader Bartending 2.0 replacement or Phase I content implementation
-is implied. See
+actions must determine the actual drink state, and the remaining prototype
+mini-games are reference/fallback implementations until their replacements are
+validated. I0-A and I1 through I4 are the currently validated Phase I runtime
+increments: dedicated narrative reading pauses patience; direct Pour Core
+records milliliter liquid transfer in runtime container state before bridging to
+the unchanged matcher; bounded amount variants prove arbitrary fixed quantities,
+discrete Dash, and manual TopUp guidance; and I3 supplies separate Serving
+Glass, Mixing Glass, and Shaker state with target-specific ice, full liquid
+transfer, and non-scored Strain. I4 makes Build the first fully migrated route:
+the player directly prepares the Serving Glass, manually completes preparation,
+and that actual glass snapshot enters the existing result flow without the old
+detached Build timing score. Stir, Shake, and Float remain legacy pending their
+own replacements. No broader Bartending 2.0 content implementation is implied.
+See
 `Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
 `Docs/05_REBUILD_PLAN.md`.

@@ -120,7 +120,7 @@ PlayerPrefs storage ownership is centralized without format migration.
 The independent red-team review identified the next material risk as
 player-facing gameplay proof rather than another architecture refactor. The
 current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
-Bartending 2.0**. I0-A, I1, I2, and I3 are now validated incremental runtime work; the
+Bartending 2.0**. I0-A and I1 through I4 are now validated incremental runtime work; the
 remaining Phase I work is still future work. This does not claim that the
 prototype minigames, recipe data, content, or assets have already been broadly
 replaced.
@@ -489,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A, I1, I2, and I3 validated; I0-B and I4+ remain pending
+Status: IN PROGRESS — I0-A and I1 through I4 validated; I0-B preservation work for the remaining legacy techniques and I5+ remain pending
 
 #### Purpose
 
@@ -522,7 +522,7 @@ Docs/11_BARTENDING_2_0_DESIGN.md.
 | Step | Goal | Exit criterion |
 | --- | --- | --- |
 | I0-A — Narrative Reading Safety | Prevent dedicated narrative reading from consuming customer patience; preserve existing departure/persistence policy unless separately changed; do not rewrite the broad customer state machine. | Dedicated dialogue can be read without accidentally timing out the encounter. |
-| I0-B — Legacy Minigame Preservation | Retain existing Stir/Shake/Build/Float implementations temporarily as regression/fallback/reference while replacements are verified. | No legacy implementation is deleted before replacement validation and reachability/reference proof. |
+| I0-B — Legacy Minigame Preservation | Retain each legacy technique route as regression/fallback/reference only until its own replacement is validated. Build's detached score may be removed after I4 validation; Stir/Shake/Float remain preserved meanwhile. | No legacy implementation is deleted before its replacement validation and reachability/reference proof. |
 
 #### I1 — Pour Core
 
@@ -605,6 +605,17 @@ Exit criterion:
 
 > At least one Build cocktail can be prepared from start to serve using actual
 > poured quantities.
+
+Current implementation note (I4): Build is the first fully migrated Bartending
+2.0 route. It starts with a fresh, Serving Glass-only preparation state; direct
+Pour Core transfer is the authoritative drink state, and the player manually
+confirms completion. That completion captures the actual Serving Glass through
+the existing BrewComposition bridge and immediately enters the unchanged result
+and matcher flow. The detached Build target-zone, timer, overflow, and
+hold/release score are no longer active. The shared legacy result contract uses
+`success = true`, `repDelta = 0`, and `grade = "Complete"` solely to represent
+truthful preparation completion; it is not a synthetic timing grade. Stir,
+Shake, and Float remain on their legacy routes pending their own phases.
 
 #### I5 — Stir
 

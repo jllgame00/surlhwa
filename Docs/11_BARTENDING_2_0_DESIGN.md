@@ -33,9 +33,12 @@ amount/count, and manual TopUp target guidance; recipe data and the matcher
 remain unchanged. I3 now creates separate runtime Serving Glass, Mixing Glass,
 and Shaker state for an active preparation session; bounded ice belongs to one
 container, full liquid transfer moves actual ingredient amounts and Dash counts,
-and Strain retains source ice. Existing Stir, Shake, Build scoring, and Float
-implementations otherwise remain prototype/legacy behavior until their
-replacements pass their own validation and reachability audits.
+and Strain retains source ice. I4 makes Build the first fully migrated route:
+the player pours directly into a fresh Serving Glass and manually confirms its
+actual contents for the existing matching/result boundary. Build's detached
+target-zone/timing score is no longer active. Stir, Shake, and Float otherwise
+remain prototype/legacy behavior until their replacements pass their own
+validation and reachability audits.
 
 ---
 
@@ -269,9 +272,10 @@ and retained Dash counts while leaving source ice in place. Non-scored Strain
 accepts only Mixing Glass or Shaker as a source and moves liquid to the Serving
 Glass while retaining source ice.
 
-The temporary Build preview controls used to prove target selection, ice,
-transfer, and Strain are not a final interaction contract. I3 does not add
-container visuals, ice physics, capacity/overflow rules, recipe preparation
+I4 removes those temporary target/ice/transfer/Strain controls from the active
+Build route: Build now owns only direct Serving Glass preparation. The underlying
+I3 container APIs remain available for later Stir and Shake work. I3/I4 do not
+add container visuals, ice physics, capacity/overflow rules, recipe preparation
 sequence data, or Stir/Shake/Float technique gameplay.
 
 ---
@@ -490,6 +494,18 @@ Do not create an unnecessary garnish precision minigame.
 The methods may share the Pour foundation. They should not share an
 indistinguishable player decision merely because they all involve a container.
 
+### 10.1 I4 current implementation boundary
+
+Build now begins with the Serving Glass as its only active target. The player
+selects ingredients, pours actual milliliter amounts through Pour Core, and
+chooses when to press **Complete Build**. The final Serving Glass is converted
+only at the established legacy BrewComposition boundary; expected recipe data is
+not used to construct or repair the submitted drink. Because the current shared
+MiniGameResult contract has no separate preparation-complete value, Build emits
+`success = true`, `repDelta = 0`, and `grade = "Complete"` to mean that direct
+preparation ended, not that a detached timing challenge was passed. Recipe and
+request correctness remain downstream.
+
 ---
 
 ## 11. Recipe and Preparation Data Direction
@@ -706,7 +722,7 @@ uses the following implementation progression:
 | I1 | Pour Core | Actual player transfer updates authoritative target-container quantity |
 | I2 | Amount Variants | Arbitrary small amounts, Dash, and TopUp are expressible without fixed increment UI |
 | I3 | Container Operations | Serving Glass, Mixing Glass, Shaker, AddIce, liquid transfer, and Strain can express intermediate preparation |
-| I4 | Build | At least one Build drink is prepared start-to-serve through actual pours |
+| I4 | Build — validated | Direct Serving Glass preparation is manually completed and its actual contents enter the existing matcher/result flow without a detached Build score |
 | I5 | Stir | Player controls a visible spoon and produces technique state connected to preparation |
 | I6 | Shake Rhythm | Player timing visibly drives Shaker motion and creates a short Shake outcome |
 | I7 | Float / Layering | Player can visibly preserve or destroy a layer through pour control |
