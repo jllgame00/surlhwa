@@ -555,7 +555,15 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: APPROVED DIRECTION / PHASE I FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10+ FUTURE WORK
+
+I9B validates seven official-IBA recipes as a production preparation-model
+proof: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and
+Hanky Panky. They remain a representative validation set, not the final
+catalog. New York Sour is deferred because its official `Few Drops of Egg
+White` wording has no approved quantitative semantic. Ingredient progression,
+guide/discovery, guest response, and glass-selection gameplay remain later
+work.
 
 Red-team review 이후 다음 production rule이 승인되었다.
 

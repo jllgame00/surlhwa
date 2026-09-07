@@ -12,4 +12,10 @@ public struct MiniGameResult
     // Immutable result-bound snapshot of the Serving Glass's optional garnish.
     // It is not part of liquid matching and does not replace container truth.
     public BartendingGarnishState garnish;
+
+    // I9B keeps operation evidence and recipe-owned preparation evaluation
+    // separate from the liquid matcher and the technique grade.
+    public CocktailRecipeData expectedRecipe;
+    public BartendingPreparationTrace preparationTrace;
+    public RecipePreparationEvaluationResult preparationEvaluation;
 }

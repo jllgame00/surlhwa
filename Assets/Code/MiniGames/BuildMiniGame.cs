@@ -7,11 +7,12 @@ using UnityEngine.UI;
 /// I4's direct Build route. The Serving Glass records actual Pour Core state;
 /// confirming preparation submits that state without a second timing score.
 /// </summary>
-public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver
+public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver, IRecipePreparationExpectationReceiver
 {
     public enum BuildState
     {
         Preparing,
+        GentleStirring,
         AwaitingGarnish,
         Result
     }
@@ -37,6 +38,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private string requestDisplayTitle;
     private bool isPouring;
     private ServingGlassGarnishController garnishController;
+    private CocktailRecipeData expectedRecipe;
+    private ServingGlassGentleStirInteraction gentleStirInteraction;
 
     // I2 runtime guidance only. It never inserts liquid or completes Build.
     private BartendingTopUpGuidance topUpGuidance;
@@ -44,6 +47,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     public void SetRequestDisplayTitle(string displayTitle)
     {
         requestDisplayTitle = displayTitle;
+    }
+
+    public void SetExpectedRecipe(CocktailRecipeData recipe)
+    {
+        expectedRecipe = recipe;
     }
 
     public void StartGame(Action<MiniGameResult> done)
@@ -68,6 +76,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         state = BuildState.Preparing;
         isPouring = false;
         topUpGuidance = null;
+        gentleStirInteraction = new ServingGlassGentleStirInteraction();
 
         if (ingredientText != null)
             ingredientText.text = GetDisplayTitle();
@@ -90,7 +99,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         }
 
         UpdateProgressText();
-        SetHint("Select an ingredient and hold SPACE to pour. Press D for one dash.");
+        SetHint("Select an ingredient and hold SPACE to pour. Press I for ice, D for one dash, or J for a gentle serving-glass stir.");
 
         Debug.Log(
             "[BuildMiniGame] Direct Build ready / " +
@@ -170,14 +179,19 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         // TechniqueCompleted state. success therefore means the player
         // completed direct preparation, not that a timing grade was awarded.
         // Recognition/request correctness remains downstream in OrderManager.
-        onDone?.Invoke(new MiniGameResult
+        MiniGameResult result = new MiniGameResult
         {
             success = true,
             repDelta = 0,
             grade = "Complete",
             brewedComposition = composition,
             garnish = garnish
-        });
+        };
+        BartendingPreparationResultFactory.Apply(
+            ref result,
+            expectedRecipe,
+            ingredientShelf.PreparationTrace);
+        onDone?.Invoke(result);
     }
 
     public bool TryApplyGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
@@ -196,10 +210,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void Update()
     {
-        if (state != BuildState.Preparing)
-            return;
-
-        UpdateDirectPour();
+        if (state == BuildState.Preparing)
+            UpdateDirectPour();
+        else if (state == BuildState.GentleStirring)
+            UpdateGentleStir();
     }
 
     private void UpdateDirectPour()
@@ -213,6 +227,18 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (Input.GetKeyDown(KeyCode.D))
         {
             TryDispenseDash();
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            AddIceToServingGlass();
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            BeginGentleStir();
             return;
         }
 
@@ -310,6 +336,85 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             $"compatibilityMl={ingredientMl:0.###}");
     }
 
+    public bool AddIceToServingGlass()
+    {
+        if (state != BuildState.Preparing || ingredientShelf == null ||
+            !ingredientShelf.TryAddIceToActiveTarget())
+        {
+            SetHint("The Serving Glass already has ice or is unavailable.");
+            return false;
+        }
+
+        SetHint("Ice added to the Serving Glass.");
+        UpdateProgressText();
+        return true;
+    }
+
+    /// <summary>
+    /// A short optional serving-glass action for Build recipes such as Negroni.
+    /// It is never auto-started by expected recipe data, so omitting it remains
+    /// a valid submitted preparation mistake.
+    /// </summary>
+    public void BeginGentleStir()
+    {
+        if (state != BuildState.Preparing || ingredientShelf == null ||
+            !ingredientShelf.HasServingGlassContents())
+        {
+            SetHint("Pour into the Serving Glass before gently stirring.");
+            return;
+        }
+
+        StopDirectPour("Gentle Stir started");
+        RectTransform center = transform.Find("UI/GlassImage")?.GetComponent<RectTransform>();
+        Transform visualParent = transform.Find("UI") ?? transform;
+        if (gentleStirInteraction == null || !gentleStirInteraction.Begin(center, visualParent))
+        {
+            SetHint("Gentle Stir visual could not start.");
+            return;
+        }
+
+        state = BuildState.GentleStirring;
+        ingredientShelf.SetVisible(false);
+        SetPrimaryAction(FinishGentleStir, "Finish Gentle Stir", true);
+        SetHint("Move the mouse in a light circle around the Serving Glass.");
+        UpdateProgressText();
+    }
+
+    private void UpdateGentleStir()
+    {
+        gentleStirInteraction?.Tick();
+        UpdateProgressText();
+    }
+
+    public bool TryRecordGentleStirAngle(float angleDeg, float deltaTime)
+    {
+        return state == BuildState.GentleStirring &&
+               gentleStirInteraction != null &&
+               gentleStirInteraction.TryRecordAngle(angleDeg, deltaTime);
+    }
+
+    public void FinishGentleStir()
+    {
+        if (state != BuildState.GentleStirring || gentleStirInteraction == null)
+            return;
+
+        if (!gentleStirInteraction.TryFinish())
+        {
+            SetHint("Keep gently stirring for a little longer.");
+            return;
+        }
+
+        ingredientShelf.RecordTechniqueAction(
+            RecipePreparationAction.GentleStir,
+            BartendingContainerType.ServingGlass);
+        state = BuildState.Preparing;
+        ingredientShelf.SetVisible(true);
+        SetPrimaryAction(CompleteBuild, "Finish Build", true);
+        SetHint("Gentle Stir complete. Continue pouring or finish the Build.");
+        UpdateProgressText();
+        Debug.Log("[GentleStir] Build ServingGlass complete");
+    }
+
     private bool ShowTopUpGuidance(IngredientData selectedIngredient)
     {
         if (topUpGuidance == null || !topUpGuidance.AppliesTo(selectedIngredient) ||
@@ -337,9 +442,13 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void StopDirectPour(string reason)
     {
         if (!isPouring)
+        {
+            ingredientShelf?.EndSelectedPour();
             return;
+        }
 
         isPouring = false;
+        ingredientShelf?.EndSelectedPour();
 
         IngredientData ingredient = ingredientShelf != null ? ingredientShelf.SelectedIngredient : null;
         float ingredientMl = ingredientShelf != null && ingredientShelf.ServingGlass != null && ingredient != null
@@ -420,6 +529,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void OnDisable()
     {
         StopDirectPour("BuildMiniGame disabled");
+        gentleStirInteraction?.End();
     }
 
     private void ConfigureGarnishController()
@@ -432,7 +542,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         garnishController.Initialize(
             ingredientShelf != null ? ingredientShelf.ServingGlass : null,
             servingGlassVisual,
-            hintText);
+            hintText,
+            ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
     }
 
     private void AutoBindIfMissing()

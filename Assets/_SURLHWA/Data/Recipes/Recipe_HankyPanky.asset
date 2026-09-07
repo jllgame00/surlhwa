@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb55097d4deeb34c852231a8dc386d7, type: 3}
+  m_Name: Recipe_HankyPanky
+  m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
+  recipeId: recipe_hanky_panky
+  method: 2
+  targetCocktail: {fileID: 11400000, guid: 75f52774c87d299418e5434438f0a0de, type: 2}
+  ingredients:
+  - ingredient: {fileID: 11400000, guid: 1e579d608d12a434c805ec0d0cd4ca24, type: 2}
+    ratio: 1.521631
+  - ingredient: {fileID: 11400000, guid: 70b512d04df84da418e3a2ec018a55ce, type: 2}
+    ratio: 1.521631
+  - ingredient: {fileID: 11400000, guid: caf6554d897e72245b328f8001764a1f, type: 2}
+    ratio: 0.25360516
+  expectedPreparation:
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 1e579d608d12a434c805ec0d0cd4ca24, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 70b512d04df84da418e3a2ec018a55ce, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: caf6554d897e72245b328f8001764a1f, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 3
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 4
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 7
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 2
+    target: 1
+    optional: 0
+    acceptedGarnishes: []
+  - action: 10
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 1
+    optional: 0
+    acceptedGarnishes:
+    - garnish: 5
+      placement: 0
+  matchThreshold: 0.85
+  discoverable: 1

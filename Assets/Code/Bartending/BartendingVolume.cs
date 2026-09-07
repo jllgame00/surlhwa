@@ -16,6 +16,12 @@ public static class BartendingVolume
     // legacy matcher.
     public const float DefaultDashMilliliters = 1f;
 
+    // I9B gameplay tuning for Gin Fizz. This deliberately is not an official
+    // IBA conversion: the official recipe calls for a qualitative splash.
+    public const float MinimumSplashMilliliters = 10f;
+    public const float DefaultSplashMilliliters = 15f;
+    public const float MaximumSplashMilliliters = 20f;
+
     public static float OuncesToMilliliters(float ounces)
     {
         if (float.IsNaN(ounces) || float.IsInfinity(ounces))
@@ -38,5 +44,12 @@ public static class BartendingVolume
             return 0f;
 
         return dashCount * Mathf.Max(0f, millilitersPerDash);
+    }
+
+    public static bool IsValidSplashMilliliters(float milliliters)
+    {
+        return !float.IsNaN(milliliters) && !float.IsInfinity(milliliters) &&
+               milliliters >= MinimumSplashMilliliters &&
+               milliliters <= MaximumSplashMilliliters;
     }
 }

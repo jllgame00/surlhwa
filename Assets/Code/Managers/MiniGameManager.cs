@@ -113,6 +113,9 @@ public class MiniGameManager : MonoBehaviour
         if (game is IRequestDisplayTitleReceiver titleReceiver)
             titleReceiver.SetRequestDisplayTitle(request != null ? request.DisplayTitle : null);
 
+        if (game is IRecipePreparationExpectationReceiver expectationReceiver)
+            expectationReceiver.SetExpectedRecipe(request != null ? request.ExpectedRecipe : null);
+
         game.StartGame(result =>
         {
             if (currentMiniGame != null)

@@ -426,9 +426,15 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
+        CocktailRecipeData expectedRecipe = recipeUnlockManager != null
+            ? recipeUnlockManager.GetRecipeForCocktail(
+                currentOrder.requestedCocktail,
+                currentOrder.miniGameType)
+            : null;
         BartendingRequestContext request = new BartendingRequestContext(
             currentOrder.miniGameType,
-            currentOrder.orderName);
+            currentOrder.orderName,
+            expectedRecipe);
         RecipeGuideContext recipeGuideContext = BuildRecipeGuideContext();
         BartendingSession session = new BartendingSession(
             request,

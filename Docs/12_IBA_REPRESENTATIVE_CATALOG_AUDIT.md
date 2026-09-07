@@ -3,7 +3,8 @@
 Last Updated: 2026-09-07
 
 Status: I9A COMPLETE — research/design/capability audit. I9B catalog and
-preparation-data implementation is pending.
+preparation-data implementation is pending. This is the historical I9A header;
+the current I9B implementation record is Section 14.
 
 ---
 
@@ -409,3 +410,60 @@ narrow preparation-data seam before any content assets are authored.
 
 This audit made no runtime, serialized, persistence, matcher, catalog, scene,
 prefab, or project-setting changes.
+
+---
+
+## 14. I9B Implementation Record (2026-09-07)
+
+### CURRENT SURLHWA IMPLEMENTATION
+
+The adopted production validation set is **seven**, not the historical proposed
+eight:
+
+1. Dry Martini
+2. Manhattan
+3. Negroni
+4. Last Word
+5. Gin Fizz
+6. French 75
+7. Hanky Panky
+
+Each now has a real `CocktailData`, `CocktailRecipeData`, exact-identity
+`IngredientData` entries as required, and an authoritative catalog entry. The
+entries remain `unlockedByDefault = false`; I10 owns availability/progression.
+
+### OWNER DECISIONS IMPLEMENTED
+
+- **Splash:** Gin Fizz uses player-triggered Soda Water `Splash`. SURLHWA uses
+  a configurable 10–20 ml gameplay range (15 ml default). Its actual ml enters
+  the Serving Glass and the action trace records `Splash`; this is not an IBA
+  fixed-volume claim or a Dash conversion.
+- **GentleStir:** Negroni and French 75 use a short shared direct-input Serving
+  Glass operation. It records `GentleStir` and does not replace Mixing Glass
+  Stir.
+- **PourFromContainer:** Gin Fizz uses the semantic post-shake pour action over
+  the existing liquid-transfer primitive; source ice remains behind.
+- **Garnish:** one active garnish remains runtime truth. Recipe expectation can
+  accept explicit alternatives or optionality without creating multi-garnish
+  state. Lemon Twist represents the placed lemon peel/twist; oil expression is
+  still deferred.
+- **Glassware:** authored as metadata only; there is no glass-selection
+  gameplay or correctness check.
+
+### PREPARATION DATA AND EVALUATION
+
+`CocktailRecipeData` owns a typed, bounded ordered preparation expectation.
+Production actions add an evidence-only action trace while
+`BartendingContainerState` remains the sole liquid quantity authority. The
+preparation evaluator checks action, ingredient, container, semantic action,
+order, and garnish expectation separately from the unchanged liquid matcher.
+It never adds, repairs, or reconstructs the drink.
+
+### NEW YORK SOUR — DEFERRED
+
+New York Sour is not implemented in I9B. The official `Few Drops of Egg White`
+wording has no approved quantitative `Drop` semantic, and no implicit
+Dash-to-Drop conversion was made. When it is eventually authored, its explicit
+final red-wine Float instruction is the authoritative sequencing instruction:
+the wine is reserved from the Shaker step. This is a content rule, not
+recipe-name runtime logic.

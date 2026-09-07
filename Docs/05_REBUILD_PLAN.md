@@ -489,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A and I1 through I7.5 validated; I8+ remains pending
+Status: IN PROGRESS — I0-A and I1 through I9B validated; I10+ remains pending
 
 #### Purpose
 
@@ -717,16 +717,26 @@ progression, and final UI/art remain I9+ work.
 
 #### I9 — Representative Real Cocktail Catalog
 
-Validate approximately 6–8 real/classic cocktail recipes against the new
-preparation model.
+I9A completed the official IBA audit. I9B validates the adopted seven-cocktail
+set: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and
+Hanky Panky. These real RecipeData/CocktailData/IngredientData assets enter the
+existing authoritative `RecipeCatalogData`; prototype recipes remain intact.
 
-I9A, the official IBA representative-catalog audit, is complete. It selects
-Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, New York Sour,
-and Hanky Panky as the proposed eight-recipe validation set and records the
-official source facts, capability gaps, and owner decisions in
-`Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. I9B implementation remains
-pending: no real recipe/catalog assets, preparation schema, matcher, or
-progression changes are implied by the audit alone.
+`CocktailRecipeData` now owns a deliberately bounded ordered expected
+preparation list. Production actions record a per-session action trace while
+the containers remain the sole liquid-quantity truth. The new preparation
+evaluator compares expected action/order/container/semantic actions and garnish
+expectations without changing `RecipeMatchService` or duplicating its liquid
+amount tolerance. `MiniGameResult` therefore keeps composition recognition,
+technique quality, and preparation correctness distinguishable.
+
+The selected content validates Dash, Splash, direct serving-glass GentleStir,
+Shaker `PourFromContainer`, post-strain fixed Champagne addition, garnish
+alternatives, and 7.5–60 ml amounts. New York Sour is deferred: its official
+`Few Drops of Egg White` has no approved `Drop` semantic. The future explicit
+red-wine Float instruction remains the adopted interpretation when that content
+is eventually authored. No ingredient progression, glass-selection gameplay,
+or catalog scale-up is implied.
 
 Do not scale beyond representative validation yet.
 

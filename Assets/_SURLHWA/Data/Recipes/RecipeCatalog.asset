@@ -21,3 +21,17 @@ MonoBehaviour:
     unlockedByDefault: 0
   - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
     unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: f1c4921f13e32b9458ede7f1d1e20276, type: 2}
+    unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: e62a5629488267244864180aac69e82f, type: 2}
+    unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: dd6b77a7f92acdf449be2ae9804d1144, type: 2}
+    unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: 89cd0fd10633ad94cbb1534eb68134cd, type: 2}
+    unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: efd8b7cce627d234e816e38e81d7a71e, type: 2}
+    unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: 0e273da40799b274db03f6fc2480d401, type: 2}
+    unlockedByDefault: 0
+  - recipe: {fileID: 11400000, guid: b0e4455d735fe4a46851534cd4a531ce, type: 2}
+    unlockedByDefault: 0

@@ -24,10 +24,16 @@ public class IngredientShelfController : MonoBehaviour
     // an interaction/UI adapter around its selected source and active target.
     private BartendingPreparationState preparationState;
     private BartendingContainerState targetContainer;
+    private BartendingPreparationTrace preparationTrace;
+    private IngredientData activePourIngredient;
+    private BartendingContainerType activePourTarget;
+    private RecipePreparationAction activePourAction;
+    private float activePourTransferredMl;
 
     public IngredientData SelectedIngredient => selectedIngredient;
     public BartendingContainerState TargetContainer => targetContainer;
     public BartendingPreparationState PreparationState => preparationState;
+    public BartendingPreparationTrace PreparationTrace => preparationTrace;
     public BartendingContainerState ServingGlass => preparationState != null
         ? preparationState.GetContainer(BartendingContainerType.ServingGlass)
         : null;
@@ -40,6 +46,9 @@ public class IngredientShelfController : MonoBehaviour
         selectedIngredient = null;
         preparationState = new BartendingPreparationState(targetContainerType);
         targetContainer = preparationState.ActiveTarget;
+        preparationTrace = new BartendingPreparationTrace();
+        activePourIngredient = null;
+        activePourTransferredMl = 0f;
 
         // Do not seed from the recipe/default session.
         // The shelf represents what the player has actually poured.
@@ -178,6 +187,7 @@ public class IngredientShelfController : MonoBehaviour
         if (ingredient == null)
             return;
 
+        EndSelectedPour();
         selectedIngredient = ingredient;
         RefreshSelectedVisuals();
 
@@ -206,14 +216,84 @@ public class IngredientShelfController : MonoBehaviour
 
         float transferredMl = targetContainer.AddLiquid(ingredient, amountMl);
         if (transferredMl > 0f)
+        {
+            if (activePourIngredient == ingredient &&
+                activePourTarget == targetContainer.ContainerType)
+            {
+                activePourTransferredMl += transferredMl;
+            }
+            else
+            {
+                preparationTrace?.Record(
+                    RecipePreparationAction.Pour,
+                    ingredient,
+                    transferredMl,
+                    null,
+                    targetContainer.ContainerType);
+            }
+
             RefreshContents();
+        }
 
         return transferredMl;
     }
 
+    /// <summary>
+    /// Shares the click-selection path with narrow deterministic validation and
+    /// route-local controls. It does not add liquid or change quantity truth.
+    /// </summary>
+    public bool TrySelectIngredient(IngredientData ingredient)
+    {
+        if (ingredient == null)
+            return false;
+
+        OnIngredientSelected(ingredient);
+        return selectedIngredient == ingredient;
+    }
+
     public float PourSelectedIngredient(float amountMl)
     {
+        BeginSelectedPour();
         return AddLiquidMl(selectedIngredient, amountMl);
+    }
+
+    /// <summary>
+    /// Starts one evidence record for a continuous Pour Core operation. The
+    /// container still receives every accepted frame amount immediately; this
+    /// only coalesces the trace into the single player action that caused it.
+    /// </summary>
+    public bool BeginSelectedPour(RecipePreparationAction action = RecipePreparationAction.Pour)
+    {
+        if (selectedIngredient == null || targetContainer == null)
+            return false;
+
+        if (activePourIngredient == selectedIngredient &&
+            activePourTarget == targetContainer.ContainerType &&
+            activePourAction == action)
+            return true;
+
+        EndSelectedPour();
+        activePourIngredient = selectedIngredient;
+        activePourTarget = targetContainer.ContainerType;
+        activePourAction = action;
+        activePourTransferredMl = 0f;
+        return true;
+    }
+
+    public void EndSelectedPour()
+    {
+        if (activePourIngredient != null && activePourTransferredMl > 0f)
+        {
+            preparationTrace?.Record(
+                activePourAction,
+                activePourIngredient,
+                activePourTransferredMl,
+                null,
+                activePourTarget);
+        }
+
+        activePourIngredient = null;
+        activePourTransferredMl = 0f;
     }
 
     /// <summary>
@@ -222,6 +302,7 @@ public class IngredientShelfController : MonoBehaviour
     /// </summary>
     public bool TrySetActiveTarget(BartendingContainerType containerType)
     {
+        EndSelectedPour();
         if (preparationState == null || !preparationState.TrySetActiveTarget(containerType))
             return false;
 
@@ -233,9 +314,16 @@ public class IngredientShelfController : MonoBehaviour
 
     public bool TryAddIceToActiveTarget()
     {
+        EndSelectedPour();
         if (preparationState == null || !preparationState.TryAddIceToActiveTarget())
             return false;
 
+        preparationTrace?.Record(
+            RecipePreparationAction.AddIce,
+            null,
+            0f,
+            null,
+            targetContainer.ContainerType);
         RefreshContents();
         Debug.Log($"[Container] AddIce target={targetContainer.ContainerType}");
         return true;
@@ -244,6 +332,7 @@ public class IngredientShelfController : MonoBehaviour
     public bool TryTransferActiveTargetToServingGlass(out float transferredMl)
     {
         transferredMl = 0f;
+        EndSelectedPour();
 
         if (preparationState == null || targetContainer == null)
             return false;
@@ -262,9 +351,43 @@ public class IngredientShelfController : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// I9B's Gin Fizz semantic: reuse I3's liquid-transfer primitive while
+    /// recording that the bartender poured from the source container rather
+    /// than strained it. Ice remains with the source in either operation.
+    /// </summary>
+    public bool TryPourActiveTargetToServingGlass(out float transferredMl)
+    {
+        transferredMl = 0f;
+        EndSelectedPour();
+
+        if (preparationState == null || targetContainer == null)
+            return false;
+
+        BartendingContainerType sourceType = targetContainer.ContainerType;
+        if (!preparationState.TryTransferAllLiquid(
+                sourceType,
+                BartendingContainerType.ServingGlass,
+                out transferredMl))
+            return false;
+
+        preparationTrace?.Record(
+            RecipePreparationAction.PourFromContainer,
+            null,
+            transferredMl,
+            sourceType,
+            BartendingContainerType.ServingGlass);
+        preparationState.TrySetActiveTarget(BartendingContainerType.ServingGlass);
+        targetContainer = preparationState.ActiveTarget;
+        RefreshContents();
+        Debug.Log($"[PourFromContainer] {sourceType} -> ServingGlass volumeMl={transferredMl:0.###}");
+        return true;
+    }
+
     public bool TryStrainActiveTargetToServingGlass(out float transferredMl)
     {
         transferredMl = 0f;
+        EndSelectedPour();
 
         if (preparationState == null || targetContainer == null)
             return false;
@@ -274,6 +397,12 @@ public class IngredientShelfController : MonoBehaviour
             return false;
 
         BartendingContainerState source = preparationState.GetContainer(sourceType);
+        preparationTrace?.Record(
+            RecipePreparationAction.Strain,
+            null,
+            transferredMl,
+            sourceType,
+            BartendingContainerType.ServingGlass);
         preparationState.TrySetActiveTarget(BartendingContainerType.ServingGlass);
         targetContainer = preparationState.ActiveTarget;
         RefreshContents();
@@ -291,6 +420,7 @@ public class IngredientShelfController : MonoBehaviour
     public bool TryDashSelectedIngredient(out int totalDashCount)
     {
         totalDashCount = 0;
+        EndSelectedPour();
 
         if (targetContainer == null || selectedIngredient == null)
             return false;
@@ -301,9 +431,60 @@ public class IngredientShelfController : MonoBehaviour
             out totalDashCount);
 
         if (added)
+        {
+            preparationTrace?.Record(
+                RecipePreparationAction.Dash,
+                selectedIngredient,
+                BartendingVolume.DashesToMilliliters(1),
+                null,
+                targetContainer.ContainerType);
             RefreshContents();
+        }
 
         return added;
+    }
+
+    /// <summary>
+    /// A Splash is its own qualitative player action, distinct from a Dash.
+    /// The accepted liquid is still stored as ml in the target container.
+    /// </summary>
+    public bool TrySplashSelectedIngredient(float requestedMl, out float transferredMl)
+    {
+        transferredMl = 0f;
+        EndSelectedPour();
+
+        if (targetContainer == null || selectedIngredient == null ||
+            !BartendingVolume.IsValidSplashMilliliters(requestedMl))
+            return false;
+
+        transferredMl = targetContainer.AddLiquid(selectedIngredient, requestedMl);
+        if (transferredMl <= 0f)
+            return false;
+
+        preparationTrace?.Record(
+            RecipePreparationAction.Splash,
+            selectedIngredient,
+            transferredMl,
+            null,
+            targetContainer.ContainerType);
+        RefreshContents();
+        Debug.Log(
+            $"[Splash] ingredient={selectedIngredient.ingredientId} target={targetContainer.ContainerType} " +
+            $"ml={transferredMl:0.###}");
+        return true;
+    }
+
+    public void RecordTechniqueAction(
+        RecipePreparationAction action,
+        BartendingContainerType target)
+    {
+        if (action != RecipePreparationAction.Stir &&
+            action != RecipePreparationAction.GentleStir &&
+            action != RecipePreparationAction.Shake)
+            return;
+
+        EndSelectedPour();
+        preparationTrace?.Record(action, null, 0f, null, target);
     }
 
     private void RefreshContents()

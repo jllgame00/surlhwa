@@ -100,11 +100,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
   - {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
   - {fileID: 11400000, guid: db5a42e5ddc8daf49ba26a334aafe62a, type: 2}
+  - {fileID: 11400000, guid: d87060247a6223b409ea94a876a824cf, type: 2}
+  - {fileID: 11400000, guid: 43c6097267101ce49a0212b9612aafde, type: 2}
+  - {fileID: 11400000, guid: 70b512d04df84da418e3a2ec018a55ce, type: 2}
+  - {fileID: 11400000, guid: 78fe3b6fa02eceb4f922e2772ed6e4ef, type: 2}
+  - {fileID: 11400000, guid: 28742c5eade7c7043acb389b056cbec7, type: 2}
+  - {fileID: 11400000, guid: 2d6aa0ff207c0a74d89a44528166e421, type: 2}
+  - {fileID: 11400000, guid: 9c74a9cb5410c3c4ca2d5439ca2e6462, type: 2}
+  - {fileID: 11400000, guid: 8a01c6e2b0c54394988f93ad4f440743, type: 2}
+  - {fileID: 11400000, guid: bdcad25df259b774ba735ed7cd4d26ee, type: 2}
+  - {fileID: 11400000, guid: 76a9785e9eafcf543a1f333df88d2d00, type: 2}
+  - {fileID: 11400000, guid: a690697921e0b8d408524e1e922f89b7, type: 2}
+  - {fileID: 11400000, guid: 348085e17f1ec7b40a8732f6df256861, type: 2}
+  - {fileID: 11400000, guid: 1e579d608d12a434c805ec0d0cd4ca24, type: 2}
+  - {fileID: 11400000, guid: caf6554d897e72245b328f8001764a1f, type: 2}
   ingredientListRoot: {fileID: 6297617859533203585}
   ingredientOptionPrefab: {fileID: 1668240398160441948, guid: 70472bf45b5f3a04f99d7b741cd173e6, type: 3}
   titleText: {fileID: 4273208198120219119}
   summaryText: {fileID: 281980363278522336}
-  amountStep: 0.5
 --- !u!1 &4621570718236347499
 GameObject:
   m_ObjectHideFlags: 0

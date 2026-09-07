@@ -13,6 +13,10 @@ public class CocktailRecipeData : ScriptableObject
     [Header("Recipe")]
     public RecipeIngredientEntry[] ingredients;
 
+    [Header("Expected Preparation (I9B)")]
+    [Tooltip("Typed, recipe-owned action order. Liquid amount matching remains owned by RecipeMatchService.")]
+    public RecipePreparationStep[] expectedPreparation;
+
     [Header("Discovery")]
     [Range(0f, 1f)] public float matchThreshold = 0.85f;
     public bool discoverable = true;

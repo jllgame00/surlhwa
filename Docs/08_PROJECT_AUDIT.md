@@ -1142,10 +1142,21 @@ and persistence. The temporary Lemon Twist, Cherry, and Olive choices are proof
 controls rather than an adopted catalog or unlock system. No I9 content,
 recipe-schema, matcher, or persistence implementation is implied.
 
-I9A is now complete as a documentation-only official IBA representative-catalog
-audit. It proposes eight recipes and records exact official recipe facts,
-current Bartending 2.0 capability coverage, data-authoring limitations, and
-owner decisions in `Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. I9B is still
-pending: no real RecipeData/IngredientData assets, preparation-sequence schema,
-runtime mechanics, matcher changes, or progression implementation have been
-added by I9A.
+I9A is complete as the official IBA source audit. I9B is now validated with
+seven production recipe/cocktail entries: Dry Martini, Manhattan, Negroni,
+Last Word, Gin Fizz, French 75, and Hanky Panky. The recipe owns a bounded
+ordered expected-preparation list; the active preparation session records its
+actual production actions as evidence; and `BartendingContainerState` remains
+the sole liquid-quantity authority feeding the unchanged `RecipeMatchService`.
+The preparation evaluator reports action/order/semantic correctness separately
+from final composition recognition and technique quality.
+
+I9B adds only the adopted content seams: configurable 10–20 ml SURLHWA Splash
+(15 ml default, not an official IBA conversion), serving-glass GentleStir,
+semantic Shaker `PourFromContainer`, recipe glassware metadata, and expected
+single-garnish alternatives/optionality. Exact ingredient identities are kept
+separate. All new catalog entries are not unlocked by default; I10 retains
+availability/progression ownership. New York Sour is deferred because no
+`Drop` semantic has been approved for its official `Few Drops of Egg White`.
+No matcher, persistence, guest, Guide, or glass-selection gameplay change was
+made.

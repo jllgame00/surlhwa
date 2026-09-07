@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// I5's direct Stir route. Actual liquid stays in the Mixing Glass until the
 /// player explicitly strains it into the Serving Glass for result submission.
 /// </summary>
-public class StirMiniGame : MonoBehaviour, IMiniGame
+public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectationReceiver
 {
     private enum State
     {
@@ -66,6 +66,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     private StirGrade completedGrade;
     private bool isPouring;
     private ServingGlassGarnishController garnishController;
+    private CocktailRecipeData expectedRecipe;
 
     public float TotalStirRotationDegrees => techniqueTracker != null
         ? techniqueTracker.TotalRotationDegrees
@@ -82,6 +83,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     public float StirConsistency => techniqueTracker != null
         ? techniqueTracker.Consistency
         : 0f;
+
+    public void SetExpectedRecipe(CocktailRecipeData recipe)
+    {
+        expectedRecipe = recipe;
+    }
 
     public void StartGame(Action<MiniGameResult> done)
     {
@@ -214,6 +220,9 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         }
 
         completedGrade = EvaluateTechnique();
+        ingredientShelf.RecordTechniqueAction(
+            RecipePreparationAction.Stir,
+            BartendingContainerType.MixingGlass);
         state = State.AwaitingStrain;
 
         if (resultLabel != null)
@@ -280,6 +289,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         result.garnish = ingredientShelf.ServingGlass != null
             ? ingredientShelf.ServingGlass.Garnish
             : null;
+        BartendingPreparationResultFactory.Apply(
+            ref result,
+            expectedRecipe,
+            ingredientShelf.PreparationTrace);
         state = State.Result;
         garnishController?.EndSelection();
 
@@ -476,9 +489,13 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
     private void StopDirectPour(string reason)
     {
         if (!isPouring)
+        {
+            ingredientShelf?.EndSelectedPour();
             return;
+        }
 
         isPouring = false;
+        ingredientShelf?.EndSelectedPour();
         IngredientData ingredient = ingredientShelf != null ? ingredientShelf.SelectedIngredient : null;
         BartendingContainerState mixingGlass = GetMixingGlass();
         float ingredientMl = ingredient != null && mixingGlass != null
@@ -626,7 +643,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
         garnishController.Initialize(
             ingredientShelf != null ? ingredientShelf.ServingGlass : null,
             null,
-            hintText);
+            hintText,
+            ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
     }
 
     private void AutoBindIfMissing()
@@ -659,103 +677,4 @@ public class StirMiniGame : MonoBehaviour, IMiniGame
             spoonInCup = transform.Find("UI/SpoonInCup")?.GetComponent<RectTransform>();
     }
 
-    private sealed class StirTechniqueTracker
-    {
-        private const float DirectionEpsilon = 0.1f;
-
-        private readonly float maximumAngularJumpDeg;
-        private bool hasReferenceAngle;
-        private float previousAngleDeg;
-        private int lastDirection;
-        private int validMotionSamples;
-        private int directionChanges;
-        private float validMotionSeconds;
-
-        public float ElapsedSeconds { get; private set; }
-        public float TotalRotationDegrees { get; private set; }
-        public float Revolutions => TotalRotationDegrees / 360f;
-        public float AverageAngularSpeedDegPerSecond => validMotionSeconds > 0f
-            ? TotalRotationDegrees / validMotionSeconds
-            : 0f;
-
-        public float Consistency
-        {
-            get
-            {
-                if (ElapsedSeconds <= 0f || validMotionSamples <= 0)
-                    return 0f;
-
-                float continuity = Mathf.Clamp01(validMotionSeconds / ElapsedSeconds);
-                float directionStability = validMotionSamples <= 1
-                    ? 1f
-                    : Mathf.Clamp01(1f - ((float)directionChanges / (validMotionSamples - 1)));
-
-                return Mathf.Clamp01((continuity * 0.5f) + (directionStability * 0.5f));
-            }
-        }
-
-        public StirTechniqueTracker(float maximumAngularJumpDeg)
-        {
-            this.maximumAngularJumpDeg = Mathf.Max(1f, maximumAngularJumpDeg);
-        }
-
-        public void Reset()
-        {
-            hasReferenceAngle = false;
-            previousAngleDeg = 0f;
-            lastDirection = 0;
-            validMotionSamples = 0;
-            directionChanges = 0;
-            validMotionSeconds = 0f;
-            ElapsedSeconds = 0f;
-            TotalRotationDegrees = 0f;
-        }
-
-        public void RecordIdle(float deltaTime)
-        {
-            ElapsedSeconds += Mathf.Max(0f, deltaTime);
-            hasReferenceAngle = false;
-        }
-
-        public bool RecordAngle(float angleDeg, float deltaTime)
-        {
-            float safeDeltaTime = Mathf.Max(0f, deltaTime);
-            ElapsedSeconds += safeDeltaTime;
-
-            if (!IsFinite(angleDeg))
-            {
-                hasReferenceAngle = false;
-                return false;
-            }
-
-            if (!hasReferenceAngle)
-            {
-                previousAngleDeg = angleDeg;
-                hasReferenceAngle = true;
-                return false;
-            }
-
-            float deltaAngle = Mathf.DeltaAngle(previousAngleDeg, angleDeg);
-            previousAngleDeg = angleDeg;
-
-            float absoluteDelta = Mathf.Abs(deltaAngle);
-            if (absoluteDelta <= DirectionEpsilon || absoluteDelta > maximumAngularJumpDeg || safeDeltaTime <= 0f)
-                return false;
-
-            int direction = deltaAngle > 0f ? 1 : -1;
-            if (lastDirection != 0 && direction != lastDirection)
-                directionChanges++;
-
-            lastDirection = direction;
-            validMotionSamples++;
-            validMotionSeconds += safeDeltaTime;
-            TotalRotationDegrees += absoluteDelta;
-            return true;
-        }
-
-        private static bool IsFinite(float value)
-        {
-            return !float.IsNaN(value) && !float.IsInfinity(value);
-        }
-    }
 }

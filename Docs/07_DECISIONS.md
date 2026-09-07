@@ -1405,6 +1405,64 @@ added only when adopted representative content proves it is required.
 
 ---
 
+# ADR-037 — Preparation Expectations Evaluate Evidence, Not Cocktail Contents
+
+**Status:** ACCEPTED — I9B
+
+## Context
+
+Final liquid composition alone cannot distinguish a correct French 75 from the
+same liquids prepared in the wrong order. Conversely, duplicating the matcher
+inside a sequence evaluator would create competing quantity authorities.
+
+## Decision
+
+`CocktailRecipeData` owns a typed, bounded ordered expected-preparation list.
+The active preparation records actual production actions as evidence. Runtime
+container contents remain canonical liquid truth, and `RecipeMatchService`
+remains the existing liquid-recognition authority. Preparation evaluation checks
+action/order/container/semantic actions and garnish expectations only; it never
+inserts, repairs, or re-measures cocktail contents.
+
+## Consequences
+
+- Composition recognition, preparation correctness, and technique quality stay
+  distinct result axes.
+- The schema is deliberately limited to adopted I9B actions, not a generic
+  cocktail scripting language.
+- Future content adds new action types only when adopted requirements justify
+  them.
+
+---
+
+# ADR-038 — Splash and Container-Pour Semantics Remain Content-Bounded
+
+**Status:** ACCEPTED — I9B
+
+## Context
+
+Gin Fizz officially specifies a qualitative `Splash of Soda Water` and a
+post-shake `Pour` into its serving glass. Neither fact authorizes inventing an
+official ml value or duplicating container-transfer math.
+
+## Decision
+
+`Splash` is a player-triggered, configurable SURLHWA gameplay action with an
+actual 10–20 ml liquid transfer (15 ml default); it is not a Dash or an IBA
+volume conversion. `PourFromContainer` records the authored pour meaning while
+delegating liquid movement to the existing transfer primitive. `GentleStir` is
+a short Serving-Glass reuse of the direct spoon-input foundation.
+
+## Consequences
+
+- The actual amount in the Serving Glass remains authoritative.
+- Gin Fizz can preserve the official qualitative/pour semantics without a new
+  fluid engine or duplicate transfer implementation.
+- New York Sour remains deferred until `Few Drops` has an explicitly approved
+  amount semantic.
+
+---
+
 # OPEN DECISIONS
 
 ## OD-001 — Save Format

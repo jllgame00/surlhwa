@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb55097d4deeb34c852231a8dc386d7, type: 3}
+  m_Name: Recipe_LastWord
+  m_EditorClassIdentifier: Assembly-CSharp::CocktailRecipeData
+  recipeId: recipe_last_word
+  method: 3
+  targetCocktail: {fileID: 11400000, guid: a9baa4cbd3907a44fa1a8550debf4798, type: 2}
+  ingredients:
+  - ingredient: {fileID: 11400000, guid: 3d52aad9ecb349940ba46b3879093ef9, type: 2}
+    ratio: 0.7608155
+  - ingredient: {fileID: 11400000, guid: 2d6aa0ff207c0a74d89a44528166e421, type: 2}
+    ratio: 0.7608155
+  - ingredient: {fileID: 11400000, guid: 9c74a9cb5410c3c4ca2d5439ca2e6462, type: 2}
+    ratio: 0.7608155
+  - ingredient: {fileID: 11400000, guid: 8a01c6e2b0c54394988f93ad4f440743, type: 2}
+    ratio: 0.7608155
+  expectedPreparation:
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 3d52aad9ecb349940ba46b3879093ef9, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 3
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 2d6aa0ff207c0a74d89a44528166e421, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 3
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 9c74a9cb5410c3c4ca2d5439ca2e6462, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 3
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 8a01c6e2b0c54394988f93ad4f440743, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 3
+    optional: 0
+    acceptedGarnishes: []
+  - action: 3
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 3
+    optional: 0
+    acceptedGarnishes: []
+  - action: 6
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 3
+    optional: 0
+    acceptedGarnishes: []
+  - action: 7
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 3
+    target: 1
+    optional: 0
+    acceptedGarnishes: []
+  matchThreshold: 0.85
+  discoverable: 1

@@ -23,6 +23,26 @@ public sealed class RecipeCatalogData : ScriptableObject
         return false;
     }
 
+    /// <summary>
+    /// Resolves an explicit order request through the authoritative catalog.
+    /// Generic orders remain recipe-agnostic and therefore receive no I9B
+    /// preparation expectation.
+    /// </summary>
+    public CocktailRecipeData FindRecipeForCocktail(CocktailData cocktail, MiniGameType method)
+    {
+        if (cocktail == null)
+            return null;
+
+        foreach (RecipeCatalogEntry entry in Entries)
+        {
+            CocktailRecipeData recipe = entry != null ? entry.Recipe : null;
+            if (recipe != null && recipe.method == method && recipe.targetCocktail == cocktail)
+                return recipe;
+        }
+
+        return null;
+    }
+
     private void OnValidate()
     {
         HashSet<CocktailRecipeData> seenRecipes = new();

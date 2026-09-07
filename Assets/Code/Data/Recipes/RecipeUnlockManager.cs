@@ -119,6 +119,13 @@ public class RecipeUnlockManager : MonoBehaviour
         return result;
     }
 
+    public CocktailRecipeData GetRecipeForCocktail(CocktailData cocktail, MiniGameType method)
+    {
+        return recipeCatalog != null
+            ? recipeCatalog.FindRecipeForCocktail(cocktail, method)
+            : null;
+    }
+
     public bool HasShownFirstRecipeReveal()
     {
         return RecipeProgressPersistence.HasShownFirstRecipeReveal();

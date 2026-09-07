@@ -11,7 +11,10 @@ public enum BartendingGarnishId
 {
     LemonTwist,
     Cherry,
-    Olive
+    Olive,
+    OrangeSlice,
+    LemonSlice,
+    OrangeZest
 }
 
 /// <summary>
@@ -50,7 +53,7 @@ public sealed class BartendingGarnishState
     public static bool IsValid(BartendingGarnishId garnishId)
     {
         return garnishId >= BartendingGarnishId.LemonTwist &&
-               garnishId <= BartendingGarnishId.Olive;
+               garnishId <= BartendingGarnishId.OrangeZest;
     }
 
     public static bool IsValid(BartendingGarnishPlacement placement)
@@ -69,6 +72,12 @@ public sealed class BartendingGarnishState
                 return "Cherry";
             case BartendingGarnishId.Olive:
                 return "Olive";
+            case BartendingGarnishId.OrangeSlice:
+                return "Orange Slice";
+            case BartendingGarnishId.LemonSlice:
+                return "Lemon Slice";
+            case BartendingGarnishId.OrangeZest:
+                return "Orange Zest";
             default:
                 return "Unknown Garnish";
         }

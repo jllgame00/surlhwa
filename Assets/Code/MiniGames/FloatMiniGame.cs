@@ -174,6 +174,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (!layeredDrinkState.TryBeginLayer(ingredient))
             return false;
 
+        ingredientShelf.BeginSelectedPour();
         ResetActiveLayerMetrics();
         bool isFirstLayer = layeredDrinkState.ActiveLayer.OrderIndex == 0;
         SetSpoonVisible(!isFirstLayer);
@@ -234,6 +235,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             : EvaluateBoundaryQuality();
 
         bool completed = layeredDrinkState.TryCompleteActiveLayer(boundaryQuality, out BartendingLayer completedLayer);
+        ingredientShelf.EndSelectedPour();
         SetSpoonVisible(false);
         UpdateLayerVisuals();
         UpdateProgressText();
@@ -347,6 +349,10 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         result.garnish = ingredientShelf.ServingGlass != null
             ? ingredientShelf.ServingGlass.Garnish
             : null;
+        BartendingPreparationResultFactory.Apply(
+            ref result,
+            null,
+            ingredientShelf.PreparationTrace);
         state = State.Result;
         garnishController?.EndSelection();
 
@@ -784,6 +790,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     {
         if (layeredDrinkState != null && layeredDrinkState.HasActiveLayer)
             EndActiveLayerPour();
+        ingredientShelf?.EndSelectedPour();
         SetSpoonVisible(false);
     }
 
@@ -797,7 +804,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         garnishController.Initialize(
             ingredientShelf != null ? ingredientShelf.ServingGlass : null,
             servingGlassVisual,
-            hintText);
+            hintText,
+            ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
     }
 
     private void AutoBindIfMissing()

@@ -6,10 +6,15 @@ public sealed class BartendingRequestContext
 {
     public MiniGameType Route { get; }
     public string DisplayTitle { get; }
+    public CocktailRecipeData ExpectedRecipe { get; }
 
-    public BartendingRequestContext(MiniGameType route, string displayTitle)
+    public BartendingRequestContext(
+        MiniGameType route,
+        string displayTitle,
+        CocktailRecipeData expectedRecipe = null)
     {
         Route = route;
         DisplayTitle = displayTitle ?? string.Empty;
+        ExpectedRecipe = expectedRecipe;
     }
 }

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public sealed class ServingGlassGarnishController : MonoBehaviour
 {
     private BartendingContainerState servingGlass;
+    private BartendingPreparationTrace preparationTrace;
     private RectTransform visualAnchor;
     private TMP_FontAsset fontAsset;
 
@@ -36,9 +37,11 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
     public void Initialize(
         BartendingContainerState servingGlassState,
         RectTransform servingGlassVisualAnchor,
-        TMP_Text fontSource)
+        TMP_Text fontSource,
+        BartendingPreparationTrace trace = null)
     {
         servingGlass = servingGlassState;
+        preparationTrace = trace;
         fontAsset = fontSource != null ? fontSource.font : TMP_Settings.defaultFontAsset;
         visualAnchor = servingGlassVisualAnchor != null
             ? servingGlassVisualAnchor
@@ -83,6 +86,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
 
         selectedGarnish = garnishId;
         selectedPlacement = placement;
+        preparationTrace?.RecordActiveGarnish(servingGlass.Garnish, BartendingContainerType.ServingGlass);
         RefreshPresentation();
         RefreshSelectionText();
 
@@ -95,6 +99,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         if (servingGlass == null || !servingGlass.ClearGarnish())
             return false;
 
+        preparationTrace?.ClearActiveGarnish();
         RefreshPresentation();
         RefreshSelectionText();
         Debug.Log("[Garnish] Cleared ServingGlass garnish");
@@ -112,6 +117,12 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
             selectedGarnish = BartendingGarnishId.Cherry;
         else if (Input.GetKeyDown(KeyCode.Alpha3))
             selectedGarnish = BartendingGarnishId.Olive;
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            selectedGarnish = BartendingGarnishId.OrangeSlice;
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            selectedGarnish = BartendingGarnishId.LemonSlice;
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            selectedGarnish = BartendingGarnishId.OrangeZest;
         else if (Input.GetKeyDown(KeyCode.Q))
             selectedPlacement = BartendingGarnishPlacement.Rim;
         else if (Input.GetKeyDown(KeyCode.W))
@@ -228,7 +239,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
             ? "none"
             : CurrentGarnish.DisplayName + " / " + GetPlacementLabel(CurrentGarnish.Placement);
         selectionText.text =
-            "Garnish (optional)  [1] Lemon Twist  [2] Cherry  [3] Olive\n" +
+            "Garnish (optional) [1] Lemon Twist [2] Cherry [3] Olive [4] Orange Slice [5] Lemon Slice [6] Orange Zest\n" +
             "Placement  [Q] Rim  [W] In Glass  [E] Surface   [G] Apply  [X] Clear\n" +
             "Selected: " + BartendingGarnishState.GetDisplayName(selectedGarnish) +
             " / " + GetPlacementLabel(selectedPlacement) + "   Applied: " + current;
@@ -282,6 +293,12 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
                 return new Vector2(34f, 12f);
             case BartendingGarnishId.Cherry:
                 return new Vector2(20f, 20f);
+            case BartendingGarnishId.OrangeSlice:
+                return new Vector2(30f, 20f);
+            case BartendingGarnishId.LemonSlice:
+                return new Vector2(28f, 18f);
+            case BartendingGarnishId.OrangeZest:
+                return new Vector2(36f, 10f);
             default:
                 return new Vector2(22f, 18f);
         }
@@ -295,6 +312,11 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
                 return new Color(1f, 0.84f, 0.18f, 1f);
             case BartendingGarnishId.Cherry:
                 return new Color(0.75f, 0.08f, 0.14f, 1f);
+            case BartendingGarnishId.OrangeSlice:
+            case BartendingGarnishId.OrangeZest:
+                return new Color(1f, 0.46f, 0.08f, 1f);
+            case BartendingGarnishId.LemonSlice:
+                return new Color(1f, 0.9f, 0.25f, 1f);
             default:
                 return new Color(0.42f, 0.58f, 0.16f, 1f);
         }

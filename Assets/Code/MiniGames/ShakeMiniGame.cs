@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// I6's direct Shake route. Actual liquid remains in the Shaker until the
 /// player explicitly strains it into the Serving Glass for result submission.
 /// </summary>
-public class ShakeMiniGame : MonoBehaviour, IMiniGame
+public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectationReceiver
 {
     public enum ShakeDirection
     {
@@ -31,6 +31,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         Rhythm,
         AwaitingStrain,
         AwaitingGarnish,
+        GentleStirring,
         Result
     }
 
@@ -74,6 +75,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     [Header("Pour Core")]
     [SerializeField] private float pourRateMlPerSecond = 30f;
 
+    [Header("I9B Splash")]
+    [SerializeField] private float splashMilliliters = BartendingVolume.DefaultSplashMilliliters;
+
     private State state = State.Preparing;
     private Action<MiniGameResult> onDone;
     private Coroutine shakerMotion;
@@ -88,6 +92,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     private int wrongDirectionCount;
     private int extraInputCount;
     private ServingGlassGarnishController garnishController;
+    private CocktailRecipeData expectedRecipe;
+    private ServingGlassGentleStirInteraction gentleStirInteraction;
+    private bool isServingPouring;
 
     public int NoteCount => Mathf.Max(1, defaultPatternNoteCount);
     public int PerfectHitCount => perfectHitCount;
@@ -97,6 +104,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     public int ExtraInputCount => extraInputCount;
     public int CorrectHitCount => perfectHitCount + goodHitCount;
     public float DirectionAccuracy => NoteCount > 0 ? (float)CorrectHitCount / NoteCount : 0f;
+
+    public void SetExpectedRecipe(CocktailRecipeData recipe)
+    {
+        expectedRecipe = recipe;
+    }
 
     public void StartGame(Action<MiniGameResult> done)
     {
@@ -117,6 +129,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         state = State.Preparing;
         isPouring = false;
         ResetRhythmState();
+        gentleStirInteraction = new ServingGlassGentleStirInteraction();
+        isServingPouring = false;
         CaptureShakerOrigin();
         ResetShakerToOrigin();
 
@@ -149,6 +163,18 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
             case State.Rhythm:
                 UpdateRhythmInput();
+                break;
+
+            case State.AwaitingStrain:
+                UpdatePostRhythmInput();
+                break;
+
+            case State.AwaitingGarnish:
+                UpdateServingGlassInput();
+                break;
+
+            case State.GentleStirring:
+                UpdateGentleStir();
                 break;
         }
     }
@@ -308,10 +334,10 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
 
         state = State.AwaitingGarnish;
 
-        ingredientShelf.SetVisible(false);
+        ingredientShelf.SetVisible(true);
         garnishController?.BeginSelection();
         SetPrimaryAction(ServeShake, "Serve Shake", true);
-        SetHint("Shaken drink strained. Garnish is optional; choose one or serve the drink as made.");
+        SetHint("Liquid moved to the Serving Glass. You may add more liquid, Splash with S, gently stir with J, garnish, or serve.");
         UpdateProgressText();
 
         BartendingContainerState shakerState = GetShaker();
@@ -319,6 +345,34 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             $"[Shake] Strain Shaker -> ServingGlass volumeMl={transferredMl:0.###} " +
             $"iceRetained={(shakerState != null && shakerState.HasIce)}");
 
+    }
+
+    /// <summary>
+    /// I9B's Gin Fizz path. It shares I3's liquid-only transfer primitive with
+    /// Strain but records the official semantic as PourFromContainer.
+    /// </summary>
+    public void PourFromContainerAndContinue()
+    {
+        if (state != State.AwaitingStrain)
+        {
+            Debug.LogWarning($"[Shake] PourFromContainer ignored. state={state}");
+            return;
+        }
+
+        if (ingredientShelf == null ||
+            !ingredientShelf.TryPourActiveTargetToServingGlass(out float transferredMl))
+        {
+            SetHint("Pour requires liquid in the Shaker.");
+            return;
+        }
+
+        state = State.AwaitingGarnish;
+        ingredientShelf.SetVisible(true);
+        garnishController?.BeginSelection();
+        SetPrimaryAction(ServeShake, "Serve Shake", true);
+        SetHint("Poured from the Shaker. Add the optional Splash with S, garnish, or serve.");
+        UpdateProgressText();
+        Debug.Log($"[Shake] PourFromContainer Shaker -> ServingGlass volumeMl={transferredMl:0.###}");
     }
 
     /// <summary>
@@ -338,6 +392,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         result.garnish = ingredientShelf.ServingGlass != null
             ? ingredientShelf.ServingGlass.Garnish
             : null;
+        StopServingPour("Shake served");
+        BartendingPreparationResultFactory.Apply(
+            ref result,
+            expectedRecipe,
+            ingredientShelf.PreparationTrace);
         state = State.Result;
         garnishController?.EndSelection();
 
@@ -418,6 +477,140 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         UpdateProgressText();
     }
 
+    private void UpdatePostRhythmInput()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            PourFromContainerAndContinue();
+    }
+
+    private void UpdateServingGlassInput()
+    {
+        if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
+        {
+            StopServingPour("Serving Glass unavailable");
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            BeginGentleStir();
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            TryAddSplashToServingGlass();
+            return;
+        }
+
+        if (!Input.GetKey(KeyCode.Space))
+        {
+            StopServingPour("input released");
+            return;
+        }
+
+        IngredientData ingredient = ingredientShelf.SelectedIngredient;
+        if (ingredient == null)
+        {
+            StopServingPour("no ingredient selected");
+            SetHint("Select an ingredient before pouring into the Serving Glass.");
+            return;
+        }
+
+        float transferredMl = ingredientShelf.PourSelectedIngredient(
+            Mathf.Max(0f, pourRateMlPerSecond) * Time.deltaTime);
+        if (transferredMl <= 0f)
+        {
+            StopServingPour("transfer rejected");
+            return;
+        }
+
+        if (!isServingPouring)
+        {
+            isServingPouring = true;
+            Debug.Log($"[Pour] Start ingredient={ingredient.ingredientId} target=ServingGlass rate={pourRateMlPerSecond:0.##} ml/s");
+        }
+
+        SetHint($"Pouring {ingredient.displayName} into Serving Glass. Press J for gentle stir or serve when ready.");
+        UpdateProgressText();
+    }
+
+    public bool TryAddSplashToServingGlass()
+    {
+        if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null ||
+            !ingredientShelf.TrySplashSelectedIngredient(splashMilliliters, out float transferredMl))
+        {
+            SetHint($"Select an ingredient and use a {splashMilliliters:0.#} ml Splash.");
+            return false;
+        }
+
+        SetHint($"Splash added: {transferredMl:0.#} ml. This is SURLHWA gameplay tuning, not an official IBA volume.");
+        UpdateProgressText();
+        return true;
+    }
+
+    public void BeginGentleStir()
+    {
+        if (state != State.AwaitingGarnish || ingredientShelf == null ||
+            !ingredientShelf.HasServingGlassContents())
+        {
+            SetHint("The Serving Glass needs liquid before a gentle stir.");
+            return;
+        }
+
+        StopServingPour("Gentle Stir started");
+        RectTransform center = transform.Find("UI/GlassImage")?.GetComponent<RectTransform>();
+        Transform visualParent = transform.Find("UI") ?? transform;
+        if (gentleStirInteraction == null || !gentleStirInteraction.Begin(center, visualParent))
+        {
+            SetHint("Gentle Stir visual could not start.");
+            return;
+        }
+
+        garnishController?.EndSelection();
+        ingredientShelf.SetVisible(false);
+        state = State.GentleStirring;
+        SetPrimaryAction(FinishGentleStir, "Finish Gentle Stir", true);
+        SetHint("Move the mouse in a light circle around the Serving Glass.");
+        UpdateProgressText();
+    }
+
+    private void UpdateGentleStir()
+    {
+        gentleStirInteraction?.Tick();
+        UpdateProgressText();
+    }
+
+    public bool TryRecordGentleStirAngle(float angleDeg, float deltaTime)
+    {
+        return state == State.GentleStirring &&
+               gentleStirInteraction != null &&
+               gentleStirInteraction.TryRecordAngle(angleDeg, deltaTime);
+    }
+
+    public void FinishGentleStir()
+    {
+        if (state != State.GentleStirring || gentleStirInteraction == null)
+            return;
+
+        if (!gentleStirInteraction.TryFinish())
+        {
+            SetHint("Keep gently stirring for a little longer.");
+            return;
+        }
+
+        ingredientShelf.RecordTechniqueAction(
+            RecipePreparationAction.GentleStir,
+            BartendingContainerType.ServingGlass);
+        state = State.AwaitingGarnish;
+        ingredientShelf.SetVisible(true);
+        garnishController?.BeginSelection();
+        SetPrimaryAction(ServeShake, "Serve Shake", true);
+        SetHint("Gentle Stir complete. Garnish, adjust with actual liquid, or serve.");
+        UpdateProgressText();
+        Debug.Log("[GentleStir] Shake route ServingGlass complete");
+    }
+
     private void UpdateRhythmInput()
     {
         float now = Time.unscaledTime;
@@ -455,6 +648,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
             return false;
 
         completedGrade = EvaluateTechnique();
+        ingredientShelf.RecordTechniqueAction(
+            RecipePreparationAction.Shake,
+            BartendingContainerType.Shaker);
         state = State.AwaitingStrain;
 
         if (resultLabel != null)
@@ -580,9 +776,13 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     private void StopDirectPour(string reason)
     {
         if (!isPouring)
+        {
+            ingredientShelf?.EndSelectedPour();
             return;
+        }
 
         isPouring = false;
+        ingredientShelf?.EndSelectedPour();
         IngredientData ingredient = ingredientShelf != null ? ingredientShelf.SelectedIngredient : null;
         BartendingContainerState shakerState = GetShaker();
         float ingredientMl = ingredient != null && shakerState != null
@@ -593,6 +793,19 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         Debug.Log(
             $"[Pour] Stop reason={reason} ingredient={(ingredient != null ? ingredient.ingredientId : "NULL")} " +
             $"ingredientMl={ingredientMl:0.0} totalMl={totalMl:0.0}");
+    }
+
+    private void StopServingPour(string reason)
+    {
+        if (!isServingPouring)
+        {
+            ingredientShelf?.EndSelectedPour();
+            return;
+        }
+
+        isServingPouring = false;
+        ingredientShelf?.EndSelectedPour();
+        Debug.Log($"[Pour] Stop reason={reason} target=ServingGlass");
     }
 
     private ShakeDirection GetExpectedDirection(int noteIndex)
@@ -655,7 +868,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
                 break;
 
             case State.AwaitingGarnish:
-                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish optional";
+                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish or gentle stir optional";
+                break;
+
+            case State.GentleStirring:
+                progressText.text = $"Gentle Stir {gentleStirInteraction?.Revolutions ?? 0f:0.00} rotations";
                 break;
 
             case State.Result:
@@ -717,6 +934,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
     private void OnDisable()
     {
         StopDirectPour("ShakeMiniGame disabled");
+        StopServingPour("ShakeMiniGame disabled");
+        gentleStirInteraction?.End();
         ResetShakerToOrigin();
     }
 
@@ -732,7 +951,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame
         garnishController.Initialize(
             ingredientShelf != null ? ingredientShelf.ServingGlass : null,
             null,
-            hintText);
+            hintText,
+            ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
     }
 
     private void AutoBindIfMissing()

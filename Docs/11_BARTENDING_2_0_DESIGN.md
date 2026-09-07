@@ -714,11 +714,35 @@ This set exists to answer:
 - Are Dash, TopUp, Strain, and Float needs represented correctly?
 - Does the recipe interaction remain fun?
 
-I9A has now selected an official-IBA eight-cocktail recommendation in
-`Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. That audit is selection and
-capability evidence only: I9B recipe/content implementation, preparation-step
-authoring, and all catalog scale-up remain pending. Do not add 30+ cocktails
-before the selected representative validation passes.
+I9A selected the source-audited candidates in
+`Docs/12_IBA_REPRESENTATIVE_CATALOG_AUDIT.md`. I9B now validates the adopted
+seven: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and
+Hanky Panky. New York Sour is deferred pending an approved semantic for the
+official `Few Drops of Egg White`; I9B does not implement `Drop`.
+
+#### I9B implemented preparation boundary
+
+`CocktailRecipeData` owns a bounded ordered `RecipePreparationStep[]` using
+only the adopted action vocabulary: `Pour`, `Dash`, `Splash`, `AddIce`, `Stir`,
+`GentleStir`, `Shake`, `Strain`, `PourFromContainer`, `TopUp`, and `Garnish`.
+This is typed recipe data, not a generalized scripting language.
+
+The same production action that changes a container records an
+`ActualPreparationAction` in the current preparation trace. Container contents
+remain canonical liquid truth; the trace is action/order evidence only.
+`RecipePreparationEvaluator` compares that trace and final garnish state with
+the recipe expectation, while the unchanged `RecipeMatchService` remains the
+sole normal liquid-volume recognition boundary. The result keeps composition,
+preparation, and technique quality separate.
+
+I9B adopts a 10–20 ml SURLHWA gameplay range for `Splash` (15 ml default).
+It is a qualitative player-triggered Soda Water addition whose actual ml enters
+the Serving Glass; it is neither a Dash nor an IBA volume conversion. A shared
+short direct-input `GentleStir` operates on the Serving Glass for Negroni and
+French 75. `PourFromContainer` records Gin Fizz's official post-shake pour
+semantic while reusing the existing transfer primitive and retaining source
+ice. Garnish remains one active runtime garnish; expected data can accept an
+alternative or mark it optional. Glassware is recipe metadata only.
 
 ### 12.2 Shared ingredient principle
 
