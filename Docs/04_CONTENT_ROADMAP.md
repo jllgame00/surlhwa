@@ -1,6 +1,6 @@
 # SURLHWA CONTENT ROADMAP
 
-Last Updated: 2026-08-11
+Last Updated: 2026-09-07
 
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
@@ -83,16 +83,21 @@ Little Prince는 플레이어에게 정답을 알려주는 인물이 아니다. 
 
 ### Current Prototype Note — Audit Source of Truth
 
-다음은 Story Design이 아니라 현재 Repository에서 확인된 구현 상태다.
+다음은 Story Design이 아니라 current repository에서 확인된 구현 상태다.
 
-- `CONFIRMED_IMPLEMENTED_STATIC`: Day 2 첫 Spawn에서 Little Prince prefab을
-  우선 선택하는 코드와 Main Scene 연결이 존재한다.
-- `CONFIRMED`: Little Prince prefab 참조와 `littlePrinceFirstVisitCompleted`
-  completion flag 저장 경로가 존재한다. 현재 flag는 Customer leave 시 저장된다.
-- `PARTIAL`: DialogueData 및 OrderData asset은 존재하지만, 현재 interaction
-  runtime이 Little Prince 전용 Dialogue / Order를 소비한다는 증거는 없다.
-- `NEEDS_VERIFICATION`: 실제 Play Mode에서 Day 2 전체 방문, 응답, 저장, 재방문
-  흐름이 의도대로 연결되는지는 별도 Vertical Slice 검증이 필요하다.
+- `CONFIRMED_IMPLEMENTED`: Day 2 첫 Spawn에서 Little Prince prefab을 우선
+  선택하는 code/scene 연결이 존재한다.
+- `CONFIRMED_IMPLEMENTED`: Little Prince prefab의 optional DialogueData와
+  dedicated OrderData는 active interaction flow에서 소비된다. 네 개의
+  pre-request line은 NextButton으로 진행되고, 마지막 line 뒤 Brew가 열린다.
+- `CONFIRMED_IMPLEMENTED`: dedicated first-visit request는 Float / 만월
+  route를 사용한다. first-visit completion flag는 Customer leave 시 저장된다.
+- `DEFERRED_CONTENT`: post-result Little Prince dialogue, interpretive
+  drink choice, revisit, statue/environment trace, and final story completion
+  semantics are not implemented by this current prototype.
+- `NEEDS_VERIFICATION`: Bartending 2.0 이후 Day 2 전체 방문, actual
+  preparation, response, memory, and revisit path는 별도 Vertical Slice
+  검증이 필요하다.
 
 ## 5. ACT 2 — Chunhyang / Mongryong
 
@@ -545,3 +550,77 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 순서와 실제 catalog는 planning target이며 launch requirement나 final recipe list가
 아니다. 총 칵테일 수, exact IBA/classic list, exact Korean-local/original list, 그리고
 설화라는 이름의 cocktail이 late-game/ending 역할을 가질지는 아직 확정하지 않는다.
+
+---
+
+## 18. Bartending 2.0 and Representative Catalog Validation
+
+Status: APPROVED DIRECTION / PHASE I FUTURE WORK
+
+Red-team review 이후 다음 production rule이 승인되었다.
+
+현재 설야, 여명, 잔설, 만월의 disconnected prototype recipe는 final catalog
+structure나 final bartending interaction의 증거가 아니다. 먼저 Bartending 2.0의
+actual preparation model을 representative real/classic cocktail set으로 검증한
+뒤에만 large catalog production을 시작한다.
+
+상세 preparation design은 `Docs/11_BARTENDING_2_0_DESIGN.md`, implementation
+sequence는 `05_REBUILD_PLAN.md` Phase I을 따른다.
+
+### 18.1 Representative validation gate
+
+초기 검증 target은 약 **6–8개의 representative real/classic cocktail**이다.
+
+이 set은 final cocktail list가 아니다. 다음 질문에 답하기 위한 gameplay/data
+validation set이다.
+
+- ml-based amount model이 selected real recipe를 표현할 수 있는가?
+- shared ingredient가 recipe 간의 transferable learning을 만드는가?
+- Serving Glass, Mixing Glass, Shaker와 preparation sequence가 필요한 recipe를
+  표현할 수 있는가?
+- Dash, TopUp, AddIce, Strain, Float requirement가 actual interaction으로
+  표현되는가?
+- preparation 자체가 재미있고 readable한가?
+
+검증 전에는 30개 이상의 cocktail catalog를 추가하지 않는다. actual recipe
+selection/source text는 이 documentation update에서 확정하지 않는다.
+
+### 18.2 Shared ingredient and staged availability
+
+Ingredient는 시작부터 전체 catalog를 모두 노출하지 않는다. Business Day, story
+progression, authored unlock event 등 intentionally defined progression point를 통해
+availability를 넓힌다.
+
+목적은 arbitrary gate가 아니라 player가 recipe space를 단계적으로 이해하게 하는
+것이다.
+
+```text
+Learn ingredient
+→ recognize where it can be used
+→ multiple recipes become possible
+→ knowledge carries into later encounters
+```
+
+새 ingredient는 가능한 한 여러 recipe와 연결된다. 각 recipe가 완전히 isolated
+ingredient set을 요구하는 prototype pattern은 final content direction이 아니다.
+
+Ingredient unlock persistence, final unlock conditions, and final UI are
+separate future work. 이 section은 현재 save/runtime behavior를 변경하지 않는다.
+
+### 18.3 Content scale-up boundary
+
+Section 4–11의 seven-ACT / revisit material은 long-term story direction으로
+보존한다. 이는 Bartending 2.0 proof 이전의 immediate shipping commitment가 아니다.
+
+Phase I은 먼저 다음을 입증해야 한다.
+
+```text
+learnable recipe
+→ actual preparation
+→ understandable guest response
+→ one remembered choice
+→ one environmental trace
+```
+
+이 proof가 완료되기 전에는 full ACT production, large catalog, or broad special
+guest framework를 scale-up하지 않는다.

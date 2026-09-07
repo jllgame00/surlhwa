@@ -1,6 +1,6 @@
 # SURLHWA — Game Design
 
-Last Updated: 2026-08-11
+Last Updated: 2026-09-07
 
 ---
 
@@ -35,9 +35,11 @@ Dialogue / Order
 ↓
 Cocktail Interpretation
 ↓
-Bartending Method
+Cocktail Choice
 ↓
-Mini Game
+Recipe Knowledge / Discovery
+↓
+Actual Preparation
 ↓
 Result
 ↓
@@ -146,67 +148,101 @@ Tutorial 고정 진행은 1일차에만 적용한다.
 
 설화의 기본 조주 방식은 네 종류다.
 
+### Bartending 2.0 Direction
+
+현재 prototype은 재료와 수량을 UI에서 먼저 정한 뒤 별도 technique minigame을
+수행하는 흐름을 사용한다. 이 흐름은 Phase I Bartending 2.0에서 즉시 삭제되는
+current-runtime 사실이 아니라, 교체를 검증해야 하는 legacy/prototype baseline이다.
+
+승인된 target은 다음과 같다.
+
+```text
+Understand the guest
+→ Choose the drink
+→ Know / discover the recipe
+→ Actually prepare it
+→ Guest responds
+→ Encounter may be remembered
+```
+
+핵심 원칙은 다음과 같다.
+
+- preparation 자체가 gameplay다.
+- 플레이어가 실제로 옮긴 liquid amount와 container state가 실제 cocktail
+  composition이 된다.
+- narrative choice는 **무엇을 만들지**를 정한다.
+- recipe knowledge는 **무엇이 들어가는지**를 정한다.
+- bartending skill은 **어떻게 잘 만들었는지**를 정한다.
+- technique 뒤에 실제 drink state와 분리된 redundant scoring minigame을 두지 않는다.
+- authentic-feeling bartending을 지향하되 real-world fluid simulation을 목표로 하지
+  않는다.
+
+상세 preparation vocabulary, container, unit, implementation phase, non-goal은
+`Docs/11_BARTENDING_2_0_DESIGN.md`를 따른다.
+
 ### 6.1 Stir
 
-잔 속 재료를 Bar Spoon으로 젓는다.
+재료와 ice를 Mixing Glass에 넣은 뒤 Bar Spoon으로 실제 젓는 방향이다.
 
 핵심 감각:
 
-- 회전
-- 속도 조절
-- Timing
-- 안정감
+- player-driven spoon motion
+- 회전 consistency
+- speed / duration의 game-scale control
+- dilution / chilling을 대신하는 simplified technique state
 
-평가 예:
-
-- Perfect
-- Good
-- Fail
+입력이 visible spoon motion과 preparation state에 연결되어야 한다. 실제 bartending
+시간을 그대로 재현하지 않고 satisfying한 game-scale duration으로 압축한다.
 
 ---
 
 ### 6.2 Shake
 
-Shaker를 흔들어 칵테일을 완성한다.
+재료와 ice를 Shaker에 넣은 뒤 short rhythm interaction으로 흔드는 방향이다.
 
 핵심 감각:
 
-- Rhythm
-- 반복
-- 속도
-- Timing
+- left / right timing
+- rhythm
+- consistency
+- chilling / aeration을 대신하는 simplified technique state
 
-세부 조작과 최종 판정 방식은 구현 상태를 Audit 후 확정한다.
+Shaker는 player input에 맞춰 visibly move해야 한다. recipe별 bespoke music-game
+beatmap을 기본 requirement로 두지 않고, reusable rhythm pattern template을 우선한다.
 
 ---
 
 ### 6.3 Build
 
-재료를 순서대로 직접 잔에 넣어 완성한다.
+Serving Glass에 재료를 직접 pour하여 완성한다.
 
 핵심 감각:
 
-- 순서
-- 양 조절
-- Pouring
-- Recipe Understanding
+- measurement
+- sequence
+- correct destination
+- optional top-up
+- recipe understanding
 
-세부 조작과 최종 판정 방식은 구현 상태를 Audit 후 확정한다.
+Build의 challenge는 actual pour-based preparation에 있다. drink가 이미 구성된 뒤
+별도의 Build timing minigame을 다시 수행하지 않는다. Build는 의도적으로 가장
+쉬운 technique로 남을 수 있다.
 
 ---
 
 ### 6.4 Float
 
-밀도 차이를 이용하여 재료의 층을 분리한다.
+common Pour foundation 위에서 spoon / surface를 이용해 layer를 만드는 방향이다.
 
 핵심 감각:
 
-- 천천히 붓기
-- 정밀함
-- Layer
-- Flow Control
+- low-force pouring
+- flow control
+- layer separation
+- visible CleanLayer / PartialMix / Mixed-style result
 
-세부 조작과 최종 판정 방식은 구현 상태를 Audit 후 확정한다.
+Float는 Build의 hold/release test를 재사용하지 않는다. gentle pour와 aggressive
+pour가 drink의 visible layer state를 다르게 만들어야 한다.
 
 ---
 
@@ -257,6 +293,11 @@ Result
 - Bartending Method
 - 기타 조주 규칙
 
+향후 real/classic content에서는 ingredient identity와 technique뿐 아니라 actual
+preparation sequence가 필요해진다. 이는 현재 `CocktailRecipeData` schema가 이미
+교체되었다는 뜻이 아니다. Phase I representative validation이 current codebase에
+필요한 narrow data extension을 먼저 증명해야 한다.
+
 ### OrderData
 
 - Customer Request
@@ -266,10 +307,16 @@ Result
 코드에 개별 Cocktail 조건을 Hard Coding하는 방식은 지양한다.
 
 최종 카탈로그는 특정 prototype 칵테일 이름이나 한 조주 방식당 하나의 고정 Order에
-의존하지 않는다. 실제 칵테일은 Stir, Shake, Build, Float의 네 gameplay를 의미 있게
-보여 줄 수 있도록 선정하되, technique 수를 맞추기 위해 실제 recipe를 왜곡하지
-않는다. 카탈로그와 gameplay의 균형은 이후 Data Architecture와 content curation에서
-결정한다.
+의존하지 않는다. 실제/established classic cocktails를 primary direction으로 삼고,
+shared ingredient를 통해 knowledge가 여러 recipe로 이어지게 한다. 실제 recipe는
+Stir, Shake, Build, Float의 target gameplay를 의미 있게 cover하도록 curated하되,
+technique 수를 맞추기 위해 recipe를 왜곡하지 않는다.
+
+최종 catalog production 전에 약 6–8개의 representative real/classic cocktail로
+measurement, container, Dash / TopUp / Strain / Float requirement, shared ingredient
+learning, 그리고 interaction fun을 검증한다. 이 검증 전에는 30개 이상의 catalog를
+추가하지 않는다. 상세 catalog direction은 `04_CONTENT_ROADMAP.md`, Bartending 2.0
+design은 `Docs/11_BARTENDING_2_0_DESIGN.md`를 따른다.
 
 ---
 
@@ -286,7 +333,28 @@ Result
 
 이 네 asset은 현재 prototype/tutorial baseline이다. 설야, 여명, 잔설, 만월은
 삭제하거나 rename하지 않지만, 최종 catalog에 반드시 남는다는 design requirement로
-취급하지 않는다. 최종 카탈로그 방향은 `04_CONTENT_ROADMAP.md`와 ADR-028을 따른다.
+취급하지 않는다. 이 네 prototype은 Bartending 2.0 target interaction 또는 final
+catalog structure의 증거도 아니다. 최종 카탈로그 방향은 `04_CONTENT_ROADMAP.md`와
+ADR-028, ADR-035를 따른다.
+
+### Ingredient Progression
+
+재료는 시작부터 전체 catalog를 모두 노출하지 않는다. Business Day, story progress,
+authored unlock event 등 의도적으로 정의된 progression point를 통해 availability를
+넓힌다.
+
+목적은 arbitrary gate가 아니라 recipe space의 확장과 transferable learning이다.
+
+```text
+Learn ingredient
+→ recognize where it can be used
+→ multiple recipes become possible
+→ knowledge carries into later encounters
+```
+
+새 ingredient는 가능한 한 여러 recipe와 연결된다. 한 recipe마다 완전히 고립된
+ingredient set을 추가하는 prototype pattern은 final content model로 삼지 않는다.
+구체적인 unlock data, persistence, UI는 Phase I validation 이후 별도로 결정한다.
 
 ---
 

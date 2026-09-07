@@ -1,6 +1,6 @@
 # SURLHWA PROJECT AUDIT
 
-Last Updated: 2026-08-11
+Last Updated: 2026-09-07
 
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 
@@ -1086,3 +1086,19 @@ The four existing key strings, value types, serialized representations,
 missing-key behavior, and immediate-save timing were retained without a save
 format migration. No Scene, Prefab, or ScriptableObject migration was required
 for Phase H.
+
+---
+
+## Phase I Current Direction Note (2026-09-07)
+
+The structural rebuild through Phase H remains complete and current. The
+independent red-team review identified the player-facing core loop, rather than
+another ownership or persistence refactor, as the next material project risk.
+
+Bartending 2.0 is therefore the approved next development direction: preparation
+actions must determine the actual drink state, and the four current prototype
+mini-games are reference/fallback implementations until replacements are
+validated. Phase I is planned future work only; no Phase I runtime
+implementation occurred as part of this documentation update. See
+`Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
+`Docs/05_REBUILD_PLAN.md`.

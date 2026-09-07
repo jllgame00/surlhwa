@@ -1,6 +1,6 @@
 # SURLHWA — Architecture & Design Decisions
 
-Last Updated: 2026-08-11
+Last Updated: 2026-09-07
 
 이 문서는 프로젝트에서 중요한 결정을
 "무엇을 선택했는가"뿐만 아니라
@@ -1166,6 +1166,242 @@ representation after changing `BuildMiniGame` to present the request title
 without a fabricated step-count suffix. It does not change request selection,
 `miniGameType`, `targetCocktail`, `orderPool`, Little Prince activation,
 matching, persistence, Scenes, or Prefabs.
+
+---
+
+# ADR-031 — Bartending Preparation Actions Are Authoritative
+
+**Status:** ACCEPTED — Phase I future direction
+
+## Context
+
+The playable prototype establishes ingredient quantities through UI selection,
+then grades a separate technique mini-game. The visible preparation action and
+the state used for recipe recognition are therefore not yet one authoritative
+player action. The red-team review identified this as a core player-facing
+risk, despite the completed data, request, and persistence rebuilds.
+
+## Decision
+
+Phase I adopts this target flow:
+
+```text
+Select ingredient / bottle
+→ prepare into a container
+→ actual action updates container state
+→ actual container state is the drink composition
+→ perform only the recipe-required technique
+→ serve what was made
+```
+
+The governing rule is: **what the player pours is what the player made.**
+Preparation is gameplay. A technique cannot be followed by an unrelated score
+mini-game whose result is disconnected from the drink state.
+
+The target is authentic-feeling, game-scale bartending, not literal fluid,
+thermal, or density simulation. Existing prototype Stir, Shake, Build, and
+Float implementations remain temporary regression/reference fallbacks until
+their replacements pass reachability and runtime validation.
+
+## Consequences
+
+- Future preparation must make transferred quantities and target-container
+  state authoritative inputs to recognition and serving.
+- Narrative choice answers **what** drink to make; recipe knowledge answers
+  **what goes into it**; bartending skill answers **how well it is made**.
+- This does not reopen ADR-029 data ownership, ADR-030 Little Prince dialogue
+  sequencing, or Phase H persistence contracts.
+- It is a future Phase I direction, not a claim that the current runtime has
+  already replaced the prototype flow.
+
+---
+
+# ADR-032 — Milliliters Are the Canonical Future Liquid Quantity Unit
+
+**Status:** ACCEPTED — Phase I future direction
+
+## Context
+
+The prototype quantity UI is constrained by `0.5 oz` and `1.0 oz` choices.
+Representative classic recipes require arbitrary values such as
+quarter-ounce-equivalents, three-quarter-ounce-equivalents, and one-and-a-half
+ounces. A future preparation model needs a single precise internal unit while
+remaining readable to players familiar with ounce recipes.
+
+## Decision
+
+Future runtime and recipe liquid quantities use milliliters as their canonical
+data unit. Ounces remain an allowed presentation and reference unit through UI
+conversion. The future model must represent amounts equivalent to `0.25 oz`,
+`0.75 oz`, `1.5 oz`, and other appropriate values; the old fixed increment UI
+does not constrain Phase I content.
+
+This decision does not set player measurement tolerances, rewrite existing
+prototype recipe assets, or authorize a save migration. Matching tolerance and
+presentation tuning remain future gameplay decisions.
+
+## Consequences
+
+- Recipe data and actual transfer state can share one unambiguous quantity
+  language when Phase I implementation begins.
+- UI may present a localized or ounce-oriented value without changing the
+  canonical internal value.
+- Existing IDs, persistence keys, and current recipe matching contracts remain
+  intact until a separately scoped implementation migration is approved.
+
+---
+
+# ADR-033 — Initial Bartending Preparation Vocabulary Is Bounded
+
+**Status:** ACCEPTED — Phase I future direction
+
+## Context
+
+Bartending 2.0 requires enough vocabulary to express a representative classic
+cocktail set without recreating a broad real-world bartending simulator.
+Feature completeness is not a valid reason to build unused mechanics.
+
+## Decision
+
+The initial intended vocabulary is:
+
+```text
+Measure
+Pour
+Dash
+TopUp
+AddIce
+Stir
+Shake
+Float
+Strain
+Garnish
+```
+
+`Measure` / `Pour` transfer an actual liquid amount. `Dash` is a discrete
+small dispensing action, conceptually one input per dash. `TopUp` uses the
+same transfer foundation but targets an appropriate glass-fill condition.
+`AddIce` targets a container. `Stir`, `Shake`, and `Float` have the distinct
+interactions defined by Bartending 2.0. `Strain` transfers prepared liquid to
+the serving glass while retaining ice where applicable. `Garnish` begins as a
+simple preparation action, not a precision mini-game.
+
+Build is direct construction in the serving glass and must not retain a
+redundant standalone timing test after the drink has already been made.
+
+## Consequences
+
+- This vocabulary is a content-driven target, not a final generalized recipe
+  scripting schema.
+- New operations are added only when adopted recipes require them.
+- Details such as exact TopUp data representation and technique tolerances are
+  deliberately deferred to narrow implementation/design slices.
+
+---
+
+# ADR-034 — Ingredient Availability Expands the Shared Recipe Space
+
+**Status:** ACCEPTED — Phase I future direction
+
+## Context
+
+Exposing every ingredient at the start makes the intended learning curve and
+catalog expansion weak. Conversely, a prototype pattern where every recipe
+uses isolated ingredients creates gates without transferable player knowledge.
+
+## Decision
+
+Future production ingredient availability expands through authored business
+days, story progression, unlock events, or other explicitly defined progression
+points. The purpose is to expand possible recipe space, not to impose arbitrary
+gating. Ingredient and catalog curation should prefer shared ingredients so a
+newly introduced ingredient can make multiple understandable recipes possible.
+
+```text
+Learn ingredient
+→ recognize where it can be used
+→ multiple recipes become possible
+→ knowledge carries into later encounters
+```
+
+## Consequences
+
+- Phase I must validate the learning effect with a representative catalog before
+  content scale-up.
+- This decision does not introduce ingredient-unlock persistence, new PlayerPrefs
+  keys, or a required long-term progression format.
+- Existing recipe/catalog/progression ownership remains valid; future content
+  work must preserve its boundaries.
+
+---
+
+# ADR-035 — Representative Real/Classic Cocktail Validation Precedes Catalog Scale-Up
+
+**Status:** ACCEPTED — Phase I future direction
+
+## Context
+
+The four current prototype recipes prove architecture and routes, not a final
+catalog structure or a compelling preparation loop. Bartending 2.0 must be
+tested against recognizable recipes with shared ingredient knowledge before a
+large content burden is created.
+
+## Decision
+
+Before production expands to a large catalog, Phase I validates approximately
+six to eight curated real/classic cocktails. IBA-recognized recipes are a major
+reference direction, not an automatic claim that every future recipe must be
+an IBA entry. The set should deliberately exercise shared ingredients,
+measurement, containers, Dash, TopUp, Strain, and Float where adopted content
+requires them.
+
+The validation answers whether the milliliter model, transfer interactions,
+container operations, recipe discovery, and player learning are understandable
+and enjoyable. It does not select the final recipe list in advance or authorize
+30-plus cocktails before that proof.
+
+## Consequences
+
+- Prototype-only disconnected recipes are not evidence of final catalog scope.
+- Recipe reuse is desirable because it creates transferable player knowledge.
+- ADR-028 catalog ownership remains authoritative; this decision changes future
+  content direction, not its canonical data owner.
+
+---
+
+# ADR-036 — Bartending 2.0 Must Not Generalize Ahead of Adopted Content
+
+**Status:** ACCEPTED — Phase I future direction
+
+## Context
+
+The project needs a physically legible preparation loop, but it is a
+student/indie production. Systems built for hypothetical cocktails can delay
+the proof that the core loop is fun.
+
+## Decision
+
+Phase I must not preemptively implement:
+
+- Muddle, Blend, Flame, Dry Shake, Reverse Dry Shake, Double Strain, or
+  salt/sugar-rim mini-games;
+- advanced density, fluid, or thermal simulation;
+- a generalized bartending scripting language;
+- bespoke Shake rhythm charts for every cocktail; or
+- a 30-plus cocktail catalog before representative validation.
+
+Likewise, Phase I does not justify a giant rhythm-game framework, a new
+story/ACT framework, or a broad architectural rewrite. A narrow mechanic is
+added only when adopted representative content proves it is required.
+
+## Consequences
+
+- Reusable Shake pattern templates are preferred to per-cocktail beatmap
+  production unless later content demonstrably needs more.
+- The detailed scope and non-goals live in
+  `Docs/11_BARTENDING_2_0_DESIGN.md`.
+- The next work is a player-facing Phase I proof, not another structural
+  rebuild.
 
 ---
 

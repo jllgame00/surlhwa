@@ -1,8 +1,8 @@
 # SURLHWA REBUILD PLAN
 
-Last Updated: 2026-08-11
+Last Updated: 2026-09-07
 
-Status: ACTIVE EXECUTION PLAN
+Status: ACTIVE EXECUTION PLAN / PHASE I BARTENDING 2.0 CURRENT
 
 ---
 
@@ -89,7 +89,7 @@ Assets/_SURLHWA/Prefabs
 
 Legacy, unknown, Font/TMP, Code, Scene은 아직 후속 Phase 대상이다.
 
-### Known Unresolved Work
+### Known Unresolved Work (Historical Pre-G/H Baseline)
 
 - Little Prince Dialogue / Order asset의 runtime 미사용
 - general customer pool 비어 있음
@@ -101,7 +101,7 @@ Legacy, unknown, Font/TMP, Code, Scene은 아직 후속 Phase 대상이다.
 - Special Guest Story condition 분리
 - Cocktail / Recipe / Order responsibility overlap와 TestShake mismatch
 
-### Immediate Next Step
+### Immediate Next Step (Historical Pre-G/H Baseline)
 
 `C5 — UI / Runtime Ownership / Progression Boundary Hardening`
 
@@ -110,6 +110,19 @@ regression까지 완료했다. C5는 RecipeGuide hidden Bar dependency, runtime 
 Canvas sorting / overlap, EventSystem final ownership, Camera / AudioListener ownership,
 MiniGameCanvas와 BrewSelection responsibility를 harden한다. C4 additive lifecycle 자체를
 다시 설계하지 않는다.
+
+### Post-G/H Current State (2026-09-07)
+
+Structural rebuild through Phase H is complete. The completed G/H work remains
+valid: canonical data/request/bartending ownership has been established and
+PlayerPrefs storage ownership is centralized without format migration.
+
+The independent red-team review identified the next material risk as
+player-facing gameplay proof rather than another architecture refactor. The
+current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
+Bartending 2.0**. It is future work at current HEAD; this plan update does not
+claim that the runtime minigames, recipe data, content, or assets have already
+been replaced.
 
 ## 4. Canonical Rebuild Roadmap
 
@@ -422,7 +435,7 @@ Little Prince 하나를 위해 generic Quest 또는 cinematic framework를 만�
 기존 PlayerPrefs key compatibility를 보존한다. persistent state와 scene runtime
 state를 구분한다.
 
-### PHASE I — UI Structure
+### PHASE I — UI Structure (SUPERSEDED AS THE NEXT EXECUTION PHASE)
 
 - UI domain cleanup
 - Overlay
@@ -433,6 +446,10 @@ state를 구분한다.
 
 Bar-specific UI, Bartending UI, MainMenu UI의 Scene ownership을 분리하고 UI Host
 Rule을 유지한다.
+
+UI structure remains a future concern, but it is not the next canonical
+execution phase. Relevant feedback/UI work is sequenced inside the current
+Bartending 2.0 Phase I after actual preparation and guest-response proof.
 
 ### PHASE J — Tech / Legacy Cleanup
 
@@ -468,6 +485,219 @@ Recipe / Codex
 Persistence
 Special Guest flow and presentation
 ```
+
+### PHASE I — Core Gameplay Rebuild / Bartending 2.0
+
+Status: CURRENT NEXT PHASE / NOT IMPLEMENTED
+
+#### Purpose
+
+Phase I follows the completed structural rebuild through G/H. It is a
+player-facing gameplay proof/rebuild axis, not a reopening of completed
+catalog, request, Bartending boundary, or persistence ownership decisions.
+
+The approved target is:
+
+~~~text
+Understand request
+→ choose drink
+→ know / discover recipe
+→ actually prepare the drink
+→ serve actual container state
+→ guest responds
+→ encounter can be remembered
+~~~
+
+Preparation actions must become authoritative for actual drink state. Broad
+architectural rewrites, generalized simulation/framework work, and mass content
+production are explicitly out of scope until representative validation proves
+they are needed.
+
+Detailed Bartending 2.0 interaction requirements are in
+Docs/11_BARTENDING_2_0_DESIGN.md.
+
+#### I0 — Immediate Player-Facing Safety
+
+| Step | Goal | Exit criterion |
+| --- | --- | --- |
+| I0-A — Narrative Reading Safety | Prevent dedicated narrative reading from consuming customer patience; preserve existing departure/persistence policy unless separately changed; do not rewrite the broad customer state machine. | Dedicated dialogue can be read without accidentally timing out the encounter. |
+| I0-B — Legacy Minigame Preservation | Retain existing Stir/Shake/Build/Float implementations temporarily as regression/fallback/reference while replacements are verified. | No legacy implementation is deleted before replacement validation and reachability/reference proof. |
+
+#### I1 — Pour Core
+
+Target:
+
+- ingredient/bottle selection;
+- source → target container;
+- continuous/granular actual amount;
+- canonical ml state;
+- oz/ml presentation conversion;
+- current container volume;
+- actual transferred amount becomes authoritative composition data.
+
+Exit criterion:
+
+> A player can physically pour an ingredient into a valid container and the
+> recorded gameplay quantity matches what was actually poured.
+
+#### I2 — Amount Variants
+
+Target:
+
+- small arbitrary amounts including quarter-ounce-equivalent recipes;
+- Dash;
+- TopUp.
+
+Exit criterion:
+
+> Representative fixed-volume, dash-based, and top-up ingredients can be
+> expressed without returning to the old fixed increment UI model.
+
+#### I3 — Container Operations
+
+Target:
+
+- Serving Glass;
+- Mixing Glass;
+- Shaker;
+- AddIce;
+- liquid transfer;
+- Strain.
+
+Exit criterion:
+
+> A recipe can prepare liquid in an intermediate container and transfer it into
+> a serving glass while preserving the intended container state.
+
+#### I4 — Build
+
+Replace redundant Build grading with the direct Pour-based preparation loop.
+
+Exit criterion:
+
+> At least one Build cocktail can be prepared from start to serve using actual
+> poured quantities.
+
+#### I5 — Stir
+
+Implement spoon-driven Stir interaction.
+
+Exit criterion:
+
+> Player movement visibly controls the spoon and produces a technique result
+> connected to the preparation state.
+
+#### I6 — Shake Rhythm
+
+Implement short rhythm-driven shaker interaction.
+
+Exit criterion:
+
+> Player timing visibly drives shaker movement and creates a Shake technique
+> outcome.
+
+Do not build a large general rhythm-game framework.
+
+#### I7 — Float / Layering
+
+Implement:
+
+- Float pour mode;
+- pour strength/velocity evaluation;
+- visible CleanLayer / PartialMix / Mixed-style result.
+
+Exit criterion:
+
+> A player can successfully create or visibly destroy a layer based on how they
+> pour.
+
+#### I8 — Garnish
+
+Add only the minimum garnish interaction needed by the representative cocktail
+set.
+
+#### I9 — Representative Real Cocktail Catalog
+
+Validate approximately 6–8 real/classic cocktail recipes against the new
+preparation model.
+
+Do not scale beyond representative validation yet.
+
+#### I10 — Ingredient Progression
+
+Design/implement staged ingredient availability after the representative
+catalog proves the required data/control model.
+
+#### I11 — Guide / Discovery
+
+Repair the fresh-save learning path and support unknown / partially-known /
+known recipe information.
+
+#### I12 — Guest Response
+
+Revisit generic emotional evaluation, cocktail characteristics, and authored
+important-guest preferences.
+
+#### I13 — Little Prince Interpretive Choice / Memory
+
+Build one full proof of the narrative promise:
+
+~~~text
+understand request
+→ choose between understandable drink responses
+→ prepare actual drink
+→ receive specific response
+→ later encounter remembers the choice
+→ one visible environmental trace remains
+~~~
+
+#### I14 — Feedback Hierarchy
+
+Prioritize:
+
+1. physical drink result;
+2. guest response;
+3. quiet discovery/record update;
+4. night result.
+
+Reduce competing toast/heart/result channels where they obscure meaning.
+
+#### I15 — Representative Audio / Visual Pass
+
+For at least one complete encounter:
+
+- convincing bar presentation;
+- pour audio;
+- glass audio;
+- Stir audio;
+- Shake audio;
+- responsive bottle/spoon/shaker motion.
+
+#### I16 — Two-Night Vertical Slice
+
+Build a focused slice proving:
+
+- learnable recipes;
+- actual preparation;
+- ingredient progression;
+- one meaningful special guest;
+- one remembered choice;
+- one environmental trace.
+
+Suggested target remains approximately 25–35 minutes, subject to actual
+playtesting.
+
+#### Phase I Non-Goals
+
+Phase I does not authorize:
+
+- a generalized fluid simulation;
+- a giant rhythm framework;
+- universal preparation scripting before representative content proves it;
+- a large 30+ cocktail catalog;
+- future ACT/revisit framework work;
+- a new save format or PlayerPrefs migration;
+- an architecture rewrite unrelated to the smallest required gameplay proof.
 
 ---
 
