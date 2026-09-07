@@ -1098,12 +1098,15 @@ another ownership or persistence refactor, as the next material project risk.
 Bartending 2.0 is therefore the approved next development direction: preparation
 actions must determine the actual drink state, and the four current prototype
 mini-games are reference/fallback implementations until replacements are
-validated. I0-A, I1, and I2 are the currently validated Phase I runtime
+validated. I0-A, I1, I2, and I3 are the currently validated Phase I runtime
 increments: dedicated narrative reading pauses patience; the Build proof
 records hold-to-pour liquid transfer in a runtime Serving Glass using
 milliliters before bridging to the unchanged matcher; and bounded amount
 variants prove arbitrary fixed quantities, discrete Dash, and manual TopUp
-guidance without a recipe-data migration. No broader Bartending 2.0
-replacement or Phase I content implementation is implied. See
+guidance without a recipe-data migration. I3 adds separate runtime Serving
+Glass, Mixing Glass, and Shaker state, target-specific bounded ice, full liquid
+transfer, and non-scored Strain while retaining the existing matcher and recipe
+data. No broader Bartending 2.0 replacement or Phase I content implementation
+is implied. See
 `Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
 `Docs/05_REBUILD_PLAN.md`.

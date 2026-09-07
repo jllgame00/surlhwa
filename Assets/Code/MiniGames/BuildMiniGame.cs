@@ -122,7 +122,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (startHintText != null)
         {
             startHintText.gameObject.SetActive(true);
-            startHintText.text = "Select an ingredient, hold SPACE to pour, press D for one dash, then start.";
+            startHintText.text = "[I3 proof] 1/2/3 target, I ice, T transfer, R strain. Hold SPACE to pour; D adds one dash.";
         }
 
         if (startButton != null)
@@ -133,7 +133,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         }
 
         UpdateProgressText();
-        SetHint("Select an ingredient, then hold SPACE to pour into the serving glass. Press D for one dash.");
+        SetHint("[I3 proof] Target Serving/Mixing/Shaker with 1/2/3. I adds ice; T transfers; R strains. SPACE pours; D dashes.");
 
         Debug.Log(
             $"[BuildMiniGame] Preview ready / " +
@@ -153,15 +153,15 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        if (!ingredientShelf.HasAnySelectedIngredient())
+        if (!ingredientShelf.HasServingGlassContents())
         {
-            SetHint("Pour at least one ingredient first.");
-            Debug.LogWarning("[BuildMiniGame] Cannot start. No ingredients poured.");
+            SetHint("Pour into, transfer to, or strain into the Serving Glass before starting.");
+            Debug.LogWarning("[BuildMiniGame] Cannot start. Serving Glass has no liquid.");
             return;
         }
 
         StopPreviewPour("Build technique started");
-        currentBrewComposition = ingredientShelf.BuildComposition();
+        currentBrewComposition = ingredientShelf.BuildServingGlassComposition();
 
         Debug.Log(
             $"[{nameof(BuildMiniGame)}] Authoritative serving-glass composition captured / " +
@@ -292,7 +292,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private BrewComposition CreateBrewComposition()
     {
-        return currentBrewComposition ?? ingredientShelf?.BuildComposition() ?? new BrewComposition
+        return currentBrewComposition ?? ingredientShelf?.BuildServingGlassComposition() ?? new BrewComposition
         {
             method = MiniGameType.Build,
             ingredients = Array.Empty<BrewIngredientEntry>()
@@ -306,6 +306,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             StopPreviewPour("target container unavailable");
             return;
         }
+
+        if (HandleContainerProofInput())
+            return;
 
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -340,7 +343,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         {
             isPreviewPouring = true;
             Debug.Log(
-                $"[Pour] Start ingredient={ingredient.ingredientId} target=ServingGlass " +
+                $"[Pour] Start ingredient={ingredient.ingredientId} target={ingredientShelf.TargetContainer.ContainerType} " +
                 $"rate={previewPourRateMlPerSecond:0.##} ml/s");
         }
 
@@ -348,11 +351,86 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         float totalMl = ingredientShelf.TargetContainer.CurrentLiquidVolumeMl;
         if (!ShowTopUpGuidance(ingredient))
         {
-            SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in serving glass.");
+            SetHint(
+                $"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in " +
+                $"{ingredientShelf.TargetContainer.ContainerType}.");
 
             if (progressText != null)
-                progressText.text = $"Serving Glass {totalMl:0.0} ml";
+                progressText.text =
+                    $"{ingredientShelf.TargetContainer.ContainerType} {totalMl:0.0} ml";
         }
+    }
+
+    // Temporary I3 proof controls. They intentionally do not define final
+    // bartending UX; later Build/Stir/Shake phases will own adopted interaction.
+    private bool HandleContainerProofInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            return SelectProofTarget(BartendingContainerType.ServingGlass);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            return SelectProofTarget(BartendingContainerType.MixingGlass);
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            return SelectProofTarget(BartendingContainerType.Shaker);
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (!ingredientShelf.TryAddIceToActiveTarget())
+                SetHint("Ice is already present or no target container is active.");
+            else
+                SetHint($"Ice added to {ingredientShelf.TargetContainer.ContainerType}.");
+
+            UpdateProgressText();
+            return true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            BartendingContainerType sourceType = ingredientShelf.TargetContainer != null
+                ? ingredientShelf.TargetContainer.ContainerType
+                : BartendingContainerType.ServingGlass;
+
+            if (!ingredientShelf.TryTransferActiveTargetToServingGlass(out float transferredMl))
+                SetHint("Transfer requires liquid in Mixing Glass or Shaker.");
+            else
+                SetHint($"Transferred {transferredMl:0.0} ml from {sourceType} to Serving Glass.");
+
+            UpdateProgressText();
+            return true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            BartendingContainerType sourceType = ingredientShelf.TargetContainer != null
+                ? ingredientShelf.TargetContainer.ContainerType
+                : BartendingContainerType.ServingGlass;
+
+            if (!ingredientShelf.TryStrainActiveTargetToServingGlass(out float transferredMl))
+                SetHint("Strain requires liquid in the Mixing Glass or Shaker.");
+            else
+                SetHint($"Strained {transferredMl:0.0} ml from {sourceType}; source ice remains.");
+
+            UpdateProgressText();
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool SelectProofTarget(BartendingContainerType containerType)
+    {
+        StopPreviewPour("container target changed");
+
+        if (!ingredientShelf.TrySetActiveTarget(containerType))
+        {
+            SetHint("That container target is unavailable.");
+            return true;
+        }
+
+        SetHint($"Target: {containerType}. Select an ingredient, then hold SPACE to pour.");
+        UpdateProgressText();
+        return true;
     }
 
     /// <summary>
@@ -398,7 +476,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (!ingredientShelf.TryDashSelectedIngredient(out int totalDashCount))
         {
-            SetHint("That dash could not be added to the serving glass.");
+            SetHint("That dash could not be added to the active container.");
             return;
         }
 
@@ -407,7 +485,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         SetHint($"{ingredient.displayName} — {totalDashCount} dash ({ingredientMl:0.0} ml).");
 
         if (progressText != null)
-            progressText.text = $"Serving Glass {ingredientShelf.TargetContainer.CurrentLiquidVolumeMl:0.0} ml";
+            progressText.text =
+                $"{ingredientShelf.TargetContainer.ContainerType} " +
+                $"{ingredientShelf.TargetContainer.CurrentLiquidVolumeMl:0.0} ml";
 
         Debug.Log(
             $"[Dash] Ingredient={ingredient.ingredientId} count={totalDashCount} " +
@@ -480,7 +560,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (state == BuildState.Preview && ingredientShelf != null && ingredientShelf.TargetContainer != null)
         {
-            progressText.text = $"Serving Glass {ingredientShelf.TargetContainer.CurrentLiquidVolumeMl:0.0} ml";
+            string iceText = ingredientShelf.TargetContainer.HasIce ? " / ice" : string.Empty;
+            progressText.text =
+                $"{ingredientShelf.TargetContainer.ContainerType} " +
+                $"{ingredientShelf.TargetContainer.CurrentLiquidVolumeMl:0.0} ml{iceText}";
             return;
         }
 

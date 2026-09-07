@@ -120,7 +120,7 @@ PlayerPrefs storage ownership is centralized without format migration.
 The independent red-team review identified the next material risk as
 player-facing gameplay proof rather than another architecture refactor. The
 current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
-Bartending 2.0**. I0-A, I1, and I2 are now validated incremental runtime work; the
+Bartending 2.0**. I0-A, I1, I2, and I3 are now validated incremental runtime work; the
 remaining Phase I work is still future work. This does not claim that the
 prototype minigames, recipe data, content, or assets have already been broadly
 replaced.
@@ -489,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A, I1, and I2 validated; I0-B and I3+ remain pending
+Status: IN PROGRESS — I0-A, I1, I2, and I3 validated; I0-B and I4+ remain pending
 
 #### Purpose
 
@@ -587,6 +587,15 @@ Exit criterion:
 
 > A recipe can prepare liquid in an intermediate container and transfer it into
 > a serving glass while preserving the intended container state.
+
+Current implementation note (I3): each active bartending shelf creates one
+runtime preparation state with separate Serving Glass, Mixing Glass, and
+Shaker instances. The active target is the container that receives actual Pour
+Core liquid. AddIce is bounded, target-specific runtime state. Full liquid
+transfer preserves ingredient milliliters and Dash counts; Strain is limited to
+Mixing Glass/Shaker -> Serving Glass and retains source ice. Temporary Build
+proof controls expose this state without defining final UX. Recipe assets,
+RecipeMatchService, persistence, and technique gameplay remain unchanged.
 
 #### I4 — Build
 

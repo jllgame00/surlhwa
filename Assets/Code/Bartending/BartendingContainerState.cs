@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The limited container vocabulary needed by the Bartending 2.0 Pour Core.
-/// I1 actively proves ServingGlass; the other identities reserve no behavior,
-/// physics, or contents rules ahead of their adopted phases.
+/// The limited container vocabulary currently adopted by Bartending 2.0.
+/// I3 gives each identity separate runtime liquid/ice state; it deliberately
+/// does not add physical simulation or technique-specific quality rules.
 /// </summary>
 public enum BartendingContainerType
 {
@@ -42,10 +42,9 @@ public sealed class BartendingLiquidEntry
 }
 
 /// <summary>
-/// Runtime-only liquid state for one bartending container.
-/// It deliberately excludes ice, temperature, dilution, density, layering, and
-/// overflow gameplay. I1 has no capacity rule; a future adopted container phase
-/// may supply a positive capacity without changing liquid quantity authority.
+/// Runtime-only preparation state for one bartending container.
+/// I3 adds bounded ice presence and full liquid transfer. It deliberately still
+/// excludes temperature, dilution, density, layering, and overflow gameplay.
 /// </summary>
 public sealed class BartendingContainerState
 {
@@ -54,6 +53,7 @@ public sealed class BartendingContainerState
     public BartendingContainerType ContainerType { get; }
     public float CapacityMl { get; }
     public float CurrentLiquidVolumeMl { get; private set; }
+    public bool HasIce { get; private set; }
     public IReadOnlyList<BartendingLiquidEntry> LiquidEntries => liquidEntries;
 
     public BartendingContainerState(BartendingContainerType containerType, float capacityMl = 0f)
@@ -187,6 +187,73 @@ public sealed class BartendingContainerState
     }
 
     /// <summary>
+    /// Adds bounded ice presence to this specific container. I3 does not model
+    /// individual cubes, melting, temperature, dilution, or ice volume.
+    /// </summary>
+    public bool TryAddIce()
+    {
+        if (HasIce)
+            return false;
+
+        HasIce = true;
+        return true;
+    }
+
+    /// <summary>
+    /// Moves every actual liquid entry to a different container. Ingredient
+    /// amounts and DashCount move together; ice deliberately remains with the
+    /// source because this is a liquid-only operation.
+    /// </summary>
+    public bool TryTransferAllLiquidTo(BartendingContainerState target, out float transferredMl)
+    {
+        transferredMl = 0f;
+
+        if (target == null || ReferenceEquals(this, target) || CurrentLiquidVolumeMl <= 0f)
+            return false;
+
+        if (target.CapacityMl > 0f && target.CurrentLiquidVolumeMl + CurrentLiquidVolumeMl > target.CapacityMl)
+            return false;
+
+        foreach (BartendingLiquidEntry entry in liquidEntries)
+        {
+            if (entry == null || entry.Ingredient == null || !IsFinitePositive(entry.AmountMl))
+                return false;
+        }
+
+        foreach (BartendingLiquidEntry entry in liquidEntries)
+        {
+            float acceptedMl = target.AddLiquid(entry.Ingredient, entry.AmountMl);
+            if (!Mathf.Approximately(acceptedMl, entry.AmountMl))
+                return false;
+
+            target.AddDashCount(entry.Ingredient, entry.DashCount);
+        }
+
+        transferredMl = CurrentLiquidVolumeMl;
+        liquidEntries.Clear();
+        CurrentLiquidVolumeMl = 0f;
+        return true;
+    }
+
+    /// <summary>
+    /// I3's non-scored strain operation. Only a Shaker or Mixing Glass may
+    /// strain into a Serving Glass. It transfers liquid while retaining source
+    /// ice, including after the source becomes liquid-empty.
+    /// </summary>
+    public bool TryStrainTo(BartendingContainerState servingGlass, out float transferredMl)
+    {
+        transferredMl = 0f;
+
+        if ((ContainerType != BartendingContainerType.Shaker &&
+             ContainerType != BartendingContainerType.MixingGlass) ||
+            servingGlass == null ||
+            servingGlass.ContainerType != BartendingContainerType.ServingGlass)
+            return false;
+
+        return TryTransferAllLiquidTo(servingGlass, out transferredMl);
+    }
+
+    /// <summary>
     /// Temporary, one-way adapter for the existing ounce-authored recipe matcher.
     /// The container remains the source of truth; the returned BrewComposition is
     /// a result-bound snapshot, not a second editable preparation state.
@@ -230,6 +297,19 @@ public sealed class BartendingContainerState
         }
 
         return null;
+    }
+
+    private void AddDashCount(IngredientData ingredient, int dashCount)
+    {
+        if (dashCount <= 0)
+            return;
+
+        BartendingLiquidEntry entry = FindEntry(ingredient);
+        if (entry == null)
+            return;
+
+        for (int i = 0; i < dashCount && entry.DashCount < int.MaxValue; i++)
+            entry.AddDash();
     }
 
     private static bool IsFinitePositive(float value)

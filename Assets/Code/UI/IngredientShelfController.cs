@@ -21,12 +21,18 @@ public class IngredientShelfController : MonoBehaviour
 
     private readonly List<BrewIngredientOptionView> optionViews = new List<BrewIngredientOptionView>();
 
-    // I1 owns actual liquid state here. The selected ingredient is only the
-    // current source; the target container records what was really transferred.
+    // The shelf owns this preparation session only for the active mini-game.
+    // I3 keeps container semantics in BartendingPreparationState; the shelf is
+    // an interaction/UI adapter around its selected source and active target.
+    private BartendingPreparationState preparationState;
     private BartendingContainerState targetContainer;
 
     public IngredientData SelectedIngredient => selectedIngredient;
     public BartendingContainerState TargetContainer => targetContainer;
+    public BartendingPreparationState PreparationState => preparationState;
+    public BartendingContainerState ServingGlass => preparationState != null
+        ? preparationState.GetContainer(BartendingContainerType.ServingGlass)
+        : null;
 
     public void Initialize(
         MiniGameType method,
@@ -34,7 +40,8 @@ public class IngredientShelfController : MonoBehaviour
     {
         currentMethod = method;
         selectedIngredient = null;
-        targetContainer = new BartendingContainerState(targetContainerType);
+        preparationState = new BartendingPreparationState(targetContainerType);
+        targetContainer = preparationState.ActiveTarget;
 
         // Do not seed from the recipe/default session.
         // The shelf represents what the player has actually poured.
@@ -84,6 +91,15 @@ public class IngredientShelfController : MonoBehaviour
     }
 
     /// <summary>
+    /// Result submission is deliberately distinct from the active preparation
+    /// target: I3 makes the final Serving Glass the actual cocktail source.
+    /// </summary>
+    public bool HasServingGlassContents()
+    {
+        return ServingGlass != null && ServingGlass.CurrentLiquidVolumeMl > 0f;
+    }
+
+    /// <summary>
     /// Returns a result-bound snapshot for the existing recipe matcher. The
     /// target container remains authoritative until the minigame submits it.
     /// </summary>
@@ -91,6 +107,17 @@ public class IngredientShelfController : MonoBehaviour
     {
         return targetContainer != null
             ? targetContainer.ToLegacyBrewComposition(currentMethod)
+            : new BrewComposition
+            {
+                method = currentMethod,
+                ingredients = System.Array.Empty<BrewIngredientEntry>()
+            };
+    }
+
+    public BrewComposition BuildServingGlassComposition()
+    {
+        return ServingGlass != null
+            ? ServingGlass.ToLegacyBrewComposition(currentMethod)
             : new BrewComposition
             {
                 method = currentMethod,
@@ -154,9 +181,13 @@ public class IngredientShelfController : MonoBehaviour
         if (summaryText == null)
             return;
 
+        string iceText = targetContainer != null && targetContainer.HasIce ? " / ice" : string.Empty;
+
         if (!HasAnySelectedIngredient())
         {
-            summaryText.text = "No ingredients selected";
+            summaryText.text = targetContainer != null
+                ? $"{targetContainer.ContainerType} empty{iceText}"
+                : "No active container";
             return;
         }
 
@@ -175,7 +206,7 @@ public class IngredientShelfController : MonoBehaviour
 
         summaryText.text =
             $"{targetContainer.ContainerType} {targetContainer.CurrentLiquidVolumeMl:0.0} ml: " +
-            string.Join(" / ", parts);
+            string.Join(" / ", parts) + iceText;
     }
 
     public void SetJiggerPanel(JiggerPanelController jiggerPanel)
@@ -267,6 +298,73 @@ public class IngredientShelfController : MonoBehaviour
     public float PourSelectedIngredient(float amountMl)
     {
         return AddLiquidMl(selectedIngredient, amountMl);
+    }
+
+    /// <summary>
+    /// I3 proof seam: future UI may replace these temporary controls, but the
+    /// selected target remains the actual container receiving Pour Core liquid.
+    /// </summary>
+    public bool TrySetActiveTarget(BartendingContainerType containerType)
+    {
+        if (preparationState == null || !preparationState.TrySetActiveTarget(containerType))
+            return false;
+
+        targetContainer = preparationState.ActiveTarget;
+        RefreshContents();
+        Debug.Log($"[Container] Target={targetContainer.ContainerType}");
+        return true;
+    }
+
+    public bool TryAddIceToActiveTarget()
+    {
+        if (preparationState == null || !preparationState.TryAddIceToActiveTarget())
+            return false;
+
+        RefreshContents();
+        Debug.Log($"[Container] AddIce target={targetContainer.ContainerType}");
+        return true;
+    }
+
+    public bool TryTransferActiveTargetToServingGlass(out float transferredMl)
+    {
+        transferredMl = 0f;
+
+        if (preparationState == null || targetContainer == null)
+            return false;
+
+        BartendingContainerType sourceType = targetContainer.ContainerType;
+        if (!preparationState.TryTransferAllLiquid(
+                sourceType,
+                BartendingContainerType.ServingGlass,
+                out transferredMl))
+            return false;
+
+        preparationState.TrySetActiveTarget(BartendingContainerType.ServingGlass);
+        targetContainer = preparationState.ActiveTarget;
+        RefreshContents();
+        Debug.Log($"[Transfer] {sourceType} -> ServingGlass volumeMl={transferredMl:0.###}");
+        return true;
+    }
+
+    public bool TryStrainActiveTargetToServingGlass(out float transferredMl)
+    {
+        transferredMl = 0f;
+
+        if (preparationState == null || targetContainer == null)
+            return false;
+
+        BartendingContainerType sourceType = targetContainer.ContainerType;
+        if (!preparationState.TryStrainToServingGlass(sourceType, out transferredMl))
+            return false;
+
+        BartendingContainerState source = preparationState.GetContainer(sourceType);
+        preparationState.TrySetActiveTarget(BartendingContainerType.ServingGlass);
+        targetContainer = preparationState.ActiveTarget;
+        RefreshContents();
+        Debug.Log(
+            $"[Strain] {sourceType} -> ServingGlass volumeMl={transferredMl:0.###} " +
+            $"iceRetained={(source != null && source.HasIce)}");
+        return true;
     }
 
     /// <summary>

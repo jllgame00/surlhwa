@@ -30,9 +30,12 @@ hold-to-pour into a runtime Serving Glass whose actual liquid amounts are held
 in milliliters and bridged to the existing ounce-authored matcher. I2 extends
 that same state with arbitrary fixed amounts, a discrete Dash compatibility
 amount/count, and manual TopUp target guidance; recipe data and the matcher
-remain unchanged. Existing Stir, Shake, Build scoring, and Float implementations
-otherwise remain prototype/legacy behavior until their replacements pass their
-own validation and reachability audits.
+remain unchanged. I3 now creates separate runtime Serving Glass, Mixing Glass,
+and Shaker state for an active preparation session; bounded ice belongs to one
+container, full liquid transfer moves actual ingredient amounts and Dash counts,
+and Strain retains source ice. Existing Stir, Shake, Build scoring, and Float
+implementations otherwise remain prototype/legacy behavior until their
+replacements pass their own validation and reachability audits.
 
 ---
 
@@ -255,6 +258,21 @@ Containers are a gameplay/preparation concept. This document does not require
 a physical GameObject for every conceptual container, a new Scene, a global
 singleton, or a container component hierarchy before a narrow implementation
 requires one.
+
+### 7.5 I3 current implementation boundary
+
+I3 implements one runtime-only preparation state per active shelf with exactly
+one Serving Glass, Mixing Glass, and Shaker. Its active target receives actual
+Pour Core liquid. Ice is bounded present/absent state on its target container;
+it is not a global recipe flag. Full transfer moves the actual liquid entries
+and retained Dash counts while leaving source ice in place. Non-scored Strain
+accepts only Mixing Glass or Shaker as a source and moves liquid to the Serving
+Glass while retaining source ice.
+
+The temporary Build preview controls used to prove target selection, ice,
+transfer, and Strain are not a final interaction contract. I3 does not add
+container visuals, ice physics, capacity/overflow rules, recipe preparation
+sequence data, or Stir/Shake/Float technique gameplay.
 
 ---
 
