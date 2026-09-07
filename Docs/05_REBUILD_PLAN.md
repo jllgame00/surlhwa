@@ -120,7 +120,7 @@ PlayerPrefs storage ownership is centralized without format migration.
 The independent red-team review identified the next material risk as
 player-facing gameplay proof rather than another architecture refactor. The
 current execution direction is therefore **PHASE I — Core Gameplay Rebuild /
-Bartending 2.0**. I0-A and I1 through I6 are now validated incremental runtime work; the
+Bartending 2.0**. I0-A and I1 through I7 are now validated incremental runtime work; the
 remaining Phase I work is still future work. This does not claim that the
 prototype minigames, recipe data, content, or assets have already been broadly
 replaced.
@@ -489,7 +489,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A and I1 through I6 validated; I0-B preservation work for the remaining legacy Float route and I7+ remain pending
+Status: IN PROGRESS — I0-A and I1 through I7 validated; I8+ remains pending
 
 #### Purpose
 
@@ -522,7 +522,7 @@ Docs/11_BARTENDING_2_0_DESIGN.md.
 | Step | Goal | Exit criterion |
 | --- | --- | --- |
 | I0-A — Narrative Reading Safety | Prevent dedicated narrative reading from consuming customer patience; preserve existing departure/persistence policy unless separately changed; do not rewrite the broad customer state machine. | Dedicated dialogue can be read without accidentally timing out the encounter. |
-| I0-B — Legacy Minigame Preservation | Retain each legacy technique route as regression/fallback/reference only until its own replacement is validated. Build/Stir detached scores and Shake's command route may be removed after I4/I5/I6 validation; Float remains preserved meanwhile. | No legacy implementation is deleted before its replacement validation and reachability/reference proof. |
+| I0-B — Legacy Minigame Preservation | Retain each legacy technique route as regression/fallback/reference only until its own replacement is validated. Build/Stir detached scores, Shake's command route, and Float's hold/release route are inactive only after I4/I5/I6/I7 validation and reachability proof. | No legacy implementation is deleted before its replacement validation and reachability/reference proof. |
 
 #### I1 — Pour Core
 
@@ -614,8 +614,7 @@ the existing BrewComposition bridge and immediately enters the unchanged result
 and matcher flow. The detached Build target-zone, timer, overflow, and
 hold/release score are no longer active. The shared legacy result contract uses
 `success = true`, `repDelta = 0`, and `grade = "Complete"` solely to represent
-truthful preparation completion; it is not a synthetic timing grade. Float
-remains on its legacy route pending its own phase.
+truthful preparation completion; it is not a synthetic timing grade.
 
 #### I5 — Stir
 
@@ -635,7 +634,7 @@ angular speed, and continuity/direction consistency produce truthful
 `Good`/`Acceptable`/`Poor` technique results; those results remain distinct from
 recipe recognition. The Serving Glass snapshot continues through the unchanged
 matcher/result boundary. The old Stir gauge, target zones, Space timing, and
-timeout result are no longer active. Float remains legacy.
+timeout result are no longer active.
 
 #### I6 — Shake Rhythm
 
@@ -655,22 +654,40 @@ Perfect/Good/Miss timing, expected direction, and bounded extra-input handling
 produce truthful `Good`/`Acceptable`/`Poor` technique results independent of
 recipe recognition. Every rhythm input drives the Shaker left or right. The old
 direction-then-Space command sequence, count target, timer, and legacy
-composition snapshot are no longer active. Float remains legacy.
+composition snapshot are no longer active.
 
 Do not build a large general rhythm-game framework.
 
 #### I7 — Float / Layering
 
-Implement:
+Implement ordered Float layer construction:
 
-- Float pour mode;
-- pour strength/velocity evaluation;
-- visible CleanLayer / PartialMix / Mixed-style result.
+- first-layer creation in the Serving Glass;
+- controlled spoon-assisted additions for every later layer;
+- per-adjacent-boundary `Clean` / `Partial` / `Mixed` state;
+- visible runtime layer stack;
+- manual completion using actual Serving Glass contents.
 
 Exit criterion:
 
 > A player can successfully create or visibly destroy a layer based on how they
 > pour.
+
+Current implementation note (I7): Float is the fourth fully migrated
+Bartending 2.0 route. A fresh Serving Glass remains the sole liquid-composition
+authority while an ordered runtime layer companion records each actual addition
+and its adjacent boundary quality. The first actual pour establishes Layer 0;
+every later actual Pour Core transfer uses an explicit Float intensity
+(gentle/normal/aggressive) and records one immutable `Clean`, `Partial`, or
+`Mixed` boundary from its aggregate rate and aggressive-duration ratio. This
+one bounded model supports both layered shots and a final float over an existing
+base. The player manually completes the drink; the Serving Glass snapshot enters
+the unchanged matcher/result boundary, so technique quality stays independent
+of composition recognition. The old Float target zone, hold/release score,
+timer, overflow logic, Jigger authority, and legacy session snapshot are no
+longer active. Current recipe assets do not author an expected layer sequence,
+so actual layer order is preserved but order scoring is deferred to I9
+preparation-step authoring.
 
 #### I8 — Garnish
 

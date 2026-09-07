@@ -42,8 +42,11 @@ mouse-angle input visibly controls the spoon, and an explicit Strain moves the
 actual liquid to the Serving Glass. I6 makes Shake the third migrated route:
 actual liquid is prepared in the Shaker, explicit ice is required, a bounded
 Left/Right rhythm visibly moves the Shaker, and an explicit Strain moves actual
-liquid to the Serving Glass. Float remains prototype/legacy behavior until its
-replacement passes validation and a reachability audit.
+liquid to the Serving Glass. I7 makes Float the fourth migrated route: ordered
+actual additions enter the Serving Glass, each later spoon-assisted layer records
+its own adjacent-boundary quality, and manual completion submits only that actual
+Serving Glass composition. The legacy Float target gauge and Jigger path are no
+longer active.
 
 ---
 
@@ -120,7 +123,7 @@ Bartending 2.0 must satisfy all of the following:
 | Build | Separate hold/release score after composition is prepared | Direct construction in the serving glass through actual pours |
 | Stir | Automated gauge and one timing input | Player-driven bar-spoon interaction in a Mixing Glass |
 | Shake | Short sequential input test | Short left/right rhythm interaction that visibly moves the Shaker |
-| Float | Build-like hold/release test | Controlled layer-building pour whose force affects visible layer state |
+| Float | Build-like hold/release test | Ordered layer construction: layered shots and final floats share actual pours, visible layer order, and per-boundary quality |
 | Recipe matching input | Prototype BrewComposition from prepared session | Composition derived from the final/served preparation state |
 | Unit limitations | UI exposes fixed 0.5 oz / 1.0 oz increments | Canonical quantity supports arbitrary data amounts; UI presentation is separate |
 
@@ -280,10 +283,11 @@ Glass while retaining source ice.
 I4 removes those temporary target/ice/transfer/Strain controls from the active
 Build route: Build now owns only direct Serving Glass preparation. I5 then
 adopts the Mixing Glass, explicit ice, and Strain operations for Stir; I6
-adopts the Shaker, explicit ice, and Strain operations for Shake. I3's shared
-container APIs remain available for later Float work. I3 through I6 do not add
-container visuals, ice physics, capacity/overflow rules, recipe preparation
-sequence data, or Float technique gameplay.
+adopts the Shaker, explicit ice, and Strain operations for Shake. I7 reuses
+the Serving Glass and shared Pour Core for ordered Float additions. It adds a
+runtime-only layered-drink companion and prototype stacked visuals, not fluid
+physics, density simulation, capacity/overflow rules, or authored recipe
+preparation-sequence data.
 
 ---
 
@@ -448,28 +452,42 @@ later justifies it.
 
 ### 9.7 Float
 
-Float is a controlled layer-building pour:
+Float is **ordered layer construction**, not a special final-topping action.
+One bounded model supports both a layered shot beginning from an empty Serving
+Glass and a final float over a prepared base:
 
-1. Base ingredients are placed normally.
-2. The floating ingredient is poured over/across a spoon or liquid surface.
-3. Pour strength/flow rate affects the resulting layer state.
+1. The first actual pour creates Layer 0. It establishes the bottom of the
+   stack and has no boundary to judge.
+2. Every later actual addition is a spoon-assisted Float pour into the same
+   Serving Glass. It becomes the next ordered upper layer.
+3. Each later addition records exactly one adjacent lower-to-upper boundary as
+   `Clean`, `Partial`, or `Mixed` from aggregate controlled-pour behavior.
+4. The visible stack reflects the same ordered layers and boundary states.
 
-Suggested initial simplified output states:
+I7's bounded controls are intentionally gameplay-scale rather than fluid
+simulation. Normal Pour remains unchanged for other methods; Layer 0 uses the
+ordinary 30 ml/s proof rate. For later layers, Shift/`Gentle` uses 15 ml/s,
+normal uses 30 ml/s, and Ctrl/`Aggressive` uses 60 ml/s. For later layers, an average rate at or below
+22 ml/s with no more than 10% aggressive duration is `Clean`; a rate at or
+below 42 ml/s with no more than 50% aggressive duration is `Partial`; the
+remaining result is `Mixed`. These are initial tuning values. This aggregate
+per-addition policy means a short late aggressive burst cannot be judged solely
+from the release frame.
 
-~~~text
-CleanLayer
-PartialMix
-Mixed
-~~~
+Layer state is preparation/technique information, not duplicate cocktail
+composition authority. The Serving Glass still owns the actual ingredient ml
+amounts supplied to the legacy BrewComposition bridge. A bad boundary never
+deletes ingredient identity or quantity, a later clean boundary never repairs an
+earlier mixed boundary, and technical recipe matching remains independent of
+Float quality. Current recipe assets do not author expected layer sequences:
+I7 preserves actual layer order but deliberately defers order scoring to I9
+preparation-step authoring.
 
-Example principle:
-
-- gentle pour → clear layer;
-- moderate pour → partially blurred boundary;
-- aggressive pour → mixed layer / failed float.
-
-The visual drink must reflect the result. Float therefore differs from Build
-through physical control and visible separation, not a reused timing gauge.
+The visual drink must reflect the result. I7 uses stacked runtime regions and
+distinct thin/medium/thick boundary bands for `Clean`/`Partial`/`Mixed`; final
+art, shaders, and real liquid behavior remain out of scope. Float therefore
+differs from Build through physical control and visible separation, not a reused
+timing gauge.
 
 ### 9.8 Strain
 
@@ -496,7 +514,7 @@ Do not create an unnecessary garnish precision minigame.
 | Build | Construct the drink directly in its final glass | amount, order, destination, top-up, recipe knowledge | a second timing score after the drink is built |
 | Stir | Calm, controlled integration in a Mixing Glass | spoon-driven consistency and game-scale technique quality | an automatic moving gauge unrelated to spoon motion |
 | Shake | Deliberate energetic mixing | short left/right rhythm and readable response | a large standalone music game |
-| Float | Gentle final separation of a layer | flow strength and layer preservation | Build’s hold/release test with different art |
+| Float | Construct an ordered visible layer stack | controlled upper-layer flow, boundary preservation, and order awareness | a final-topping-only rule or Build's hold/release test with different art |
 
 The methods may share the Pour foundation. They should not share an
 indistinguishable player decision merely because they all involve a container.
@@ -544,6 +562,25 @@ I3 operation. The Serving Glass snapshot is the only submitted composition.
 As in I5, `Good` maps to `success = true`, `repDelta = 1`; `Acceptable` to
 `success = true`, `repDelta = 0`; and `Poor` to `success = false`, `repDelta =
 0`. Recipe matching remains a separate downstream judgement.
+
+### 10.4 I7 current implementation boundary
+
+Float begins with a fresh Serving Glass and its actual ml contents remain the
+only submitted cocktail composition. The first successful Pour Core addition is
+Layer 0; each later addition is an explicit Float-mode, spoon-assisted layer.
+`BartendingLayeredDrinkState` records individual ordered additions only after
+the same liquid has been accepted by the Serving Glass, plus one immutable
+`Clean`, `Partial`, or `Mixed` boundary for every adjacent pair. It is therefore
+a bounded technique/visual companion rather than a second composition store.
+
+The player chooses when to complete Float; expected recipe quantity, count, and
+order never auto-complete or repair the drink. All clean boundaries produce
+`Good` (`success = true`, `repDelta = 1`); one or more `Partial` boundaries and
+no `Mixed` boundary produce `Acceptable` (`success = true`, `repDelta = 0`);
+any `Mixed` boundary produces `Poor` (`success = false`, `repDelta = 0`).
+Recipe recognition consumes the unchanged Serving Glass compatibility snapshot.
+Current recipe assets have no authoritative expected layer sequence, so actual
+order is preserved but sequence scoring is deferred to I9.
 
 ---
 
@@ -764,7 +801,7 @@ uses the following implementation progression:
 | I4 | Build — validated | Direct Serving Glass preparation is manually completed and its actual contents enter the existing matcher/result flow without a detached Build score |
 | I5 | Stir — validated | Mixing Glass direct preparation, explicit ice, mouse-driven spoon motion, and explicit Strain produce a technique result distinct from recipe matching |
 | I6 | Shake — validated | Shaker direct preparation, explicit ice, an eight-note alternating rhythm, visible input-driven motion, and explicit Strain produce a technique result distinct from recipe matching |
-| I7 | Float / Layering | Player can visibly preserve or destroy a layer through pour control |
+| I7 | Float / Layering — validated | Ordered actual Serving Glass additions support layered shots and final floats; each later layer has visible Clean/Partial/Mixed boundary quality while composition remains separate |
 | I8 | Garnish | Minimum garnish action required by representative content |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
 | I10 | Ingredient Progression | Staged availability expands recipe space after catalog proof |

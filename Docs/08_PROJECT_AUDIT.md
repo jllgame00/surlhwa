@@ -1098,7 +1098,7 @@ another ownership or persistence refactor, as the next material project risk.
 Bartending 2.0 is therefore the approved next development direction: preparation
 actions must determine the actual drink state, and the remaining prototype
 mini-games are reference/fallback implementations until their replacements are
-validated. I0-A and I1 through I6 are the currently validated Phase I runtime
+validated. I0-A and I1 through I7 are the currently validated Phase I runtime
 increments: dedicated narrative reading pauses patience; direct Pour Core
 records milliliter liquid transfer in runtime container state before bridging to
 the unchanged matcher; bounded amount variants prove arbitrary fixed quantities,
@@ -1115,7 +1115,14 @@ recipe recognition. I6 makes Shake the third migrated route: direct Pour Core
 feeds the Shaker, ice is explicit, a short alternating Left/Right rhythm drives
 visible shaker movement and bounded timing quality, then non-scored Strain moves
 the actual liquid to the Serving Glass. Timing quality remains independent of
-recipe recognition. Float remains legacy pending its replacement. No broader
-Bartending 2.0 content implementation is implied. See
+recipe recognition. I7 makes Float the fourth migrated route: the Serving
+Glass stays the sole liquid-composition authority while an ordered layer
+companion preserves actual layer order and per-adjacent-boundary
+Clean/Partial/Mixed quality from controlled spoon-assisted additions. It
+supports both layered shots and final-float drinks; its old hold/release score,
+timer, overflow, Jigger authority, and legacy session snapshot are inactive.
+Current recipe assets do not yet author expected layer order, so order scoring
+is deliberately deferred to I9. No broader Bartending 2.0 content
+implementation is implied. See
 `Docs/11_BARTENDING_2_0_DESIGN.md` and Phase I in
 `Docs/05_REBUILD_PLAN.md`.
