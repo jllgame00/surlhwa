@@ -1061,3 +1061,28 @@ MOVE 0은 최종 folder move가 불필요하다는 뜻이 아니다. 현재 phas
 ---
 
 Audit stop condition reached: current state has been proven to the limit of static Repository analysis. No refactor, code fix, asset move, Scene edit, prefab edit, ProjectSettings edit, .meta edit, or runtime test was performed.
+
+---
+
+## H5 Current-State Completion Note (2026-09-07)
+
+The audit findings above are the pre-refactor static baseline and remain as
+historical evidence. They do not describe the completed Phase H persistence
+ownership boundary.
+
+Current active persistence architecture:
+
+- `SurlhwaPlayerPrefsStore` is the sole direct `UnityEngine.PlayerPrefs`
+  caller in project C# code.
+- `BusinessDayPersistence` owns the legacy `currentDay` storage contract.
+- `RecipeProgressPersistence` owns the legacy recipe-unlock and
+  first-recipe-reveal storage contracts.
+- `LittlePrinceVisitPersistence` owns the legacy
+  `littlePrinceFirstVisitCompleted` storage contract.
+- Domain managers retain gameplay semantics, and `SURLHWARegressionTools`
+  uses the domain persistence APIs rather than raw keys.
+
+The four existing key strings, value types, serialized representations,
+missing-key behavior, and immediate-save timing were retained without a save
+format migration. No Scene, Prefab, or ScriptableObject migration was required
+for Phase H.

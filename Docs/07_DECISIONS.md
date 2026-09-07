@@ -237,7 +237,7 @@ CustomerSpawner를 수정하지 않는 구조를 지향한다.
 # ADR-009 — Persistence Must Be Centralized
 
 Status:
-TARGET
+ACCEPTED / IMPLEMENTED (H5)
 
 ## Context
 
@@ -260,6 +260,22 @@ Gameplay
 Persistent state에는 CurrentDay, unlock, Codex, Special Guest progress, Story /
 Ending flag를 둔다. current seated customer, seat occupancy, running mini game 같은
 Scene runtime state는 기본적으로 SaveData에 넣지 않는다.
+
+## Implemented boundary (H5)
+
+`SurlhwaPlayerPrefsStore` is the sole raw `UnityEngine.PlayerPrefs` boundary.
+The implemented domain storage owners are:
+
+- `BusinessDayPersistence` — `currentDay`;
+- `RecipeProgressPersistence` — `SURLHWA_UNLOCKED_RECIPES` and
+  `SURLHWA_FIRST_RECIPE_REVEAL_SHOWN`; and
+- `LittlePrinceVisitPersistence` — `littlePrinceFirstVisitCompleted`.
+
+`BusinessDayManager`, `RecipeUnlockManager`, and `CustomerSpawner` retain
+their gameplay rules. `SURLHWARegressionTools` uses the same domain APIs.
+All legacy PlayerPrefs key strings, primitive types, serialized formats,
+missing-key defaults, and immediate-save behavior remain compatible; H does
+not add a save-format migration.
 
 ## Reason
 
