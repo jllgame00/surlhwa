@@ -1,6 +1,31 @@
 # SURLHWA — Architecture & Design Decisions
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-08
+
+## ADR-039 — Ingredient Availability Is Day-Derived and Separate from Recipe Knowledge
+
+**Status:** ACCEPTED / I10 IMPLEMENTATION
+
+`IngredientData` remains stable ingredient identity, display, category, and
+sorting data. `IngredientAvailabilityData` owns static normal availability
+policy for every shared-shelf ingredient: either a minimum business day or
+legacy/test always available. `IngredientAvailabilityContext` supplies the
+current business day and an optional dedicated-request temporary override.
+`IngredientShelfController` only consumes that evaluation.
+
+Normal availability derives from the existing persisted `currentDay` and
+static policy data. No ingredient PlayerPrefs key, stock quantity, shop, or
+explicit normal-unlock state is added. Existing `IngredientData.ingredientId`
+is already stable for matching; availability evaluates authored asset references
+and therefore adds no second identity scheme.
+
+`RecipeConstructibilityService` tests catalog liquid requirements against a
+given available IngredientData set without consulting unlock state or mutating
+anything. Guide/recipe unlock knowledge remains separate. Garnish remains the
+I8 runtime garnish state and is not supply-gated in I10. Dedicated requests can
+temporarily provide their required liquid ingredients for that session only.
+Manwol is additionally safe because its three existing liquids are legacy
+always available. Save/reload reconstructs normal availability from `currentDay`.
 
 이 문서는 프로젝트에서 중요한 결정을
 "무엇을 선택했는가"뿐만 아니라

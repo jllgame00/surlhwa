@@ -1,6 +1,23 @@
 # SURLHWA — Game Design
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-08
+
+## I10 Ingredient Availability (Implemented)
+
+I10 makes physical ingredient availability a day-derived bar-supply rule. It
+does not make a recipe known, unlocked, or visible in the Guide. `currentDay`
+plus authored `IngredientAvailabilityData` determines normal supply; no
+per-ingredient save key or inventory quantity exists.
+
+The production vocabulary expands over Days 1-5 as Gin/Dry Vermouth; Sweet Red
+Vermouth/Campari; Rye/Angostura/London Dry Gin/Fernet; Fresh Lemon Juice/Simple
+Syrup/Soda Water/Champagne; then Green Chartreuse/Maraschino Luxardo/Fresh Lime
+Juice. Legacy tutorial ingredients remain available for compatibility. Garnish
+proof controls are not IngredientData supply and remain ungated in I10.
+
+For a dedicated request, its required liquid ingredients may be added only to
+that Bartending session's temporary availability context. This does not change
+normal bar supply or persistence.
 
 ---
 

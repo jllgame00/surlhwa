@@ -1,6 +1,24 @@
 # SURLHWA REBUILD PLAN
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-08
+
+## I10 Ingredient Progression Implementation Note
+
+I10 adds static `IngredientAvailabilityData` policy, a transient
+`IngredientAvailabilityContext`, filtered shelf consumption, and the pure
+`RecipeConstructibilityService`. Normal supply derives solely from persisted
+`currentDay`; no ingredient PlayerPrefs key, inventory quantity, shop, or
+normal-unlock state exists. The five tiers construct Dry Martini (Day 1),
+Negroni (Day 2), Manhattan and Hanky Panky (Day 3), Gin Fizz and French 75
+(Day 4), and Last Word (Day 5). Legacy tutorial ingredients remain available;
+Manwol's Vodka/Coffee Liqueur/Cream preserve Little Prince Float safety.
+
+The I10 editor validation command checks each tier's shelf count and recipe
+constructibility, selection reset, prototype regression safety, Little Prince
+ingredients, request-local isolation, and locked-recipe/available-ingredient
+independence. Batch execution on this workstation is blocked by the unavailable
+Unity batch/headless entitlement, so a licensed Unity editor must rerun it
+before I10 is marked fully runtime-validated. I11+ remains pending.
 
 Status: ACTIVE EXECUTION PLAN / PHASE I BARTENDING 2.0 CURRENT
 
@@ -489,7 +507,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A and I1 through I9B validated; I10+ remains pending
+Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11+ remains pending
 
 #### Purpose
 

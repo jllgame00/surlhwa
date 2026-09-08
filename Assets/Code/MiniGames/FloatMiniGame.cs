@@ -9,7 +9,8 @@ using UnityEngine.UI;
 /// state; this class adds only the ordered layer and boundary-quality companion
 /// required to make the player's controlled additions visible and judgeable.
 /// </summary>
-public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver
+public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver,
+    IIngredientAvailabilityContextReceiver
 {
     public enum FloatPourIntensity
     {
@@ -80,6 +81,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private float activeLayerTransferredMl;
     private Vector2 spoonStartPosition;
     private ServingGlassGarnishController garnishController;
+    private IngredientAvailabilityContext ingredientAvailabilityContext;
 
     public BartendingLayeredDrinkState LayeredDrinkState => layeredDrinkState;
     public int RenderedLayerCount => layerVisuals.Count;
@@ -88,6 +90,11 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     public void SetRequestDisplayTitle(string displayTitle)
     {
         requestDisplayTitle = displayTitle;
+    }
+
+    public void SetIngredientAvailabilityContext(IngredientAvailabilityContext context)
+    {
+        ingredientAvailabilityContext = context;
     }
 
     public void StartGame(Action<MiniGameResult> done)
@@ -102,7 +109,10 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             throw new InvalidOperationException("[FloatMiniGame] IngredientShelfController is required.");
 
         // I7 always prepares in the actual Serving Glass.
-        ingredientShelf.Initialize(MiniGameType.Float, BartendingContainerType.ServingGlass);
+        ingredientShelf.Initialize(
+            MiniGameType.Float,
+            BartendingContainerType.ServingGlass,
+            ingredientAvailabilityContext);
         ConfigureGarnishController();
 
         state = State.Preparing;

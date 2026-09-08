@@ -7,7 +7,8 @@ using UnityEngine.UI;
 /// I4's direct Build route. The Serving Glass records actual Pour Core state;
 /// confirming preparation submits that state without a second timing score.
 /// </summary>
-public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver, IRecipePreparationExpectationReceiver
+public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver,
+    IRecipePreparationExpectationReceiver, IIngredientAvailabilityContextReceiver
 {
     public enum BuildState
     {
@@ -40,6 +41,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private ServingGlassGarnishController garnishController;
     private CocktailRecipeData expectedRecipe;
     private ServingGlassGentleStirInteraction gentleStirInteraction;
+    private IngredientAvailabilityContext ingredientAvailabilityContext;
 
     // I2 runtime guidance only. It never inserts liquid or completes Build.
     private BartendingTopUpGuidance topUpGuidance;
@@ -52,6 +54,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     public void SetExpectedRecipe(CocktailRecipeData recipe)
     {
         expectedRecipe = recipe;
+    }
+
+    public void SetIngredientAvailabilityContext(IngredientAvailabilityContext context)
+    {
+        ingredientAvailabilityContext = context;
     }
 
     public void StartGame(Action<MiniGameResult> done)
@@ -70,7 +77,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         // A Build starts with a fresh preparation session whose only active
         // target is the final Serving Glass. I3's other container APIs remain
         // available for later technique routes but are not Build controls.
-        ingredientShelf.Initialize(MiniGameType.Build, BartendingContainerType.ServingGlass);
+        ingredientShelf.Initialize(
+            MiniGameType.Build,
+            BartendingContainerType.ServingGlass,
+            ingredientAvailabilityContext);
         ConfigureGarnishController();
 
         state = BuildState.Preparing;

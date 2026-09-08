@@ -114,6 +114,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 348085e17f1ec7b40a8732f6df256861, type: 2}
   - {fileID: 11400000, guid: 1e579d608d12a434c805ec0d0cd4ca24, type: 2}
   - {fileID: 11400000, guid: caf6554d897e72245b328f8001764a1f, type: 2}
+  availabilityData: {fileID: 11400000, guid: 1825aec07c484db992c40ee63246f959, type: 2}
   ingredientListRoot: {fileID: 6297617859533203585}
   ingredientOptionPrefab: {fileID: 1668240398160441948, guid: 70472bf45b5f3a04f99d7b741cd173e6, type: 3}
   titleText: {fileID: 4273208198120219119}

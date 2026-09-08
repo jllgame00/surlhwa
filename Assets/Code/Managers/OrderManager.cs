@@ -431,10 +431,15 @@ public class OrderManager : MonoBehaviour
                 currentOrder.requestedCocktail,
                 currentOrder.miniGameType)
             : null;
+        BusinessDayManager businessDayManager = FindFirstObjectByType<BusinessDayManager>();
+        int currentBusinessDay = businessDayManager != null
+            ? businessDayManager.CurrentDay
+            : BusinessDayPersistence.LoadCurrentDay(1);
         BartendingRequestContext request = new BartendingRequestContext(
             currentOrder.miniGameType,
             currentOrder.orderName,
-            expectedRecipe);
+            expectedRecipe,
+            currentBusinessDay);
         RecipeGuideContext recipeGuideContext = BuildRecipeGuideContext();
         BartendingSession session = new BartendingSession(
             request,

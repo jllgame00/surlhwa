@@ -8,7 +8,8 @@ using UnityEngine.UI;
 /// I6's direct Shake route. Actual liquid remains in the Shaker until the
 /// player explicitly strains it into the Serving Glass for result submission.
 /// </summary>
-public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectationReceiver
+public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectationReceiver,
+    IIngredientAvailabilityContextReceiver
 {
     public enum ShakeDirection
     {
@@ -95,6 +96,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     private CocktailRecipeData expectedRecipe;
     private ServingGlassGentleStirInteraction gentleStirInteraction;
     private bool isServingPouring;
+    private IngredientAvailabilityContext ingredientAvailabilityContext;
 
     public int NoteCount => Mathf.Max(1, defaultPatternNoteCount);
     public int PerfectHitCount => perfectHitCount;
@@ -110,6 +112,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         expectedRecipe = recipe;
     }
 
+    public void SetIngredientAvailabilityContext(IngredientAvailabilityContext context)
+    {
+        ingredientAvailabilityContext = context;
+    }
+
     public void StartGame(Action<MiniGameResult> done)
     {
         onDone = done;
@@ -123,7 +130,10 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         // Shake owns direct preparation in the Shaker. I3's preparation state
         // still creates the Serving Glass for the later explicit Strain.
-        ingredientShelf.Initialize(MiniGameType.Shake, BartendingContainerType.Shaker);
+        ingredientShelf.Initialize(
+            MiniGameType.Shake,
+            BartendingContainerType.Shaker,
+            ingredientAvailabilityContext);
         ConfigureGarnishController();
 
         state = State.Preparing;

@@ -1,6 +1,27 @@
 # SURLHWA CONTENT ROADMAP
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-08
+
+## I10 Availability Implementation Record
+
+`IngredientAvailabilityData` owns normal minimum-day or legacy-always-available
+policy; `IngredientAvailabilityContext` carries the current day and an optional
+request-local liquid override; the shared shelf is only a filtered consumer.
+Availability is derived from `currentDay`, so I10 adds no PlayerPrefs key and
+no stock/economy state.
+
+| Tier / earliest day | Newly available production ingredients | Total shelf ingredients | Newly constructible representative recipes |
+| --- | --- | ---: | --- |
+| 1 / Day 1 | Gin; Dry Vermouth | 13 | Dry Martini |
+| 2 / Day 2 | Sweet Red Vermouth; Campari | 15 | Negroni |
+| 3 / Day 3 | Rye Whiskey; Angostura Bitters; London Dry Gin; Fernet | 19 | Manhattan; Hanky Panky |
+| 4 / Day 4 | Fresh Lemon Juice; Simple Syrup; Soda Water; Champagne | 23 | Gin Fizz; French 75 |
+| 5 / Day 5 | Green Chartreuse; Maraschino Luxardo; Fresh Lime Juice | 26 | Last Word |
+
+Counts include 11 legacy/test ingredients that remain visible for existing
+tutorial and special-request compatibility. Recipe unlock/Guide knowledge stays
+independent: an available ingredient never reveals a recipe, and a known recipe
+does not bypass unavailable supply. I11 remains the owner of discovery.
 
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
@@ -555,7 +576,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED; I11+ FUTURE WORK
 
 I9B validates seven official-IBA recipes as a production preparation-model
 proof: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and

@@ -7,6 +7,7 @@ public class IngredientShelfController : MonoBehaviour
 {
     [Header("Ingredient Data")]
     [SerializeField] private IngredientData[] allIngredients;
+    [SerializeField] private IngredientAvailabilityData availabilityData;
 
     [Header("UI")]
     [SerializeField] private Transform ingredientListRoot;
@@ -29,8 +30,13 @@ public class IngredientShelfController : MonoBehaviour
     private BartendingContainerType activePourTarget;
     private RecipePreparationAction activePourAction;
     private float activePourTransferredMl;
+    private IngredientAvailabilityContext availabilityContext;
 
     public IngredientData SelectedIngredient => selectedIngredient;
+    public IngredientAvailabilityContext AvailabilityContext => availabilityContext;
+    public IReadOnlyList<IngredientData> ConfiguredIngredients => allIngredients ?? System.Array.Empty<IngredientData>();
+    public IngredientAvailabilityData AvailabilityData => availabilityData;
+    public int VisibleIngredientCount => optionViews.Count;
     public BartendingContainerState TargetContainer => targetContainer;
     public BartendingPreparationState PreparationState => preparationState;
     public BartendingPreparationTrace PreparationTrace => preparationTrace;
@@ -40,10 +46,14 @@ public class IngredientShelfController : MonoBehaviour
 
     public void Initialize(
         MiniGameType method,
-        BartendingContainerType targetContainerType = BartendingContainerType.ServingGlass)
+        BartendingContainerType targetContainerType = BartendingContainerType.ServingGlass,
+        IngredientAvailabilityContext context = null)
     {
         currentMethod = method;
         selectedIngredient = null;
+        // Every production Bartending route receives this from the Bar-side
+        // request context. Day 1 is only a deterministic direct-use fallback.
+        availabilityContext = context ?? new IngredientAvailabilityContext(1);
         preparationState = new BartendingPreparationState(targetContainerType);
         targetContainer = preparationState.ActiveTarget;
         preparationTrace = new BartendingPreparationTrace();
@@ -56,6 +66,34 @@ public class IngredientShelfController : MonoBehaviour
         RefreshTexts();
 
         gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Refreshes the presentation consumer from the current availability
+    /// context. It never changes the static policy or any saved state.
+    /// </summary>
+    public void SetAvailabilityContext(IngredientAvailabilityContext context)
+    {
+        availabilityContext = context ?? new IngredientAvailabilityContext(1);
+        RefreshAvailability();
+    }
+
+    public void RefreshAvailability()
+    {
+        if (selectedIngredient != null && !IsIngredientAvailable(selectedIngredient))
+        {
+            EndSelectedPour();
+            selectedIngredient = null;
+        }
+
+        RebuildIngredientList();
+        RefreshTexts();
+    }
+
+    public bool IsIngredientVisible(IngredientData ingredient)
+    {
+        return ingredient != null && optionViews.Any(option =>
+            option != null && option.Ingredient == ingredient);
     }
 
     public bool HasAnySelectedIngredient()
@@ -115,13 +153,22 @@ public class IngredientShelfController : MonoBehaviour
 
         for (int i = ingredientListRoot.childCount - 1; i >= 0; i--)
         {
-            Destroy(ingredientListRoot.GetChild(i).gameObject);
+            GameObject optionInstance = ingredientListRoot.GetChild(i).gameObject;
+
+            if (Application.isPlaying)
+                Destroy(optionInstance);
+            else
+                DestroyImmediate(optionInstance);
         }
 
         if (allIngredients == null)
             return;
 
-        IEnumerable<IngredientData> sortedIngredients = allIngredients
+        IEnumerable<IngredientData> availableIngredients = availabilityData != null
+            ? availabilityData.GetAvailableIngredients(allIngredients, availabilityContext)
+            : allIngredients.Where(ingredient => ingredient != null);
+
+        IEnumerable<IngredientData> sortedIngredients = availableIngredients
             .Where(ingredient => ingredient != null)
             .OrderBy(ingredient => ingredient.category)
             .ThenBy(ingredient => ingredient.sortOrder)
@@ -164,27 +211,20 @@ public class IngredientShelfController : MonoBehaviour
             return;
         }
 
-        List<string> parts = new List<string>();
+        int liquidCount = targetContainer.LiquidEntries.Count(entry =>
+            entry != null && entry.Ingredient != null && entry.AmountMl > 0f);
 
-        foreach (BartendingLiquidEntry entry in targetContainer.LiquidEntries)
-        {
-            if (entry == null || entry.Ingredient == null || entry.AmountMl <= 0f)
-                continue;
-
-            string dashText = entry.DashCount > 0 ? $" / {entry.DashCount} dash" : string.Empty;
-            parts.Add(
-                $"{entry.Ingredient.displayName} {entry.AmountMl:0.0} ml " +
-                $"({BartendingVolume.MillilitersToOunces(entry.AmountMl):0.##} oz){dashText}");
-        }
-
+        // Individual ingredient rows already present their exact amounts. Keep
+        // this fixed-height summary bounded so a multi-liquid drink cannot
+        // drive TMP's wrapped-ellipsis layout into recursive line breaking.
         summaryText.text =
-            $"{targetContainer.ContainerType} {targetContainer.CurrentLiquidVolumeMl:0.0} ml: " +
-            string.Join(" / ", parts) + iceText;
+            $"{targetContainer.ContainerType} {targetContainer.CurrentLiquidVolumeMl:0.0} ml / " +
+            $"{liquidCount} liquid{(liquidCount == 1 ? string.Empty : "s")}{iceText}";
     }
 
     private void OnIngredientSelected(IngredientData ingredient)
     {
-        if (ingredient == null)
+        if (ingredient == null || !IsIngredientAvailable(ingredient))
             return;
 
         EndSelectedPour();
@@ -236,6 +276,12 @@ public class IngredientShelfController : MonoBehaviour
         }
 
         return transferredMl;
+    }
+
+    private bool IsIngredientAvailable(IngredientData ingredient)
+    {
+        return ingredient != null &&
+               (availabilityData == null || availabilityData.IsIngredientAvailable(ingredient, availabilityContext));
     }
 
     /// <summary>

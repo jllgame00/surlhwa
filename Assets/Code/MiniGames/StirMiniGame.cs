@@ -7,7 +7,8 @@ using UnityEngine.UI;
 /// I5's direct Stir route. Actual liquid stays in the Mixing Glass until the
 /// player explicitly strains it into the Serving Glass for result submission.
 /// </summary>
-public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectationReceiver
+public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectationReceiver,
+    IIngredientAvailabilityContextReceiver
 {
     private enum State
     {
@@ -67,6 +68,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     private bool isPouring;
     private ServingGlassGarnishController garnishController;
     private CocktailRecipeData expectedRecipe;
+    private IngredientAvailabilityContext ingredientAvailabilityContext;
 
     public float TotalStirRotationDegrees => techniqueTracker != null
         ? techniqueTracker.TotalRotationDegrees
@@ -89,6 +91,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         expectedRecipe = recipe;
     }
 
+    public void SetIngredientAvailabilityContext(IngredientAvailabilityContext context)
+    {
+        ingredientAvailabilityContext = context;
+    }
+
     public void StartGame(Action<MiniGameResult> done)
     {
         onDone = done;
@@ -103,7 +110,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         // Stir owns direct preparation in the Mixing Glass. The I3 preparation
         // state still creates the Serving Glass for the later explicit Strain.
-        ingredientShelf.Initialize(MiniGameType.Stir, BartendingContainerType.MixingGlass);
+        ingredientShelf.Initialize(
+            MiniGameType.Stir,
+            BartendingContainerType.MixingGlass,
+            ingredientAvailabilityContext);
         ConfigureGarnishController();
 
         state = State.Preparing;

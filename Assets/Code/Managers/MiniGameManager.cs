@@ -116,6 +116,12 @@ public class MiniGameManager : MonoBehaviour
         if (game is IRecipePreparationExpectationReceiver expectationReceiver)
             expectationReceiver.SetExpectedRecipe(request != null ? request.ExpectedRecipe : null);
 
+        if (game is IIngredientAvailabilityContextReceiver availabilityReceiver)
+        {
+            availabilityReceiver.SetIngredientAvailabilityContext(
+                request != null ? request.AvailabilityContext : null);
+        }
+
         game.StartGame(result =>
         {
             if (currentMiniGame != null)

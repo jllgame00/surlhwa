@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4031077907a4a0da87ef932406471c5, type: 3}
+  m_Name: IngredientAvailability
+  m_EditorClassIdentifier: Assembly-CSharp::IngredientAvailabilityData
+  entries:
+  - ingredient: {fileID: 11400000, guid: 78fe3b6fa02eceb4f922e2772ed6e4ef, type: 2}
+    policy: 0
+    minimumBusinessDay: 3
+  - ingredient: {fileID: 11400000, guid: 28742c5eade7c7043acb389b056cbec7, type: 2}
+    policy: 0
+    minimumBusinessDay: 2
+  - ingredient: {fileID: 11400000, guid: 348085e17f1ec7b40a8732f6df256861, type: 2}
+    policy: 0
+    minimumBusinessDay: 4
+  - ingredient: {fileID: 11400000, guid: e00d4a7e4e940b74297043ec0154e4c1, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 02f6eceda66c83e4d901b2dc701c2d3a, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: d87060247a6223b409ea94a876a824cf, type: 2}
+    policy: 0
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: caf6554d897e72245b328f8001764a1f, type: 2}
+    policy: 0
+    minimumBusinessDay: 3
+  - ingredient: {fileID: 11400000, guid: bdcad25df259b774ba735ed7cd4d26ee, type: 2}
+    policy: 0
+    minimumBusinessDay: 4
+  - ingredient: {fileID: 11400000, guid: 8a01c6e2b0c54394988f93ad4f440743, type: 2}
+    policy: 0
+    minimumBusinessDay: 5
+  - ingredient: {fileID: 11400000, guid: 3d52aad9ecb349940ba46b3879093ef9, type: 2}
+    policy: 0
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 2d6aa0ff207c0a74d89a44528166e421, type: 2}
+    policy: 0
+    minimumBusinessDay: 5
+  - ingredient: {fileID: 11400000, guid: 651da93143613fc438aba4d27103e826, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 4796b4d769970e04197b73ff1d478d40, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 1e579d608d12a434c805ec0d0cd4ca24, type: 2}
+    policy: 0
+    minimumBusinessDay: 3
+  - ingredient: {fileID: 11400000, guid: 9c74a9cb5410c3c4ca2d5439ca2e6462, type: 2}
+    policy: 0
+    minimumBusinessDay: 5
+  - ingredient: {fileID: 11400000, guid: b2678bda85aeb604aa41aec9d0c76d24, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 43c6097267101ce49a0212b9612aafde, type: 2}
+    policy: 0
+    minimumBusinessDay: 3
+  - ingredient: {fileID: 11400000, guid: 76a9785e9eafcf543a1f333df88d2d00, type: 2}
+    policy: 0
+    minimumBusinessDay: 4
+  - ingredient: {fileID: 11400000, guid: a690697921e0b8d408524e1e922f89b7, type: 2}
+    policy: 0
+    minimumBusinessDay: 4
+  - ingredient: {fileID: 11400000, guid: 70b512d04df84da418e3a2ec018a55ce, type: 2}
+    policy: 0
+    minimumBusinessDay: 2
+  - ingredient: {fileID: 11400000, guid: a508b9d06b9611c47939e79f2eef61f4, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: e9ac86382740b8840a3452bdb748cf69, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 47193433f59ce804fb70332e10afaf72, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  - ingredient: {fileID: 11400000, guid: db5a42e5ddc8daf49ba26a334aafe62a, type: 2}
+    policy: 1
+    minimumBusinessDay: 1
+  unlistedIngredientsAreAvailable: 1

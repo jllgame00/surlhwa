@@ -1,6 +1,26 @@
 # SURLHWA PROJECT AUDIT
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-08
+
+## I10 Current-State Note (2026-09-08)
+
+The shared `IngredientShelfPanel` retains one configured list of 26 existing
+IngredientData assets, but no longer presents all of them blindly.
+`IngredientAvailabilityData` explicitly classifies each configured asset as
+minimum-business-day production supply or legacy/test always available.
+`IngredientShelfController` filters this list from a transient business-day /
+request context and clears an invalid selection on refresh.
+
+The sole persistence input remains `BusinessDayPersistence.currentDay`. I10
+adds no raw PlayerPrefs caller/key, no recipe-unlock persistence, and no
+ingredient inventory state. `RecipeConstructibilityService` is a pure catalog
+liquid-requirement query; it deliberately does not read RecipeUnlockManager or
+Guide state. Dedicated-request overrides are session-local and unpersisted.
+
+Legacy `recipe_janseol`, `recipe_test_stir`, `recipe_test_shake`, and
+`recipe_manwol` remain Day-1 constructible. Manwol uses legacy
+Vodka/Coffee Liqueur/Cream, preserving the Day-2 Little Prince Float route.
+I8 garnish controls remain outside IngredientData supply in this phase.
 
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 

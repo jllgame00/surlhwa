@@ -7,14 +7,19 @@ public sealed class BartendingRequestContext
     public MiniGameType Route { get; }
     public string DisplayTitle { get; }
     public CocktailRecipeData ExpectedRecipe { get; }
+    public IngredientAvailabilityContext AvailabilityContext { get; }
 
     public BartendingRequestContext(
         MiniGameType route,
         string displayTitle,
-        CocktailRecipeData expectedRecipe = null)
+        CocktailRecipeData expectedRecipe = null,
+        int currentBusinessDay = 1)
     {
         Route = route;
         DisplayTitle = displayTitle ?? string.Empty;
         ExpectedRecipe = expectedRecipe;
+        AvailabilityContext = IngredientAvailabilityContext.ForRequest(
+            currentBusinessDay,
+            expectedRecipe);
     }
 }

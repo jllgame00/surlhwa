@@ -1,6 +1,27 @@
 # SURLHWA — Bartending 2.0 Design Specification
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-08
+
+## I10 Ingredient Availability (Implemented Boundary)
+
+I10 implements one bounded day-derived availability layer, not an inventory
+system. `IngredientAvailabilityData` owns minimum-day production policy and
+legacy/test always-available policy. `IngredientAvailabilityContext` contains a
+business day plus optional request-local liquid ingredients. The normal shelf
+is filtered from this evaluation; it is never filtered to only a chosen recipe.
+
+Physical construction is a separate pure query over `RecipeCatalogData` liquid
+requirements and available IngredientData references. It ignores whether a
+recipe is unlocked, known, or visible in the Guide. Recipe garnish expectations
+remain outside liquid requirements, and I8 proof garnish state remains available
+rather than starting a second garnish-supply system.
+
+Earliest physical availability: Dry Martini, Day 1; Negroni, Day 2; Manhattan
+and Hanky Panky, Day 3; Gin Fizz and French 75, Day 4; Last Word, Day 5. Exact
+Gin and London Dry Gin remain distinct identities. Normal availability is
+reconstructed from `currentDay`; no ingredient save key exists. A special
+request may get a temporary local supply override, while Manwol remains
+protected by legacy availability.
 
 Status: APPROVED GAMEPLAY DIRECTION / PHASE I IMPLEMENTATION REFERENCE
 
@@ -870,7 +891,7 @@ uses the following implementation progression:
 | I7.5 | Legacy Bartending Cleanup — validated | Removes the unreachable fixed-increment Jigger/session/factory runtime path; inactive legacy gauge and target-zone prefab visuals remain deferred asset cleanup |
 | I8 | Garnish — validated | One optional actual garnish identity and bounded Serving Glass placement is recorded separately from liquid composition and technique quality before manual serve |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
-| I10 | Ingredient Progression | Staged availability expands recipe space after catalog proof |
+| I10 | Ingredient Progression — implemented | Day-derived shelf availability expands recipe space; licensed-Editor runtime validation remains pending |
 | I11 | Guide / Discovery | Unknown, partially-known, and known learning path works from fresh progress |
 | I12 | Guest Response | Cocktail characteristics and authored important-guest preferences are revisited |
 | I13 | Little Prince Interpretive Choice / Memory | One choice → response → later recall → environmental trace proof exists |
