@@ -42,7 +42,7 @@ the cocktail identity and quantities remain hidden until independently learned
 or fully discovered. Wrong attempted ingredients are not recorded as recipe
 knowledge. Richer guest clue coverage and encounter pacing remain I11C+ work.
 
-## I11C Normal-Play Dry Martini Arc (Implemented; licensed-Editor proof pending)
+## I11C Normal-Play Dry Martini Arc (Implemented; validated)
 
 One production-paced Day 1 arc now uses four authored `OrderData` entries on
 the existing generic-customer sequence: Stir clue, Gin clue, Dry Vermouth clue,
@@ -57,7 +57,7 @@ match promotes the recipe to Known. `TestStir` remains legacy/debug tutorial
 content and is not the normal-play I11C proof. Broader recipe arcs, clue prose,
 and guest pacing remain future work.
 
-## I12 Guest Recommendation Fit (Implemented; automated Editor validation passed)
+## I12 Guest Recommendation Fit (Implemented; validated)
 
 I12 extends the existing request-evaluation seam instead of creating a second
 satisfaction system. `ExactCocktail` retains its existing identity constraint;
@@ -99,6 +99,27 @@ and existing ice, transfer, and garnish confirmation remains direct. Pour rates,
 Shake windows, Float thresholds, composition recognition, and preparation traces
 are unchanged. The project has no owned SFX clips, so a broader sound pass is
 deferred rather than introducing placeholder audio assets.
+
+## I16 Two-Night Vertical Slice (Validated)
+
+The shipped BarScene now has one validated, controlled Day-1-to-Day-2 slice:
+the four authored Dry Martini encounters retain Unknown -> Partial -> Known
+knowledge, then the Clarity Recommendation evaluates Dry Martini as a fitting
+recognized drink without a second discovery. The production day transition
+retains the Known state into Day 2, whose vocabulary expands through the
+existing availability data.
+
+Day 2 validates Little Prince first-visit eligibility, a separate persisted
+`KeepTheLight` / `SeekTheStar` choice, the exact Manwol Float request and its
+request-local ingredient context, departure-based first-visit completion, and
+Day-3 follow-up eligibility. This is one representative slice, not broader
+recipe, recommendation, or narrative content rollout.
+
+Normal-Editor validation passed the I10-I16 matrix. Earlier production Play
+Mode proofs for I11B, I13, and I14 remain applicable because I16 did not alter
+their production paths. The unavailable Unity headless entitlement is an
+environment limitation; I15 functional validation passed while subjective
+human feel sign-off remains pending.
 
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
@@ -653,7 +674,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED / I13 ONE LITTLE PRINCE REMEMBERED-CHOICE SLICE IMPLEMENTED / I14 AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF PASSED / I15 IMPLEMENTATION COMPLETE WITH SHORT HUMAN FEEL SIGN-OFF PENDING; I16+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10-I16 NORMAL-EDITOR VALIDATION PASSED / I11B, I13, AND I14 RETAIN ESTABLISHED PRODUCTION PLAY MODE EVIDENCE / I15 FUNCTIONAL VALIDATION PASSED WITH SHORT HUMAN FEEL SIGN-OFF PENDING; I17+ FUTURE WORK
 
 ### I13 bounded Little Prince memory proof
 

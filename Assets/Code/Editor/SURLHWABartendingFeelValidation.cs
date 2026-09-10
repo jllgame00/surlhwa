@@ -57,8 +57,11 @@ public static class SURLHWABartendingFeelValidation
                     Mathf.Approximately(GetPrivateFloat(shake, "goodWindowSeconds"), 0.20f),
                 "I15 must not alter Shake timing windows.");
 
-            Require(floatRoot.transform.Find("UI/SpoonImage") != null,
-                "Production Float prefab must retain its authored SpoonImage visual.");
+            FloatMiniGame floatMiniGame = floatRoot.GetComponent<FloatMiniGame>();
+            Require(floatMiniGame != null, "Production Float prefab is missing its controller.");
+            RectTransform floatSpoon = GetPrivateReference<RectTransform>(floatMiniGame, "spoon");
+            Require(floatSpoon != null && floatSpoon.name == "SpoonImage",
+                "Production Float prefab must retain its authored SpoonImage visual binding.");
         }
         finally
         {
@@ -190,6 +193,14 @@ public static class SURLHWABartendingFeelValidation
         FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
         Require(field != null && field.FieldType == typeof(float), "Missing float field '" + fieldName + "'.");
         return (float)field.GetValue(target);
+    }
+
+    private static T GetPrivateReference<T>(object target, string fieldName) where T : class
+    {
+        FieldInfo field = target.GetType().GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+        Require(field != null && typeof(T).IsAssignableFrom(field.FieldType),
+            "Missing reference field '" + fieldName + "'.");
+        return field.GetValue(target) as T;
     }
 
     private static void Require(bool condition, string message)

@@ -174,12 +174,39 @@ thresholds, now surfaces active flow and resolves the production prefab's
 preparation-trace actions. No recipe, catalog, scene, PlayerPrefs, matcher,
 preparation expectation, FIT, reward, or availability field changed.
 
-Static compilation passed for the runtime/editor assemblies, including the new
-I15 validator. Unity command-line invocation reached managed assembly reload
-without a compiler diagnostic but could not execute validation because the local
-Unity Licensing Client repeatedly failed to provide `com.unity.editor.headless`.
-The final subjective feel check therefore remains pending a licensed Editor
-session; no runtime validator PASS is claimed from that blocked invocation.
+Normal Unity 6000.3.7f1 Editor validation now passes the I15 functional
+validator. Its Float assertion was corrected to inspect the actual serialized
+`FloatMiniGame.spoon` reference, rather than assume the visual was a direct
+`UI/SpoonImage` child; this is a validator-only correction and no gameplay or
+serialized production content changed. The final subjective human feel check
+remains pending.
+
+The local license still lacks `com.unity.editor.headless`, so batch/headless
+validation is unavailable by entitlement. Normal-Editor validation is the
+accepted route; the limitation is environmental, not a project defect.
+
+---
+
+## I16 Current-State Note (2026-09-10)
+
+`SURLHWATwoNightVerticalSliceValidation` is a narrow editor validator that
+opens the shipped `BarScene` additively and snapshots/restores player progress.
+It validates the real assigned controllers and authored content rather than
+introducing another day, knowledge, request, or Little Prince owner. The normal
+Editor run passed: Day-1 shelf safety and Dry Martini Unknown -> Partial ->
+Known; no-leak Clarity Recommendation FIT separation; current-day and knowledge
+reload; Day-2 Little Prince first-visit eligibility and independent choice
+persistence; exact Manwol Float context with request-local availability;
+departure completion; and Day-3 follow-up eligibility.
+
+The normal-Editor cycle passed the I10-I15 functional/editor validator matrix
+and I11A's production Play Mode proof. Earlier production Play Mode proof
+remains valid for I11B's real shelf ingredient/discovery path, I13's shipped
+Little Prince UI/choice/patience/Manwol path, and I14's `OrderManager ->
+CustomerController/GuestReactionResolver -> ResultToastController ->
+RecipeUnlockPopupController` sequence because I16 did not modify those paths.
+No recovery, scene, prefab, ScriptableObject, ProjectSettings, or gameplay
+persistence changes are part of I16.
 
 ---
 

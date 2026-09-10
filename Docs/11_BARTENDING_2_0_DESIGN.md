@@ -952,6 +952,29 @@ audio. The intended feedback language is quiet and direct: accepted input gets
 a small immediate response, a completed action gets a short clear confirmation,
 and a weak action is readable without arcade effects.
 
+### I16 two-night vertical slice validation
+
+I16 validates one controlled production slice using the shipped BarScene and
+existing authorities. Day 1 holds Dry Martini as physically available but
+Guide-unknown, then consumes the ordered Stir/Gin/Dry Vermouth facts, preserves
+Partial state after a failed attempt, and promotes Known only through the
+existing exact composition match. The next non-leaking Clarity Recommendation
+accepts the recognized Dry Martini without conflating FIT with discovery.
+
+After the normal day persistence boundary, Day 2 retains recipe knowledge and
+uses existing staged availability. Little Prince remains eligible for the first
+visit, persists the bounded narrative choice separately from departure-based
+visit completion, enters the exact Manwol Float request with its request-local
+liquid context, and enables the Day-3 authored follow-up after completion.
+This proves integration only; it adds no new progression authority, content
+framework, recipe truth, matcher, technique, FIT, or reward system.
+
+Normal Unity Editor validation passed I10-I16. The I11B, I13, and I14
+production Play Mode proofs remain the live UI/interaction evidence for paths
+unchanged by I16. The missing `com.unity.editor.headless` entitlement is an
+environment constraint, not a product defect. I15 functional validation passed;
+its subjective human feel sign-off remains pending.
+
 ---
 
 ## 14. Guest and Cocktail Response Direction
@@ -1027,13 +1050,13 @@ uses the following implementation progression:
 | I7.5 | Legacy Bartending Cleanup — validated | Removes the unreachable fixed-increment Jigger/session/factory runtime path; inactive legacy gauge and target-zone prefab visuals remain deferred asset cleanup |
 | I8 | Garnish — validated | One optional actual garnish identity and bounded Serving Glass placement is recorded separately from liquid composition and technique quality before manual serve |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
-| I10 | Ingredient Progression — implemented | Day-derived shelf availability expands recipe space; licensed-Editor runtime validation remains pending |
-| I11 | Guide / Discovery | I11A/I11B ownership and triggers plus one Day-1 multi-encounter Dry Martini Partial-to-Known arc are implemented; licensed-Editor runtime proof remains pending |
-| I12 | Guest Response — implemented | Pure authored FIT now distinguishes ExactCocktail from multi-valid Recommendation requests and is composed with execution response; automated Editor validation passed |
+| I10 | Ingredient Progression — validated | Day-derived shelf availability expands recipe space; normal-Editor validation passed |
+| I11 | Guide / Discovery — validated | I11A/I11B ownership and triggers plus one Day-1 multi-encounter Dry Martini Partial-to-Known arc are validated; I11B retains production Play Mode proof |
+| I12 | Guest Response — validated | Pure authored FIT distinguishes ExactCocktail from multi-valid Recommendation requests and is composed with execution response; normal-Editor validation passed |
 | I13 | Little Prince Interpretive Choice / Memory — implemented | One stable choice → immediate response → Day-3 authored recall; environmental trace remains future work |
 | I14 | Feedback Hierarchy - validated | Guest FIT, drink identity, execution, one discovery event, and reward are sequenced from resolved service truth; automated production-UI Play Mode sign-off passed |
-| I15 | Bartending Feel / Audiovisual Polish — implementation complete | Visual-only Stir/GentleStir smoothing, readable Shake/Float feedback, and existing direct action confirmation preserve all authorities; final short human feel sign-off remains pending |
-| I16 | Two-Night Vertical Slice | A 25–35 minute, playtested proof combines the adopted direction |
+| I15 | Bartending Feel / Audiovisual Polish — functional validation passed | Visual-only Stir/GentleStir smoothing, readable Shake/Float feedback, and existing direct action confirmation preserve all authorities; final short human feel sign-off remains pending |
+| I16 | Two-Night Vertical Slice — validated | Controlled Day-1-to-Day-2 BarScene integration proof preserves knowledge, FIT, day progression, Little Prince choice, and Manwol Float boundaries |
 
 No later phase starts merely because an earlier one has code. Each exit criterion
 requires focused validation and an intended diff review.

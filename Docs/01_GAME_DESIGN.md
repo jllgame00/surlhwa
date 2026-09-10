@@ -52,7 +52,7 @@ through `OrderManager`. Neither hint facts nor player ingredient use affect
 ingredient availability, technique quality, preparation evaluation, or guest
 satisfaction.
 
-## I11C Normal-Play Discovery Arc (Implemented; licensed-Editor proof pending)
+## I11C Normal-Play Discovery Arc (Implemented; validated)
 
 Day 1 now schedules one deterministic, authored four-customer Dry Martini arc
 through the existing generic customer and dedicated-request flow. Its three
@@ -71,7 +71,7 @@ preparation evidence. A technically recognized but policy-rejected attempt
 also keeps an Unknown recipe unnamed in the result UI. This is content pacing
 over I11A/I11B ownership, not a quest, dialogue-parser, or guest-memory system.
 
-## I12 Guest Recommendation Fit (Implemented; licensed-Editor proof pending)
+## I12 Guest Recommendation Fit (Implemented; validated)
 
 Guest response now separates four result axes:
 
@@ -169,6 +169,31 @@ audio clips or audio playback system currently exist, so I15 adds no arbitrary
 external audio or fake audio authority. The visual language remains restrained:
 accepted input gets a short visible response, completed actions get a clear
 confirmation, and weak technique remains readable without arcade-style effects.
+
+## I16 Two-Night Vertical Slice (Validated)
+
+The first bounded two-night production slice is validated from a controlled
+progress state in the shipped `BarScene`. Day 1 keeps Dry Martini physically
+available but Guide-unknown, consumes its authored Stir, Gin, and Dry Vermouth
+clues into retained Partial knowledge, preserves that state through a failed
+attempt, and promotes it to Known only through the existing successful match.
+The following Clarity Recommendation remains unnamed before evaluation and
+accepts Dry Martini as FIT-satisfied without producing a duplicate discovery.
+
+The normal day persistence boundary retains Day 2 and Known Dry Martini. Day 2
+uses the existing Little Prince first-visit eligibility, separate persisted
+choice, patience-safe narrative-to-Brew handoff, exact Manwol Float context,
+departure-based completion, and Day-3 follow-up eligibility. Recipe knowledge,
+availability, preparation, FIT, reward, and narrative-choice authorities remain
+separate throughout this proof.
+
+Normal Unity 6000.3.7f1 Editor validation passed I10 through I16. Existing
+production Play Mode evidence remains the interaction-level proof for I11B
+ingredient/discovery, I13 Little Prince choice/patience/Manwol, and I14's
+BarScene reaction-to-toast-to-popup order; those routes were unchanged by I16.
+The local Unity license lacks `com.unity.editor.headless`, so headless runs are
+an environment limitation rather than a project failure. I15 functional
+validation passed; its optional subjective human feel sign-off remains pending.
 
 ---
 
