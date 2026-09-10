@@ -1,6 +1,6 @@
 # SURLHWA REBUILD PLAN
 
-Last Updated: 2026-09-08
+Last Updated: 2026-09-10
 
 ## I10 Ingredient Progression Implementation Note
 
@@ -775,7 +775,13 @@ learned identity, method, ingredient, amount, garnish, and/or preparation
 facts; `Known` projects the supported full recipe presentation. The new
 versioned knowledge save is independent from day-derived ingredient
 availability and derives legacy `SURLHWA_UNLOCKED_RECIPES` entries as `Known`
-on load. I11B+ must still provide production discovery/clue triggers.
+on load. **I11B implemented:** consumed authored request/dialogue facts and
+correct player-used ingredient facts now flow through the same authority. A
+target recipe must already be present in `BartendingRequestContext`; generic
+requests are never retroactively assigned a recipe from the matcher. Wrong
+ingredients remain actual preparation evidence only. The existing successful
+technical match still promotes a recipe to `Known`. I11C+ remains responsible
+for richer guest clue content and normal-play pacing.
 
 #### I12 — Guest Response
 

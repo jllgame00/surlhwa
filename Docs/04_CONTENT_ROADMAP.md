@@ -1,6 +1,6 @@
 # SURLHWA CONTENT ROADMAP
 
-Last Updated: 2026-09-08
+Last Updated: 2026-09-10
 
 ## I10 Availability Implementation Record
 
@@ -31,6 +31,16 @@ specific ingredient, specific ingredient amount, garnish, and preparation—by
 stable recipe and ingredient identity rather than opaque completion percentage.
 The legacy unlocked-recipe list maps to `Known` on load. Full guest clue and
 normal-play discovery sources remain I11B+ work.
+
+## I11B Production Discovery Triggers (Implemented)
+
+The initial production discovery sources are deliberately bounded: an authored
+consumed request/dialogue reveal, a correct player-used ingredient in a request
+with an explicit target recipe, and the existing successful technical recipe
+match. The TestStir tutorial request now gives a method-only Dry Martini clue;
+the cocktail identity and quantities remain hidden until independently learned
+or fully discovered. Wrong attempted ingredients are not recorded as recipe
+knowledge. Richer guest clue coverage and encounter pacing remain I11C+ work.
 
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 

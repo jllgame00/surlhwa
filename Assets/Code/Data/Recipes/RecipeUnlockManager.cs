@@ -58,6 +58,19 @@ public class RecipeUnlockManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Production player-action entry point. Incorrect attempted ingredients
+    /// are valid actions but are not recipe facts, so they remain silent and
+    /// never enter player knowledge.
+    /// </summary>
+    public bool LearnIngredientFromPlayerUse(CocktailRecipeData recipe, IngredientData ingredient)
+    {
+        if (!IsAuthoredRecipeIngredient(recipe, ingredient))
+            return false;
+
+        return Learn(recipe, RecipeKnowledgeFact.Ingredient, ingredient);
+    }
+
+    /// <summary>
     /// Amount knowledge always establishes its corresponding ingredient fact
     /// first. This prevents an amount from existing without an identified
     /// authored IngredientData reference.

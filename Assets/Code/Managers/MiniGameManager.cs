@@ -97,6 +97,8 @@ public class MiniGameManager : MonoBehaviour
 
         currentMiniGame = Instantiate(prefab, transform);
 
+        SetupRecipeKnowledgeDiscovery(currentMiniGame, request);
+
         // 레시피 가이드 패널에 현재 조주 방식 전달
         SetupRecipeGuide(currentMiniGame, recipeGuideContext, firstRecipeRevealRequested);
 
@@ -167,6 +169,34 @@ public class MiniGameManager : MonoBehaviour
 
                 return GetPrefab(request.Route);
         }
+    }
+
+    /// <summary>
+    /// Binds player-used liquid evidence only when the Bar already supplied an
+    /// authoritative target recipe in the request. Generic requests with no
+    /// target remain intentionally ineligible; no recipe is inferred from a
+    /// later composition match.
+    /// </summary>
+    private static void SetupRecipeKnowledgeDiscovery(
+        GameObject miniGameRoot,
+        BartendingRequestContext request)
+    {
+        CocktailRecipeData targetRecipe = request != null ? request.ExpectedRecipe : null;
+        if (miniGameRoot == null || targetRecipe == null)
+            return;
+
+        RecipeUnlockManager knowledgeManager = FindFirstObjectByType<RecipeUnlockManager>();
+        IngredientShelfController shelf =
+            miniGameRoot.GetComponentInChildren<IngredientShelfController>(true);
+
+        if (knowledgeManager == null || shelf == null)
+        {
+            Debug.LogWarning(
+                "[MiniGameManager] Recipe ingredient discovery is unavailable for the current target request.");
+            return;
+        }
+
+        RecipeKnowledgeIngredientUseDiscovery.Bind(shelf, targetRecipe, knowledgeManager);
     }
 
     private void SetMainSceneActive(bool active)

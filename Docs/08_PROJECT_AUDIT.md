@@ -1,6 +1,6 @@
 # SURLHWA PROJECT AUDIT
 
-Last Updated: 2026-09-08
+Last Updated: 2026-09-10
 
 ## I10 Current-State Note (2026-09-08)
 
@@ -39,6 +39,26 @@ fact booleans, and stable ingredient-ID lists. The old
 source, mapping prior unlocks to `Known`; the first-recipe-reveal key remains
 independent UI state. No ingredient-availability, matcher, preparation, IBA
 asset, Little Prince, or Manwol content authority changed in I11A.
+
+## I11B Current-State Note (2026-09-10)
+
+I11B adds production callers without creating another knowledge store. The
+first Stir tutorial request has an explicit Dry Martini constraint and a
+method-only authored hint; `InteractionUIController` applies that data only
+when the hint is displayed. `DialogueData` can additionally associate bounded
+reveals with exact consumed `onEnterLines` indexes, without parsing text.
+
+`IngredientShelfController` emits one observation per accepted liquid
+ingredient for its active session. `MiniGameManager` binds that observation
+only when the request already supplies `ExpectedRecipe`. The knowledge manager
+accepts player-used ingredients only when they occur in that authored recipe.
+Generic no-target requests receive no ingredient discovery, and incorrect
+liquids remain preparation-trace evidence rather than false recipe facts. The
+existing `OrderManager` match-success boundary still owns promotion to `Known`.
+
+No I10 availability policy, I9B recipe/preparation data, matcher semantics,
+Little Prince content, or Manwol route was changed. The only serialized
+content change is the existing TestStir `OrderData` request/hint metadata.
 
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 

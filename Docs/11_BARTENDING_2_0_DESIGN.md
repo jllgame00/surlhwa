@@ -1,6 +1,6 @@
 # SURLHWA — Bartending 2.0 Design Specification
 
-Last Updated: 2026-09-08
+Last Updated: 2026-09-10
 
 ## I10 Ingredient Availability (Implemented Boundary)
 
@@ -834,6 +834,22 @@ separate persistence concern.
 Discovery is not invalidated by showing a learned full recipe. Discovery can
 include learning why a cocktail matters, when it fits a guest, how its
 preparation feels, and what later uses become possible.
+
+### I11B production trigger implementation
+
+I11B begins normal-play learning with three explicit sources only. A consumed
+authored request or dialogue line can dispatch one or more typed facts. The
+initial Stir tutorial request carries a method-only Dry Martini hint. The
+actual shelf may reveal a liquid ingredient the player used, but only when the
+request supplied an explicit target recipe and that authored recipe contains
+the same `IngredientData`. A wrong liquid remains action-trace evidence, not a
+player-knowledge guess; no amount is inferred from a pour.
+
+The existing successful composition match remains the only I11B source of full
+`Known` state. These triggers do not change container truth, preparation
+evaluation, technique quality, guest satisfaction, or I10 availability. I11C+
+will add richer authored clues and multi-encounter pacing rather than a text
+parser or generalized inference system.
 
 ---
 

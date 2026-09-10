@@ -1,6 +1,6 @@
 # SURLHWA — Game Design
 
-Last Updated: 2026-09-08
+Last Updated: 2026-09-10
 
 ## I10 Ingredient Availability (Implemented)
 
@@ -35,6 +35,22 @@ show the complete currently supported recipe presentation.
 The full authored recipe remains in `CocktailRecipeData`; player progress saves
 only stable recipe/ingredient IDs and fact booleans. Guest-driven clue sources
 and the normal gameplay discovery loop remain future I11 work.
+
+## I11B Production Discovery Triggers (Implemented)
+
+I11B connects three bounded gameplay sources to the I11A knowledge authority.
+An authored request hint may reveal explicit typed facts only when its line is
+shown to the player; the initial Stir tutorial hint teaches only the method for
+its explicitly targeted Dry Martini request. A player-used liquid is observed
+after the shelf accepts it, and can reveal that ingredient only when the
+request already carries that recipe as its authoritative target. Incorrect
+liquids remain player action/preparation evidence and never become recipe
+facts or amount knowledge.
+
+Successful `RecipeMatchService` discovery continues to grant explicit `Known`
+through `OrderManager`. Neither hint facts nor player ingredient use affect
+ingredient availability, technique quality, preparation evaluation, or guest
+satisfaction.
 
 ---
 

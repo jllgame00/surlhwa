@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,6 +64,7 @@ public class InteractionUIController : MonoBehaviour
 
     private OrderManager orderManager;
     private BusinessDayManager businessDayManager;
+    private RecipeUnlockManager recipeKnowledgeManager;
     private CustomerController activeCustomer;
 
     private MiniGameType selectedMethod;
@@ -79,6 +81,7 @@ public class InteractionUIController : MonoBehaviour
     private bool activeCustomerUsesFourthCustomerRoute;
     private MiniGameType activeForcedMethod = MiniGameType.Stir;
     private string[] activePreRequestLines;
+    private DialogueData activePreRequestDialogue;
     private int activePreRequestLineIndex;
     private bool isPreRequestDialogueActive;
 
@@ -91,6 +94,7 @@ public class InteractionUIController : MonoBehaviour
     {
         orderManager = FindFirstObjectByType<OrderManager>();
         businessDayManager = FindFirstObjectByType<BusinessDayManager>();
+        recipeKnowledgeManager = FindFirstObjectByType<RecipeUnlockManager>();
 
         if (orderManager != null)
             orderManager.BartendingFlowFailed += RestoreAfterBartendingFailure;
@@ -325,6 +329,9 @@ public class InteractionUIController : MonoBehaviour
         if (TryOpenDedicatedPreRequestDialogue())
             return;
 
+        if (TryOpenOrderKnowledgeHint())
+            return;
+
         string line = activeCustomer.GetInteractionHintLine();
         OpenDialogue(line);
     }
@@ -355,16 +362,56 @@ public class InteractionUIController : MonoBehaviour
         }
 
         activePreRequestLines = dialogue.onEnterLines;
+        activePreRequestDialogue = dialogue;
         activePreRequestLineIndex = 0;
         isPreRequestDialogueActive = true;
         activeCustomer.SetPatiencePausedForNarrativeDialogue(true);
         ShowDialogue(activePreRequestLines[activePreRequestLineIndex], true);
+        ApplyKnowledgeReveals(dialogue.GetOnEnterKnowledgeReveals(activePreRequestLineIndex));
 
         Debug.Log(
             $"[InteractionUI] Dedicated pre-request dialogue -> {activeCustomer.name} / " +
             $"lines={activePreRequestLines.Length}"
         );
         return true;
+    }
+
+    /// <summary>
+    /// The first tutorial route already resolves one authored OrderData before
+    /// bartending begins. Its optional hint is therefore safe to consume here;
+    /// no method selection or final recipe matcher is used to invent context.
+    /// </summary>
+    private bool TryOpenOrderKnowledgeHint()
+    {
+        if (!activeCustomerUsesForcedRoute)
+            return false;
+
+        OrderData order = FindPrototypeOrder(activeForcedMethod);
+        if (order == null || !order.HasRecipeKnowledgeHint)
+            return false;
+
+        ShowDialogue(order.RecipeKnowledgeHintLine, false);
+        ApplyKnowledgeReveals(order.RecipeKnowledgeHintReveals);
+        return true;
+    }
+
+    private void ApplyKnowledgeReveals(RecipeKnowledgeReveal[] reveals)
+    {
+        if (reveals == null || reveals.Length == 0)
+            return;
+
+        if (recipeKnowledgeManager == null)
+            recipeKnowledgeManager = FindFirstObjectByType<RecipeUnlockManager>();
+
+        if (recipeKnowledgeManager == null)
+        {
+            Debug.LogWarning(
+                "[InteractionUI] Consumed an authored recipe hint without a RecipeUnlockManager.");
+            return;
+        }
+
+        foreach (RecipeKnowledgeReveal reveal in reveals)
+            reveal?.TryApply(recipeKnowledgeManager);
     }
 
     private void OnClickNextDialogueLine()
@@ -377,6 +424,11 @@ public class InteractionUIController : MonoBehaviour
         {
             if (dialogueText != null)
                 dialogueText.text = activePreRequestLines[activePreRequestLineIndex];
+
+            ApplyKnowledgeReveals(
+                activePreRequestDialogue != null
+                    ? activePreRequestDialogue.GetOnEnterKnowledgeReveals(activePreRequestLineIndex)
+                    : Array.Empty<RecipeKnowledgeReveal>());
 
             return;
         }
@@ -419,6 +471,7 @@ public class InteractionUIController : MonoBehaviour
             activeCustomer.SetPatiencePausedForNarrativeDialogue(false);
 
         activePreRequestLines = null;
+        activePreRequestDialogue = null;
         activePreRequestLineIndex = 0;
         isPreRequestDialogueActive = false;
         SetDialogueActionVisibility(false);

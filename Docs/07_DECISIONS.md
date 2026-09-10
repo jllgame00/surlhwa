@@ -2,6 +2,35 @@
 
 Last Updated: 2026-09-10
 
+## ADR-041 — Production Discovery Uses Explicit Evidence, Not Inference
+
+**Status:** ACCEPTED / I11B IMPLEMENTATION
+
+`RecipeUnlockManager` remains the sole owner of player recipe knowledge. I11B
+adds only bounded callers: `RecipeKnowledgeReveal` data attached to a consumed
+request/dialogue line, accepted liquid-use evidence from
+`IngredientShelfController`, and the pre-existing successful
+`RecipeMatchService` result path in `OrderManager`.
+
+Authored hint data references a concrete `CocktailRecipeData`, one typed fact,
+and an ingredient only where that fact requires one. No dialogue text is
+parsed. A dialogue reveal is dispatched when its indexed line is displayed;
+the initial TestStir request uses this to reveal Dry Martini's method without
+revealing its identity or amounts.
+
+Ingredient-use evidence binds only when `BartendingRequestContext.ExpectedRecipe`
+is already available from the request's explicit cocktail constraint. The shelf
+emits an ingredient only after an accepted liquid action. The manager records
+it only if that exact authored recipe contains the ingredient. Therefore a Rum
+attempt for Dry Martini remains in `BartendingPreparationTrace` but cannot
+become a false Dry Martini fact. Amount, garnish, and preparation facts are
+not inferred from player actions in I11B.
+
+Consequently, knowledge remains independent from availability, preparation,
+technique, satisfaction, and composition matching. The matcher continues to
+recognize composition; it grants `Known` only through the existing successful
+result boundary.
+
 ## ADR-040 — Recipe Knowledge Is Fact-Based Player Progress
 
 **Status:** ACCEPTED / I11A IMPLEMENTATION

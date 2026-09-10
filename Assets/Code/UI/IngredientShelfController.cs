@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -44,6 +45,15 @@ public class IngredientShelfController : MonoBehaviour
         ? preparationState.GetContainer(BartendingContainerType.ServingGlass)
         : null;
 
+    /// <summary>
+    /// Raised once per ingredient after an accepted physical liquid action in
+    /// this Bartending session. It observes player action only; it does not
+    /// know a recipe, store knowledge, or affect preparation truth.
+    /// </summary>
+    public event Action<IngredientData> IngredientUsed;
+
+    private readonly HashSet<IngredientData> ingredientsUsedThisSession = new();
+
     public void Initialize(
         MiniGameType method,
         BartendingContainerType targetContainerType = BartendingContainerType.ServingGlass,
@@ -59,6 +69,7 @@ public class IngredientShelfController : MonoBehaviour
         preparationTrace = new BartendingPreparationTrace();
         activePourIngredient = null;
         activePourTransferredMl = 0f;
+        ingredientsUsedThisSession.Clear();
 
         // Do not seed from the recipe/default session.
         // The shelf represents what the player has actually poured.
@@ -273,6 +284,7 @@ public class IngredientShelfController : MonoBehaviour
             }
 
             RefreshContents();
+            NotifyIngredientUsed(ingredient);
         }
 
         return transferredMl;
@@ -485,6 +497,7 @@ public class IngredientShelfController : MonoBehaviour
                 null,
                 targetContainer.ContainerType);
             RefreshContents();
+            NotifyIngredientUsed(selectedIngredient);
         }
 
         return added;
@@ -514,6 +527,7 @@ public class IngredientShelfController : MonoBehaviour
             null,
             targetContainer.ContainerType);
         RefreshContents();
+        NotifyIngredientUsed(selectedIngredient);
         Debug.Log(
             $"[Splash] ingredient={selectedIngredient.ingredientId} target={targetContainer.ContainerType} " +
             $"ml={transferredMl:0.###}");
@@ -546,5 +560,11 @@ public class IngredientShelfController : MonoBehaviour
         }
 
         RefreshTexts();
+    }
+
+    private void NotifyIngredientUsed(IngredientData ingredient)
+    {
+        if (ingredient != null && ingredientsUsedThisSession.Add(ingredient))
+            IngredientUsed?.Invoke(ingredient);
     }
 }
