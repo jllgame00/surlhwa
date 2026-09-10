@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: LittlePrinceKeepTheLightFollowupDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  onEnterLines:
+  - "지난번에 작은 빛을 지켜 주겠다고 했지요. 오늘도 그 말이 별처럼 남아 있어요."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals: []

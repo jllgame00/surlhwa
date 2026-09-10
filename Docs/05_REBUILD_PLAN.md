@@ -509,7 +509,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11A/I11B knowledge architecture implemented; I11C Dry Martini normal-play arc implemented with licensed-Editor runtime validation pending
+Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11A/I11B knowledge architecture implemented; I11C Dry Martini normal-play arc implemented with licensed-Editor runtime validation pending; I12 guest FIT and one I13 Little Prince remembered-choice slice implemented
 
 #### Purpose
 
@@ -797,12 +797,27 @@ recognized `CocktailData` metadata, allowing multiple valid cocktails. The
 result handoff keeps WHAT (recognized cocktail), HOW (preparation), QUALITY
 (mechanical result), FIT, and final reward delta separately observable.
 One Day-1 clarity recommendation follows the I11C discovery arc. Wider
-cocktail/guest authoring remains future work; I13 narrative persistence is not
-part of this implementation.
+cocktail/guest authoring remains future work; I13 narrative persistence is a
+separate bounded Little Prince slice.
 
 #### I13 — Little Prince Interpretive Choice / Memory
 
-Build one full proof of the narrative promise:
+**Implemented (Editor and Play Mode validation passed):** the existing Day-2
+Little Prince first visit now reaches one small two-response seam after its
+dedicated four-line dialogue. `LittlePrinceNarrativePersistence` stores only
+the stable authored `KeepTheLight` or `SeekTheStar` enum ID. It does not replace
+the existing first-visit completion key; normal departure still completes the
+visit after the exact Manwol Float request.
+
+One deterministic Day-3 follow-up reads the saved ID through one authored
+Little-Prince-specific resolver. `None` is the fresh and legacy-safe fallback,
+so a previously completed first visit never receives fabricated remembered
+dialogue. The choice pause reuses the existing I0-A dedicated-dialogue pause
+and releases at Brew. No universal quest, customer-memory, or branching
+dialogue framework is introduced. Environmental traces and broader revisit
+content remain future work.
+
+The longer-term target remains:
 
 ~~~text
 understand request

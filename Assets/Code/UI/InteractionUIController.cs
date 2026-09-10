@@ -84,6 +84,11 @@ public class InteractionUIController : MonoBehaviour
     private DialogueData activePreRequestDialogue;
     private int activePreRequestLineIndex;
     private bool isPreRequestDialogueActive;
+    private bool isLittlePrinceChoiceActive;
+    private bool isLittlePrinceChoiceResponseActive;
+    private LittlePrinceNarrativeData activeLittlePrinceNarrative;
+    private string defaultNextButtonLabel;
+    private string defaultBrewButtonLabel;
 
     public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesFirstCustomerRoute;
     public bool IsForcedSecondCustomerRouteActive => activeCustomerUsesSecondCustomerRoute;
@@ -419,6 +424,12 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickNextDialogueLine()
     {
+        if (isLittlePrinceChoiceActive)
+        {
+            CommitLittlePrinceChoice(LittlePrinceNarrativeChoice.KeepTheLight);
+            return;
+        }
+
         if (!isPreRequestDialogueActive || activePreRequestLines == null)
             return;
 
@@ -436,7 +447,8 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        ResetPreRequestDialogue();
+        if (!TryOpenLittlePrinceChoice())
+            ResetPreRequestDialogue();
     }
 
     private void ShowDialogue(string line, bool showNext)
@@ -470,14 +482,126 @@ public class InteractionUIController : MonoBehaviour
 
     private void ResetPreRequestDialogue()
     {
-        if (isPreRequestDialogueActive && activeCustomer != null)
+        bool hadNarrativeGate = isPreRequestDialogueActive ||
+                                isLittlePrinceChoiceActive ||
+                                isLittlePrinceChoiceResponseActive;
+        if (hadNarrativeGate && activeCustomer != null)
             activeCustomer.SetPatiencePausedForNarrativeDialogue(false);
 
         activePreRequestLines = null;
         activePreRequestDialogue = null;
         activePreRequestLineIndex = 0;
         isPreRequestDialogueActive = false;
+        isLittlePrinceChoiceActive = false;
+        isLittlePrinceChoiceResponseActive = false;
+        activeLittlePrinceNarrative = null;
+        RestoreDialogueButtonLabels();
         SetDialogueActionVisibility(false);
+    }
+
+    private bool TryOpenLittlePrinceChoice()
+    {
+        if (activeCustomer == null ||
+            !activeCustomer.TryGetLittlePrinceFirstVisitNarrative(
+                out LittlePrinceNarrativeData narrative))
+        {
+            return false;
+        }
+
+        LittlePrinceNarrativeChoice existingChoice = LittlePrinceNarrativePersistence.LoadChoice();
+        activeLittlePrinceNarrative = narrative;
+
+        if (existingChoice != LittlePrinceNarrativeChoice.None)
+        {
+            // A committed choice remains locked even if the dialogue is reopened
+            // before the first visit departs.
+            isPreRequestDialogueActive = false;
+            isLittlePrinceChoiceResponseActive = true;
+            ShowDialogue(narrative.GetImmediateResponse(existingChoice), false);
+            return true;
+        }
+
+        if (string.IsNullOrWhiteSpace(narrative.ChoicePrompt) ||
+            string.IsNullOrWhiteSpace(
+                narrative.GetChoiceLabel(LittlePrinceNarrativeChoice.KeepTheLight)) ||
+            string.IsNullOrWhiteSpace(
+                narrative.GetChoiceLabel(LittlePrinceNarrativeChoice.SeekTheStar)))
+        {
+            Debug.LogWarning("[LittlePrince] Narrative choice content is incomplete; continuing without a choice.");
+            activeLittlePrinceNarrative = null;
+            return false;
+        }
+
+        isPreRequestDialogueActive = false;
+        isLittlePrinceChoiceActive = true;
+        ShowDialogue(narrative.ChoicePrompt, true);
+        if (brewButton != null)
+            brewButton.gameObject.SetActive(true);
+        SetChoiceButtonLabels(narrative);
+
+        Debug.Log("[LittlePrince] First-visit narrative choice opened.");
+        return true;
+    }
+
+    private void CommitLittlePrinceChoice(LittlePrinceNarrativeChoice requestedChoice)
+    {
+        LittlePrinceNarrativeData narrative = activeLittlePrinceNarrative;
+        if (narrative == null)
+            return;
+
+        bool committed = LittlePrinceNarrativePersistence.TryCommitChoice(requestedChoice);
+        LittlePrinceNarrativeChoice resolvedChoice = LittlePrinceNarrativePersistence.LoadChoice();
+        if (!committed || resolvedChoice == LittlePrinceNarrativeChoice.None)
+        {
+            Debug.LogWarning("[LittlePrince] Narrative choice was not committed.");
+            return;
+        }
+
+        isLittlePrinceChoiceActive = false;
+        isLittlePrinceChoiceResponseActive = true;
+        RestoreDialogueButtonLabels();
+        ShowDialogue(narrative.GetImmediateResponse(resolvedChoice), false);
+
+        Debug.Log($"[LittlePrince] Narrative choice committed -> {resolvedChoice}");
+    }
+
+    private void SetChoiceButtonLabels(LittlePrinceNarrativeData narrative)
+    {
+        TMP_Text nextLabel = nextButton != null
+            ? nextButton.GetComponentInChildren<TMP_Text>(true)
+            : null;
+        TMP_Text brewLabel = brewButton != null
+            ? brewButton.GetComponentInChildren<TMP_Text>(true)
+            : null;
+
+        if (nextLabel != null)
+        {
+            defaultNextButtonLabel ??= nextLabel.text;
+            nextLabel.text = narrative.GetChoiceLabel(LittlePrinceNarrativeChoice.KeepTheLight);
+        }
+
+        if (brewLabel != null)
+        {
+            defaultBrewButtonLabel ??= brewLabel.text;
+            brewLabel.text = narrative.GetChoiceLabel(LittlePrinceNarrativeChoice.SeekTheStar);
+        }
+    }
+
+    private void RestoreDialogueButtonLabels()
+    {
+        if (nextButton != null && defaultNextButtonLabel != null)
+        {
+            TMP_Text nextLabel = nextButton.GetComponentInChildren<TMP_Text>(true);
+            if (nextLabel != null)
+                nextLabel.text = defaultNextButtonLabel;
+        }
+
+        if (brewButton != null && defaultBrewButtonLabel != null)
+        {
+            TMP_Text brewLabel = brewButton.GetComponentInChildren<TMP_Text>(true);
+            if (brewLabel != null)
+                brewLabel.text = defaultBrewButtonLabel;
+        }
     }
 
     private void OnClickBrew()
@@ -485,8 +609,17 @@ public class InteractionUIController : MonoBehaviour
         if (activeCustomer == null)
             return;
 
+        if (isLittlePrinceChoiceActive)
+        {
+            CommitLittlePrinceChoice(LittlePrinceNarrativeChoice.SeekTheStar);
+            return;
+        }
+
         if (isPreRequestDialogueActive)
             return;
+
+        if (isLittlePrinceChoiceResponseActive)
+            ResetPreRequestDialogue();
 
         if (TryStartDedicatedRequest())
             return;

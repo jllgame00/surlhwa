@@ -2,6 +2,33 @@
 
 Last Updated: 2026-09-10
 
+## ADR-044 — Little Prince Narrative Choice Is Stable Progress Separate From Visit Completion
+
+**Status:** ACCEPTED / I13 IMPLEMENTATION
+
+I13 adds one Little-Prince-specific persistent value rather than a universal
+customer-memory, relationship, quest, or dialogue-condition system. The
+bounded `LittlePrinceNarrativeChoice` values are `None`, `KeepTheLight`, and
+`SeekTheStar`; only the two non-None stable enum values can be committed. The
+saved key `SURLHWA_LITTLE_PRINCE_NARRATIVE_CHOICE` contains no localized prose,
+button label, or array index. The first committed choice is idempotent and
+cannot be silently overwritten by the other response.
+
+`littlePrinceFirstVisitCompleted` remains the scheduling authority for whether
+the Day-2 first encounter has completed. Selecting a response saves choice
+memory immediately, while the existing departure lifecycle still completes the
+visit after the unchanged exact Manwol Float request. A separate one-time Day-3
+follow-up scheduling marker prevents repeated proof visits. Its dialogue is
+resolved in one Little-Prince-specific authored mapping: A, B, or a neutral
+`None` branch for pre-I13 completed saves.
+
+This narrative state is independent of recipe knowledge, FIT, recipe matching,
+preparation/technique result, reputation, and ingredient availability. The UI
+only displays and reports a selected stable response; persistence and later
+branch ownership remain outside the UI. This ADR does not authorize a generic
+branching-dialogue language, customer-memory database, story rewrite, or
+persistent environmental consequence system.
+
 ## ADR-043 — Guest Fit Is Authored Request Evaluation, Not Recipe Quality
 
 **Status:** ACCEPTED / I12 IMPLEMENTATION

@@ -97,6 +97,30 @@ drink with good execution now produce distinct bounded guest response tiers.
 `repDelta` remains mechanical; the existing `reputationReward` is withheld
 only for `Unsatisfied` FIT. Broader cocktail mood coverage remains future work.
 
+## I13 Little Prince Remembered Choice (Implemented)
+
+Little Prince now proves one bounded persistent narrative consequence without
+introducing a general customer-memory or dialogue-graph system. During the
+existing Day-2 first-visit dialogue, the player explicitly chooses either
+`KeepTheLight` or `SeekTheStar`. The stable enum value is immediately saved in
+`SURLHWA_LITTLE_PRINCE_NARRATIVE_CHOICE`; fresh and pre-I13 saves read as
+`None`.
+
+The existing `littlePrinceFirstVisitCompleted` value remains the sole answer
+to whether the first visit has resolved. Choice commitment does not complete
+the visit: the existing departure path still does that after the Manwol Float
+flow. On Day 3, one deterministic Little Prince follow-up is scheduled only
+after first-visit completion and consumes the saved choice through an authored
+dialogue mapping. A legacy completed visit with `None` uses a neutral follow-up
+instead of inventing a remembered statement.
+
+The dedicated reading pause remains active through the four dialogue lines,
+the two visible responses, and the immediate reply; it releases at the existing
+Brew transition. Both first and follow-up encounters retain the exact Manwol
+Float request. Narrative choice does not alter recipe knowledge, guest FIT,
+recipe/preparation truth, rewards, or ingredient availability. Broader guest
+memory, consequences, and environmental traces remain future work.
+
 ---
 
 ## 1. 장르

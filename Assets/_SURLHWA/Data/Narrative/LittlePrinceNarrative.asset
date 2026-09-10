@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a4567890abcdef1234567890abcdef, type: 3}
+  m_Name: LittlePrinceNarrative
+  m_EditorClassIdentifier: Assembly-CSharp::LittlePrinceNarrativeData
+  choicePrompt: "그 아이의 물음에, 어떻게 대답할까요?"
+  keepTheLightLabel: "작은 빛을 지켜 줄게요."
+  seekTheStarLabel: "함께 별을 찾을게요."
+  keepTheLightImmediateResponse: "그럼 별이 멀어져도, 그 빛은 남겠네요."
+  seekTheStarImmediateResponse: "그럼 길을 잃어도, 다시 찾을 수 있겠네요."
+  keepTheLightFollowupDialogue: {fileID: 11400000, guid: f3a4567890abcdef1234567890abcdef, type: 2}
+  seekTheStarFollowupDialogue: {fileID: 11400000, guid: a4a4567890abcdef1234567890abcdef, type: 2}
+  legacyFollowupDialogue: {fileID: 11400000, guid: b4a4567890abcdef1234567890abcdef, type: 2}

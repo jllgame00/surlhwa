@@ -34,6 +34,11 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private SpecialGuestData[] specialGuests;
     [SerializeField] private GameObject littlePrincePrefab;
 
+    [Header("Little Prince Follow-up")]
+    [Tooltip("One deterministic later encounter for the I13 remembered-choice proof.")]
+    [SerializeField] private int littlePrinceFollowupDay = 3;
+    [SerializeField] private OrderData littlePrinceFollowupOrder;
+
     private GameManager gm;
     private BartendingFlowCoordinator bartendingFlowCoordinator;
     [SerializeField] private BusinessDayManager businessDayManager;
@@ -43,6 +48,7 @@ public class CustomerSpawner : MonoBehaviour
     private int spawnedCount;
     private GameObject lastSpawnedPrefab;
     private bool activeCustomerIsLittlePrinceFirstVisit;
+    private bool activeCustomerIsLittlePrinceFollowupVisit;
     private Coroutine spawnRoutine;
 
     private void Awake()
@@ -160,8 +166,17 @@ public class CustomerSpawner : MonoBehaviour
         OrderData authoredOrder = GetDayOneAuthoredOrder();
         if (authoredOrder != null)
             customer.ConfigureDedicatedEncounter(authoredOrder);
+
         activeCustomerIsLittlePrinceFirstVisit =
             prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFirstVisit();
+        activeCustomerIsLittlePrinceFollowupVisit =
+            prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFollowupVisit();
+
+        if (activeCustomerIsLittlePrinceFirstVisit)
+            customer.ConfigureLittlePrinceFirstVisitNarrative();
+        else if (activeCustomerIsLittlePrinceFollowupVisit)
+            customer.ConfigureLittlePrinceFollowupEncounter(littlePrinceFollowupOrder);
+
         customer.SetLoopManager(this);
         customer.SetUsesPatience(!IsTutorialSpawn());
         spawnedCount++;
@@ -182,9 +197,14 @@ public class CustomerSpawner : MonoBehaviour
             {
                 LittlePrinceVisitPersistence.MarkFirstVisitCompleted();
             }
+            else if (activeCustomerIsLittlePrinceFollowupVisit)
+            {
+                LittlePrinceVisitPersistence.MarkFollowupVisitCompleted();
+            }
 
             activeCustomer = null;
             activeCustomerIsLittlePrinceFirstVisit = false;
+            activeCustomerIsLittlePrinceFollowupVisit = false;
         }
 
         servedCount++;
@@ -260,6 +280,9 @@ public class CustomerSpawner : MonoBehaviour
         if (ShouldSpawnLittlePrinceFirstVisit())
             return littlePrincePrefab;
 
+        if (ShouldSpawnLittlePrinceFollowupVisit())
+            return littlePrincePrefab;
+
         if (IsTutorialSpawn())
             return customerPrefab;
 
@@ -327,6 +350,17 @@ public class CustomerSpawner : MonoBehaviour
             && businessDayManager.CurrentDay == 2
             && spawnedCount == 0
             && !LittlePrinceVisitPersistence.IsFirstVisitCompleted()
+            && littlePrincePrefab != null;
+    }
+
+    private bool ShouldSpawnLittlePrinceFollowupVisit()
+    {
+        return businessDayManager != null
+            && businessDayManager.CurrentDay == littlePrinceFollowupDay
+            && spawnedCount == 0
+            && LittlePrinceVisitPersistence.IsFirstVisitCompleted()
+            && !LittlePrinceVisitPersistence.IsFollowupVisitCompleted()
+            && littlePrinceFollowupOrder != null
             && littlePrincePrefab != null;
     }
 

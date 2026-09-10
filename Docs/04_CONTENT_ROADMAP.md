@@ -626,7 +626,17 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED; I13+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED / I13 ONE LITTLE PRINCE REMEMBERED-CHOICE SLICE IMPLEMENTED; I14+ FUTURE WORK
+
+### I13 bounded Little Prince memory proof
+
+The first vertical-slice memory proof is deliberately smaller than the roadmap's
+eventual revisit/environment plan. Day 2 Little Prince dialogue now asks for
+one explicit authored response, persisted as a stable non-localized ID. A
+single Day 3 revisit selects a visibly distinct authored follow-up for either
+response; a pre-I13 completed save with no response receives neutral dialogue.
+The existing Manwol Float request remains intact. Persistent bar traces,
+repeat-visit architecture, and the broader ACT/revisit plan remain deferred.
 
 I9B validates seven official-IBA recipes as a production preparation-model
 proof: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and

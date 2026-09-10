@@ -100,6 +100,27 @@ and calculated reward to presentation without persistence. Only Dry Martini
 receives the minimal IBA tag (`Clarity`); the remaining IBA assets are still
 untagged. Little Prince/Manwol assets and scheduling are unchanged.
 
+## I13 Current-State Note (2026-09-10)
+
+I13 retains `LittlePrinceVisitPersistence` as the scheduling/first-visit
+completion owner and adds exactly one separate player-memory owner:
+`LittlePrinceNarrativePersistence`. The existing `littlePrinceFirstVisitCompleted`
+int remains the Day-2 first-spawn and departure-completion authority. The new
+`SURLHWA_LITTLE_PRINCE_NARRATIVE_CHOICE` int stores stable bounded values
+`None`, `KeepTheLight`, and `SeekTheStar`; absent or invalid data resolves to
+neutral `None` for legacy completed saves. A separate follow-up-completed key
+prevents the one deterministic Day-3 proof visit from repeating.
+
+The Little Prince prefab references one authored narrative asset. The existing
+Interaction UI shows its four first-visit dialogue lines, then reuses its Next
+and Brew controls as two explicit labelled choices. The UI delegates the stable
+choice to persistence, holds the existing I0-A patience pause through the
+choice/reply, and resumes it at the existing Brew handoff. `CustomerSpawner`
+selects the Day-3 follow-up only; `CustomerController` resolves its one
+authored A/B/legacy dialogue mapping. Both visits retain the exact Manwol Float
+order. No I10 shelf policy, I11 recipe knowledge, I12 FIT/reward semantics,
+matcher, preparation, or technique authority changed.
+
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 
 ---

@@ -890,6 +890,24 @@ poor-fit / weak-execution. The Day-1 proof request is an unnamed Clarifying
 Stir recommendation after I11C. It uses Dry Martini's minimal `Clarity` tag;
 broader IBA mood authoring and all narrative memory remain future work.
 
+### I13 Little Prince remembered choice
+
+I13 adds one authored narrative-memory proof without making recipe, preparation,
+or guest-fit systems carry relationship state. The existing Day-2 Little Prince
+dialogue now ends in an explicit `KeepTheLight` / `SeekTheStar` response. The
+selection saves a stable enum in `SURLHWA_LITTLE_PRINCE_NARRATIVE_CHOICE`; it
+does not complete the first visit, reveal recipe facts, change availability, or
+affect the exact Manwol Float request. The existing I0-A patience pause spans
+reading, choice, and immediate reply, then releases at the existing Brew gate.
+
+After the existing first-visit completion is saved, one Day-3 Little Prince
+follow-up resolves an authored A or B dialogue from that saved enum. Missing
+legacy data is `None` and intentionally selects neutral dialogue rather than a
+fabricated recollection. This is one content-specific resolver and one
+deterministic revisit—not a generic customer-memory, quest, or branching
+dialogue framework. Broader narrative consequence and environmental feedback
+remain future work.
+
 ---
 
 ## 14. Guest and Cocktail Response Direction
@@ -968,7 +986,7 @@ uses the following implementation progression:
 | I10 | Ingredient Progression — implemented | Day-derived shelf availability expands recipe space; licensed-Editor runtime validation remains pending |
 | I11 | Guide / Discovery | I11A/I11B ownership and triggers plus one Day-1 multi-encounter Dry Martini Partial-to-Known arc are implemented; licensed-Editor runtime proof remains pending |
 | I12 | Guest Response — implemented | Pure authored FIT now distinguishes ExactCocktail from multi-valid Recommendation requests and is composed with execution response; automated Editor validation passed |
-| I13 | Little Prince Interpretive Choice / Memory | One choice → response → later recall → environmental trace proof exists |
+| I13 | Little Prince Interpretive Choice / Memory — implemented | One stable choice → immediate response → Day-3 authored recall; environmental trace remains future work |
 | I14 | Feedback Hierarchy | Physical result, guest response, quiet record, then night result are legible |
 | I15 | Representative Audio / Visual Pass | One complete encounter proves the atmosphere/presentation target |
 | I16 | Two-Night Vertical Slice | A 25–35 minute, playtested proof combines the adopted direction |

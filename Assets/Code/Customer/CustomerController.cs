@@ -72,6 +72,10 @@ public class CustomerController : MonoBehaviour
     [Header("Order")]
     [SerializeField] private OrderData orderData;
 
+    [Header("Little Prince Narrative")]
+    [Tooltip("The single I13 narrative branch. Leave empty for all normal customers.")]
+    [SerializeField] private LittlePrinceNarrativeData littlePrinceNarrative;
+
     private GameObject currentDialogueBubble;
 
     [Header("Emotion Reaction")]
@@ -110,6 +114,8 @@ public class CustomerController : MonoBehaviour
     private bool usesPatience;
     private bool patienceTimerActive;
     private bool patiencePausedForNarrativeDialogue;
+    private bool isLittlePrinceFirstVisitNarrative;
+    private bool isLittlePrinceFollowupNarrative;
     private float patienceDuration;
     private float patienceRemaining;
     
@@ -167,9 +173,19 @@ public class CustomerController : MonoBehaviour
 
     public bool TryGetDialogueData(out DialogueData dialogue)
     {
-        dialogue = dialogueData;
+        dialogue = isLittlePrinceFollowupNarrative && littlePrinceNarrative != null
+            ? littlePrinceNarrative.GetFollowupDialogue(LittlePrinceNarrativePersistence.LoadChoice())
+            : dialogueData;
         return dialogue != null;
     }
+
+    public bool TryGetLittlePrinceFirstVisitNarrative(out LittlePrinceNarrativeData narrative)
+    {
+        narrative = isLittlePrinceFirstVisitNarrative ? littlePrinceNarrative : null;
+        return narrative != null;
+    }
+
+    public bool IsPatiencePausedForNarrativeDialogue => patiencePausedForNarrativeDialogue;
 
     /// <summary>
     /// Applies one authored early-discovery encounter to this spawned generic
@@ -183,6 +199,26 @@ public class CustomerController : MonoBehaviour
 
         orderData = request;
         dialogueData = request.PreBrewDialogue;
+    }
+
+    /// <summary>
+    /// CustomerSpawner determines visit eligibility; this component only carries
+    /// the active Little Prince content into the existing dialogue UI.
+    /// </summary>
+    public void ConfigureLittlePrinceFirstVisitNarrative()
+    {
+        isLittlePrinceFirstVisitNarrative = littlePrinceNarrative != null;
+        isLittlePrinceFollowupNarrative = false;
+    }
+
+    public void ConfigureLittlePrinceFollowupEncounter(OrderData request)
+    {
+        if (request == null)
+            return;
+
+        orderData = request;
+        isLittlePrinceFirstVisitNarrative = false;
+        isLittlePrinceFollowupNarrative = littlePrinceNarrative != null;
     }
 
     public void SetUsesPatience(bool value)
