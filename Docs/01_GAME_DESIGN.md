@@ -149,6 +149,27 @@ and `RecipeUnlockPopupController`. It verifies reaction-to-toast-to-popup order,
 one discovery presentation for newly Known Dry Martini, and no discovery popup
 or generic-success contradiction for a recognized but poor-fitting cocktail.
 
+## I15 Bartending Feel / Audiovisual Polish (Implementation complete; final human feel sign-off pending)
+
+I15 keeps the established preparation, technique, matching, FIT, knowledge, and
+reward authorities intact while making their existing interactions more
+readable. Stir and GentleStir use the same real wrapped-angle input tracker as
+before, with a 36 px center dead zone, a 110 degree anti-teleport guard, and a
+0.08 s smoothed **visual-only** spoon orbit. Smoothing never contributes
+rotation or quality. Pour remains immediate 30 ml/s container transfer and
+stops without a delayed amount. Shake retains its 0.09 s Perfect and 0.20 s
+Good windows while showing the next direction/key and an immediate
+Perfect/Good/Miss label. Float retains its 15/30/60 ml/s Gentle/Normal/Aggressive
+flow and Clean/Partial/Mixed thresholds while showing the active mode and its
+authored spoon visual.
+
+Ice, Strain, PourFromContainer, and garnish continue to use their existing
+actual container/trace actions with concise confirmation. No project-owned
+audio clips or audio playback system currently exist, so I15 adds no arbitrary
+external audio or fake audio authority. The visual language remains restrained:
+accepted input gets a short visible response, completed actions get a clear
+confirmation, and weak technique remains readable without arcade-style effects.
+
 ---
 
 ## 1. 장르

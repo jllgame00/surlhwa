@@ -1668,6 +1668,38 @@ a short Serving-Glass reuse of the direct spoon-input foundation.
 
 ---
 
+# ADR-040 — Bartending Feel Presentation Does Not Create Technique Truth
+
+**Status:** ACCEPTED — I15
+
+## Context
+
+The existing Bartending 2.0 controls need smoother, more legible feedback,
+especially the mouse-angle Stir and Serving-Glass GentleStir routes. Letting a
+visual tween or UI pulse influence rotation, timing, container amount, or a
+grade would create a second gameplay authority and conceal poor input.
+
+## Decision
+
+Raw player input continues through the existing bounded interaction validators
+and technique trackers. I15 may smooth only the visual follower after a valid
+cursor angle is observed; it never adds to rotation or samples. The Stir center
+dead zone and jump guard reject unstable/teleport-like input before the existing
+tracker records it. Shake, Float, ice, transfer, and garnish polish consumes
+their existing resolved action state and does not re-evaluate it. Project-owned
+audio is reused only when present; no placeholder external audio system is
+introduced for this phase.
+
+## Consequences
+
+- `BartendingContainerState`, preparation trace, matcher, and technique grades
+  remain their existing authorities.
+- A visually smooth spoon cannot turn weak real input into a Good result.
+- Readability may improve independently of scoring, recipe, reward, knowledge,
+  or persistence changes.
+
+---
+
 # OPEN DECISIONS
 
 ## OD-001 — Save Format

@@ -859,14 +859,15 @@ success contradiction.
 
 #### I15 — Representative Audio / Visual Pass
 
-For at least one complete encounter:
-
-- convincing bar presentation;
-- pour audio;
-- glass audio;
-- Stir audio;
-- Shake audio;
-- responsive bottle/spoon/shaker motion.
+**Implementation complete; final human feel sign-off pending.** I15 refines the
+existing direct controls rather than adding an AV/scoring system. Stir and
+GentleStir now have a bounded center dead zone, anti-teleport guard, and
+visual-only smoothed orbit; Shake exposes next-input/judgement feedback; Float
+shows its active flow mode and binds its authored spoon visual. Existing direct
+Pour, ice, transfer, and garnish confirmation remains immediate. There are no
+project-owned audio clips to reuse, so no external or placeholder SFX are added.
+The remaining acceptance is the short manual feel check: Stir (30–60 seconds),
+Pour (15 seconds), one Shake sequence, and one three-layer Float drink.
 
 #### I16 — Two-Night Vertical Slice
 

@@ -19,6 +19,11 @@ public sealed class StirTechniqueTracker
 
     public float ElapsedSeconds { get; private set; }
     public float TotalRotationDegrees { get; private set; }
+    /// <summary>
+    /// Diagnostic-only count of implausible cursor jumps rejected by the
+    /// existing input guard. It never participates in technique grading.
+    /// </summary>
+    public int RejectedJumpCount { get; private set; }
     public float Revolutions => TotalRotationDegrees / 360f;
     public float AverageAngularSpeedDegPerSecond => validMotionSeconds > 0f
         ? TotalRotationDegrees / validMotionSeconds
@@ -55,6 +60,7 @@ public sealed class StirTechniqueTracker
         validMotionSeconds = 0f;
         ElapsedSeconds = 0f;
         TotalRotationDegrees = 0f;
+        RejectedJumpCount = 0;
     }
 
     public void RecordIdle(float deltaTime)
@@ -85,7 +91,13 @@ public sealed class StirTechniqueTracker
         previousAngleDeg = angleDeg;
 
         float absoluteDelta = Mathf.Abs(deltaAngle);
-        if (absoluteDelta <= DirectionEpsilon || absoluteDelta > maximumAngularJumpDeg || safeDeltaTime <= 0f)
+        if (absoluteDelta > maximumAngularJumpDeg)
+        {
+            RejectedJumpCount++;
+            return false;
+        }
+
+        if (absoluteDelta <= DirectionEpsilon || safeDeltaTime <= 0f)
             return false;
 
         int direction = deltaAngle > 0f ? 1 : -1;

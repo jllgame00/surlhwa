@@ -4201,6 +4201,7 @@ MonoBehaviour:
   spoonOrbitRadius: 16
   spoonOrbitYScale: 0.65
   spoonBaseAngleDeg: 90
+  spoonVisualSmoothingSeconds: 0.08
   minimumFinishDurationSeconds: 3
   targetStirDurationSeconds: 5
   goodMinimumRevolutions: 2
@@ -4209,8 +4210,8 @@ MonoBehaviour:
   maximumGoodAngularSpeedDegPerSecond: 540
   goodConsistencyThreshold: 0.7
   acceptableConsistencyThreshold: 0.35
-  minimumMouseRadiusPixels: 24
-  maximumAngularJumpDeg: 75
+  minimumMouseRadiusPixels: 36
+  maximumAngularJumpDeg: 110
   ingredientShelf: {fileID: 0}
   jiggerPanel: {fileID: 0}
   pourRateMlPerSecond: 30

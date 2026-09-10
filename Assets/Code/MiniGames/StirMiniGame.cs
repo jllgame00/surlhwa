@@ -42,6 +42,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     [SerializeField] private float spoonOrbitRadius = 16f;
     [SerializeField] private float spoonOrbitYScale = 0.65f;
     [SerializeField] private float spoonBaseAngleDeg = 90f;
+    [SerializeField, Min(0.01f)] private float spoonVisualSmoothingSeconds = 0.08f;
 
     [Header("Direct Stir Tuning")]
     [SerializeField] private float minimumFinishDurationSeconds = 3f;
@@ -52,8 +53,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     [SerializeField] private float maximumGoodAngularSpeedDegPerSecond = 540f;
     [SerializeField] private float goodConsistencyThreshold = 0.7f;
     [SerializeField] private float acceptableConsistencyThreshold = 0.35f;
-    [SerializeField] private float minimumMouseRadiusPixels = 24f;
-    [SerializeField] private float maximumAngularJumpDeg = 75f;
+    [SerializeField] private float minimumMouseRadiusPixels = 36f;
+    [SerializeField] private float maximumAngularJumpDeg = 110f;
 
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
@@ -66,6 +67,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     private StirTechniqueTracker techniqueTracker;
     private StirGrade completedGrade;
     private bool isPouring;
+    private bool hasSpoonVisualTarget;
+    private float spoonVisualAngleDeg;
+    private float spoonVisualAngleVelocity;
+    private float targetSpoonVisualAngleDeg;
     private ServingGlassGarnishController garnishController;
     private CocktailRecipeData expectedRecipe;
     private IngredientAvailabilityContext ingredientAvailabilityContext;
@@ -151,6 +156,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
             case State.Stirring:
                 UpdateMouseStirInput();
+                UpdateSpoonVisual(Time.unscaledDeltaTime);
                 break;
         }
     }
@@ -187,7 +193,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         ingredientShelf.SetVisible(false);
 
         SetPrimaryAction(FinishStir, "Finish Stir", true);
-        SetHint("Move the mouse in circles around the spoon. Finish Stir becomes available after a short stir.");
+        SetHint("Move the mouse in a steady circle around the spoon. Keep outside the center of the glass.");
         UpdateProgressText();
 
         Debug.Log($"[Stir] Begin mixingGlassMl={mixingGlass.CurrentLiquidVolumeMl:0.###} ice={mixingGlass.HasIce}");
@@ -202,9 +208,16 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (state != State.Stirring || techniqueTracker == null)
             return false;
 
+        if (!float.IsNaN(angleDeg) && !float.IsInfinity(angleDeg))
+        {
+            // Visual following consumes the same valid cursor angle as the
+            // tracker, but never writes rotation back into technique truth.
+            // A rejected/idle sample cannot create score through smoothing.
+            targetSpoonVisualAngleDeg = angleDeg;
+            hasSpoonVisualTarget = true;
+        }
+
         bool acceptedMotion = techniqueTracker.RecordAngle(angleDeg, deltaTime);
-        if (acceptedMotion)
-            UpdateSpoonPose(angleDeg);
 
         UpdateProgressText();
         return acceptedMotion;
@@ -518,6 +531,22 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             $"ingredientMl={ingredientMl:0.0} totalMl={totalMl:0.0}");
     }
 
+    private void UpdateSpoonVisual(float deltaTime)
+    {
+        if (!hasSpoonVisualTarget)
+            return;
+
+        float smoothing = Mathf.Max(0.01f, spoonVisualSmoothingSeconds);
+        spoonVisualAngleDeg = Mathf.SmoothDampAngle(
+            spoonVisualAngleDeg,
+            targetSpoonVisualAngleDeg,
+            ref spoonVisualAngleVelocity,
+            smoothing,
+            Mathf.Infinity,
+            Mathf.Max(0f, deltaTime));
+        UpdateSpoonPose(spoonVisualAngleDeg);
+    }
+
     private void UpdateSpoonPose(float angleDeg)
     {
         if (spoon == null)
@@ -538,6 +567,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     private void ResetSpoonPose()
     {
+        hasSpoonVisualTarget = false;
+        spoonVisualAngleDeg = 0f;
+        spoonVisualAngleVelocity = 0f;
+        targetSpoonVisualAngleDeg = 0f;
+
         if (spoon == null)
             return;
 

@@ -156,6 +156,33 @@ Status: COMPLETE — AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF
 
 ---
 
+## I15 Current-State Note (2026-09-10)
+
+I15 changes presentation/input handling only. `StirMiniGame` production tuning
+is now a 36 px center dead zone, a 110 degree jump guard, and a 0.08 s smoothed
+spoon orbit. The real `StirTechniqueTracker` still owns accepted rotation,
+duration, speed, consistency, and grade; the visual follower cannot fabricate
+motion. `ServingGlassGentleStirInteraction` shares the same bounded input model
+and now renders its runtime spoon on an orbit rather than rotating in place.
+
+`ShakeMiniGame` retains its authored timing thresholds and input-driven motion,
+but exposes the next required key and immediate bounded judgement label.
+`FloatMiniGame` retains the 15/30/60 ml/s flow rates and Clean/Partial/Mixed
+thresholds, now surfaces active flow and resolves the production prefab's
+`SpoonImage` visual. Existing direct shelf pour, ice, Strain,
+`PourFromContainer`, and garnish operations remain their existing container and
+preparation-trace actions. No recipe, catalog, scene, PlayerPrefs, matcher,
+preparation expectation, FIT, reward, or availability field changed.
+
+Static compilation passed for the runtime/editor assemblies, including the new
+I15 validator. Unity command-line invocation reached managed assembly reload
+without a compiler diagnostic but could not execute validation because the local
+Unity Licensing Client repeatedly failed to provide `com.unity.editor.headless`.
+The final subjective feel check therefore remains pending a licensed Editor
+session; no runtime validator PASS is claimed from that blocked invocation.
+
+---
+
 ## 1. Audit Scope
 
 이 문서는 2026-08-11 현재 Repository를 리빌딩의 Source of Truth로 삼아 수행한 Phase 0/1 Audit 결과다.

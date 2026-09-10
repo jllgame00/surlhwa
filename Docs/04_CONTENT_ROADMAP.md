@@ -88,6 +88,18 @@ Clarity Recommendation: newly discovered Dry Martini yields reaction, resolved
 toast, then exactly one popup; a recognized incompatible cocktail yields a
 poor-FIT reaction and withheld request-reward presentation without an unlock.
 
+## I15 Bartending Feel / Audiovisual Polish (Implementation complete; final human feel sign-off pending)
+
+The four existing preparation routes now use one restrained feedback language
+without changing their scoring or authored recipe data. Stir/GentleStir add a
+visual-only smoothed spoon orbit after the real 36 px dead zone and 110 degree
+jump guard; Shake exposes its next Left/Right key plus immediate judgement;
+Float exposes Gentle/Normal/Aggressive flow and binds its authored spoon visual;
+and existing ice, transfer, and garnish confirmation remains direct. Pour rates,
+Shake windows, Float thresholds, composition recognition, and preparation traces
+are unchanged. The project has no owned SFX clips, so a broader sound pass is
+deferred rather than introducing placeholder audio assets.
+
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
 ---
@@ -641,7 +653,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED / I13 ONE LITTLE PRINCE REMEMBERED-CHOICE SLICE IMPLEMENTED / I14 AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF PASSED; I15+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED / I13 ONE LITTLE PRINCE REMEMBERED-CHOICE SLICE IMPLEMENTED / I14 AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF PASSED / I15 IMPLEMENTATION COMPLETE WITH SHORT HUMAN FEEL SIGN-OFF PENDING; I16+ FUTURE WORK
 
 ### I13 bounded Little Prince memory proof
 

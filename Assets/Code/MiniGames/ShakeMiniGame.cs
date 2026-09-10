@@ -148,6 +148,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             resultLabel.gameObject.SetActive(true);
             resultLabel.text = string.Empty;
+            resultLabel.color = Color.white;
         }
 
         if (startHintText != null)
@@ -222,6 +223,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         ingredientShelf.SetVisible(false);
         SetPrimaryAction(null, string.Empty, false);
         SetHint("Follow the LEFT / RIGHT rhythm. Use A or Left Arrow, and D or Right Arrow.");
+        SetRhythmFeedback("Ready", new Color(0.8f, 0.86f, 0.92f, 1f));
         UpdateProgressText();
 
         Debug.Log(
@@ -246,6 +248,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             TryCompleteRhythm();
             extraInputCount++;
             SetHint("Rhythm already complete. Strain the drink.");
+            SetRhythmFeedback("Complete", new Color(0.8f, 0.86f, 0.92f, 1f));
             UpdateProgressText();
             return ShakeJudgement.Extra;
         }
@@ -259,6 +262,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             extraInputCount++;
             SetHint("Off beat. Follow the next direction at the hit time.");
+            SetRhythmFeedback("Off Beat", new Color(0.95f, 0.65f, 0.32f, 1f));
             UpdateProgressText();
             return ShakeJudgement.Extra;
         }
@@ -269,6 +273,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             wrongDirectionCount++;
             ConsumeMiss();
             SetHint($"Wrong direction. Expected {DirectionLabel(expectedDirection)}.");
+            SetRhythmFeedback("Miss", new Color(0.88f, 0.42f, 0.42f, 1f));
             UpdateProgressText();
             TryCompleteRhythm();
             return ShakeJudgement.Miss;
@@ -278,7 +283,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             perfectHitCount++;
             nextNoteIndex++;
-            SetHint("Perfect shake.");
+            SetHint($"Perfect — {DirectionLabel(expectedDirection)} accepted.");
+            SetRhythmFeedback("Perfect", new Color(0.78f, 0.93f, 0.72f, 1f));
             UpdateProgressText();
             TryCompleteRhythm();
             return ShakeJudgement.Perfect;
@@ -286,7 +292,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         goodHitCount++;
         nextNoteIndex++;
-        SetHint("Good shake.");
+        SetHint($"Good — {DirectionLabel(expectedDirection)} accepted.");
+        SetRhythmFeedback("Good", new Color(0.8f, 0.86f, 0.92f, 1f));
         UpdateProgressText();
         TryCompleteRhythm();
         return ShakeJudgement.Good;
@@ -650,6 +657,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         missCount++;
         nextNoteIndex++;
+        SetRhythmFeedback("Miss", new Color(0.88f, 0.42f, 0.42f, 1f));
     }
 
     private bool TryCompleteRhythm()
@@ -664,7 +672,10 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         state = State.AwaitingStrain;
 
         if (resultLabel != null)
+        {
             resultLabel.text = completedGrade.ToString();
+            resultLabel.color = Color.white;
+        }
 
         SetPrimaryAction(StrainAndSubmit, "Strain", true);
         SetHint("Rhythm complete. Press Strain to move the actual Shaker contents into the Serving Glass.");
@@ -866,7 +877,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
                 float untilNext = GetExpectedNoteTime(nextNoteIndex) - Time.unscaledTime;
                 progressText.text =
-                    $"{DirectionLabel(GetExpectedDirection(nextNoteIndex))}  " +
+                    $"Next: {DirectionLabel(GetExpectedDirection(nextNoteIndex))} " +
+                    (GetExpectedDirection(nextNoteIndex) == ShakeDirection.Left ? "[A / ←]" : "[D / →]") + "  " +
                     $"{Mathf.Max(0f, untilNext):0.00}s  " +
                     $"{nextNoteIndex + 1}/{NoteCount}  P{perfectHitCount} G{goodHitCount} M{missCount}";
                 break;
@@ -914,6 +926,15 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         if (startHintText != null && startHintText.gameObject.activeSelf)
             startHintText.text = message;
+    }
+
+    private void SetRhythmFeedback(string message, Color color)
+    {
+        if (resultLabel == null)
+            return;
+
+        resultLabel.text = message;
+        resultLabel.color = color;
     }
 
     private void ResetShakerToOrigin()

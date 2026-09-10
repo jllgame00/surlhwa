@@ -926,6 +926,32 @@ toast, then one delayed discovery popup only when Dry Martini newly becomes
 Known. A known, incompatible recognized cocktail retains `Technique: Good` but
 reports poor FIT and its withheld request reward, with no popup.
 
+### I15 bartending feel and restrained feedback
+
+I15 improves interaction readability without adding a competing preparation or
+technique authority. Stir and Serving-Glass GentleStir still feed raw
+wrapped-angle samples to `StirTechniqueTracker`; a 36 px center dead zone
+records idle rather than a synthetic cross-center turn, and a 110 degree guard
+continues to reject implausible jumps. The spoon now orbits at its authored
+radius through a 0.08 s visual smoother. This follower consumes input only and
+never adds rotation, duration, consistency, or grade.
+
+Hold-to-pour remains an immediate 30 ml/s container transfer and `EndSelectedPour`
+does not add a release tail. Shake keeps the 0.09 s Perfect and 0.20 s Good
+timing windows, input-driven Shaker motion, and existing grade thresholds while
+showing `Next: LEFT [A / ←]` or `Next: RIGHT [D / →]` and an immediate
+Perfect/Good/Miss label. Float keeps Layer 0 at 30 ml/s and later
+Gentle/Normal/Aggressive at 15/30/60 ml/s; it now identifies the active flow
+and binds its authored `SpoonImage`. Clean/Partial/Mixed boundary state remains
+the existing visible thin/medium/thick band and unchanged technique companion.
+
+Ice, Strain, `PourFromContainer`, and garnish remain direct bounded actions
+with existing confirmation/visual state. No owned SFX clips or audio playback
+code exist in the project, so I15 intentionally adds no external placeholder
+audio. The intended feedback language is quiet and direct: accepted input gets
+a small immediate response, a completed action gets a short clear confirmation,
+and a weak action is readable without arcade effects.
+
 ---
 
 ## 14. Guest and Cocktail Response Direction
@@ -1006,7 +1032,7 @@ uses the following implementation progression:
 | I12 | Guest Response — implemented | Pure authored FIT now distinguishes ExactCocktail from multi-valid Recommendation requests and is composed with execution response; automated Editor validation passed |
 | I13 | Little Prince Interpretive Choice / Memory — implemented | One stable choice → immediate response → Day-3 authored recall; environmental trace remains future work |
 | I14 | Feedback Hierarchy - validated | Guest FIT, drink identity, execution, one discovery event, and reward are sequenced from resolved service truth; automated production-UI Play Mode sign-off passed |
-| I15 | Representative Audio / Visual Pass | One complete encounter proves the atmosphere/presentation target |
+| I15 | Bartending Feel / Audiovisual Polish — implementation complete | Visual-only Stir/GentleStir smoothing, readable Shake/Float feedback, and existing direct action confirmation preserve all authorities; final short human feel sign-off remains pending |
 | I16 | Two-Night Vertical Slice | A 25–35 minute, playtested proof combines the adopted direction |
 
 No later phase starts merely because an earlier one has code. Each exit criterion

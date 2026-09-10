@@ -79,6 +79,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private float activeLayerDuration;
     private float activeLayerAggressiveDuration;
     private float activeLayerTransferredMl;
+    private FloatPourIntensity activePourIntensity;
     private Vector2 spoonStartPosition;
     private ServingGlassGarnishController garnishController;
     private IngredientAvailabilityContext ingredientAvailabilityContext;
@@ -119,6 +120,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         layeredDrinkState = new BartendingLayeredDrinkState();
         completedGrade = FloatGrade.Poor;
         ResetActiveLayerMetrics();
+        activePourIntensity = FloatPourIntensity.Normal;
         ResetLayerVisuals();
 
         if (spoon != null)
@@ -186,12 +188,13 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         ingredientShelf.BeginSelectedPour();
         ResetActiveLayerMetrics();
+        activePourIntensity = intensity;
         bool isFirstLayer = layeredDrinkState.ActiveLayer.OrderIndex == 0;
         SetSpoonVisible(!isFirstLayer);
         SetHint(isFirstLayer
-            ? "Pouring bottom layer: " + ingredient.displayName + "."
+            ? "Pouring bottom layer: " + ingredient.displayName + ". Flow: " + DescribeFlow(intensity) + "."
             : "Pouring Layer " + (layeredDrinkState.ActiveLayer.OrderIndex + 1) +
-              ": use a gentle spoon-assisted flow for a clean boundary.");
+              ": " + DescribeFlow(intensity) + " spoon-assisted flow.");
         UpdateProgressText();
 
         Debug.Log("[Float] Begin layer=" + layeredDrinkState.ActiveLayer.OrderIndex +
@@ -214,6 +217,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return 0f;
 
         BartendingLayer activeLayer = layeredDrinkState.ActiveLayer;
+        activePourIntensity = intensity;
         float rate = GetLayerPourRate(activeLayer.OrderIndex, intensity);
         float transferredMl = ingredientShelf.AddLiquidMl(activeLayer.Ingredient, rate * safeDuration);
         if (transferredMl <= 0f)
@@ -265,6 +269,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         }
 
         ResetActiveLayerMetrics();
+        activePourIntensity = FloatPourIntensity.Normal;
         return completed;
     }
 
@@ -760,7 +765,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         int boundaryCount = layeredDrinkState != null ? layeredDrinkState.Boundaries.Count : 0;
         string active = layeredDrinkState != null && layeredDrinkState.HasActiveLayer
             ? " / Layer " + (layeredDrinkState.ActiveLayer.OrderIndex + 1) +
-              " " + activeLayerTransferredMl.ToString("0.0") + " ml"
+              " " + activeLayerTransferredMl.ToString("0.0") + " ml" +
+              " / Flow " + DescribeFlow(activePourIntensity)
             : string.Empty;
 
         progressText.text = "Serving Glass " +
@@ -789,6 +795,19 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             hintText.text = message;
         if (startHintText != null && startHintText.gameObject.activeSelf)
             startHintText.text = message;
+    }
+
+    private static string DescribeFlow(FloatPourIntensity intensity)
+    {
+        switch (intensity)
+        {
+            case FloatPourIntensity.Gentle:
+                return "Gentle [Shift]";
+            case FloatPourIntensity.Aggressive:
+                return "Aggressive [Ctrl]";
+            default:
+                return "Normal";
+        }
     }
 
     private string GetDisplayTitle()
@@ -830,6 +849,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             targetZone = transform.Find("UI/LiquidArea/TargetZone")?.GetComponent<RectTransform>();
         if (spoon == null)
             spoon = transform.Find("UI/Spoon")?.GetComponent<RectTransform>();
+        if (spoon == null)
+            spoon = transform.Find("UI/SpoonImage")?.GetComponent<RectTransform>();
         if (ingredientText == null)
             ingredientText = transform.Find("UI/IngredientText")?.GetComponent<TMP_Text>();
         if (progressText == null)
