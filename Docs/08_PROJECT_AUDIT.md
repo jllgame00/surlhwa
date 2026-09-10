@@ -121,7 +121,38 @@ authored A/B/legacy dialogue mapping. Both visits retain the exact Manwol Float
 order. No I10 shelf policy, I11 recipe knowledge, I12 FIT/reward semantics,
 matcher, preparation, or technique authority changed.
 
-Status: COMPLETE — STATIC REPOSITORY AUDIT
+## I14 Current-State Note (2026-09-10)
+
+Before I14, `OrderManager` showed the recipe popup as soon as `MarkKnown`
+succeeded and called the fit-only `ResultToastController` before the guest
+reaction/reward handoff. This could overlap a discovery popup, generic fit
+toast, reaction bubble, and heart feedback while omitting recognized drink,
+execution, and reward context.
+
+I14 preserves the existing matcher, `RequestEvaluation`, preparation
+evaluator, `GuestReactionResolver`, recipe knowledge authority, and reward
+formula. `OrderManager` now produces one transient `GuestServiceResult` with
+the resolved reputation components and player-safe cocktail reveal state.
+Guest dialogue remains primary. The toast follows the established guest
+reaction sequence and reports drink, failed preparation only when applicable,
+technique, and applied reputation. The existing recipe unlock popup is queued
+after the toast and remains the only normal service discovery event.
+
+This changes no asset, prefab, scene, PlayerPrefs key, recipe data, availability
+rule, request semantics, Little Prince scheduling, or reward economy. Old
+direct toast helpers remain compatibility-only and are no longer called by the
+normal service path.
+
+Automated production-UI Play Mode sign-off passed on the shipped `BarScene`.
+The Day-1 Clarity Recommendation exercised the real
+`OrderManager -> CustomerController/GuestReactionResolver -> ResultToastController
+-> RecipeUnlockPopupController` route. Dry Martini produced reaction, the
+resolved `Guest Fit: Good` toast, and exactly one later discovery popup. The
+recognized incompatible TestStir result produced an authored poor-FIT reaction,
+`Guest Fit: Poor - Drink Well Made`, `Technique: Good`, and
+`request reward withheld`, with no popup or generic-success conflict.
+
+Status: COMPLETE — AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF
 
 ---
 

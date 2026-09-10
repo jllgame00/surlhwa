@@ -17,6 +17,9 @@ public class ResultToastController : MonoBehaviour
 
     private Coroutine showRoutine;
 
+    public float DisplayCycleDuration => Mathf.Max(0f, displayTime) +
+                                         Mathf.Max(0f, fadeDuration) * 2f;
+
     private void Awake()
     {
         if (canvasGroup == null)
@@ -52,6 +55,17 @@ public class ResultToastController : MonoBehaviour
             StopCoroutine(showRoutine);
 
         showRoutine = StartCoroutine(ShowDelayedRoutine(title, message, delay));
+    }
+
+    /// <summary>
+    /// Shows the diagnostic service summary after the guest has reacted. The
+    /// input is already resolved by OrderManager; this controller does not
+    /// calculate any gameplay result.
+    /// </summary>
+    public void ShowServiceResult(GuestServiceResult result, float delay)
+    {
+        ServiceFeedbackPresentation presentation = GuestServiceFeedbackFormatter.Build(result);
+        ShowDelayed(presentation.Title, presentation.Message, delay);
     }
 
     public void ShowRecipeMatched(string recipeName)

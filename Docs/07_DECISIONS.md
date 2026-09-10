@@ -2,6 +2,34 @@
 
 Last Updated: 2026-09-10
 
+## ADR-045 - Feedback Projects Resolved Service Truth
+
+**Status:** ACCEPTED / I14 IMPLEMENTATION / AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF
+
+I14 does not introduce a total score, another result evaluator, persistence,
+or reward calculation. `OrderManager` remains the integration seam: after it
+has resolved WHAT, HOW, QUALITY, FIT, knowledge transition, and the existing
+reward policy, it passes those values through transient `GuestServiceResult`.
+The expanded handoff carries only presentation-safe reveal and reward-breakdown
+context in addition to the existing resolved axes.
+
+The hierarchy is intentional: `CustomerController` and
+`GuestReactionResolver` provide the primary guest interpretation, the result
+toast provides a delayed diagnostic summary, and `RecipeUnlockPopupController`
+is the single normal-service notification for a newly Known recipe. UI text
+formats resolved values and never matches a recipe, evaluates FIT, judges
+preparation/technique, awards reputation, or marks knowledge. This makes a
+well-made but poor recommendation legible without hiding a valid discovery.
+
+No global modal manager or feedback persistence is required. Existing first
+recipe reveal and Little Prince narrative UI remain separate flows.
+
+The sign-off uses the shipped BarScene and production `OrderManager` result
+boundary rather than formatter-only checks. It observes the real guest
+reaction, result toast, and recipe popup coroutine sequence for a newly
+discovered fitting Dry Martini and a known incompatible cocktail. This confirms
+that presentation consumes resolved state without creating a second evaluator.
+
 ## ADR-044 — Little Prince Narrative Choice Is Stable Progress Separate From Visit Completion
 
 **Status:** ACCEPTED / I13 IMPLEMENTATION

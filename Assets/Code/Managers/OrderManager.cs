@@ -3,6 +3,9 @@ using System;
 
 public class OrderManager : MonoBehaviour
 {
+    private const float GuestReactionSequenceDuration = 4f;
+    private const float DiscoveryFeedbackGap = 0.1f;
+
     [Header("Debug")]
     [SerializeField] private bool verboseLogging = false;
     
@@ -140,7 +143,6 @@ public class OrderManager : MonoBehaviour
         CocktailRecipeData matchedRecipe = null;
         RecipeMatchResult matchResult = default;
         bool newlyKnownRecipe = false;
-        bool firstCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
         bool secondCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedSecondCustomerRoute();
 
         if (recipeUnlockManager != null && result.brewedComposition != null)
@@ -151,12 +153,6 @@ public class OrderManager : MonoBehaviour
 
         RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentOrder, matchResult);
         LogRequestEvaluation(currentOrder, matchResult, requestEvaluation);
-        bool isWrongValidRequestMismatch = IsWrongValidRequestMismatch(
-            currentOrder,
-            result,
-            matchResult,
-            requestEvaluation);
-
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
             if (matchResult.success && matchResult.matchedRecipe != null)
@@ -181,7 +177,10 @@ public class OrderManager : MonoBehaviour
 
                         Debug.Log($"[OrderManager] RECIPE BECAME KNOWN -> {GetCocktailDisplayName(matchedRecipe)}");
 
-                        if (unlockPopup != null)
+                        // The resolved discovery popup follows the guest
+                        // reaction and diagnostic summary below. Keep an
+                        // immediate fallback only for scenes with no toast.
+                        if (unlockPopup != null && resultToast == null)
                         {
                             if (secondCustomerRoute)
                             {
@@ -223,28 +222,19 @@ public class OrderManager : MonoBehaviour
                 GuestReactionResolver.GuestResponseTone.NotApplicable,
                 false);
         
-        ShowResultToast(
-            matchedRecipe,
-            matchedRecipe != null && recipeUnlockManager != null &&
-                recipeUnlockManager.IsKnown(matchedRecipe),
-            newlyKnownRecipe,
-            result,
-            guestResponse,
-            firstCustomerRoute,
-            secondCustomerRoute,
-            isWrongValidRequestMismatch);
-
         if (matchedRecipe == null)
         {
             Debug.LogWarning("[OrderManager] No matched cocktail. Serving as unknown cocktail.");
         }
 
         // ���� ó��
-        int reputationDelta = CalculateReputationDelta(
-            result,
-            matchedRecipe,
-            currentOrder,
-            requestEvaluation);
+        int requestReputationReward = CalculateRequestReputationReward(
+            result, matchedRecipe, currentOrder, requestEvaluation);
+        int reputationDelta = result.repDelta + requestReputationReward;
+        bool requestRewardWithheld = IsRequestRewardWithheld(
+            result, matchedRecipe, currentOrder, requestEvaluation);
+        bool canRevealMatchedCocktail = matchedRecipe != null && recipeUnlockManager != null &&
+                                         recipeUnlockManager.IsKnown(matchedRecipe);
         if (gm != null)
             gm.AddReputation(reputationDelta);
 
@@ -253,11 +243,23 @@ public class OrderManager : MonoBehaviour
             result,
             requestEvaluation,
             guestResponse,
-            reputationDelta);
+            reputationDelta,
+            result.repDelta,
+            requestReputationReward,
+            requestRewardWithheld,
+            canRevealMatchedCocktail,
+            newlyKnownRecipe);
 
         // �� ���� �ý��� ȣ��
         if (currentCustomer != null)
             currentCustomer.OnServedWithReaction(guestServiceResult);
+
+        PresentServiceFeedback(
+            guestServiceResult,
+            matchedRecipe,
+            newlyKnownRecipe,
+            secondCustomerRoute,
+            currentCustomer != null);
 
         // ���� �ʱ�ȭ
         currentCustomer = null;
@@ -303,6 +305,55 @@ public class OrderManager : MonoBehaviour
             Debug.Log(message);
     }
     
+    /// <summary>
+    /// Coordinates already-resolved transient feedback. The guest reaction is
+    /// primary, then this diagnostic toast, then the sole discovery popup.
+    /// No gameplay axis is recalculated here.
+    /// </summary>
+    private void PresentServiceFeedback(
+        GuestServiceResult serviceResult,
+        CocktailRecipeData newlyKnownRecipe,
+        bool recipeBecameKnown,
+        bool secondCustomerRoute,
+        bool hasCustomerReaction)
+    {
+        if (resultToast == null)
+            resultToast = FindFirstObjectByType<ResultToastController>();
+
+        float reactionDelay = hasCustomerReaction ? GuestReactionSequenceDuration : 0f;
+        float toastCycle = 0f;
+        if (resultToast != null)
+        {
+            resultToast.ShowServiceResult(serviceResult, reactionDelay);
+            toastCycle = resultToast.DisplayCycleDuration;
+        }
+
+        if (!recipeBecameKnown || newlyKnownRecipe == null)
+            return;
+
+        if (unlockPopup == null)
+            unlockPopup = FindFirstObjectByType<RecipeUnlockPopupController>();
+
+        if (unlockPopup == null)
+            return;
+
+        float discoveryDelay = reactionDelay + toastCycle + DiscoveryFeedbackGap;
+        if (secondCustomerRoute)
+        {
+            unlockPopup.ShowDelayed(
+                newlyKnownRecipe,
+                discoveryDelay,
+                "New Recipe Discovered",
+                "The recipe has been added to your Guide.");
+        }
+        else
+        {
+            unlockPopup.ShowDelayed(newlyKnownRecipe, discoveryDelay);
+        }
+    }
+
+    // Legacy direct-toast routing is retained for serialized scene/debug
+    // compatibility. Normal service now uses PresentServiceFeedback above.
     private void ShowResultToast(
         CocktailRecipeData matchedRecipe,
         bool canRevealMatchedRecipe,
@@ -378,14 +429,34 @@ public class OrderManager : MonoBehaviour
         OrderData request,
         RequestEvaluationResult evaluation)
     {
-        int total = result.repDelta;
+        return result.repDelta + CalculateRequestReputationReward(
+            result, matchedRecipe, request, evaluation);
+    }
+
+    private static int CalculateRequestReputationReward(
+        MiniGameResult result,
+        CocktailRecipeData matchedRecipe,
+        OrderData request,
+        RequestEvaluationResult evaluation)
+    {
         if (result.success && matchedRecipe != null && request != null &&
             ShouldGrantRequestReward(evaluation))
         {
-            total += request.reputationReward;
+            return request.reputationReward;
         }
 
-        return total;
+        return 0;
+    }
+
+    private static bool IsRequestRewardWithheld(
+        MiniGameResult result,
+        CocktailRecipeData matchedRecipe,
+        OrderData request,
+        RequestEvaluationResult evaluation)
+    {
+        return result.success && matchedRecipe != null && request != null &&
+               request.reputationReward != 0 &&
+               evaluation.Status == RequestEvaluationStatus.Unsatisfied;
     }
 
     private static bool IsWrongValidRequestMismatch(

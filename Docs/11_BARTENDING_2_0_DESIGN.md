@@ -908,6 +908,24 @@ deterministic revisit—not a generic customer-memory, quest, or branching
 dialogue framework. Broader narrative consequence and environmental feedback
 remain future work.
 
+### I14 service result feedback
+
+I14 sequences the existing service result after bartending without changing
+its authorities. Guest FIT remains the primary spoken response; recognized
+drink identity follows as context; failed preparation and technique grade are
+secondary diagnostics; a new recipe is one separate delayed popup; and the
+already-applied reputation outcome is shown last. `GuestServiceResult` carries
+the resolved transient data to this presentation. The toast formatter does not
+match recipes, evaluate FIT, judge technique, alter knowledge, or calculate
+reward. Unknown and unrevealed recipes remain hidden, and a newly discovered
+cocktail can still be clearly communicated as a poor recommendation.
+
+Automated I14 sign-off uses the shipped BarScene and its real completion/UI
+coroutines. It confirms the primary guest reaction appears before the resolved
+toast, then one delayed discovery popup only when Dry Martini newly becomes
+Known. A known, incompatible recognized cocktail retains `Technique: Good` but
+reports poor FIT and its withheld request reward, with no popup.
+
 ---
 
 ## 14. Guest and Cocktail Response Direction
@@ -987,7 +1005,7 @@ uses the following implementation progression:
 | I11 | Guide / Discovery | I11A/I11B ownership and triggers plus one Day-1 multi-encounter Dry Martini Partial-to-Known arc are implemented; licensed-Editor runtime proof remains pending |
 | I12 | Guest Response — implemented | Pure authored FIT now distinguishes ExactCocktail from multi-valid Recommendation requests and is composed with execution response; automated Editor validation passed |
 | I13 | Little Prince Interpretive Choice / Memory — implemented | One stable choice → immediate response → Day-3 authored recall; environmental trace remains future work |
-| I14 | Feedback Hierarchy | Physical result, guest response, quiet record, then night result are legible |
+| I14 | Feedback Hierarchy - validated | Guest FIT, drink identity, execution, one discovery event, and reward are sequenced from resolved service truth; automated production-UI Play Mode sign-off passed |
 | I15 | Representative Audio / Visual Pass | One complete encounter proves the atmosphere/presentation target |
 | I16 | Two-Night Vertical Slice | A 25–35 minute, playtested proof combines the adopted direction |
 

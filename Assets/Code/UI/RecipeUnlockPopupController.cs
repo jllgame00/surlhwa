@@ -46,6 +46,41 @@ public class RecipeUnlockPopupController : MonoBehaviour
         popupRoutine = StartCoroutine(ShowRoutine(recipe, titleOverride, messageOverride));
     }
 
+    /// <summary>
+    /// Defers one already-authorized discovery presentation so it follows the
+    /// guest reaction and result summary. It does not make a recipe Known.
+    /// </summary>
+    public void ShowDelayed(
+        CocktailRecipeData recipe,
+        float delay,
+        string titleOverride = null,
+        string messageOverride = null)
+    {
+        if (recipe == null || popupRoot == null)
+            return;
+
+        if (popupRoutine != null)
+            StopCoroutine(popupRoutine);
+
+        popupRoutine = StartCoroutine(ShowDelayedRoutine(
+            recipe,
+            Mathf.Max(0f, delay),
+            titleOverride,
+            messageOverride));
+    }
+
+    private IEnumerator ShowDelayedRoutine(
+        CocktailRecipeData recipe,
+        float delay,
+        string titleOverride,
+        string messageOverride)
+    {
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        yield return ShowRoutine(recipe, titleOverride, messageOverride);
+    }
+
     private IEnumerator ShowRoutine(CocktailRecipeData recipe, string titleOverride, string messageOverride)
     {
         SetupContent(recipe, titleOverride, messageOverride);

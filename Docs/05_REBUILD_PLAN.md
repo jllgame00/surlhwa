@@ -839,6 +839,24 @@ Prioritize:
 
 Reduce competing toast/heart/result channels where they obscure meaning.
 
+**Implemented (automated production-UI Play Mode sign-off passed):** I14 keeps all scoring and evaluation
+owners unchanged, then presents their resolved output in this order: guest FIT
+through the existing spoken reaction; recognized drink identity when
+player-safe; failed preparation diagnostic only when relevant and technique
+grade; one delayed discovery popup if `MarkKnown` changed knowledge; and the
+applied reputation and request-reward result.
+
+`ResultToastController` receives a transient `GuestServiceResult` projection
+after the guest reaction. It never recomputes matching, FIT, preparation,
+technique, knowledge, or reward. Unknown and unrevealed recipes remain
+`Unknown Cocktail`; discovery is not duplicated in the result toast.
+
+The automated sign-off runs the shipped BarScene and actual production
+controllers/UI. It asserts the Day-1 Clarity Recommendation's Good FIT/Good
+execution and Poor FIT/Good execution routes, including visible sequence,
+resolved text, reward treatment, discovery deduplication, and no generic
+success contradiction.
+
 #### I15 — Representative Audio / Visual Pass
 
 For at least one complete encounter:

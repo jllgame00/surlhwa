@@ -73,6 +73,21 @@ recognized contrast. Four bounded response tones communicate fit and execution
 without changing matching, preparation, technique, recipe knowledge, or shelf
 availability. The IBA catalog has no broader mood rollout yet.
 
+## I14 Service Result Feedback (Implemented; automated production-UI Play Mode sign-off passed)
+
+The result presentation now sequences primary guest response, diagnostic drink
+and execution summary, one new-recipe popup when applicable, and explicit
+reputation outcome. `GuestServiceResult` remains a transient resolved handoff:
+the formatter and UI only project it. A poor-fit but well-made cocktail is
+therefore communicated as a poor recommendation with good technique, while a
+newly Known cocktail remains a separate discovery event. No feedback state is
+persisted and no result score or catalog content is introduced.
+
+The shipped BarScene now has automated production-UI coverage for the Day-1
+Clarity Recommendation: newly discovered Dry Martini yields reaction, resolved
+toast, then exactly one popup; a recognized incompatible cocktail yields a
+poor-FIT reaction and withheld request-reward presentation without an unlock.
+
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
 ---
@@ -626,7 +641,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED / I13 ONE LITTLE PRINCE REMEMBERED-CHOICE SLICE IMPLEMENTED; I14+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED / I13 ONE LITTLE PRINCE REMEMBERED-CHOICE SLICE IMPLEMENTED / I14 AUTOMATED PRODUCTION-UI PLAY MODE SIGN-OFF PASSED; I15+ FUTURE WORK
 
 ### I13 bounded Little Prince memory proof
 

@@ -121,6 +121,34 @@ Float request. Narrative choice does not alter recipe knowledge, guest FIT,
 recipe/preparation truth, rewards, or ingredient availability. Broader guest
 memory, consequences, and environmental traces remain future work.
 
+## I14 Service Result Feedback (Implemented; automated production-UI Play Mode sign-off passed)
+
+I14 presents existing resolved service truths in one bounded hierarchy without
+adding an overall score or another evaluator:
+
+```text
+Guest FIT       primary guest interpretation
+Matched drink   recognized identity when it is safe to reveal
+HOW / QUALITY   preparation issue only when relevant, then technique grade
+KNOWLEDGE       one delayed recipe-discovery popup when a recipe becomes Known
+REWARD          applied reputation delta and request-reward outcome
+```
+
+`GuestReactionResolver` remains the primary spoken response owner. After its
+normal reaction sequence, `ResultToastController` consumes the resolved
+`GuestServiceResult` as a concise diagnostic summary; it does not recompute
+matching, FIT, preparation, technique, discovery, or reward. The existing
+recipe popup is the only normal service discovery surface and is queued after
+the summary, so a newly discovered but poor-fitting drink still reads as a
+poor service choice and a separate knowledge event. Feedback is transient:
+I14 introduces no persistence, score, reward-economy, or recipe-truth change.
+
+The automated BarScene proof drives the real `OrderManager` completion seam
+through `CustomerController` / `GuestReactionResolver`, `ResultToastController`,
+and `RecipeUnlockPopupController`. It verifies reaction-to-toast-to-popup order,
+one discovery presentation for newly Known Dry Martini, and no discovery popup
+or generic-success contradiction for a recognized but poor-fitting cocktail.
+
 ---
 
 ## 1. 장르
