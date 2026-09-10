@@ -51,7 +51,8 @@ public class OrderManager : MonoBehaviour
 
         return new RecipeGuideContext(
             method,
-            recipeUnlockManager.GetUnlockedRecipesByMethod(method),
+            recipeUnlockManager.GetAllRecipesByMethod(method),
+            recipeUnlockManager.GetKnownFacts,
             isForcedFirstCustomerRouteActive);
     }
 
@@ -138,7 +139,7 @@ public class OrderManager : MonoBehaviour
         CocktailData servedCocktail = null;
         CocktailRecipeData matchedRecipe = null;
         RecipeMatchResult matchResult = default;
-        bool unlockedNewRecipe = false;
+        bool newlyKnownRecipe = false;
         bool firstCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedFirstCustomerRoute();
         bool secondCustomerRoute = currentCustomer != null && currentCustomer.IsInForcedSecondCustomerRoute();
 
@@ -168,17 +169,17 @@ public class OrderManager : MonoBehaviour
                     $"recipeId={matchedRecipe.recipeId} / similarity={matchResult.similarity:0.00}"
                 );
 
-                bool wasUnlocked = recipeUnlockManager.IsUnlocked(matchedRecipe);
+                bool wasKnown = recipeUnlockManager.IsKnown(matchedRecipe);
 
-                if (result.success && !wasUnlocked)
+                if (result.success && !wasKnown)
                 {
-                    bool newlyUnlocked = recipeUnlockManager.UnlockRecipe(matchedRecipe);
+                    bool becameKnown = recipeUnlockManager.MarkKnown(matchedRecipe);
 
-                    if (newlyUnlocked)
+                    if (becameKnown)
                     {
-                        unlockedNewRecipe = true;
+                        newlyKnownRecipe = true;
 
-                        Debug.Log($"[OrderManager] NEW RECIPE UNLOCKED -> {GetCocktailDisplayName(matchedRecipe)}");
+                        Debug.Log($"[OrderManager] RECIPE BECAME KNOWN -> {GetCocktailDisplayName(matchedRecipe)}");
 
                         if (unlockPopup != null)
                         {
@@ -210,7 +211,7 @@ public class OrderManager : MonoBehaviour
         
         ShowResultToast(
             matchedRecipe,
-            unlockedNewRecipe,
+            newlyKnownRecipe,
             result,
             firstCustomerRoute,
             secondCustomerRoute,
@@ -291,7 +292,7 @@ public class OrderManager : MonoBehaviour
     
     private void ShowResultToast(
         CocktailRecipeData matchedRecipe,
-        bool unlockedNewRecipe,
+        bool newlyKnownRecipe,
         MiniGameResult result,
         bool firstCustomerRoute,
         bool secondCustomerRoute,
@@ -323,7 +324,7 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        if (unlockedNewRecipe)
+        if (newlyKnownRecipe)
         {
             if (secondCustomerRoute)
                 resultToast.ShowSecondRouteRecipeUnlocked();

@@ -31,10 +31,14 @@ public class CocktailCodexCardView : MonoBehaviour
         ApplyDefaultLayout();
     }
 
-    public void Bind(CocktailRecipeData recipeData, bool unlocked, Action<CocktailRecipeData> clickCallback)
+    public void Bind(
+        CocktailRecipeData recipeData,
+        RecipeKnowledgeFacts facts,
+        Action<CocktailRecipeData> clickCallback)
     {
         recipe = recipeData;
         onClick = clickCallback;
+        facts ??= new RecipeKnowledgeFacts(false, false, false, false, false, null, null);
 
         ResolveReferences();
         ApplyDefaultLayout();
@@ -46,19 +50,17 @@ public class CocktailCodexCardView : MonoBehaviour
         }
 
         if (nameText != null)
-        {
-            nameText.text = unlocked
-                ? GetRecipeDisplayName(recipe)
-                : "???";
-        }
+            nameText.text = RecipeKnowledgeGuideFormatter.GetCardLabel(recipe, facts);
 
         if (lockedOverlay != null)
-            lockedOverlay.SetActive(!unlocked);
+            lockedOverlay.SetActive(facts.State == RecipeKnowledgeState.Unknown);
 
-        Sprite sprite = unlocked ? GetRecipeSprite(recipe) : null;
+        Sprite sprite = RecipeKnowledgeGuideFormatter.IsFullyKnown(facts)
+            ? GetRecipeSprite(recipe)
+            : null;
         ApplyIcon(sprite);
         ApplyRootBackground();
-        LogBindState(unlocked);
+        LogBindState(facts);
     }
 
     private void HandleClick()
@@ -229,13 +231,13 @@ public class CocktailCodexCardView : MonoBehaviour
         rect.sizeDelta = defaultSize;
     }
 
-    private void LogBindState(bool unlocked)
+    private void LogBindState(RecipeKnowledgeFacts facts)
     {
         RectTransform rootRect = GetComponent<RectTransform>();
         RectTransform iconRect = iconImage != null ? iconImage.rectTransform : null;
         RectTransform nameRect = nameText != null ? nameText.rectTransform : null;
 
-        string recipeName = recipe != null ? GetRecipeDisplayName(recipe) : "NULL";
+        string recipeName = RecipeKnowledgeGuideFormatter.GetCardLabel(recipe, facts);
         string recipeId = recipe != null ? recipe.recipeId : "NULL";
         string finalName = nameText != null ? nameText.text : "NULL";
         float nameAlpha = nameText != null ? nameText.color.a : -1f;
@@ -244,7 +246,7 @@ public class CocktailCodexCardView : MonoBehaviour
 
         Debug.Log(
             $"[CocktailCodexCard] Bind / " +
-            $"recipe={recipeName} / recipeId={recipeId} / unlocked={unlocked} / " +
+            $"recipe={recipeName} / recipeId={recipeId} / knowledge={facts.State} / " +
             $"button={(button != null ? "OK" : "NULL")} / " +
             $"iconImage={(iconImage != null ? "OK" : "NULL")} / " +
             $"nameText={(nameText != null ? "OK" : "NULL")} / " +

@@ -123,7 +123,7 @@ public class CocktailCodexPanelController : MonoBehaviour
             }
 
             spawnedCards.Add(cardObject);
-            card.Bind(recipe, IsRecipeUnlocked(recipe), SelectRecipe);
+            card.Bind(recipe, GetRecipeKnowledge(recipe), SelectRecipe);
         }
     }
 
@@ -139,16 +139,23 @@ public class CocktailCodexPanelController : MonoBehaviour
 
         ShowDetailPage();
 
-        if (!IsRecipeUnlocked(recipe))
+        RecipeKnowledgeFacts facts = GetRecipeKnowledge(recipe);
+        if (facts.State == RecipeKnowledgeState.Unknown)
         {
-            ShowLockedDetail();
+            ShowUnknownDetail();
             return;
         }
 
-        ShowUnlockedDetail(recipe);
+        if (facts.State == RecipeKnowledgeState.Partial)
+        {
+            ShowPartialDetail(recipe, facts);
+            return;
+        }
+
+        ShowKnownDetail(recipe, facts);
     }
 
-    private void ShowUnlockedDetail(CocktailRecipeData recipe)
+    private void ShowKnownDetail(CocktailRecipeData recipe, RecipeKnowledgeFacts facts)
     {
         SetLockedDetailVisible(false);
         ApplyLargeImage(GetRecipeSprite(recipe));
@@ -160,13 +167,34 @@ public class CocktailCodexPanelController : MonoBehaviour
             descriptionText.text = GetDescription(recipe);
 
         if (methodText != null)
-            methodText.text = $"Method: {recipe.method}";
+            methodText.text = RecipeKnowledgeGuideFormatter.GetMethodText(recipe, facts);
 
         if (ingredientsText != null)
-            ingredientsText.text = BuildIngredientText(recipe);
+            ingredientsText.text = RecipeKnowledgeGuideFormatter.BuildDetailText(
+                recipe,
+                facts,
+                includeKnownDescription: false);
     }
 
-    private void ShowLockedDetail()
+    private void ShowPartialDetail(CocktailRecipeData recipe, RecipeKnowledgeFacts facts)
+    {
+        SetLockedDetailVisible(false);
+        ApplyLargeImage(null);
+
+        if (nameText != null)
+            nameText.text = RecipeKnowledgeGuideFormatter.GetDetailName(recipe, facts);
+
+        if (descriptionText != null)
+            descriptionText.text = string.Empty;
+
+        if (methodText != null)
+            methodText.text = RecipeKnowledgeGuideFormatter.GetMethodText(recipe, facts);
+
+        if (ingredientsText != null)
+            ingredientsText.text = RecipeKnowledgeGuideFormatter.BuildDetailText(recipe, facts);
+    }
+
+    private void ShowUnknownDetail()
     {
         ApplyLargeImage(null);
         SetLockedDetailVisible(true);
@@ -175,7 +203,7 @@ public class CocktailCodexPanelController : MonoBehaviour
             nameText.text = "???";
 
         if (descriptionText != null)
-            descriptionText.text = "Unlock this cocktail to view its notes.";
+            descriptionText.text = "Unknown cocktail.";
 
         if (methodText != null)
             methodText.text = "Method: ???";
@@ -184,7 +212,7 @@ public class CocktailCodexPanelController : MonoBehaviour
             ingredientsText.text = "";
 
         if (lockedDetailText != null)
-            lockedDetailText.text = "Locked";
+            lockedDetailText.text = "Unknown";
     }
 
     private void ClearDetail()
@@ -255,15 +283,16 @@ public class CocktailCodexPanelController : MonoBehaviour
         return result;
     }
 
-    private bool IsRecipeUnlocked(CocktailRecipeData recipe)
+    private RecipeKnowledgeFacts GetRecipeKnowledge(CocktailRecipeData recipe)
     {
         if (recipe == null)
-            return false;
+            return new RecipeKnowledgeFacts(false, false, false, false, false, null, null);
 
         if (recipeUnlockManager != null)
-            return recipeUnlockManager.IsUnlocked(recipe);
+            return recipeUnlockManager.GetKnownFacts(recipe);
 
-        return recipeCatalog != null && recipeCatalog.IsUnlockedByDefault(recipe);
+        bool knownByDefault = recipeCatalog != null && recipeCatalog.IsUnlockedByDefault(recipe);
+        return new RecipeKnowledgeFacts(knownByDefault, false, false, false, false, null, null);
     }
 
     private void ResolveRecipeUnlockManager()

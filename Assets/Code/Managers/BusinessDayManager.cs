@@ -91,7 +91,7 @@ public class BusinessDayManager : MonoBehaviour
         List<CocktailRecipeData> recipes = recipeUnlockManager.GetAllRecipes();
         foreach (CocktailRecipeData recipe in recipes)
         {
-            if (recipe == null || !recipeUnlockManager.IsUnlocked(recipe))
+            if (recipe == null || !recipeUnlockManager.IsKnown(recipe))
                 continue;
 
             CocktailData cocktail = recipe.targetCocktail;

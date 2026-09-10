@@ -702,7 +702,7 @@ The following Phase G/H contracts remain valid during this direction change:
 | Cocktail identity/presentation/reaction metadata | CocktailData |
 | Technical recipe standard | CocktailRecipeData |
 | Catalog membership/default configuration | RecipeCatalogData / RecipeCatalogEntry |
-| Recipe unlock state | RecipeUnlockManager / recipe progression persistence |
+| Recipe knowledge state | RecipeUnlockManager / recipe progression persistence |
 | Technical recognition | RecipeMatchService |
 | Customer request | OrderData |
 | Actual served cocktail | matched recipe target cocktail |
@@ -811,6 +811,25 @@ memorization challenge.
 
 The exact UI, unlock trigger, and clue data are deferred. The requirement is a
 learnable path from curiosity to informed attempt.
+
+### I11A implemented foundation
+
+I11A now supplies the bounded persistence and presentation foundation without
+authoring a guest discovery loop. Recipe knowledge is owned by the existing
+serialized `RecipeUnlockManager` component, whose active semantics are
+`Unknown` → `Partial` → `Known`. `Partial` stores typed fact categories:
+identity, method, exact ingredient identity, that ingredient's amount, garnish,
+and preparation sequence. Amount facts always carry their corresponding
+ingredient fact. `Known` remains an explicit successful-discovery grant; partial
+facts do not infer completeness.
+
+The Guide and Codex project only those facts. `CocktailRecipeData` remains full
+authored recipe truth, `RecipeMatchService` remains liquid-composition truth,
+and actual preparation/container state remains gameplay truth. The I10 shelf
+continues to ignore recipe knowledge, so available ingredients and unknown
+recipes remain valid together. Legacy binary unlock entries are derived as
+`Known` when loading old saves; the first-recipe-reveal UI flag remains a
+separate persistence concern.
 
 Discovery is not invalidated by showing a learned full recipe. Discovery can
 include learning why a cocktail matters, when it fits a guest, how its

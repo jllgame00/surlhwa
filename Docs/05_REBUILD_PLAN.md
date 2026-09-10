@@ -18,7 +18,7 @@ constructibility, selection reset, prototype regression safety, Little Prince
 ingredients, request-local isolation, and locked-recipe/available-ingredient
 independence. Batch execution on this workstation is blocked by the unavailable
 Unity batch/headless entitlement, so a licensed Unity editor must rerun it
-before I10 is marked fully runtime-validated. I11+ remains pending.
+before I10 is marked fully runtime-validated. I11A is implemented; I11B+ remains pending.
 
 Status: ACTIVE EXECUTION PLAN / PHASE I BARTENDING 2.0 CURRENT
 
@@ -507,7 +507,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11+ remains pending
+Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11A knowledge foundation implemented; I11B+ remains pending
 
 #### Purpose
 
@@ -767,6 +767,15 @@ catalog proves the required data/control model.
 
 Repair the fresh-save learning path and support unknown / partially-known /
 known recipe information.
+
+**I11A implemented:** `RecipeUnlockManager` is retained as the serialized
+scene component but now owns the one fact-based recipe-knowledge authority.
+`Unknown` cards reveal no authored identity/details; `Partial` projects only
+learned identity, method, ingredient, amount, garnish, and/or preparation
+facts; `Known` projects the supported full recipe presentation. The new
+versioned knowledge save is independent from day-derived ingredient
+availability and derives legacy `SURLHWA_UNLOCKED_RECIPES` entries as `Known`
+on load. I11B+ must still provide production discovery/clue triggers.
 
 #### I12 — Guest Response
 

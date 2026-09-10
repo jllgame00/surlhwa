@@ -1,6 +1,50 @@
 # SURLHWA — Architecture & Design Decisions
 
-Last Updated: 2026-09-08
+Last Updated: 2026-09-10
+
+## ADR-040 — Recipe Knowledge Is Fact-Based Player Progress
+
+**Status:** ACCEPTED / I11A IMPLEMENTATION
+
+### Context
+
+The old `RecipeUnlockManager` treated every catalog recipe as binary locked or
+unlocked and persisted a pipe-delimited list in `SURLHWA_UNLOCKED_RECIPES`.
+That could not express actionable partial learning and caused the Guide to
+either hide a recipe entirely or expose its complete authored details.
+
+### Decision
+
+The existing serialized `RecipeUnlockManager` component remains the single
+runtime authority for player recipe knowledge so existing scene references stay
+valid. Its active API is `GetKnowledgeState`, `IsKnown`, `GetKnownFacts`, typed
+`Learn…` operations, and `MarkKnown`. The state derives monotonically from
+facts: no facts is `Unknown`; one or more facts is `Partial`; the explicit
+`known` marker is `Known`. `Known` is granted by the existing successful
+recipe-match result path rather than inferred from partial facts.
+
+The bounded facts are identity, method, actual `IngredientData` identity,
+actual ingredient amount, garnish expectation, and preparation sequence. An
+amount fact automatically records its corresponding ingredient fact. Player
+progress is persisted as versioned JSON in `SURLHWA_RECIPE_KNOWLEDGE_V1`:
+`version` plus per-recipe stable `recipeId`, booleans, and stable ingredient-ID
+lists. It stores no display strings or full authored recipe duplication.
+
+`SURLHWA_UNLOCKED_RECIPES` remains a read-only legacy migration input: each
+pipe-delimited legacy ID is derived as `Known` during load. New writes target
+only the versioned knowledge key. `SURLHWA_FIRST_RECIPE_REVEAL_SHOWN` remains a
+separate one-time feedback/UI state. A deliberate debug progress clear removes
+both recipe-knowledge and legacy-unlock keys.
+
+### Consequences
+
+`CocktailRecipeData` remains the complete authored technical truth;
+`RecipeCatalogData` remains catalog membership/default-known configuration;
+`RecipeMatchService`, `RecipePreparationStep`, and runtime preparation state
+remain independent gameplay truths. Guide/Codex consumers project only learned
+facts. `IngredientAvailabilityData` and its day/request context neither read
+nor alter recipe knowledge, preserving both available-but-unknown and
+known-but-currently-unavailable states.
 
 ## ADR-039 — Ingredient Availability Is Day-Derived and Separate from Recipe Knowledge
 

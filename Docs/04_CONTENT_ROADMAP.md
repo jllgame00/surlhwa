@@ -23,6 +23,15 @@ tutorial and special-request compatibility. Recipe unlock/Guide knowledge stays
 independent: an available ingredient never reveals a recipe, and a known recipe
 does not bypass unavailable supply. I11 remains the owner of discovery.
 
+## I11A Recipe Knowledge Foundation (Implemented)
+
+The Guide foundation now represents player knowledge as `Unknown`, `Partial`,
+or `Known`. Partial knowledge records bounded learned facts—identity, method,
+specific ingredient, specific ingredient amount, garnish, and preparation—by
+stable recipe and ingredient identity rather than opaque completion percentage.
+The legacy unlocked-recipe list maps to `Known` on load. Full guest clue and
+normal-play discovery sources remain I11B+ work.
+
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
 ---
@@ -576,7 +585,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED; I11+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A FOUNDATION IMPLEMENTED; I11B+ FUTURE WORK
 
 I9B validates seven official-IBA recipes as a production preparation-model
 proof: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and

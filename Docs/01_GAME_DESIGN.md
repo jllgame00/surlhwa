@@ -5,7 +5,7 @@ Last Updated: 2026-09-08
 ## I10 Ingredient Availability (Implemented)
 
 I10 makes physical ingredient availability a day-derived bar-supply rule. It
-does not make a recipe known, unlocked, or visible in the Guide. `currentDay`
+does not make a recipe known or reveal authored details in the Guide. `currentDay`
 plus authored `IngredientAvailabilityData` determines normal supply; no
 per-ingredient save key or inventory quantity exists.
 
@@ -18,6 +18,23 @@ proof controls are not IngredientData supply and remain ungated in I10.
 For a dedicated request, its required liquid ingredients may be added only to
 that Bartending session's temporary availability context. This does not change
 normal bar supply or persistence.
+
+## I11A Recipe Knowledge Foundation (Implemented)
+
+Recipe knowledge is now a separate player-progress state with three bounded
+states: `Unknown`, `Partial`, and `Known`. Availability of an ingredient does
+not reveal a recipe, and knowing a recipe does not add any ingredient to the
+shelf.
+
+`Partial` is fact-based rather than percentage-based. The initial fact set is
+cocktail identity, method, exact `IngredientData` identity, that ingredient's
+amount, garnish expectation, and preparation sequence. `Known` is explicitly
+granted by a successful recipe discovery/match, at which point the Guide may
+show the complete currently supported recipe presentation.
+
+The full authored recipe remains in `CocktailRecipeData`; player progress saves
+only stable recipe/ingredient IDs and fact booleans. Guest-driven clue sources
+and the normal gameplay discovery loop remain future I11 work.
 
 ---
 

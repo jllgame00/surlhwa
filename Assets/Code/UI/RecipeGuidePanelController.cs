@@ -122,7 +122,7 @@ public class RecipeGuidePanelController : MonoBehaviour
         if (verboseLogging)
         {
             IReadOnlyList<CocktailRecipeData> allRecipes = recipeGuideContext.AvailableRecipes;
-            Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, unlockedRecipes={allRecipes.Count}");
+            Debug.Log($"[RecipeGuidePanel] RefreshRecipeList -> method={currentMethod}, recipes={allRecipes.Count}");
 
             foreach (CocktailRecipeData recipe in allRecipes)
             {
@@ -132,9 +132,10 @@ public class RecipeGuidePanelController : MonoBehaviour
                     continue;
                 }
 
+                RecipeKnowledgeFacts facts = recipeGuideContext.GetKnownFacts(recipe);
                 Debug.Log(
                     $"[RecipeGuidePanel] Recipe Candidate -> " +
-                    $"name={GetCocktailDisplayName(recipe)}, id={recipe.recipeId}, method={recipe.method}, " +
+                    $"id={recipe.recipeId}, knowledge={facts.State}, " +
                     $"methodMatch={recipe.method == currentMethod}"
                 );
             }
@@ -153,7 +154,9 @@ public class RecipeGuidePanelController : MonoBehaviour
             TMP_Text label = btn.GetComponentInChildren<TMP_Text>();
             if (label != null)
             {
-                label.text = GetCocktailDisplayName(recipe);
+                label.text = RecipeKnowledgeGuideFormatter.GetCardLabel(
+                    recipe,
+                    recipeGuideContext.GetKnownFacts(recipe));
                 ConfigureRecipeButtonText(label);
             }
 
@@ -171,7 +174,7 @@ public class RecipeGuidePanelController : MonoBehaviour
         {
             Debug.Log(
                 $"[RecipeGuidePanel] RefreshRecipeList complete -> " +
-                $"method={currentMethod}, unlockedForMethod={recipes.Count}, buttons={instantiatedCount}, " +
+                $"method={currentMethod}, recipesForMethod={recipes.Count}, buttons={instantiatedCount}, " +
                 $"parent={recipeListParent.name}, parentActive={recipeListParent.gameObject.activeInHierarchy}"
             );
         }
@@ -194,14 +197,25 @@ public class RecipeGuidePanelController : MonoBehaviour
             return;
         }
 
+        RecipeKnowledgeFacts facts = recipeGuideContext != null
+            ? recipeGuideContext.GetKnownFacts(selectedRecipe)
+            : null;
+
         if (recipeNameText != null)
-            recipeNameText.text = GetCocktailDisplayName(selectedRecipe);
+            recipeNameText.text = RecipeKnowledgeGuideFormatter.GetDetailName(selectedRecipe, facts);
 
         if (recipeMethodText != null)
-            recipeMethodText.text = $"Method: {selectedRecipe.method}";
+            recipeMethodText.text = RecipeKnowledgeGuideFormatter.GetMethodText(selectedRecipe, facts);
 
         if (recipeIngredientText != null)
-            recipeIngredientText.text = BuildIngredientText(selectedRecipe);
+            recipeIngredientText.text = BuildIngredientText(selectedRecipe, facts);
+    }
+
+    private static string BuildIngredientText(
+        CocktailRecipeData recipe,
+        RecipeKnowledgeFacts facts)
+    {
+        return RecipeKnowledgeGuideFormatter.BuildDetailText(recipe, facts);
     }
 
     private string BuildIngredientText(CocktailRecipeData recipe)

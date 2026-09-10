@@ -22,6 +22,24 @@ Legacy `recipe_janseol`, `recipe_test_stir`, `recipe_test_shake`, and
 Vodka/Coffee Liqueur/Cream, preserving the Day-2 Little Prince Float route.
 I8 garnish controls remain outside IngredientData supply in this phase.
 
+## I11A Current-State Note (2026-09-10)
+
+Recipe knowledge now has one runtime owner: the serialized
+`RecipeUnlockManager` component. It preserves its component name for scene
+compatibility but no longer stores binary progression internally. It exposes
+`Unknown`, fact-based `Partial`, and explicit `Known` state for each catalog
+recipe. Guide and Codex derive all cards from the catalog, then project only
+the facts supplied by this authority; they do not infer facts from
+`CocktailRecipeData`.
+
+Persistence remains centralized in `RecipeProgressPersistence`. New
+`SURLHWA_RECIPE_KNOWLEDGE_V1` JSON stores a version, stable `recipeId`, bounded
+fact booleans, and stable ingredient-ID lists. The old
+`SURLHWA_UNLOCKED_RECIPES` pipe string is retained as a load-time migration
+source, mapping prior unlocks to `Known`; the first-recipe-reveal key remains
+independent UI state. No ingredient-availability, matcher, preparation, IBA
+asset, Little Prince, or Manwol content authority changed in I11A.
+
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 
 ---
@@ -463,6 +481,20 @@ Wrapper/SaveManager는 없다. 4개 key가 4개 class 책임에 분산되어 있
 | SURLHWA_FIRST_RECIPE_REVEAL_SHOWN | int | RecipeGuidePanelController | same class set/delete; RecipeUnlockManager invokes clear helper | first guide toast | MEDIUM: UI owns persistence |
 
 PlayerPrefs.DeleteAll은 없다. PlayerPrefs.Save는 각 write/delete 직후 호출된다. 향후 중앙화 시 기존 key를 유지하거나 migration을 제공해야 한다.
+
+### 13.1 I11A persistence update
+
+The historical table above describes the pre-I11 binary unlock implementation.
+Current recipe-progress storage is `SURLHWA_RECIPE_KNOWLEDGE_V1`, a versioned
+JSON object with `version` and per-recipe `recipeId`, `known`,
+`identityKnown`, `methodKnown`, `garnishKnown`, `preparationKnown`,
+`knownIngredientIds`, and `knownIngredientAmountIds` fields. The ingredient
+lists contain stable `IngredientData.ingredientId` values only.
+
+`SURLHWA_UNLOCKED_RECIPES` remains a pipe-delimited legacy input read at load;
+each listed recipe becomes `Known`. New progression writes never duplicate a
+binary unlock list. `SURLHWA_FIRST_RECIPE_REVEAL_SHOWN` remains one-time UI
+feedback state, separate from the knowledge model.
 
 ## 14. Special Guest System
 
