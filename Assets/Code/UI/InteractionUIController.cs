@@ -175,7 +175,10 @@ public class InteractionUIController : MonoBehaviour
         activeCustomerUsesFourthCustomerRoute = false;
         activeForcedMethod = MiniGameType.Stir;
 
-        bool canApplyTutorialRoute = IsTutorialDay();
+        // An authored dedicated encounter already supplies its route and clue
+        // context. It must not be overwritten by the legacy forced test route.
+        bool hasDedicatedRequest = customer.TryGetDedicatedRequest(out _);
+        bool canApplyTutorialRoute = IsTutorialDay() && !hasDedicatedRequest;
         if (canApplyTutorialRoute && TryApplyFirstCustomerRoute(customer))
         {
             activeCustomerUsesForcedRoute = true;

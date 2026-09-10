@@ -15041,6 +15041,11 @@ MonoBehaviour:
   tutorialCustomerCount: 4
   maxCustomersServed: 0
   autoStart: 1
+  dayOneDiscoveryOrders:
+  - {fileID: 11400000, guid: 4b5c6d7e8f90123456789abcdef0123a, type: 2}
+  - {fileID: 11400000, guid: 5b6c7d8e9f0123456789abcdef01234b, type: 2}
+  - {fileID: 11400000, guid: 6b7c8d9e0f123456789abcdef012345c, type: 2}
+  - {fileID: 11400000, guid: 7b8c9d0e1f23456789abcdef0123456d, type: 2}
   debugSpawnWithKey: 1
   debugSpawnKey: 32
   specialGuests: []

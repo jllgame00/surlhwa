@@ -18,6 +18,10 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private int maxCustomersServed = 0;
     [SerializeField] private bool autoStart = true;
 
+    [Header("Day 1 Recipe Discovery")]
+    [Tooltip("Optional deterministic early encounters. Each entry configures the spawned generic customer with authored order/dialogue content.")]
+    [SerializeField] private OrderData[] dayOneDiscoveryOrders;
+
     [Header("Debug")]
     [SerializeField] private bool debugSpawnWithKey = false;
     [SerializeField] private KeyCode debugSpawnKey = KeyCode.Space;
@@ -149,6 +153,9 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         activeCustomer = customer;
+        OrderData discoveryOrder = GetDayOneDiscoveryOrder();
+        if (discoveryOrder != null)
+            customer.ConfigureDedicatedEncounter(discoveryOrder);
         activeCustomerIsLittlePrinceFirstVisit =
             prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFirstVisit();
         customer.SetLoopManager(this);
@@ -288,6 +295,21 @@ public class CustomerSpawner : MonoBehaviour
             : BusinessDayPersistence.LoadCurrentDay(1);
 
         return currentDay == 1 && spawnedCount < tutorialCustomerCount;
+    }
+
+    private OrderData GetDayOneDiscoveryOrder()
+    {
+        int currentDay = businessDayManager != null
+            ? businessDayManager.CurrentDay
+            : BusinessDayPersistence.LoadCurrentDay(1);
+
+        if (currentDay != 1 || dayOneDiscoveryOrders == null ||
+            spawnedCount < 0 || spawnedCount >= dayOneDiscoveryOrders.Length)
+        {
+            return null;
+        }
+
+        return dayOneDiscoveryOrders[spawnedCount];
     }
 
     private bool ShouldSpawnLittlePrinceFirstVisit()

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: DryMartiniAttemptOrder
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "\uAE30\uC5B5 \uC18D\uC758 \uD55C \uC794"
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 11400000, guid: d9c733deb7fbd7d42bae910f55b7227b, type: 2}
+  preBrewDialogue: {fileID: 11400000, guid: 3a4b5c6d7e8f90123456789abcdef012, type: 2}

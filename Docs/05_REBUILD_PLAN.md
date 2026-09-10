@@ -18,7 +18,9 @@ constructibility, selection reset, prototype regression safety, Little Prince
 ingredients, request-local isolation, and locked-recipe/available-ingredient
 independence. Batch execution on this workstation is blocked by the unavailable
 Unity batch/headless entitlement, so a licensed Unity editor must rerun it
-before I10 is marked fully runtime-validated. I11A is implemented; I11B+ remains pending.
+before I10 is marked fully runtime-validated. I11A/I11B are implemented; I11C
+adds one authored normal-play Dry Martini arc, with licensed-Editor runtime
+validation still pending.
 
 Status: ACTIVE EXECUTION PLAN / PHASE I BARTENDING 2.0 CURRENT
 
@@ -507,7 +509,7 @@ Special Guest flow and presentation
 
 ### PHASE I — Core Gameplay Rebuild / Bartending 2.0
 
-Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11A knowledge foundation implemented; I11B+ remains pending
+Status: IN PROGRESS — I0-A through I9B validated; I10 implemented with licensed-Editor runtime validation pending; I11A/I11B knowledge architecture implemented; I11C Dry Martini normal-play arc implemented with licensed-Editor runtime validation pending
 
 #### Purpose
 
@@ -780,8 +782,11 @@ correct player-used ingredient facts now flow through the same authority. A
 target recipe must already be present in `BartendingRequestContext`; generic
 requests are never retroactively assigned a recipe from the matcher. Wrong
 ingredients remain actual preparation evidence only. The existing successful
-technical match still promotes a recipe to `Known`. I11C+ remains responsible
-for richer guest clue content and normal-play pacing.
+technical match still promotes a recipe to `Known`. **I11C implemented:** one
+serialized Day-1 Dry Martini encounter sequence teaches Stir, Gin, and Dry
+Vermouth across separate generic customers, retains Partial Guide memory across
+failure/reload, and leaves identity hidden until Known. Broader clue writing
+and recipe coverage remain future work.
 
 #### I12 — Guest Response
 

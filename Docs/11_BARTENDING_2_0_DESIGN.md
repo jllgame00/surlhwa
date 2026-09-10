@@ -851,6 +851,25 @@ evaluation, technique quality, guest satisfaction, or I10 availability. I11C+
 will add richer authored clues and multi-encounter pacing rather than a text
 parser or generalized inference system.
 
+### I11C normal-play discovery pacing
+
+I11C supplies one real, deterministic Day-1 Dry Martini arc through the
+existing generic customer/dedicated-order path. Four serialized orders present
+separate consumed dialogue facts—Stir, Gin, then Dry Vermouth—followed by an
+unnamed final Stir opportunity. The request's Dry Martini target is retained
+only as internal request/match context; its player-facing dialogue and order
+name do not reveal identity. The representative policy leaves identity hidden
+until a successful match grants `Known`.
+
+The Guide retains each Partial fact between encounters and reloads. A failed
+Gin-only attempt preserves Partial knowledge rather than revealing recipe
+amounts or identity; a successful current matcher result retains the established
+`MarkKnown` and one-time unlock-feedback behavior. A technically matched but
+policy-rejected attempt is kept unnamed by result presentation. This is
+intentionally one content arc, not a customer-memory framework, generalized clue graph, or
+rewrite of `TestStir`, Little Prince, ingredient availability, preparation, or
+technique evaluation. Broader discovery coverage remains future work.
+
 ---
 
 ## 14. Guest and Cocktail Response Direction
@@ -927,7 +946,7 @@ uses the following implementation progression:
 | I8 | Garnish — validated | One optional actual garnish identity and bounded Serving Glass placement is recorded separately from liquid composition and technique quality before manual serve |
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
 | I10 | Ingredient Progression — implemented | Day-derived shelf availability expands recipe space; licensed-Editor runtime validation remains pending |
-| I11 | Guide / Discovery | Unknown, partially-known, and known learning path works from fresh progress |
+| I11 | Guide / Discovery | I11A/I11B ownership and triggers plus one Day-1 multi-encounter Dry Martini Partial-to-Known arc are implemented; licensed-Editor runtime proof remains pending |
 | I12 | Guest Response | Cocktail characteristics and authored important-guest preferences are revisited |
 | I13 | Little Prince Interpretive Choice / Memory | One choice → response → later recall → environmental trace proof exists |
 | I14 | Feedback Hierarchy | Physical result, guest response, quiet record, then night result are legible |

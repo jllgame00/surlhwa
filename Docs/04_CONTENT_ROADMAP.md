@@ -42,6 +42,21 @@ the cocktail identity and quantities remain hidden until independently learned
 or fully discovered. Wrong attempted ingredients are not recorded as recipe
 knowledge. Richer guest clue coverage and encounter pacing remain I11C+ work.
 
+## I11C Normal-Play Dry Martini Arc (Implemented; licensed-Editor proof pending)
+
+One production-paced Day 1 arc now uses four authored `OrderData` entries on
+the existing generic-customer sequence: Stir clue, Gin clue, Dry Vermouth clue,
+then an unnamed final Stir opportunity. Each order references a consumed
+`DialogueData` line with at most one bounded `RecipeKnowledgeReveal`; no text
+is parsed and the player-visible content does not say “Dry Martini” before
+successful discovery.
+
+The first three encounters accumulate fact-based Partial knowledge across
+customers; failed attempts retain those facts; the final successful existing
+match promotes the recipe to Known. `TestStir` remains legacy/debug tutorial
+content and is not the normal-play I11C proof. Broader recipe arcs, clue prose,
+and guest pacing remain future work.
+
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
 ---
@@ -595,7 +610,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A FOUNDATION IMPLEMENTED; I11B+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING; I12+ FUTURE WORK
 
 I9B validates seven official-IBA recipes as a production preparation-model
 proof: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and

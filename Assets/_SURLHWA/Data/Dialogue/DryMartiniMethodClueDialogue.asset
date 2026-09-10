@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: DryMartiniMethodClueDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  onEnterLines:
+  - "\uC5BC\uC74C\uC73C\uB85C \uCC28\uAC11\uAC8C \uB9CC\uB4E4\uACE0, \uCC9C\uCC9C\uD788 \uC800\uC5B4 \uC8FC\uC138\uC694."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals:
+  - lineIndex: 0
+    reveals:
+    - recipe: {fileID: 11400000, guid: f1c4921f13e32b9458ede7f1d1e20276, type: 2}
+      fact: 2
+      ingredient: {fileID: 0}

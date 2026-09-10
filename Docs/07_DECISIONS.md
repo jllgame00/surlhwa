@@ -2,6 +2,32 @@
 
 Last Updated: 2026-09-10
 
+## ADR-042 — One Authored Discovery Arc Uses Existing Encounter Ownership
+
+**Status:** ACCEPTED / I11C IMPLEMENTATION
+
+I11C adds one Day 1 Dry Martini discovery arc without a quest graph, visit
+history, or recipe-name conditional in a gameplay manager. `CustomerSpawner`
+owns only its serialized early sequence of four `OrderData` references.
+`OrderData` owns its optional consumed `preBrewDialogue`; `CustomerController`
+receives that existing data on the spawned generic customer; and
+`InteractionUIController` dispatches the dialogue's typed reveal when its line
+is actually displayed. Dedicated content therefore replaces the legacy forced
+test-route only for those explicitly authored encounters.
+
+The sequence teaches Stir, Gin, and Dry Vermouth in separate interactions,
+then supplies an unnamed final Stir request. The explicit request target stays
+internal for `BartendingRequestContext`, ingredient-use safety, and match
+evaluation. Player-visible order text and dialogue do not name Dry Martini.
+For this representative arc, identity intentionally remains hidden until the
+existing successful `RecipeMatchService` result grants `Known`.
+
+Partial facts persist through customer departure, failed attempts, and reload;
+failure grants no answer. This decision adds pacing data only. It does not
+alter the I11A knowledge authority or persistence, I10 supply, I9B preparation
+truth, composition matching, generic customer behaviour after the scheduled
+entries, or Little Prince narrative ownership.
+
 ## ADR-041 — Production Discovery Uses Explicit Evidence, Not Inference
 
 **Status:** ACCEPTED / I11B IMPLEMENTATION

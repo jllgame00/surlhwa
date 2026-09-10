@@ -52,6 +52,25 @@ through `OrderManager`. Neither hint facts nor player ingredient use affect
 ingredient availability, technique quality, preparation evaluation, or guest
 satisfaction.
 
+## I11C Normal-Play Discovery Arc (Implemented; licensed-Editor proof pending)
+
+Day 1 now schedules one deterministic, authored four-customer Dry Martini arc
+through the existing generic customer and dedicated-request flow. Its three
+pre-brew dialogue lines teach, in order, `Method: Stir`, `Gin`, and `Dry
+Vermouth`; a fourth unnamed Stir request is the discovery opportunity. The
+request retains its explicit internal recipe target for matching and safe
+ingredient learning, while the player-visible order names and dialogue never
+name Dry Martini before it becomes `Known`.
+
+Partial facts persist between customers, day/session boundaries, and failed
+attempts. The Guide is the retained player memory: it shows Stir and the
+learned ingredients, but no identity or amounts. The representative arc keeps
+identity hidden until the established successful-match `Known` transition.
+Correct repeated Gin use is idempotent; incorrect ingredients remain only
+preparation evidence. A technically recognized but policy-rejected attempt
+also keeps an Unknown recipe unnamed in the result UI. This is content pacing
+over I11A/I11B ownership, not a quest, dialogue-parser, or guest-memory system.
+
 ---
 
 ## 1. 장르

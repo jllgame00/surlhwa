@@ -60,6 +60,25 @@ No I10 availability policy, I9B recipe/preparation data, matcher semantics,
 Little Prince content, or Manwol route was changed. The only serialized
 content change is the existing TestStir `OrderData` request/hint metadata.
 
+## I11C Current-State Note (2026-09-10)
+
+The BarScene `CustomerSpawner` now serializes four Day-1 discovery
+`OrderData` entries. For each early generic customer it assigns the order and
+its optional `DialogueData` before the existing Interaction UI registers that
+customer. This produces a deterministic Dry Martini content sequence: method
+clue, Gin clue, Dry Vermouth clue, then a final unnamed Stir opportunity. The
+legacy forced TestStir/Shake/Build/Float tutorial route is skipped only when a
+customer already has one of these dedicated orders; `TestStir` remains
+debug/tutorial compatibility content rather than I11C production proof.
+
+Each clue asset references the already-authored Dry Martini recipe and the
+appropriate typed fact. The names visible in dialogue and `OrderData.orderName`
+are deliberately anonymous; identity remains hidden until the existing
+successful match marks the recipe Known. Failed attempts and reload retain the
+facts through the unchanged `RecipeProgressPersistence` key. No new
+persistence key, recipe/matcher/preparation asset, availability policy, Little
+Prince scheduling, narrative-patience pause, or Manwol Float route was changed.
+
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 
 ---

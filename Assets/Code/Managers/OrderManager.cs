@@ -211,6 +211,8 @@ public class OrderManager : MonoBehaviour
         
         ShowResultToast(
             matchedRecipe,
+            matchedRecipe != null && recipeUnlockManager != null &&
+                recipeUnlockManager.IsKnown(matchedRecipe),
             newlyKnownRecipe,
             result,
             firstCustomerRoute,
@@ -292,6 +294,7 @@ public class OrderManager : MonoBehaviour
     
     private void ShowResultToast(
         CocktailRecipeData matchedRecipe,
+        bool canRevealMatchedRecipe,
         bool newlyKnownRecipe,
         MiniGameResult result,
         bool firstCustomerRoute,
@@ -305,7 +308,10 @@ public class OrderManager : MonoBehaviour
         if (resultToast == null)
             return;
 
-        if (matchedRecipe == null)
+        // Composition recognition can succeed while the current result policy
+        // rejects the attempt (for example, failed technique). That technical
+        // result must not reveal an otherwise Unknown recipe identity.
+        if (matchedRecipe == null || !canRevealMatchedRecipe)
         {
             if (firstCustomerRoute)
                 resultToast.ShowFirstRouteUnknownCocktail(result.success);

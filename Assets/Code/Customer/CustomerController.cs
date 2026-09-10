@@ -171,6 +171,20 @@ public class CustomerController : MonoBehaviour
         return dialogue != null;
     }
 
+    /// <summary>
+    /// Applies one authored early-discovery encounter to this spawned generic
+    /// customer. The data remains in OrderData/DialogueData; this component
+    /// merely carries the current interaction instance through existing UI.
+    /// </summary>
+    public void ConfigureDedicatedEncounter(OrderData request)
+    {
+        if (request == null)
+            return;
+
+        orderData = request;
+        dialogueData = request.PreBrewDialogue;
+    }
+
     public void SetUsesPatience(bool value)
     {
         usesPatience = value;
