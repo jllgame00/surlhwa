@@ -870,6 +870,26 @@ intentionally one content arc, not a customer-memory framework, generalized clue
 rewrite of `TestStir`, Little Prince, ingredient availability, preparation, or
 technique evaluation. Broader discovery coverage remains future work.
 
+### I12 guest recommendation fit
+
+I12 makes an authored guest request distinguish a reasonable recommendation
+from its execution. The existing pure `RequestEvaluation` service has two
+bounded semantics: Exact Cocktail compares stable cocktail IDs; Recommendation
+compares authored desired `EmotionTag` values with a recognized cocktail's
+authored tags. This is deterministic and admits multiple valid cocktails. It
+does not inspect ingredients, dialogue text, preparation, technique, Guide
+knowledge, or availability. Unrecognized compositions retain their existing
+graceful unknown-cocktail reaction and are never positive recommendation fits.
+
+`GuestServiceResult` makes the handoff explicit: WHAT is the recognized
+`CocktailData`; HOW remains `MiniGameResult.preparationEvaluation`; QUALITY
+remains its mechanical success/grade; FIT is the request evaluation; and reward
+is the calculated reputation delta. Four small response tiers cover good-fit /
+good-execution, good-fit / weak-execution, poor-fit / good-execution, and
+poor-fit / weak-execution. The Day-1 proof request is an unnamed Clarifying
+Stir recommendation after I11C. It uses Dry Martini's minimal `Clarity` tag;
+broader IBA mood authoring and all narrative memory remain future work.
+
 ---
 
 ## 14. Guest and Cocktail Response Direction
@@ -947,7 +967,7 @@ uses the following implementation progression:
 | I9 | Representative Real Cocktail Catalog | 6–8 recipes validate the interaction/data model |
 | I10 | Ingredient Progression — implemented | Day-derived shelf availability expands recipe space; licensed-Editor runtime validation remains pending |
 | I11 | Guide / Discovery | I11A/I11B ownership and triggers plus one Day-1 multi-encounter Dry Martini Partial-to-Known arc are implemented; licensed-Editor runtime proof remains pending |
-| I12 | Guest Response | Cocktail characteristics and authored important-guest preferences are revisited |
+| I12 | Guest Response — implemented | Pure authored FIT now distinguishes ExactCocktail from multi-valid Recommendation requests and is composed with execution response; automated Editor validation passed |
 | I13 | Little Prince Interpretive Choice / Memory | One choice → response → later recall → environmental trace proof exists |
 | I14 | Feedback Hierarchy | Physical result, guest response, quiet record, then night result are legible |
 | I15 | Representative Audio / Visual Pass | One complete encounter proves the atmosphere/presentation target |

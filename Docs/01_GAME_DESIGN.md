@@ -71,6 +71,32 @@ preparation evidence. A technically recognized but policy-rejected attempt
 also keeps an Unknown recipe unnamed in the result UI. This is content pacing
 over I11A/I11B ownership, not a quest, dialogue-parser, or guest-memory system.
 
+## I12 Guest Recommendation Fit (Implemented; licensed-Editor proof pending)
+
+Guest response now separates four result axes:
+
+```text
+WHAT    = recognized CocktailData / recipe composition
+HOW     = recipe-owned preparation evaluation
+QUALITY = MiniGameResult mechanical execution
+FIT     = whether a recognized cocktail suits the authored guest request
+```
+
+`OrderData` has two bounded request semantics. `ExactCocktail` preserves the
+existing requested-cocktail constraint. `Recommendation` has no hidden target:
+it evaluates one or more authored desired `EmotionTag` values against the
+recognized cocktail's authored tags. The pure `RequestEvaluation` service owns
+FIT; it does not read preparation, technique, knowledge, availability, or
+dialogue prose.
+
+The first normal-play request follows the Day-1 Dry Martini discovery arc and
+asks for a quiet, clarifying Stir drink. Dry Martini is minimally authored as
+`Clarity`; the existing tagged TestStir cocktail is a constructible recognized
+incompatible contrast. A fitting drink with weak execution and an unfitting
+drink with good execution now produce distinct bounded guest response tiers.
+`repDelta` remains mechanical; the existing `reputationReward` is withheld
+only for `Unsatisfied` FIT. Broader cocktail mood coverage remains future work.
+
 ---
 
 ## 1. 장르

@@ -15046,6 +15046,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b6c7d8e9f0123456789abcdef01234b, type: 2}
   - {fileID: 11400000, guid: 6b7c8d9e0f123456789abcdef012345c, type: 2}
   - {fileID: 11400000, guid: 7b8c9d0e1f23456789abcdef0123456d, type: 2}
+  dayOneRecommendationOrder: {fileID: 11400000, guid: ae1f23456789abcdef0123456789abcd, type: 2}
   debugSpawnWithKey: 1
   debugSpawnKey: 32
   specialGuests: []

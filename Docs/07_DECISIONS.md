@@ -2,6 +2,32 @@
 
 Last Updated: 2026-09-10
 
+## ADR-043 — Guest Fit Is Authored Request Evaluation, Not Recipe Quality
+
+**Status:** ACCEPTED / I12 IMPLEMENTATION
+
+`RequestEvaluation` remains the sole pure owner of guest FIT. It now branches
+on the bounded `OrderData` request semantics: `ExactCocktail` compares stable
+cocktail IDs as before, while `Recommendation` compares the order's authored
+desired `EmotionTag` set with tags on a recognized `CocktailData`. No dialogue
+text, ingredient inference, flavor model, recipe name conditional, or random
+satisfaction roll participates. An unknown composition is Unsatisfied for a
+recommendation rather than receiving an invented emotional interpretation.
+
+FIT is separate from WHAT (recipe/composition match), HOW (I9B preparation
+evaluation), and QUALITY (`MiniGameResult.success`/grade). `OrderManager`
+passes those independent values in transient `GuestServiceResult`; the guest
+reaction and result toast consume the resulting bounded fit/execution tone.
+The established reward rule remains: mechanical `repDelta` always applies and
+`OrderData.reputationReward` applies only to a technically successful,
+non-Unsatisfied request. Recipe discovery remains a successful-match gate and
+does not depend on FIT.
+
+Existing serialized orders default safely to `ExactCocktail`; orders without a
+cocktail constraint remain NotApplicable as before. Little Prince remains an
+exact story request. I12 adds one Day-1 Clarity recommendation only; it does
+not create customer-memory, narrative-consequence, or catalog-wide mood work.
+
 ## ADR-042 — One Authored Discovery Arc Uses Existing Encounter Ownership
 
 **Status:** ACCEPTED / I11C IMPLEMENTATION

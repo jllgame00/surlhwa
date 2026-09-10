@@ -79,6 +79,27 @@ facts through the unchanged `RecipeProgressPersistence` key. No new
 persistence key, recipe/matcher/preparation asset, availability policy, Little
 Prince scheduling, narrative-patience pause, or Manwol Float route was changed.
 
+## I12 Current-State Note (2026-09-10)
+
+Before I12, `RequestEvaluation` already compared an optional
+`OrderData.requestedCocktail` stable ID with the recipe-match result. It was an
+exact request constraint: null requests were NotApplicable, failed matches were
+Unsatisfied, and `OrderManager` always applied mechanical `MiniGameResult.repDelta`
+while withholding `reputationReward` only for Unsatisfied requests. Separately,
+`CustomerController` used randomized `GuestEmotionRequest` tags and
+`CocktailData.emotionTags` to choose hearts/reaction lines, which mixed
+recommendation affinity with execution success and was not a request-fit result.
+
+I12 retains `RequestEvaluation` as the single FIT authority and adds safe
+serialized `GuestRequestType` defaults. The first recommendation order is
+explicitly authored with `Clarity`, no `requestedCocktail`, and an unnamed
+pre-brew line. `RequestEvaluation` evaluates it only after a recognized recipe
+match. `GuestServiceResult` carries the matched cocktail, unchanged
+`MiniGameResult` (including preparation/technique fields), FIT, response tone,
+and calculated reward to presentation without persistence. Only Dry Martini
+receives the minimal IBA tag (`Clarity`); the remaining IBA assets are still
+untagged. Little Prince/Manwol assets and scheduling are unchanged.
+
 Status: COMPLETE — STATIC REPOSITORY AUDIT
 
 ---

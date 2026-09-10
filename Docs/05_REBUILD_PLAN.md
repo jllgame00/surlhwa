@@ -790,8 +790,15 @@ and recipe coverage remain future work.
 
 #### I12 — Guest Response
 
-Revisit generic emotional evaluation, cocktail characteristics, and authored
-important-guest preferences.
+**Implemented (automated Editor validation passed):** the existing
+`RequestEvaluation` seam now owns pure guest FIT. Exact cocktail requests stay
+exact; recommendation requests match structured desired `EmotionTag` values to
+recognized `CocktailData` metadata, allowing multiple valid cocktails. The
+result handoff keeps WHAT (recognized cocktail), HOW (preparation), QUALITY
+(mechanical result), FIT, and final reward delta separately observable.
+One Day-1 clarity recommendation follows the I11C discovery arc. Wider
+cocktail/guest authoring remains future work; I13 narrative persistence is not
+part of this implementation.
 
 #### I13 — Little Prince Interpretive Choice / Memory
 

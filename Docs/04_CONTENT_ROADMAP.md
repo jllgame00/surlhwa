@@ -57,6 +57,22 @@ match promotes the recipe to Known. `TestStir` remains legacy/debug tutorial
 content and is not the normal-play I11C proof. Broader recipe arcs, clue prose,
 and guest pacing remain future work.
 
+## I12 Guest Recommendation Fit (Implemented; automated Editor validation passed)
+
+I12 extends the existing request-evaluation seam instead of creating a second
+satisfaction system. `ExactCocktail` retains its existing identity constraint;
+the new `Recommendation` semantics match authored desired `EmotionTag` values
+against a recognized cocktail's tags and can therefore accept more than one
+cocktail. Unknown compositions have no inferred mood and cannot satisfy a
+recommendation.
+
+The Day-1 representative request is a quiet/clarifying Stir recommendation
+after I11C's four discovery encounters. Dry Martini receives the minimal
+`Clarity` metadata; existing TestStir metadata supplies the incompatible
+recognized contrast. Four bounded response tones communicate fit and execution
+without changing matching, preparation, technique, recipe knowledge, or shelf
+availability. The IBA catalog has no broader mood rollout yet.
+
 Status: INTERNAL STORY BIBLE / CONTENT DIRECTION
 
 ---
@@ -610,7 +626,7 @@ G. Remove prototype assets only after no runtime or serialized reference remains
 
 ## 18. Bartending 2.0 and Representative Catalog Validation
 
-Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING; I12+ FUTURE WORK
+Status: I9B REPRESENTATIVE PRODUCTION VALIDATION COMPLETE / I10 IMPLEMENTED / I11A-I11C IMPLEMENTED WITH LICENSED-EDITOR RUNTIME VALIDATION PENDING / I12 IMPLEMENTED WITH AUTOMATED EDITOR VALIDATION PASSED; I13+ FUTURE WORK
 
 I9B validates seven official-IBA recipes as a production preparation-model
 proof: Dry Martini, Manhattan, Negroni, Last Word, Gin Fizz, French 75, and

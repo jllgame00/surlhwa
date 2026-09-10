@@ -13,6 +13,11 @@ public class OrderData : ScriptableObject
     [Header("Cocktail Request Constraint")]
     public CocktailData requestedCocktail;
 
+    [Header("Guest Fit")]
+    [Tooltip("Exact keeps an explicit cocktail request. Recommendation evaluates a recognized cocktail against these authored emotion tags.")]
+    [SerializeField] private GuestRequestType requestType = GuestRequestType.ExactCocktail;
+    [SerializeField] private EmotionTag[] desiredEmotionTags;
+
     [Header("Pre-Brew Dialogue")]
     [Tooltip("Optional authored dialogue consumed before this dedicated request begins.")]
     [SerializeField] private DialogueData preBrewDialogue;
@@ -24,9 +29,22 @@ public class OrderData : ScriptableObject
     [SerializeField] private RecipeKnowledgeReveal[] recipeKnowledgeHintReveals;
 
     public bool HasRecipeKnowledgeHint => !string.IsNullOrWhiteSpace(recipeKnowledgeHintLine);
+    public GuestRequestType RequestType => requestType;
+    public EmotionTag[] DesiredEmotionTags => desiredEmotionTags ?? Array.Empty<EmotionTag>();
     public DialogueData PreBrewDialogue => preBrewDialogue;
     public string RecipeKnowledgeHintLine => recipeKnowledgeHintLine ?? string.Empty;
     public RecipeKnowledgeReveal[] RecipeKnowledgeHintReveals =>
         recipeKnowledgeHintReveals ?? Array.Empty<RecipeKnowledgeReveal>();
 
+}
+
+/// <summary>
+/// Bounded player-facing request semantics. Exact Cocktail preserves existing
+/// authored identity constraints; Recommendation permits multiple recognized
+/// cocktails that satisfy an authored emotional need.
+/// </summary>
+public enum GuestRequestType
+{
+    ExactCocktail,
+    Recommendation
 }

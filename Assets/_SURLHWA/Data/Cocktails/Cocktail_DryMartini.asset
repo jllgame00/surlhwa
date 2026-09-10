@@ -16,5 +16,5 @@ MonoBehaviour:
   cocktailName: Dry Martini
   glassware: 1
   description: 'Official IBA validation recipe: stirred Gin and Dry Vermouth.'
-  emotionTags: 
+  emotionTags: 06000000
   cocktailSprite: {fileID: 0}

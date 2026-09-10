@@ -112,6 +112,27 @@ public class ResultToastController : MonoBehaviour
         );
     }
 
+    public void ShowGuestFitOutcome(GuestReactionResolver.GuestResponseTone tone)
+    {
+        switch (tone)
+        {
+            case GuestReactionResolver.GuestResponseTone.GoodFitGoodExecution:
+                Show("좋은 선택", "손님이 원한 방향에 맞고, 잔도 잘 완성됐습니다.");
+                return;
+            case GuestReactionResolver.GuestResponseTone.GoodFitWeakExecution:
+                Show("선택은 맞았어요", "손님이 원한 방향이지만, 완성도는 아쉽습니다.");
+                return;
+            case GuestReactionResolver.GuestResponseTone.PoorFitGoodExecution:
+                Show("선택이 빗나갔어요", "잔은 잘 만들었지만 손님이 원한 방향은 아닙니다.");
+                return;
+            case GuestReactionResolver.GuestResponseTone.PoorFitWeakExecution:
+                Show("손님과 맞지 않았어요", "선택과 완성도 모두 다시 살펴보세요.");
+                return;
+            default:
+                return;
+        }
+    }
+
     private IEnumerator ShowDelayedRoutine(string title, string message, float delay)
     {
         if (delay > 0f)

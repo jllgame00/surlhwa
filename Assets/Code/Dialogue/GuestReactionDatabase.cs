@@ -16,10 +16,20 @@ public class GuestReactionLine
     public EmotionTag[] tags;
 }
 
+[System.Serializable]
+public class GuestFitReactionLine
+{
+    [TextArea(2, 4)]
+    public string text;
+
+    public GuestReactionResolver.GuestResponseTone tone;
+}
+
 [CreateAssetMenu(menuName = "Surlhwa/Dialogue/Guest Reaction Database")]
 public class GuestReactionDatabase : ScriptableObject
 {
     public List<GuestReactionLine> lines = new();
+    public List<GuestFitReactionLine> guestFitLines = new();
 
     public string GetRandomLine(EmotionTag[] desiredTags, int heartCount, ReactionPhase phase)
     {
@@ -54,5 +64,18 @@ public class GuestReactionDatabase : ScriptableObject
             return samePhase[Random.Range(0, samePhase.Count)].text;
 
         return "...";
+    }
+
+    public string GetGuestFitLine(GuestReactionResolver.GuestResponseTone tone)
+    {
+        if (guestFitLines == null)
+            return string.Empty;
+
+        List<GuestFitReactionLine> matches = guestFitLines.Where(line =>
+            line != null && line.tone == tone && !string.IsNullOrWhiteSpace(line.text)).ToList();
+        if (matches.Count == 0)
+            return string.Empty;
+
+        return matches[Random.Range(0, matches.Count)].text;
     }
 }

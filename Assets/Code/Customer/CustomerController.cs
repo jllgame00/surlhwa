@@ -238,6 +238,13 @@ public class CustomerController : MonoBehaviour
         Debug.Log($"[Customer] Debug Emotion Forced -> {primaryTag} + {secondaryTag}");
     }
 
+    public EmotionTag[] GetDesiredEmotionTags()
+    {
+        return emotionRequest != null
+            ? emotionRequest.ToArray()
+            : System.Array.Empty<EmotionTag>();
+    }
+
     public bool IsInForcedFirstCustomerRoute()
     {
         if (interactionUI == null)
@@ -497,9 +504,13 @@ public class CustomerController : MonoBehaviour
     }
 
     // New path: calculate reaction from the actually served CocktailData.
-    public void OnServedWithReaction(CocktailData servedCocktail, MiniGameResult result)
+    public void OnServedWithReaction(GuestServiceResult serviceResult)
     {
         StopPatienceTimer();
+
+        CocktailData servedCocktail = serviceResult.MatchedCocktail;
+        MiniGameResult result = serviceResult.BartendingResult;
+        GuestReactionResolver.GuestResponseOutcome responseOutcome = serviceResult.GuestResponse;
 
         bool firstCustomerRoute = IsInForcedFirstCustomerRoute();
         bool secondCustomerRoute = IsInForcedSecondCustomerRoute();
@@ -509,9 +520,7 @@ public class CustomerController : MonoBehaviour
         if (interactionUI != null)
             interactionUI.ClearCustomer(this);
 
-        EmotionTag[] desiredTags = emotionRequest != null
-            ? emotionRequest.ToArray()
-            : System.Array.Empty<EmotionTag>();
+        EmotionTag[] desiredTags = GetDesiredEmotionTags();
 
         if (servedCocktail == null)
         {
@@ -540,13 +549,7 @@ public class CustomerController : MonoBehaviour
             ? servedCocktail.emotionTags
             : System.Array.Empty<EmotionTag>();
 
-        bool recipeInTolerance = result.success;
-
-        int hearts = GuestReactionResolver.CalculateHearts(
-            desiredTags,
-            servedTags,
-            recipeInTolerance
-        );
+        int hearts = responseOutcome.Hearts;
 
         Debug.Log(
             $"[Customer] ServedCocktail={(servedCocktail != null ? servedCocktail.name : "NULL")} / " +
@@ -554,6 +557,18 @@ public class CustomerController : MonoBehaviour
         );
 
         StopAllCoroutines();
+
+        if (responseOutcome.HasGuestFitFeedback)
+        {
+            string fitLine = reactionDatabase != null
+                ? reactionDatabase.GetGuestFitLine(responseOutcome.Tone)
+                : string.Empty;
+            if (string.IsNullOrWhiteSpace(fitLine))
+                fitLine = GetGuestFitFallbackLine(responseOutcome.Tone);
+
+            StartCoroutine(ReactionSequenceThenLeave(fitLine, hearts));
+            return;
+        }
 
         if (firstCustomerRoute)
         {
@@ -588,6 +603,22 @@ public class CustomerController : MonoBehaviour
         }
 
         StartCoroutine(ReactionSequenceThenLeave(desiredTags, hearts));
+    }
+
+    private static string GetGuestFitFallbackLine(GuestReactionResolver.GuestResponseTone tone)
+    {
+        return tone switch
+        {
+            GuestReactionResolver.GuestResponseTone.GoodFitGoodExecution =>
+                "오늘 원했던 방향에, 잔도 잘 만들어졌네요.",
+            GuestReactionResolver.GuestResponseTone.GoodFitWeakExecution =>
+                "고른 방향은 좋았어요. 다만 오늘은 조금 거칠게 느껴지네요.",
+            GuestReactionResolver.GuestResponseTone.PoorFitGoodExecution =>
+                "잘 만든 잔인 건 알겠어요. 하지만 오늘 원한 쪽은 아니었어요.",
+            GuestReactionResolver.GuestResponseTone.PoorFitWeakExecution =>
+                "오늘 제게는 맞지 않았고, 잔도 조금 아쉽네요.",
+            _ => "..."
+        };
     }
 
     private IEnumerator ReactionSequenceThenLeave(EmotionTag[] desiredTags, int hearts)

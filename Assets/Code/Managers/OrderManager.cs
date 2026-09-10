@@ -208,6 +208,20 @@ public class OrderManager : MonoBehaviour
                 );
             }
         }
+
+        GuestReactionResolver.GuestResponseOutcome guestResponse = currentCustomer != null
+            ? GuestReactionResolver.EvaluateOutcome(
+                requestEvaluation,
+                result.success,
+                currentCustomer.GetDesiredEmotionTags(),
+                servedCocktail != null && servedCocktail.emotionTags != null
+                    ? servedCocktail.emotionTags
+                    : Array.Empty<EmotionTag>(),
+                servedCocktail != null)
+            : new GuestReactionResolver.GuestResponseOutcome(
+                0,
+                GuestReactionResolver.GuestResponseTone.NotApplicable,
+                false);
         
         ShowResultToast(
             matchedRecipe,
@@ -215,6 +229,7 @@ public class OrderManager : MonoBehaviour
                 recipeUnlockManager.IsKnown(matchedRecipe),
             newlyKnownRecipe,
             result,
+            guestResponse,
             firstCustomerRoute,
             secondCustomerRoute,
             isWrongValidRequestMismatch);
@@ -225,28 +240,24 @@ public class OrderManager : MonoBehaviour
         }
 
         // ���� ó��
+        int reputationDelta = CalculateReputationDelta(
+            result,
+            matchedRecipe,
+            currentOrder,
+            requestEvaluation);
         if (gm != null)
-        {
-            if (result.success)
-            {
-                int totalRep = result.repDelta;
-                if (matchedRecipe != null &&
-                    currentOrder != null &&
-                    ShouldGrantRequestReward(requestEvaluation))
-                {
-                    totalRep += currentOrder.reputationReward;
-                }
-                gm.AddReputation(totalRep);
-            }
-            else
-            {
-                gm.AddReputation(result.repDelta);
-            }
-        }
+            gm.AddReputation(reputationDelta);
+
+        GuestServiceResult guestServiceResult = new(
+            servedCocktail,
+            result,
+            requestEvaluation,
+            guestResponse,
+            reputationDelta);
 
         // �� ���� �ý��� ȣ��
         if (currentCustomer != null)
-            currentCustomer.OnServedWithReaction(servedCocktail, result);
+            currentCustomer.OnServedWithReaction(guestServiceResult);
 
         // ���� �ʱ�ȭ
         currentCustomer = null;
@@ -297,6 +308,7 @@ public class OrderManager : MonoBehaviour
         bool canRevealMatchedRecipe,
         bool newlyKnownRecipe,
         MiniGameResult result,
+        GuestReactionResolver.GuestResponseOutcome guestResponse,
         bool firstCustomerRoute,
         bool secondCustomerRoute,
         bool isWrongValidRequestMismatch
@@ -307,6 +319,12 @@ public class OrderManager : MonoBehaviour
 
         if (resultToast == null)
             return;
+
+        if (guestResponse.HasGuestFitFeedback)
+        {
+            resultToast.ShowGuestFitOutcome(guestResponse.Tone);
+            return;
+        }
 
         // Composition recognition can succeed while the current result policy
         // rejects the attempt (for example, failed technique). That technical
@@ -354,6 +372,22 @@ public class OrderManager : MonoBehaviour
         return evaluation.Status != RequestEvaluationStatus.Unsatisfied;
     }
 
+    private static int CalculateReputationDelta(
+        MiniGameResult result,
+        CocktailRecipeData matchedRecipe,
+        OrderData request,
+        RequestEvaluationResult evaluation)
+    {
+        int total = result.repDelta;
+        if (result.success && matchedRecipe != null && request != null &&
+            ShouldGrantRequestReward(evaluation))
+        {
+            total += request.reputationReward;
+        }
+
+        return total;
+    }
+
     private static bool IsWrongValidRequestMismatch(
         OrderData request,
         MiniGameResult result,
@@ -361,6 +395,7 @@ public class OrderManager : MonoBehaviour
         RequestEvaluationResult evaluation)
     {
         return request != null &&
+               request.RequestType == GuestRequestType.ExactCocktail &&
                request.requestedCocktail != null &&
                result.success &&
                matchResult.success &&

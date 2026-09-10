@@ -22,6 +22,10 @@ public class CustomerSpawner : MonoBehaviour
     [Tooltip("Optional deterministic early encounters. Each entry configures the spawned generic customer with authored order/dialogue content.")]
     [SerializeField] private OrderData[] dayOneDiscoveryOrders;
 
+    [Header("Day 1 Recommendation Proof")]
+    [Tooltip("One authored recommendation request after the discovery arc. It remains optional and does not change generic request selection.")]
+    [SerializeField] private OrderData dayOneRecommendationOrder;
+
     [Header("Debug")]
     [SerializeField] private bool debugSpawnWithKey = false;
     [SerializeField] private KeyCode debugSpawnKey = KeyCode.Space;
@@ -153,9 +157,9 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         activeCustomer = customer;
-        OrderData discoveryOrder = GetDayOneDiscoveryOrder();
-        if (discoveryOrder != null)
-            customer.ConfigureDedicatedEncounter(discoveryOrder);
+        OrderData authoredOrder = GetDayOneAuthoredOrder();
+        if (authoredOrder != null)
+            customer.ConfigureDedicatedEncounter(authoredOrder);
         activeCustomerIsLittlePrinceFirstVisit =
             prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFirstVisit();
         customer.SetLoopManager(this);
@@ -297,19 +301,24 @@ public class CustomerSpawner : MonoBehaviour
         return currentDay == 1 && spawnedCount < tutorialCustomerCount;
     }
 
-    private OrderData GetDayOneDiscoveryOrder()
+    private OrderData GetDayOneAuthoredOrder()
     {
         int currentDay = businessDayManager != null
             ? businessDayManager.CurrentDay
             : BusinessDayPersistence.LoadCurrentDay(1);
 
-        if (currentDay != 1 || dayOneDiscoveryOrders == null ||
-            spawnedCount < 0 || spawnedCount >= dayOneDiscoveryOrders.Length)
+        if (currentDay != 1 || spawnedCount < 0)
         {
             return null;
         }
 
-        return dayOneDiscoveryOrders[spawnedCount];
+        if (dayOneDiscoveryOrders != null && spawnedCount < dayOneDiscoveryOrders.Length)
+            return dayOneDiscoveryOrders[spawnedCount];
+
+        return dayOneRecommendationOrder != null && dayOneDiscoveryOrders != null &&
+               spawnedCount == dayOneDiscoveryOrders.Length
+            ? dayOneRecommendationOrder
+            : null;
     }
 
     private bool ShouldSpawnLittlePrinceFirstVisit()
