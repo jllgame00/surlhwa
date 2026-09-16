@@ -27,6 +27,46 @@ active legacy `Test*` assets. The I10-I16 truth boundaries remain unchanged.
 Focused J1 static validation and relevant normal-Editor Play Mode regressions
 passed; I15 subjective feel approval remains a human sign-off item.
 
+## J2 Implementation Record (2026-09-17)
+
+J2 implements the audit's bounded cocktail/ingredient data recommendation
+without revising this report's historical audit baseline. The four-night demo
+production set is now explicitly Seolya, Manwol, Dry Martini, Negroni,
+Manhattan, and Gin Fizz. Hanky Panky, French 75, and Last Word remain intact
+as reserve recipe/catalog data. Yeomyeong and Janseol remain active
+compatibility content and were not normalized or deleted.
+
+Implemented data contract: the selected emotion matrix is Seolya
+`Softness, Warmth`; Manwol `Longing, Clarity`; Dry Martini `Clarity`; Negroni
+`Bitterness`; Manhattan `Warmth, Bitterness`; and Gin Fizz `Awakening,
+Clarity`. Selected IBA descriptions are player-facing Korean copy, while their
+existing I9B recipe quantities, preparation, garnish, glassware, and stable
+identities are preserved. No new customers, discovery facts, Recommendation
+requests, narrative content, or gameplay authority were created.
+
+Ordinary staged supply is now demo-facing: the 13-item Day-1 shelf contains
+the compatibility/original supply plus Gin and Dry Vermouth; Day 2 adds Sweet
+Red Vermouth and Campari (15); Day 3 adds Rye Whiskey and Angostura Bitters
+(17); Day 4 adds Fresh Lemon Juice, Simple Syrup, and Soda Water (20). The six
+reserve-only ingredients remain at Day 5. The explicit availability fallback
+is disabled, preventing omitted reserve ingredients from leaking into Days
+1-4; existing request-scoped exact-order availability remains intact.
+
+J2.1 closes the selected original-drink metadata contract using the existing
+data model. Seolya now has Old-fashioned glass metadata and the authored
+Mixing Glass sequence Whiskey, legacy Vermouth, Water, AddIce, Stir, and
+Strain; Manwol has Old-fashioned glass metadata and ordered direct Serving
+Glass pours Vodka, Coffee Liqueur, then Cream. Neither drink has a garnish.
+Manwol's `Float` method and the existing `BartendingLayeredDrinkState` remain
+the runtime authority for actual player-created layers; the final Cream step is
+the authored upper layer. The J2 validator directly asserts these final
+contracts alongside the selected-set, supply, catalog, and Prince regressions.
+Selected IBA art and ingredient icons remain presentation work. The dedicated
+J2 data validator passed in a normal Unity Editor run before J2.1; its J2.1
+rerun was blocked before project load by the local Unity license/Software Terms
+state, not a project validation failure. J3 may now consume this stable data
+contract.
+
 This document preserves the findings and recommendations of the completed POST-I16 audit. The authorization that originally saved the report changed only its delivery format; the later J1 authorization is recorded above. Baseline and validation statements below describe the audited state, not newly executed Play Mode tests.
 
 SURLHWA’s core rebuild is ready to support production. The largest remaining gap is the authored playthrough: recipes, ingredients, and reusable mechanics extend considerably beyond the encounters that teach and contextualize them.

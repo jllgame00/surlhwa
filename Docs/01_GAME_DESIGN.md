@@ -34,6 +34,42 @@ unchanged. Automated J1 static validation and the relevant normal-Editor Play
 Mode regression checks passed. I15 functional validation remains distinct from
 its pending subjective human feel sign-off.
 
+## J2 Selected Cocktail and Ingredient Production Data (Implemented; normal-Editor validation passed)
+
+J2 establishes the bounded four-night demo's production-facing cocktail set:
+Seolya, Manwol, Dry Martini, Negroni, Manhattan, and Gin Fizz. Hanky Panky,
+French 75, and Last Word remain valid catalog and recipe data for later
+expansion, but are reserve content rather than required demo content. The
+active compatibility drinks Yeomyeong and Janseol are not reclassified or
+removed.
+
+The selected emotion matrix is deliberately overlapping: Seolya is
+`Softness, Warmth`; Manwol is `Longing, Clarity`; Dry Martini is `Clarity`;
+Negroni is `Bitterness`; Manhattan is `Warmth, Bitterness`; and Gin Fizz is
+`Awakening, Clarity`. This is data for future multi-answer Recommendation
+content, not a new evaluator or a one-cocktail-per-emotion rule.
+
+Ordinary demo supply is explicitly curated. Day 1 provides the compatibility
+supply plus Gin and Dry Vermouth; Day 2 adds Sweet Red Vermouth and Campari;
+Day 3 adds Rye Whiskey and Angostura Bitters; Day 4 adds Fresh Lemon Juice,
+Simple Syrup, and Soda Water. Reserve-only ingredients remain configured for
+Day 5. The availability fallback is disabled, so an ingredient omitted from a
+day cannot leak into ordinary supply; the existing request-scoped availability
+context still permits an exact dedicated request to supply only its required
+liquids. This does not change RecipeCatalogData, recipe knowledge, matching,
+or the J1 demo lifecycle.
+
+The IBA preparation, garnish, glassware, amounts, and stable IDs are preserved
+from I9B. J2.1 completes the selected original-drink metadata without adding a
+new runtime authority: Seolya uses an Old-fashioned glass and its authored
+Mixing Glass sequence is Whiskey, legacy Vermouth, Water, ice, Stir, and
+Strain; Manwol uses an Old-fashioned glass and its authored direct Serving
+Glass layer order is Vodka, Coffee Liqueur, then Cream. Neither drink has a
+garnish. Manwol's existing Float route and `BartendingLayeredDrinkState` remain
+the authority for the player's actual ordered layers; Cream is the authored
+final/upper layer. Selected IBA cocktail art and ingredient icons remain a J6
+presentation backlog.
+
 ## I10 Ingredient Availability (Implemented)
 
 I10 makes physical ingredient availability a day-derived bar-supply rule. It
@@ -41,11 +77,13 @@ does not make a recipe known or reveal authored details in the Guide. `currentDa
 plus authored `IngredientAvailabilityData` determines normal supply; no
 per-ingredient save key or inventory quantity exists.
 
-The production vocabulary expands over Days 1-5 as Gin/Dry Vermouth; Sweet Red
-Vermouth/Campari; Rye/Angostura/London Dry Gin/Fernet; Fresh Lemon Juice/Simple
-Syrup/Soda Water/Champagne; then Green Chartreuse/Maraschino Luxardo/Fresh Lime
-Juice. Legacy tutorial ingredients remain available for compatibility. Garnish
-proof controls are not IngredientData supply and remain ungated in I10.
+For the bounded J2 demo, normal supply expands over Days 1-4 as Gin/Dry
+Vermouth; Sweet Red Vermouth/Campari; Rye/Angostura; then Fresh Lemon
+Juice/Simple Syrup/Soda Water. Day 5 retains London Dry Gin, Fernet, Champagne,
+Green Chartreuse, Maraschino Luxardo, and Fresh Lime Juice for reserve data
+outside the four-night demo. Legacy tutorial ingredients remain available for
+compatibility. Garnish proof controls are not IngredientData supply and remain
+ungated in I10.
 
 For a dedicated request, its required liquid ingredients may be added only to
 that Bartending session's temporary availability context. This does not change

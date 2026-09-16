@@ -45,12 +45,12 @@ public static class SURLHWAIngredientAvailabilityValidation
             ValidateTier(shelf, availability, catalog, 2, 15,
                 new[] { "recipe_dry_martini", "recipe_negroni" },
                 new[] { "recipe_gin_fizz", "recipe_french_75", "recipe_hanky_panky", "recipe_last_word", "recipe_manhattan" });
-            ValidateTier(shelf, availability, catalog, 3, 19,
-                new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan", "recipe_hanky_panky" },
-                new[] { "recipe_gin_fizz", "recipe_french_75", "recipe_last_word" });
-            ValidateTier(shelf, availability, catalog, 4, 23,
-                new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan", "recipe_hanky_panky", "recipe_gin_fizz", "recipe_french_75" },
-                new[] { "recipe_last_word" });
+            ValidateTier(shelf, availability, catalog, 3, 17,
+                new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan" },
+                new[] { "recipe_gin_fizz", "recipe_french_75", "recipe_hanky_panky", "recipe_last_word" });
+            ValidateTier(shelf, availability, catalog, 4, 20,
+                new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan", "recipe_gin_fizz" },
+                new[] { "recipe_french_75", "recipe_hanky_panky", "recipe_last_word" });
             ValidateTier(shelf, availability, catalog, 5, 26,
                 new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan", "recipe_hanky_panky", "recipe_gin_fizz", "recipe_french_75", "recipe_last_word" },
                 Array.Empty<string>());

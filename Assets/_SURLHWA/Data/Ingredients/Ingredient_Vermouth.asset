@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ingredient_Vermouth
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientId: vermouth
-  displayName: vermouth
+  displayName: Vermouth
   category: 1
   icon: {fileID: 0}

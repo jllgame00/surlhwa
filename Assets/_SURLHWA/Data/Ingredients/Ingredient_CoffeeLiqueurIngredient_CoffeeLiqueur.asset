@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ingredient_CoffeeLiqueurIngredient_CoffeeLiqueur
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientId: coffee_liqueur
-  displayName: CoffeeLiqueur
+  displayName: Coffee Liqueur
   category: 1
   icon: {fileID: 0}

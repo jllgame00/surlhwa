@@ -15,6 +15,6 @@ MonoBehaviour:
   cocktailId: cocktail_negroni
   cocktailName: Negroni
   glassware: 2
-  description: 'Official IBA validation recipe: built over ice and gently stirred.'
-  emotionTags: 
+  description: "쓴맛과 향긋한 단맛이 천천히 겹쳐지는 한 잔. 짙은 여운을 조용히 음미하고 싶을 때 어울린다."
+  emotionTags: 04000000
   cocktailSprite: {fileID: 0}

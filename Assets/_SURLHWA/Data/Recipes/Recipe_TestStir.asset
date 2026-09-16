@@ -22,5 +22,48 @@ MonoBehaviour:
     ratio: 1
   - ingredient: {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
     ratio: 1
+  expectedPreparation:
+  - action: 0
+    ingredient: {fileID: 11400000, guid: db5a42e5ddc8daf49ba26a334aafe62a, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 47193433f59ce804fb70332e10afaf72, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 0
+    ingredient: {fileID: 11400000, guid: 00f21fab7aea6584d8ceeb11f778135f, type: 2}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 3
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 4
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 0
+    target: 2
+    optional: 0
+    acceptedGarnishes: []
+  - action: 7
+    ingredient: {fileID: 0}
+    repeatCount: 1
+    source: 2
+    target: 1
+    optional: 0
+    acceptedGarnishes: []
   matchThreshold: 0.85
   discoverable: 1

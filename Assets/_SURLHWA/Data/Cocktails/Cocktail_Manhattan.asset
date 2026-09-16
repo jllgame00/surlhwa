@@ -15,7 +15,6 @@ MonoBehaviour:
   cocktailId: cocktail_manhattan
   cocktailName: Manhattan
   glassware: 1
-  description: 'Official IBA validation recipe: stirred Rye Whiskey, Sweet Red Vermouth,
-    and Angostura.'
-  emotionTags: 
+  description: "따뜻한 결 사이로 쌉싸름한 향이 또렷이 남는 한 잔. 천천히 생각을 정리하고 싶은 밤에 어울린다."
+  emotionTags: 0700000004000000
   cocktailSprite: {fileID: 0}

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ingredient_Water
   m_EditorClassIdentifier: Assembly-CSharp::IngredientData
   ingredientId: water
-  displayName: water
+  displayName: Water
   category: 2
   icon: {fileID: 0}

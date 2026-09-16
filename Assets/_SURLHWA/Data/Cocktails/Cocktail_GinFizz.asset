@@ -15,7 +15,6 @@ MonoBehaviour:
   cocktailId: cocktail_gin_fizz
   cocktailName: Gin Fizz
   glassware: 3
-  description: 'Official IBA validation recipe: shaken, poured from shaker, then
-    finished with a soda splash.'
-  emotionTags: 
+  description: "상큼한 거품과 가벼운 탄산이 기분을 깨우는 한 잔. 맑은 숨을 고르고 다시 움직이고 싶을 때 어울린다."
+  emotionTags: 0200000006000000
   cocktailSprite: {fileID: 0}
