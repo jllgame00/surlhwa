@@ -168,11 +168,29 @@ public static class SURLHWAGuestFitValidation
             recommendation, Matched(testStir));
 
         int goodFitReward = (int)calculateReward.Invoke(
-            null, new object[] { technicallyGood, dryMartini, recommendation, compatible });
+            null, new object[]
+            {
+                technicallyGood,
+                dryMartini,
+                GuestRequestContext.FromOrder(recommendation),
+                compatible
+            });
         int poorFitReward = (int)calculateReward.Invoke(
-            null, new object[] { technicallyGood, testStir, recommendation, incompatible });
+            null, new object[]
+            {
+                technicallyGood,
+                testStir,
+                GuestRequestContext.FromOrder(recommendation),
+                incompatible
+            });
         int weakExecutionReward = (int)calculateReward.Invoke(
-            null, new object[] { technicallyWeak, dryMartini, recommendation, compatible });
+            null, new object[]
+            {
+                technicallyWeak,
+                dryMartini,
+                GuestRequestContext.FromOrder(recommendation),
+                compatible
+            });
 
         Require(goodFitReward == technicallyGood.repDelta + recommendation.reputationReward,
             "Satisfied recommendation must receive the existing request reward once.");

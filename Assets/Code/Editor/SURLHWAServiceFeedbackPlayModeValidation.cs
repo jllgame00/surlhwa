@@ -179,6 +179,7 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
     private GameObject activeCustomerObject;
     private float beganAt;
     private bool finished;
+    private bool runInBackgroundBeforeValidation;
     private bool popupWasActive;
     private int popupActivationCount;
     private readonly List<string> scenarioAEvents = new();
@@ -186,6 +187,8 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
 
     private void Start()
     {
+        runInBackgroundBeforeValidation = Application.runInBackground;
+        Application.runInBackground = true;
         StartCoroutine(Run());
     }
 
@@ -443,6 +446,10 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
         MiniGameResult result = BuildGoodResult(recipe);
         SetPrivateField(orderManager, "_currentCustomer", customer);
         SetPrivateField(orderManager, "currentOrder", recommendation);
+        SetPrivateField(
+            orderManager,
+            "currentGuestRequest",
+            GuestRequestContext.FromOrder(recommendation));
         InvokePrivate(orderManager, "OnMiniGameDone", new object[] { result });
         return true;
     }
@@ -668,6 +675,7 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
             return;
 
         finished = true;
+        Application.runInBackground = runInBackgroundBeforeValidation;
         DestroyActiveCustomer();
         SURLHWAServiceFeedbackPlayModeValidation.Complete(success);
     }

@@ -6,6 +6,13 @@ public static class RequestEvaluation
         OrderData request,
         RecipeMatchResult matchResult)
     {
+        return Evaluate(GuestRequestContext.FromOrder(request), matchResult);
+    }
+
+    public static RequestEvaluationResult Evaluate(
+        GuestRequestContext request,
+        RecipeMatchResult matchResult)
+    {
         if (request == null)
             return new RequestEvaluationResult(
                 GuestRequestType.ExactCocktail,
@@ -20,10 +27,10 @@ public static class RequestEvaluation
     }
 
     private static RequestEvaluationResult EvaluateExactCocktail(
-        OrderData request,
+        GuestRequestContext request,
         RecipeMatchResult matchResult)
     {
-        CocktailData requestedCocktail = request.requestedCocktail;
+        CocktailData requestedCocktail = request.RequestedCocktail;
         if (requestedCocktail == null)
             return new RequestEvaluationResult(
                 GuestRequestType.ExactCocktail,
@@ -62,7 +69,7 @@ public static class RequestEvaluation
     }
 
     private static RequestEvaluationResult EvaluateRecommendation(
-        OrderData request,
+        GuestRequestContext request,
         RecipeMatchResult matchResult)
     {
         EmotionTag[] desiredTags = request.DesiredEmotionTags;

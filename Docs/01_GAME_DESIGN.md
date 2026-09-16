@@ -1,6 +1,38 @@
 # SURLHWA — Game Design
 
-Last Updated: 2026-09-10
+Last Updated: 2026-09-17
+
+## J1 Coherent Demo Flow Closure (Implemented; validated)
+
+J1 closes the narrow lifecycle and routing gaps identified by the POST-I16
+production audit without changing the I10-I16 authorities. The runtime entry
+surface now offers a bounded New Game / Continue flow. New Game delegates a
+full reset of SURLHWA-owned gameplay progression to its existing owners, while
+preserving unrelated preferences; Continue either resumes the saved day or
+opens the deterministic completion state after the demo has ended.
+
+The playable demo has a configurable four-night boundary. Day 1 ends after its
+five existing authored anchors: the three Dry Martini facts, its experiment,
+and the Clarity Recommendation. This routing change removes the unintended
+legacy method-tutorial tail from the selected demo flow; it does not delete or
+reclassify the still-active `Test*` compatibility assets. Days 2-4 retain
+authorable customer-count slots, and completing Day 4 persists Demo Complete
+instead of starting an unbounded Day 5.
+
+Generic emotional requests now keep their Recommendation context when the
+player selects a bartending method. The selected method opens the appropriate
+interaction, but no longer replaces the guest request with a prototype
+`OrderData` or its hidden exact cocktail target. Exact authored orders,
+including the Dry Martini experiment and Little Prince Manwol request, retain
+their existing exact semantics. Day Result now reports the night-local delta of
+Known recipes rather than all recipes that happened to be Known at day end.
+
+The active technique Guide enters an explicitly owned read-state pause and
+restores prior timing on close; its use does not introduce a generalized modal
+framework. The existing Little Prince dialogue/choice pause contract is
+unchanged. Automated J1 static validation and the relevant normal-Editor Play
+Mode regression checks passed. I15 functional validation remains distinct from
+its pending subjective human feel sign-off.
 
 ## I10 Ingredient Availability (Implemented)
 

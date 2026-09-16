@@ -32,6 +32,7 @@ public class OrderManager : MonoBehaviour
     }
 
     private OrderData currentOrder;
+    private GuestRequestContext currentGuestRequest;
 
     private UIManager ui;
     private GameManager gm;
@@ -151,8 +152,8 @@ public class OrderManager : MonoBehaviour
             matchResult = RecipeMatchService.FindBestMatch(result.brewedComposition, candidates);
         }
 
-        RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentOrder, matchResult);
-        LogRequestEvaluation(currentOrder, matchResult, requestEvaluation);
+        RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentGuestRequest, matchResult);
+        LogRequestEvaluation(currentGuestRequest, matchResult, requestEvaluation);
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
             if (matchResult.success && matchResult.matchedRecipe != null)
@@ -229,10 +230,10 @@ public class OrderManager : MonoBehaviour
 
         // ���� ó��
         int requestReputationReward = CalculateRequestReputationReward(
-            result, matchedRecipe, currentOrder, requestEvaluation);
+            result, matchedRecipe, currentGuestRequest, requestEvaluation);
         int reputationDelta = result.repDelta + requestReputationReward;
         bool requestRewardWithheld = IsRequestRewardWithheld(
-            result, matchedRecipe, currentOrder, requestEvaluation);
+            result, matchedRecipe, currentGuestRequest, requestEvaluation);
         bool canRevealMatchedCocktail = matchedRecipe != null && recipeUnlockManager != null &&
                                          recipeUnlockManager.IsKnown(matchedRecipe);
         if (gm != null)
@@ -264,6 +265,7 @@ public class OrderManager : MonoBehaviour
         // ���� �ʱ�ȭ
         currentCustomer = null;
         currentOrder = null;
+        currentGuestRequest = null;
 
         if (ui != null)
         {
@@ -273,15 +275,15 @@ public class OrderManager : MonoBehaviour
     }
 
     private void LogRequestEvaluation(
-        OrderData request,
+        GuestRequestContext request,
         RecipeMatchResult matchResult,
         RequestEvaluationResult evaluation)
     {
         if (!verboseLogging && evaluation.Status != RequestEvaluationStatus.InvalidData)
             return;
 
-        string requestedCocktailId = request != null && request.requestedCocktail != null
-            ? request.requestedCocktail.cocktailId
+        string requestedCocktailId = request != null && request.RequestedCocktail != null
+            ? request.RequestedCocktail.cocktailId
             : "None";
         string actualCocktailId = matchResult.success &&
                                   matchResult.matchedRecipe != null &&
@@ -293,7 +295,7 @@ public class OrderManager : MonoBehaviour
             : "None";
         string message =
             $"[OrderManager] Request Evaluation -> " +
-            $"order={request?.name ?? "NULL"} / " +
+            $"request={request?.DisplayTitle ?? "NULL"} / " +
             $"status={evaluation.Status} / " +
             $"requested={requestedCocktailId} / " +
             $"recipe={matchedRecipeId} / " +
@@ -426,7 +428,7 @@ public class OrderManager : MonoBehaviour
     private static int CalculateReputationDelta(
         MiniGameResult result,
         CocktailRecipeData matchedRecipe,
-        OrderData request,
+        GuestRequestContext request,
         RequestEvaluationResult evaluation)
     {
         return result.repDelta + CalculateRequestReputationReward(
@@ -436,13 +438,13 @@ public class OrderManager : MonoBehaviour
     private static int CalculateRequestReputationReward(
         MiniGameResult result,
         CocktailRecipeData matchedRecipe,
-        OrderData request,
+        GuestRequestContext request,
         RequestEvaluationResult evaluation)
     {
         if (result.success && matchedRecipe != null && request != null &&
             ShouldGrantRequestReward(evaluation))
         {
-            return request.reputationReward;
+            return request.ReputationReward;
         }
 
         return 0;
@@ -451,23 +453,23 @@ public class OrderManager : MonoBehaviour
     private static bool IsRequestRewardWithheld(
         MiniGameResult result,
         CocktailRecipeData matchedRecipe,
-        OrderData request,
+        GuestRequestContext request,
         RequestEvaluationResult evaluation)
     {
         return result.success && matchedRecipe != null && request != null &&
-               request.reputationReward != 0 &&
+               request.ReputationReward != 0 &&
                evaluation.Status == RequestEvaluationStatus.Unsatisfied;
     }
 
     private static bool IsWrongValidRequestMismatch(
-        OrderData request,
+        GuestRequestContext request,
         MiniGameResult result,
         RecipeMatchResult matchResult,
         RequestEvaluationResult evaluation)
     {
         return request != null &&
                request.RequestType == GuestRequestType.ExactCocktail &&
-               request.requestedCocktail != null &&
+               request.RequestedCocktail != null &&
                result.success &&
                matchResult.success &&
                evaluation.Status == RequestEvaluationStatus.Unsatisfied;
@@ -487,6 +489,30 @@ public class OrderManager : MonoBehaviour
 
     public void PlaySpecificOrder(OrderData order, CustomerController customer)
     {
+        PlayOrder(order, customer, GuestRequestContext.FromOrder(order));
+    }
+
+    /// <summary>
+    /// Starts a generic emotional Recommendation through a selected method
+    /// template. The template remains responsible only for bartending route;
+    /// it cannot replace the guest request with its serialized exact target.
+    /// </summary>
+    public void PlayGenericRecommendationOrder(OrderData methodTemplate, CustomerController customer)
+    {
+        string displayTitle = customer != null ? customer.GetInteractionHintLine() : string.Empty;
+        GuestRequestContext guestRequest = GuestRequestContext.CreateRecommendation(
+            customer != null ? customer.GetDesiredEmotionTags() : null,
+            displayTitle,
+            methodTemplate != null ? methodTemplate.reputationReward : 0);
+
+        PlayOrder(methodTemplate, customer, guestRequest);
+    }
+
+    private void PlayOrder(
+        OrderData order,
+        CustomerController customer,
+        GuestRequestContext guestRequest)
+    {
         if (order == null)
         {
             Debug.LogError("[OrderManager] PlaySpecificOrder called with NULL order");
@@ -496,6 +522,12 @@ public class OrderManager : MonoBehaviour
         if (customer == null)
         {
             Debug.LogError("[OrderManager] PlaySpecificOrder called with NULL customer");
+            return;
+        }
+
+        if (guestRequest == null)
+        {
+            Debug.LogError("[OrderManager] PlayOrder called with NULL guest request context");
             return;
         }
 
@@ -513,13 +545,16 @@ public class OrderManager : MonoBehaviour
 
         currentCustomer = customer;
         currentOrder = order;
+        currentGuestRequest = guestRequest;
 
         if (ui != null)
-            ui.SetOrderText($"ORDER: {currentOrder.orderName}");
+            ui.SetOrderText($"ORDER: {currentGuestRequest.DisplayTitle}");
 
         Debug.Log(
-            $"[OrderManager] PlaySpecificOrder -> " +
-            currentOrder.orderName
+            $"[OrderManager] PlayOrder -> " +
+            $"request={currentGuestRequest.RequestType} / " +
+            $"method={currentOrder.miniGameType} / " +
+            $"title={currentGuestRequest.DisplayTitle}"
         );
 
         BeginCurrentOrderBartending();
@@ -539,7 +574,9 @@ public class OrderManager : MonoBehaviour
             return;
         }
 
-        CocktailRecipeData expectedRecipe = recipeUnlockManager != null
+        CocktailRecipeData expectedRecipe = recipeUnlockManager != null &&
+            currentGuestRequest != null &&
+            currentGuestRequest.RequestType == GuestRequestType.ExactCocktail
             ? recipeUnlockManager.GetRecipeForCocktail(
                 currentOrder.requestedCocktail,
                 currentOrder.miniGameType)
@@ -550,7 +587,7 @@ public class OrderManager : MonoBehaviour
             : BusinessDayPersistence.LoadCurrentDay(1);
         BartendingRequestContext request = new BartendingRequestContext(
             currentOrder.miniGameType,
-            currentOrder.orderName,
+            currentGuestRequest != null ? currentGuestRequest.DisplayTitle : currentOrder.orderName,
             expectedRecipe,
             currentBusinessDay);
         RecipeGuideContext recipeGuideContext = BuildRecipeGuideContext();

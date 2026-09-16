@@ -21,4 +21,10 @@ public static class BusinessDayPersistence
         SurlhwaPlayerPrefsStore.SetInt(CurrentDayKey, day);
         SurlhwaPlayerPrefsStore.Save();
     }
+
+    public static void ClearCurrentDay()
+    {
+        SurlhwaPlayerPrefsStore.DeleteKey(CurrentDayKey);
+        SurlhwaPlayerPrefsStore.Save();
+    }
 }

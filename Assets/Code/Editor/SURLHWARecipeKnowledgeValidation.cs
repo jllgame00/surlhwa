@@ -541,6 +541,7 @@ public static class SURLHWARecipeKnowledgePlayModeValidation
         GameObject instance = UnityEngine.Object.Instantiate(prefab);
         try
         {
+            float timeScaleBeforeOpen = Time.timeScale;
             RecipeGuidePanelController guide =
                 instance.GetComponentInChildren<RecipeGuidePanelController>(true);
             Require(guide != null, "StirMiniGame prefab has no RecipeGuidePanelController.");
@@ -554,6 +555,9 @@ public static class SURLHWARecipeKnowledgePlayModeValidation
                 null);
 
             InvokePrivate(guide, "OpenPanel", null);
+            Require(RecipeGuidePanelController.IsTechniqueReadStateActive &&
+                    Mathf.Approximately(Time.timeScale, 0f),
+                "Opening the active-technique Guide must pause its read state and input timing.");
             Transform listParent = GetPrivateField<Transform>(guide, "recipeListParent");
             TMP_Text cardLabel = listParent != null
                 ? listParent.GetComponentInChildren<TMP_Text>(true)
@@ -580,6 +584,11 @@ public static class SURLHWARecipeKnowledgePlayModeValidation
                 Require(!detail.Contains(forbiddenDetailA), "Guide detail leaked an unlearned authored fact.");
             if (!string.IsNullOrEmpty(forbiddenDetailB))
                 Require(!detail.Contains(forbiddenDetailB), "Guide detail leaked an unlearned authored fact.");
+
+            InvokePrivate(guide, "ClosePanel", null);
+            Require(!RecipeGuidePanelController.IsTechniqueReadStateActive &&
+                    Mathf.Approximately(Time.timeScale, timeScaleBeforeOpen),
+                "Closing the active-technique Guide must restore its prior timing state.");
         }
         finally
         {

@@ -148,6 +148,9 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     private void Update()
     {
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+            return;
+
         switch (state)
         {
             case State.Preparing:

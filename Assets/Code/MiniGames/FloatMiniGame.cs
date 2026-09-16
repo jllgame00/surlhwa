@@ -159,6 +159,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void Update()
     {
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+            return;
+
         if (state == State.Preparing)
             UpdatePreparationInput();
     }

@@ -133,8 +133,8 @@ public static class SURLHWATwoNightVerticalSliceValidation
             "CustomerSpawner no longer references the authoritative BusinessDayManager.");
         Require(GetPrivateField<DayResultPanelController>(dayManager, "resultPanel") == dayResult,
             "BusinessDayManager no longer references the shipped Day Result panel.");
-        Require(GetPrivateField<int>(dayManager, "maxCustomersPerDay") == 8,
-            "The shipped day length changed; I16 expects the authored five-customer arc plus three ordinary services.");
+        Require(dayManager.MaxCustomersPerDay == 5,
+            "The bounded J1 Day-1 demo schedule must end after its five authored encounters.");
 
         OrderData[] assignedDiscoveryOrders = GetPrivateField<OrderData[]>(spawner, "dayOneDiscoveryOrders");
         Require(ReferenceSequenceEquals(assignedDiscoveryOrders, discoveryOrders),

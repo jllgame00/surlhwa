@@ -220,6 +220,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void Update()
     {
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+            return;
+
         if (state == BuildState.Preparing)
             UpdateDirectPour();
         else if (state == BuildState.GentleStirring)

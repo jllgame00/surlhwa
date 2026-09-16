@@ -737,9 +737,18 @@ public class InteractionUIController : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / {order.orderName} / IngredientAuthority=BartendingShelf");
+        Debug.Log($"[InteractionUI] Confirm -> {selectedMethod} / method template={order.orderName} / IngredientAuthority=BartendingShelf");
 
-        orderManager.PlaySpecificOrder(order, activeCustomer);
+        if (activeCustomerUsesForcedRoute)
+        {
+            // Legacy forced routes remain explicit compatibility/debug routes.
+            // Normal generic service must preserve the generated Recommendation.
+            orderManager.PlaySpecificOrder(order, activeCustomer);
+        }
+        else
+        {
+            orderManager.PlayGenericRecommendationOrder(order, activeCustomer);
+        }
     }
 
     private OrderData FindPrototypeOrder(MiniGameType type)

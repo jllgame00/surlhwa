@@ -43,6 +43,12 @@ public class RecipeGuidePanelController : MonoBehaviour
     private RecipeGuideContext recipeGuideContext;
     private Action<string, string> firstRecipeRevealRequested;
     private bool missingContextWarningLogged;
+    private bool readStatePauseActive;
+    private float timeScaleBeforeReadState = 1f;
+    private static RecipeGuidePanelController activeReadStateOwner;
+
+    public bool IsReading => panelRoot != null && panelRoot.activeSelf;
+    public static bool IsTechniqueReadStateActive => activeReadStateOwner != null;
 
     private void Awake()
     {
@@ -94,6 +100,8 @@ public class RecipeGuidePanelController : MonoBehaviour
         if (panelRoot != null)
             panelRoot.SetActive(true);
 
+        BeginReadStatePause();
+
         RefreshRecipeList();
         TryShowFirstRecipeReveal();
     }
@@ -102,6 +110,47 @@ public class RecipeGuidePanelController : MonoBehaviour
     {
         if (panelRoot != null)
             panelRoot.SetActive(false);
+
+        EndReadStatePause();
+    }
+
+    private void OnDisable()
+    {
+        EndReadStatePause();
+    }
+
+    private void OnDestroy()
+    {
+        EndReadStatePause();
+    }
+
+    /// <summary>
+    /// The technique-local Guide is the only reading surface available during
+    /// active bartending. Pausing this local read state prevents keyboard/mouse
+    /// technique input and customer timing from continuing behind its UI.
+    /// </summary>
+    private void BeginReadStatePause()
+    {
+        if (!Application.isPlaying || readStatePauseActive)
+            return;
+
+        timeScaleBeforeReadState = Time.timeScale;
+        Time.timeScale = 0f;
+        readStatePauseActive = true;
+        activeReadStateOwner = this;
+    }
+
+    private void EndReadStatePause()
+    {
+        if (!readStatePauseActive)
+            return;
+
+        if (Mathf.Approximately(Time.timeScale, 0f))
+            Time.timeScale = timeScaleBeforeReadState;
+
+        readStatePauseActive = false;
+        if (activeReadStateOwner == this)
+            activeReadStateOwner = null;
     }
 
     private void RefreshRecipeList()

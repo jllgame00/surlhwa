@@ -166,6 +166,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     private void Update()
     {
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+            return;
+
         switch (state)
         {
             case State.Preparing:

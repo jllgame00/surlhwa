@@ -88,13 +88,16 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
-        if (autoStart)
+        if (autoStart && IsGameplaySessionStarted())
             SpawnNextCustomer();
     }
 
     private void Update()
     {
         if (!debugSpawnWithKey)
+            return;
+
+        if (!IsGameplaySessionStarted())
             return;
 
         if (bartendingFlowCoordinator != null && bartendingFlowCoordinator.IsBartendingActive)
@@ -107,6 +110,9 @@ public class CustomerSpawner : MonoBehaviour
     public void SpawnNextCustomer()
     {
         if (activeCustomer != null)
+            return;
+
+        if (!IsGameplaySessionStarted())
             return;
 
         EnsureReferences();
@@ -264,6 +270,17 @@ public class CustomerSpawner : MonoBehaviour
 
         if (seatManager == null)
             seatManager = FindFirstObjectByType<SeatManager>();
+    }
+
+    private bool IsGameplaySessionStarted()
+    {
+        if (gm == null)
+            gm = FindFirstObjectByType<GameManager>();
+
+        // Layout/recovery scenes without a GameManager retain their existing
+        // inspection behavior. The production Bar scene starts only after the
+        // minimal New Game or Continue entry decision.
+        return gm == null || gm.IsGameplaySessionStarted;
     }
 
     private void ResolveBusinessDayManager(bool createIfMissing)

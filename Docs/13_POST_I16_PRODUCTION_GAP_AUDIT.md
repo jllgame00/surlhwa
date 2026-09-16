@@ -8,7 +8,26 @@ Audited HEAD: `3fdce32736854e6793de5b142ff4c58e7e1ec650`
 
 Report export date: 2026-09-16
 
-This document preserves the findings and recommendations of the completed POST-I16 audit. The subsequent authorization to save the report changes only its delivery format: it does not authorize implementation, production-asset changes, cleanup, or a commit. Baseline and validation statements describe the audited state, not newly executed Play Mode tests.
+## J1 Implementation Record (2026-09-17)
+
+The audit's immediate next phase, J1 -- Coherent Demo Flow Closure, has since
+been implemented as a narrow lifecycle/routing pass. This record does not
+rewrite the audit's historical baseline or its content recommendations.
+
+Implemented: a minimal New Game / Continue entry surface; delegated reset of
+SURLHWA-owned progression; a configurable bounded four-night schedule; the
+five-anchor Day-1 route without its unintended legacy tutorial tail; preserved
+generic Recommendation request context across method selection; night-local
+recipe-discovery reporting; persistent Demo Complete routing after Day 4; and
+owned Guide read-state pause behavior during active bartending.
+
+Not implemented by J1: new cocktail discovery content, additional narrative,
+emotion-tag expansion, art, audio, a final authored ending, or deletion of the
+active legacy `Test*` assets. The I10-I16 truth boundaries remain unchanged.
+Focused J1 static validation and relevant normal-Editor Play Mode regressions
+passed; I15 subjective feel approval remains a human sign-off item.
+
+This document preserves the findings and recommendations of the completed POST-I16 audit. The authorization that originally saved the report changed only its delivery format; the later J1 authorization is recorded above. Baseline and validation statements below describe the audited state, not newly executed Play Mode tests.
 
 SURLHWA’s core rebuild is ready to support production. The largest remaining gap is the authored playthrough: recipes, ingredients, and reusable mechanics extend considerably beyond the encounters that teach and contextualize them.
 

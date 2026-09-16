@@ -108,6 +108,9 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
 
     private void Update()
     {
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+            return;
+
         if (!selectionActive)
             return;
 

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DayResultPanelController : MonoBehaviour
@@ -16,6 +15,10 @@ public class DayResultPanelController : MonoBehaviour
     [SerializeField] private CocktailCodexPanelController codexPanel;
 
     private bool openingResult;
+    private bool isDemoCompletionResult;
+    private const string NextNightButtonLabel = "Next Night";
+    private const string ReturnToTitleButtonLabel = "Return to Title";
+    private const string NewRecipesRecordedPrefix = "New recipes recorded tonight";
     private const string RestartButtonLabel = "다음 밤으로";
     private const string CodexButtonLabel = "도감 펼치기";
 
@@ -42,11 +45,14 @@ public class DayResultPanelController : MonoBehaviour
         int reputation,
         int servedCustomerCount,
         int maxCustomersPerDay,
-        IReadOnlyList<string> unlockedRecipeNames
+        IReadOnlyList<string> unlockedRecipeNames,
+        bool demoComplete = false
     )
     {
         EnsurePanel();
         BindButtons();
+        isDemoCompletionResult = demoComplete;
+        ConfigureDemoNavigationButton();
 
         if (titleText != null)
             titleText.text = "밤의 마감";
@@ -58,7 +64,37 @@ public class DayResultPanelController : MonoBehaviour
             customerCountText.text = $"마주한 손님: {servedCustomerCount}/{maxCustomersPerDay}";
 
         if (unlockedRecipesText != null)
-            unlockedRecipesText.text = BuildUnlockedRecipeText(unlockedRecipeNames);
+            unlockedRecipesText.text = BuildNewRecipeText(unlockedRecipeNames);
+
+        if (panelRoot != null)
+        {
+            openingResult = true;
+            panelRoot.SetActive(true);
+            openingResult = false;
+        }
+
+        if (demoComplete && titleText != null)
+            titleText.text = "Demo Complete";
+    }
+
+    public void OpenDemoComplete()
+    {
+        EnsurePanel();
+        BindButtons();
+        isDemoCompletionResult = true;
+        ConfigureDemoNavigationButton();
+
+        if (titleText != null)
+            titleText.text = "Demo Complete";
+
+        if (reputationText != null)
+            reputationText.text = string.Empty;
+
+        if (customerCountText != null)
+            customerCountText.text = "This production demo has reached its current endpoint.";
+
+        if (unlockedRecipesText != null)
+            unlockedRecipesText.text = "Start a New Game to replay from Day 1.";
 
         if (panelRoot != null)
         {
@@ -88,8 +124,12 @@ public class DayResultPanelController : MonoBehaviour
 
     private void Restart()
     {
-        Scene activeScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(activeScene.buildIndex);
+        GameManager.ContinueDemoGameplay();
+    }
+
+    private void ReturnToTitle()
+    {
+        GameManager.ReturnToDemoEntry();
     }
 
     private string BuildUnlockedRecipeText(IReadOnlyList<string> unlockedRecipeNames)
@@ -98,6 +138,27 @@ public class DayResultPanelController : MonoBehaviour
             return "새로 기록된 칵테일: 0개";
 
         return $"새로 기록된 칵테일: {string.Join(", ", unlockedRecipeNames)}";
+    }
+
+    private string BuildNewRecipeText(IReadOnlyList<string> newlyKnownRecipeNames)
+    {
+        if (newlyKnownRecipeNames == null || newlyKnownRecipeNames.Count == 0)
+            return NewRecipesRecordedPrefix + ": 0";
+
+        return NewRecipesRecordedPrefix + ": " + string.Join(", ", newlyKnownRecipeNames);
+    }
+
+    private void ConfigureDemoNavigationButton()
+    {
+        if (restartButton == null)
+            return;
+
+        SetButtonLabel(
+            restartButton,
+            isDemoCompletionResult ? ReturnToTitleButtonLabel : NextNightButtonLabel);
+        restartButton.onClick.RemoveListener(Restart);
+        restartButton.onClick.RemoveListener(ReturnToTitle);
+        restartButton.onClick.AddListener(isDemoCompletionResult ? ReturnToTitle : Restart);
     }
 
     private void BindButtons()
