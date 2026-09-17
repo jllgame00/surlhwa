@@ -26,6 +26,14 @@ public class CustomerSpawner : MonoBehaviour
     [Tooltip("One authored recommendation request after the discovery arc. It remains optional and does not change generic request selection.")]
     [SerializeField] private OrderData dayOneRecommendationOrder;
 
+    [Header("J4 Discovery Practice")]
+    [Tooltip("Day-2 slot 2 practice encounter. It is selected only while Negroni is not Known.")]
+    [SerializeField] private OrderData negroniDiscoveryOrder;
+    [Tooltip("Day-3 slot 2 practice encounter, after the existing Little Prince return. It is selected only while Manhattan is not Known.")]
+    [SerializeField] private OrderData manhattanDiscoveryOrder;
+    [Tooltip("Day-4 slot 1 practice encounter. It is selected only while Gin Fizz is not Known.")]
+    [SerializeField] private OrderData ginFizzDiscoveryOrder;
+
     [Header("Debug")]
     [SerializeField] private bool debugSpawnWithKey = false;
     [SerializeField] private KeyCode debugSpawnKey = KeyCode.Space;
@@ -42,6 +50,7 @@ public class CustomerSpawner : MonoBehaviour
     private GameManager gm;
     private BartendingFlowCoordinator bartendingFlowCoordinator;
     [SerializeField] private BusinessDayManager businessDayManager;
+    private RecipeUnlockManager recipeUnlockManager;
 
     private CustomerController activeCustomer;
     private int servedCount;
@@ -64,6 +73,7 @@ public class CustomerSpawner : MonoBehaviour
         bartendingFlowCoordinator = FindFirstObjectByType<BartendingFlowCoordinator>();
 
         ResolveBusinessDayManager(false);
+        ResolveRecipeUnlockManager();
 
         CustomerSpawner[] spawners = FindObjectsByType<CustomerSpawner>(
             FindObjectsInactive.Exclude,
@@ -169,7 +179,7 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         activeCustomer = customer;
-        OrderData authoredOrder = GetDayOneAuthoredOrder();
+        OrderData authoredOrder = GetAuthoredOrderForNextSpawn();
         if (authoredOrder != null)
             customer.ConfigureDedicatedEncounter(authoredOrder);
 
@@ -184,7 +194,9 @@ public class CustomerSpawner : MonoBehaviour
             customer.ConfigureLittlePrinceFollowupEncounter(littlePrinceFollowupOrder);
 
         customer.SetLoopManager(this);
-        customer.SetUsesPatience(!IsTutorialSpawn());
+        bool requiresSuccessfulDiscovery = customer.TryGetDedicatedRequest(out OrderData activeOrder) &&
+                                           activeOrder.RequiresSuccessfulDiscovery;
+        customer.SetUsesPatience(!IsTutorialSpawn() && !requiresSuccessfulDiscovery);
         spawnedCount++;
         lastSpawnedPrefab = prefabToSpawn;
 
@@ -341,16 +353,22 @@ public class CustomerSpawner : MonoBehaviour
         return currentDay == 1 && spawnedCount < tutorialCustomerCount;
     }
 
-    private OrderData GetDayOneAuthoredOrder()
+    private OrderData GetAuthoredOrderForNextSpawn()
     {
         int currentDay = businessDayManager != null
             ? businessDayManager.CurrentDay
             : BusinessDayPersistence.LoadCurrentDay(1);
 
-        if (currentDay != 1 || spawnedCount < 0)
-        {
+        if (currentDay == 1)
+            return GetDayOneAuthoredOrder();
+
+        return GetJ4DiscoveryOrderForNextSpawn(currentDay);
+    }
+
+    private OrderData GetDayOneAuthoredOrder()
+    {
+        if (spawnedCount < 0)
             return null;
-        }
 
         if (dayOneDiscoveryOrders != null && spawnedCount < dayOneDiscoveryOrders.Length)
             return dayOneDiscoveryOrders[spawnedCount];
@@ -359,6 +377,92 @@ public class CustomerSpawner : MonoBehaviour
                spawnedCount == dayOneDiscoveryOrders.Length
             ? dayOneRecommendationOrder
             : null;
+    }
+
+    /// <summary>
+    /// Keeps the three J4 practice encounters in their authored early-night
+    /// positions without owning the later J3/J5 schedule. A same-day scene
+    /// reload resets this component's transient spawn count, so existing
+    /// completed Prince-visit flags advance only the already-consumed special
+    /// positions; recipe knowledge remains the authoritative discovery state.
+    /// </summary>
+    private OrderData GetJ4DiscoveryOrderForNextSpawn(int currentDay)
+    {
+        switch (currentDay)
+        {
+            case 2:
+                // Fresh: Prince is D2-1 and Negroni is D2-2. After a reload
+                // following Prince success, its persisted completion flag
+                // reconstructs that consumed first position.
+                if (spawnedCount == 1 ||
+                    (spawnedCount == 0 && LittlePrinceVisitPersistence.IsFirstVisitCompleted()))
+                {
+                    return GetPendingDiscoveryOrder(negroniDiscoveryOrder);
+                }
+
+                break;
+
+            case 3:
+                // Fresh: the existing Prince return is D3-1 and Manhattan is
+                // D3-2. Its existing completion flag provides the same reload
+                // reconstruction without a J4 persistence key.
+                if (spawnedCount == 1 ||
+                    (spawnedCount == 0 && LittlePrinceVisitPersistence.IsFollowupVisitCompleted()))
+                {
+                    return GetPendingDiscoveryOrder(manhattanDiscoveryOrder);
+                }
+
+                break;
+
+            case 4:
+                if (spawnedCount == 0)
+                    return GetPendingDiscoveryOrder(ginFizzDiscoveryOrder);
+
+                break;
+        }
+
+        return null;
+    }
+
+    private OrderData GetPendingDiscoveryOrder(OrderData discoveryOrder)
+    {
+        if (discoveryOrder == null)
+            return null;
+
+        RecipeUnlockManager knowledge = ResolveRecipeUnlockManager();
+        if (knowledge == null)
+        {
+            Debug.LogWarning(
+                "[CustomerSpawner] RecipeUnlockManager unavailable; preserving the authored discovery encounter.");
+            return discoveryOrder;
+        }
+
+        CocktailRecipeData targetRecipe = knowledge.GetRecipeForCocktail(
+            discoveryOrder.requestedCocktail,
+            discoveryOrder.miniGameType);
+        if (targetRecipe == null)
+        {
+            Debug.LogWarning(
+                "[CustomerSpawner] Discovery order has no authoritative target recipe; preserving the encounter -> " +
+                discoveryOrder.name);
+            return discoveryOrder;
+        }
+
+        if (!knowledge.IsKnown(targetRecipe))
+            return discoveryOrder;
+
+        Debug.Log(
+            "[CustomerSpawner] Discovery target already Known; using normal fallback for this authored position -> " +
+            targetRecipe.recipeId);
+        return null;
+    }
+
+    private RecipeUnlockManager ResolveRecipeUnlockManager()
+    {
+        if (recipeUnlockManager == null)
+            recipeUnlockManager = FindFirstObjectByType<RecipeUnlockManager>();
+
+        return recipeUnlockManager;
     }
 
     private bool ShouldSpawnLittlePrinceFirstVisit()

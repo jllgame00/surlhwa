@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// required to make the player's controlled additions visible and judgeable.
 /// </summary>
 public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleReceiver,
-    IIngredientAvailabilityContextReceiver
+    IRecipePreparationExpectationReceiver, IIngredientAvailabilityContextReceiver
 {
     public enum FloatPourIntensity
     {
@@ -83,6 +83,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private Vector2 spoonStartPosition;
     private ServingGlassGarnishController garnishController;
     private IngredientAvailabilityContext ingredientAvailabilityContext;
+    private CocktailRecipeData expectedRecipe;
 
     public BartendingLayeredDrinkState LayeredDrinkState => layeredDrinkState;
     public int RenderedLayerCount => layerVisuals.Count;
@@ -96,6 +97,16 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     public void SetIngredientAvailabilityContext(IngredientAvailabilityContext context)
     {
         ingredientAvailabilityContext = context;
+    }
+
+    /// <summary>
+    /// Float keeps its own layered-drink authority. This expectation is only
+    /// forwarded with the completed trace to the shared recipe-preparation
+    /// evaluator, matching the other production method routes.
+    /// </summary>
+    public void SetExpectedRecipe(CocktailRecipeData recipe)
+    {
+        expectedRecipe = recipe;
     }
 
     public void StartGame(Action<MiniGameResult> done)
@@ -369,7 +380,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             : null;
         BartendingPreparationResultFactory.Apply(
             ref result,
-            null,
+            expectedRecipe,
             ingredientShelf.PreparationTrace);
         state = State.Result;
         garnishController?.EndSelection();

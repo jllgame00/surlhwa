@@ -224,6 +224,29 @@ public class CustomerController : MonoBehaviour
     public void SetUsesPatience(bool value)
     {
         usesPatience = value;
+
+        if (!usesPatience)
+            StopPatienceTimer();
+    }
+
+    /// <summary>
+    /// Keeps one flagged authored practice encounter with its existing
+    /// customer, order, seat, and knowledge state after an unsuccessful
+    /// attempt. It deliberately does not create a new customer lifecycle.
+    /// </summary>
+    public void RestoreAfterDiscoveryRetry(string feedback)
+    {
+        if (state != State.Waiting)
+        {
+            Debug.LogWarning(
+                "[Customer] Discovery retry ignored because the customer is not waiting -> " + name);
+            return;
+        }
+
+        if (interactionUI == null)
+            interactionUI = FindFirstObjectByType<InteractionUIController>();
+
+        interactionUI?.RestoreAfterDiscoveryRetry(this, feedback);
     }
 
     /// <summary>

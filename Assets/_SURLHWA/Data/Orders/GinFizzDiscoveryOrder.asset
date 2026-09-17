@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: GinFizzDiscoveryOrder
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "\uC9C4 \uD53C\uC988"
+  reputationReward: 1
+  miniGameType: 3
+  requestedCocktail: {fileID: 11400000, guid: 5ae66b2ace694794ba0b8390fa66356a, type: 2}
+  requestType: 0
+  desiredEmotionTags: []
+  preBrewDialogue: {fileID: 11400000, guid: 55627bc79dce408aa680f992487e97bf, type: 2}
+  recipeKnowledgeHintLine: 
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 1
+  discoveryRetryFeedback: "\uC170\uC774\uCEE4\uC5D0\uC11C \uC62E\uAE34 \uB4A4 \uC18C\uB2E4\uB97C \uC2A4\uD50C\uB798\uC2DC\uB85C \uB354\uD588\uB294\uC9C0 \uD655\uC778\uD574 \uC8FC\uC138\uC694."

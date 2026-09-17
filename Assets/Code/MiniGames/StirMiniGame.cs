@@ -288,7 +288,9 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         ingredientShelf.SetVisible(false);
         garnishController?.BeginSelection();
         SetPrimaryAction(ServeStir, "Serve Stir", true);
-        SetHint("Stirred drink strained. Garnish is optional; choose one or serve the drink as made.");
+        SetHint(garnishController != null && garnishController.IsExpectedGarnishRequired
+            ? "Stirred drink strained. Garnish is required before serving."
+            : "Stirred drink strained. Garnish is optional; choose one or serve the drink as made.");
         UpdateProgressText();
 
         BartendingContainerState mixingGlass = GetMixingGlass();
@@ -632,7 +634,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
                 break;
 
             case State.AwaitingGarnish:
-                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish optional";
+                progressText.text =
+                    $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish " +
+                    (garnishController != null && garnishController.IsExpectedGarnishRequired
+                        ? "required"
+                        : "optional");
                 break;
 
             case State.Result:
@@ -692,6 +698,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             null,
             hintText,
             ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
+        garnishController.SetExpectedRecipe(expectedRecipe);
     }
 
     private void AutoBindIfMissing()

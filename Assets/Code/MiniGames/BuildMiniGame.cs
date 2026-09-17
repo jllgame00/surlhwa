@@ -148,7 +148,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         ingredientShelf.SetVisible(false);
         garnishController?.BeginSelection();
         SetPrimaryAction(ServeBuild, "Serve Build", true);
-        SetHint("Serving Glass ready. Garnish is optional; choose one or serve the drink as made.");
+        SetHint(garnishController != null && garnishController.IsExpectedGarnishRequired
+            ? "Serving Glass ready. Garnish is required before serving."
+            : "Serving Glass ready. Garnish is optional; choose one or serve the drink as made.");
         UpdateProgressText();
 
         Debug.Log($"[BuildMiniGame] Liquid preparation ready / ServingMl={ingredientShelf.ServingGlass.CurrentLiquidVolumeMl:0.###}");
@@ -557,6 +559,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             servingGlassVisual,
             hintText,
             ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
+        garnishController.SetExpectedRecipe(expectedRecipe);
     }
 
     private void AutoBindIfMissing()

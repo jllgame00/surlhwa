@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: NegroniDiscoveryOrder
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "\uB124\uADF8\uB85C\uB2C8"
+  reputationReward: 1
+  miniGameType: 0
+  requestedCocktail: {fileID: 11400000, guid: 18aa2f289dc365e4095132a39e411e08, type: 2}
+  requestType: 0
+  desiredEmotionTags: []
+  preBrewDialogue: {fileID: 11400000, guid: 1723057e93d74f84936353e657ff7997, type: 2}
+  recipeKnowledgeHintLine: 
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 1
+  discoveryRetryFeedback: "\uBE44\uC728\uC774\uB098 \uB9C8\uBB34\uB9AC\uAC00 \uB2EC\uB790\uC5B4\uC694. \uAC00\uC774\uB4DC\uB97C \uBCF4\uACE0 \uB2E4\uC2DC \uD655\uC778\uD574 \uC8FC\uC138\uC694."

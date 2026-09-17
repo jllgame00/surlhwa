@@ -15047,6 +15047,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6b7c8d9e0f123456789abcdef012345c, type: 2}
   - {fileID: 11400000, guid: 7b8c9d0e1f23456789abcdef0123456d, type: 2}
   dayOneRecommendationOrder: {fileID: 11400000, guid: ae1f23456789abcdef0123456789abcd, type: 2}
+  negroniDiscoveryOrder: {fileID: 11400000, guid: 22a187470f6646c5a9cbe73680b2e44b, type: 2}
+  manhattanDiscoveryOrder: {fileID: 11400000, guid: 33abda25eccf472bbff54787aab86a82, type: 2}
+  ginFizzDiscoveryOrder: {fileID: 11400000, guid: ac2a4617a23f4204a7d342a14951e424, type: 2}
   debugSpawnWithKey: 1
   debugSpawnKey: 32
   specialGuests: []

@@ -17,5 +17,30 @@ MonoBehaviour:
   - "어른들은 왜 중요한 걸 몰라요?"
   - "숫자는 잘 기억하면서, 별빛이 얼마나 오래 남는지는 묻지 않아요."
   - "제게... 잊히지 않는 맛을 줄 수 있나요?"
+  - "\uB9CC\uC6D4\uC740 \uC774\uB807\uAC8C \uB9CC\uB4E0\uB300\uC694. \uBCF4\uB4DC\uCE74\uB97C \uB450\uACE0, \uCEE4\uD53C \uB9AC\uD050\uB974\uB97C \uD558\uB098 \uBA3C\uC800 \uB2F4\uC544\uC694. \uD06C\uB9BC \uD558\uB098\uB294 \uB9E8 \uC704\uC5D0 \uCC9C\uCC9C\uD788 \uC62C\uB824 \uC8FC\uC138\uC694."
+  - "\uCE35\uC774 \uC11E\uC774\uC9C0 \uC54A\uAC8C \uC870\uC2EC\uD558\uBA74, \uB2EC\uBE5B\uC774 \uC794 \uC704\uC5D0 \uB0A8\uB294 \uAC83\uCC98\uB7FC \uBCF4\uC77C \uAC70\uC608\uC694."
   onSuccessLines: []
   onFailLines: []
+  onEnterKnowledgeReveals:
+  - lineIndex: 4
+    reveals:
+    - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+      fact: 1
+      ingredient: {fileID: 0}
+    - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+      fact: 2
+      ingredient: {fileID: 0}
+    - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+      fact: 8
+      ingredient: {fileID: 11400000, guid: 5954cc826e7fa8440b909dbae1473cf5, type: 2}
+    - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+      fact: 8
+      ingredient: {fileID: 11400000, guid: e00d4a7e4e940b74297043ec0154e4c1, type: 2}
+    - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+      fact: 8
+      ingredient: {fileID: 11400000, guid: 02f6eceda66c83e4d901b2dc701c2d3a, type: 2}
+  - lineIndex: 5
+    reveals:
+    - recipe: {fileID: 11400000, guid: e053e735e13af5d4585d5ca1f36cd955, type: 2}
+      fact: 32
+      ingredient: {fileID: 0}

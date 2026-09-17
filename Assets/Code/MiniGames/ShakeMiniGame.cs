@@ -390,7 +390,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         ingredientShelf.SetVisible(true);
         garnishController?.BeginSelection();
         SetPrimaryAction(ServeShake, "Serve Shake", true);
-        SetHint("Poured from the Shaker. Add the optional Splash with S, garnish, or serve.");
+        SetHint(RequiresExpectedSplash()
+            ? "Poured from the Shaker. Add the required Splash with S before serving."
+            : "Poured from the Shaker. Add the optional Splash with S, garnish, or serve.");
         UpdateProgressText();
         Debug.Log($"[Shake] PourFromContainer Shaker -> ServingGlass volumeMl={transferredMl:0.###}");
     }
@@ -680,8 +682,14 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             resultLabel.color = Color.white;
         }
 
-        SetPrimaryAction(StrainAndSubmit, "Strain", true);
-        SetHint("Rhythm complete. Press Strain to move the actual Shaker contents into the Serving Glass.");
+        bool usePourFromContainer = UsesExpectedPourFromContainerTransfer();
+        SetPrimaryAction(
+            usePourFromContainer ? PourFromContainerAndContinue : StrainAndSubmit,
+            usePourFromContainer ? "Pour to Glass" : "Strain",
+            true);
+        SetHint(usePourFromContainer
+            ? "Rhythm complete. Pour the Shaker contents to the Serving Glass."
+            : "Rhythm complete. Press Strain to move the actual Shaker contents into the Serving Glass.");
         UpdateProgressText();
 
         Debug.Log(
@@ -889,11 +897,16 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             case State.AwaitingStrain:
                 progressText.text =
                     $"Rhythm {CorrectHitCount}/{NoteCount} correct — Shaker " +
-                    $"{shakerState?.CurrentLiquidVolumeMl ?? 0f:0.0} ml ready to strain";
+                    $"{shakerState?.CurrentLiquidVolumeMl ?? 0f:0.0} ml ready to " +
+                    (UsesExpectedPourFromContainerTransfer() ? "pour to glass" : "strain");
                 break;
 
             case State.AwaitingGarnish:
-                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish or gentle stir optional";
+                progressText.text =
+                    $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / " +
+                    (garnishController != null && garnishController.IsExpectedGarnishRequired
+                        ? "garnish required"
+                        : "garnish or gentle stir optional");
                 break;
 
             case State.GentleStirring:
@@ -987,6 +1000,21 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             null,
             hintText,
             ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
+        garnishController.SetExpectedRecipe(expectedRecipe);
+    }
+
+    private bool UsesExpectedPourFromContainerTransfer()
+    {
+        return RecipePreparationEvaluator.HasRequiredAction(
+            expectedRecipe,
+            RecipePreparationAction.PourFromContainer);
+    }
+
+    private bool RequiresExpectedSplash()
+    {
+        return RecipePreparationEvaluator.HasRequiredAction(
+            expectedRecipe,
+            RecipePreparationAction.Splash);
     }
 
     private void AutoBindIfMissing()

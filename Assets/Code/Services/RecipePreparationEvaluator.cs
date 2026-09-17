@@ -35,6 +35,27 @@ public sealed class RecipePreparationEvaluationResult
 
 public static class RecipePreparationEvaluator
 {
+    /// <summary>
+    /// Read-only authored-preparation query for method UI affordances. It does
+    /// not alter matching or evaluation and deliberately ignores optional
+    /// actions, so optional Gin Fizz garnish remains optional.
+    /// </summary>
+    public static bool HasRequiredAction(
+        CocktailRecipeData recipe,
+        RecipePreparationAction action)
+    {
+        if (recipe == null || recipe.expectedPreparation == null)
+            return false;
+
+        foreach (RecipePreparationStep step in recipe.expectedPreparation)
+        {
+            if (step != null && !step.optional && step.action == action)
+                return true;
+        }
+
+        return false;
+    }
+
     public static RecipePreparationEvaluationResult Evaluate(
         CocktailRecipeData recipe,
         BartendingPreparationTrace trace)

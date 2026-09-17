@@ -28,6 +28,13 @@ public class OrderData : ScriptableObject
     [SerializeField] private string recipeKnowledgeHintLine;
     [SerializeField] private RecipeKnowledgeReveal[] recipeKnowledgeHintReveals;
 
+    [Header("Discovery Completion")]
+    [Tooltip("Keeps this authored exact recipe-practice encounter active until its intended recipe is matched with successful technique and satisfied preparation. Leave disabled for ordinary orders.")]
+    [SerializeField] private bool requiresSuccessfulDiscovery;
+    [TextArea]
+    [Tooltip("Optional retry copy for a flagged authored recipe-practice order. Ordinary orders do not use this field.")]
+    [SerializeField] private string discoveryRetryFeedback;
+
     public bool HasRecipeKnowledgeHint => !string.IsNullOrWhiteSpace(recipeKnowledgeHintLine);
     public GuestRequestType RequestType => requestType;
     public EmotionTag[] DesiredEmotionTags => desiredEmotionTags ?? Array.Empty<EmotionTag>();
@@ -35,6 +42,8 @@ public class OrderData : ScriptableObject
     public string RecipeKnowledgeHintLine => recipeKnowledgeHintLine ?? string.Empty;
     public RecipeKnowledgeReveal[] RecipeKnowledgeHintReveals =>
         recipeKnowledgeHintReveals ?? Array.Empty<RecipeKnowledgeReveal>();
+    public bool RequiresSuccessfulDiscovery => requiresSuccessfulDiscovery;
+    public string DiscoveryRetryFeedback => discoveryRetryFeedback ?? string.Empty;
 
 }
 

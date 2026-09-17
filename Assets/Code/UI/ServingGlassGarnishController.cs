@@ -22,11 +22,25 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
     private TMP_Text selectionText;
 
     private bool selectionActive;
+    private bool expectedGarnishRequired;
     private BartendingGarnishId selectedGarnish = BartendingGarnishId.LemonTwist;
     private BartendingGarnishPlacement selectedPlacement = BartendingGarnishPlacement.Rim;
 
     public BartendingGarnishState CurrentGarnish => servingGlass != null ? servingGlass.Garnish : null;
     public bool IsSelectionActive => selectionActive;
+    public bool IsExpectedGarnishRequired => expectedGarnishRequired;
+
+    /// <summary>
+    /// The controller owns only the visible garnish affordance. The existing
+    /// preparation evaluator remains authoritative for actual success.
+    /// </summary>
+    public void SetExpectedRecipe(CocktailRecipeData recipe)
+    {
+        expectedGarnishRequired = RecipePreparationEvaluator.HasRequiredAction(
+            recipe,
+            RecipePreparationAction.Garnish);
+        RefreshSelectionText();
+    }
 
     /// <summary>
     /// Binds this short-lived view to the per-session Serving Glass. A supplied
@@ -241,8 +255,9 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         string current = CurrentGarnish == null
             ? "none"
             : CurrentGarnish.DisplayName + " / " + GetPlacementLabel(CurrentGarnish.Placement);
+        string requirement = expectedGarnishRequired ? "required" : "optional";
         selectionText.text =
-            "Garnish (optional) [1] Lemon Twist [2] Cherry [3] Olive [4] Orange Slice [5] Lemon Slice [6] Orange Zest\n" +
+            "Garnish (" + requirement + ") [1] Lemon Twist [2] Cherry [3] Olive [4] Orange Slice [5] Lemon Slice [6] Orange Zest\n" +
             "Placement  [Q] Rim  [W] In Glass  [E] Surface   [G] Apply  [X] Clear\n" +
             "Selected: " + BartendingGarnishState.GetDisplayName(selectedGarnish) +
             " / " + GetPlacementLabel(selectedPlacement) + "   Applied: " + current;

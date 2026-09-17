@@ -286,6 +286,29 @@ public class InteractionUIController : MonoBehaviour
             "[InteractionUI] Restored Brew panel after retry-safe Bartending failure -> " + failure);
     }
 
+    /// <summary>
+    /// Restores the existing dedicated-order interaction after a failed
+    /// flagged recipe-practice attempt. The current customer remains
+    /// registered, so this does not replay customer setup or create a new
+    /// encounter. The Brew action begins that same dedicated order again.
+    /// </summary>
+    public void RestoreAfterDiscoveryRetry(CustomerController customer, string feedback)
+    {
+        if (activeCustomer != customer)
+        {
+            Debug.LogWarning("[InteractionUI] Discovery retry ignored for a non-active customer.");
+            return;
+        }
+
+        ResetPreRequestDialogue();
+        ShowDialogue(feedback, false);
+
+        if (waitIndicator != null)
+            waitIndicator.SetVisible(false);
+
+        Debug.Log("[InteractionUI] Restored same-customer discovery retry interaction.");
+    }
+
     public void SetCustomerWaitIndicatorVisible(CustomerController customer, bool visible)
     {
         if (activeCustomer != customer || waitIndicator == null)

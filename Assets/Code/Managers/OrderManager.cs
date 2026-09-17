@@ -5,6 +5,8 @@ public class OrderManager : MonoBehaviour
 {
     private const float GuestReactionSequenceDuration = 4f;
     private const float DiscoveryFeedbackGap = 0.1f;
+    private const string DefaultDiscoveryRetryFeedback =
+        "레시피와 다른 부분이 있어요. 층과 순서를 확인하고 다시 만들어 주세요.";
 
     [Header("Debug")]
     [SerializeField] private bool verboseLogging = false;
@@ -154,6 +156,26 @@ public class OrderManager : MonoBehaviour
 
         RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentGuestRequest, matchResult);
         LogRequestEvaluation(currentGuestRequest, matchResult, requestEvaluation);
+
+        bool requiresSuccessfulDiscovery = currentOrder != null &&
+                                           currentOrder.RequiresSuccessfulDiscovery;
+        CocktailRecipeData discoveryTargetRecipe = requiresSuccessfulDiscovery
+            ? GetCurrentExactTargetRecipe()
+            : null;
+        bool successfulDiscovery = MeetsSuccessfulDiscoveryRequirements(
+            currentOrder,
+            currentGuestRequest,
+            discoveryTargetRecipe,
+            matchResult,
+            requestEvaluation,
+            result);
+
+        if (requiresSuccessfulDiscovery && !successfulDiscovery)
+        {
+            RestoreAfterFailedDiscoveryAttempt();
+            return;
+        }
+
         if (recipeUnlockManager != null && result.brewedComposition != null)
         {
             if (matchResult.success && matchResult.matchedRecipe != null)
@@ -168,7 +190,11 @@ public class OrderManager : MonoBehaviour
 
                 bool wasKnown = recipeUnlockManager.IsKnown(matchedRecipe);
 
-                if (result.success && !wasKnown)
+                bool canPromoteMatchedRecipe = requiresSuccessfulDiscovery
+                    ? successfulDiscovery && matchedRecipe == discoveryTargetRecipe
+                    : result.success;
+
+                if (canPromoteMatchedRecipe && !wasKnown)
                 {
                     bool becameKnown = recipeUnlockManager.MarkKnown(matchedRecipe);
 
@@ -272,6 +298,67 @@ public class OrderManager : MonoBehaviour
             Debug.Log("[OrderManager] OnMiniGameDone -> resetting ORDER text to -");
             ui.SetOrderText("ORDER: -");
         }
+    }
+
+    /// <summary>
+    /// Bounded completion rule for explicitly flagged authored recipe-practice
+    /// orders. Ordinary service keeps its historical match/discovery behavior.
+    /// </summary>
+    internal static bool MeetsSuccessfulDiscoveryRequirements(
+        OrderData order,
+        GuestRequestContext request,
+        CocktailRecipeData targetRecipe,
+        RecipeMatchResult matchResult,
+        RequestEvaluationResult requestEvaluation,
+        MiniGameResult result)
+    {
+        return order != null &&
+               order.RequiresSuccessfulDiscovery &&
+               request != null &&
+               request.RequestType == GuestRequestType.ExactCocktail &&
+               targetRecipe != null &&
+               result.expectedRecipe == targetRecipe &&
+               matchResult.success &&
+               matchResult.matchedRecipe == targetRecipe &&
+               requestEvaluation.Status == RequestEvaluationStatus.Satisfied &&
+               result.success &&
+               result.preparationEvaluation != null &&
+               result.preparationEvaluation.Status == RecipePreparationEvaluationStatus.Satisfied;
+    }
+
+    private CocktailRecipeData GetCurrentExactTargetRecipe()
+    {
+        if (recipeUnlockManager == null || currentOrder == null ||
+            currentGuestRequest == null ||
+            currentGuestRequest.RequestType != GuestRequestType.ExactCocktail)
+        {
+            return null;
+        }
+
+        return recipeUnlockManager.GetRecipeForCocktail(
+            currentOrder.requestedCocktail,
+            currentOrder.miniGameType);
+    }
+
+    private void RestoreAfterFailedDiscoveryAttempt()
+    {
+        CustomerController retryCustomer = currentCustomer;
+        string retryFeedback = currentOrder != null &&
+                               !string.IsNullOrWhiteSpace(currentOrder.DiscoveryRetryFeedback)
+            ? currentOrder.DiscoveryRetryFeedback
+            : DefaultDiscoveryRetryFeedback;
+
+        Debug.Log(
+            "[OrderManager] Discovery attempt incomplete. Keeping the same authored customer active for retry.");
+
+        currentCustomer = null;
+        currentOrder = null;
+        currentGuestRequest = null;
+
+        if (ui != null)
+            ui.SetOrderText("ORDER: -");
+
+        retryCustomer?.RestoreAfterDiscoveryRetry(retryFeedback);
     }
 
     private void LogRequestEvaluation(

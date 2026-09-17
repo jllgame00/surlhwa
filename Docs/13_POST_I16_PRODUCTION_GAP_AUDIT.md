@@ -67,6 +67,119 @@ rerun was blocked before project load by the local Unity license/Software Terms
 state, not a project validation failure. J3 may now consume this stable data
 contract.
 
+## J4B Implementation Record (2026-09-17)
+
+J4B adds the bounded authored discovery-practice completion contract without
+altering ordinary orders, matching, recipe knowledge ownership, or the
+four-night schedule. `OrderData.requiresSuccessfulDiscovery` is false by
+default and is enabled only for the existing Day-2 Little Prince first-visit
+Manwol order. A flagged order completes only when its exact target recipe is
+recognized and FIT-satisfied, the mini-game result succeeds, and the shared
+preparation evaluation is satisfied. Recipe knowledge remains owned by
+`RecipeUnlockManager`; a flagged attempt can promote only that exact target
+after the complete gate passes. A recognized non-target recipe is never
+incidentally promoted in that authored practice encounter.
+
+An incomplete flagged attempt receives concise retry feedback through the
+existing interaction surface, restores Brew for the same waiting customer, and
+does not award service completion, trigger departure, or advance the bounded
+schedule. Patience is suppressed only for a flagged discovery-practice
+customer. As departure is still the existing owner of Little Prince's
+first-visit completion persistence, an incomplete attempt cannot consume the
+first visit; its independently persisted Partial facts remain available after
+reload, while the successful served/departure path and Day-3 branch-aware
+return remain unchanged.
+
+Little Prince's existing four narrative lines and choice are preserved. Two
+appended functional teaching lines now reveal Manwol identity, Float, Vodka
+2, Coffee Liqueur 1, Cream 1, and its ordered direct-serving-glass preparation
+as typed Partial knowledge. They do not mark it Known or expose its
+Known-only glassware. `FloatMiniGame` now receives the active expected recipe
+through the existing preparation-expectation receiver seam and forwards its
+existing `BartendingLayeredDrinkState` trace to the shared preparation result
+factory, so Vodka, Coffee Liqueur, then the final Cream layer is enforced
+without a second Float simulation.
+
+The focused J4B validator covers the flag boundary, teaching facts/Guide
+projection, Float expectation and sequence, full completion gate, and
+failed-attempt retry/persistence safety. Its batch-mode execution is currently
+blocked by the local Unity license entitlement before project scripts can load;
+the validator remains intentionally strict and must be rerun in a licensed
+Editor. J3 remains blocked until J4C discovery encounters and J4D required
+scheduling/recovery work are complete.
+
+## J4C Implementation Record (2026-09-17)
+
+J4C adds three isolated authored exact-practice assets without finalizing the
+Day 2--4 schedule: Negroni (`Build`), Manhattan (`Stir`), and Gin Fizz
+(`Shake`). Each order is flagged with the existing J4B
+`requiresSuccessfulDiscovery` contract, points to its production cocktail and
+pre-brew teaching dialogue, and supplies recipe-specific retry copy through
+the existing retry surface. The dialogues grant typed Partial knowledge only:
+identity, method, all ingredient amounts, preparation, and garnish. A correct
+attempt is therefore still required to mark the intended recipe Known; no
+recipe is default-unlocked or marked Known by dialogue.
+
+The preparation/UI seams now read the active expected recipe without changing
+`RecipeMatchService` or recipe data. Build and Stir label the garnish action
+as required only where their authored target requires it (Negroni Orange Slice
+and Manhattan Cherry); ordinary and optional-garnish routes retain their
+previous optional presentation. The shared preparation trace already records
+Manhattan's `Dash`, so a liquid-equivalent `Pour` cannot satisfy its authored
+sequence. Shake now exposes its existing `PourFromContainer` action as the
+primary “Pour to Glass” transfer where the expected Gin Fizz recipe requires
+it, while Shake recipes that expect `Strain` remain unchanged. Gin Fizz Lemon
+garnish stays optional and omitting it does not create a required garnish
+step.
+
+The existing J4 validator now covers all four discovery recipes, their typed
+Partial facts and staged supply, expected preparations (including Manhattan
+Dash, required/optional garnish behavior, and Gin Fizz transfer/Splash), and
+the shared J4B gate/retry boundary. Editor execution remains blocked before
+project load by the local Unity license entitlement; the validator is kept
+strict for a licensed rerun. J4D still owns normal-play discovery scheduling
+and the final end-to-end proof. J3 and J5 remain pending.
+
+## J4D Implementation Record (2026-09-17)
+
+J4D wires the existing J4C authored practice orders into the sole existing
+`CustomerSpawner` in `BarScene`: Little Prince / Manwol remains Day 2 slot 1;
+Negroni is the pending Day 2 slot 2 encounter; the existing branch-aware
+Little Prince return remains Day 3 slot 1; Manhattan is the pending Day 3
+slot 2 encounter; and Gin Fizz is the pending Day 4 slot 1 encounter. Only
+the three new serialized order references were added to the scene. No
+transforms, prefabs, customer counts, or J3/J5 slots were changed: J1's
+interim `5/8/8/8` counts remain until J3D owns final `5/4/4/4` scheduling.
+
+The selector consults the existing `RecipeUnlockManager` and schedules a
+practice order only while its target is not Known. A known Negroni, Manhattan,
+or Gin Fizz therefore receives the ordinary generic fallback for that position
+without regressing Partial/Known knowledge or replaying a discovery unlock.
+The component's spawn count is intentionally transient because normal night
+continuation reloads the Bar scene. Existing persisted Little Prince first and
+follow-up completion flags reconstruct the already-consumed Day 2 / Day 3
+special slots after such a reload, so a still-unknown Negroni or Manhattan
+remains pending without adding a J4 persistence key. An incomplete active
+practice encounter still cannot advance: J4B retains the same customer, and
+the existing spawner increments its counters only at spawn/departure paths.
+
+This establishes the J3 prerequisite sequence through normal play: successful
+Day 2 Manwol and Negroni practice make Manwol and Negroni Known before later
+Day-2/Day-3 requests; successful Day 3 Manhattan practice makes both Warmth
+and Bitterness alternatives available; successful Day 4 Gin Fizz practice
+makes the Awakening route available. Existing staged supply provides each
+recipe's ingredients on its scheduled day; no intended learning route relies
+on temporary exact-order supply injection.
+
+The focused J4 validator now loads the production Bar scene, verifies its
+three references and unchanged interim counts, simulates fresh and reload
+positions, Known skips, Prince priority, and active-customer retry blocking.
+The C# project compiles. Unity's batch Editor continues to exit before project
+scripts load because the local license entitlement is unavailable, so licensed
+runtime/Console validation remains outstanding. J4 implementation is complete;
+J3 is now unblocked for implementation on top of this uncommitted work, and
+J5 remains separate.
+
 This document preserves the findings and recommendations of the completed POST-I16 audit. The authorization that originally saved the report changed only its delivery format; the later J1 authorization is recorded above. Baseline and validation statements below describe the audited state, not newly executed Play Mode tests.
 
 SURLHWA’s core rebuild is ready to support production. The largest remaining gap is the authored playthrough: recipes, ingredients, and reusable mechanics extend considerably beyond the encounters that teach and contextualize them.
