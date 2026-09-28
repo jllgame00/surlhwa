@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: SimCheongResolveBefore
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "심청: 배를 타기 전에 들렀어요."
+  - "심청: 나 이거 할 거예요."
+  - "심청: 무섭지 않다는 말은 안 할래요. 누구의 칭찬 때문이라고도 하지 않을 거예요."
+  - "심청: 손이 식지 않을 잔을 주세요. 조금 쓰더라도 괜찮아요."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals: []

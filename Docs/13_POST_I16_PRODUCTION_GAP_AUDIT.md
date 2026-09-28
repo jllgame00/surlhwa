@@ -2002,3 +2002,7 @@ Audited the existing uncommitted two-visit draft against the full roadmap. Quest
 ## C5 — Faust Main ACT (2026-09-28)
 
 Two visits connect wanting knowledge, recalled signing and the cost that cannot simply be reclaimed. No salvation/condemnation branch is invented. Requests allow Clarity/Awakening and Bitterness/Warmth; service changes responses, not the person's ending. Compile PASS (0 errors), Unity authored-ACT validation PASS (11 visits), Logs/campaign-faust.log exit 0. No scene/prefab changes. Cracked-glass spatial memory and full-route proof remain integration dependencies. Tone/pacing: HUMAN_SIGNOFF_REQUIRED.
+
+## C6 — Sim Cheong Main ACT (2026-09-28)
+
+Three visits preserve the roadmap's talkative uncertainty, self-owned resolve before the boat and changed, calm return after meeting her father. Her decision is not a bartender success reward; fear and agency remain explicit without staging the original event. Warmth/Clarity/Bitterness requests retain alternatives. Compile PASS (0 errors), Unity authored-ACT validation PASS (14 visits), Logs/campaign-simcheong.log exit 0. No scene/prefab changes. Lotus memory and normal-play remain integration dependencies; emotional/pacing quality is HUMAN_SIGNOFF_REQUIRED. Father revisit excluded.

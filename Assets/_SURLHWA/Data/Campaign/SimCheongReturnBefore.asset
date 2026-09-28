@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: SimCheongReturnBefore
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "심청: 아버지를 만나고 왔어요."
+  - "그녀는 지난번에 앉았던 자리를 찾아 조용히 손을 놓는다."
+  - "심청: 괜찮아요. 예전 같다는 말은 아니에요. 오늘은 여기 앉아 있어도 괜찮다는 뜻이에요."
+  - "심청: 돌아온 사람이 천천히 마실 잔을 부탁해요. 따뜻해도, 물빛처럼 맑아도 좋겠어요."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals: []
