@@ -42,6 +42,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
     private const string BartendingScenePath = "Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity";
 
     [SerializeField] private Camera barMainCamera;
+    [SerializeField] private DemoAudioController presentationAudio;
 
     private bool isBartendingActive;
     private int sessionGeneration;
@@ -349,6 +350,7 @@ public class BartendingFlowCoordinator : MonoBehaviour
 
                 capturedResult = result;
             });
+            presentationAudio?.ObserveBartending(runner);
         }
         catch (Exception exception)
         {

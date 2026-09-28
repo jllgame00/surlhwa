@@ -166,8 +166,12 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     private void Update()
     {
-        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+        {
+            // Input and the unscaled rhythm timeline must pause together.
+            if (state == State.Rhythm) rhythmStartTime += Time.unscaledDeltaTime;
             return;
+        }
 
         switch (state)
         {

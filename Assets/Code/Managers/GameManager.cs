@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         contentRect.anchorMin = new Vector2(0.5f, 0.5f);
         contentRect.anchorMax = new Vector2(0.5f, 0.5f);
         contentRect.pivot = new Vector2(0.5f, 0.5f);
-        contentRect.sizeDelta = new Vector2(460f, 300f);
+        contentRect.sizeDelta = new Vector2(460f, 400f);
 
         VerticalLayoutGroup layout = content.AddComponent<VerticalLayoutGroup>();
         layout.padding = new RectOffset(36, 36, 32, 32);
@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         contentImage.color = new Color(0.12f, 0.1f, 0.09f, 1f);
 
         CreateEntryText("Title", "SURLHWA", 42f, content.transform);
-        CreateEntryText("Subtitle", "Production Demo", 20f, content.transform);
+        CreateEntryText("Subtitle", "네 번의 밤 · Esc 소리 설정", 20f, content.transform);
         CreateEntryButton("NewGameButton", "New Game", BeginNewGame, true, content.transform);
         CreateEntryButton(
             "ContinueButton",
@@ -151,6 +151,9 @@ public class GameManager : MonoBehaviour
             ContinueGame,
             SurlhwaGameProgress.HasMeaningfulProgress(),
             content.transform);
+        DemoAudioController audio = GetComponent<DemoAudioController>();
+        if (audio != null)
+            CreateEntryButton("SoundSettingsButton", "소리 설정", audio.ToggleSettings, true, content.transform);
     }
 
     private static GameObject CreateRectObject(string objectName, Transform parent)

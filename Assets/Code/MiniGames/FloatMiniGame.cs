@@ -170,7 +170,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void Update()
     {
-        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
             return;
 
         if (state == State.Preparing)

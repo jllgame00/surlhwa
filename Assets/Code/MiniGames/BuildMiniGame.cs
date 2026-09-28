@@ -222,7 +222,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void Update()
     {
-        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
             return;
 
         if (state == BuildState.Preparing)

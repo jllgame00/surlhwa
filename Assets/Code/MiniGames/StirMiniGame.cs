@@ -148,7 +148,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     private void Update()
     {
-        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
             return;
 
         switch (state)

@@ -1853,3 +1853,37 @@ HUMAN_SIGNOFF_REQUIRED. Seated poses currently reuse standing drafts; dedicated
 pose/animation refinement is DEFERRED_PRESENTATION, not an animation-complete
 claim. Bar dressing and ingredient icon refinement remain separately reviewable;
 existing IngredientData labels continue to identify supplied ingredients.
+
+
+## J7 Temporary Audio and Settings Integration (2026-09-28)
+
+Seven owner-authorized original synthesized audio drafts are generated reproducibly
+by `Tools/generate_demo_audio.mjs`. No external sound source is introduced.
+`Docs/AUDIO_DRAFTS.md` records provenance, roles, defaults and review limits.
+The scene-owned DemoAudioController is serialized on the existing GameManager
+host, with explicit spawner and coordinator references. The coordinator passes
+its loaded runner for read-only observation of accepted preparation/volume.
+Music, wind, pouring, ice, glass, entrance/departure and UI sound are integrated.
+No recipe, matching, FIT, score or knowledge responsibility moves.
+
+The existing settings button, entry sound button and Esc expose master/music/
+effects sliders and mute. Additive preference keys survive gameplay New Game.
+Settings owns a bounded read pause, restores previous timing, and does not stack
+over an open Guide. Technique input is blocked while it is open. Shake now shifts
+its unscaled rhythm origin throughout Guide/settings pauses, fixing the objective
+case where notes expired while the player read.
+
+Unity `SURLHWAAudioPlayModeValidation.Run` PASS in
+`Logs/production-audio-playmode.log`: seven imported clips, exactly four owned
+sources, actual slider/mute controls, silence at zero/mute, preference preservation
+through reset, explicit additive runner handoff, continuous accepted-pour audio
+start/stop, two 1.1-second reading pauses without missed notes, resumed eight-note
+Shake and clean unload. This is live source/control/timing evidence, not an auditory
+mix approval. Batch ScreenCapture did not produce a review PNG; no screenshot or
+visual-readability PASS is inferred. C# build passes; prior full-route evidence is
+retained. Scene changes are one component, seven clips, one existing settings
+button reference and two explicit same-scene audio references; no prefab edits.
+
+J7 playback/settings technical prerequisites are implemented. Temporary sound
+quality, loudness, loop feel and atmosphere remain HUMAN_SIGNOFF_REQUIRED. No
+final soundtrack, bar dressing, or broad presentation approval is claimed.

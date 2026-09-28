@@ -1843,6 +1843,7 @@ GameObject:
   m_Component:
   - component: {fileID: 202206313}
   - component: {fileID: 202206314}
+  - component: {fileID: 202206315}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1877,6 +1878,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70b2bc35a6544647abb174cd7d32aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &202206315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202206311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6975232c2714aa5a646fd466a445a13, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DemoAudioController
+  musicClip: {fileID: 8300000, guid: 07f8b36a320a4ea5a753e649a8d53075, type: 3}
+  ambienceClip: {fileID: 8300000, guid: 35d4d1922b6e443aa4329bb710835b8a, type: 3}
+  pourClip: {fileID: 8300000, guid: 65fef788d7d448458b0a708d7bb3d0aa, type: 3}
+  iceClip: {fileID: 8300000, guid: 7701f41298684218842d9e1820afaf13, type: 3}
+  glassClip: {fileID: 8300000, guid: ef11f4fc395343f9b63f56287a9c4513, type: 3}
+  doorClip: {fileID: 8300000, guid: 9225a01687044233bdb8adce4b7c9881, type: 3}
+  pageClip: {fileID: 8300000, guid: 09a352ed2cb44dd390494e96173146bd, type: 3}
+  settingsButton: {fileID: 130158580}
 --- !u!1 &212485327
 GameObject:
   m_ObjectHideFlags: 0
@@ -15030,6 +15051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 4898275966391150351, guid: 43b8b1b7d7afeb847bbd018220b17f41, type: 3}
+  presentationAudio: {fileID: 202206315}
   generalCustomerPrefabs:
   - {fileID: 4898275966391150351, guid: 43b8b1b7d7afeb847bbd018220b17f41, type: 3}
   - {fileID: 5841097236827498169, guid: fa5d4e255987f7a42a3a4dd5b6b16409, type: 3}
@@ -15479,6 +15501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BartendingFlowCoordinator
   barMainCamera: {fileID: 519420031}
+  presentationAudio: {fileID: 202206315}
 --- !u!1 &1787717737
 GameObject:
   m_ObjectHideFlags: 0

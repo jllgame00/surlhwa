@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
+    [SerializeField] private DemoAudioController presentationAudio;
+
     [Header("Spawn")]
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private GameObject[] generalCustomerPrefabs;
@@ -222,6 +224,7 @@ public class CustomerSpawner : MonoBehaviour
             customer.defaultExitPoint = defaultExitPoint;
 
         customer.AssignSeat(seat);
+        presentationAudio?.PlayDoor();
         Debug.Log($"[CustomerSpawner] Spawned customer at seat {seat.name}");
     }
 
@@ -254,6 +257,7 @@ public class CustomerSpawner : MonoBehaviour
             activeCustomerIsLittlePrinceClosingVisit = false;
         }
 
+        presentationAudio?.PlayDoor();
         servedCount++;
         Debug.Log($"[CustomerSpawner] Customer left. Served={servedCount}");
 
