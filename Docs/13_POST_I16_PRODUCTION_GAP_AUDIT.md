@@ -1603,3 +1603,35 @@ Serialized diff contains only the two teaching lines and their four typed
 facts; no scene or prefab changes. `git diff --check` passed.
 Normal-input Day-1 teaching/readability remains VALIDATION_DEBT and
 HUMAN_SIGNOFF_REQUIRED respectively; this run does not claim Play Mode PASS.
+
+
+## J5 Owner Direction — Three-Visit Farewell (2026-09-28)
+
+The owner resolved the closing meaning and failure policy:
+
+- The third Little Prince visit is the bounded-demo final visit.
+- Correct service in all three visits leads to the open farewell.
+- An incorrect cocktail in any visit leads to the quiet farewell. A later
+  successful service does not erase an earlier incorrect service.
+- Failed service is accepted as part of the story and resolves the visit;
+  the Prince must not be held in a forced-success retry loop.
+- The first and second requests need not both require Manwol. Cocktail
+  suitability should follow the authored dialogue at each visit.
+- The open farewell should support a later Prince-related statue reward.
+  The owner described that reward as future work; no statue asset or
+  immediate reward presentation is selected in this record.
+
+These are approved directions, not a claim of implemented J5 behavior.
+The current first-visit mandatory Manwol discovery gate must be reconciled
+with accepted narrative failure while preserving fair Manwol learning
+through the existing Recipe Knowledge architecture. Follow-up requests
+must retain real knowledge/supply/method reachability. Existing A/B choice
+recollection and legacy save compatibility remain required.
+
+One outcome detail was submitted for owner clarification: whether a
+request-fitting cocktail counts despite poor execution, or whether all
+three visits also require successful technique/preparation. FIT and
+execution currently have separate authorities. This choice affects the
+story outcome, so no combined success threshold has been invented.
+J5 implementation remains PARTIAL pending this criterion; normal-play
+validation and subjective farewell review remain outstanding.
