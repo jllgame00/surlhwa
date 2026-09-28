@@ -1826,3 +1826,30 @@ pause must preserve remaining note times; this is an objective fix, not polish.
 J6/J7 presentation work and standalone delivery are still open. The owner has
 now authorized temporary winter-bar audio and character drafts as well as their
 technical integration; final aesthetic approval remains human-owned.
+
+
+## J6 Character Draft Integration (2026-09-28)
+
+Owner-approved temporary winter-bar character direction is now connected through
+three existing prefabs: Little Prince, Customer_A and Customer_B. Original PNGs
+were generated with built-in imagegen using Seolya texture/light as reference;
+exact prompts and provenance are in `Docs/CHARACTER_ART_DRAFTS.md`. New sprite
+imports preserve the existing two-unit world canvas and feet baseline. Each
+prefab's SpriteRenderer and standing/seated fields use its own draft; the Prince's
+obsolete red placeholder tint is reset to white. Customer_B's existing interaction
+anchor is now assigned. The scene's existing generic-variant array now references
+A and B; existing anti-repeat logic is reused, with no new spawn system.
+
+Unity `SURLHWAPresentationValidation.RunCharacters` PASS verifies three distinct
+resolving sprites, prefab presentation fields, bounded world scale, interaction
+anchors and PNG alpha. Log: `Logs/production-character-drafts.log`, exit 0.
+C# build passes with the same eight existing warnings. Prefab diffs were inspected:
+three sprite references each, one Prince tint, one B anchor; scene diff is only
+the two-entry existing variant array. No transforms, IDs, recipe facts or narrative
+outcomes change. `git diff --check` passes.
+
+Final character identity, tone, placement and composition remain
+HUMAN_SIGNOFF_REQUIRED. Seated poses currently reuse standing drafts; dedicated
+pose/animation refinement is DEFERRED_PRESENTATION, not an animation-complete
+claim. Bar dressing and ingredient icon refinement remain separately reviewable;
+existing IngredientData labels continue to identify supplied ingredients.

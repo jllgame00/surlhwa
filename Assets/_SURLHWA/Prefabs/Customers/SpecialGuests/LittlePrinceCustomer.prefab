@@ -114,8 +114,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 445801905374030838, guid: 5a82a0d7d69b1194c81f3ffd7987a8c6, type: 3}
-  m_Color: {r: 0.8301887, g: 0.39551443, b: 0.39551443, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 4bbb301cf9f6499395520435a746a3cc, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -138,8 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   arriveThreshold: {x: 0.05, y: 0.05}
-  standSprite: {fileID: 0}
-  sitSprite: {fileID: 0}
+  standSprite: {fileID: 21300000, guid: 4bbb301cf9f6499395520435a746a3cc, type: 3}
+  sitSprite: {fileID: 21300000, guid: 4bbb301cf9f6499395520435a746a3cc, type: 3}
   defaultExitPoint: {fileID: 0}
   dialogueData: {fileID: 11400000, guid: 4c2a9d870f1e4f9ab6d27c8e53109a42, type: 2}
   dialogueBubblePrefab: {fileID: 6878723193407893406, guid: 5e1bead4382e36a4e82ba6bcf17e1432, type: 3}

@@ -15030,7 +15030,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 4898275966391150351, guid: 43b8b1b7d7afeb847bbd018220b17f41, type: 3}
-  generalCustomerPrefabs: []
+  generalCustomerPrefabs:
+  - {fileID: 4898275966391150351, guid: 43b8b1b7d7afeb847bbd018220b17f41, type: 3}
+  - {fileID: 5841097236827498169, guid: fa5d4e255987f7a42a3a4dd5b6b16409, type: 3}
   avoidSameCustomerPrefabTwice: 1
   spawnPoint: {fileID: 1749289295}
   seatManager: {fileID: 1051261802}
