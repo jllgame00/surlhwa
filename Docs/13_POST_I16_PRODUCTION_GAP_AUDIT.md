@@ -1994,3 +1994,7 @@ Five authored visits cover opposite meeting perspectives, departure, silent humi
 ## C3 — Don Quixote Main ACT (2026-09-28)
 
 Declaration and remembered ridicule lead to clearer conviction and a solitary departure; the ideal is not played as a drunken joke. Authored requests, pre-service dialogue, separate successful/weak-service responses and read-before-departure lines are implemented. dotnet compile and Unity authored-ACT validation PASS (7 cumulative unique visits). No scene/prefab changes or future revisits. Normal-play, memory and localized presentation proof remain dependent on campaign integration; subjective tone/pacing remain HUMAN_SIGNOFF_REQUIRED.
+
+## C4 — Hamlet Main ACT (2026-09-28)
+
+Audited the existing uncommitted two-visit draft against the full roadmap. Question, lifting/lowering the glass and unresolved departure preserve inaction; successful service does not cure it. Both visits request interpretation and carry a local stillness presentation flag. No TimeScale, input or global audio changes. Compile PASS (0 errors), Unity authored-ACT validation PASS (9 visits), Logs/campaign-hamlet.log exit 0. Scene/prefab changes: none. Local staging, memories and normal-play proof remain integration dependencies; emotional/pacing quality is HUMAN_SIGNOFF_REQUIRED.
