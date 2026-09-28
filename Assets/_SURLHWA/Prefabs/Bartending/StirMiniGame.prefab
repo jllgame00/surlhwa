@@ -4198,7 +4198,7 @@ MonoBehaviour:
   cup: {fileID: 0}
   spoon: {fileID: 0}
   spoonInCup: {fileID: 0}
-  spoonOrbitRadius: 16
+  spoonOrbitRadius: 60
   spoonOrbitYScale: 0.65
   spoonBaseAngleDeg: 90
   spoonVisualSmoothingSeconds: 0.08

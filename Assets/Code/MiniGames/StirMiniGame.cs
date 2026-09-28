@@ -42,6 +42,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     [SerializeField] private float spoonOrbitRadius = 16f;
     [SerializeField] private float spoonOrbitYScale = 0.65f;
     [SerializeField] private float spoonBaseAngleDeg = 90f;
+    [SerializeField] private float spoonShaftTiltDegrees = 8f;
     [SerializeField, Min(0.01f)] private float spoonVisualSmoothingSeconds = 0.08f;
 
     [Header("Direct Stir Tuning")]
@@ -192,6 +193,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         StopDirectPour("Stir started");
         state = State.Stirring;
+        if (spoon != null) spoon.gameObject.SetActive(true);
         techniqueTracker.Reset();
 
         ingredientShelf.SetVisible(false);
@@ -212,7 +214,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (state != State.Stirring || techniqueTracker == null)
             return false;
 
-        if (!float.IsNaN(angleDeg) && !float.IsInfinity(angleDeg))
+        bool acceptedMotion = techniqueTracker.RecordAngle(angleDeg, deltaTime);
+        if ((acceptedMotion || !hasSpoonVisualTarget) && !float.IsNaN(angleDeg) && !float.IsInfinity(angleDeg))
         {
             // Visual following consumes the same valid cursor angle as the
             // tracker, but never writes rotation back into technique truth.
@@ -220,8 +223,6 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             targetSpoonVisualAngleDeg = angleDeg;
             hasSpoonVisualTarget = true;
         }
-
-        bool acceptedMotion = techniqueTracker.RecordAngle(angleDeg, deltaTime);
 
         UpdateProgressText();
         return acceptedMotion;
@@ -251,6 +252,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             RecipePreparationAction.Stir,
             BartendingContainerType.MixingGlass);
         state = State.AwaitingStrain;
+        if (spoon != null) spoon.gameObject.SetActive(false);
 
         if (resultLabel != null)
             resultLabel.text = completedGrade.ToString();
@@ -576,12 +578,17 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             return;
 
         float radians = angleDeg * Mathf.Deg2Rad;
-        Vector2 orbit = new Vector2(
-            Mathf.Cos(radians) * spoonOrbitRadius,
-            Mathf.Sin(radians) * spoonOrbitRadius * spoonOrbitYScale);
-
-        spoon.anchoredPosition = center.anchoredPosition + orbit;
-        spoon.localRotation = Quaternion.Euler(0f, 0f, spoonBaseAngleDeg + angleDeg);
+        // The spoon's bowl is the pivot. Its tip orbits inside the vessel;
+        // the shaft stays almost upright instead of rotating through 360 degrees.
+        float vesselWidth = Mathf.Abs(spoon.parent.InverseTransformVector(
+            center.TransformVector(Vector3.right * center.rect.width)).x);
+        float radius = Mathf.Min(spoonOrbitRadius, vesselWidth * .35f);
+        Vector2 orbit = new Vector2(Mathf.Cos(radians) * radius,
+            Mathf.Sin(radians) * radius * spoonOrbitYScale);
+        Vector3 origin = center.TransformPoint(center.rect.center + Vector2.up * center.rect.height * .12f);
+        spoon.position = origin + spoon.parent.TransformVector(orbit);
+        spoon.localRotation = Quaternion.Euler(0f, 0f,
+            spoonBaseAngleDeg + Mathf.Cos(radians) * spoonShaftTiltDegrees);
     }
 
     private void ResetSpoonPose()
@@ -594,6 +601,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (spoon == null)
             return;
 
+        spoon.pivot = new Vector2(0f, .5f);
+        spoon.gameObject.SetActive(false);
         RectTransform center = GetSpoonCenter();
         if (center != null)
             spoon.anchoredPosition = center.anchoredPosition;
@@ -603,7 +612,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     private RectTransform GetSpoonCenter()
     {
-        return spoonInCup != null ? spoonInCup : cup;
+        return cup != null ? cup : spoonInCup;
     }
 
     private static Camera ResolveUiCamera(RectTransform element)
@@ -737,6 +746,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         if (cup == null)
             cup = transform.Find("UI/Cup")?.GetComponent<RectTransform>();
+        if (cup == null)
+            cup = transform.Find("UI/CupBack")?.GetComponent<RectTransform>();
 
         if (spoon == null)
             spoon = transform.Find("UI/Spoon")?.GetComponent<RectTransform>();

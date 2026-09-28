@@ -15,6 +15,7 @@ public sealed class ServingGlassGentleStirInteraction
     private readonly float minimumMouseRadiusPixels;
     private readonly float spoonOrbitRadius;
     private readonly float spoonVisualSmoothingSeconds;
+    private readonly float shaftTiltDegrees;
     private readonly StirTechniqueTracker tracker;
 
     private RectTransform center;
@@ -36,13 +37,15 @@ public sealed class ServingGlassGentleStirInteraction
         float minimumMouseRadiusPixels = 36f,
         float maximumAngularJumpDegrees = 110f,
         float spoonOrbitRadius = 18f,
-        float spoonVisualSmoothingSeconds = 0.08f)
+        float spoonVisualSmoothingSeconds = 0.08f,
+        float shaftTiltDegrees = 8f)
     {
         this.minimumDurationSeconds = Mathf.Max(0.1f, minimumDurationSeconds);
         this.minimumRevolutions = Mathf.Max(0.1f, minimumRevolutions);
         this.minimumMouseRadiusPixels = Mathf.Max(1f, minimumMouseRadiusPixels);
         this.spoonOrbitRadius = Mathf.Max(1f, spoonOrbitRadius);
         this.spoonVisualSmoothingSeconds = Mathf.Max(0.01f, spoonVisualSmoothingSeconds);
+        this.shaftTiltDegrees = Mathf.Clamp(shaftTiltDegrees, 0f, 25f);
         tracker = new StirTechniqueTracker(maximumAngularJumpDegrees);
     }
 
@@ -83,9 +86,7 @@ public sealed class ServingGlassGentleStirInteraction
         }
 
         float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-        SetVisualTarget(angle);
-        tracker.RecordAngle(angle, Time.deltaTime);
-        UpdateSpoonVisual(Time.unscaledDeltaTime);
+        TryRecordAngle(angle, Time.deltaTime);
     }
 
     /// <summary>
@@ -97,8 +98,8 @@ public sealed class ServingGlassGentleStirInteraction
         if (!active)
             return false;
 
-        SetVisualTarget(angle);
         bool accepted = tracker.RecordAngle(angle, deltaTime);
+        if (accepted || !hasVisualTarget) SetVisualTarget(angle);
         UpdateSpoonVisual(deltaTime);
         return accepted;
     }
@@ -151,7 +152,7 @@ public sealed class ServingGlassGentleStirInteraction
         RectTransform rect = runtimeSpoonObject.GetComponent<RectTransform>();
         rect.anchorMin = new Vector2(0.5f, 0.5f);
         rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.pivot = new Vector2(0.5f, 0.2f);
+        rect.pivot = new Vector2(0.5f, 0f);
         rect.anchoredPosition = new Vector2(spoonOrbitRadius, 0f);
         rect.sizeDelta = new Vector2(10f, 76f);
         return rect;
@@ -183,7 +184,7 @@ public sealed class ServingGlassGentleStirInteraction
         spoonVisual.anchoredPosition = new Vector2(
             Mathf.Cos(radians) * spoonOrbitRadius,
             Mathf.Sin(radians) * spoonOrbitRadius * 0.65f);
-        spoonVisual.localRotation = Quaternion.Euler(0f, 0f, visualAngle - 90f);
+        spoonVisual.localRotation = Quaternion.Euler(0f, 0f, Mathf.Cos(radians) * shaftTiltDegrees);
     }
 
     private static Camera ResolveUiCamera(RectTransform rect)

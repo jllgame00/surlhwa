@@ -15,6 +15,7 @@ public static class SURLHWAPhysicalBartendingValidation
     {
         Unity.CodeEditor.CodeEditor.CurrentEditor.SyncAll();
         ValidateMeasurement();
+        ValidateSpoonOrbit();
         foreach (string method in new[] { "Build", "Stir", "Shake", "Float" })
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
@@ -58,6 +59,43 @@ public static class SURLHWAPhysicalBartendingValidation
     private static void Require(bool condition, string message)
     {
         if (!condition) throw new InvalidOperationException("[Phase K Physical] " + message);
+    }
+
+    private static void ValidateSpoonOrbit()
+    {
+        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_SURLHWA/Prefabs/Bartending/StirMiniGame.prefab");
+        var root = UnityEngine.Object.Instantiate(prefab);
+        try
+        {
+            var stir = root.GetComponent<StirMiniGame>();
+            stir.StartGame(_ => { });
+            var spoon = root.transform.Find("UI/Spoon") as RectTransform;
+            var cup = root.transform.Find("UI/CupBack") as RectTransform;
+            var pose = typeof(StirMiniGame).GetMethod("UpdateSpoonPose",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Vector3 first = default;
+            for (int angle = 0; angle <= 360; angle += 30)
+            {
+                pose.Invoke(stir, new object[] { (float)angle });
+                Vector3 tipInCup = cup.InverseTransformPoint(spoon.position);
+                Require(cup.rect.Contains(tipInCup), "Stir spoon tip left the vessel.");
+                Require(Mathf.Abs(Mathf.DeltaAngle(90f, spoon.localEulerAngles.z)) < 20f,
+                    "Spoon windmill regression: shaft made a full rotation.");
+                if (angle == 0) first = spoon.position;
+                if (angle == 180) Require(Vector3.Distance(first, spoon.position) > 20f, "Spoon did not orbit.");
+                if (angle == 360) Require(Vector3.Distance(first, spoon.position) < .01f, "Orbit does not close.");
+            }
+            var gentle = new ServingGlassGentleStirInteraction();
+            gentle.Begin(cup, root.transform.Find("UI"));
+            for (int i = 0; i <= 180; i++) gentle.TryRecordAngle(i * 4f, 1f / 60f);
+            var gentleSpoon = cup.Find("RuntimeGentleStirSpoon");
+            Require(Mathf.Abs(Mathf.DeltaAngle(0f, gentleSpoon.localEulerAngles.z)) < 20f,
+                "GentleStir shaft made a full rotation.");
+            Require(gentle.Revolutions > 1.9f, "Presentation changed technique rotation.");
+            gentle.End();
+        }
+        finally { UnityEngine.Object.DestroyImmediate(root); }
+        Debug.Log("[Phase K Stir] PASS: real scaled prefab, tip inside vessel, closed orbit, stable shaft and unchanged technique authority.");
     }
 
     private static void ValidateMeasurement()

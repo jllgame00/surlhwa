@@ -111,3 +111,19 @@ correct final target and action trace for Strain and PourFromContainer. The
 shared campaign test driver now waits for these real asynchronous transfers;
 its assertions are unchanged. Full campaign replay follows K11. No serialized
 scene/prefab changes. Tool timing/art remain HUMAN_TUNING_LATER/DEFERRED_ART.
+
+## K5 — Stir tip orbit
+
+The existing spoon now pivots at its bowl, travels around the actual Mixing
+Glass interior in a common parent coordinate space and keeps an almost upright
+shaft (8-degree first-pass lean). Orbit radius is clamped to vessel width;
+the production prefab changes only radius 16 → 60 UI units. No rotation is
+added to gameplay by visual smoothing. Rejected cursor jumps no longer move
+the visual target. GentleStir receives the same shaft fix and Shake's gentle
+stir now uses its actual serving vessel rather than a duplicate fallback.
+
+Dotnet PASS, 0 errors. Focused real-prefab Editor tests verify a closed orbit,
+tip inside the scaled vessel and a bounded shaft at every 30 degrees; GentleStir
+still accumulates two input revolutions. Existing I15 and integrated campaign
+regressions PASS (`Logs/phase-k5-regression.log`, exit 0). Visual feel is not
+approved; runtime integrated technique validation follows K11.

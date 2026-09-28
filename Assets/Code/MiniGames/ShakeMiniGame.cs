@@ -613,6 +613,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         StopServingPour("Gentle Stir started");
         RectTransform center = transform.Find("UI/GlassImage")?.GetComponent<RectTransform>();
+        if (center == null) center = ingredientShelf.PhysicalPresentation?.GetVessel(ingredientShelf.ServingGlass);
         Transform visualParent = transform.Find("UI") ?? transform;
         if (gentleStirInteraction == null || !gentleStirInteraction.Begin(center, visualParent))
         {
