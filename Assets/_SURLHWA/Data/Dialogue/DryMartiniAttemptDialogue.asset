@@ -13,6 +13,24 @@ MonoBehaviour:
   m_Name: DryMartiniAttemptDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   onEnterLines:
-  - "\uC774\uC81C\uB294 \uC2A4\uC2A4\uB85C \uB9DE\uB294 \uD55C \uC794\uC744 \uB9CC\uB4E4 \uC218 \uC788\uC744 \uAC70\uC608\uC694."
+  - "앞서 들은 재료를 함께 써 볼까요. 믹싱 글라스에 진 60 ml, 드라이 베르무트 10 ml를 차례로 담아 주세요."
+  - "얼음을 넣고 바 스푼으로 저은 뒤, 얼음은 남겨 두고 잔에 따라 주세요. 레몬 껍질이나 올리브 장식은 더해도, 생략해도 괜찮아요."
   onSuccessLines: []
   onFailLines: []
+  onEnterKnowledgeReveals:
+  - lineIndex: 0
+    reveals:
+    - recipe: {fileID: 11400000, guid: f1c4921f13e32b9458ede7f1d1e20276, type: 2}
+      fact: 8
+      ingredient: {fileID: 11400000, guid: 3d52aad9ecb349940ba46b3879093ef9, type: 2}
+    - recipe: {fileID: 11400000, guid: f1c4921f13e32b9458ede7f1d1e20276, type: 2}
+      fact: 8
+      ingredient: {fileID: 11400000, guid: d87060247a6223b409ea94a876a824cf, type: 2}
+  - lineIndex: 1
+    reveals:
+    - recipe: {fileID: 11400000, guid: f1c4921f13e32b9458ede7f1d1e20276, type: 2}
+      fact: 32
+      ingredient: {fileID: 0}
+    - recipe: {fileID: 11400000, guid: f1c4921f13e32b9458ede7f1d1e20276, type: 2}
+      fact: 16
+      ingredient: {fileID: 0}

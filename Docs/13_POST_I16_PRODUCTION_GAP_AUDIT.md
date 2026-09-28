@@ -1574,3 +1574,32 @@ Continue and Demo Complete without Day 5. J6/J7 presentation/audio selection
 and integration, J8/J9 full acceptance and the final release audit remain open.
 Reserve cocktails, other literary ACTs and generalized progression systems
 remain OUT_OF_SCOPE for this bounded demo.
+
+
+## Dry Martini Teaching Contract — Owner Resolution (2026-09-28)
+
+The owner approved teaching quantities and preparation before the Day-1
+experiment. The first three clues retain their original fact boundaries.
+The fourth encounter now teaches Gin 60 ml then Dry Vermouth 10 ml in the
+Mixing Glass, ice, Stir, Strain, and optional lemon twist/olive garnish.
+Typed facts are granted only as each of the two lines is consumed. The Guide
+retains them as unnamed Partial knowledge; dialogue does not grant Known.
+The existing ordinary failure/departure behavior remains; mandatory retry
+was not part of this approval. Stable recipe/ingredient identities and
+preparation truth are unchanged.
+
+The focused I11C validator retains early-clue non-leak assertions and now
+checks exact final teaching facts, unnamed Guide projection, persistence
+after failure, and match-only Known transition. Historical hidden-amount
+findings above remain historical.
+
+Validation: C# Editor build passed with zero errors and the same eight
+existing warnings. Unity 6000.3.7f1 production regression passed I10-I16,
+J1, J2/J2.1, J4 and J3 static/edit-mode integration checks after the I16
+final-attempt assertion was updated to the owner-approved teaching contract.
+Early-clue non-leak and no automatic Known assertions remain intact.
+Log: `Logs/production-dry-teaching-regression-fixed.log`.
+Serialized diff contains only the two teaching lines and their four typed
+facts; no scene or prefab changes. `git diff --check` passed.
+Normal-input Day-1 teaching/readability remains VALIDATION_DEBT and
+HUMAN_SIGNOFF_REQUIRED respectively; this run does not claim Play Mode PASS.

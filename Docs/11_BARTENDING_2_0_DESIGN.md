@@ -861,9 +861,11 @@ only as internal request/match context; its player-facing dialogue and order
 name do not reveal identity. The representative policy leaves identity hidden
 until a successful match grants `Known`.
 
-The Guide retains each Partial fact between encounters and reloads. A failed
-Gin-only attempt preserves Partial knowledge rather than revealing recipe
-amounts or identity; a successful current matcher result retains the established
+The Guide retains each Partial fact between encounters and reloads. The final
+attempt now teaches both exact amounts, preparation and optional garnish in
+consumed dialogue, following the owner-approved production learning contract.
+A failed Gin-only attempt preserves these Partial facts without revealing
+identity; a successful current matcher result retains the established
 `MarkKnown` and one-time unlock-feedback behavior. A technically matched but
 policy-rejected attempt is kept unnamed by result presentation. This is
 intentionally one content arc, not a customer-memory framework, generalized clue graph, or

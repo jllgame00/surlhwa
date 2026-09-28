@@ -99,8 +99,20 @@ public static class SURLHWADryMartiniDiscoveryArcValidation
         Require(HasSingleReveal(encounters[2].PreBrewDialogue, dryMartini, RecipeKnowledgeFact.Ingredient,
                     FindIngredient(dryMartini, "dry_vermouth")),
             "Encounter 3 must teach only Dry Vermouth through an authored dialogue fact.");
-        Require(encounters[3].PreBrewDialogue.GetOnEnterKnowledgeReveals(0).Length == 0,
-            "The final discovery opportunity must not reveal further recipe facts.");
+        DialogueData teaching = encounters[3].PreBrewDialogue;
+        RecipeKnowledgeReveal[] amounts = teaching.GetOnEnterKnowledgeReveals(0);
+        RecipeKnowledgeReveal[] preparation = teaching.GetOnEnterKnowledgeReveals(1);
+        Require(teaching.onEnterLines.Length == 2 && amounts.Length == 2 && preparation.Length == 2,
+            "The final attempt must teach both amounts, preparation and optional garnish through two consumed lines.");
+        Require(amounts[0].Recipe == dryMartini && amounts[1].Recipe == dryMartini &&
+                amounts[0].Fact == RecipeKnowledgeFact.IngredientAmount &&
+                amounts[1].Fact == RecipeKnowledgeFact.IngredientAmount &&
+                amounts[0].Ingredient == FindIngredient(dryMartini, "gin") &&
+                amounts[1].Ingredient == FindIngredient(dryMartini, "dry_vermouth") &&
+                preparation[0].Recipe == dryMartini && preparation[1].Recipe == dryMartini &&
+                preparation[0].Fact == RecipeKnowledgeFact.Preparation &&
+                preparation[1].Fact == RecipeKnowledgeFact.Garnish,
+            "Final teaching must use exact recipe facts without granting identity or Known.");
     }
 
     private static void ValidateAvailability(
@@ -173,6 +185,20 @@ public static class SURLHWADryMartiniDiscoveryArcValidation
                     !Contains(partialDetail, "0.34 oz"),
                 "Partial Guide must show only learned ingredients, never identity or unlearned amounts.");
 
+            DialogueData teaching = encounters[3].PreBrewDialogue;
+            for (int line = 0; line < teaching.onEnterLines.Length; line++)
+                foreach (RecipeKnowledgeReveal reveal in teaching.GetOnEnterKnowledgeReveals(line))
+                    Require(reveal.TryApply(manager), "Consumed final teaching did not add its authored fact.");
+            RecipeKnowledgeFacts taught = manager.GetKnownFacts(dryMartini);
+            Require(taught.State == RecipeKnowledgeState.Partial && !taught.IdentityKnown &&
+                    taught.IsIngredientAmountKnown(gin) && taught.IsIngredientAmountKnown(dryVermouth) &&
+                    taught.PreparationKnown && taught.GarnishKnown,
+                "Teaching must leave an unnamed Partial recipe with actionable quantities and preparation.");
+            Require(ContainsAll(RecipeKnowledgeGuideFormatter.BuildDetailText(dryMartini, taught),
+                        "2.03 oz", "0.34 oz", "Stir", "Strain") &&
+                    RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, taught) == "Unknown Cocktail",
+                "Guide must retain the taught amounts/steps without revealing the cocktail identity.");
+
             RecipeMatchResult failedMatch = RecipeMatchService.FindBestMatch(
                 new BrewComposition
                 {
@@ -194,7 +220,8 @@ public static class SURLHWADryMartiniDiscoveryArcValidation
             manager = CreateKnowledgeManager(catalog);
             RecipeKnowledgeFacts reloadedPartial = manager.GetKnownFacts(dryMartini);
             Require(reloadedPartial.State == RecipeKnowledgeState.Partial && reloadedPartial.MethodKnown &&
-                    reloadedPartial.IsIngredientKnown(gin) && reloadedPartial.IsIngredientKnown(dryVermouth),
+                    reloadedPartial.IsIngredientAmountKnown(gin) && reloadedPartial.IsIngredientAmountKnown(dryVermouth) &&
+                    reloadedPartial.PreparationKnown && reloadedPartial.GarnishKnown && !reloadedPartial.IdentityKnown,
                 "Richer Partial knowledge did not survive reload after the failed attempt.");
 
             RecipeMatchResult exactMatch = RecipeMatchService.FindBestMatch(

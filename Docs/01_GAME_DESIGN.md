@@ -156,8 +156,12 @@ name Dry Martini before it becomes `Known`.
 
 Partial facts persist between customers, day/session boundaries, and failed
 attempts. The Guide is the retained player memory: it shows Stir and the
-learned ingredients, but no identity or amounts. The representative arc keeps
-identity hidden until the established successful-match `Known` transition.
+learned ingredients while the first three clues withhold identity and amounts.
+Before the fourth encounter's attempt, two consumed lines teach Gin 60 ml,
+Dry Vermouth 10 ml, the Mixing Glass / ice / Stir / Strain sequence, and
+optional garnish. These facts remain Partial and persist in the Guide;
+identity stays hidden until the established successful-match `Known` transition.
+The teaching does not add a mandatory-success retry gate.
 Correct repeated Gin use is idempotent; incorrect ingredients remain only
 preparation evidence. A technically recognized but policy-rejected attempt
 also keeps an Unknown recipe unnamed in the result UI. This is content pacing

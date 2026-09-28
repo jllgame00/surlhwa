@@ -165,9 +165,11 @@ public static class SURLHWATwoNightVerticalSliceValidation
             FindIngredient(dryMartini, "gin"));
         ValidateDiscoveryOrder(discoveryOrders[2], dryMartini, RecipeKnowledgeFact.Ingredient,
             FindIngredient(dryMartini, "dry_vermouth"));
-        Require(discoveryOrders[3].PreBrewDialogue != null &&
-                discoveryOrders[3].PreBrewDialogue.GetOnEnterKnowledgeReveals(0).Length == 0,
-            "The final Dry Martini attempt must be a discovery opportunity, not another automatic fact reveal.");
+        DialogueData finalTeaching = discoveryOrders[3].PreBrewDialogue;
+        Require(finalTeaching != null && finalTeaching.onEnterLines.Length == 2 &&
+                finalTeaching.GetOnEnterKnowledgeReveals(0).Length == 2 &&
+                finalTeaching.GetOnEnterKnowledgeReveals(1).Length == 2,
+            "The final Dry Martini attempt must teach quantities and preparation through two consumed lines.");
 
         RecipeProgressPersistence.ClearRecipeProgress();
         RecipeUnlockManager manager = CreateKnowledgeManager(catalog);
@@ -199,6 +201,22 @@ public static class SURLHWATwoNightVerticalSliceValidation
                     !richerPartial.IdentityKnown && !richerPartial.IsIngredientAmountKnown(gin) &&
                     !richerPartial.IsIngredientAmountKnown(dryVermouth),
                 "Encounter 3 did not leave the expected richer Partial knowledge state.");
+
+            for (int line = 0; line < finalTeaching.onEnterLines.Length; line++)
+            {
+                foreach (RecipeKnowledgeReveal reveal in finalTeaching.GetOnEnterKnowledgeReveals(line))
+                {
+                    Require(reveal != null && reveal.Recipe == dryMartini && reveal.TryApply(manager),
+                        "A consumed final teaching fact did not apply to Dry Martini.");
+                }
+            }
+
+            RecipeKnowledgeFacts taughtPartial = manager.GetKnownFacts(dryMartini);
+            Require(taughtPartial.State == RecipeKnowledgeState.Partial && !taughtPartial.IdentityKnown &&
+                    taughtPartial.IsIngredientAmountKnown(gin) &&
+                    taughtPartial.IsIngredientAmountKnown(dryVermouth) &&
+                    taughtPartial.PreparationKnown && taughtPartial.GarnishKnown && !manager.IsKnown(dryMartini),
+                "Final teaching must retain unnamed Partial knowledge with quantities and preparation, without automatic Known.");
 
             RecipeMatchResult failedMatch = RecipeMatchService.FindBestMatch(
                 new BrewComposition
