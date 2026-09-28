@@ -11,6 +11,25 @@ public sealed class BartendingPreparationTrace
 
     public IReadOnlyList<ActualPreparationAction> Actions => actions;
 
+    // Measurement is a way to perform one authored Pour, not a new recipe step.
+    // Repeated measures of the same source into the same destination coalesce
+    // only when no intervening preparation action has occurred.
+    public void RecordMeasuredPour(IngredientData ingredient, float amountMl, BartendingContainerType target)
+    {
+        if (amountMl <= 0f) return;
+        if (actions.Count > 0)
+        {
+            var last = actions[actions.Count - 1];
+            if (last.Action == RecipePreparationAction.Pour && last.Ingredient == ingredient && last.Target == target)
+            {
+                actions[actions.Count - 1] = new ActualPreparationAction(last.Action, ingredient,
+                    last.ActualMl + amountMl, null, target, 1, null);
+                return;
+            }
+        }
+        Record(RecipePreparationAction.Pour, ingredient, amountMl, null, target);
+    }
+
     public void Record(
         RecipePreparationAction action,
         IngredientData ingredient = null,

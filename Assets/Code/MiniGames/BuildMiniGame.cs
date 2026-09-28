@@ -123,6 +123,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void CompleteBuild()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != BuildState.Preparing)
         {
             Debug.LogWarning($"[BuildMiniGame] Complete ignored. state={state}");
@@ -162,6 +163,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void ServeBuild()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != BuildState.AwaitingGarnish)
         {
             Debug.LogWarning($"[BuildMiniGame] Serve ignored. state={state}");
@@ -233,6 +235,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void UpdateDirectPour()
     {
+        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(previewPourRateMlPerSecond)) return;
         if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
         {
             StopDirectPour("Serving Glass unavailable");
@@ -373,6 +376,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void BeginGentleStir()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != BuildState.Preparing || ingredientShelf == null ||
             !ingredientShelf.HasServingGlassContents())
         {

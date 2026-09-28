@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System;
 using System.Linq;
 using TMPro;
@@ -15,6 +16,9 @@ public class IngredientShelfController : MonoBehaviour
     [SerializeField] private BrewIngredientOptionView ingredientOptionPrefab;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text summaryText;
+    [Header("Physical tools — HUMAN_TUNING_LATER")]
+    [SerializeField, Min(1f)] private float jiggerCapacityMl = 60f;
+    [SerializeField, Min(1f)] private float jiggerTransferMlPerSecond = 90f;
 
     private MiniGameType currentMethod;
     private IngredientData selectedIngredient;
@@ -34,6 +38,12 @@ public class IngredientShelfController : MonoBehaviour
     private IngredientAvailabilityContext availabilityContext;
     private BartendingPhysicalPresentation physicalPresentation;
     public BartendingPhysicalPresentation PhysicalPresentation => physicalPresentation;
+    public bool PhysicalTransferActive { get; private set; }
+    public bool Measuring { get; private set; }
+    public BartendingContainerState Jigger => preparationState?.GetContainer(BartendingContainerType.Jigger);
+    public bool HasPendingMeasurement => Jigger != null && Jigger.CurrentLiquidVolumeMl > 0f;
+    public bool ToolsReady => !PhysicalTransferActive && !HasPendingMeasurement &&
+                              (physicalPresentation == null || physicalPresentation.IsResting);
 
     public IngredientData SelectedIngredient => selectedIngredient;
     public IngredientAvailabilityContext AvailabilityContext => availabilityContext;
@@ -66,7 +76,7 @@ public class IngredientShelfController : MonoBehaviour
         // Every production Bartending route receives this from the Bar-side
         // request context. Day 1 is only a deterministic direct-use fallback.
         availabilityContext = context ?? new IngredientAvailabilityContext(1);
-        preparationState = new BartendingPreparationState(targetContainerType);
+        preparationState = new BartendingPreparationState(targetContainerType, jiggerCapacityMl);
         targetContainer = preparationState.ActiveTarget;
         preparationTrace = new BartendingPreparationTrace();
         activePourIngredient = null;
@@ -248,6 +258,7 @@ public class IngredientShelfController : MonoBehaviour
 
     private void OnIngredientSelected(IngredientData ingredient)
     {
+        if (PhysicalTransferActive || HasPendingMeasurement) return;
         if (ingredient == null || !IsIngredientAvailable(ingredient))
             return;
 
@@ -335,6 +346,80 @@ public class IngredientShelfController : MonoBehaviour
         if (!BeginSelectedPour()) return false;
         return physicalPresentation == null ||
                physicalPresentation.PrepareBottle(selectedIngredient, targetContainer);
+    }
+
+    /// <summary>Shared live measurement controls, called only in preparation states.</summary>
+    public bool HandlePhysicalTools(float fillRateMlPerSecond)
+    {
+        physicalPresentation?.ShowMeasurement(Measuring);
+        if (PhysicalTransferActive) return true;
+        if (Input.GetKeyDown(KeyCode.M) && !HasPendingMeasurement)
+        {
+            EndSelectedPour();
+            Measuring = !Measuring;
+        }
+        if (!Measuring) return false;
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            BeginMeasuredTransfer();
+            return true;
+        }
+        if (!Input.GetKey(KeyCode.Space))
+        {
+            physicalPresentation?.EndBottle();
+            return true;
+        }
+        if (selectedIngredient != null && (physicalPresentation == null ||
+            physicalPresentation.PrepareBottle(selectedIngredient, Jigger)))
+            FillJigger(fillRateMlPerSecond * Time.deltaTime);
+        return true;
+    }
+
+    public float FillJigger(float incomingMl)
+    {
+        if (PhysicalTransferActive || Jigger == null || selectedIngredient == null ||
+            float.IsNaN(incomingMl) || float.IsInfinity(incomingMl) || incomingMl <= 0f) return 0f;
+        // One owned bottle per measure; do not mix an unlabelled second source.
+        if (Jigger.LiquidEntries.Count > 0 && Jigger.LiquidEntries[0].Ingredient != selectedIngredient) return 0f;
+        float accepted = Jigger.AddLiquid(selectedIngredient, incomingMl);
+        physicalPresentation?.ObserveAcceptedPour(accepted);
+        physicalPresentation?.ObserveSpill(incomingMl - accepted);
+        physicalPresentation?.ShowMeasurement(Measuring);
+        return accepted;
+    }
+
+    public bool BeginMeasuredTransfer()
+    {
+        if (PhysicalTransferActive || !HasPendingMeasurement || physicalPresentation == null ||
+            !physicalPresentation.IsResting) return false;
+        PhysicalTransferActive = true;
+        StartCoroutine(TransferMeasurement());
+        return true;
+    }
+
+    private IEnumerator TransferMeasurement()
+    {
+        var source = Jigger;
+        var target = targetContainer;
+        var measuredIngredient = source.LiquidEntries[0].Ingredient;
+        yield return physicalPresentation.MoveContainerToPour(source, target);
+        while (source.CurrentLiquidVolumeMl > 0f)
+        {
+            if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+            { yield return null; continue; }
+            float accepted = source.TransferLiquidTo(target, jiggerTransferMlPerSecond * Time.deltaTime);
+            if (accepted > 0f)
+            {
+                preparationTrace.RecordMeasuredPour(measuredIngredient, accepted, target.ContainerType);
+                NotifyIngredientUsed(measuredIngredient);
+                RefreshContents();
+            }
+            physicalPresentation.ObserveContainerTransfer(accepted);
+            physicalPresentation.ShowMeasurement(Measuring);
+            yield return null;
+        }
+        yield return physicalPresentation.ReturnContainer();
+        PhysicalTransferActive = false;
     }
 
     /// <summary>

@@ -170,6 +170,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     /// </summary>
     public void BeginStir()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != State.Preparing)
         {
             Debug.LogWarning($"[Stir] Begin ignored. state={state}");
@@ -306,6 +307,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     /// </summary>
     public void ServeStir()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != State.AwaitingGarnish)
         {
             Debug.LogWarning($"[Stir] Serve ignored. state={state}");
@@ -369,6 +371,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     private void UpdatePreparationInput()
     {
+        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(pourRateMlPerSecond)) return;
         if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
         {
             StopDirectPour("Mixing Glass unavailable");

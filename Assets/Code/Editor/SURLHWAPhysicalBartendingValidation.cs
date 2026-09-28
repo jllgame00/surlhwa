@@ -5,10 +5,16 @@ using UnityEngine;
 
 public static class SURLHWAPhysicalBartendingValidation
 {
+    public static void RunRegression()
+    {
+        Run();
+        SURLHWACampaignValidation.RunIntegrated();
+    }
     [MenuItem("SURLHWA/Validation/Physical Bartending")]
     public static void Run()
     {
         Unity.CodeEditor.CodeEditor.CurrentEditor.SyncAll();
+        ValidateMeasurement();
         foreach (string method in new[] { "Build", "Stir", "Shake", "Float" })
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
@@ -52,6 +58,40 @@ public static class SURLHWAPhysicalBartendingValidation
     private static void Require(bool condition, string message)
     {
         if (!condition) throw new InvalidOperationException("[Phase K Physical] " + message);
+    }
+
+    private static void ValidateMeasurement()
+    {
+        var ingredient = ScriptableObject.CreateInstance<IngredientData>();
+        try
+        {
+            foreach (float capacity in new[] { 30f, 60f, 75f })
+            {
+                var preparation = new BartendingPreparationState(BartendingContainerType.MixingGlass, capacity);
+                var source = preparation.GetContainer(BartendingContainerType.Jigger);
+                var target = preparation.ActiveTarget;
+                float received = source.AddLiquid(ingredient, capacity + 12.25f);
+                Require(Mathf.Approximately(received, capacity) && source.CurrentLiquidVolumeMl == capacity,
+                    "Finite jigger must cap intake and report accepted amount.");
+                Require(source.AddLiquid(ingredient, 100f) == 0f, "Full jigger must reject excess.");
+                float moved = 0f;
+                while (source.CurrentLiquidVolumeMl > 0f)
+                    moved += source.TransferLiquidTo(target, 7.25f);
+                Require(Mathf.Abs(moved - capacity) < .001f && Mathf.Abs(target.CurrentLiquidVolumeMl - capacity) < .001f,
+                    "Measured transfer duplicated/lost liquid.");
+                Require(source.CurrentLiquidVolumeMl == 0f, "Jigger did not empty.");
+                source.AddLiquid(ingredient, 10f);
+                source.TransferLiquidTo(target, 10f);
+                Require(Mathf.Abs(target.CurrentLiquidVolumeMl - capacity - 10f) < .001f, "Repeated measurement failed.");
+            }
+            var trace = new BartendingPreparationTrace();
+            trace.RecordMeasuredPour(ingredient, 60f, BartendingContainerType.MixingGlass);
+            trace.RecordMeasuredPour(ingredient, 15f, BartendingContainerType.MixingGlass);
+            Require(trace.Actions.Count == 1 && trace.Actions[0].ActualMl == 75f,
+                "Repeated measurement must remain one authored Pour.");
+        }
+        finally { UnityEngine.Object.DestroyImmediate(ingredient); }
+        Debug.Log("[Phase K Measurement] PASS: varied finite capacities, overflow rejection, partial emptying, repeat and trace.");
     }
 }
 #endif

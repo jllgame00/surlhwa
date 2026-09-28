@@ -10,7 +10,8 @@ public enum BartendingContainerType
 {
     ServingGlass,
     MixingGlass,
-    Shaker
+    Shaker,
+    Jigger
 }
 
 /// <summary>
@@ -267,6 +268,32 @@ public sealed class BartendingContainerState
         liquidEntries.Clear();
         CurrentLiquidVolumeMl = 0f;
         return true;
+    }
+
+    /// <summary>
+    /// Transfers a proportional portion of the actual mixture. Capacity limits
+    /// acceptance without losing source liquid. Ice stays in the source; dash
+    /// evidence moves when its entry empties, once only. No visual quantities.
+    /// </summary>
+    public float TransferLiquidTo(BartendingContainerState target, float requestedMl)
+    {
+        if (target == null || ReferenceEquals(this, target) || !IsFinitePositive(requestedMl) ||
+            CurrentLiquidVolumeMl <= 0f) return 0f;
+        float amount = Mathf.Min(requestedMl, CurrentLiquidVolumeMl);
+        if (target.CapacityMl > 0f)
+            amount = Mathf.Min(amount, Mathf.Max(0f, target.CapacityMl - target.CurrentLiquidVolumeMl));
+        if (amount <= 0f) return 0f;
+        if (amount >= CurrentLiquidVolumeMl)
+            return TryTransferAllLiquidTo(target, out float all) ? all : 0f;
+        float fraction = amount / CurrentLiquidVolumeMl;
+        float transferred = 0f;
+        for (int i = liquidEntries.Count - 1; i >= 0; i--)
+        {
+            var entry = liquidEntries[i];
+            float accepted = target.AddLiquid(entry.Ingredient, entry.AmountMl * fraction);
+            transferred += RemoveLiquid(entry.Ingredient, accepted);
+        }
+        return transferred;
     }
 
     /// <summary>

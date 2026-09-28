@@ -8,16 +8,21 @@ public sealed class BartendingPreparationState
     private readonly BartendingContainerState servingGlass;
     private readonly BartendingContainerState mixingGlass;
     private readonly BartendingContainerState shaker;
+    private readonly BartendingContainerState jigger;
 
     public BartendingContainerType ActiveTargetType { get; private set; }
     public BartendingContainerState ActiveTarget => GetContainer(ActiveTargetType);
 
     public BartendingPreparationState(
-        BartendingContainerType initialTargetType = BartendingContainerType.ServingGlass)
+        BartendingContainerType initialTargetType = BartendingContainerType.ServingGlass,
+        float jiggerCapacityMl = 60f)
     {
         servingGlass = new BartendingContainerState(BartendingContainerType.ServingGlass);
         mixingGlass = new BartendingContainerState(BartendingContainerType.MixingGlass);
         shaker = new BartendingContainerState(BartendingContainerType.Shaker);
+        jigger = new BartendingContainerState(BartendingContainerType.Jigger,
+            float.IsNaN(jiggerCapacityMl) || float.IsInfinity(jiggerCapacityMl) || jiggerCapacityMl <= 0f
+                ? 60f : jiggerCapacityMl);
         ActiveTargetType = GetContainer(initialTargetType) != null
             ? initialTargetType
             : BartendingContainerType.ServingGlass;
@@ -33,6 +38,8 @@ public sealed class BartendingPreparationState
                 return mixingGlass;
             case BartendingContainerType.Shaker:
                 return shaker;
+            case BartendingContainerType.Jigger:
+                return jigger;
             default:
                 return null;
         }

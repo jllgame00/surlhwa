@@ -63,3 +63,33 @@ and failed to find the new file; it is superseded by the regenerated build.
 No scene/prefab changes. Generated font whitespace is excluded/restored.
 Play Mode and rendered readability remain pending K11; this is no human feel
 claim. Dash/Splash and container motion are subsequent milestones.
+
+## K3 — Finite measurement
+
+The former Jigger was inactive legacy residue. The new optional M measurement
+mode uses a session-local Jigger in `BartendingPreparationState`, implemented
+by the same `BartendingContainerState` as every other vessel. Appended runtime
+enum member preserves existing numeric identities; no saved format changes.
+60 ml is the first-pass capacity (Dry Martini's largest individual pour is
+60 ml; larger amounts use repeated measurements). Capacity is serialized on
+the shelf. Space fills; release returns the bottle; T moves/tilts/empties the
+Jigger into the current working vessel, then returns it. Source choice is
+locked while a measured portion remains. A nonempty Jigger must be transferred
+before technique/serve progression. Build still permits direct Pour/Dash.
+
+Overflow fate: incoming minus accepted ml is spilled/lost, not waste currency,
+not recipe composition and not preparation evidence. The Jigger remains
+capped; a simple short spill stream displays excess. Supply has no finite
+bottle-stock model. Partial transfer is proportional and lives entirely in
+the existing container class. Measurement records destination Pour evidence;
+adjacent repeated measures coalesce so existing authored recipes need no new
+Measure step or changed semantics. Float measurement integration follows K8.
+
+Validation: focused Editor capacities 30/60/75 ml, overflow, partial emptying,
+repeat and trace PASS (`Logs/phase-k3-physical.log`). Actual Play Mode production
+Build/Stir/Shake prefabs PASS for pickup-before-liquid, release, 72 ml incoming
+→ 60 ml retained, progressive source reduction, conservation each frame, empty
+Jigger and tools returning (`Logs/phase-k3-playmode.log`). Programmatic inputs;
+not human gameplay. Integrated existing campaign/bartending regressions PASS
+(`Logs/phase-k3-regression.log`, exit 0). Dotnet PASS, 0 errors, 8 existing
+warnings (`Logs/phase-k3-dotnet.log`). No prefab/scene/content/save edits.

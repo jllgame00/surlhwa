@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +20,9 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     [SerializeField, Min(1f)] private float streamWidth = 4f;
     [SerializeField, Min(1f)] private float displayVolumeMl = 240f;
     [SerializeField] private Vector2 bottleHome = new Vector2(-250f, 140f);
+    [SerializeField, Min(.01f)] private float containerMoveSeconds = .3f;
+    [SerializeField] private float containerTiltDegrees = 105f;
+    [SerializeField, Min(.01f)] private float spillSeconds = .3f;
 
     private enum Motion { Rest, Approach, Tilt, Pour, Upright, Return }
     private Motion motion;
@@ -31,6 +36,13 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private IngredientData ingredient;
     private BartendingContainerState destination;
     private int acceptedFrame = -1;
+    private RectTransform movingVessel;
+    private Vector3 vesselHomePosition;
+    private Quaternion vesselHomeRotation;
+    private RectTransform spill;
+    private float spillRemaining;
+    private TMP_Text measurementText;
+    private BartendingContainerState jiggerState;
     private readonly Dictionary<BartendingContainerState, RectTransform> vessels = new();
     private readonly Dictionary<BartendingContainerState, RectTransform> fills = new();
 
@@ -56,6 +68,21 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         foreach (var pair in vessels)
             pair.Value.gameObject.SetActive(pair.Key.ContainerType == BartendingContainerType.ServingGlass ||
                                             pair.Key == state.ActiveTarget);
+        jiggerState = state.GetContainer(BartendingContainerType.Jigger);
+        Register(jiggerState, null, new Vector2(-240f, -20f));
+        var jiggerVisual = GetVessel(jiggerState);
+        jiggerVisual.sizeDelta = new Vector2(55f, 70f);
+        var labelObject = new GameObject("Measurement", typeof(RectTransform), typeof(TextMeshProUGUI));
+        measurementText = labelObject.GetComponent<TextMeshProUGUI>();
+        measurementText.rectTransform.SetParent(ui, false);
+        measurementText.rectTransform.sizeDelta = new Vector2(370f, 65f);
+        measurementText.rectTransform.anchoredPosition = new Vector2(-200f, -140f);
+        measurementText.fontSize = 18f;
+        measurementText.alignment = TextAlignmentOptions.Center;
+        measurementText.raycastTarget = false;
+        spill = Shape("JiggerOverflow", jiggerVisual, new Vector2(4f, 65f), new Color(.85f, .78f, .55f, .9f));
+        spill.anchoredPosition = new Vector2(30f, -10f);
+        spill.gameObject.SetActive(false);
         bottle = Shape("PhysicalBottleGrip", ui, new Vector2(48f, 108f), new Color(.2f, .42f, .32f, 1f));
         bottle.anchoredPosition = bottleHome;
         var top = Shape("BottleNeck", bottle, new Vector2(16f, 30f), new Color(.3f, .52f, .4f, 1f));
@@ -117,6 +144,88 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         if (stream != null) stream.gameObject.SetActive(false);
         if (motion == Motion.Rest || motion == Motion.Return || motion == Motion.Upright) return;
         Enter(Motion.Upright);
+    }
+
+    public void ShowMeasurement(bool measuring)
+    {
+        if (measurementText != null && jiggerState != null)
+            measurementText.text = $"Jigger {jiggerState.CurrentLiquidVolumeMl:0.0} / {jiggerState.CapacityMl:0} ml\nM: {(measuring ? "Direct" : "Measure")} · T: Transfer";
+    }
+
+    public void ObserveSpill(float lostMl)
+    {
+        if (lostMl <= 0f || spill == null) return;
+        spillRemaining = spillSeconds;
+        spill.gameObject.SetActive(true);
+        // Incoming stream continues over the finite rim, even when accepted ml is zero.
+        if (IsAtPourPose) { acceptedFrame = Time.frameCount; DrawStream(); }
+    }
+
+    public IEnumerator MoveContainerToPour(BartendingContainerState source, BartendingContainerState target)
+    {
+        movingVessel = GetVessel(source);
+        destination = target;
+        if (movingVessel == null) yield break;
+        vesselHomePosition = movingVessel.position;
+        vesselHomeRotation = movingVessel.rotation;
+        Vector3 rim = TargetWorldRim(target) + ui.TransformVector(Vector3.up * pourHeight);
+        Vector3 lip = new Vector3(0f, movingVessel.rect.yMax, 0f);
+        Vector3 start = movingVessel.position;
+        Vector3 upright = rim - (movingVessel.TransformPoint(lip) - movingVessel.position);
+        for (float t = 0f; t < containerMoveSeconds; t += Time.deltaTime)
+        {
+            movingVessel.position = Vector3.Lerp(start, upright, Smooth(t / containerMoveSeconds));
+            yield return null;
+        }
+        for (float t = 0f; t < tiltSeconds; t += Time.deltaTime)
+        {
+            PoseContainer(rim, Smooth(t / tiltSeconds));
+            yield return null;
+        }
+        PoseContainer(rim, 1f);
+    }
+
+    private Vector3 TargetWorldRim(BartendingContainerState target)
+    {
+        var vessel = GetVessel(target);
+        return vessel.TransformPoint(new Vector3(0f, vessel.rect.yMax, 0f));
+    }
+
+    private void PoseContainer(Vector3 rim, float tilt)
+    {
+        movingVessel.rotation = vesselHomeRotation * Quaternion.Euler(0f, 0f, containerTiltDegrees * tilt);
+        movingVessel.position += rim - movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
+    }
+
+    public void ObserveContainerTransfer(float acceptedMl)
+    {
+        RefreshState();
+        if (movingVessel == null || acceptedMl <= 0f) { stream.gameObject.SetActive(false); return; }
+        Vector3 lip = movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
+        DrawStreamBetween(lip, TargetWorldRim(destination));
+    }
+
+    public IEnumerator ReturnContainer()
+    {
+        stream.gameObject.SetActive(false);
+        if (movingVessel == null) yield break;
+        Vector3 rim = movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
+        for (float t = 0f; t < tiltSeconds; t += Time.deltaTime)
+        {
+            PoseContainer(rim, 1f - Smooth(t / tiltSeconds));
+            yield return null;
+        }
+        PoseContainer(rim, 0f);
+        Vector3 start = movingVessel.position;
+        for (float t = 0f; t < returnSeconds; t += Time.deltaTime)
+        {
+            movingVessel.position = Vector3.Lerp(start, vesselHomePosition, Smooth(t / returnSeconds));
+            yield return null;
+        }
+        movingVessel.position = vesselHomePosition;
+        movingVessel.rotation = vesselHomeRotation;
+        movingVessel = null;
+        destination = null;
     }
 
     private void Enter(Motion next)
@@ -187,6 +296,9 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         }
         TickMotion(Time.deltaTime);
         RefreshState();
+        spillRemaining -= Time.deltaTime;
+        if (spill != null && spillRemaining <= 0f) spill.gameObject.SetActive(false);
+        if (movingVessel != null) return;
         if (acceptedFrame == Time.frameCount && IsAtPourPose) DrawStream();
         else if (stream != null) stream.gameObject.SetActive(false);
     }
@@ -205,8 +317,13 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private void DrawStream()
     {
         if (stream == null) return;
-        Vector2 from = (Vector2)ui.InverseTransformPoint(neck.position) - ui.rect.center;
-        Vector2 to = TargetPoint();
+        DrawStreamBetween(neck.position, TargetWorldRim(destination));
+    }
+
+    private void DrawStreamBetween(Vector3 worldFrom, Vector3 worldTo)
+    {
+        Vector2 from = (Vector2)ui.InverseTransformPoint(worldFrom) - ui.rect.center;
+        Vector2 to = (Vector2)ui.InverseTransformPoint(worldTo) - ui.rect.center;
         Vector2 delta = to - from;
         stream.anchoredPosition = from;
         stream.sizeDelta = new Vector2(streamWidth, delta.magnitude);
