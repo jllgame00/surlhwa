@@ -17,3 +17,5 @@ This is an internal review build. Final public-release attribution and permissio
 Noto OFL source: https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/LICENSE
 
 The Little Prince interpretation, dialogue tone, reference artwork permissions, and final title/author credit are human review items. This document records evidence and pending ownership checks; it does not declare public distribution clearance.
+
+The first-pass campaign reuses the existing draft guest silhouettes as temporary visuals for new special guests. Its small memory objects, local Hamlet light and shared-glass contour are project-authored Unity line geometry, with no external image source. New ACT dialogue and the ending are first-pass project text based on the repository's thematic roadmap; final editorial and character interpretation review remains with the owner.

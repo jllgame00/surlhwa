@@ -2042,3 +2042,41 @@ Logs/campaign-full-quiet-playmode.log: PASS, fresh New Game through all 47 natur
 Continue is exercised after the second night, inside nights 6/10/15, during Quixote's dialogue, during ending reading and after the completed ending. The final Continue returns to the coda without night 19. New Game clears campaign/knowledge/memories. A separate restored legacy fixture then verifies completed-demo handoff to night 5 without invented Prince successes or Hanky Panky knowledge. Editor saves are restored by the runner. The earlier open-Prince run reached all 47 departures before the now-fixed panel defect; it is not relabeled as a full ending PASS.
 
 Latest rendered reunion and Hamlet captures confirm the corrected glass/light positions. Ending and coda captures show seven spatial traces, readable lines and navigation. The focused ending fixture measures all eight lines against the text area. These are objective rendering checks at 1280×720, not aesthetic approval. Final C# compile: PASS, 0 errors and one existing assembly-reference warning in Logs/campaign-final-dotnet.log.
+
+## C11 — Full Campaign Audit and Owner Review Handoff (2026-09-28)
+
+The following classifications apply to the current campaign and supersede the earlier demo's scope exclusions for main ACTs, later nights, memories and the three promoted recipes. Historical observations above remain unchanged.
+
+| Item | Classification | Current evidence or remaining work |
+|---|---|---|
+| New Game through ending, 18 nights / 47 encounters | PASS | Corrected fresh full route and ending navigation pass in C10. No debug skip or service-result injection in that route. |
+| All seven main ACTs | PASS | Canonical Prince plus 16 authored later visits execute in order. Departure reading precedes completion; poor service preserves new ACT progression. Final narrative quality is a separate review item. |
+| Ordinary guests and paced discovery | PASS | One ordinary encounter on every extended night; recurring voices and discovery on nights 6/10/15 are exercised. |
+| Recipe Knowledge and fair retry | PASS | Actual clues precede attempts; HP/French 75/Last Word are learned through real preparation/recognition. Required failed HP discovery keeps the guest/slot and remains Unknown until success. Failed Prince service has independent Manwol recovery. |
+| Supply and Recommendation reachability | PASS | Existing ingredient IDs, recipe truth and catalog retained. Strict tier assertions and live learned/supplied alternatives accompany actual chosen drinks and all four methods. No new ACT has an exact cocktail answer key. |
+| New Game / Continue / branch history | PASS | Night and departure checkpoints, dialogue restart, knowledge retention, Prince's sticky failure, interrupted ending replay and full reset pass. Additive keys preserve existing identities/formats. |
+| Environmental memories | PASS | Seven visible/restored traces derive from completed ACTs; Prince's star respects his existing eligibility. Corrected glass/light and final room were inspected in rendered captures. |
+| Ending and post-ending Continue | PASS | Eight authored lines resolve the bartender's closing among remembered people. Completion persists, Continue shows coda, and no night 19 spawns. |
+| Legacy four-night production behavior | PASS | Original 17 encounters and both Prince outcomes observed across full runs. Logs/campaign-legacy-closure.log passes six focused scenarios including all three failure positions, preparation/FIT negatives, reading, standalone demo completion and reset. The fixture explicitly removes the optional campaign; it does not claim physical-input proof. |
+| Authority, IDs and serialized scope | PASS | Existing customer/dialogue/order/knowledge/supply/recognition/FIT/runtime owners retained. Two small scene changes across C9/C10 (one presentation component and one campaign reference); no prefab edits or unrelated scene churn. |
+| C# compilation | PASS | Final build reports 0 errors; existing assembly-reference warning remains. |
+| Integrated regression, Windows build and executable startup | PASS | C11 build evidence below; complete standalone physical play remains separate validation debt. |
+| Complete standalone physical-input playthrough, hit targets at both review resolutions, target-device performance, mid-drink interruption | VALIDATION_DEBT | Automated input seams and rendered captures do not observe these physical cases. The owner checklist requests the complete executable playthrough. |
+| Dialogue interpretation/tone, emotional impact, overall pacing, bartending feel, readability hierarchy, visual composition and audible mix | HUMAN_SIGNOFF_REQUIRED | All are first-pass review material. Owner playtesting determines revisions and readiness. |
+| Public-release provenance/permission and final credits | HUMAN_SIGNOFF_REQUIRED | Existing artwork ownership checks remain as recorded in CREDITS.md. No public distribution was performed. |
+| Dedicated special-guest art/poses/animation, refined spatial memories/shared glass, stronger Hamlet stillness, final audio/lighting/cinematics and video | DEFERRED_PRESENTATION | Functional draft presentation is integrated; no progression repair is hidden in this classification. |
+| Pilot/rose/companion/secret revisits, repeated memory-click triggers, statue upgrade trees and further IBA collection growth | FUTURE_EXPANSION | Explicitly excluded from this main campaign pass. |
+| New quest/economy/scoring frameworks, destructive save migration, exact dialogue/liquid quicksave, other platforms/aspect ratios and optional Pipeline runtime server | OUT_OF_SCOPE | Existing architecture and bounded delivery target retained. |
+
+No known objective campaign implementation defect remains after the corrected full-route run. This is first-pass technical evidence, not final artistic or finished-game approval. Build execution and standalone startup evidence follow separately.
+
+### Executed build and final delivery
+
+- Logs/campaign-windows-build.log: PASS, Unity batch exit 0. Campaign content/persistence/supply checks, 18-night schedule, I10–I16 and J1–J5 regressions, character references, both enabled scenes and dependent prefab missing-script checks all pass.
+- Windows x64 player: Builds/Windows/SURLHWA.exe, Unity 6000.3.7f1, reported size 227646462 bytes. Runtime source/assets correspond to `1ed60d3`. The following delivery commit changes only Editor build packaging and review documentation.
+- One existing build warning: optional com.unity.pipeline RuntimePipelineConfig is absent, so its command/hot-reload server is disabled. This is unrelated to URP rendering; no runtime server was enabled to hide the warning.
+- Logs/campaign-player-smoke.log: D3D11/RTX 3070, assemblies, input and scene controllers initialize without errors/exceptions during the brief standalone startup check. No gameplay input was sent. Only the verified test process was stopped. This does not prove a complete standalone playthrough or graceful user exit.
+- The Windows folder contains current controls, scope, owner checklist, campaign contract, audit, credits/license notices and ten rendered review images, including reunion, Hamlet, ending and coda. The six opening/presentation images remain from the demo review; four campaign images are from the corrected full route. Keep the whole player folder together.
+- Build-generated shader prefilters, runtime cache lists, temporary project settings and Editor-local changes were inspected and restored. Dynamic font differences were whitespace only and restored. Temporary performance-test resources were cleaned by the build lifecycle. No generated/local assets are committed. The owner's `.codex/config.toml` change remains untouched.
+
+Owner next step: play the complete executable using Docs/RELEASE_REVIEW.md and record a second-pass list for dialogue, pacing, interpretation, controls, memory readability, art and audio. No push or public publication was performed. Only the owner decides final finished-game readiness.
