@@ -1998,3 +1998,7 @@ Declaration and remembered ridicule lead to clearer conviction and a solitary de
 ## C4 — Hamlet Main ACT (2026-09-28)
 
 Audited the existing uncommitted two-visit draft against the full roadmap. Question, lifting/lowering the glass and unresolved departure preserve inaction; successful service does not cure it. Both visits request interpretation and carry a local stillness presentation flag. No TimeScale, input or global audio changes. Compile PASS (0 errors), Unity authored-ACT validation PASS (9 visits), Logs/campaign-hamlet.log exit 0. Scene/prefab changes: none. Local staging, memories and normal-play proof remain integration dependencies; emotional/pacing quality is HUMAN_SIGNOFF_REQUIRED.
+
+## C5 — Faust Main ACT (2026-09-28)
+
+Two visits connect wanting knowledge, recalled signing and the cost that cannot simply be reclaimed. No salvation/condemnation branch is invented. Requests allow Clarity/Awakening and Bitterness/Warmth; service changes responses, not the person's ending. Compile PASS (0 errors), Unity authored-ACT validation PASS (11 visits), Logs/campaign-faust.log exit 0. No scene/prefab changes. Cracked-glass spatial memory and full-route proof remain integration dependencies. Tone/pacing: HUMAN_SIGNOFF_REQUIRED.

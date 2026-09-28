@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: FaustContractAfter
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "파우스트: 이 잔에 무엇을 넣었는지는 물을 수 있겠지요."
+  - "파우스트: 하지만 제게서 무엇이 빠졌는지는… 그때 묻지 않았습니다."
+  - "손가락이 탁자 위의 보이지 않는 서명을 지운다."
+  onSuccessLines:
+  - "파우스트: 하나씩 구별되는 맛이군요. 오늘은 그것만 알고 있어도 되겠습니다."
+  onFailLines:
+  - "파우스트: 알아보겠다고 했는데도 틀리는군요. 더 마신다고 답이 생기지는 않겠지요."
+  onEnterKnowledgeReveals: []
