@@ -439,6 +439,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     /// </summary>
     public void ServeShake()
     {
+        if (garnishController != null && garnishController.IsPlacing) return;
         if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != State.AwaitingGarnish)
         {
@@ -483,7 +484,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     private void UpdatePreparationInput()
     {
-        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(pourRateMlPerSecond)) return;
+        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(pourRateMlPerSecond))
+        {
+            UpdateProgressText();
+            return;
+        }
         if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
         {
             StopDirectPour("Shaker unavailable");
@@ -546,7 +551,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     private void UpdateServingGlassInput()
     {
-        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(pourRateMlPerSecond)) return;
+        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(pourRateMlPerSecond))
+        {
+            UpdateProgressText();
+            return;
+        }
         if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
         {
             StopServingPour("Serving Glass unavailable");

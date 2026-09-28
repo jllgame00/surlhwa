@@ -182,3 +182,30 @@ Compile PASS. Four-method Play Mode PASS (`Logs/phase-k8-playmode.log`), includi
 measured Float allocation matching serving volume and a Clean boundary from
 actual gentle transfer. Earlier measurement, overflow, Dash/Splash/TopUp,
 container transfer and Shake checks also pass. No serialized asset changes.
+
+## K9/K10 — Strainer, ice and garnish placement
+
+Strain now attaches a placeholder strainer to the source rim during the existing
+progressive liquid-only transfer. PourFromContainer uses the same transfer
+without a strainer. Both retain source ice under the existing preparation
+contract; neither duplicates ice or changes recipe semantics.
+
+Ice travels from the tray position into the selected vessel before authoritative
+HasIce and AddIce evidence are applied. State-driven cubes remain children of
+that vessel through Stir, Shake and transfer. Garnish travels from a pickup
+offset before applying the existing state and trace. Rim, InGlass and Surface
+placements use the actual serving vessel; Surface follows actual liquid height.
+Serve and other physical actions wait for placement. Reading/settings suspend
+placement and transfer motion. Measurement updates the existing method summary.
+
+Graphical Play Mode exposed opaque liquid baked into the legacy vessel art and
+an overlapping Jigger position. Runtime open vessel outlines now reveal actual
+fill; original image assets are unchanged. Jigger and its label were moved clear
+of the ingredient shelf. These are replaceable straight-walled placeholders,
+not approved final glassware. No scene or prefab serialization was required.
+
+Compile PASS (0 errors, 8 existing warnings). Graphical four-method checks PASS
+in `Logs/phase-k10-rendered-r2.log`; captured pour, measurement and final garnish
+images were inspected. They cover delayed ice/garnish state, retained attached
+ice, actual surface placement, conservation and the earlier technique checks.
+Final action-lock checks are recorded with K11 integrated validation below.

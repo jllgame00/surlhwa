@@ -48,7 +48,9 @@ public class IngredientShelfController : MonoBehaviour
     public Func<float> MeasuredPourRate { get; set; }
     public BartendingContainerState Jigger => preparationState?.GetContainer(BartendingContainerType.Jigger);
     public bool HasPendingMeasurement => Jigger != null && Jigger.CurrentLiquidVolumeMl > 0f;
-    public bool ToolsReady => !PhysicalTransferActive && !HasPendingMeasurement &&
+    private bool GarnishPlacementActive => physicalPresentation != null &&
+        physicalPresentation.GetComponent<ServingGlassGarnishController>()?.IsPlacing == true;
+    public bool ToolsReady => !PhysicalTransferActive && !GarnishPlacementActive && !HasPendingMeasurement &&
                               (physicalPresentation == null || physicalPresentation.IsResting);
 
     public IngredientData SelectedIngredient => selectedIngredient;
@@ -349,7 +351,7 @@ public class IngredientShelfController : MonoBehaviour
     /// <summary>Live input gate: no ml moves during pickup/alignment/tilt.</summary>
     public bool PreparePhysicalPour(RecipePreparationAction action = RecipePreparationAction.Pour)
     {
-        if (PhysicalTransferActive || !BeginSelectedPour(action)) return false;
+        if (PhysicalTransferActive || GarnishPlacementActive || !BeginSelectedPour(action)) return false;
         return physicalPresentation == null ||
                physicalPresentation.PrepareBottle(selectedIngredient, targetContainer);
     }
@@ -358,7 +360,7 @@ public class IngredientShelfController : MonoBehaviour
     public bool HandlePhysicalTools(float fillRateMlPerSecond)
     {
         physicalPresentation?.ShowMeasurement(Measuring);
-        if (PhysicalTransferActive) return true;
+        if (PhysicalTransferActive || GarnishPlacementActive) return true;
         if (Input.GetKeyDown(KeyCode.M) && !HasPendingMeasurement)
         {
             EndSelectedPour();
@@ -421,6 +423,7 @@ public class IngredientShelfController : MonoBehaviour
     {
         var source = targetContainer;
         var target = ServingGlass;
+        physicalPresentation.SetStrainer(source, action == RecipePreparationAction.Strain);
         yield return physicalPresentation.MoveContainerToPour(source, target);
         float moved = 0f;
         while (source.CurrentLiquidVolumeMl > 0f)
@@ -434,6 +437,7 @@ public class IngredientShelfController : MonoBehaviour
         }
         preparationTrace.Record(action, null, moved, source.ContainerType, target.ContainerType);
         yield return physicalPresentation.ReturnContainer();
+        physicalPresentation.SetStrainer(source, false);
         preparationState.TrySetActiveTarget(BartendingContainerType.ServingGlass);
         targetContainer = preparationState.ActiveTarget;
         RefreshContents();
@@ -558,6 +562,26 @@ public class IngredientShelfController : MonoBehaviour
     }
 
     public bool TryAddIceToActiveTarget()
+    {
+        if (physicalPresentation != null)
+        {
+            if (!ToolsReady || targetContainer == null || targetContainer.HasIce) return false;
+            EndSelectedPour();
+            PhysicalTransferActive = true;
+            physicalPresentation.StartCoroutine(PlacePhysicalIce());
+            return true;
+        }
+        return ApplyIceToActiveTarget();
+    }
+
+    private IEnumerator PlacePhysicalIce()
+    {
+        yield return physicalPresentation.PlaceIce(targetContainer);
+        ApplyIceToActiveTarget();
+        PhysicalTransferActive = false;
+    }
+
+    private bool ApplyIceToActiveTarget()
     {
         EndSelectedPour();
         if (preparationState == null || !preparationState.TryAddIceToActiveTarget())

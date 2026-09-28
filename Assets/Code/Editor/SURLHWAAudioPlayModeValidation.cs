@@ -180,6 +180,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Require(!((AudioSource)Get(audio, "pour")).isPlaying, "Pour sound did not stop after transfer ended.");
         SURLHWAReviewCapture.Save("shake-preparation", 1280, 720);
         Require(shake.AddIceToShaker(), "Ice preparation failed.");
+        while (shelf.PhysicalTransferActive) yield return null;
         shake.BeginShake();
         var guide = shake.GetComponentInChildren<RecipeGuidePanelController>(true);
         Require(guide != null, "No real Guide.");

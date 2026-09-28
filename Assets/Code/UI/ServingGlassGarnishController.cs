@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 /// <summary>
 /// Narrow I8 UI adapter for choosing and visibly placing one garnish on the
@@ -9,6 +10,9 @@ using UnityEngine.UI;
 /// </summary>
 public sealed class ServingGlassGarnishController : MonoBehaviour
 {
+    [SerializeField, Min(.01f)] private float placementSeconds = .35f;
+    [SerializeField] private Vector2 pickupOffset = new Vector2(-180f, 110f);
+    public bool IsPlacing { get; private set; }
     private BartendingContainerState servingGlass;
     private BartendingPreparationTrace preparationTrace;
     private RectTransform visualAnchor;
@@ -94,6 +98,38 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         BartendingGarnishId garnishId,
         BartendingGarnishPlacement placement)
     {
+        if (IsPlacing || servingGlass == null || servingGlass.CurrentLiquidVolumeMl <= 0f ||
+            !BartendingGarnishState.IsValid(garnishId) || !BartendingGarnishState.IsValid(placement)) return false;
+        var shelf = GetComponentInChildren<IngredientShelfController>(true);
+        if (shelf != null && !shelf.ToolsReady) return false;
+        if (Application.isPlaying && visualAnchor != null)
+        {
+            IsPlacing = true;
+            StartCoroutine(PlaceGarnish(garnishId, placement));
+            return true;
+        }
+        return ApplyPlacedGarnish(garnishId, placement);
+    }
+
+    private IEnumerator PlaceGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
+    {
+        var held = BartendingPhysicalPresentation.Shape("HeldGarnish", visualAnchor,
+            GetGarnishSize(garnishId), GetGarnishColor(garnishId));
+        Vector2 destination = GetPlacementPosition(placement);
+        for (float t = 0f; t < placementSeconds; t += BartendingPhysicalPresentation.MotionDeltaTime)
+        {
+            held.anchoredPosition = Vector2.Lerp(destination + pickupOffset, destination,
+                Mathf.SmoothStep(0f, 1f, t / placementSeconds));
+            yield return null;
+        }
+        held.gameObject.SetActive(false);
+        Destroy(held.gameObject);
+        ApplyPlacedGarnish(garnishId, placement);
+        IsPlacing = false;
+    }
+
+    private bool ApplyPlacedGarnish(BartendingGarnishId garnishId, BartendingGarnishPlacement placement)
+    {
         if (servingGlass == null || servingGlass.CurrentLiquidVolumeMl <= 0f ||
             !servingGlass.TryApplyGarnish(garnishId, placement))
             return false;
@@ -110,6 +146,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
 
     public bool ClearGarnish()
     {
+        if (IsPlacing) return false;
         if (servingGlass == null || !servingGlass.ClearGarnish())
             return false;
 
@@ -292,10 +329,17 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
     private Vector2 GetPlacementPosition(BartendingGarnishPlacement placement)
     {
         float height = visualAnchor != null ? Mathf.Max(60f, visualAnchor.rect.height) : 120f;
+        var physical = GetComponent<BartendingPhysicalPresentation>();
+        if (physical != null && servingGlass != null && placement != BartendingGarnishPlacement.Rim)
+        {
+            Vector2 surface = visualAnchor.InverseTransformPoint(physical.GetLiquidSurfaceWorld(servingGlass));
+            return placement == BartendingGarnishPlacement.Surface ? surface :
+                Vector2.Lerp(new Vector2(0f, -height * .35f), surface, .45f);
+        }
         switch (placement)
         {
             case BartendingGarnishPlacement.Rim:
-                return new Vector2(0f, height * 0.36f);
+                return new Vector2(visualAnchor.rect.width * .36f, height * .45f);
             case BartendingGarnishPlacement.Surface:
                 return new Vector2(0f, height * 0.12f);
             default:

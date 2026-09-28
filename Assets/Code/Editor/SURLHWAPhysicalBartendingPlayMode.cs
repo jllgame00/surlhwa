@@ -96,6 +96,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 ? floating.PourActiveLayerForDuration(12.5f / 30f, FloatMiniGame.FloatPourIntensity.Gentle)
                 : shelf.PourSelectedIngredient(12.5f);
             Require(Mathf.Abs(bottleMl - 12.5f) < .001f && view.StreamVisible, "Accepted bottle stream missing.");
+            SURLHWAReviewCapture.Save("phase-k-" + method + "-pour", 1280, 720);
             if (floating != null) floating.EndActiveLayerPour();
             shelf.EndSelectedPour();
             Require(!view.StreamVisible, "Release continued pouring.");
@@ -117,7 +118,11 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 float target = shelf.TargetContainer.CurrentLiquidVolumeMl;
                 Require(Mathf.Abs(source + target - 72.5f) < .002f, "Transfer did not conserve liquid.");
                 Require(source <= previous + .001f, "Source grew during outgoing transfer.");
-                if (source > .01f && source < 59.99f) observedPartial = true;
+                if (source > .01f && source < 59.99f && !observedPartial)
+                {
+                    observedPartial = true;
+                    SURLHWAReviewCapture.Save("phase-k-" + method + "-measure", 1280, 720);
+                }
                 previous = source;
                 yield return null;
             }
@@ -157,7 +162,11 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             if (method == "Stir" || method == "Shake")
             {
                 var source = shelf.TargetContainer;
-                source.TryAddIce();
+                Require(shelf.TryAddIceToActiveTarget(), "Physical ice placement rejected.");
+                Require(!source.HasIce, "Ice appeared before placement.");
+                while (shelf.PhysicalTransferActive) yield return null;
+                Require(source.HasIce && view.GetIceVisual(source).gameObject.activeInHierarchy,
+                    "Authoritative ice has no attached visual.");
                 if (method == "Shake")
                 {
                     var shake = (ShakeMiniGame)game;
@@ -203,6 +212,24 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                     (method == "Stir" ? RecipePreparationAction.Strain : RecipePreparationAction.PourFromContainer),
                     "Transfer trace did not preserve action semantics.");
             }
+            var garnishController = root.GetComponent<ServingGlassGarnishController>();
+            garnishController.BeginSelection();
+            foreach (var placement in new[] { BartendingGarnishPlacement.Rim, BartendingGarnishPlacement.InGlass, BartendingGarnishPlacement.Surface })
+            {
+                var previousGarnish = shelf.ServingGlass.Garnish;
+                Require(garnishController.TryApplyGarnish(BartendingGarnishId.Cherry, placement), "Garnish pickup rejected.");
+                Require(shelf.ServingGlass.Garnish == previousGarnish, "Garnish state changed before placement.");
+                Require(!shelf.ToolsReady && !shelf.PreparePhysicalPour() && !shelf.TryAddIceToActiveTarget(),
+                    "Another physical action interrupted garnish placement.");
+                while (garnishController.IsPlacing) yield return null;
+                Require(shelf.ServingGlass.Garnish.Placement == placement, "Placed garnish differs from state.");
+                var marker = view.GetVessel(shelf.ServingGlass).Find("RuntimeGarnishMarker");
+                Require(marker != null && marker.gameObject.activeInHierarchy, "Garnish state has no visible marker.");
+                if (placement == BartendingGarnishPlacement.Surface)
+                    Require(Vector3.Distance(marker.position, view.GetLiquidSurfaceWorld(shelf.ServingGlass)) < .1f,
+                        "Surface garnish is detached from liquid surface.");
+            }
+            SURLHWAReviewCapture.Save("phase-k-" + method + "-finished", 1280, 720);
             Debug.Log("[Phase K Play Mode] " + method + " physical bottle/measure/transfer PASS.");
             Destroy(root);
             yield return null;

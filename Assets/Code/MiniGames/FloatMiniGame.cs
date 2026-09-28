@@ -409,6 +409,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void ServeFloat()
     {
+        if (garnishController != null && garnishController.IsPlacing) return;
         if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != State.AwaitingGarnish)
         {

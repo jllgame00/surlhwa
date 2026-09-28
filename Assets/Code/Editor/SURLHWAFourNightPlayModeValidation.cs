@@ -377,6 +377,7 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                 case RecipePreparationAction.AddIce:
                     Require(stir != null ? stir.AddIceToMixingGlass() : shake != null ? shake.AddIceToShaker() :
                         build != null ? build.AddIceToServingGlass() : shelf.TryAddIceToActiveTarget(), "Ice rejected.");
+                    while (shelf.PhysicalTransferActive) yield return null;
                     break;
                 case RecipePreparationAction.Stir:
                     ClickField(stir, "startButton");
@@ -426,6 +427,8 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                         build != null ? build.TryApplyGarnish(garnish.garnish, garnish.placement) :
                         shake != null ? shake.TryApplyGarnish(garnish.garnish, garnish.placement) :
                         floating.TryApplyGarnish(garnish.garnish, garnish.placement), "Garnish rejected.");
+                    var garnishView = shelf.PhysicalPresentation.GetComponent<ServingGlassGarnishController>();
+                    while (garnishView.IsPlacing) yield return null;
                     break;
                 default: throw new InvalidOperationException("Unsupported production step " + step.action);
             }

@@ -163,6 +163,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void ServeBuild()
     {
+        if (garnishController != null && garnishController.IsPlacing) return;
         if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != BuildState.AwaitingGarnish)
         {
@@ -235,7 +236,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void UpdateDirectPour()
     {
-        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(previewPourRateMlPerSecond)) return;
+        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(previewPourRateMlPerSecond))
+        {
+            UpdateProgressText();
+            return;
+        }
         if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
         {
             StopDirectPour("Serving Glass unavailable");
