@@ -209,3 +209,186 @@ in `Logs/phase-k10-rendered-r2.log`; captured pour, measurement and final garnis
 images were inspected. They cover delayed ice/garnish state, retained attached
 ice, actual surface placement, conservation and the earlier technique checks.
 Final action-lock checks are recorded with K11 integrated validation below.
+
+## K11 — Complete physical recipe validation
+
+PASS: `Logs/phase-k11-campaign-playmode.log` runs a fresh New Game through
+all 18 nights and 47 natural departures, then the ending. The shared driver
+replaces only method keyboard polling with programmatic input. It waits for
+real bottle positioning, pours over multiple frames, uses finite repeated
+Jigger measurement for Stir recipes, performs the techniques, waits for actual
+container/ice/garnish movement, and serves through the production result path.
+It does not inject successful recipes, preparation, FIT, knowledge or campaign
+outcomes. Stir inputs use the existing angular seam and visual follower;
+Shake uses real-time L/R note windows. This is not human gameplay evidence.
+
+| Completed recipe | Physical sequence exercised |
+|---|---|
+| Seolya | Bottle → Jigger → Mixing Glass, ice, Stir, Strain, serve/match/FIT |
+| Dry Martini | Measurement, ice, Stir, Strain, required garnish and recognition |
+| Manhattan | Measurement plus discrete Dash, ice, Stir, Strain, garnish |
+| Negroni | Direct Build pours, serving ice, GentleStir, garnish |
+| Manwol | Bottle at liquid surface, slow/aggressive Float, ordered growing layers, serve |
+| Gin Fizz | Direct Shaker pours, ice, eight-note Shake, PourFromContainer, Splash |
+| Hanky Panky | Measured Stir/Strain, required garnish failure and real retry/discovery |
+| French 75 | Shake/Strain, subsequent serving-glass Pour, GentleStir and discovery |
+| Last Word | Four actual ingredient pours, ice, Shake, Strain and discovery |
+
+The same route verifies learned/supplied Recommendation alternatives, quiet
+Prince failure and later independent recovery, weak-service ACT continuation,
+Continue after night 2 and inside nights 6/10/15, interrupted dialogue/ending,
+completed-ending Continue, seven memories, New Game reset and legacy handoff.
+The runner restores the prior Editor save after completion. Campaign code and
+content were not changed to satisfy this regression.
+
+Additional executed evidence:
+
+- `Logs/phase-k10-closure-playmode.log`: four actual method prefabs PASS, including
+  action-lock rejection while garnish is held. Its earlier graphical r2 run
+  supplies inspected 1280x720 views. Runtime transforms and per-frame transfer
+  conservation are asserted, not merely serialized field values.
+- `Logs/phase-k11-closure-regression.log`: final focused Editor checks plus the
+  complete existing I10–I16/J1–J5 and campaign static set PASS, Unity exit 0.
+  Varied Jigger capacities, mixed per-ingredient transfer into a bounded target,
+  single final Dash evidence, retained ice, source exhaustion, spoon reversal,
+  rejected cursor jumps and interruption of bottle pickup all pass.
+- Final code review found a potential target snap in the first-pass
+  return path. An interrupted upright approach now returns from its current
+  position. This correction was present in the full campaign run above.
+- `Logs/phase-k11-closure-dotnet.log`: C# compile PASS, 0 errors, 8 existing
+  warnings (assembly-reference conflict and J4 reference-comparison warnings).
+- Focused physical fixtures cover measured Float, all three garnish placements,
+  overflow, direct Dash/Splash and TopUp. TopUp has no authored production recipe;
+  this is fixture coverage, not a normal-play TopUp claim.
+- `Logs/phase-k11-audio-playmode.log`: existing audio/reading Play Mode PASS.
+  One scene listener, accepted pour start/stop, volume/mute, preference isolation,
+  additive handoff/unload and Guide/settings pause preserving Shake timing all
+  pass. This does not approve the audible mix or add pickup/spill sounds.
+
+No scene/recipe/campaign/persistence serialization changed. The single Stir
+prefab value was inspected; generated font whitespace is excluded. No human
+feel, aesthetic or final game-readiness approval is claimed.
+
+## K12 — Owner tuning handoff
+
+### Components and authority
+
+| Component | Responsibility |
+|---|---|
+| `BartendingContainerState` / `BartendingPreparationState` | Sole runtime ml, ingredient, ice and garnish state; finite Jigger uses the same class. Progressive transfer lives here. |
+| `IngredientShelfController` | Select source/target, admit actions when tools are ready, orchestrate coroutines, record actual accepted destination ml in the existing trace. |
+| `BartendingPhysicalPresentation` (new) | Replaceable bottle grip/neck, vessel transforms, stream, spill, fill, ice and strainer views. Reads state; owns no composition, supply or score. |
+| Existing four method controllers | Their existing technique/stage rules, now with physical input readiness and asynchronous completion. |
+| `ServingGlassGentleStirInteraction` | Existing angular tracker with an orbiting tip and limited shaft lean. |
+| `ServingGlassGarnishController` | Existing garnish choices and final trace, now applied after visible pickup/placement. |
+| `BartendingLayeredDrinkState` | Existing ordered Float layers and boundary judgment; receives only actual accepted transfer. |
+| `RecipeMatchService`, preparation evaluator and RequestEvaluation | Unchanged recognition, preparation and guest FIT responsibilities. |
+| Existing data/knowledge/availability | Unchanged recipe truth, stable IDs, catalog membership, learned facts and physical supply availability. |
+
+No second liquid authority, recipe authority, inventory economy or save format
+was introduced. Runtime `Jigger` was appended after existing container enum
+members. Campaign scheduling, ACT dialogue, ending, memories and persistence
+were not edited. The only production prefab change is Stir orbit radius.
+
+### Controls and physical sequence
+
+- Select an available ingredient; hold Space. Pickup/alignment/tilt precede
+  accepted liquid. Release stops flow, returns upright, then releases the tool.
+- M toggles optional measurement while the Jigger is empty. Space fills it;
+  release the bottle, then T transfers the measured contents. Repeat for larger
+  amounts. Source/target and technique completion are locked while it is full
+  or in transfer. Capacity is 60 ml; excess is visibly spilled and lost.
+- Direct Build remains available. D is Dash, S is Splash. Existing configured
+  TopUp uses its own preparation action. Neither Dash nor Splash becomes Measure.
+- I places ice. Existing Stir mouse input, Shake L/R rhythm and Float Shift/
+  normal/Ctrl flow rules remain. Existing buttons perform transfer and serve.
+- Garnish selection retains existing controls. The garnish must arrive before
+  serving; Rim/InGlass/Surface refer to the actual serving vessel and liquid.
+
+### First-pass tuning values — HUMAN_TUNING_LATER
+
+Distances are local UI units; inspect at the intended canvas scale. Serialized
+fields can be adjusted on the active component during Play Mode. Presentation
+and garnish components are currently added at runtime: to persist Inspector
+overrides, add that same component to the method prefab root before play; the
+initializer reuses it. No separate configuration framework is necessary.
+
+| Owner / fields | First-pass default | Tune for |
+|---|---|---|
+| Physical: `approachSeconds`, `tiltSeconds`, `returnSeconds` | .25 / .18 / .25 s | Bottle speed, pickup and release readability |
+| Physical: `bottleTiltDegrees`, `bottleHome` | 115 degrees; (-250, 140) | Held bottle pose and shelf return |
+| Physical: `pourHeight`, `streamWidth` | 32 / 4 | Neck clearance and readable liquid stream |
+| Physical: `containerMoveSeconds`, `containerTiltDegrees` | .3 s / 105 degrees | Jigger/working-container transfer timing |
+| Shelf: `jiggerCapacityMl` | 60 ml | Measurement readability; retain finite capacity and repeated measures |
+| Shelf: `jiggerTransferMlPerSecond`, `containerTransferMlPerSecond` | 90 / 120 ml/s | Source reduction and destination growth readability |
+| Physical: `spillSeconds`; shelf: `doseStreamSeconds` | .3 / .12 s | Overflow and discrete pour visibility |
+| Physical: `displayVolumeMl` | 240 ml | Display reference for unbounded working/serving vessels; not gameplay capacity |
+| Stir: `spoonOrbitRadius`, `spoonOrbitYScale` | Prefab 60; .65 | Tip orbit shape; radius is clamped inside vessel width |
+| Stir: `spoonBaseAngleDeg`, `spoonShaftTiltDegrees`, `spoonVisualSmoothingSeconds` | 90 / 8 degrees; .08 s | Shaft naturalness and visual following; never add gameplay angle |
+| GentleStir constructor | Radius 18, lean 8 degrees, smoothing .08 s | Small serving-glass orbit |
+| Shake: `shakeMoveX`, `shakeMoveY`, `shakeRotationDegrees` | 80 / 24 / 12 degrees | Amplitude, direction and impact |
+| Shake: `shakeDuration`, `returnDuration`, `shakeMovementCurve` | .08 / .08 s; EaseInOut | Held movement/return; preserve rhythm timing windows |
+| Float: `visualVolumeMl`, `spoonOffsetY`; physical: `surfacePourHeight` | 240 ml / 6 / 12 | Growing layers, surface approach and spoon clearance |
+| Physical: `icePlacementSeconds` | .35 s | Ice placement timing |
+| Garnish: `placementSeconds`, `pickupOffset` | .35 s; (-180, 110) | Pickup/placement timing and path |
+
+Existing continuous pour rate is 30 ml/s. Float retains first-layer 30 and
+later-layer 15/30/60 ml/s. These values participate in existing gameplay; visual
+tuning must not silently change recipe amounts, technique judgment or timing
+windows. Spoon speed follows actual angular input, with visual smoothing only.
+Garnish shape/size/colors and relative placement offsets are small replaceable
+view helpers; tool sprite dimensions/neck offsets are in the presentation class.
+
+### Known first-pass limitations
+
+- Open UI rectangles, a bottle silhouette, straight streams, three ice cubes,
+  garnish markers and a strainer strip are placeholders. Final pixel assets,
+  hand poses, material/color differentiation and layout composition remain art work.
+- Liquid fill remains attached to the vessel during tilt. It is a state-driven
+  stylized indicator, with no gravity surface, splash physics, dilution or melting.
+- Bottle supply is availability only. There is no finite stock to decrement and
+  no waste counter. Overflow never reaches the recipe or adds a progression cost.
+- Working/serving containers retain existing unbounded gameplay capacity; their
+  visual fill saturates at the display reference. Only Jigger capacity is new.
+- Strain and PourFromContainer both retain source ice under current recipe
+  semantics. PourFromContainer does not introduce an unauthored dirty-dump rule.
+- Garnish replacement preserves the existing single-garnish correction rule.
+  Individual cube counts and multiple decorations are not modeled.
+- No production recipe currently authors TopUp. Its existing action vocabulary
+  is covered by a focused physical fixture, not a newly invented campaign drink.
+- No Phase K player executable has been packaged. The existing Windows build
+  predates Phase K. Editor automation is not a physical-keyboard playthrough.
+
+### Human tuning checklist
+
+- [ ] Bottle speed, grip/neck relationship, tilt and return feel.
+- [ ] Pour stream readability and bottle/target clearance.
+- [ ] Jigger fill and numeric reading, repeated measurement controls.
+- [ ] Overflow visibility and clear distinction from delivered liquid.
+- [ ] Stir orbit naturalness, direction reversal, speed and smoothing.
+- [ ] Shake amplitude, visual impact and attached contents.
+- [ ] Float surface approach, layer growth and slow-pour readability.
+- [ ] Transfer movement, stream and source/destination timing.
+- [ ] Ice readability and garnish positions for all three placements.
+- [ ] Replace runtime placeholders with final pixel assets; review at target resolutions.
+- [ ] Listen to the existing mix; decide whether pickup/spill/placement sounds are needed.
+- [ ] Play complete recipes and the campaign with physical controls; judge feel,
+  readability, pacing and emotional experience. Automated results do not approve these.
+
+## Final classification
+
+| Classification | Scope |
+|---|---|
+| PASS | K2–K10 bounded physical interactions; state/trace ownership, finite measurement/overflow, source/destination conservation, Stir reversal, Shake rhythm, layered Float, ice/garnish, recipe recognition and FIT. Compile, focused Editor/graphical Play Mode, audio pause and full 18-night/47-encounter campaign regressions pass. |
+| VALIDATION_DEBT | Human physical mouse/keyboard play, complete standalone Phase K playthrough, target-device performance and alternate-resolution/hit-target review. Existing Windows executable predates Phase K. No Unity licensing blocker remains. |
+| HUMAN_TUNING_LATER | All motion/spacing/readability values in the checklist; bartending feel and campaign pacing with the new interaction durations. |
+| DEFERRED_ART | Final pixel bottle/Jigger/vessel/spoon/ice/garnish/strainer sprites, hands, liquid appearance and final composition. Current views are simple replaceable placeholders. |
+| DEFERRED_AUDIO | Owner mix review and any new pickup, spill, transfer or placement accents. Existing audio behavior remains functional. |
+| FUTURE_EXPANSION | Finite bottle inventory, additional glass/container capacities, more authored cocktail content and additional tool vocabulary only if separately scoped. |
+| OUT_OF_SCOPE | Campaign/narrative rewrites, replacement recipe/knowledge/scoring authorities, destructive save migration, CFD, dynamic rigid-body fluid/breakage simulation. |
+
+No known objective defect remains in the implemented bounded Phase K contracts
+after the executed checks. This is a first-pass technical handoff. The owner
+retains final approval of art, audio, readability, physical feel and finished-game
+readiness. Logs/captures are local ignored validation artifacts, not committed
+production assets. No push or public publication was performed.

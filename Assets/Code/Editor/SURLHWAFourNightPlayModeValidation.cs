@@ -329,6 +329,10 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
         var shake = Find<ShakeMiniGame>();
         var floating = Find<FloatMiniGame>();
         Require(shelf != null, "No actual shelf.");
+        // Replace keyboard polling only. Production state, choreography,
+        // coroutines, matching and guest evaluation continue normally.
+        foreach (var input in new MonoBehaviour[] { stir, build, shake, floating })
+            if (input != null) input.enabled = false;
         // This driver reads an authored plan only after the same facts are visible
         // in consumed teaching or Known Guide knowledge. It never writes a result,
         // trace, known flag, technique grade, guest state or visit/day outcome.
@@ -354,25 +358,64 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                         int index = floating.LayeredDrinkState.Layers.Count;
                         Require(floating.BeginLayerPour(intensity), "Layer could not begin.");
                         float rate = index == 0 ? 30f : failTechnique ? 60f : 15f;
-                        Require(Mathf.Abs(floating.PourActiveLayerForDuration(ml / rate, intensity) - ml) < .01f, "Layer transfer mismatch.");
+                        while (!shelf.PreparePhysicalPour()) yield return null;
+                        float remaining = ml;
+                        while (remaining > .001f)
+                        {
+                            float amount = Mathf.Min(rate * Time.deltaTime, remaining);
+                            Require(Mathf.Abs(floating.PourActiveLayerForDuration(amount / rate, intensity) - amount) < .01f,
+                                "Layer transfer mismatch.");
+                            remaining -= amount;
+                            yield return null;
+                        }
                         Require(floating.EndActiveLayerPour(), "Layer did not complete.");
+                    }
+                    else if (stir != null)
+                    {
+                        // Complete Stir recipes use repeated finite measurements.
+                        float remaining = ml;
+                        while (remaining > .001f)
+                        {
+                            float measure = Mathf.Min(shelf.Jigger.CapacityMl, remaining);
+                            while (!shelf.PhysicalPresentation.PrepareBottle(step.ingredient, shelf.Jigger)) yield return null;
+                            float toFill = measure;
+                            while (toFill > .001f)
+                            {
+                                float amount = Mathf.Min(30f * Time.deltaTime, toFill);
+                                Require(Mathf.Abs(shelf.FillJigger(amount) - amount) < .001f, "Measured intake rejected.");
+                                toFill -= amount;
+                                yield return null;
+                            }
+                            shelf.EndSelectedPour();
+                            while (!shelf.PhysicalPresentation.IsResting) yield return null;
+                            Require(shelf.BeginMeasuredTransfer(), "Measured recipe transfer rejected.");
+                            while (shelf.PhysicalTransferActive) yield return null;
+                            Require(shelf.Jigger.CurrentLiquidVolumeMl == 0f, "Measured source not emptied.");
+                            remaining -= measure;
+                        }
                     }
                     else
                     {
                         Require(shelf.BeginSelectedPour(), "Pour could not begin.");
+                        while (!shelf.PreparePhysicalPour()) yield return null;
                         float remaining = ml;
                         while (remaining > .001f)
                         {
-                            float amount = Mathf.Min(1f, remaining);
+                            float amount = Mathf.Min(30f * Time.deltaTime, remaining);
                             Require(Mathf.Abs(shelf.PourSelectedIngredient(amount) - amount) < .001f, "Actual transfer rejected.");
                             remaining -= amount;
+                            yield return null;
                         }
                         shelf.EndSelectedPour();
                     }
+                    while (!shelf.PhysicalPresentation.IsResting) yield return null;
                     break;
                 case RecipePreparationAction.Dash:
                     for (int i = 0; i < step.repeatCount; i++)
-                        Require(shelf.TryDashSelectedIngredient(out _), "Dash rejected.");
+                    {
+                        Require(shelf.BeginPhysicalDose(RecipePreparationAction.Dash), "Dash rejected.");
+                        while (shelf.PhysicalTransferActive) yield return null;
+                    }
                     break;
                 case RecipePreparationAction.AddIce:
                     Require(stir != null ? stir.AddIceToMixingGlass() : shake != null ? shake.AddIceToShaker() :
@@ -381,20 +424,35 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                     break;
                 case RecipePreparationAction.Stir:
                     ClickField(stir, "startButton");
-                    for (int i = 0; i <= 360; i++) stir.TryRecordStirAngle(i * 3f, 1f / 60f);
+                    for (int i = 0; i <= 360; i++)
+                    {
+                        stir.TryRecordStirAngle(i * 3f, 1f / 60f);
+                        typeof(StirMiniGame).GetMethod("UpdateSpoonVisual",
+                            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                            .Invoke(stir, new object[] { 1f / 60f });
+                        yield return null;
+                    }
                     ClickField(stir, "startButton");
                     break;
                 case RecipePreparationAction.GentleStir:
                     if (build != null)
                     {
                         build.BeginGentleStir();
-                        for (int i = 0; i <= 180; i++) build.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
+                        for (int i = 0; i <= 180; i++)
+                        {
+                            build.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
+                            yield return null;
+                        }
                         build.FinishGentleStir();
                     }
                     else
                     {
                         shake.BeginGentleStir();
-                        for (int i = 0; i <= 180; i++) shake.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
+                        for (int i = 0; i <= 180; i++)
+                        {
+                            shake.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
+                            yield return null;
+                        }
                         shake.FinishGentleStir();
                     }
                     break;

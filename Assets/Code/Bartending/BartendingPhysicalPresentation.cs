@@ -241,6 +241,9 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         if (stream != null) stream.gameObject.SetActive(false);
         if (motion == Motion.Rest || motion == Motion.Return || motion == Motion.Upright) return;
+        // A released pickup is already upright. Return from its current pose;
+        // aligning to the target here would teleport an interrupted approach.
+        if (motion == Motion.Approach) { Enter(Motion.Return); return; }
         Enter(Motion.Upright);
     }
 

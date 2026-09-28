@@ -15,6 +15,7 @@ public static class SURLHWAPhysicalBartendingValidation
     {
         Unity.CodeEditor.CodeEditor.CurrentEditor.SyncAll();
         ValidateMeasurement();
+        ValidateMixedTransfer();
         ValidateSpoonOrbit();
         foreach (string method in new[] { "Build", "Stir", "Shake", "Float" })
         {
@@ -46,6 +47,15 @@ public static class SURLHWAPhysicalBartendingValidation
                 Require(view.IsResting && Mathf.Abs(Mathf.DeltaAngle(0f, view.Bottle.localEulerAngles.z)) < .05f,
                     "Bottle must return upright and release.");
                 Require(state.ActiveTarget.CurrentLiquidVolumeMl == 12.5f, "Return changed authoritative volume.");
+                view.PrepareBottle(ingredient, state.ActiveTarget);
+                view.TickMotion(.04f);
+                Vector3 interrupted = view.Bottle.position;
+                view.EndBottle();
+                Require(Vector3.Distance(interrupted, view.Bottle.position) < .001f,
+                    "Releasing pickup teleported the bottle.");
+                view.TickMotion(.001f);
+                Require(Vector3.Distance(interrupted, view.Bottle.position) < 1f,
+                    "Interrupted pickup jumped to the target before returning.");
             }
             finally
             {
@@ -85,6 +95,32 @@ public static class SURLHWAPhysicalBartendingValidation
                 if (angle == 180) Require(Vector3.Distance(first, spoon.position) > 20f, "Spoon did not orbit.");
                 if (angle == 360) Require(Vector3.Distance(first, spoon.position) < .01f, "Orbit does not close.");
             }
+            var shelf = root.GetComponentInChildren<IngredientShelfController>(true);
+            shelf.TargetContainer.AddLiquid(shelf.ConfiguredIngredients[0], 20f);
+            shelf.TargetContainer.TryAddIce();
+            stir.BeginStir();
+            var follow = typeof(StirMiniGame).GetMethod("UpdateSpoonVisual",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Vector3 forward = default, reference = default;
+            foreach (float angle in new[] { 0f, 60f, 30f })
+            {
+                stir.TryRecordStirAngle(angle, .1f);
+                for (int frame = 0; frame < 20; frame++) follow.Invoke(stir, new object[] { .02f });
+                if (angle == 0f) reference = spoon.position;
+                if (angle == 60f) forward = spoon.position;
+            }
+            Vector3 reversed = spoon.position;
+            pose.Invoke(stir, new object[] { 30f });
+            Require(Vector3.Distance(reversed, spoon.position) < .3f &&
+                Vector3.Distance(reversed, reference) < Vector3.Distance(forward, reference),
+                "Reversed input did not reverse the visible tip orbit.");
+            Require(Mathf.Abs(stir.TotalStirRotationDegrees - 90f) < .001f,
+                "Visual following changed the performed 60 + 30 degree rotation.");
+            Require(!stir.TryRecordStirAngle(240f, .1f), "Cursor teleport accepted.");
+            for (int frame = 0; frame < 20; frame++) follow.Invoke(stir, new object[] { .02f });
+            Require(Vector3.Distance(reversed, spoon.position) < .3f &&
+                Mathf.Abs(stir.TotalStirRotationDegrees - 90f) < .001f,
+                "Rejected cursor jump moved the spoon or created gameplay rotation.");
             var gentle = new ServingGlassGentleStirInteraction();
             gentle.Begin(cup, root.transform.Find("UI"));
             for (int i = 0; i <= 180; i++) gentle.TryRecordAngle(i * 4f, 1f / 60f);
@@ -95,7 +131,7 @@ public static class SURLHWAPhysicalBartendingValidation
             gentle.End();
         }
         finally { UnityEngine.Object.DestroyImmediate(root); }
-        Debug.Log("[Phase K Stir] PASS: real scaled prefab, tip inside vessel, closed orbit, stable shaft and unchanged technique authority.");
+        Debug.Log("[Phase K Stir] PASS: real scaled prefab, tip inside vessel, closed orbit, reverse input, rejected jumps, stable shaft and unchanged technique authority.");
     }
 
     private static void ValidateMeasurement()
@@ -130,6 +166,41 @@ public static class SURLHWAPhysicalBartendingValidation
         }
         finally { UnityEngine.Object.DestroyImmediate(ingredient); }
         Debug.Log("[Phase K Measurement] PASS: varied finite capacities, overflow rejection, partial emptying, repeat and trace.");
+    }
+
+    private static void ValidateMixedTransfer()
+    {
+        var first = ScriptableObject.CreateInstance<IngredientData>();
+        var second = ScriptableObject.CreateInstance<IngredientData>();
+        try
+        {
+            var source = new BartendingContainerState(BartendingContainerType.MixingGlass);
+            var bounded = new BartendingContainerState(BartendingContainerType.Jigger, 25f);
+            source.AddLiquid(first, 61f);
+            source.AddLiquid(second, 29f);
+            source.TryAddDash(second, 1f, out _);
+            source.TryAddIce();
+            Require(source.TransferLiquidTo(bounded, 50f) == 25f, "Destination capacity ignored.");
+            Require(source.TransferLiquidTo(bounded, 1f) == 0f, "Full target accepted more liquid.");
+            Require(Mathf.Abs(source.GetLiquidAmountMl(first) + bounded.GetLiquidAmountMl(first) - 61f) < .001f &&
+                Mathf.Abs(source.GetLiquidAmountMl(second) + bounded.GetLiquidAmountMl(second) - 30f) < .001f,
+                "Partial mixed transfer changed ingredient identity/quantity.");
+            var serving = new BartendingContainerState(BartendingContainerType.ServingGlass);
+            bounded.TransferLiquidTo(serving, 100f);
+            for (int i = 0; source.CurrentLiquidVolumeMl > 0f && i < 100; i++) source.TransferLiquidTo(serving, 3.7f);
+            Require(source.CurrentLiquidVolumeMl == 0f && Mathf.Abs(serving.CurrentLiquidVolumeMl - 91f) < .001f,
+                "Repeated mixed transfer failed conservation/emptying.");
+            Require(serving.GetDashCount(second) == 1 && source.GetDashCount(second) == 0,
+                "Dash evidence duplicated or lost during progressive drain.");
+            Require(source.HasIce && !serving.HasIce, "Liquid transfer changed ice ownership.");
+            Require(source.TransferLiquidTo(serving, 1f) == 0f, "Empty source transferred twice.");
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(first);
+            UnityEngine.Object.DestroyImmediate(second);
+        }
+        Debug.Log("[Phase K Mixed Transfer] PASS: capacity, per-ingredient conservation, final dash evidence and retained ice.");
     }
 }
 #endif

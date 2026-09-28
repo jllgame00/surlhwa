@@ -2080,3 +2080,61 @@ No known objective campaign implementation defect remains after the corrected fu
 - Build-generated shader prefilters, runtime cache lists, temporary project settings and Editor-local changes were inspected and restored. Dynamic font differences were whitespace only and restored. Temporary performance-test resources were cleaned by the build lifecycle. No generated/local assets are committed. The owner's `.codex/config.toml` change remains untouched.
 
 Owner next step: play the complete executable using Docs/RELEASE_REVIEW.md and record a second-pass list for dialogue, pacing, interpretation, controls, memory readability, art and audio. No push or public publication was performed. Only the owner decides final finished-game readiness.
+
+## Phase K — Bartending physical embodiment (2026-09-29)
+
+This is a bounded bartending pass after the frozen Full Campaign First-Pass.
+Baseline `4cec4fb`; the owner's `.codex/config.toml` is excluded from all work.
+Historical campaign and I-series findings above remain historical. Full audit,
+implementation records and owner tuning checklist are in
+`Docs/17_BARTENDING_PHYSICAL_EMBODIMENT.md`.
+
+Implemented bottle pickup/neck alignment/tilt/stream/return; optional finite
+60 ml Jigger measurement and lost overflow; progressive container transfer;
+tip-orbit Stir/GentleStir; whole-object Shake; direct Dash/Splash/TopUp; Float
+surface-following bottle/Jigger transfer; strainer, attached ice and delayed
+garnish placement. Open runtime placeholder vessels expose state-driven fill
+instead of legacy art with baked opaque liquid. No original image was edited.
+
+Existing container/preparation state remains the only liquid authority. The
+new presentation component owns transforms and state-derived views. Existing
+layer/technique results, recipe identity/truth/catalog, knowledge, supply,
+recognition and FIT remain separate. Jigger is an appended runtime container
+identity with no persistence migration. No campaign content, scheduling,
+ending, memories, recipe data or save code changed. The single prefab change
+is the Stir orbit radius, 16 to 60, with runtime bounds against vessel width.
+
+Compile and focused four-method graphical Play Mode checks pass. K11 final
+integrated evidence and classifications follow in the completion record; this
+paragraph does not claim subjective motion/art/audio approval. Existing
+`Builds/Windows` artifacts predate Phase K and have not been repackaged.
+
+### Phase K final executed evidence and remaining work
+
+- Compile PASS: `Logs/phase-k11-closure-dotnet.log`, 0 errors, 8 existing warnings.
+- Final Editor/static PASS: `Logs/phase-k11-closure-regression.log`, Unity exit 0;
+  physical state/transform tests and the existing I10–I16/J1–J5/campaign set.
+- Focused four-method Play Mode PASS: `Logs/phase-k10-closure-playmode.log`;
+  earlier graphical r2 captures were inspected at 1280x720. State changes follow
+  actual placement; progressive transfer conserves each source/destination.
+- Full campaign Play Mode PASS: `Logs/phase-k11-campaign-playmode.log`, fresh
+  New Game through 18 nights / 47 natural departures and ending. Nine existing
+  recipes exercise all four methods, Jigger measurement, Dash, Splash, ice,
+  GentleStir, Strain/PourFromContainer and garnish. Discovery failure/retry,
+  learned/supplied Recommendation, weak service, Continue, seven memories, reset
+  and legacy handoff remain correct. TopUp is a focused fixture because no
+  production recipe currently authors it. Inputs are programmatic; no human
+  gameplay or subjective-feel PASS is claimed.
+- Audio/reading pause Play Mode PASS: `Logs/phase-k11-audio-playmode.log`;
+  accepted pour start/stop and Guide/settings preserve rhythm and scene audio.
+- Source review and final checks preserve all authority boundaries and stable
+  IDs. No known objective bounded Phase K defect remains. Generated font and
+  Editor-local settings changes are excluded. User config remains untouched.
+
+Final categories: PASS for the implemented technical contracts and exercised
+campaign; VALIDATION_DEBT for physical-input/standalone/device/resolution review;
+HUMAN_TUNING_LATER for motion, readability, timing and feel; DEFERRED_ART for
+pixel assets/hand poses/final composition; DEFERRED_AUDIO for final mix/new tool
+accents; FUTURE_EXPANSION for separately scoped stock/content/tools; OUT_OF_SCOPE
+for campaign rewrites, replacement authorities, save migration and fluid physics.
+See Docs/17 for exact defaults, limitations, controls and the owner checklist.
