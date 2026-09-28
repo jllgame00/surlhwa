@@ -432,7 +432,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (Input.GetKeyDown(KeyCode.Space))
             BeginLayerPour(intensity);
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && ingredientShelf.PreparePhysicalPour())
             PourActiveLayerForDuration(Time.deltaTime, intensity);
 
         if (Input.GetKeyUp(KeyCode.Space))

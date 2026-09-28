@@ -482,6 +482,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
+        if (!ingredientShelf.PreparePhysicalPour()) return;
         float requestedMl = Mathf.Max(0f, pourRateMlPerSecond) * Time.deltaTime;
         float transferredMl = ingredientShelf.PourSelectedIngredient(requestedMl);
         if (transferredMl <= 0f)
@@ -543,6 +544,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
+        if (!ingredientShelf.PreparePhysicalPour()) return;
         float transferredMl = ingredientShelf.PourSelectedIngredient(
             Mathf.Max(0f, pourRateMlPerSecond) * Time.deltaTime);
         if (transferredMl <= 0f)

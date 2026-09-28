@@ -32,6 +32,8 @@ public class IngredientShelfController : MonoBehaviour
     private RecipePreparationAction activePourAction;
     private float activePourTransferredMl;
     private IngredientAvailabilityContext availabilityContext;
+    private BartendingPhysicalPresentation physicalPresentation;
+    public BartendingPhysicalPresentation PhysicalPresentation => physicalPresentation;
 
     public IngredientData SelectedIngredient => selectedIngredient;
     public IngredientAvailabilityContext AvailabilityContext => availabilityContext;
@@ -70,6 +72,17 @@ public class IngredientShelfController : MonoBehaviour
         activePourIngredient = null;
         activePourTransferredMl = 0f;
         ingredientsUsedThisSession.Clear();
+
+        Transform methodRoot = transform;
+        while (methodRoot.parent != null && methodRoot.Find("UI") == null)
+            methodRoot = methodRoot.parent;
+        if (Application.isPlaying && methodRoot.Find("UI") != null)
+        {
+            physicalPresentation = methodRoot.GetComponent<BartendingPhysicalPresentation>();
+            if (physicalPresentation == null)
+                physicalPresentation = methodRoot.gameObject.AddComponent<BartendingPhysicalPresentation>();
+            physicalPresentation.Initialize(methodRoot, preparationState);
+        }
 
         // Do not seed from the recipe/default session.
         // The shelf represents what the player has actually poured.
@@ -268,6 +281,7 @@ public class IngredientShelfController : MonoBehaviour
         float transferredMl = targetContainer.AddLiquid(ingredient, amountMl);
         if (transferredMl > 0f)
         {
+            physicalPresentation?.ObserveAcceptedPour(transferredMl);
             if (activePourIngredient == ingredient &&
                 activePourTarget == targetContainer.ContainerType)
             {
@@ -315,6 +329,14 @@ public class IngredientShelfController : MonoBehaviour
         return AddLiquidMl(selectedIngredient, amountMl);
     }
 
+    /// <summary>Live input gate: no ml moves during pickup/alignment/tilt.</summary>
+    public bool PreparePhysicalPour()
+    {
+        if (!BeginSelectedPour()) return false;
+        return physicalPresentation == null ||
+               physicalPresentation.PrepareBottle(selectedIngredient, targetContainer);
+    }
+
     /// <summary>
     /// Starts one evidence record for a continuous Pour Core operation. The
     /// container still receives every accepted frame amount immediately; this
@@ -340,6 +362,7 @@ public class IngredientShelfController : MonoBehaviour
 
     public void EndSelectedPour()
     {
+        physicalPresentation?.EndBottle();
         if (activePourIngredient != null && activePourTransferredMl > 0f)
         {
             preparationTrace?.Record(
@@ -549,6 +572,7 @@ public class IngredientShelfController : MonoBehaviour
 
     private void RefreshContents()
     {
+        physicalPresentation?.RefreshState();
         foreach (BrewIngredientOptionView option in optionViews)
         {
             if (option == null)

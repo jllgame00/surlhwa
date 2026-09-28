@@ -272,6 +272,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
+        if (!ingredientShelf.PreparePhysicalPour()) return;
         float requestedMl = Mathf.Max(0f, previewPourRateMlPerSecond) * Time.deltaTime;
         float transferredMl = ingredientShelf.PourSelectedIngredient(requestedMl);
         if (transferredMl <= 0f)
