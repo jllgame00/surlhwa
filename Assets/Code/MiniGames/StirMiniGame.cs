@@ -135,13 +135,13 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         if (startHintText != null)
         {
-            startHintText.gameObject.SetActive(true);
-            startHintText.text = "Prepare in the Mixing Glass. Press Begin Stir after adding ice.";
+            startHintText.gameObject.SetActive(hintText == null);
+            startHintText.text = "믹싱 글라스에 재료와 얼음을 넣고 젓기를 시작하세요.";
         }
 
-        SetPrimaryAction(BeginStir, "Begin Stir", true);
+        SetPrimaryAction(BeginStir, "젓기 시작", true);
         UpdateProgressText();
-        SetHint("Select an ingredient and hold SPACE to pour into the Mixing Glass. Press I to add ice.");
+        SetHint("재료를 고르고 Space를 눌러 믹싱 글라스에 붓습니다. I: 얼음");
 
         Debug.Log("[Stir] Preparation ready / Target=MixingGlass / Ice=required");
     }
@@ -179,13 +179,13 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         BartendingContainerState mixingGlass = GetMixingGlass();
         if (mixingGlass == null || mixingGlass.CurrentLiquidVolumeMl <= 0f)
         {
-            SetHint("Pour at least one ingredient into the Mixing Glass first.");
+            SetHint("믹싱 글라스에 재료를 먼저 부어 주세요.");
             return;
         }
 
         if (!mixingGlass.HasIce)
         {
-            SetHint("Add ice to the Mixing Glass before stirring.");
+            SetHint("젓기 전에 믹싱 글라스에 얼음을 넣어 주세요.");
             return;
         }
 
@@ -195,8 +195,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         ingredientShelf.SetVisible(false);
 
-        SetPrimaryAction(FinishStir, "Finish Stir", true);
-        SetHint("Move the mouse in a steady circle around the spoon. Keep outside the center of the glass.");
+        SetPrimaryAction(FinishStir, "젓기 마치기", true);
+        SetHint("잔 중앙을 피해서 스푼 둘레로 마우스를 일정하게 돌려 주세요.");
         UpdateProgressText();
 
         Debug.Log($"[Stir] Begin mixingGlassMl={mixingGlass.CurrentLiquidVolumeMl:0.###} ice={mixingGlass.HasIce}");
@@ -241,7 +241,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (techniqueTracker.ElapsedSeconds < minimumFinishDurationSeconds)
         {
             float remaining = minimumFinishDurationSeconds - techniqueTracker.ElapsedSeconds;
-            SetHint($"Keep stirring for {remaining:0.0} more seconds before finishing.");
+            SetHint($"{remaining:0.0}초만 더 저은 뒤 마쳐 주세요.");
             return;
         }
 
@@ -254,8 +254,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (resultLabel != null)
             resultLabel.text = completedGrade.ToString();
 
-        SetPrimaryAction(StrainAndSubmit, "Strain", true);
-        SetHint("Technique complete. Press Strain to move the actual Mixing Glass contents into the Serving Glass.");
+        SetPrimaryAction(StrainAndSubmit, "걸러 따르기", true);
+        SetHint("젓기를 마쳤습니다. 걸러 따르기를 눌러 서빙 잔으로 옮겨 주세요.");
         UpdateProgressText();
 
         Debug.Log(
@@ -279,7 +279,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (ingredientShelf == null ||
             !ingredientShelf.TryStrainActiveTargetToServingGlass(out float transferredMl))
         {
-            SetHint("Strain requires liquid in the Mixing Glass.");
+            SetHint("걸러 따르려면 믹싱 글라스에 액체가 있어야 합니다.");
             return;
         }
 
@@ -287,10 +287,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         ingredientShelf.SetVisible(false);
         garnishController?.BeginSelection();
-        SetPrimaryAction(ServeStir, "Serve Stir", true);
+        SetPrimaryAction(ServeStir, "내어주기", true);
         SetHint(garnishController != null && garnishController.IsExpectedGarnishRequired
-            ? "Stirred drink strained. Garnish is required before serving."
-            : "Stirred drink strained. Garnish is optional; choose one or serve the drink as made.");
+            ? "걸러 따랐습니다. 필요한 가니시를 더해 주세요."
+            : "걸러 따랐습니다. 가니시를 더하거나 그대로 내어주세요.");
         UpdateProgressText();
 
         BartendingContainerState mixingGlass = GetMixingGlass();
@@ -325,7 +325,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         garnishController?.EndSelection();
 
         SetPrimaryAction(null, string.Empty, false);
-        SetHint("Stir complete.");
+        SetHint("조주를 마쳤습니다.");
         UpdateProgressText();
 
         Debug.Log($"[Stir] Serve garnish={(result.garnish != null ? result.garnish.DisplayName + "/" + result.garnish.Placement : "none")}");
@@ -357,11 +357,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         if (!ingredientShelf.TryAddIceToActiveTarget())
         {
-            SetHint("The Mixing Glass already has ice.");
+            SetHint("믹싱 글라스에 이미 얼음이 있습니다.");
             return false;
         }
 
-        SetHint("Ice added to the Mixing Glass. Continue pouring or begin Stir.");
+        SetHint("믹싱 글라스에 얼음을 넣었습니다. 재료를 더하거나 젓기를 시작하세요.");
         UpdateProgressText();
         Debug.Log("[Container] AddIce target=MixingGlass");
         return true;
@@ -397,7 +397,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (ingredient == null)
         {
             StopDirectPour("no ingredient selected");
-            SetHint("Select an ingredient before pouring.");
+            SetHint("먼저 부을 재료를 골라 주세요.");
             return;
         }
 
@@ -497,7 +497,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     {
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
         {
-            SetHint("Select an ingredient before adding a dash.");
+            SetHint("먼저 대시로 더할 재료를 골라 주세요.");
             return;
         }
 
@@ -637,8 +637,8 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
                 progressText.text =
                     $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish " +
                     (garnishController != null && garnishController.IsExpectedGarnishRequired
-                        ? "required"
-                        : "optional");
+                        ? "필수"
+                        : "선택");
                 break;
 
             case State.Result:

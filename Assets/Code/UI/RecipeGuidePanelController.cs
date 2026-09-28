@@ -14,8 +14,8 @@ public class RecipeGuidePanelController : MonoBehaviour
     private static readonly Color RecipeButtonHighlightedColor = new(1f, 0.93f, 0.72f, 0.28f);
     private static readonly Color RecipeButtonPressedColor = new(1f, 0.86f, 0.55f, 0.36f);
     private static readonly Color RecipeButtonSelectedColor = new(1f, 0.88f, 0.55f, 0.38f);
-    private static readonly Color RecipeButtonNormalTextColor = new(0.22f, 0.18f, 0.13f, 1f);
-    private static readonly Color RecipeButtonSelectedTextColor = new(0.1f, 0.08f, 0.05f, 1f);
+    private static readonly Color RecipeButtonNormalTextColor = new(0.96f, 0.92f, 0.84f, 1f);
+    private static readonly Color RecipeButtonSelectedTextColor = new(1f, 0.95f, 0.84f, 1f);
 
     [Header("UI")]
     [SerializeField] private GameObject panelRoot;
@@ -53,6 +53,7 @@ public class RecipeGuidePanelController : MonoBehaviour
     private void Awake()
     {
         ResolveDetailTextReferences();
+        RecipeDetailScrollArea.Ensure(recipeIngredientText);
 
         if (openButton != null)
         {
@@ -98,7 +99,10 @@ public class RecipeGuidePanelController : MonoBehaviour
         }
 
         if (panelRoot != null)
+        {
+            panelRoot.transform.SetAsLastSibling();
             panelRoot.SetActive(true);
+        }
 
         BeginReadStatePause();
 
@@ -258,6 +262,7 @@ public class RecipeGuidePanelController : MonoBehaviour
 
         if (recipeIngredientText != null)
             recipeIngredientText.text = BuildIngredientText(selectedRecipe, facts);
+        RecipeDetailScrollArea.ResetToTop(recipeIngredientText);
     }
 
     private static string BuildIngredientText(
@@ -333,7 +338,7 @@ public class RecipeGuidePanelController : MonoBehaviour
             recipeMethodText.text = "";
 
         if (recipeIngredientText != null)
-            recipeIngredientText.text = "선택한 레시피의 재료 용량(oz)이 표시됩니다.";
+            recipeIngredientText.text = "배운 재료와 용량(ml), 준비 순서가 표시됩니다.";
     }
 
     private void RefreshButtonVisuals()

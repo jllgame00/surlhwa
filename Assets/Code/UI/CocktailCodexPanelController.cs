@@ -41,6 +41,7 @@ public class CocktailCodexPanelController : MonoBehaviour
     private void Awake()
     {
         ResolveRecipeUnlockManager();
+        RecipeDetailScrollArea.Ensure(ingredientsText);
 
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
@@ -174,6 +175,7 @@ public class CocktailCodexPanelController : MonoBehaviour
                 recipe,
                 facts,
                 includeKnownDescription: false);
+        RecipeDetailScrollArea.ResetToTop(ingredientsText);
     }
 
     private void ShowPartialDetail(CocktailRecipeData recipe, RecipeKnowledgeFacts facts)
@@ -192,6 +194,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
         if (ingredientsText != null)
             ingredientsText.text = RecipeKnowledgeGuideFormatter.BuildDetailText(recipe, facts);
+        RecipeDetailScrollArea.ResetToTop(ingredientsText);
     }
 
     private void ShowUnknownDetail()
@@ -203,16 +206,16 @@ public class CocktailCodexPanelController : MonoBehaviour
             nameText.text = "???";
 
         if (descriptionText != null)
-            descriptionText.text = "Unknown cocktail.";
+            descriptionText.text = "아직 배우지 않은 칵테일입니다.";
 
         if (methodText != null)
-            methodText.text = "Method: ???";
+            methodText.text = "조주법: ???";
 
         if (ingredientsText != null)
             ingredientsText.text = "";
 
         if (lockedDetailText != null)
-            lockedDetailText.text = "Unknown";
+            lockedDetailText.text = "미확인";
     }
 
     private void ClearDetail()
@@ -221,7 +224,7 @@ public class CocktailCodexPanelController : MonoBehaviour
         SetLockedDetailVisible(false);
 
         if (nameText != null)
-            nameText.text = "Select a cocktail";
+            nameText.text = "칵테일을 선택하세요";
 
         if (descriptionText != null)
             descriptionText.text = "";
@@ -344,7 +347,7 @@ public class CocktailCodexPanelController : MonoBehaviour
         CocktailData cocktail = GetTargetCocktail(recipe);
         return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.description)
             ? cocktail.description.Trim()
-            : "No description.";
+            : "아직 기록된 이야기가 없습니다.";
     }
 
     private static CocktailData GetTargetCocktail(CocktailRecipeData recipe)

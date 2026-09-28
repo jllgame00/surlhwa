@@ -59,13 +59,13 @@ public static class SURLHWAServiceFeedbackValidation
                 true,
                 false));
 
-        Require(presentation.Title == "Guest Fit: Good",
+        Require(presentation.Title == "마음에 닿은 잔",
             "Good FIT + good execution must lead with positive FIT.");
-        RequireContains(presentation.Message, "Drink: " + recipe.targetCocktail.cocktailName,
+        RequireContains(presentation.Message, "내어준 잔: " + recipe.targetCocktail.cocktailName,
             "Recognized known cocktail must be named in the diagnostic summary.");
-        RequireContains(presentation.Message, "Technique: Good",
+        RequireContains(presentation.Message, "조주: Good",
             "Good technique must remain a secondary diagnostic.");
-        RequireContains(presentation.Message, "request +" + recommendation.reputationReward,
+        RequireContains(presentation.Message, "요청 +" + recommendation.reputationReward,
             "Granted request reward must be visible separately from mechanical reputation.");
     }
 
@@ -89,11 +89,11 @@ public static class SURLHWAServiceFeedbackValidation
                 true,
                 false));
 
-        RequireContains(presentation.Title, "Guest Fit: Good",
+        RequireContains(presentation.Title, "어울리는 잔 · 조주는 조금 아쉬웠어요",
             "Poor execution must not turn a fitting recommendation into poor FIT.");
-        RequireContains(presentation.Message, "Preparation: Order differed from the recipe.",
+        RequireContains(presentation.Message, "준비 순서가 레시피와 달랐습니다.",
             "Only failed preparation should add the concise HOW diagnostic.");
-        RequireContains(presentation.Message, "Technique: Poor",
+        RequireContains(presentation.Message, "조주: Poor",
             "Poor technique must remain visible without replacing FIT.");
     }
 
@@ -117,11 +117,11 @@ public static class SURLHWAServiceFeedbackValidation
                 true,
                 false));
 
-        Require(presentation.Title == "Guest Fit: Poor - Drink Well Made",
+        Require(presentation.Title == "잘 만들었지만 다른 마음의 잔",
             "Poor FIT + good execution must communicate both truths in priority order.");
-        RequireContains(presentation.Message, "Technique: Good",
+        RequireContains(presentation.Message, "조주: Good",
             "Good technique must remain visible when the recommendation was wrong.");
-        RequireContains(presentation.Message, "request reward withheld",
+        RequireContains(presentation.Message, "요청 보상 없음",
             "Unsatisfied FIT must communicate the existing withheld request reward.");
     }
 
@@ -145,9 +145,9 @@ public static class SURLHWAServiceFeedbackValidation
                 true,
                 false));
 
-        Require(presentation.Title == "Guest Fit: Poor",
+        Require(presentation.Title == "마음과 조금 다른 잔",
             "Poor FIT + poor execution must not use positive wording.");
-        RequireContains(presentation.Message, "Technique: Poor",
+        RequireContains(presentation.Message, "조주: Poor",
             "Poor FIT + poor execution must still expose technique quality.");
     }
 
@@ -169,11 +169,12 @@ public static class SURLHWAServiceFeedbackValidation
                 false,
                 false));
 
-        Require(presentation.Title == "Service Result",
+        Require(presentation.Title == "잔을 건넨 뒤",
             "Unknown composition must preserve the graceful non-FIT reaction path.");
-        RequireContains(presentation.Message, "Drink: Unknown Cocktail",
+        RequireContains(presentation.Message, "내어준 잔: 이름을 모르는 칵테일",
             "Unknown composition must be identified as unknown without a hidden answer.");
-        Require(presentation.Message.IndexOf("Recipe", StringComparison.Ordinal) < 0,
+        Require(presentation.Message.IndexOf("Recipe", StringComparison.Ordinal) < 0 &&
+                presentation.Message.IndexOf("발견", StringComparison.Ordinal) < 0,
             "Unknown composition must not claim a recipe discovery.");
     }
 
@@ -197,9 +198,10 @@ public static class SURLHWAServiceFeedbackValidation
                 true,
                 true));
 
-        Require(presentation.Title == "Guest Fit: Poor - Drink Well Made",
+        Require(presentation.Title == "잘 만들었지만 다른 마음의 잔",
             "A newly known recipe must not overwrite poor guest FIT.");
-        Require(presentation.Message.IndexOf("discovered", StringComparison.OrdinalIgnoreCase) < 0,
+        Require(presentation.Message.IndexOf("discovered", StringComparison.OrdinalIgnoreCase) < 0 &&
+                presentation.Message.IndexOf("발견", StringComparison.Ordinal) < 0,
             "Discovery belongs to the one popup, not the service summary toast.");
     }
 

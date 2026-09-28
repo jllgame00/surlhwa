@@ -122,7 +122,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
 
     private void Update()
     {
-        if (RecipeGuidePanelController.IsTechniqueReadStateActive)
+        if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
             return;
 
         if (!selectionActive)
@@ -176,7 +176,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         Image background = fallback.AddComponent<Image>();
         background.color = new Color(0.08f, 0.12f, 0.16f, 0.72f);
 
-        TMP_Text title = CreateText("Title", fallbackServingGlass, "Serving Glass", 15f);
+        TMP_Text title = CreateText("Title", fallbackServingGlass, "서빙 잔", 15f);
         RectTransform titleRect = title.rectTransform;
         titleRect.anchorMin = new Vector2(0.5f, 1f);
         titleRect.anchorMax = new Vector2(0.5f, 1f);
@@ -218,7 +218,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         panelRect.anchorMax = new Vector2(0.5f, 0f);
         panelRect.pivot = new Vector2(0.5f, 0f);
         panelRect.anchoredPosition = new Vector2(0f, 18f);
-        panelRect.sizeDelta = new Vector2(510f, 78f);
+        panelRect.sizeDelta = new Vector2(510f, 102f);
         Image panelImage = selectionPanel.AddComponent<Image>();
         panelImage.color = new Color(0.04f, 0.06f, 0.08f, 0.85f);
 
@@ -255,12 +255,12 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         string current = CurrentGarnish == null
             ? "none"
             : CurrentGarnish.DisplayName + " / " + GetPlacementLabel(CurrentGarnish.Placement);
-        string requirement = expectedGarnishRequired ? "required" : "optional";
+        string requirement = expectedGarnishRequired ? "필수" : "선택";
         selectionText.text =
-            "Garnish (" + requirement + ") [1] Lemon Twist [2] Cherry [3] Olive [4] Orange Slice [5] Lemon Slice [6] Orange Zest\n" +
-            "Placement  [Q] Rim  [W] In Glass  [E] Surface   [G] Apply  [X] Clear\n" +
-            "Selected: " + BartendingGarnishState.GetDisplayName(selectedGarnish) +
-            " / " + GetPlacementLabel(selectedPlacement) + "   Applied: " + current;
+            "가니시 (" + requirement + ") 1: 레몬 트위스트 · 2: 체리 · 3: 올리브\n4: 오렌지 슬라이스 · 5: 레몬 슬라이스 · 6: 오렌지 제스트\n" +
+            "Q: 테두리 · W: 잔 안 · E: 표면 · G: 올리기 · X: 빼기\n" +
+            "고른 가니시: " + BartendingGarnishState.GetDisplayName(selectedGarnish) +
+            " / " + GetPlacementLabel(selectedPlacement) + "   올린 가니시: " + current;
     }
 
     private void SetSelectionPanelVisible(bool visible)

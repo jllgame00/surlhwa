@@ -119,6 +119,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         var entry = (GameObject)Get(FindFirstObjectByType<GameManager>(), "entryPanel");
         var settings = entry.transform.Find("DemoEntryContent/SoundSettingsButton")?.GetComponent<Button>();
         Require(settings != null && settings.interactable, "Entry has no sound control.");
+        SURLHWAReviewCapture.Save("title", 1280, 720);
         settings.onClick.Invoke();
         Require(DemoAudioController.IsSettingsOpen && Time.timeScale == 0f, "Sound settings did not own a pause.");
         var root = (GameObject)Get(audio, "settingsRoot");
@@ -135,7 +136,8 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         SurlhwaGameProgress.ResetGameProgress();
         Require(audio.Muted && SurlhwaPlayerPrefsStore.GetInt(DemoAudioController.MasterKey, -1) == 63,
             "Gameplay reset erased sound preferences.");
-        ScreenCapture.CaptureScreenshot("Logs/production-sound-settings.png");
+        SURLHWAReviewCapture.Save("sound-settings", 1280, 720);
+        SURLHWAReviewCapture.Save("sound-settings", 1920, 1080);
         yield return new WaitForSecondsRealtime(.5f);
         audio.ToggleMute();
         audio.ToggleSettings();
@@ -144,6 +146,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
 
         var recipe = Load<CocktailRecipeData>("Recipes/Recipe_GinFizz.asset");
         var knowledge = FindFirstObjectByType<RecipeUnlockManager>();
+        knowledge.MarkKnown(recipe); // Focused presentation fixture only; saved knowledge is restored by the wrapper.
         var guideContext = new RecipeGuideContext(MiniGameType.Shake, new[] { recipe },
             knowledge.GetKnownFacts, false);
         var coordinator = FindFirstObjectByType<BartendingFlowCoordinator>();
@@ -172,6 +175,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Require(((AudioSource)Get(audio, "pour")).isPlaying, "Accepted continuous pour has no running sound.");
         yield return new WaitForSecondsRealtime(.25f);
         Require(!((AudioSource)Get(audio, "pour")).isPlaying, "Pour sound did not stop after transfer ended.");
+        SURLHWAReviewCapture.Save("shake-preparation", 1280, 720);
         Require(shake.AddIceToShaker(), "Ice preparation failed.");
         shake.BeginShake();
         var guide = shake.GetComponentInChildren<RecipeGuidePanelController>(true);
@@ -180,6 +184,17 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         var close = (Button)Get(guide, "closeButton");
         float before = shake.GetExpectedNoteTime(0) - Time.unscaledTime;
         open.onClick.Invoke();
+        var cards = (List<Button>)Get(guide, "spawnedButtons");
+        Require(cards.Count == 1, "Expected one fixture recipe.");
+        cards[0].onClick.Invoke();
+        yield return null;
+        var detail = (TMP_Text)Get(guide, "recipeIngredientText");
+        var scroll = detail.transform.parent.GetComponent<ScrollRect>();
+        Require(scroll != null && scroll.content == detail.rectTransform, "Long recipe has no reading scroll area.");
+        SURLHWAReviewCapture.Save("recipe-guide", 1280, 720);
+        scroll.verticalNormalizedPosition = 0;
+        Canvas.ForceUpdateCanvases();
+        SURLHWAReviewCapture.Save("recipe-guide-bottom", 1280, 720);
         yield return new WaitForSecondsRealtime(1.1f);
         float after = shake.GetExpectedNoteTime(0) - Time.unscaledTime;
         Require(Mathf.Abs(after - before) < .15f && shake.MissCount == 0,
@@ -201,6 +216,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Require(shake.MissCount == 0 && shake.CorrectHitCount == shake.NoteCount,
             "Resumed rhythm was not playable after both read pauses.");
         shake.StrainAndSubmit();
+        SURLHWAReviewCapture.Save("garnish", 1280, 720);
         shake.ServeShake();
         deadline = Time.realtimeSinceStartup + 15f;
         while (!completed)

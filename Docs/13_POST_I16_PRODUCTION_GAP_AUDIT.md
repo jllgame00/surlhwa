@@ -1887,3 +1887,16 @@ button reference and two explicit same-scene audio references; no prefab edits.
 J7 playback/settings technical prerequisites are implemented. Temporary sound
 quality, loudness, loop feel and atmosphere remain HUMAN_SIGNOFF_REQUIRED. No
 final soundtrack, bar dressing, or broad presentation approval is claimed.
+
+
+## J6 Korean UI, Reading Layout and Font Closure (2026-09-28)
+
+Scope: player-facing menu/result/preparation instructions, ml-first known ingredient quantities (legacy ounces retained as secondary display), and readable Guide/Codex detail. Recipe IDs, amounts, conversion constant, grade strings, knowledge gates and save format are unchanged. English ingredient identities and established method labels remain authored data.
+
+Rendered evidence exposed objective defects that compilation did not: dynamically created Korean labels rendered as missing-glyph boxes; preparation hints were duplicated over each other; the Recipe button covered the shelf heading; the Guide allowed technique text to draw over it; long authored recipe detail had no scrolling. These were fixed with a project-owned dynamic fallback from the existing Noto Sans KR font, narrow four-prefab text/anchor/scaler changes, a single hint surface, foreground opaque Guide, and a Unity ScrollRect around the existing detail text. The formatter remains the sole knowledge-filtered projection. Settings now suppress garnish keyboard input as well as technique input. Font source licenses are included under Docs/Licenses.
+
+Validation: dotnet Editor build: 0 errors, 8 pre-existing warnings. Full J1–J5 regression rerun recorded in Logs/production-final-regression.log. Focused graphics-enabled Audio PlayMode in Logs/production-ui-render.log passed clips, volume/mute/reset isolation, actual pour playback, both reading pauses, rhythm resume/unload, and the long-recipe scroll reference. The latter uses an explicitly Known Gin Fizz presentation fixture and restores prior saves; it is not discovery evidence. RenderTexture review images under Logs/Review cover title, sound settings, Shake preparation, Guide top/bottom, and garnish. Captures temporarily project real overlay canvases through a camera and restore them; they are offscreen review evidence, not OS-input or final display approval.
+
+Logs/production-final-four-night.log separately passed two complete production runs after character/audio integration: 34 departures plus one mandatory retry, strict open/quiet Prince branches, all methods, actual liquid/preparation/technique/matching, knowledge/supply-reachable alternative answers, night-2 reload/Continue, completed Continue without Day 5, and New Game reset. No grade/result/knowledge injection was used in those runs; actual input processing seams and UI callbacks were driven. Physical mouse/keyboard, subjective control feel and final readability remain human checks.
+
+Remaining: bar dialogue/default labels and environment presentation are the next bounded correction, followed by standalone build/delivery audit. Source-visible draft composition/animation and final Korean editorial preference remain HUMAN_SIGNOFF_REQUIRED, not automatic visual PASS.

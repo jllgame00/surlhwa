@@ -317,11 +317,11 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
 
         yield return new WaitForSeconds(ToastWait - InitialReactionWait);
         TrackPopupActivation();
-        string expectedMessage = "Drink: " + dryMartini.targetCocktail.cocktailName + "\n" +
-                                 "Technique: Good\n" +
-                                 "Reputation: +3 (service +2, request +1)";
+        string expectedMessage = "내어준 잔: " + dryMartini.targetCocktail.cocktailName + "\n" +
+                                 "조주: Good\n" +
+                                 "평판: +3 (조주 +2, 요청 +1)";
         if (!Require(toastCanvas.alpha > 0.01f && !IsPopupActive() &&
-                     toastTitle.text == "Guest Fit: Good" &&
+                     toastTitle.text == "마음에 닿은 잔" &&
                      toastMessage.text == expectedMessage,
                 "Scenario A did not present the resolved Dry Martini, Good technique, and granted reward through the production toast."))
         {
@@ -401,11 +401,11 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
 
         yield return new WaitForSeconds(ToastWait - InitialReactionWait);
         TrackPopupActivation();
-        string expectedMessage = "Drink: " + incompatibleRecipe.targetCocktail.cocktailName + "\n" +
-                                 "Technique: Good\n" +
-                                 "Reputation: +2 (request reward withheld)";
+        string expectedMessage = "내어준 잔: " + incompatibleRecipe.targetCocktail.cocktailName + "\n" +
+                                 "조주: Good\n" +
+                                 "평판: +2 (요청 보상 없음)";
         if (!Require(toastCanvas.alpha > 0.01f && !IsPopupActive() &&
-                     toastTitle.text == "Guest Fit: Poor - Drink Well Made" &&
+                     toastTitle.text == "잘 만들었지만 다른 마음의 잔" &&
                      toastMessage.text == expectedMessage,
                 "Scenario B did not preserve poor FIT, recognized identity, Good technique, and the withheld request reward in the production toast."))
         {

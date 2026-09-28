@@ -69,7 +69,7 @@ public static class SURLHWARecipeKnowledgeValidation
             Require(RecipeKnowledgeGuideFormatter.GetCardLabel(dryMartini, unknown) == "???",
                 "Unknown card leaked the cocktail identity.");
             string unknownDetail = RecipeKnowledgeGuideFormatter.BuildDetailText(dryMartini, unknown);
-            Require(!ContainsAny(unknownDetail, "Dry Martini", "Gin", "Dry Vermouth", "Stir"),
+            Require(!ContainsAny(unknownDetail, "Dry Martini", "Gin", "Dry Vermouth", "Stir", "젓기"),
                 "Unknown detail leaked authored recipe facts.");
 
             Require(manager.LearnMethod(dryMartini), "LearnMethod should change Unknown Dry Martini.");
@@ -89,7 +89,7 @@ public static class SURLHWARecipeKnowledgeValidation
                 "Partial Dry Martini lost an acquired typed fact.");
 
             string partialDetail = RecipeKnowledgeGuideFormatter.BuildDetailText(dryMartini, partial);
-            Require(RecipeKnowledgeGuideFormatter.GetMethodText(dryMartini, partial) == "Method: Stir" &&
+            Require(RecipeKnowledgeGuideFormatter.GetMethodText(dryMartini, partial) == "조주법: Stir" &&
                     ContainsAll(partialDetail, "Gin", "2.03 oz"),
                 "Partial Guide fields did not show the learned method and Gin amount.");
             Require(!ContainsAny(partialDetail, "Dry Martini", "Dry Vermouth", "Olive"),
@@ -103,7 +103,7 @@ public static class SURLHWARecipeKnowledgeValidation
 
             string knownDetail = RecipeKnowledgeGuideFormatter.BuildDetailText(dryMartini, known);
             Require(RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, known) == "Dry Martini" &&
-                    ContainsAll(knownDetail, "Gin", "Dry Vermouth", "Stir", "Olive", "Cocktail Glass"),
+                    ContainsAll(knownDetail, "Gin", "Dry Vermouth", "젓기", "Olive", "Cocktail Glass"),
                 "Known Dry Martini did not reveal the supported full recipe truth.");
         }
         finally
@@ -472,8 +472,8 @@ public static class SURLHWARecipeKnowledgePlayModeValidation
                     dryMartini,
                     manager.GetKnownFacts(dryMartini),
                     "???",
-                    "Unknown Cocktail",
-                    "Method: ???",
+                    "이름을 모르는 칵테일",
+                    "조주법: ???",
                     string.Empty,
                     "Dry Martini",
                     "Gin");
@@ -485,8 +485,8 @@ public static class SURLHWARecipeKnowledgePlayModeValidation
                     dryMartini,
                     manager.GetKnownFacts(dryMartini),
                     "???",
-                    "Unknown Cocktail",
-                    "Method: Stir",
+                    "이름을 모르는 칵테일",
+                    "조주법: Stir",
                     "Gin",
                     "Dry Martini",
                     "Dry Vermouth");
@@ -497,7 +497,7 @@ public static class SURLHWARecipeKnowledgePlayModeValidation
                     manager.GetKnownFacts(dryMartini),
                     "Dry Martini",
                     "Dry Martini",
-                    "Method: Stir",
+                    "조주법: Stir",
                     "Dry Vermouth",
                     string.Empty,
                     string.Empty);

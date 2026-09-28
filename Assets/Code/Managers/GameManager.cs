@@ -144,10 +144,10 @@ public class GameManager : MonoBehaviour
 
         CreateEntryText("Title", "SURLHWA", 42f, content.transform);
         CreateEntryText("Subtitle", "네 번의 밤 · Esc 소리 설정", 20f, content.transform);
-        CreateEntryButton("NewGameButton", "New Game", BeginNewGame, true, content.transform);
+        CreateEntryButton("NewGameButton", "새 게임", BeginNewGame, true, content.transform);
         CreateEntryButton(
             "ContinueButton",
-            "Continue",
+            "이어하기",
             ContinueGame,
             SurlhwaGameProgress.HasMeaningfulProgress(),
             content.transform);

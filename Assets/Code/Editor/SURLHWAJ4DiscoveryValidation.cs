@@ -367,8 +367,8 @@ public static class SURLHWAJ4DiscoveryValidation
 
         string detail = RecipeKnowledgeGuideFormatter.BuildDetailText(manwol, facts);
         Require(RecipeKnowledgeGuideFormatter.GetDetailName(manwol, facts) == "만월" &&
-                RecipeKnowledgeGuideFormatter.GetMethodText(manwol, facts) == "Method: Float" &&
-                ContainsAll(detail, "Vodka", "Coffee Liqueur", "Cream", "2 oz", "1 oz", "Preparation:", "Pour") &&
+                RecipeKnowledgeGuideFormatter.GetMethodText(manwol, facts) == "조주법: Float" &&
+                ContainsAll(detail, "Vodka", "Coffee Liqueur", "Cream", "59.1 ml (2 oz)", "29.6 ml (1 oz)", "준비 순서:", "붓기") &&
                 !Contains(detail, "Old Fashioned Glass"),
             "Partial Manwol Guide must expose only the authored teaching facts, never Known-only glassware.");
     }
@@ -789,9 +789,9 @@ public static class SURLHWAJ4DiscoveryValidation
 
         string guideDetail = RecipeKnowledgeGuideFormatter.BuildDetailText(recipe, facts);
         Require(!string.IsNullOrWhiteSpace(RecipeKnowledgeGuideFormatter.GetDetailName(recipe, facts)) &&
-                RecipeKnowledgeGuideFormatter.GetMethodText(recipe, facts) == "Method: " + expectedMethod &&
-                Contains(guideDetail, "Preparation:") &&
-                !Contains(guideDetail, "Glassware:"),
+                RecipeKnowledgeGuideFormatter.GetMethodText(recipe, facts) == "조주법: " + expectedMethod &&
+                Contains(guideDetail, "준비 순서:") &&
+                !Contains(guideDetail, "잔:"),
             label + " Partial Guide must expose only taught facts, never Known-only glassware.");
 
     }

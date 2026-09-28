@@ -156,12 +156,12 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (startHintText != null)
         {
-            startHintText.gameObject.SetActive(true);
-            startHintText.text = "Build layers in order. Hold SPACE; Shift is gentle and Ctrl is aggressive.";
+            startHintText.gameObject.SetActive(hintText == null);
+            startHintText.text = "순서대로 층을 쌓으세요. Space: 붓기 · Shift: 천천히 · Ctrl: 세게";
         }
 
-        SetPrimaryAction(CompleteFloat, "Complete Float", true);
-        SetHint("Select an ingredient. Hold SPACE to pour Layer 0; later layers use the spoon-assisted flow.");
+        SetPrimaryAction(CompleteFloat, "층 쌓기 마치기", true);
+        SetHint("재료를 고르고 Space로 첫 층을 부어 주세요. 다음 층부터는 스푼을 따라 흐릅니다.");
         UpdateLayerVisuals();
         UpdateProgressText();
 
@@ -193,7 +193,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         IngredientData ingredient = ingredientShelf.SelectedIngredient;
         if (ingredient == null)
         {
-            SetHint("Select an ingredient before building a layer.");
+            SetHint("층을 쌓기 전에 재료를 골라 주세요.");
             return false;
         }
 
@@ -338,7 +338,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (layeredDrinkState == null || layeredDrinkState.Layers.Count == 0)
         {
-            SetHint("Add at least one actual layer before completing Float.");
+            SetHint("마무리하기 전에 한 층 이상 부어 주세요.");
             return;
         }
 
@@ -350,8 +350,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         ingredientShelf.SetVisible(false);
         garnishController?.BeginSelection();
-        SetPrimaryAction(ServeFloat, "Serve Float", true);
-        SetHint("Float layers complete. Garnish is optional; choose one or serve the drink as made.");
+        SetPrimaryAction(ServeFloat, "내어주기", true);
+        SetHint("층 쌓기를 마쳤습니다. 가니시를 더하거나 그대로 내어주세요.");
         UpdateProgressText();
 
         BartendingContainerState servingGlass = GetServingGlass();
@@ -386,7 +386,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         garnishController?.EndSelection();
 
         SetPrimaryAction(null, string.Empty, false);
-        SetHint("Float complete. The Serving Glass composition is being evaluated.");
+        SetHint("층 쌓기를 마쳤습니다.");
         UpdateProgressText();
 
         Debug.Log("[Float] Serve garnish=" +
@@ -446,11 +446,11 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (!ingredientShelf.TryAddIceToActiveTarget())
         {
-            SetHint("The Serving Glass already has ice.");
+            SetHint("서빙 잔에 이미 얼음이 있습니다.");
             return false;
         }
 
-        SetHint("Ice added to the Serving Glass.");
+        SetHint("서빙 잔에 얼음을 넣었습니다.");
         UpdateProgressText();
         Debug.Log("[Container] AddIce target=ServingGlass");
         return true;

@@ -96,8 +96,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (startHintText != null)
         {
-            startHintText.gameObject.SetActive(true);
-            startHintText.text = "Build directly in the Serving Glass. Finish Build when the liquid is ready.";
+            startHintText.gameObject.SetActive(hintText == null);
+            startHintText.text = "서빙 잔에 직접 만드세요. 준비가 되면 마무리를 누르세요.";
         }
 
         if (startButton != null)
@@ -105,11 +105,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             startButton.gameObject.SetActive(true);
             startButton.onClick.RemoveAllListeners();
             startButton.onClick.AddListener(CompleteBuild);
-            SetPrimaryActionLabel("Finish Build");
+            SetPrimaryActionLabel("마무리");
         }
 
         UpdateProgressText();
-        SetHint("Select an ingredient and hold SPACE to pour. Press I for ice, D for one dash, or J for a gentle serving-glass stir.");
+        SetHint("재료를 고르고 Space를 눌러 붓습니다. I: 얼음 · D: 1대시 · J: 잔에서 가볍게 젓기");
 
         Debug.Log(
             "[BuildMiniGame] Direct Build ready / " +
@@ -131,7 +131,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (ingredientShelf == null || !ingredientShelf.HasServingGlassContents())
         {
-            SetHint("Pour at least one ingredient into the Serving Glass before completing.");
+            SetHint("서빙 잔에 재료를 먼저 부어 주세요.");
             Debug.LogWarning("[BuildMiniGame] Cannot complete. Serving Glass has no liquid.");
             return;
         }
@@ -140,17 +140,17 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         state = BuildState.AwaitingGarnish;
 
         if (resultLabel != null)
-            resultLabel.text = "Liquid Ready";
+            resultLabel.text = "액체 준비 완료";
 
         if (startHintText != null)
             startHintText.gameObject.SetActive(false);
 
         ingredientShelf.SetVisible(false);
         garnishController?.BeginSelection();
-        SetPrimaryAction(ServeBuild, "Serve Build", true);
+        SetPrimaryAction(ServeBuild, "내어주기", true);
         SetHint(garnishController != null && garnishController.IsExpectedGarnishRequired
-            ? "Serving Glass ready. Garnish is required before serving."
-            : "Serving Glass ready. Garnish is optional; choose one or serve the drink as made.");
+            ? "서빙 잔이 준비됐습니다. 필요한 가니시를 더해 주세요."
+            : "서빙 잔이 준비됐습니다. 가니시를 더하거나 그대로 내어주세요.");
         UpdateProgressText();
 
         Debug.Log($"[BuildMiniGame] Liquid preparation ready / ServingMl={ingredientShelf.ServingGlass.CurrentLiquidVolumeMl:0.###}");
@@ -176,7 +176,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         garnishController?.EndSelection();
 
         if (resultLabel != null)
-            resultLabel.text = "Complete";
+            resultLabel.text = "완료";
 
         SetPrimaryAction(null, string.Empty, false);
 
@@ -268,7 +268,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (ingredient == null)
         {
             StopDirectPour("no ingredient selected");
-            SetHint("Select an ingredient before pouring.");
+            SetHint("먼저 부을 재료를 골라 주세요.");
             return;
         }
 
@@ -331,7 +331,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     {
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
         {
-            SetHint("Select an ingredient before adding a dash.");
+            SetHint("먼저 대시로 더할 재료를 골라 주세요.");
             return;
         }
 
@@ -356,11 +356,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (state != BuildState.Preparing || ingredientShelf == null ||
             !ingredientShelf.TryAddIceToActiveTarget())
         {
-            SetHint("The Serving Glass already has ice or is unavailable.");
+            SetHint("서빙 잔에 이미 얼음이 있거나 사용할 수 없습니다.");
             return false;
         }
 
-        SetHint("Ice added to the Serving Glass.");
+        SetHint("서빙 잔에 얼음을 넣었습니다.");
         UpdateProgressText();
         return true;
     }
@@ -375,7 +375,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (state != BuildState.Preparing || ingredientShelf == null ||
             !ingredientShelf.HasServingGlassContents())
         {
-            SetHint("Pour into the Serving Glass before gently stirring.");
+            SetHint("가볍게 젓기 전에 서빙 잔에 재료를 부어 주세요.");
             return;
         }
 
@@ -384,14 +384,14 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         Transform visualParent = transform.Find("UI") ?? transform;
         if (gentleStirInteraction == null || !gentleStirInteraction.Begin(center, visualParent))
         {
-            SetHint("Gentle Stir visual could not start.");
+            SetHint("가볍게 젓기를 시작할 수 없습니다.");
             return;
         }
 
         state = BuildState.GentleStirring;
         ingredientShelf.SetVisible(false);
-        SetPrimaryAction(FinishGentleStir, "Finish Gentle Stir", true);
-        SetHint("Move the mouse in a light circle around the Serving Glass.");
+        SetPrimaryAction(FinishGentleStir, "젓기 마치기", true);
+        SetHint("서빙 잔 둘레로 마우스를 가볍게 원을 그리며 움직여 주세요.");
         UpdateProgressText();
     }
 
@@ -415,7 +415,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (!gentleStirInteraction.TryFinish())
         {
-            SetHint("Keep gently stirring for a little longer.");
+            SetHint("조금만 더 가볍게 저어 주세요.");
             return;
         }
 
@@ -424,8 +424,8 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             BartendingContainerType.ServingGlass);
         state = BuildState.Preparing;
         ingredientShelf.SetVisible(true);
-        SetPrimaryAction(CompleteBuild, "Finish Build", true);
-        SetHint("Gentle Stir complete. Continue pouring or finish the Build.");
+        SetPrimaryAction(CompleteBuild, "마무리", true);
+        SetHint("가볍게 젓기를 마쳤습니다. 재료를 더하거나 마무리하세요.");
         UpdateProgressText();
         Debug.Log("[GentleStir] Build ServingGlass complete");
     }

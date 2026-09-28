@@ -48,7 +48,7 @@ public class BrewIngredientOptionView : MonoBehaviour
         {
             nameText.text = ingredient != null
                 ? ingredient.displayName
-                : "Unknown";
+                : "미확인";
         }
 
         if (iconImage != null)

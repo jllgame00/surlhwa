@@ -161,6 +161,7 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                     var guest = (CustomerController)Get(ui, "activeCustomer");
                     Require(guest.TryGetDedicatedRequest(out var order), "Production slot has no authored request.");
                     ClickField(ui, "ellipsisButton");
+                    if (scenario == 0 && slot == 1) SURLHWAReviewCapture.Save("bar-night-" + night, 1280, 720);
                     while ((bool)Get(ui, "isPreRequestDialogueActive")) ClickField(ui, "nextButton");
                     if ((bool)Get(ui, "isLittlePrinceChoiceActive"))
                         ClickField(ui, scenario == 0 ? "nextButton" : "brewButton");

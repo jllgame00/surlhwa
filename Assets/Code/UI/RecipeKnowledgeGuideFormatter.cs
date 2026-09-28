@@ -29,14 +29,14 @@ public static class RecipeKnowledgeGuideFormatter
     {
         return IsIdentityKnown(facts)
             ? GetCocktailDisplayName(recipe)
-            : "Unknown Cocktail";
+            : "이름을 모르는 칵테일";
     }
 
     public static string GetMethodText(CocktailRecipeData recipe, RecipeKnowledgeFacts facts)
     {
         return IsFullyKnown(facts) || (facts != null && facts.MethodKnown)
-            ? "Method: " + (recipe != null ? recipe.method.ToString() : "???")
-            : "Method: ???";
+            ? "조주법: " + (recipe != null ? recipe.method.ToString() : "???")
+            : "조주법: ???";
     }
 
     public static string BuildDetailText(
@@ -72,7 +72,7 @@ public static class RecipeKnowledgeGuideFormatter
             recipe.targetCocktail.glassware != CocktailGlassware.Unspecified)
         {
             AppendSectionBreak(detail);
-            detail.Append("Glassware: ")
+            detail.Append("잔: ")
                 .Append(FormatGlassware(recipe.targetCocktail.glassware));
         }
 
@@ -88,7 +88,7 @@ public static class RecipeKnowledgeGuideFormatter
         if (recipe.ingredients == null || recipe.ingredients.Length == 0)
         {
             if (fullyKnown)
-                detail.Append("Ingredients: No ingredient data.");
+                detail.Append("재료 정보가 없습니다.");
             return;
         }
 
@@ -109,13 +109,13 @@ public static class RecipeKnowledgeGuideFormatter
         if (!fullyKnown && knownEntries.Count == 0)
             return;
 
-        detail.AppendLine("Ingredients:");
+        detail.AppendLine("재료:");
         foreach (RecipeIngredientEntry entry in knownEntries)
         {
             bool amountKnown = fullyKnown || facts.IsIngredientAmountKnown(entry.ingredient);
             detail.Append("- ")
                 .Append(entry.ingredient.displayName)
-                .Append(amountKnown ? $" — {entry.ratio:0.##} oz" : " — ?")
+                .Append(amountKnown ? $" — {BartendingVolume.OuncesToMilliliters(entry.ratio):0.#} ml ({entry.ratio:0.##} oz)" : " — ?")
                 .AppendLine();
         }
 
@@ -130,11 +130,11 @@ public static class RecipeKnowledgeGuideFormatter
         bool fullyKnown)
     {
         AppendSectionBreak(detail);
-        detail.AppendLine("Preparation:");
+        detail.AppendLine("준비 순서:");
 
         if (recipe.expectedPreparation == null || recipe.expectedPreparation.Length == 0)
         {
-            detail.Append("No preparation sequence recorded.");
+            detail.Append("아직 기록된 준비 순서가 없습니다.");
             return;
         }
 
@@ -148,7 +148,7 @@ public static class RecipeKnowledgeGuideFormatter
     private static void AppendGarnish(StringBuilder detail, CocktailRecipeData recipe)
     {
         AppendSectionBreak(detail);
-        detail.AppendLine("Garnish:");
+        detail.AppendLine("가니시:");
 
         HashSet<string> garnishLines = new();
         if (recipe.expectedPreparation != null)
@@ -175,7 +175,7 @@ public static class RecipeKnowledgeGuideFormatter
 
         if (garnishLines.Count == 0)
         {
-            detail.Append("No garnish expectation.");
+            detail.Append("가니시 없음");
             return;
         }
 
@@ -190,9 +190,9 @@ public static class RecipeKnowledgeGuideFormatter
     {
         StringBuilder text = new();
         if (step.optional)
-            text.Append("Optional ");
+            text.Append("선택 · ");
 
-        text.Append(step.action);
+        text.Append(FormatAction(step.action));
         if (step.ingredient != null)
         {
             text.Append(' ')
@@ -205,13 +205,41 @@ public static class RecipeKnowledgeGuideFormatter
             text.Append(" ×").Append(step.repeatCount);
 
         if (step.source != RecipePreparationContainer.Any)
-            text.Append(" from ").Append(step.source);
+            text.Append(" · 출발: ").Append(FormatContainer(step.source));
 
         if (step.target != RecipePreparationContainer.Any)
-            text.Append(" to ").Append(step.target);
+            text.Append(" · 도착: ").Append(FormatContainer(step.target));
 
         return text.ToString();
     }
+
+    private static string FormatAction(RecipePreparationAction action)
+    {
+        string label = action switch
+        {
+            RecipePreparationAction.Pour => "붓기",
+            RecipePreparationAction.Dash => "대시 더하기",
+            RecipePreparationAction.Splash => "스플래시 더하기",
+            RecipePreparationAction.AddIce => "얼음 넣기",
+            RecipePreparationAction.Stir => "젓기",
+            RecipePreparationAction.GentleStir => "가볍게 젓기",
+            RecipePreparationAction.Shake => "흔들기",
+            RecipePreparationAction.Strain => "걸러 따르기",
+            RecipePreparationAction.PourFromContainer => "잔으로 옮겨 붓기",
+            RecipePreparationAction.TopUp => "채우기",
+            RecipePreparationAction.Garnish => "가니시 올리기",
+            _ => action.ToString()
+        };
+        return label;
+    }
+
+    private static string FormatContainer(RecipePreparationContainer container) => container switch
+    {
+        RecipePreparationContainer.ServingGlass => "서빙 잔",
+        RecipePreparationContainer.MixingGlass => "믹싱 글라스",
+        RecipePreparationContainer.Shaker => "셰이커",
+        _ => string.Empty
+    };
 
     private static void AppendSectionBreak(StringBuilder detail)
     {
@@ -224,7 +252,7 @@ public static class RecipeKnowledgeGuideFormatter
         CocktailData cocktail = recipe != null ? recipe.targetCocktail : null;
         return cocktail != null && !string.IsNullOrWhiteSpace(cocktail.cocktailName)
             ? cocktail.cocktailName
-            : "Unknown Cocktail";
+            : "이름을 모르는 칵테일";
     }
 
     private static string FormatGlassware(CocktailGlassware glassware)

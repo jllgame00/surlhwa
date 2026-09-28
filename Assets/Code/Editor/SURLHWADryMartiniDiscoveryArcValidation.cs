@@ -150,8 +150,8 @@ public static class SURLHWADryMartiniDiscoveryArcValidation
             Require(afterMethod.State == RecipeKnowledgeState.Partial && afterMethod.MethodKnown &&
                     !afterMethod.IdentityKnown && !afterMethod.IsIngredientKnown(gin),
                 "Encounter 1 must leave Dry Martini as method-only Partial knowledge.");
-            Require(RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, afterMethod) == "Unknown Cocktail" &&
-                    RecipeKnowledgeGuideFormatter.GetMethodText(dryMartini, afterMethod) == "Method: Stir",
+            Require(RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, afterMethod) == "이름을 모르는 칵테일" &&
+                    RecipeKnowledgeGuideFormatter.GetMethodText(dryMartini, afterMethod) == "조주법: Stir",
                 "Method-only Partial Guide projection leaked identity or hid Stir.");
 
             DestroyKnowledgeManager(manager);
@@ -195,8 +195,8 @@ public static class SURLHWADryMartiniDiscoveryArcValidation
                     taught.PreparationKnown && taught.GarnishKnown,
                 "Teaching must leave an unnamed Partial recipe with actionable quantities and preparation.");
             Require(ContainsAll(RecipeKnowledgeGuideFormatter.BuildDetailText(dryMartini, taught),
-                        "2.03 oz", "0.34 oz", "Stir", "Strain") &&
-                    RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, taught) == "Unknown Cocktail",
+                        "2.03 oz", "0.34 oz", "젓기", "걸러 따르기") &&
+                    RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, taught) == "이름을 모르는 칵테일",
                 "Guide must retain the taught amounts/steps without revealing the cocktail identity.");
 
             RecipeMatchResult failedMatch = RecipeMatchService.FindBestMatch(
@@ -236,7 +236,7 @@ public static class SURLHWADryMartiniDiscoveryArcValidation
             Require(known.State == RecipeKnowledgeState.Known &&
                     RecipeKnowledgeGuideFormatter.GetDetailName(dryMartini, known) == "Dry Martini" &&
                     ContainsAll(RecipeKnowledgeGuideFormatter.BuildDetailText(dryMartini, known),
-                        "Gin", "Dry Vermouth", "2.03 oz", "0.34 oz", "Stir", "Cocktail Glass"),
+                        "Gin", "Dry Vermouth", "2.03 oz", "0.34 oz", "젓기", "Cocktail Glass"),
                 "Known Dry Martini did not expose the supported full Guide truth.");
             Require(CountOccurrences(RecipeProgressPersistence.LoadRecipeKnowledgeRaw(), "recipe_dry_martini") == 1,
                 "Idempotent production progression duplicated the saved recipe entry.");

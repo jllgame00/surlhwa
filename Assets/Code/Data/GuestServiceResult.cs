@@ -63,22 +63,22 @@ public readonly struct ServiceFeedbackPresentation
 
 public static class GuestServiceFeedbackFormatter
 {
-    private const string UnknownCocktailLabel = "Unknown Cocktail";
+    private const string UnknownCocktailLabel = "이름을 모르는 칵테일";
 
     public static ServiceFeedbackPresentation Build(GuestServiceResult result)
     {
         List<string> lines = new();
-        lines.Add("Drink: " + GetDrinkLabel(result));
+        lines.Add("내어준 잔: " + GetDrinkLabel(result));
 
         RecipePreparationEvaluationResult preparation = result.BartendingResult.preparationEvaluation;
         if (preparation != null &&
             preparation.Status == RecipePreparationEvaluationStatus.Unsatisfied)
         {
-            lines.Add("Preparation: Order differed from the recipe.");
+            lines.Add("준비 순서가 레시피와 달랐습니다.");
         }
 
         if (!string.IsNullOrWhiteSpace(result.BartendingResult.grade))
-            lines.Add("Technique: " + result.BartendingResult.grade);
+            lines.Add("조주: " + result.BartendingResult.grade);
 
         lines.Add(BuildRewardLine(result));
 
@@ -100,19 +100,19 @@ public static class GuestServiceFeedbackFormatter
     private static string GetTitle(GuestReactionResolver.GuestResponseOutcome response)
     {
         if (!response.HasGuestFitFeedback)
-            return "Service Result";
+            return "잔을 건넨 뒤";
 
         return response.Tone switch
         {
             GuestReactionResolver.GuestResponseTone.GoodFitGoodExecution =>
-                "Guest Fit: Good",
+                "마음에 닿은 잔",
             GuestReactionResolver.GuestResponseTone.GoodFitWeakExecution =>
-                "Guest Fit: Good - Execution Needs Work",
+                "어울리는 잔 · 조주는 조금 아쉬웠어요",
             GuestReactionResolver.GuestResponseTone.PoorFitGoodExecution =>
-                "Guest Fit: Poor - Drink Well Made",
+                "잘 만들었지만 다른 마음의 잔",
             GuestReactionResolver.GuestResponseTone.PoorFitWeakExecution =>
-                "Guest Fit: Poor",
-            _ => "Service Result"
+                "마음과 조금 다른 잔",
+            _ => "잔을 건넨 뒤"
         };
     }
 
@@ -122,15 +122,15 @@ public static class GuestServiceFeedbackFormatter
 
         if (result.RequestReputationReward != 0)
         {
-            return "Reputation: " + total +
-                   " (service " + FormatSigned(result.MechanicalReputationDelta) +
-                   ", request " + FormatSigned(result.RequestReputationReward) + ")";
+            return "평판: " + total +
+                   " (조주 " + FormatSigned(result.MechanicalReputationDelta) +
+                   ", 요청 " + FormatSigned(result.RequestReputationReward) + ")";
         }
 
         if (result.RequestRewardWithheld)
-            return "Reputation: " + total + " (request reward withheld)";
+            return "평판: " + total + " (요청 보상 없음)";
 
-        return "Reputation: " + total;
+        return "평판: " + total;
     }
 
     private static string FormatSigned(int value)

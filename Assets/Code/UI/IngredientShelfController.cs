@@ -207,18 +207,18 @@ public class IngredientShelfController : MonoBehaviour
     private void RefreshTexts()
     {
         if (titleText != null)
-            titleText.text = $"Ingredients - {currentMethod}";
+            titleText.text = $"재료 · {currentMethod}";
 
         if (summaryText == null)
             return;
 
-        string iceText = targetContainer != null && targetContainer.HasIce ? " / ice" : string.Empty;
+        string iceText = targetContainer != null && targetContainer.HasIce ? " · 얼음" : string.Empty;
 
         if (!HasAnySelectedIngredient())
         {
             summaryText.text = targetContainer != null
-                ? $"{targetContainer.ContainerType} empty{iceText}"
-                : "No active container";
+                ? $"{targetContainer.ContainerType} · 비어 있음{iceText}"
+                : "용기 없음";
             return;
         }
 
@@ -230,7 +230,7 @@ public class IngredientShelfController : MonoBehaviour
         // drive TMP's wrapped-ellipsis layout into recursive line breaking.
         summaryText.text =
             $"{targetContainer.ContainerType} {targetContainer.CurrentLiquidVolumeMl:0.0} ml / " +
-            $"{liquidCount} liquid{(liquidCount == 1 ? string.Empty : "s")}{iceText}";
+            $"재료 {liquidCount}종{iceText}";
     }
 
     private void OnIngredientSelected(IngredientData ingredient)

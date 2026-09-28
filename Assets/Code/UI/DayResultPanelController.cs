@@ -16,9 +16,9 @@ public class DayResultPanelController : MonoBehaviour
 
     private bool openingResult;
     private bool isDemoCompletionResult;
-    private const string NextNightButtonLabel = "Next Night";
-    private const string ReturnToTitleButtonLabel = "Return to Title";
-    private const string NewRecipesRecordedPrefix = "New recipes recorded tonight";
+    private const string NextNightButtonLabel = "다음 밤으로";
+    private const string ReturnToTitleButtonLabel = "처음 화면으로";
+    private const string NewRecipesRecordedPrefix = "오늘 기록한 칵테일";
     private const string RestartButtonLabel = "다음 밤으로";
     private const string CodexButtonLabel = "도감 펼치기";
 
@@ -74,7 +74,7 @@ public class DayResultPanelController : MonoBehaviour
         }
 
         if (demoComplete && titleText != null)
-            titleText.text = "Demo Complete";
+            titleText.text = "네 번의 밤을 마치며";
     }
 
     public void OpenDemoComplete()
@@ -85,16 +85,16 @@ public class DayResultPanelController : MonoBehaviour
         ConfigureDemoNavigationButton();
 
         if (titleText != null)
-            titleText.text = "Demo Complete";
+            titleText.text = "네 번의 밤을 마치며";
 
         if (reputationText != null)
             reputationText.text = string.Empty;
 
         if (customerCountText != null)
-            customerCountText.text = "This production demo has reached its current endpoint.";
+            customerCountText.text = "설화의 네 번의 밤이 끝났습니다.";
 
         if (unlockedRecipesText != null)
-            unlockedRecipesText.text = "Start a New Game to replay from Day 1.";
+            unlockedRecipesText.text = "새 게임으로 첫날부터 다시 만날 수 있습니다.";
 
         if (panelRoot != null)
         {

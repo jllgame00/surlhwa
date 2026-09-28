@@ -153,12 +153,12 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         if (startHintText != null)
         {
-            startHintText.gameObject.SetActive(true);
-            startHintText.text = "Prepare in the Shaker. Press Begin Shake after adding ice.";
+            startHintText.gameObject.SetActive(hintText == null);
+            startHintText.text = "셰이커에 재료와 얼음을 넣고 흔들기를 시작하세요.";
         }
 
-        SetPrimaryAction(BeginShake, "Begin Shake", true);
-        SetHint("Select an ingredient and hold SPACE to pour into the Shaker. Press I to add ice.");
+        SetPrimaryAction(BeginShake, "흔들기 시작", true);
+        SetHint("재료를 고르고 Space를 눌러 셰이커에 붓습니다. I: 얼음");
         UpdateProgressText();
 
         Debug.Log("[Shake] Preparation ready / Target=Shaker / Ice=required");
@@ -212,13 +212,13 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         BartendingContainerState shakerState = GetShaker();
         if (shakerState == null || shakerState.CurrentLiquidVolumeMl <= 0f)
         {
-            SetHint("Pour at least one ingredient into the Shaker first.");
+            SetHint("셰이커에 재료를 먼저 부어 주세요.");
             return;
         }
 
         if (!shakerState.HasIce)
         {
-            SetHint("Add ice to the Shaker before shaking.");
+            SetHint("흔들기 전에 셰이커에 얼음을 넣어 주세요.");
             return;
         }
 
@@ -229,7 +229,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         ingredientShelf.SetVisible(false);
         SetPrimaryAction(null, string.Empty, false);
-        SetHint("Follow the LEFT / RIGHT rhythm. Use A or Left Arrow, and D or Right Arrow.");
+        SetHint("왼쪽·오른쪽 박자를 따라 눌러 주세요. 왼쪽: A / ← · 오른쪽: D / →");
         SetRhythmFeedback("Ready", new Color(0.8f, 0.86f, 0.92f, 1f));
         UpdateProgressText();
 
@@ -254,8 +254,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             TryCompleteRhythm();
             extraInputCount++;
-            SetHint("Rhythm already complete. Strain the drink.");
-            SetRhythmFeedback("Complete", new Color(0.8f, 0.86f, 0.92f, 1f));
+            SetHint("흔들기를 마쳤습니다. 잔으로 옮겨 주세요.");
+            SetRhythmFeedback("완료", new Color(0.8f, 0.86f, 0.92f, 1f));
             UpdateProgressText();
             return ShakeJudgement.Extra;
         }
@@ -268,7 +268,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (timingOffset > Mathf.Max(0f, goodWindowSeconds))
         {
             extraInputCount++;
-            SetHint("Off beat. Follow the next direction at the hit time.");
+            SetHint("다음 방향과 박자를 확인해 주세요.");
             SetRhythmFeedback("Off Beat", new Color(0.95f, 0.65f, 0.32f, 1f));
             UpdateProgressText();
             return ShakeJudgement.Extra;
@@ -279,7 +279,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             wrongDirectionCount++;
             ConsumeMiss();
-            SetHint($"Wrong direction. Expected {DirectionLabel(expectedDirection)}.");
+            SetHint($"다음 방향은 {DirectionLabel(expectedDirection)}입니다.");
             SetRhythmFeedback("Miss", new Color(0.88f, 0.42f, 0.42f, 1f));
             UpdateProgressText();
             TryCompleteRhythm();
@@ -290,7 +290,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             perfectHitCount++;
             nextNoteIndex++;
-            SetHint($"Perfect — {DirectionLabel(expectedDirection)} accepted.");
+            SetHint($"정확하게 · {DirectionLabel(expectedDirection)}");
             SetRhythmFeedback("Perfect", new Color(0.78f, 0.93f, 0.72f, 1f));
             UpdateProgressText();
             TryCompleteRhythm();
@@ -299,7 +299,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         goodHitCount++;
         nextNoteIndex++;
-        SetHint($"Good — {DirectionLabel(expectedDirection)} accepted.");
+        SetHint($"안정적으로 · {DirectionLabel(expectedDirection)}");
         SetRhythmFeedback("Good", new Color(0.8f, 0.86f, 0.92f, 1f));
         UpdateProgressText();
         TryCompleteRhythm();
@@ -327,11 +327,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         if (!ingredientShelf.TryAddIceToActiveTarget())
         {
-            SetHint("The Shaker already has ice.");
+            SetHint("셰이커에 이미 얼음이 있습니다.");
             return false;
         }
 
-        SetHint("Ice added to the Shaker. Continue pouring or begin Shake.");
+        SetHint("셰이커에 얼음을 넣었습니다. 재료를 더하거나 흔들기를 시작하세요.");
         UpdateProgressText();
         Debug.Log("[Container] AddIce target=Shaker");
         return true;
@@ -352,7 +352,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (ingredientShelf == null ||
             !ingredientShelf.TryStrainActiveTargetToServingGlass(out float transferredMl))
         {
-            SetHint("Strain requires liquid in the Shaker.");
+            SetHint("걸러 따르려면 셰이커에 액체가 있어야 합니다.");
             return;
         }
 
@@ -360,8 +360,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         ingredientShelf.SetVisible(true);
         garnishController?.BeginSelection();
-        SetPrimaryAction(ServeShake, "Serve Shake", true);
-        SetHint("Liquid moved to the Serving Glass. You may add more liquid, Splash with S, gently stir with J, garnish, or serve.");
+        SetPrimaryAction(ServeShake, "내어주기", true);
+        SetHint("서빙 잔으로 옮겼습니다. S: 스플래시 · J: 가볍게 젓기 · 가니시를 더하거나 내어주세요.");
         UpdateProgressText();
 
         BartendingContainerState shakerState = GetShaker();
@@ -386,16 +386,16 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (ingredientShelf == null ||
             !ingredientShelf.TryPourActiveTargetToServingGlass(out float transferredMl))
         {
-            SetHint("Pour requires liquid in the Shaker.");
+            SetHint("옮겨 부으려면 셰이커에 액체가 있어야 합니다.");
             return;
         }
 
         state = State.AwaitingGarnish;
         ingredientShelf.SetVisible(true);
         garnishController?.BeginSelection();
-        SetPrimaryAction(ServeShake, "Serve Shake", true);
+        SetPrimaryAction(ServeShake, "내어주기", true);
         SetHint(RequiresExpectedSplash()
-            ? "Poured from the Shaker. Add the required Splash with S before serving."
+            ? "셰이커에서 옮겨 부었습니다. S로 필요한 스플래시를 더해 주세요."
             : "Poured from the Shaker. Add the optional Splash with S, garnish, or serve.");
         UpdateProgressText();
         Debug.Log($"[Shake] PourFromContainer Shaker -> ServingGlass volumeMl={transferredMl:0.###}");
@@ -427,7 +427,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         garnishController?.EndSelection();
 
         SetPrimaryAction(null, string.Empty, false);
-        SetHint("Shake complete.");
+        SetHint("조주를 마쳤습니다.");
         UpdateProgressText();
 
         Debug.Log($"[Shake] Serve garnish={(result.garnish != null ? result.garnish.DisplayName + "/" + result.garnish.Placement : "none")}");
@@ -478,7 +478,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (ingredient == null)
         {
             StopDirectPour("no ingredient selected");
-            SetHint("Select an ingredient before pouring.");
+            SetHint("먼저 부을 재료를 골라 주세요.");
             return;
         }
 
@@ -539,7 +539,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (ingredient == null)
         {
             StopServingPour("no ingredient selected");
-            SetHint("Select an ingredient before pouring into the Serving Glass.");
+            SetHint("서빙 잔에 부을 재료를 먼저 골라 주세요.");
             return;
         }
 
@@ -557,7 +557,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             Debug.Log($"[Pour] Start ingredient={ingredient.ingredientId} target=ServingGlass rate={pourRateMlPerSecond:0.##} ml/s");
         }
 
-        SetHint($"Pouring {ingredient.displayName} into Serving Glass. Press J for gentle stir or serve when ready.");
+        SetHint($"{ingredient.displayName} 붓는 중 · J: 가볍게 젓기 · 준비되면 내어주세요.");
         UpdateProgressText();
     }
 
@@ -566,11 +566,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null ||
             !ingredientShelf.TrySplashSelectedIngredient(splashMilliliters, out float transferredMl))
         {
-            SetHint($"Select an ingredient and use a {splashMilliliters:0.#} ml Splash.");
+            SetHint($"재료를 고르고 {splashMilliliters:0.#} ml 스플래시를 더해 주세요.");
             return false;
         }
 
-        SetHint($"Splash added: {transferredMl:0.#} ml. This is SURLHWA gameplay tuning, not an official IBA volume.");
+        SetHint($"스플래시 {transferredMl:0.#} ml를 더했습니다.");
         UpdateProgressText();
         return true;
     }
@@ -580,7 +580,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (state != State.AwaitingGarnish || ingredientShelf == null ||
             !ingredientShelf.HasServingGlassContents())
         {
-            SetHint("The Serving Glass needs liquid before a gentle stir.");
+            SetHint("가볍게 젓기 전에 서빙 잔에 액체가 있어야 합니다.");
             return;
         }
 
@@ -589,15 +589,15 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         Transform visualParent = transform.Find("UI") ?? transform;
         if (gentleStirInteraction == null || !gentleStirInteraction.Begin(center, visualParent))
         {
-            SetHint("Gentle Stir visual could not start.");
+            SetHint("가볍게 젓기를 시작할 수 없습니다.");
             return;
         }
 
         garnishController?.EndSelection();
         ingredientShelf.SetVisible(false);
         state = State.GentleStirring;
-        SetPrimaryAction(FinishGentleStir, "Finish Gentle Stir", true);
-        SetHint("Move the mouse in a light circle around the Serving Glass.");
+        SetPrimaryAction(FinishGentleStir, "젓기 마치기", true);
+        SetHint("서빙 잔 둘레로 마우스를 가볍게 원을 그리며 움직여 주세요.");
         UpdateProgressText();
     }
 
@@ -621,7 +621,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         if (!gentleStirInteraction.TryFinish())
         {
-            SetHint("Keep gently stirring for a little longer.");
+            SetHint("조금만 더 가볍게 저어 주세요.");
             return;
         }
 
@@ -631,8 +631,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         state = State.AwaitingGarnish;
         ingredientShelf.SetVisible(true);
         garnishController?.BeginSelection();
-        SetPrimaryAction(ServeShake, "Serve Shake", true);
-        SetHint("Gentle Stir complete. Garnish, adjust with actual liquid, or serve.");
+        SetPrimaryAction(ServeShake, "내어주기", true);
+        SetHint("가볍게 젓기를 마쳤습니다. 가니시나 재료를 더하거나 내어주세요.");
         UpdateProgressText();
         Debug.Log("[GentleStir] Shake route ServingGlass complete");
     }
@@ -689,11 +689,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         bool usePourFromContainer = UsesExpectedPourFromContainerTransfer();
         SetPrimaryAction(
             usePourFromContainer ? PourFromContainerAndContinue : StrainAndSubmit,
-            usePourFromContainer ? "Pour to Glass" : "Strain",
+            usePourFromContainer ? "잔으로 붓기" : "Strain",
             true);
         SetHint(usePourFromContainer
-            ? "Rhythm complete. Pour the Shaker contents to the Serving Glass."
-            : "Rhythm complete. Use Strain, or press P to pour from the Shaker into the Serving Glass.");
+            ? "흔들기를 마쳤습니다. 셰이커의 내용물을 서빙 잔으로 부어 주세요."
+            : "흔들기를 마쳤습니다. 걸러 따르기 또는 P로 서빙 잔에 부어 주세요.");
         UpdateProgressText();
 
         Debug.Log(
@@ -792,7 +792,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     {
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
         {
-            SetHint("Select an ingredient before adding a dash.");
+            SetHint("먼저 대시로 더할 재료를 골라 주세요.");
             return;
         }
 
@@ -886,7 +886,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             case State.Rhythm:
                 if (nextNoteIndex >= NoteCount)
                 {
-                    progressText.text = "Rhythm complete";
+                    progressText.text = "흔들기 완료";
                     break;
                 }
 
@@ -909,8 +909,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
                 progressText.text =
                     $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / " +
                     (garnishController != null && garnishController.IsExpectedGarnishRequired
-                        ? "garnish required"
-                        : "garnish or gentle stir optional");
+                        ? "가니시 필수"
+                        : "가니시·가볍게 젓기 선택");
                 break;
 
             case State.GentleStirring:
