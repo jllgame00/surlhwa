@@ -116,6 +116,26 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             }
             Require(observedPartial && shelf.Jigger.CurrentLiquidVolumeMl == 0f, "Transfer must visibly empty over frames.");
             Require(shelf.ToolsReady, "Tools remained locked after return.");
+            if (method == "Build")
+            {
+                float beforeDose = shelf.ServingGlass.CurrentLiquidVolumeMl;
+                Require(shelf.BeginPhysicalDose(RecipePreparationAction.Dash), "Physical Dash rejected.");
+                Require(shelf.ServingGlass.CurrentLiquidVolumeMl == beforeDose, "Dash arrived before bottle movement.");
+                while (shelf.PhysicalTransferActive) yield return null;
+                Require(Mathf.Abs(shelf.ServingGlass.CurrentLiquidVolumeMl - beforeDose - BartendingVolume.DashesToMilliliters(1)) < .002f,
+                    "Physical Dash quantity mismatch.");
+                beforeDose = shelf.ServingGlass.CurrentLiquidVolumeMl;
+                Require(shelf.BeginPhysicalDose(RecipePreparationAction.Splash, BartendingVolume.DefaultSplashMilliliters), "Physical Splash rejected.");
+                while (shelf.PhysicalTransferActive) yield return null;
+                Require(Mathf.Abs(shelf.ServingGlass.CurrentLiquidVolumeMl - beforeDose - BartendingVolume.DefaultSplashMilliliters) < .002f,
+                    "Physical Splash quantity mismatch.");
+                while (!shelf.PreparePhysicalPour(RecipePreparationAction.TopUp)) yield return null;
+                shelf.PourSelectedIngredient(8f, RecipePreparationAction.TopUp);
+                shelf.EndSelectedPour();
+                while (!view.IsResting) yield return null;
+                Require(shelf.PreparationTrace.Actions[shelf.PreparationTrace.Actions.Count - 1].Action == RecipePreparationAction.TopUp,
+                    "TopUp changed into an ordinary Pour.");
+            }
             if (method != "Build")
             {
                 var source = shelf.TargetContainer;

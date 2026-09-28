@@ -511,6 +511,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     private void TryDispenseDash()
     {
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+        {
+            ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Dash);
+            return;
+        }
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
         {
             SetHint("먼저 대시로 더할 재료를 골라 주세요.");

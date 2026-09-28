@@ -600,6 +600,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     public bool TryAddSplashToServingGlass()
     {
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+            return state == State.AwaitingGarnish && ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Splash, splashMilliliters);
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null ||
             !ingredientShelf.TrySplashSelectedIngredient(splashMilliliters, out float transferredMl))
         {
@@ -846,6 +848,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     private void TryDispenseDash()
     {
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+        {
+            ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Dash);
+            return;
+        }
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
         {
             SetHint("먼저 대시로 더할 재료를 골라 주세요.");

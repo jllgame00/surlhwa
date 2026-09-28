@@ -417,6 +417,7 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                     break;
                 case RecipePreparationAction.Splash:
                     Require(shake.TryAddSplashToServingGlass(), "Splash rejected.");
+                    while (shelf.PhysicalTransferActive) yield return null;
                     break;
                 case RecipePreparationAction.Garnish:
                     if (build != null) ClickField(build, "startButton");

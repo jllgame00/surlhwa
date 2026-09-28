@@ -248,6 +248,12 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Splash, BartendingVolume.DefaultSplashMilliliters);
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             AddIceToServingGlass();
@@ -275,9 +281,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        if (!ingredientShelf.PreparePhysicalPour()) return;
+        RecipePreparationAction pourAction = topUpGuidance != null && topUpGuidance.AppliesTo(ingredient)
+            ? RecipePreparationAction.TopUp : RecipePreparationAction.Pour;
+        if (!ingredientShelf.PreparePhysicalPour(pourAction)) return;
         float requestedMl = Mathf.Max(0f, previewPourRateMlPerSecond) * Time.deltaTime;
-        float transferredMl = ingredientShelf.PourSelectedIngredient(requestedMl);
+        float transferredMl = ingredientShelf.PourSelectedIngredient(requestedMl, pourAction);
         if (transferredMl <= 0f)
         {
             StopDirectPour("transfer rejected");
@@ -333,6 +341,11 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void TryDispenseDash()
     {
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+        {
+            ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Dash);
+            return;
+        }
         if (ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
         {
             SetHint("먼저 대시로 더할 재료를 골라 주세요.");

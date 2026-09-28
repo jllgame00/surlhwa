@@ -58,6 +58,8 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         ui = methodRoot.Find("UI") as RectTransform;
         if (ui == null) return;
+        if (methodRoot.GetComponent<BuildMiniGame>() != null)
+            methodRoot.Find("UI/LiquidArea")?.gameObject.SetActive(false);
         Register(state.GetContainer(BartendingContainerType.ServingGlass),
             methodRoot.Find("UI/GlassImage") as RectTransform, new Vector2(240f, 10f));
         Register(state.GetContainer(BartendingContainerType.MixingGlass),
@@ -139,6 +141,14 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         if (!IsAtPourPose || acceptedMl <= 0f) return;
         acceptedFrame = Time.frameCount;
         RefreshState();
+        DrawStream();
+    }
+
+    // Keep a short, already accepted discrete dose readable without adding ml.
+    public void ShowDoseStream()
+    {
+        if (!IsAtPourPose) return;
+        acceptedFrame = Time.frameCount;
         DrawStream();
     }
 

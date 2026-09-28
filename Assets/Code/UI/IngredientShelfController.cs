@@ -20,6 +20,7 @@ public class IngredientShelfController : MonoBehaviour
     [SerializeField, Min(1f)] private float jiggerCapacityMl = 60f;
     [SerializeField, Min(1f)] private float jiggerTransferMlPerSecond = 90f;
     [SerializeField, Min(1f)] private float containerTransferMlPerSecond = 120f;
+    [SerializeField, Min(.01f)] private float doseStreamSeconds = .12f;
 
     private MiniGameType currentMethod;
     private IngredientData selectedIngredient;
@@ -335,16 +336,16 @@ public class IngredientShelfController : MonoBehaviour
         return selectedIngredient == ingredient;
     }
 
-    public float PourSelectedIngredient(float amountMl)
+    public float PourSelectedIngredient(float amountMl, RecipePreparationAction action = RecipePreparationAction.Pour)
     {
-        BeginSelectedPour();
+        BeginSelectedPour(action);
         return AddLiquidMl(selectedIngredient, amountMl);
     }
 
     /// <summary>Live input gate: no ml moves during pickup/alignment/tilt.</summary>
-    public bool PreparePhysicalPour()
+    public bool PreparePhysicalPour(RecipePreparationAction action = RecipePreparationAction.Pour)
     {
-        if (!BeginSelectedPour()) return false;
+        if (PhysicalTransferActive || !BeginSelectedPour(action)) return false;
         return physicalPresentation == null ||
                physicalPresentation.PrepareBottle(selectedIngredient, targetContainer);
     }
@@ -461,6 +462,36 @@ public class IngredientShelfController : MonoBehaviour
         PhysicalTransferActive = false;
     }
 
+    public bool BeginPhysicalDose(RecipePreparationAction action, float amountMl = 0f, Action<float> accepted = null)
+    {
+        if (!ToolsReady || selectedIngredient == null || physicalPresentation == null ||
+            (action != RecipePreparationAction.Dash && action != RecipePreparationAction.Splash) ||
+            (action == RecipePreparationAction.Splash && !BartendingVolume.IsValidSplashMilliliters(amountMl))) return false;
+        EndSelectedPour();
+        PhysicalTransferActive = true;
+        physicalPresentation.StartCoroutine(PerformPhysicalDose(action, amountMl, accepted));
+        return true;
+    }
+
+    private IEnumerator PerformPhysicalDose(RecipePreparationAction action, float amountMl, Action<float> accepted)
+    {
+        while (!physicalPresentation.PrepareBottle(selectedIngredient, targetContainer)) yield return null;
+        float before = targetContainer.CurrentLiquidVolumeMl;
+        if (action == RecipePreparationAction.Dash) TryDashSelectedIngredient(out _);
+        else TrySplashSelectedIngredient(amountMl, out _);
+        float actual = targetContainer.CurrentLiquidVolumeMl - before;
+        accepted?.Invoke(actual);
+        for (float elapsed = 0f; actual > 0f && elapsed < doseStreamSeconds; elapsed += Time.deltaTime)
+        {
+            if (!RecipeGuidePanelController.IsTechniqueReadStateActive && !DemoAudioController.IsSettingsOpen)
+                physicalPresentation.ShowDoseStream();
+            yield return null;
+        }
+        physicalPresentation.EndBottle();
+        while (!physicalPresentation.IsResting) yield return null;
+        PhysicalTransferActive = false;
+    }
+
     /// <summary>
     /// Starts one evidence record for a continuous Pour Core operation. The
     /// container still receives every accepted frame amount immediately; this
@@ -486,7 +517,7 @@ public class IngredientShelfController : MonoBehaviour
 
     public void EndSelectedPour()
     {
-        physicalPresentation?.EndBottle();
+        if (!PhysicalTransferActive) physicalPresentation?.EndBottle();
         if (activePourIngredient != null && activePourTransferredMl > 0f)
         {
             preparationTrace?.Record(

@@ -146,3 +146,20 @@ test's exact comparison to a decimal literal after float accumulation. R3
 compares the actual pre-shake value to the actual post-shake value without
 tolerance and passes. Neither earlier run is claimed as PASS. No rhythm
 assertion was weakened. Ice visuals follow K10; no human feel claim.
+
+## K7 — Direct Build and discrete pours
+
+Build retains direct serving-glass preparation. D performs a bottle Dash and
+S a bottle Splash; Stir/Shake Dash and post-Shake Splash share that physical
+path. Each accepted discrete action invokes its existing state/trace API once
+at the pour pose, holds a short readable stream, then returns the bottle.
+It never sends a Dash/Splash through a Jigger. Configured TopUp guidance uses
+the same hold-to-pour motion and records TopUp rather than changing it into
+Pour. No current production recipe authors a TopUp step; K11 covers that
+existing vocabulary with a focused fixture. Removed only Build's active
+legacy liquid-area presentation at runtime so state-driven fill is visible.
+
+Compile PASS, 0 errors. `Logs/phase-k7-playmode.log` PASS: no Dash before tool
+positioning, exact existing Dash/Splash quantities, TopUp trace, and previous
+measurement/transfer/Shake checks. All inputs are programmatic. Final visual
+composition and broad recipe/campaign replay remain K11 work.
