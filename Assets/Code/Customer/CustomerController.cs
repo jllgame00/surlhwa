@@ -218,6 +218,7 @@ public class CustomerController : MonoBehaviour
         campaignEncounter = encounter;
         ConfigureDedicatedEncounter(encounter.order);
         name = encounter.guestName;
+        gameObject.AddComponent<CampaignGuestPresentation>().Configure(encounter);
     }
 
     /// <summary>
@@ -780,6 +781,7 @@ public class CustomerController : MonoBehaviour
 
         if (campaignEncounter != null && campaignEncounter.afterService != null)
         {
+            GetComponent<CampaignGuestPresentation>()?.ShowServedGlass();
             yield return new WaitForSeconds(Mathf.Max(0f, serviceFeedbackDuration - 4.2f));
             string[] lines = campaignEncounter.GetDepartureLines(campaignServiceSucceeded);
             if (interactionUI == null || lines.Length == 0)

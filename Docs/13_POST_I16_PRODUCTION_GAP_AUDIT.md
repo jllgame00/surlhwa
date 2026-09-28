@@ -2017,3 +2017,12 @@ Two visits move from silence and changed return to staying after the glass is em
 Four ordinary voices recur across 14 extended-night blocks, reflecting work, waiting and the changing bar. Three teach the existing Hanky Panky, French 75 and Last Word recipes before required attempts, with retry-safe OrderData and full typed Partial facts. Supply opens at nights 6/10/15 through existing IngredientAvailabilityData; no knowledge auto-grant. Official recipe/source audit is recorded in Docs/15_IBA_COCKTAIL_CATALOG.md. Stable IDs, recipe amounts and catalog membership unchanged.
 
 Compile PASS (0 errors). Logs/campaign-content.log PASS, exit 0: 16 unique main visits, checkpoint/reset, all three discovery fact sets and strict supply/shelf tiers (13/15/17/20/20/22/23/26 across nights 1/2/3/4/5/6/10/15). I10 assertions now test the explicit campaign tiers, including exclusion before each tier. No scene/prefab changes. Normal-play recognition, retry and Recommendation alternatives remain integration validation dependencies. Dialogue/pacing: HUMAN_SIGNOFF_REQUIRED.
+
+
+## C9 ? Local Guest Staging and Spatial Memory Drafts (2026-09-28)
+
+One scene-bound presentation component derives seven small bar traces from existing completion records. The Prince leaves an empty chair after either departure; the small star still requires his canonical open-farewell eligibility. Other traces use the roadmap's swing, windmill, stage/skull, circle/cracked glass, half-submerged lotus and anchor/ship fragment. No collection UI, counters, rewards or new persisted state.
+
+The reunited pair and departure use one CustomerController with a visual companion; reunion displays one served glass during departure reading. Hamlet uses only a muted local sprite and still pool of light. Global time, audio, input, other customers and preparation are untouched. Existing character silhouettes and restrained world-space contours are first-pass placeholders.
+
+Compile PASS (0 errors); Unity content regression PASS, exit 0 in Logs/campaign-presentation-compile.log. Inspected scene diff: one component plus its explicit day-manager reference; no transform/prefab churn. New presentation is dormant without campaign data. Rendered placement/restoration proof remains an integration dependency; final art, stillness and emotional impact require human review.
