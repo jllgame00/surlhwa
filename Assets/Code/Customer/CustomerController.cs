@@ -116,6 +116,10 @@ public class CustomerController : MonoBehaviour
     private bool patiencePausedForNarrativeDialogue;
     private bool isLittlePrinceFirstVisitNarrative;
     private bool isLittlePrinceFollowupNarrative;
+    private bool isLittlePrinceClosingNarrative;
+    private float serviceFeedbackDuration;
+    public int LittlePrinceVisitNumber => isLittlePrinceFirstVisitNarrative ? 1 :
+        isLittlePrinceFollowupNarrative ? 2 : isLittlePrinceClosingNarrative ? 3 : 0;
     private float patienceDuration;
     private float patienceRemaining;
     
@@ -173,6 +177,11 @@ public class CustomerController : MonoBehaviour
 
     public bool TryGetDialogueData(out DialogueData dialogue)
     {
+        if (isLittlePrinceClosingNarrative && littlePrinceNarrative != null)
+        {
+            dialogue = littlePrinceNarrative.ClosingVisitDialogue;
+            return dialogue != null;
+        }
         dialogue = isLittlePrinceFollowupNarrative && littlePrinceNarrative != null
             ? littlePrinceNarrative.GetFollowupDialogue(LittlePrinceNarrativePersistence.LoadChoice())
             : dialogueData;
@@ -219,6 +228,15 @@ public class CustomerController : MonoBehaviour
         orderData = request;
         isLittlePrinceFirstVisitNarrative = false;
         isLittlePrinceFollowupNarrative = littlePrinceNarrative != null;
+    }
+
+    public void ConfigureLittlePrinceClosingEncounter(OrderData request)
+    {
+        if (request == null) return;
+        orderData = request;
+        isLittlePrinceFirstVisitNarrative = false;
+        isLittlePrinceFollowupNarrative = false;
+        isLittlePrinceClosingNarrative = littlePrinceNarrative != null;
     }
 
     public void SetUsesPatience(bool value)
@@ -566,8 +584,12 @@ public class CustomerController : MonoBehaviour
     }
 
     // New path: calculate reaction from the actually served CocktailData.
-    public void OnServedWithReaction(GuestServiceResult serviceResult)
+    public void OnServedWithReaction(GuestServiceResult serviceResult, float feedbackDuration = 4.2f)
     {
+        serviceFeedbackDuration = feedbackDuration;
+        if (LittlePrinceVisitNumber > 0)
+            LittlePrinceVisitPersistence.RecordServiceOutcome(LittlePrinceVisitNumber,
+                LittlePrinceVisitPersistence.IsSuccessfulService(serviceResult));
         StopPatienceTimer();
 
         CocktailData servedCocktail = serviceResult.MatchedCocktail;
@@ -725,6 +747,25 @@ public class CustomerController : MonoBehaviour
         ClearDialogueBubble();
 
         yield return new WaitForSeconds(0.3f);
+
+        if (isLittlePrinceClosingNarrative)
+        {
+            // Diagnostic/discovery feedback finishes before the player reads the farewell.
+            yield return new WaitForSeconds(Mathf.Max(0f, serviceFeedbackDuration - 4.2f));
+            string[] lines = littlePrinceNarrative.GetFarewellLines(
+                LittlePrinceNarrativePersistence.LoadChoice(), LittlePrinceVisitPersistence.HasOpenFarewell());
+            if (interactionUI != null && lines.Length > 0)
+            {
+                bool read = false;
+                interactionUI.ShowLittlePrinceFarewell(this, lines, () => read = true);
+                yield return new WaitUntil(() => read);
+            }
+            else
+            {
+                Debug.LogError("[Customer] Closing visit requires its authored farewell and reading UI.");
+                yield break;
+            }
+        }
 
         state = State.Leaving;
     }

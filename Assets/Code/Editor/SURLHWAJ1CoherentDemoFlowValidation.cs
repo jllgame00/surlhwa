@@ -26,6 +26,13 @@ public static class SURLHWAJ1CoherentDemoFlowValidation
     public static void Run()
     {
         ProgressSnapshot snapshot = ProgressSnapshot.Capture();
+        string[] closureKeys = { "SURLHWA_LITTLE_PRINCE_CLOSING_VISIT_COMPLETED",
+            "SURLHWA_LITTLE_PRINCE_SERVICE_OUTCOME_1", "SURLHWA_LITTLE_PRINCE_SERVICE_OUTCOME_2",
+            "SURLHWA_LITTLE_PRINCE_SERVICE_OUTCOME_3" };
+        Dictionary<string, int?> closureSnapshot = new();
+        foreach (string key in closureKeys)
+            closureSnapshot[key] = SurlhwaPlayerPrefsStore.HasKey(key)
+                ? SurlhwaPlayerPrefsStore.GetInt(key, 0) : null;
         Scene scene = default;
 
         try
@@ -62,6 +69,12 @@ public static class SURLHWAJ1CoherentDemoFlowValidation
                 EditorSceneManager.CloseScene(scene, true);
 
             snapshot.Restore();
+            foreach (var entry in closureSnapshot)
+            {
+                if (entry.Value.HasValue) SurlhwaPlayerPrefsStore.SetInt(entry.Key, entry.Value.Value);
+                else SurlhwaPlayerPrefsStore.DeleteKey(entry.Key);
+            }
+            SurlhwaPlayerPrefsStore.Save();
         }
     }
 
@@ -153,6 +166,7 @@ public static class SURLHWAJ1CoherentDemoFlowValidation
                 !RecipeProgressPersistence.HasShownFirstRecipeReveal() &&
                 !LittlePrinceVisitPersistence.HasSavedFirstVisitState() &&
                 !LittlePrinceVisitPersistence.HasSavedFollowupVisitState() &&
+                !LittlePrinceVisitPersistence.HasSavedClosureState() &&
                 !LittlePrinceNarrativePersistence.HasSavedChoice() &&
                 !DemoCompletionPersistence.HasSavedDemoCompletionState() &&
                 !SurlhwaGameProgress.HasMeaningfulProgress(),

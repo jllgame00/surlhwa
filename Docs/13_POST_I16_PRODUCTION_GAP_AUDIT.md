@@ -1635,3 +1635,97 @@ execution currently have separate authorities. This choice affects the
 story outcome, so no combined success threshold has been invented.
 J5 implementation remains PARTIAL pending this criterion; normal-play
 validation and subjective farewell review remain outstanding.
+
+
+## J5 Implementation — Strict Three-Visit Service History (2026-09-28)
+
+The owner resolved the pending criterion: a fitting cocktail with failed
+bartending does NOT count. The implementation requires recognized cocktail,
+satisfied FIT, successful technique, and satisfied authored preparation in
+all three visits. One failed service locks the quiet farewell, including
+when the scene is reloaded before departure. The first/second/third visits
+resolve after failure rather than demanding a retry.
+
+First-visit Manwol teaching and A/B choice are preserved. The Day-3 return
+asks for Warmth through branch-aware situational dialogue; the Day-4 final
+slot asks for Clarity. Later visits have no hidden exact target and retain
+the existing method picker. Seolya answers the return before Manhattan
+practice; Manwol/Gin Fizz and learned Dry Martini answer the final visit.
+Prince visits have no patience countdown. If first-visit Manwol was not
+learned, Day-2 slot 3 provides separately authored Manwol recovery practice,
+using the unchanged knowledge owner and required-discovery retry gate.
+That learning never overwrites the failed Prince service. Counts stay
+5 / 4 / 4 / 4.
+
+Recommendation preparation is evaluated only after actual recipe recognition,
+against the recognized recipe and actual trace through the existing evaluator.
+No expected recipe is injected into method routing, and FIT and technique
+remain independent. Generic Shake already supports container-pour on P;
+its post-rhythm hint now exposes this action alongside Strain so Gin Fizz
+preparation is visible without an exact request.
+
+Outcome keys and closing-completed state are additive in
+LittlePrinceVisitPersistence. Existing visit keys, choice key, IDs and
+recipe relationships are unchanged. Legacy/malformed missing outcomes are
+Unknown and cannot create an open farewell. New Game clears new state;
+Continue preserves it. Future statue eligibility is derived from completed
+open closure; no statue art, immediate grant or collection framework is added.
+
+Open and quiet farewell assets share the existing dialogue panel and Next
+button, with distinct A/B/None recall. The final guest stays until all lines
+are read, after transient result/discovery feedback. Departure remains the
+visit-completion authority and then reaches the independent Demo Complete
+endpoint. Scene changes are exactly two order references; no prefab edits.
+
+Validation evidence:
+
+- `dotnet build Assembly-CSharp-Editor.csproj --no-restore`: zero errors,
+  the same eight pre-existing warnings.
+- Unity 6000.3.7f1 production static/edit-mode regression I10-I16, J1,
+  J2/J2.1, J4, J3 and J5 PASS. Log:
+  `Logs/production-j5-regression-final.log`.
+- J5 validates all eight success/failure histories across A/B/None, strict
+  FIT/technique/preparation boundaries, unknown/malformed/legacy data,
+  failure retention, departure-only statue eligibility, reset, closing
+  scheduling, and authored-reference coverage. J4 retains retry-safe
+  discovery assertions on independent Manwol recovery and checks pending
+  recovery/skip-after-Known scheduling.
+- J5 Play Mode PASS through actual BarScene OrderManager completion,
+  CustomerController, the existing Next/Brew controls, feedback coroutines
+  and CustomerSpawner departure. Cases: all successful; technique failure
+  independently in visits 1, 2 and 3; final wrong preparation; final wrong
+  FIT. Manwol, Dry Martini and Gin Fizz are recognized final alternatives;
+  newly learned Dry Martini/Gin Fizz popups finish before farewell reading.
+  Brew/cancel cannot bypass reading. Final failed service still completes
+  the demo on Day 4; New Game clears the added state. Log:
+  `Logs/production-j5-playmode-final.log`. This probe injects controlled
+  completed bartending results and does NOT claim normal-input discovery,
+  manual bartending or full four-night acceptance.
+- I14 production UI Play Mode regression PASS, preserving reaction → toast
+  → one discovery popup and poor-FIT feedback. Log:
+  `Logs/production-j5-i14-playmode.log`.
+- I13 production UI Play Mode regression PASS: first-visit teaching, A/B
+  buttons, saved A, Manwol Float entry and later recall remain intact.
+  Log: `Logs/production-j5-i13-playmode.log`.
+- Six new serialized assets have unique GUIDs and resolving references.
+  Only two BarScene references changed; no prefab changes or stable-ID
+  migration. `git diff --check` passes. Generated editor scene-history
+  changes are excluded.
+
+Status: J5 is IMPLEMENTED_WITH_VALIDATION_DEBT for normal-input playthrough.
+Its focused service/reading/closure contract is objectively validated.
+HUMAN_SIGNOFF_REQUIRED: authored dialogue tone, farewell pacing, emotional
+meaning in play and UI readability. Future statue art/placement/presentation
+is DEFERRED_PRESENTATION; eligibility alone is not a presented reward.
+
+Remaining dependency audit: selected IBA cocktail sprites are still null,
+ingredient icons are absent, the Prince still uses placeholder character
+presentation, and no project-owned audio clips exist. J6/J7 remain PARTIAL
+or NOT_STARTED in those respective areas; playback/volume integration is
+not implemented and is not claimed complete. The owner was asked whether
+to prepare cocktail-art drafts from the existing Seolya/Manwol direction
+or leave art/audio sourcing to the owner. No arbitrary assets were added.
+J3/J8/J9 normal-input four-night discovery/choice/save/reload and packaged
+build acceptance remain VALIDATION_DEBT. Broader ACTs, reserve cocktail
+production and generalized collection systems remain OUT_OF_SCOPE.
+Technical production closure is not yet declared.

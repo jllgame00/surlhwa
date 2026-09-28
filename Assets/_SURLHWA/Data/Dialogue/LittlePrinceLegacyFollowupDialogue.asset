@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   onEnterLines:
   - "지난번의 대답은 듣지 못했지만, 오늘은 조용히 앉아 있을게요."
+  - "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요."
   onSuccessLines: []
   onFailLines: []
   onEnterKnowledgeReveals: []

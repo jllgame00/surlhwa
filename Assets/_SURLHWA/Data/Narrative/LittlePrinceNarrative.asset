@@ -20,3 +20,9 @@ MonoBehaviour:
   keepTheLightFollowupDialogue: {fileID: 11400000, guid: f3a4567890abcdef1234567890abcdef, type: 2}
   seekTheStarFollowupDialogue: {fileID: 11400000, guid: a4a4567890abcdef1234567890abcdef, type: 2}
   legacyFollowupDialogue: {fileID: 11400000, guid: b4a4567890abcdef1234567890abcdef, type: 2}
+  closingVisitDialogue: {fileID: 11400000, guid: 247e98a6b6a533154febd70cd0a52eed, type: 2}
+  openFarewellDialogue: {fileID: 11400000, guid: 717af722513025edbb1974cbf48a0e06, type: 2}
+  quietFarewellDialogue: {fileID: 11400000, guid: 2759a040164828490e79303a8fb5693a, type: 2}
+  keepTheLightClosingRecall: "작은 빛을 지켜 주겠다는 말, 기억하고 있어요."
+  seekTheStarClosingRecall: "함께 별을 찾겠다는 말, 기억하고 있어요."
+  legacyClosingRecall: "이 창가에 앉아 있던 밤들이 생각나요."

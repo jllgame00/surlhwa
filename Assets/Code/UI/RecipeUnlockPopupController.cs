@@ -18,6 +18,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
     [Header("Timing")]
     [SerializeField] private float slideDuration = 0.25f;
     [SerializeField] private float showDuration = 2.5f;
+    public float DisplayCycleDuration => Mathf.Max(0f, showDuration) + Mathf.Max(0f, slideDuration) * 2f;
 
     private Coroutine popupRoutine;
 

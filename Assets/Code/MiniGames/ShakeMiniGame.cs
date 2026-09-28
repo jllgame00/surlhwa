@@ -689,7 +689,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             true);
         SetHint(usePourFromContainer
             ? "Rhythm complete. Pour the Shaker contents to the Serving Glass."
-            : "Rhythm complete. Press Strain to move the actual Shaker contents into the Serving Glass.");
+            : "Rhythm complete. Use Strain, or press P to pour from the Shaker into the Serving Glass.");
         UpdateProgressText();
 
         Debug.Log(

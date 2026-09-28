@@ -80,12 +80,13 @@ public static class SURLHWALittlePrinceNarrativeValidation
             "Each Little Prince narrative branch needs distinct authored dialogue.");
 
         Require(firstVisitOrder.RequestType == GuestRequestType.ExactCocktail &&
-                followupOrder.RequestType == GuestRequestType.ExactCocktail &&
                 firstVisitOrder.requestedCocktail != null &&
-                followupOrder.requestedCocktail == firstVisitOrder.requestedCocktail &&
                 firstVisitOrder.miniGameType == MiniGameType.Float &&
-                followupOrder.miniGameType == MiniGameType.Float,
-            "Both Little Prince visits must retain the exact Manwol Float request.");
+                followupOrder.RequestType == GuestRequestType.Recommendation &&
+                followupOrder.requestedCocktail == null &&
+                Array.IndexOf(followupOrder.DesiredEmotionTags, EmotionTag.Warmth) >= 0 &&
+                !firstVisitOrder.RequiresSuccessfulDiscovery && !followupOrder.RequiresSuccessfulDiscovery,
+            "Prince first visit teaches exact Manwol; the return asks for Warmth without a hidden target or retry gate.");
 
         CocktailRecipeData manwol = FindRecipe(catalog, "recipe_manwol");
         Require(manwol.targetCocktail == firstVisitOrder.requestedCocktail,

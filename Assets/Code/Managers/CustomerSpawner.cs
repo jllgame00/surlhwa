@@ -34,6 +34,9 @@ public class CustomerSpawner : MonoBehaviour
     [Tooltip("Day-4 slot 1 practice encounter. It is selected only while Gin Fizz is not Known.")]
     [SerializeField] private OrderData ginFizzDiscoveryOrder;
 
+    [Tooltip("Day-2 slot 3 recovery practice only if Manwol was not learned during the Prince visit.")]
+    [SerializeField] private OrderData manwolRecoveryOrder;
+
     [Header("Production Recommendations")]
     [SerializeField] private OrderData[] productionRecommendationOrders;
     [SerializeField] private IngredientAvailabilityData ingredientAvailability;
@@ -51,6 +54,9 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] private int littlePrinceFollowupDay = 3;
     [SerializeField] private OrderData littlePrinceFollowupOrder;
 
+    [Header("Little Prince Closing Visit")]
+    [SerializeField] private OrderData littlePrinceClosingOrder;
+
     private GameManager gm;
     private BartendingFlowCoordinator bartendingFlowCoordinator;
     [SerializeField] private BusinessDayManager businessDayManager;
@@ -62,6 +68,7 @@ public class CustomerSpawner : MonoBehaviour
     private GameObject lastSpawnedPrefab;
     private bool activeCustomerIsLittlePrinceFirstVisit;
     private bool activeCustomerIsLittlePrinceFollowupVisit;
+    private bool activeCustomerIsLittlePrinceClosingVisit;
     private Coroutine spawnRoutine;
 
     private void Awake()
@@ -192,15 +199,22 @@ public class CustomerSpawner : MonoBehaviour
         activeCustomerIsLittlePrinceFollowupVisit =
             prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFollowupVisit();
 
+        activeCustomerIsLittlePrinceClosingVisit =
+            prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceClosingVisit();
+
         if (activeCustomerIsLittlePrinceFirstVisit)
             customer.ConfigureLittlePrinceFirstVisitNarrative();
         else if (activeCustomerIsLittlePrinceFollowupVisit)
             customer.ConfigureLittlePrinceFollowupEncounter(littlePrinceFollowupOrder);
+        else if (activeCustomerIsLittlePrinceClosingVisit)
+            customer.ConfigureLittlePrinceClosingEncounter(littlePrinceClosingOrder);
 
         customer.SetLoopManager(this);
         bool requiresSuccessfulDiscovery = customer.TryGetDedicatedRequest(out OrderData activeOrder) &&
                                            activeOrder.RequiresSuccessfulDiscovery;
-        customer.SetUsesPatience(!IsTutorialSpawn() && !requiresSuccessfulDiscovery);
+        customer.SetUsesPatience(!IsTutorialSpawn() && !requiresSuccessfulDiscovery &&
+            !activeCustomerIsLittlePrinceFirstVisit && !activeCustomerIsLittlePrinceFollowupVisit &&
+            !activeCustomerIsLittlePrinceClosingVisit);
         spawnedCount++;
         lastSpawnedPrefab = prefabToSpawn;
 
@@ -215,6 +229,11 @@ public class CustomerSpawner : MonoBehaviour
     {
         if (activeCustomer == customer)
         {
+            int visit = activeCustomerIsLittlePrinceFirstVisit ? 1 :
+                activeCustomerIsLittlePrinceFollowupVisit ? 2 : activeCustomerIsLittlePrinceClosingVisit ? 3 : 0;
+            if (visit > 0 && LittlePrinceVisitPersistence.GetServiceOutcome(visit) == 0)
+                LittlePrinceVisitPersistence.RecordServiceOutcome(visit, false);
+
             if (activeCustomerIsLittlePrinceFirstVisit)
             {
                 LittlePrinceVisitPersistence.MarkFirstVisitCompleted();
@@ -224,9 +243,15 @@ public class CustomerSpawner : MonoBehaviour
                 LittlePrinceVisitPersistence.MarkFollowupVisitCompleted();
             }
 
+            else if (activeCustomerIsLittlePrinceClosingVisit)
+            {
+                LittlePrinceVisitPersistence.MarkClosingVisitCompleted();
+            }
+
             activeCustomer = null;
             activeCustomerIsLittlePrinceFirstVisit = false;
             activeCustomerIsLittlePrinceFollowupVisit = false;
+            activeCustomerIsLittlePrinceClosingVisit = false;
         }
 
         servedCount++;
@@ -313,7 +338,7 @@ public class CustomerSpawner : MonoBehaviour
         if (ShouldSpawnLittlePrinceFirstVisit())
             return littlePrincePrefab;
 
-        if (ShouldSpawnLittlePrinceFollowupVisit())
+        if (ShouldSpawnLittlePrinceFollowupVisit() || ShouldSpawnLittlePrinceClosingVisit())
             return littlePrincePrefab;
 
         if (IsTutorialSpawn())
@@ -367,7 +392,8 @@ public class CustomerSpawner : MonoBehaviour
             return GetDayOneAuthoredOrder();
 
         // Special narrative content and required practice retain priority.
-        if (ShouldSpawnLittlePrinceFirstVisit() || ShouldSpawnLittlePrinceFollowupVisit())
+        if (ShouldSpawnLittlePrinceFirstVisit() || ShouldSpawnLittlePrinceFollowupVisit() ||
+            ShouldSpawnLittlePrinceClosingVisit())
             return null;
 
         OrderData discovery = GetJ4DiscoveryOrderForNextSpawn(currentDay);
@@ -408,6 +434,9 @@ public class CustomerSpawner : MonoBehaviour
                 {
                     return GetPendingDiscoveryOrder(negroniDiscoveryOrder);
                 }
+
+                if (spawnedCount == 2)
+                    return GetPendingDiscoveryOrder(manwolRecoveryOrder);
 
                 break;
 
@@ -556,6 +585,15 @@ public class CustomerSpawner : MonoBehaviour
             && !LittlePrinceVisitPersistence.IsFollowupVisitCompleted()
             && littlePrinceFollowupOrder != null
             && littlePrincePrefab != null;
+    }
+
+    private bool ShouldSpawnLittlePrinceClosingVisit()
+    {
+        return businessDayManager != null && businessDayManager.CurrentDay == 4 &&
+            spawnedCount == 3 && LittlePrinceVisitPersistence.IsFirstVisitCompleted() &&
+            LittlePrinceVisitPersistence.IsFollowupVisitCompleted() &&
+            !LittlePrinceVisitPersistence.IsClosingVisitCompleted() &&
+            littlePrinceClosingOrder != null && littlePrincePrefab != null;
     }
 
     private GameObject ChooseCustomerPrefab()

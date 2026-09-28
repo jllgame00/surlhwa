@@ -25,6 +25,35 @@ public sealed class LittlePrinceNarrativeData : ScriptableObject
     [SerializeField] private DialogueData seekTheStarFollowupDialogue;
     [SerializeField] private DialogueData legacyFollowupDialogue;
 
+    [Header("Closing Visit")]
+    [SerializeField] private DialogueData closingVisitDialogue;
+    [SerializeField] private DialogueData openFarewellDialogue;
+    [SerializeField] private DialogueData quietFarewellDialogue;
+
+    [TextArea] [SerializeField] private string keepTheLightClosingRecall;
+    [TextArea] [SerializeField] private string seekTheStarClosingRecall;
+    [TextArea] [SerializeField] private string legacyClosingRecall;
+
+    public string[] GetFarewellLines(LittlePrinceNarrativeChoice choice, bool open)
+    {
+        DialogueData dialogue = GetFarewellDialogue(open);
+        if (dialogue == null || dialogue.onEnterLines == null || dialogue.onEnterLines.Length == 0)
+            return System.Array.Empty<string>();
+        string recall = choice switch
+        {
+            LittlePrinceNarrativeChoice.KeepTheLight => keepTheLightClosingRecall,
+            LittlePrinceNarrativeChoice.SeekTheStar => seekTheStarClosingRecall,
+            _ => legacyClosingRecall
+        };
+        string[] lines = new string[dialogue.onEnterLines.Length + 1];
+        lines[0] = recall;
+        System.Array.Copy(dialogue.onEnterLines, 0, lines, 1, dialogue.onEnterLines.Length);
+        return lines;
+    }
+
+    public DialogueData ClosingVisitDialogue => closingVisitDialogue;
+    public DialogueData GetFarewellDialogue(bool open) => open ? openFarewellDialogue : quietFarewellDialogue;
+
     public string ChoicePrompt => choicePrompt ?? string.Empty;
 
     public string GetChoiceLabel(LittlePrinceNarrativeChoice choice)

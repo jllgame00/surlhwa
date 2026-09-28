@@ -907,8 +907,11 @@ follow-up resolves an authored A or B dialogue from that saved enum. Missing
 legacy data is `None` and intentionally selects neutral dialogue rather than a
 fabricated recollection. This is one content-specific resolver and one
 deterministic revisit—not a generic customer-memory, quest, or branching
-dialogue framework. Broader narrative consequence and environmental feedback
-remain future work.
+dialogue framework. J5 extends this bounded content to a third-visit farewell:
+all three services must satisfy FIT, technique and authored preparation.
+Failure resolves each visit, and one failure selects the quiet farewell.
+The full contract is in `01_GAME_DESIGN.md`; future statue presentation remains
+separate from the persisted farewell eligibility.
 
 ### I14 service result feedback
 

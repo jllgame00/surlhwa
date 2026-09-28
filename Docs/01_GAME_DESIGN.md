@@ -73,8 +73,10 @@ presentation backlog.
 ## Production Recommendation and Encounter Contract
 
 The bounded demo uses 5 / 4 / 4 / 4 encounters. Required authored discovery
-retains priority: Day 2 Manwol then Negroni; Day 3 the Prince return then
-Manhattan; Day 4 Gin Fizz. Other production slots use authored situational
+retains priority: Day 2 Prince/Manwol then Negroni; Day 3 the Prince return then
+Manhattan; Day 4 Gin Fizz. If the Prince’s first service did not teach Known
+Manwol, Day 2 slot 3 becomes an independent Manwol practice encounter.
+Day 4 slot 4 belongs to the Prince’s closing visit. Other production slots use authored situational
 requests from four supported interpretations: Warmth, Bitterness, Clarity,
 and Awakening, with three phrasings each. A request is offered only when an
 existing Known recipe can answer it using that night's ordinary supply.
@@ -83,7 +85,9 @@ Selection never grants knowledge or injects ingredients.
 Recommendation Brew opens the existing four-method selection. The selected
 method determines preparation controls; the authored guest request retains
 its own meaning, title, and reward. Recipe recognition and FIT stay separate.
-Exact discovery and Prince requests keep their existing required methods.
+Exact discovery and the Prince’s first Manwol request keep their required methods.
+The Prince’s return and closing requests use the same free method selection as
+other Recommendations.
 
 After Day-3 Manhattan practice, Warmth accepts both Seolya and Manhattan;
 Bitterness accepts both Negroni and Manhattan. Day-4 Clarity accepts Manwol
@@ -212,10 +216,44 @@ instead of inventing a remembered statement.
 
 The dedicated reading pause remains active through the four dialogue lines,
 the two visible responses, and the immediate reply; it releases at the existing
-Brew transition. Both first and follow-up encounters retain the exact Manwol
-Float request. Narrative choice does not alter recipe knowledge, guest FIT,
-recipe/preparation truth, rewards, or ingredient availability. Broader guest
-memory, consequences, and environmental traces remain future work.
+Brew transition. The first encounter retains its exact Manwol Float request;
+the return now asks for Warmth through Recommendation. Narrative choice
+controls remembered dialogue, independently of cocktail suitability,
+preparation, technique and visit outcomes.
+
+## J5 Little Prince Three-Visit Farewell
+
+The Prince visits on Day 2, Day 3, and the final encounter of Day 4. The first
+visit preserves the question, player choice, and Manwol teaching. The return
+recalls that choice and asks for a drink that lets him rest beside familiar
+light (Warmth). Before leaving for his star, the third visit asks for a clear
+view of the road home (Clarity). Seolya answers the return with normal Known
+knowledge and supply; learned Manhattan is also valid. Manwol and Gin Fizz
+answer the final request, with learned Dry Martini providing another option.
+No Recommendation has a hidden recipe target or preferred best answer.
+
+An open farewell requires successful service in all three visits: a recognized
+cocktail that satisfies FIT, successful technique, and satisfied recipe-owned
+preparation. A fitting drink with failed execution is not accepted. A single
+failed visit produces the quiet farewell. Each failed service still resolves
+the visit; the Prince never demands a forced-success retry. A reload cannot
+erase an already served failure. Existing A/B and legacy/None choices receive
+distinct recalled lines without changing this success requirement. Old saves
+without service evidence never invent successful past drinks.
+
+Prince visits are unhurried and have no patience countdown. If the first
+service fails, separate Day-2 Manwol practice preserves the fair learning
+path and existing retry-safe discovery policy without changing that narrative
+failure. Visiting, answering the first choice, serving a drink, and completing
+a visit on departure remain distinct events.
+
+The final farewell opens after service feedback and uses the existing
+Next button. Departure and the final night wait until every line is read.
+The existing four-night lifecycle then marks Demo Complete; narrative flags
+do not substitute for the demo endpoint. Only an open farewell followed by
+completed departure makes the future Prince statue eligible. No immediate
+statue, reward popup or new collection framework is introduced. New Game
+clears all visit outcomes and eligibility; Continue retains them.
 
 ## I14 Service Result Feedback (Implemented; automated production-UI Play Mode sign-off passed)
 

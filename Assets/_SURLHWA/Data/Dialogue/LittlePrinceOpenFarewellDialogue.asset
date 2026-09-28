@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: LittlePrinceOpenFarewellDialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  onEnterLines:
+  - "여기서 받은 세 잔을 기억할게요. 서로 다른 밤인데도, 제 이야기가 이어져 있었어요."
+  - "멀리 가도 이곳의 불빛은 알아볼 수 있을 것 같아요."
+  - "다음에 별을 바라볼 때, 저도 이 창문을 생각하고 있을게요."
+  onSuccessLines: []
+  onFailLines: []

@@ -12,6 +12,7 @@ public static class SurlhwaGameProgress
                RecipeProgressPersistence.HasShownFirstRecipeReveal() ||
                LittlePrinceVisitPersistence.HasSavedFirstVisitState() ||
                LittlePrinceVisitPersistence.HasSavedFollowupVisitState() ||
+               LittlePrinceVisitPersistence.HasSavedClosureState() ||
                LittlePrinceNarrativePersistence.HasSavedChoice() ||
                DemoCompletionPersistence.HasSavedDemoCompletionState();
     }
@@ -26,6 +27,7 @@ public static class SurlhwaGameProgress
         RecipeProgressPersistence.ClearRecipeProgress();
         LittlePrinceVisitPersistence.ClearFirstVisitCompleted();
         LittlePrinceVisitPersistence.ClearFollowupVisitCompleted();
+        LittlePrinceVisitPersistence.ClearClosureProgress();
         LittlePrinceNarrativePersistence.ClearChoice();
         DemoCompletionPersistence.ClearDemoCompletion();
         SurlhwaPlayerPrefsStore.Save();

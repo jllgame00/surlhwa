@@ -70,6 +70,11 @@ public static class SURLHWAJ4DiscoveryValidation
             IngredientData rum = LoadRequired<IngredientData>(RumPath);
 
             ValidateDiscoveryFlag(firstVisitOrder);
+            OrderData manwolPractice = LoadRequired<OrderData>(
+                "Assets/_SURLHWA/Data/Orders/ManwolRecoveryOrder.asset");
+            Require(manwolPractice.RequiresSuccessfulDiscovery &&
+                    manwolPractice.requestedCocktail == firstVisitOrder.requestedCocktail,
+                "Manwol retry safety must move to the separate recovery practice, not disappear.");
             ValidateTeachingContent(firstVisitDialogue, manwol, vodka, coffeeLiqueur, cream);
 
             RecipeProgressPersistence.ClearRecipeProgress();
@@ -91,7 +96,7 @@ public static class SURLHWAJ4DiscoveryValidation
                 cream,
                 ref floatHost);
             ValidateDiscoveryCompletionGate(
-                firstVisitOrder,
+                manwolPractice,
                 manwol,
                 vodka,
                 coffeeLiqueur,
@@ -100,7 +105,7 @@ public static class SURLHWAJ4DiscoveryValidation
             ValidateFailedRuntimeAttemptRetainsCustomer(
                 catalog,
                 knowledge,
-                firstVisitOrder,
+                manwolPractice,
                 manwol,
                 vodka,
                 coffeeLiqueur,
@@ -290,8 +295,8 @@ public static class SURLHWAJ4DiscoveryValidation
 
     private static void ValidateDiscoveryFlag(OrderData firstVisitOrder)
     {
-        Require(firstVisitOrder.RequiresSuccessfulDiscovery,
-            "Little Prince first visit must require successful Manwol discovery.");
+        Require(!firstVisitOrder.RequiresSuccessfulDiscovery,
+            "Owner-approved Prince failure must resolve the visit without a forced-success retry.");
         Require(firstVisitOrder.RequestType == GuestRequestType.ExactCocktail,
             "Little Prince first visit must remain an exact request.");
 
@@ -558,7 +563,7 @@ public static class SURLHWAJ4DiscoveryValidation
                 ginFizzOrder.RequiresSuccessfulDiscovery,
             "J4 scheduled encounters must remain flagged exact discovery practice, not Recommendation content.");
         Require(GetPrivateField<int>(spawner, "littlePrinceFollowupDay") == 3,
-            "J4 must preserve the existing Day-3 Little Prince return and schedule no Day-4 closure.");
+            "J4 must preserve the Day-3 Little Prince return; J5 owns the separate Day-4 closure.");
         RequireBoundedProductionCounts(dayManager);
 
         SetPrivateField(spawner, "recipeUnlockManager", knowledge);
@@ -578,6 +583,16 @@ public static class SURLHWAJ4DiscoveryValidation
         SetSchedulePosition(dayManager, spawner, 2, 1);
         Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) == negroniOrder,
             "Unknown Negroni must occupy Day-2 slot 2 after the Prince encounter.");
+
+        OrderData recovery = LoadRequired<OrderData>("Assets/_SURLHWA/Data/Orders/ManwolRecoveryOrder.asset");
+        SetSchedulePosition(dayManager, spawner, 2, 2);
+        Require((OrderData)InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) == recovery,
+            "A Prince service that left Manwol unlearned must retain an independent Day-2 recovery lesson.");
+        CocktailRecipeData manwol = FindRecipe(catalog, "recipe_manwol");
+        Require(knowledge.MarkKnown(manwol), "Controlled Manwol recovery setup failed.");
+        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) is OrderData recoveryFallback &&
+                recoveryFallback.RequestType == GuestRequestType.Recommendation,
+            "Known Manwol must skip recovery teaching without duplicating knowledge.");
 
         // Same-day reload after the successfully departed Prince has no
         // persisted spawn counter. The existing visit flag reconstructs only

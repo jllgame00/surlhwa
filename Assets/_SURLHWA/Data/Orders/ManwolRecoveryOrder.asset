@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: ManwolRecoveryOrder
+  m_EditorClassIdentifier:
+  orderName: "\uB9CC\uC6D4"
+  reputationReward: 1
+  miniGameType: 1
+  requestedCocktail: {fileID: 11400000, guid: c45c5194c56c1de45a5cd0061e701a27, type: 2}
+  requiresSuccessfulDiscovery: 1
+  preBrewDialogue: {fileID: 11400000, guid: c72faf99f5512550de370e0cf9547eed, type: 2}

@@ -352,9 +352,11 @@ public static class SURLHWATwoNightVerticalSliceValidation
         Require(dayThreeFollowupEligible,
             "Day-3 Little Prince follow-up is not eligible after the persisted Day-2 first visit.");
 
-        Require(littlePrinceFollowup.RequestType == GuestRequestType.ExactCocktail &&
-                littlePrinceFollowup.requestedCocktail == manwol.targetCocktail,
-            "The Little Prince follow-up no longer preserves the exact Manwol request boundary.");
+        Require(littlePrinceFollowup.RequestType == GuestRequestType.Recommendation &&
+                littlePrinceFollowup.requestedCocktail == null &&
+                Contains(littlePrinceFollowup.DesiredEmotionTags, EmotionTag.Warmth) &&
+                !littlePrinceFollowup.RequiresSuccessfulDiscovery,
+            "The Little Prince return must preserve its owner-approved Warmth interpretation without a hidden Manwol target.");
     }
 
     private static void ValidateDiscoveryOrder(

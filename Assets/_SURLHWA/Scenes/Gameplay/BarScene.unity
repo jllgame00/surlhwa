@@ -15068,6 +15068,8 @@ MonoBehaviour:
   debugSpawnKey: 32
   specialGuests: []
   littlePrincePrefab: {fileID: 4898275966391150351, guid: 535a93265c6e52046a3db76a55363aaf, type: 3}
+  manwolRecoveryOrder: {fileID: 11400000, guid: b88ad8b7add49cb9e4fd4d35a75f8745, type: 2}
+  littlePrinceClosingOrder: {fileID: 11400000, guid: 86f49a1ec186d8d600baa6a21242cf02, type: 2}
   littlePrinceFollowupDay: 3
   littlePrinceFollowupOrder: {fileID: 11400000, guid: 84a4567890abcdef1234567890abcdef, type: 2}
   businessDayManager: {fileID: 1712809651}

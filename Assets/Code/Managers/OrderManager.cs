@@ -154,6 +154,13 @@ public class OrderManager : MonoBehaviour
             matchResult = RecipeMatchService.FindBestMatch(result.brewedComposition, candidates);
         }
 
+        // Recommendation has no expected answer recipe. Once the actual liquid is
+        // recognized, evaluate its trace against that recipe without changing FIT or technique.
+        if (currentGuestRequest != null && currentGuestRequest.RequestType == GuestRequestType.Recommendation &&
+            matchResult.success && matchResult.matchedRecipe != null)
+            result.preparationEvaluation = RecipePreparationEvaluator.Evaluate(
+                matchResult.matchedRecipe, result.preparationTrace);
+
         RequestEvaluationResult requestEvaluation = RequestEvaluation.Evaluate(currentGuestRequest, matchResult);
         LogRequestEvaluation(currentGuestRequest, matchResult, requestEvaluation);
 
@@ -192,7 +199,9 @@ public class OrderManager : MonoBehaviour
 
                 bool canPromoteMatchedRecipe = requiresSuccessfulDiscovery
                     ? successfulDiscovery && matchedRecipe == discoveryTargetRecipe
-                    : result.success;
+                    : result.success && (currentCustomer == null || currentCustomer.LittlePrinceVisitNumber == 0 ||
+                        (result.preparationEvaluation != null && result.preparationEvaluation.Status ==
+                            RecipePreparationEvaluationStatus.Satisfied));
 
                 if (canPromoteMatchedRecipe && !wasKnown)
                 {
@@ -278,15 +287,15 @@ public class OrderManager : MonoBehaviour
             newlyKnownRecipe);
 
         // �� ���� �ý��� ȣ��
-        if (currentCustomer != null)
-            currentCustomer.OnServedWithReaction(guestServiceResult);
-
-        PresentServiceFeedback(
+        float feedbackDuration = PresentServiceFeedback(
             guestServiceResult,
             matchedRecipe,
             newlyKnownRecipe,
             secondCustomerRoute,
             currentCustomer != null);
+
+        if (currentCustomer != null)
+            currentCustomer.OnServedWithReaction(guestServiceResult, feedbackDuration);
 
         // ���� �ʱ�ȭ
         currentCustomer = null;
@@ -399,7 +408,7 @@ public class OrderManager : MonoBehaviour
     /// primary, then this diagnostic toast, then the sole discovery popup.
     /// No gameplay axis is recalculated here.
     /// </summary>
-    private void PresentServiceFeedback(
+    private float PresentServiceFeedback(
         GuestServiceResult serviceResult,
         CocktailRecipeData newlyKnownRecipe,
         bool recipeBecameKnown,
@@ -418,13 +427,13 @@ public class OrderManager : MonoBehaviour
         }
 
         if (!recipeBecameKnown || newlyKnownRecipe == null)
-            return;
+            return reactionDelay + toastCycle;
 
         if (unlockPopup == null)
             unlockPopup = FindFirstObjectByType<RecipeUnlockPopupController>();
 
         if (unlockPopup == null)
-            return;
+            return reactionDelay + toastCycle;
 
         float discoveryDelay = reactionDelay + toastCycle + DiscoveryFeedbackGap;
         if (secondCustomerRoute)
@@ -439,6 +448,7 @@ public class OrderManager : MonoBehaviour
         {
             unlockPopup.ShowDelayed(newlyKnownRecipe, discoveryDelay);
         }
+        return discoveryDelay + unlockPopup.DisplayCycleDuration;
     }
 
     // Legacy direct-toast routing is retained for serialized scene/debug

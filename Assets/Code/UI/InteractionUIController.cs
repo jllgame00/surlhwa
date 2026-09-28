@@ -87,6 +87,9 @@ public class InteractionUIController : MonoBehaviour
     private bool isLittlePrinceChoiceActive;
     private bool isLittlePrinceChoiceResponseActive;
     private LittlePrinceNarrativeData activeLittlePrinceNarrative;
+    private Action farewellCompleted;
+    private string[] farewellLines;
+    private int farewellLineIndex;
     private string defaultNextButtonLabel;
     private string defaultBrewButtonLabel;
 
@@ -232,6 +235,8 @@ public class InteractionUIController : MonoBehaviour
         Debug.Log($"[InteractionUI] ClearCustomer -> {(customer != null ? customer.name : "NULL")}");
 
         SetCustomerWaitIndicatorVisible(customer, false);
+        farewellCompleted = null;
+        farewellLines = null;
 
         ResetPreRequestDialogue();
 
@@ -445,8 +450,33 @@ public class InteractionUIController : MonoBehaviour
             reveal?.TryApply(recipeKnowledgeManager);
     }
 
+    public void ShowLittlePrinceFarewell(CustomerController customer, string[] lines, Action completed)
+    {
+        ResetPreRequestDialogue();
+        activeCustomer = customer;
+        farewellLines = lines;
+        farewellLineIndex = 0;
+        farewellCompleted = completed;
+        ShowDialogue(lines[0], true);
+    }
+
     private void OnClickNextDialogueLine()
     {
+        if (farewellCompleted != null)
+        {
+            farewellLineIndex++;
+            if (farewellLineIndex < farewellLines.Length)
+            {
+                ShowDialogue(farewellLines[farewellLineIndex], true);
+                return;
+            }
+            Action completed = farewellCompleted;
+            farewellCompleted = null;
+            farewellLines = null;
+            ClearCustomer(activeCustomer);
+            completed();
+            return;
+        }
         if (isLittlePrinceChoiceActive)
         {
             CommitLittlePrinceChoice(LittlePrinceNarrativeChoice.KeepTheLight);
@@ -629,6 +659,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickBrew()
     {
+        if (farewellCompleted != null) return;
         if (activeCustomer == null)
             return;
 
@@ -1011,6 +1042,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickCancel()
     {
+        if (farewellCompleted != null) return;
         // BrewPanel에서 취소하면 DialoguePanel로 복귀
         ResetPreRequestDialogue();
 

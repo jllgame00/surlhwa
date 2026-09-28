@@ -411,11 +411,12 @@ public static class SURLHWAJ2SelectedCocktailDataValidation
         OrderData firstOrder = LoadRequired<OrderData>(LittlePrinceFirstOrderPath);
         OrderData followupOrder = LoadRequired<OrderData>(LittlePrinceFollowupOrderPath);
         Require(firstOrder.RequestType == GuestRequestType.ExactCocktail &&
-                followupOrder.RequestType == GuestRequestType.ExactCocktail &&
                 firstOrder.requestedCocktail == manwol.targetCocktail &&
-                followupOrder.requestedCocktail == manwol.targetCocktail &&
-                firstOrder.miniGameType == MiniGameType.Float && followupOrder.miniGameType == MiniGameType.Float,
-            "Little Prince requests must remain exact Manwol Float routes.");
+                firstOrder.miniGameType == MiniGameType.Float &&
+                followupOrder.RequestType == GuestRequestType.Recommendation &&
+                followupOrder.requestedCocktail == null &&
+                Array.IndexOf(followupOrder.DesiredEmotionTags, EmotionTag.Warmth) >= 0,
+            "Prince first visit must retain Manwol truth; its return must preserve the approved Warmth interpretation.");
 
         IngredientAvailabilityContext ordinaryDayTwo = new(2);
         IngredientAvailabilityContext requestDayTwo = IngredientAvailabilityContext.ForRequest(2, manwol);
