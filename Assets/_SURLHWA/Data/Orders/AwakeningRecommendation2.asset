@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: AwakeningRecommendation2
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "계속 같은 하루를 보내다 오늘은 다른 길로 왔어요. 낯선 공기를 마신 듯 기분을 바꿀 한 잔을 부탁해요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 02000000
+  preBrewDialogue: {fileID: 11400000, guid: 3720d7c582a548acacb581f13ab75efb, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []

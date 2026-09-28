@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NegroniDiscoveryDialogue
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   onEnterLines:
-  - "\uB124\uADF8\uB85C\uB2C8\uB85C \uBD80\uD0C1\uD560\uAC8C\uC694. \uC9C4, \uC2A4\uC704\uD2B8 \uB808\uB4DC \uBCA0\uB974\uBB34\uD2B8, \uCE84\uD30C\uB9AC\uB97C \uAC19\uC740 \uC591\uC73C\uB85C \uC794\uC5D0 \uB123\uC5B4 \uC8FC\uC138\uC694."
+  - "네그로니로 부탁할게요. 잔에 진, 캄파리, 스위트 레드 베르무트를 이 순서로 각각 30 ml씩 넣어 주세요."
   - "\uC5BC\uC74C\uC744 \uB123\uACE0 \uAC00\uBCCD\uAC8C \uC800\uC740 \uB4A4, \uC624\uB80C\uC9C0 \uD55C \uC870\uAC01\uC73C\uB85C \uB9C8\uBB34\uB9AC\uD574 \uC8FC\uC138\uC694."
   onSuccessLines: []
   onFailLines: []

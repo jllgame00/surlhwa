@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: WarmthRecommendation1
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "길에서 오래 걸었더니 아는 집의 불빛이 자꾸 생각났어요. 잠시 마음을 놓고 머물 수 있는 한 잔이면 좋겠어요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 07000000
+  preBrewDialogue: {fileID: 11400000, guid: aabd00c87b47403b98ce9b63e11a21a5, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []

@@ -21,6 +21,14 @@ MonoBehaviour:
     tone: 3
   - text: "\uC624\uB298 \uC81C\uAC8C\uB294 \uB9DE\uC9C0 \uC54A\uC558\uACE0, \uC794\uB3C4 \uC870\uAE08 \uC544\uC26C\uC6E0\uB124\uC694."
     tone: 4
+  - text: "말로 다 못한 쪽까지 들어 준 기분이에요. 천천히 마시고 싶네요."
+    tone: 1
+  - text: "지금 제 마음에는 어울려요. 조금만 더 차분하게 만들어졌다면 편히 마실 수 있었겠어요."
+    tone: 2
+  - text: "정성 들여 만든 건 느껴져요. 다만 오늘 제 마음이 머무는 곳과는 조금 다르네요."
+    tone: 3
+  - text: "제 이야기가 잘 닿지 않은 것 같아요. 맛도 조금 어수선하게 남네요."
+    tone: 4
   lines:
   - text: "...\uC624\uB298\uC740 \uC774\uB7F0 \uAE30\uBD84\uC740 \uC544\uB2C8\uC5C8\uC5B4\uC694."
     phase: 0

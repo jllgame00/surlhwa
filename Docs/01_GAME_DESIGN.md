@@ -1,6 +1,6 @@
 # SURLHWA — Game Design
 
-Last Updated: 2026-09-17
+Last Updated: 2026-09-28
 
 ## J1 Coherent Demo Flow Closure (Implemented; validated)
 
@@ -69,6 +69,28 @@ garnish. Manwol's existing Float route and `BartendingLayeredDrinkState` remain
 the authority for the player's actual ordered layers; Cream is the authored
 final/upper layer. Selected IBA cocktail art and ingredient icons remain a J6
 presentation backlog.
+
+## Production Recommendation and Encounter Contract
+
+The bounded demo uses 5 / 4 / 4 / 4 encounters. Required authored discovery
+retains priority: Day 2 Manwol then Negroni; Day 3 the Prince return then
+Manhattan; Day 4 Gin Fizz. Other production slots use authored situational
+requests from four supported interpretations: Warmth, Bitterness, Clarity,
+and Awakening, with three phrasings each. A request is offered only when an
+existing Known recipe can answer it using that night's ordinary supply.
+Selection never grants knowledge or injects ingredients.
+
+Recommendation Brew opens the existing four-method selection. The selected
+method determines preparation controls; the authored guest request retains
+its own meaning, title, and reward. Recipe recognition and FIT stay separate.
+Exact discovery and Prince requests keep their existing required methods.
+
+After Day-3 Manhattan practice, Warmth accepts both Seolya and Manhattan;
+Bitterness accepts both Negroni and Manhattan. Day-4 Clarity accepts Manwol
+and Gin Fizz, as well as Dry Martini when learned. These alternatives are
+unranked. The Guide remains the player's recipe memory; no answer list or
+best-drink marker is added. Eight FIT responses distinguish interpretation
+from execution through the existing four response categories.
 
 ## I10 Ingredient Availability (Implemented)
 

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: BitternessRecommendation3
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "뜻대로 안 된 하루였어요. 괜찮다는 말 대신, 조금 쓴 맛을 천천히 받아들이고 싶네요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 04000000
+  preBrewDialogue: {fileID: 11400000, guid: 32f44a8d2bce471eb754093acd7b0cb9, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []

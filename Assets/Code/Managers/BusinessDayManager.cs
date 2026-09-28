@@ -11,7 +11,7 @@ public class BusinessDayManager : MonoBehaviour
     [SerializeField, Min(1)] private int startingDay = 1;
     [Header("Bounded Demo Schedule")]
     [Tooltip("Customer targets for demo nights 1 through 4. Later content may tune these counts without changing day progression code.")]
-    [SerializeField] private int[] demoCustomerCountsByDay = { 5, 8, 8, 8 };
+    [SerializeField] private int[] demoCustomerCountsByDay = { 5, 4, 4, 4 };
     [SerializeField, Min(1)] private int demoNightCount = 4;
 
     private int servedCustomerCount;

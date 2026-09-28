@@ -34,6 +34,10 @@ public class CustomerSpawner : MonoBehaviour
     [Tooltip("Day-4 slot 1 practice encounter. It is selected only while Gin Fizz is not Known.")]
     [SerializeField] private OrderData ginFizzDiscoveryOrder;
 
+    [Header("Production Recommendations")]
+    [SerializeField] private OrderData[] productionRecommendationOrders;
+    [SerializeField] private IngredientAvailabilityData ingredientAvailability;
+
     [Header("Debug")]
     [SerializeField] private bool debugSpawnWithKey = false;
     [SerializeField] private KeyCode debugSpawnKey = KeyCode.Space;
@@ -362,7 +366,12 @@ public class CustomerSpawner : MonoBehaviour
         if (currentDay == 1)
             return GetDayOneAuthoredOrder();
 
-        return GetJ4DiscoveryOrderForNextSpawn(currentDay);
+        // Special narrative content and required practice retain priority.
+        if (ShouldSpawnLittlePrinceFirstVisit() || ShouldSpawnLittlePrinceFollowupVisit())
+            return null;
+
+        OrderData discovery = GetJ4DiscoveryOrderForNextSpawn(currentDay);
+        return discovery != null ? discovery : GetProductionRecommendation(currentDay);
     }
 
     private OrderData GetDayOneAuthoredOrder()
@@ -422,6 +431,70 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         return null;
+    }
+
+    private OrderData GetProductionRecommendation(int currentDay)
+    {
+        if (productionRecommendationOrders == null || ingredientAvailability == null)
+            return null; // Compatibility scenes retain their existing generic route.
+
+        // Two different overlaps after Day-3 practice: Warmth (Seolya/Manhattan)
+        // and Bitterness (Negroni/Manhattan). Day 4 adds Clarity and Awakening.
+        EmotionTag preferred = currentDay >= 4 && spawnedCount == 1
+            ? EmotionTag.Clarity
+            : currentDay >= 4 && spawnedCount == 2
+                ? EmotionTag.Awakening
+                : spawnedCount == 3 && currentDay < 4
+                    ? EmotionTag.Bitterness
+                    : EmotionTag.Warmth;
+        List<OrderData> preferredRequests = new();
+        List<OrderData> reachableRequests = new();
+        foreach (OrderData request in productionRecommendationOrders)
+        {
+            if (!HasKnownSuppliedAnswer(request, currentDay))
+                continue;
+
+            reachableRequests.Add(request);
+            if (System.Array.IndexOf(request.DesiredEmotionTags, preferred) >= 0)
+                preferredRequests.Add(request);
+        }
+
+        List<OrderData> candidates = preferredRequests.Count > 0
+            ? preferredRequests : reachableRequests;
+        return candidates.Count > 0 ? candidates[Random.Range(0, candidates.Count)] : null;
+    }
+
+    private bool HasKnownSuppliedAnswer(OrderData request, int currentDay)
+    {
+        RecipeUnlockManager knowledge = ResolveRecipeUnlockManager();
+        if (request == null || request.RequestType != GuestRequestType.Recommendation ||
+            knowledge == null || ingredientAvailability == null)
+            return false;
+
+        IngredientAvailabilityContext supply = new(currentDay);
+        foreach (CocktailRecipeData recipe in knowledge.GetAllRecipes())
+        {
+            if (recipe == null || !knowledge.IsKnown(recipe))
+                continue;
+
+            bool supplied = true;
+            foreach (RecipeIngredientEntry ingredient in recipe.ingredients)
+            {
+                if (ingredient == null ||
+                    !ingredientAvailability.IsIngredientAvailable(ingredient.ingredient, supply))
+                {
+                    supplied = false;
+                    break;
+                }
+            }
+
+            if (supplied && RequestEvaluation.Evaluate(request, new RecipeMatchResult
+                { success = true, matchedRecipe = recipe, similarity = 1f }).Status ==
+                RequestEvaluationStatus.Satisfied)
+                return true;
+        }
+
+        return false;
     }
 
     private OrderData GetPendingDiscoveryOrder(OrderData discoveryOrder)

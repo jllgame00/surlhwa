@@ -140,6 +140,154 @@ public static class SURLHWAJ4DiscoveryValidation
         }
     }
 
+    [MenuItem("SURLHWA/Validation/Run J1-J4 Production Regression")]
+    public static void RunProductionRegression()
+    {
+        SURLHWAJ1CoherentDemoFlowValidation.RunStaticRegressionSet();
+        SURLHWAJ2SelectedCocktailDataValidation.Run();
+        Run();
+        RunProductionRecommendations();
+        Debug.Log("[J1-J4 Production Regression] PASS: static and edit-mode integration checks. " +
+                  "Normal-input four-night playthrough and subjective acceptance remain separate.");
+    }
+
+    [MenuItem("SURLHWA/Validation/Run J3 Production Recommendations")]
+
+    public static void RunProductionRecommendations()
+    {
+        ProgressSnapshot snapshot = ProgressSnapshot.Capture();
+        UnityEngine.Random.State randomState = UnityEngine.Random.state;
+        RecipeUnlockManager knowledge = null;
+        Scene scene = default;
+        try
+        {
+            RecipeProgressPersistence.ClearRecipeProgress();
+            RecipeCatalogData catalog = LoadRequired<RecipeCatalogData>(CatalogPath);
+            knowledge = CreateKnowledgeManager(catalog);
+            scene = EditorSceneManager.OpenScene(BarScenePath, OpenSceneMode.Additive);
+            CustomerSpawner spawner = FindSingleInScene<CustomerSpawner>(scene);
+            BusinessDayManager day = FindSingleInScene<BusinessDayManager>(scene);
+            InteractionUIController ui = FindSingleInScene<InteractionUIController>(scene);
+            SetPrivateField(spawner, "recipeUnlockManager", knowledge);
+            RequireBoundedProductionCounts(day);
+            Require(!GetPrivateField<bool>(spawner, "debugSpawnWithKey"),
+                "Production spawning must not respond to the debug Space shortcut.");
+            IngredientAvailabilityData availability =
+                GetPrivateField<IngredientAvailabilityData>(spawner, "ingredientAvailability");
+            Require(availability == LoadRequired<IngredientAvailabilityData>(AvailabilityPath),
+                "Recommendation filtering must use the production ingredient supply authority.");
+            OrderData[] requests = GetPrivateField<OrderData[]>(spawner, "productionRecommendationOrders");
+            Require(requests != null && requests.Length == 12,
+                "Production requires twelve authored request phrasings.");
+            Dictionary<EmotionTag, int> counts = new();
+            HashSet<string> phrasings = new();
+            foreach (OrderData request in requests)
+            {
+                Require(request != null && request.RequestType == GuestRequestType.Recommendation &&
+                        request.requestedCocktail == null && !request.RequiresSuccessfulDiscovery &&
+                        request.DesiredEmotionTags.Length == 1,
+                    "Production Recommendations must have one authored interpretation and no exact target/gate.");
+                EmotionTag tag = request.DesiredEmotionTags[0];
+                Require(tag == EmotionTag.Warmth || tag == EmotionTag.Bitterness ||
+                        tag == EmotionTag.Clarity || tag == EmotionTag.Awakening,
+                    "Production request vocabulary expanded beyond the bounded four types.");
+                counts[tag] = counts.TryGetValue(tag, out int count) ? count + 1 : 1;
+                Require(phrasings.Add(request.orderName) && request.PreBrewDialogue != null &&
+                        request.PreBrewDialogue.onEnterLines.Length == 1 &&
+                        request.PreBrewDialogue.onEnterLines[0] == request.orderName &&
+                        request.PreBrewDialogue.GetOnEnterKnowledgeReveals(0).Length == 0,
+                    "Every request needs distinct player-visible prose, matching dialogue and no automatic knowledge grant.");
+            }
+            Require(counts.Count == 4, "All four request types must exist.");
+            foreach (int count in counts.Values)
+                Require(count == 3, "Each request type needs three phrasings.");
+
+            OrderData[] templates = GetPrivateField<OrderData[]>(ui, "prototypeTechniqueOrders");
+            foreach (MiniGameType method in new[] { MiniGameType.Stir, MiniGameType.Build,
+                         MiniGameType.Float, MiniGameType.Shake })
+            {
+                int matches = 0;
+                foreach (OrderData template in templates)
+                    if (template != null && template.miniGameType == method) matches++;
+                Require(matches == 1, "Production method selection must expose exactly one route for " + method);
+            }
+
+            // Knowledge alone and supply alone must each be insufficient.
+            OrderData awakening = Array.Find(requests, r => r.DesiredEmotionTags[0] == EmotionTag.Awakening);
+            Require(!(bool)InvokePrivate(spawner, "HasKnownSuppliedAnswer", new object[] { awakening, 4 }),
+                "Supplied but Unknown Gin Fizz must not enable an Awakening request.");
+            CocktailRecipeData fizz = FindRecipe(catalog, "recipe_gin_fizz");
+            knowledge.MarkKnown(fizz); // Controlled fixture only; production never grants knowledge here.
+            Require(!(bool)InvokePrivate(spawner, "HasKnownSuppliedAnswer", new object[] { awakening, 3 }) &&
+                    (bool)InvokePrivate(spawner, "HasKnownSuppliedAnswer", new object[] { awakening, 4 }),
+                "Known Gin Fizz must still require Day-4 supply.");
+            RecipeProgressPersistence.ClearRecipeProgress();
+            UnityEngine.Object.DestroyImmediate(knowledge.gameObject);
+            knowledge = CreateKnowledgeManager(catalog);
+            SetPrivateField(spawner, "recipeUnlockManager", knowledge);
+
+            // Models success of the existing required practices without claiming
+            // this edit-mode probe itself is a normal-input Play Mode run.
+            knowledge.MarkKnown(FindRecipe(catalog, "recipe_manwol"));
+            knowledge.MarkKnown(FindRecipe(catalog, "recipe_negroni"));
+            ValidateRecommendationSlot(spawner, day, knowledge, availability, 2, 2, EmotionTag.Warmth, 1);
+            ValidateRecommendationSlot(spawner, day, knowledge, availability, 2, 3, EmotionTag.Bitterness, 1);
+            knowledge.MarkKnown(FindRecipe(catalog, "recipe_manhattan"));
+            ValidateRecommendationSlot(spawner, day, knowledge, availability, 3, 2, EmotionTag.Warmth, 2);
+            ValidateRecommendationSlot(spawner, day, knowledge, availability, 3, 3, EmotionTag.Bitterness, 2);
+            knowledge.MarkKnown(fizz);
+            ValidateRecommendationSlot(spawner, day, knowledge, availability, 4, 1, EmotionTag.Clarity, 2);
+            ValidateRecommendationSlot(spawner, day, knowledge, availability, 4, 2, EmotionTag.Awakening, 1);
+
+            GuestReactionDatabase reactions = LoadRequired<GuestReactionDatabase>(
+                "Assets/_SURLHWA/Data/Dialogue/GeneralGuestReactionDB.asset");
+            for (int tone = 1; tone <= 4; tone++)
+            {
+                HashSet<string> lines = new();
+                foreach (GuestFitReactionLine line in reactions.guestFitLines)
+                    if ((int)line.tone == tone && !string.IsNullOrWhiteSpace(line.text)) lines.Add(line.text);
+                Require(lines.Count >= 2, "Each independent FIT/execution outcome needs two responses.");
+            }
+            Debug.Log("[J3 Validation] PASS: production request data, Known/supply gates, method access, " +
+                      "scheduled alternative answers, contrasts and FIT response coverage. Normal-input Play Mode remains separate.");
+        }
+        finally
+        {
+            if (knowledge != null) UnityEngine.Object.DestroyImmediate(knowledge.gameObject);
+            if (scene.IsValid() && scene.isLoaded) EditorSceneManager.CloseScene(scene, true);
+            snapshot.Restore();
+            UnityEngine.Random.state = randomState;
+        }
+    }
+
+    private static void ValidateRecommendationSlot(CustomerSpawner spawner, BusinessDayManager day,
+        RecipeUnlockManager knowledge, IngredientAvailabilityData availability,
+        int night, int slot, EmotionTag expectedTag, int minimumAnswers)
+    {
+        SetSchedulePosition(day, spawner, night, slot);
+        OrderData request = InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) as OrderData;
+        Require(request != null && request.RequestType == GuestRequestType.Recommendation &&
+                request.DesiredEmotionTags[0] == expectedTag,
+            "Unexpected request at night " + night + " slot " + (slot + 1));
+        int answers = 0;
+        int contrasts = 0;
+        foreach (CocktailRecipeData recipe in knowledge.GetAllRecipes())
+        {
+            if (!knowledge.IsKnown(recipe)) continue;
+            bool supplied = true;
+            foreach (RecipeIngredientEntry ingredient in recipe.ingredients)
+                supplied &= availability.IsIngredientAvailable(ingredient.ingredient,
+                    new IngredientAvailabilityContext(night));
+            if (!supplied) continue;
+            RequestEvaluationResult fit = RequestEvaluation.Evaluate(request,
+                new RecipeMatchResult { success = true, matchedRecipe = recipe, similarity = 1f });
+            if (fit.Status == RequestEvaluationStatus.Satisfied) answers++;
+            else if (fit.Status == RequestEvaluationStatus.Unsatisfied) contrasts++;
+        }
+        Require(answers >= minimumAnswers && contrasts > 0,
+            "A scheduled request lacks its required Known, supplied answers or an incompatible contrast.");
+    }
+
     private static void ValidateDiscoveryFlag(OrderData firstVisitOrder)
     {
         Require(firstVisitOrder.RequiresSuccessfulDiscovery,
@@ -411,7 +559,7 @@ public static class SURLHWAJ4DiscoveryValidation
             "J4 scheduled encounters must remain flagged exact discovery practice, not Recommendation content.");
         Require(GetPrivateField<int>(spawner, "littlePrinceFollowupDay") == 3,
             "J4 must preserve the existing Day-3 Little Prince return and schedule no Day-4 closure.");
-        RequireDemoCountsRemainJ1Owned(dayManager);
+        RequireBoundedProductionCounts(dayManager);
 
         SetPrivateField(spawner, "recipeUnlockManager", knowledge);
         LittlePrinceVisitPersistence.ClearFirstVisitCompleted();
@@ -440,7 +588,9 @@ public static class SURLHWAJ4DiscoveryValidation
             "Day-2 reload after Prince success must keep unknown Negroni pending.");
         Require(knowledge.MarkKnown(negroni),
             "Controlled Negroni-success setup failed to reach Known.");
-        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) == null &&
+        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) is OrderData fallbacknegroni &&
+                fallbacknegroni.RequestType == GuestRequestType.Recommendation &&
+                !fallbacknegroni.RequiresSuccessfulDiscovery &&
                 knowledge.GetKnowledgeState(negroni) == RecipeKnowledgeState.Known &&
                 !knowledge.MarkKnown(negroni),
             "Known Negroni must skip teaching without regressing knowledge or duplicating promotion.");
@@ -460,7 +610,9 @@ public static class SURLHWAJ4DiscoveryValidation
             "Day-3 reload after Prince return must keep unknown Manhattan pending.");
         Require(knowledge.MarkKnown(manhattan),
             "Controlled Manhattan-success setup failed to reach Known.");
-        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) == null &&
+        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) is OrderData fallbackmanhattan &&
+                fallbackmanhattan.RequestType == GuestRequestType.Recommendation &&
+                !fallbackmanhattan.RequiresSuccessfulDiscovery &&
                 knowledge.GetKnowledgeState(manhattan) == RecipeKnowledgeState.Known &&
                 !knowledge.MarkKnown(manhattan),
             "Known Manhattan must skip teaching without regressing knowledge or duplicating promotion.");
@@ -470,7 +622,9 @@ public static class SURLHWAJ4DiscoveryValidation
             "Unknown Gin Fizz must occupy Day-4 slot 1.");
         Require(knowledge.MarkKnown(ginFizz),
             "Controlled Gin Fizz-success setup failed to reach Known.");
-        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) == null &&
+        Require(InvokePrivate(spawner, "GetAuthoredOrderForNextSpawn", null) is OrderData fallbackginFizz &&
+                fallbackginFizz.RequestType == GuestRequestType.Recommendation &&
+                !fallbackginFizz.RequiresSuccessfulDiscovery &&
                 knowledge.GetKnowledgeState(ginFizz) == RecipeKnowledgeState.Known &&
                 !knowledge.MarkKnown(ginFizz),
             "Known Gin Fizz must skip teaching without regressing knowledge or duplicating promotion.");
@@ -491,12 +645,12 @@ public static class SURLHWAJ4DiscoveryValidation
         SetPrivateField(spawner, "activeCustomer", null);
     }
 
-    private static void RequireDemoCountsRemainJ1Owned(BusinessDayManager dayManager)
+    private static void RequireBoundedProductionCounts(BusinessDayManager dayManager)
     {
         int[] counts = GetPrivateField<int[]>(dayManager, "demoCustomerCountsByDay");
         Require(counts != null && counts.Length == 4 &&
-                counts[0] == 5 && counts[1] == 8 && counts[2] == 8 && counts[3] == 8,
-            "J4 must preserve J1's 5/8/8/8 interim counts; J3D owns 5/4/4/4 finalization.");
+                counts[0] == 5 && counts[1] == 4 && counts[2] == 4 && counts[3] == 4,
+            "J3 finalization must retain all J4 anchors in the bounded 5/4/4/4 schedule.");
         Require(dayManager.DemoNightCount == 4,
             "J4 scheduling must preserve the bounded four-night lifecycle.");
     }
@@ -648,6 +802,10 @@ public static class SURLHWAJ4DiscoveryValidation
                     CreateNegroniTrace(gin, vermouth, campari, false)).Status ==
                 RecipePreparationEvaluationStatus.Unsatisfied,
             "Negroni discovery must fail when the required Orange Slice is omitted.");
+        Require(RecipePreparationEvaluator.Evaluate(recipe,
+                    CreateNegroniTrace(gin, campari, vermouth, true)).Status ==
+                RecipePreparationEvaluationStatus.Unsatisfied,
+            "Negroni discovery must reject swapped Campari/vermouth order, even with correct garnish.");
     }
 
     private static void ValidateManhattanDashPreparation(
@@ -746,8 +904,8 @@ public static class SURLHWAJ4DiscoveryValidation
     {
         BartendingPreparationTrace trace = new();
         trace.Record(RecipePreparationAction.Pour, gin, 30f, null, BartendingContainerType.ServingGlass);
-        trace.Record(RecipePreparationAction.Pour, vermouth, 30f, null, BartendingContainerType.ServingGlass);
         trace.Record(RecipePreparationAction.Pour, campari, 30f, null, BartendingContainerType.ServingGlass);
+        trace.Record(RecipePreparationAction.Pour, vermouth, 30f, null, BartendingContainerType.ServingGlass);
         trace.Record(RecipePreparationAction.AddIce, null, 0f, null, BartendingContainerType.ServingGlass);
         trace.Record(RecipePreparationAction.GentleStir, null, 0f, null, BartendingContainerType.ServingGlass);
         if (includeOrangeSlice)

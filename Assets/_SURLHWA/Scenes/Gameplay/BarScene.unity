@@ -15050,7 +15050,21 @@ MonoBehaviour:
   negroniDiscoveryOrder: {fileID: 11400000, guid: 22a187470f6646c5a9cbe73680b2e44b, type: 2}
   manhattanDiscoveryOrder: {fileID: 11400000, guid: 33abda25eccf472bbff54787aab86a82, type: 2}
   ginFizzDiscoveryOrder: {fileID: 11400000, guid: ac2a4617a23f4204a7d342a14951e424, type: 2}
-  debugSpawnWithKey: 1
+  productionRecommendationOrders:
+  - {fileID: 11400000, guid: 3228dd06571d49a696f6f8464f2d6c42, type: 2}
+  - {fileID: 11400000, guid: 0f58779f352e4ad7b39f99ad6b3e1099, type: 2}
+  - {fileID: 11400000, guid: e311700be7b24b70b8f47eb1ebd45671, type: 2}
+  - {fileID: 11400000, guid: 364d3dbd69c7454d9b4ea224862a2c29, type: 2}
+  - {fileID: 11400000, guid: 99c29e91746c4be1ae92f86bd7433866, type: 2}
+  - {fileID: 11400000, guid: ac3444f767a84dc3bfbf673fd3f823cf, type: 2}
+  - {fileID: 11400000, guid: 5815a03cdd2044c7852b33316792e97e, type: 2}
+  - {fileID: 11400000, guid: 02385a5f2b464b0bae91ea13f36ff429, type: 2}
+  - {fileID: 11400000, guid: 8e6ec084a724496490996252742f5cb6, type: 2}
+  - {fileID: 11400000, guid: b7b54512c5ab40b9912a0c8a8cb79f47, type: 2}
+  - {fileID: 11400000, guid: 99fd5d05535d43de886f8877643176b8, type: 2}
+  - {fileID: 11400000, guid: db0706d7b08f4591833bb84f5862aa48, type: 2}
+  ingredientAvailability: {fileID: 11400000, guid: 1825aec07c484db992c40ee63246f959, type: 2}
+  debugSpawnWithKey: 0
   debugSpawnKey: 32
   specialGuests: []
   littlePrincePrefab: {fileID: 4898275966391150351, guid: 535a93265c6e52046a3db76a55363aaf, type: 3}
@@ -15073,6 +15087,8 @@ MonoBehaviour:
   endDayWhenMaxCustomersServed: 1
   resultPanel: {fileID: 2069170614}
   startingDay: 1
+  demoCustomerCountsByDay: 05000000040000000400000004000000
+  demoNightCount: 4
 --- !u!1 &1713744115
 GameObject:
   m_ObjectHideFlags: 0

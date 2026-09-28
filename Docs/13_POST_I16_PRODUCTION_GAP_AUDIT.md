@@ -1476,3 +1476,101 @@ its reference design intentionally hides those facts, so production fairness
 needs an explicit reconciliation rather than silent validator relaxation.
 J5 closure meaning and failed-service semantics require the owner's decision
 under AGENTS.md section 6 and J5 acceptance.
+
+
+## J3 Production Content and Validation Recovery (2026-09-28)
+
+J3 content and routing are IMPLEMENTED_WITH_VALIDATION_DEBT. The production
+spawner now uses twelve authored OrderData/DialogueData pairs: three
+situational phrasings each for Warmth, Bitterness, Clarity and Awakening.
+The existing reaction database now contains eight FIT lines, two for each
+FIT/execution category. These requests have no exact target, discovery grant,
+ranked answer, or new UI. Their prose remains subject to human tone review.
+
+The spawner reads the existing knowledge and ordinary supply authorities and
+uses the unchanged RequestEvaluation to ensure an offered request has a
+Known, supplied answer. It does not unlock recipes or inject supply. Existing
+Prince and required discovery slots retain priority. Known-practice skips
+now receive a reachable authored Recommendation rather than unconstrained
+generic emotion combinations. No stable IDs, save keys or formats changed.
+
+The final customer counts are explicitly serialized as 5/4/4/4; debug Space
+spawning is disabled. Fresh routing is:
+
+| Night | Slots |
+|---|---|
+| 1 | Existing three Dry Martini clues, experiment, Clarity request |
+| 2 | Prince/Manwol, Negroni practice, Warmth, Bitterness |
+| 3 | Prince recall, Manhattan practice, Warmth, Bitterness |
+| 4 | Gin Fizz practice, Clarity, Awakening, reachable Recommendation pending J5 closure |
+
+Day-3 Warmth has Seolya/Manhattan; Day-3 Bitterness has Negroni/Manhattan
+across Build/Stir. Day-4 Clarity has Manwol/Gin Fizz across Float/Shake even
+if the optional Day-1 Dry Martini attempt did not succeed. Learned Dry
+Martini adds another Clarity interpretation. The fourth closing-night slot
+is not represented as completed J5 narrative content.
+
+### Validation findings and corrections
+
+A licensed local execution path became available during this phase. This
+supersedes the environmental restriction for the checks actually rerun below;
+it does not rewrite the earlier failed-launch evidence. The full regression
+run exposed a pre-existing J4 Negroni fixture error: it poured Gin, Sweet Red
+Vermouth, Campari, while the authoritative recipe requires Gin, Campari,
+Sweet Red Vermouth. The teaching line listed the same misleading order.
+The line now teaches the canonical sequence and 30 ml per liquid. The
+fixture follows that unchanged sequence; a swapped-order negative assertion
+was added. The evaluator, recipe metadata and required garnish assertions
+were not weakened.
+
+The I13 Play Mode harness still advanced only the historical four narrative
+lines. It now consumes exactly the six authored lines (four narrative plus
+two J4 teaching), retains its choice/patience/Float assertions, and snapshots
+recipe knowledge/legacy progress that the new teaching can modify.
+
+Executed evidence:
+
+- C# Editor build: zero errors, eight warnings after Unity project regeneration:
+  one package reference conflict and seven existing J4 object-reference
+  comparison warnings (CS0252). No warning is treated as runtime evidence.
+- Unity 6000.3.7f1 `SURLHWAJ4DiscoveryValidation.RunProductionRegression`:
+  I10, I11, I11B, I11C, I12, I13, I14, I15, I16, J1, J2/J2.1, J4 and J3 PASS
+  within their static/edit-mode integration scopes. Local ignored log:
+  `Logs/production-autopilot-regression-fixed.log`.
+- I14 production UI Play Mode PASS: actual BarScene customer reaction, result
+  toast and discovery popup sequencing, including good-fit and poor-fit cases.
+  Log: `Logs/production-autopilot-i14-playmode.log`.
+- I13 production UI Play Mode PASS: consumed teaching/narrative dialogue,
+  patience pause, visible A/B, persisted A, Manwol Float entry and A recall.
+  B/None mappings also passed the static regression; this run does not claim
+  full runtime playthroughs of both branches. Log:
+  `Logs/production-autopilot-i13-playmode.log`.
+- Twelve new order GUIDs are unique; their scripts and dialogue references
+  resolve. Unity imports the new assets and loads the production scene.
+- Scene diff is limited to twelve request references, one supply reference,
+  explicit counts/final night and the debug toggle. No prefab changes.
+
+J2.1/J4 Editor-execution debt is cleared. J3's normal-input multi-answer
+acceptance and the full four-night UI/save/endpoint run remain VALIDATION_DEBT;
+edit-mode Known-state fixtures are not claimed as normal-play discovery.
+No subjective dialogue, bartending-feel, pacing or final-readability PASS
+is claimed.
+
+### Remaining owner decisions / next dependency
+
+Technical production closure is NOT declared. J5 still needs a chosen
+closing meaning and failed-service/retry policy for A, B and legacy/None.
+`04_CONTENT_ROADMAP.md` supplies a long-term departure direction but explicitly
+does not define a bounded shipping endpoint. The owner was asked for the
+J5 direction and failure policy under AGENTS.md section 6. Day-1 Dry Martini
+also needs reconciliation between the deliberately amount-hidden I11C
+reference contract and production learning without outside recipe knowledge.
+No hidden amount grant or automatic Known transition was introduced.
+
+After those decisions: complete the corresponding bounded content, run a
+normal-input four-night slice including both Day-3 alternatives and Day-4
+Float/Shake alternatives, and check failed/reloaded practice, New Game,
+Continue and Demo Complete without Day 5. J6/J7 presentation/audio selection
+and integration, J8/J9 full acceptance and the final release audit remain open.
+Reserve cocktails, other literary ACTs and generalized progression systems
+remain OUT_OF_SCOPE for this bounded demo.

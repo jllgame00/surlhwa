@@ -346,9 +346,12 @@ public static class SURLHWALittlePrinceNarrativePlayModeValidation
             Require(nextButton != null && brewButton != null,
                 "Little Prince choice requires the existing Next and Brew buttons.");
 
-            // The existing authored first visit has four lines. The fourth
-            // advance reaches the I13 choice seam, using the real UI events.
-            for (int advance = 0; advance < 4; advance++)
+            // Consume the real first-visit content, including J4 teaching,
+            // before asserting the unchanged A/B choice and patience contract.
+            Require(littlePrince.TryGetDialogueData(out DialogueData firstDialogue) &&
+                    firstDialogue.onEnterLines.Length == 6,
+                "First visit must retain four narrative and two Manwol teaching lines.");
+            for (int advance = 0; advance < firstDialogue.onEnterLines.Length; advance++)
                 nextButton.onClick.Invoke();
 
             Require(nextButton.gameObject.activeSelf && brewButton.gameObject.activeSelf,
@@ -459,6 +462,10 @@ public static class SURLHWALittlePrinceNarrativePlayModeValidation
 
         public static void CaptureToSessionState()
         {
+            SessionState.SetBool(SnapshotPrefix + "HadKnowledge", RecipeProgressPersistence.HasRecipeKnowledge());
+            SessionState.SetString(SnapshotPrefix + "Knowledge", RecipeProgressPersistence.LoadRecipeKnowledgeRaw());
+            SessionState.SetBool(SnapshotPrefix + "HadLegacy", RecipeProgressPersistence.HasLegacyUnlockedRecipeIds());
+            SessionState.SetString(SnapshotPrefix + "Legacy", RecipeProgressPersistence.LoadLegacyUnlockedRecipeIdsRaw());
             SessionState.SetBool(SnapshotPrefix + "HadFirst", LittlePrinceVisitPersistence.HasSavedFirstVisitState());
             SessionState.SetBool(SnapshotPrefix + "First", LittlePrinceVisitPersistence.IsFirstVisitCompleted());
             SessionState.SetBool(SnapshotPrefix + "HadFollowup", LittlePrinceVisitPersistence.HasSavedFollowupVisitState());
@@ -469,6 +476,19 @@ public static class SURLHWALittlePrinceNarrativePlayModeValidation
 
         public static void RestoreFromSessionState()
         {
+            if (SessionState.GetBool(SnapshotPrefix + "HadKnowledge", false))
+                RecipeProgressPersistence.SaveRecipeKnowledgeRaw(SessionState.GetString(SnapshotPrefix + "Knowledge", string.Empty));
+            else
+                RecipeProgressPersistence.ClearRecipeKnowledge();
+            if (SessionState.GetBool(SnapshotPrefix + "HadLegacy", false))
+                RecipeProgressPersistence.SaveUnlockedRecipeIdsRaw(SessionState.GetString(SnapshotPrefix + "Legacy", string.Empty));
+            else
+                RecipeProgressPersistence.ClearLegacyUnlockedRecipeIds();
+            SessionState.EraseBool(SnapshotPrefix + "HadKnowledge");
+            SessionState.EraseString(SnapshotPrefix + "Knowledge");
+            SessionState.EraseBool(SnapshotPrefix + "HadLegacy");
+            SessionState.EraseString(SnapshotPrefix + "Legacy");
+
             RestoreVisit(
                 SessionState.GetBool(SnapshotPrefix + "HadFirst", false),
                 SessionState.GetBool(SnapshotPrefix + "First", false),

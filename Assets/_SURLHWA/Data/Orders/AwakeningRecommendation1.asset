@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: AwakeningRecommendation1
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "내일은 한동안 미뤄 둔 길을 걸어 보려고요. 처음 문을 열 때처럼 산뜻하게 시작할 수 있는 맛이 있을까요?"
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 02000000
+  preBrewDialogue: {fileID: 11400000, guid: aa0f06426e764affbcf89919728ae80c, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: BitternessRecommendation2
+  m_EditorClassIdentifier: Assembly-CSharp::OrderData
+  orderName: "끝난 이야기를 자꾸 고쳐 쓰게 되네요. 달게 덮어 주기보다는 남은 여운을 함께 마실 수 있는 잔이 필요해요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 04000000
+  preBrewDialogue: {fileID: 11400000, guid: c50f622621be464e87dcd37def6600bb, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
