@@ -1920,3 +1920,65 @@ Final log/source audit identified a real transition gap: each method prefab alre
 The existing coordinator now disables the finishing prefab's listener and restores the captured Bar listener synchronously in its accepted-result callback. Camera restoration, result finalization, cleanup/failure handling and gameplay ownership still wait on the existing lifecycle. Audio playback stays owned by DemoAudioController.
 
 Validation: 0 compile errors; Logs/production-audio-listener.log passes exactly one active listener before/during/after preparation and on every observed asynchronous cleanup frame, together with the previous volume/mute, reset isolation, actual pour playback, Guide/settings pause, Shake input resume and unload checks. The prior missing-listener warnings are absent. This is output-path continuity evidence, not approval of the audible mix or device-specific playback quality.
+
+
+## J FINAL — Technical Closure and Windows Review Delivery (2026-09-28)
+
+This entry supersedes earlier implementation-status summaries, not historical findings. Repository evidence was checked against the project vision, canonical gameplay/bartending contracts, current sources, authored data, scenes/prefabs and executed validators. Owner decisions remain authoritative: all three Prince services must succeed for open farewell; any wrong drink, failed technique or unsatisfied required preparation leaves quiet farewell. Later visits interpret their authored requests rather than repeating a fixed Manwol password. Statue presentation is for later; only eligibility is persisted here. Temporary quiet winter-bar character, environment and audio drafts were expressly authorized, with final aesthetic approval retained by the owner.
+
+### Reconstructed phase state
+
+| Phase | Current state | Evidence / remaining boundary |
+|---|---|---|
+| J1 coherent demo flow | COMPLETE | Real 5 / 4 / 4 / 4 flow, entry/reset/Continue, correct night totals and terminal Demo Complete. |
+| J2 / J2.1 selected data | COMPLETE | Six selected cocktails, exact ingredient identities, technical preparation and staged supply; reserve compatibility preserved. |
+| J3A / J3 Recommendation | COMPLETE | Authored requests/FIT responses, all-method access and learned/supplied alternatives exercised across complete runs. |
+| J4 discovery | COMPLETE | Authored quantities/preparation precede required attempts; actual matching learns recipes; required failures retry safely. |
+| J5 Prince | COMPLETE | All eight service histories validated; full open/quiet runtime routes, sticky failure, choice recall and future statue eligibility. |
+| J6 presentation integration | IMPLEMENTED_WITH_VALIDATION_DEBT | Cocktail/character/backdrop drafts, Korean font, ml-first quantities, scrollable knowledge projection and focused scene/prefab fixes; physical display/input checks remain. Final aesthetic judgment is HUMAN_SIGNOFF_REQUIRED. |
+| J7 audio/environment | HUMAN_SIGNOFF_REQUIRED | Objective playback, settings, read-pause and listener continuity pass. Owner must approve audible mix and winter-bar mood. |
+| J8 integrated slice | IMPLEMENTED_WITH_VALIDATION_DEBT | Two complete production-input-seam runs; physical mouse/keyboard four-night run remains unobserved. |
+| J9 release regression | IMPLEMENTED_WITH_VALIDATION_DEBT | Save/reset/legacy/invalid cases, modal timing, references, compilation and runtime regressions pass; target-device feel/performance checks remain. |
+| J FINAL delivery | IMPLEMENTED_WITH_VALIDATION_DEBT | Windows build, bootstrap smoke checks, controls/limits, draft provenance and representative rendered images delivered. Public-release attribution and final owner acceptance are outstanding; portfolio video is deferred presentation. |
+
+No remaining bounded objective implementation phase is NOT_STARTED. No known objective production blocker remains from this audit. This is technical closure with explicit validation debt, not an assertion that every roadmap acceptance criterion or subjective release approval is complete.
+
+### Final repository-wide classification
+
+Each item below has exactly one final classification; separate technical prerequisites and subjective judgments are separate items.
+
+| Item | Classification | Finding |
+|---|---|---|
+| Four-night lifecycle, 17 encounter structure, results and endpoint | PASS | Two fresh complete 5/4/4/4 runs; completed Continue does not create Day 5. |
+| Fair recipe discovery and knowledge | PASS | Actual clues, attempts and recognition; mandatory Negroni preparation failure retries the same guest; independent Manwol recovery protects later progression. No day/supply/catalog auto-Known shortcut. |
+| Ingredient supply, method access and Recommendation reachability | PASS | Known and supplied alternatives on live shelves; Seolya/Manhattan, Negroni/Manhattan, Manwol/Gin Fizz choices and learned Dry Martini exercised through production routes. |
+| Exact requests and FIT authority | PASS | Exact identity remains distinct from emotional suitability; route templates do not select the recognized drink or single emotional answer. |
+| Prince visits and closure | PASS | Three successful services open farewell; any failed visit remains quiet through reload/recovery. Technique failure cannot be rescued by suitable FIT. Reading completion precedes departure. |
+| Persistence, New Game, Continue, malformed/legacy compatibility | PASS | Existing gameplay identities/keys remain intact; additive outcomes/settings, reset isolation and night-boundary reload checks pass. |
+| Bartending and selected cocktail data | PASS | Actual liquid/container/preparation/layer state feeds recognition; all four methods and six selected data contracts remain valid. |
+| Architecture and serialized references | PASS | Ingredient, cocktail, recipe, catalog, knowledge, supply, recognition, FIT and runtime-state authorities remain separate. Both build scenes and dependent prefabs have no missing scripts. Intended scene/prefab diffs were reviewed in each bounded phase. |
+| Korean text, recipe scroll, Guide/settings and audio integration | PASS | Fallback glyphs/rendered layouts inspected; real scroll controls, pause-safe Shake, actual playback/volume/mute and continuous single listener checked. |
+| Compilation, automated regression and Windows bootstrap | PASS | Evidence below. No Unity license blockage prevented these runs. |
+| Physical mouse/keyboard four-night standalone run, real-display click targets/resolutions, target-hardware performance | VALIDATION_DEBT | Input-seam automation and offscreen captures cannot certify these cases. Standalone checks cover startup only. |
+| Final dialogue tone, emotional impact, control feel, pacing, art/pose/composition, readable visual hierarchy and audible mix | HUMAN_SIGNOFF_REQUIRED | Drafts are integrated and reviewable; no final subjective PASS is given. |
+| Pre-existing artwork provenance/permissions and final public-release credits | HUMAN_SIGNOFF_REQUIRED | CREDITS.md states known sources and owner checks without inventing authorship or clearance. |
+| Dedicated seated poses/animation, bespoke ingredient icons, refined glass/garnish art, further bar dressing/memory display, future Prince statue and portfolio video | DEFERRED_PRESENTATION | Functional labels and draft presentation exist; these are not needed to repair a known progression defect. |
+| Later nights/chapters, expanded reserve production, broad quest/economy/collection systems, exact dialogue/liquid quicksave, other platforms/aspect ratios | OUT_OF_SCOPE | Bounded four-night scope and existing persistence model retained. |
+| Optional Unity Pipeline runtime command/hot-reload server and existing non-blocking compiler warnings | OUT_OF_SCOPE | Build warning is from com.unity.pipeline, not URP failure. Runtime server remains disabled. Existing warning cleanup is separate from this bounded release. |
+
+### Executed validation and artifact
+
+- Final dotnet build Assembly-CSharp-Editor.csproj --no-restore: PASS, 0 errors, 8 existing warnings (one assembly-reference warning and seven existing J4 comparison warnings).
+- Logs/production-windows-build.log: full I10-I16 and J1-J5 production regression PASS, selected cocktail/character references PASS, both enabled scenes and prefab dependency missing-script checks PASS; Unity batch exit 0.
+- Logs/production-final-four-night.log: two complete production runs PASS, 34 natural departures plus one mandatory discovery retry; actual liquid, technique, preparation, recognition, discovery, reachable alternatives, choice/history, reload/Continue and no Day 5. Input seams/UI callbacks are automated; this is not OS-level input evidence.
+- Logs/production-audio-listener.log: final focused playback/settings/scroll/pause/Shake/unload checks PASS, exactly one active listener throughout observed cleanup frames, no missing-listener warnings. Its Known Gin Fizz setup is a restored presentation fixture, not discovery proof.
+- Logs/production-bar-review.log: current first-guest dialogue, Stir, Guide and departure review PASS, including cursor-orbit bounds. This shortened check does not replace the full-route evidence.
+- Windows x64 build PASS at Builds/Windows/SURLHWA.exe, Unity 6000.3.7f1, reported player size 227590366 bytes. Runtime source corresponds to 6d86c5f; the following delivery commit adds only Editor build tooling and documentation.
+- One build warning: optional Unity Pipeline RuntimePipelineConfig is absent, so its command/hot-reload server is disabled in Player. Inspected local package source confirms this is unrelated to the rendering pipeline; no runtime server was enabled to silence it.
+- Logs/production-player-smoke.log and Logs/production-player-graphics-smoke.log: separate 12-second headless and Direct3D 11 standalone startup checks. Engine, scene managers and input initialize; no exception/error appears in either player log. D3D11 uses the local RTX 3070. Only each verified test process was stopped; no New Game or gameplay input was sent. This does not prove a complete standalone playthrough or graceful user-exit behavior.
+- Build folder includes controls, limitations, credits/font notices and six representative offscreen review images. Exact generation prompts remain in the draft-art/audio records. Keep the entire player folder together.
+- Build-generated shader caches, global runtime cache lists and local build-setting churn were inspected and restored; generated font whitespace was normalized. No unrelated ProjectSettings/UserSettings change is included. Build products, logs and local Editor files remain ignored.
+
+### Owner review handoff
+
+Use Docs/RELEASE_REVIEW.md for the physical playtest. Prioritize one fresh complete run, required-discovery failure/retry, alternate Recommendation drinks/methods, one failed Prince service versus all-three success, reading/settings pauses, night Continue/completed Continue/reset, then 1280x720 and 1920x1080 readability and audible mix. The existing untracked .codex/ and root AGENTS.md are preserved outside this work's commits. No push or publication is performed. Final finished-game/public-release approval remains with the owner.
