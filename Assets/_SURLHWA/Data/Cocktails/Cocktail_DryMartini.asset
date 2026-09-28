@@ -17,4 +17,4 @@ MonoBehaviour:
   glassware: 1
   description: "맑고 차분한 향이 잔잔히 남는 한 잔. 복잡한 생각을 잠시 가라앉히고 싶을 때 어울린다."
   emotionTags: 06000000
-  cocktailSprite: {fileID: 0}
+  cocktailSprite: {fileID: 21300000, guid: d0320e6e00eb4af8aa03007be5404629, type: 3}

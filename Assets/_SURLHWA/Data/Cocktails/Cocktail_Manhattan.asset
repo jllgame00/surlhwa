@@ -17,4 +17,4 @@ MonoBehaviour:
   glassware: 1
   description: "따뜻한 결 사이로 쌉싸름한 향이 또렷이 남는 한 잔. 천천히 생각을 정리하고 싶은 밤에 어울린다."
   emotionTags: 0700000004000000
-  cocktailSprite: {fileID: 0}
+  cocktailSprite: {fileID: 21300000, guid: b247816631564e9d8c09eb95c6c09aa7, type: 3}

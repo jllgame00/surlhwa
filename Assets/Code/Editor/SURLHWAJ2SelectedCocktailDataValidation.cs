@@ -438,12 +438,58 @@ public static class SURLHWAJ2SelectedCocktailDataValidation
         Require(seolya.cocktailSprite != null && manwol.cocktailSprite != null,
             "Seolya and Manwol must retain their existing assigned presentation art.");
 
-        foreach (SelectedCocktailSpec spec in SelectedCocktails.Skip(2))
+        // Owner-authorized illustration drafts supersede J2's temporary null-art
+        // expectation. Assignment is technical coverage, not final art sign-off.
+        foreach (string name in new[]
+                 {
+                     "DryMartini", "Negroni", "Manhattan", "GinFizz",
+                     "HankyPanky", "French75", "LastWord"
+                 })
         {
-            CocktailData cocktail = LoadRequired<CocktailData>(spec.CocktailPath);
-            Require(cocktail.cocktailSprite == null,
-                spec.Label + " must not be presented as if missing final art were complete.");
+            string path = "Assets/_SURLHWA/Art/Cocktails/" + name + "-Draft.png";
+            CocktailData cocktail = LoadRequired<CocktailData>(
+                "Assets/_SURLHWA/Data/Cocktails/Cocktail_" + name + ".asset");
+            Sprite sprite = LoadRequired<Sprite>(path);
+            Require(cocktail.cocktailSprite == sprite,
+                name + " must reference its own illustration through CocktailData.");
+
+            TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            Require(importer != null && importer.textureType == TextureImporterType.Sprite &&
+                    importer.spriteImportMode == SpriteImportMode.Single &&
+                    importer.alphaIsTransparency && !importer.mipmapEnabled,
+                name + " draft must import as a single transparent UI sprite without mipmaps.");
+
+            Texture2D source = new(2, 2, TextureFormat.RGBA32, false);
+            try
+            {
+                Require(ImageConversion.LoadImage(source, System.IO.File.ReadAllBytes(path)),
+                    name + " draft PNG cannot be decoded.");
+                Require(source.width == source.height && source.width >= 1024,
+                    name + " draft must retain its full-resolution square canvas.");
+                Color32[] pixels = source.GetPixels32();
+                Require(pixels.Any(pixel => pixel.a == 0) && pixels.Any(pixel => pixel.a > 0),
+                    name + " draft needs actual transparent background and visible artwork.");
+                Require(pixels[0].a == 0 && pixels[source.width - 1].a == 0 &&
+                        pixels[pixels.Length - source.width].a == 0 &&
+                        pixels[pixels.Length - 1].a == 0,
+                    name + " draft must have transparent canvas corners.");
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(source);
+            }
         }
+
+        foreach (string guid in AssetDatabase.FindAssets(
+                     "t:CocktailData", new[] { "Assets/_SURLHWA/Data/Cocktails" }))
+        {
+            CocktailData cocktail = LoadRequired<CocktailData>(AssetDatabase.GUIDToAssetPath(guid));
+            Require(cocktail.cocktailSprite != null,
+                cocktail.cocktailId + " has no assigned illustration.");
+        }
+
+        Debug.Log("[Cocktail Art Validation] PASS: seven draft sprites, PNG alpha, import settings, " +
+                  "and all existing cocktail art references. Artistic approval remains human-owned.");
     }
 
     private static void ValidatePlayerFacingDescription(string description, string label)

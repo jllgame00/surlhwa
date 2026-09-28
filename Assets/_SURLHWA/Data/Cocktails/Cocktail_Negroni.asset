@@ -17,4 +17,4 @@ MonoBehaviour:
   glassware: 2
   description: "쓴맛과 향긋한 단맛이 천천히 겹쳐지는 한 잔. 짙은 여운을 조용히 음미하고 싶을 때 어울린다."
   emotionTags: 04000000
-  cocktailSprite: {fileID: 0}
+  cocktailSprite: {fileID: 21300000, guid: 564fbd1ff3084496aa5530e966c0e39b, type: 3}

@@ -17,4 +17,4 @@ MonoBehaviour:
   glassware: 3
   description: "상큼한 거품과 가벼운 탄산이 기분을 깨우는 한 잔. 맑은 숨을 고르고 다시 움직이고 싶을 때 어울린다."
   emotionTags: 0200000006000000
-  cocktailSprite: {fileID: 0}
+  cocktailSprite: {fileID: 21300000, guid: 9c84c461f89c40978d200a5c7b9d4a96, type: 3}

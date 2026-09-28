@@ -1729,3 +1729,52 @@ J3/J8/J9 normal-input four-night discovery/choice/save/reload and packaged
 build acceptance remain VALIDATION_DEBT. Broader ACTs, reserve cocktail
 production and generalized collection systems remain OUT_OF_SCOPE.
 Technical production closure is not yet declared.
+
+
+## J6 Cocktail Illustration Draft Integration (2026-09-28)
+
+The owner approved generating and inserting drafts for the other cocktails using
+existing Seolya/Manwol art as the style reference. This covers all seven previously
+unassigned cocktails: Dry Martini, Negroni, Manhattan, Gin Fizz, Hanky Panky,
+French 75 and Last Word. The latter three receive reserve presentation assets
+only; selected production membership, supply, requests and discovery are unchanged.
+The four existing cocktail illustrations remain intact. All eleven existing
+CocktailData assets now resolve an illustration.
+
+Seven original generated PNGs and single-sprite import metadata are added under
+`Assets/_SURLHWA/Art/Cocktails/`, with exactly one `cocktailSprite` reference change
+per corresponding CocktailData. CocktailData remains the art authority; no stable
+identity, recipe, persistence, scene, prefab or runtime UI logic changes occur.
+The Codex card/detail still hides artwork for Unknown/Partial knowledge, and the
+unlock popup still reads the recognized recipe's target CocktailData. That gate
+was inspected in source; no new normal-play UI observation is claimed here.
+
+The historical J2 null-art assertion represented the previous missing-art state.
+It is superseded by owner-authorized draft assignment checks: each of seven
+CocktailData assets must resolve its own sprite, PNG data must decode with genuine
+alpha and transparent corners, and import settings must retain single transparent
+UI sprites without mipmaps. All eleven cocktail references are checked. Existing
+identity, preparation, supply, reserve-exclusion and compatibility assertions remain.
+
+Validation:
+
+- `dotnet build Assembly-CSharp-Editor.csproj --no-restore`: PASS, zero errors,
+  the same eight pre-existing warnings.
+- Unity 6000.3.7f1 `SURLHWAJ2SelectedCocktailDataValidation.Run`: PASS, including
+  the seven PNG alpha/import/reference checks and existing J2/J2.1 data checks.
+  Local ignored log: `Logs/production-cocktail-art.log`; successful batch exit 0.
+- Inspected all seven generated images for whole-glass framing, intended vessel,
+  liquid and garnish, and absence of unwanted labels/background decoration.
+  This is a draft asset inspection, not owner approval of final art direction.
+- Serialized asset diffs are limited to seven sprite references; no scene/prefab
+  changes. `git diff --check` passes. New GUIDs apply only to new sprite assets.
+
+Exact prompts, tool provenance, asset paths and review notes are recorded in
+`Docs/COCKTAIL_ART_DRAFTS.md`. Generated assets were copied without pixel editing.
+
+Status: cocktail art integration PASS; final style consistency, small-card
+readability and actual Codex/popup composition are HUMAN_SIGNOFF_REQUIRED.
+J6 as a whole remains PARTIAL: ingredient and character presentation are still
+open. Audio selection/integration and full normal-input four-night/build acceptance
+remain outstanding as previously recorded. No final game-readiness or technical
+production-closure claim is made by this art-only phase.

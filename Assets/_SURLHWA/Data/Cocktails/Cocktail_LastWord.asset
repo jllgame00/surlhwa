@@ -17,4 +17,4 @@ MonoBehaviour:
   glassware: 1
   description: 'Official IBA validation recipe: equal 22.5 ml shaken measures.'
   emotionTags: 
-  cocktailSprite: {fileID: 0}
+  cocktailSprite: {fileID: 21300000, guid: 0d445a9b8a854c4cb063d332a2e329ff, type: 3}
