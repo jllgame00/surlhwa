@@ -116,6 +116,28 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             }
             Require(observedPartial && shelf.Jigger.CurrentLiquidVolumeMl == 0f, "Transfer must visibly empty over frames.");
             Require(shelf.ToolsReady, "Tools remained locked after return.");
+            if (method != "Build")
+            {
+                var source = shelf.TargetContainer;
+                source.TryAddIce();
+                bool complete = false;
+                Require(shelf.BeginPhysicalContainerTransfer(method == "Stir" ? RecipePreparationAction.Strain :
+                    RecipePreparationAction.PourFromContainer, _ => complete = true), "Working transfer rejected.");
+                // A repeated click must not start another operation.
+                Require(!shelf.BeginPhysicalContainerTransfer(RecipePreparationAction.Strain, _ => { }), "Concurrent transfer accepted.");
+                while (shelf.PhysicalTransferActive)
+                {
+                    Require(Mathf.Abs(source.CurrentLiquidVolumeMl + shelf.ServingGlass.CurrentLiquidVolumeMl - 72.5f) < .003f,
+                        "Working transfer lost/duplicated liquid.");
+                    Require(source.HasIce && !shelf.ServingGlass.HasIce, "Liquid transfer moved/duplicated ice.");
+                    yield return null;
+                }
+                Require(complete && source.CurrentLiquidVolumeMl == 0f && shelf.TargetContainer == shelf.ServingGlass,
+                    "Transfer did not complete in the final glass.");
+                Require(shelf.PreparationTrace.Actions[shelf.PreparationTrace.Actions.Count - 1].Action ==
+                    (method == "Stir" ? RecipePreparationAction.Strain : RecipePreparationAction.PourFromContainer),
+                    "Transfer trace did not preserve action semantics.");
+            }
             Debug.Log("[Phase K Play Mode] " + method + " physical bottle/measure/transfer PASS.");
             Destroy(root);
             yield return null;

@@ -277,6 +277,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             return;
         }
 
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+        {
+            ingredientShelf.BeginPhysicalContainerTransfer(RecipePreparationAction.Strain, FinishPhysicalStrain);
+            return;
+        }
         if (ingredientShelf == null ||
             !ingredientShelf.TryStrainActiveTargetToServingGlass(out float transferredMl))
         {
@@ -284,6 +289,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             return;
         }
 
+        FinishPhysicalStrain(transferredMl);
+    }
+
+    private void FinishPhysicalStrain(float transferredMl)
+    {
         state = State.AwaitingGarnish;
 
         ingredientShelf.SetVisible(false);
@@ -699,7 +709,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         // Mixing Glass after the actual liquid has been strained out of it.
         garnishController.Initialize(
             ingredientShelf != null ? ingredientShelf.ServingGlass : null,
-            null,
+            ingredientShelf?.PhysicalPresentation?.GetVessel(ingredientShelf.ServingGlass),
             hintText,
             ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
         garnishController.SetExpectedRecipe(expectedRecipe);

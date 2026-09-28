@@ -19,6 +19,7 @@ public class IngredientShelfController : MonoBehaviour
     [Header("Physical tools — HUMAN_TUNING_LATER")]
     [SerializeField, Min(1f)] private float jiggerCapacityMl = 60f;
     [SerializeField, Min(1f)] private float jiggerTransferMlPerSecond = 90f;
+    [SerializeField, Min(1f)] private float containerTransferMlPerSecond = 120f;
 
     private MiniGameType currentMethod;
     private IngredientData selectedIngredient;
@@ -393,8 +394,46 @@ public class IngredientShelfController : MonoBehaviour
         if (PhysicalTransferActive || !HasPendingMeasurement || physicalPresentation == null ||
             !physicalPresentation.IsResting) return false;
         PhysicalTransferActive = true;
-        StartCoroutine(TransferMeasurement());
+        physicalPresentation.StartCoroutine(TransferMeasurement());
         return true;
+    }
+
+    public bool BeginPhysicalContainerTransfer(RecipePreparationAction action, Action<float> completed)
+    {
+        if (!ToolsReady || physicalPresentation == null || targetContainer == null ||
+            targetContainer.CurrentLiquidVolumeMl <= 0f ||
+            (targetContainer.ContainerType != BartendingContainerType.MixingGlass &&
+             targetContainer.ContainerType != BartendingContainerType.Shaker) ||
+            (action != RecipePreparationAction.Strain && action != RecipePreparationAction.PourFromContainer))
+            return false;
+        EndSelectedPour();
+        PhysicalTransferActive = true;
+        physicalPresentation.StartCoroutine(TransferWorkingContainer(action, completed));
+        return true;
+    }
+
+    private IEnumerator TransferWorkingContainer(RecipePreparationAction action, Action<float> completed)
+    {
+        var source = targetContainer;
+        var target = ServingGlass;
+        yield return physicalPresentation.MoveContainerToPour(source, target);
+        float moved = 0f;
+        while (source.CurrentLiquidVolumeMl > 0f)
+        {
+            if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+            { yield return null; continue; }
+            float accepted = source.TransferLiquidTo(target, containerTransferMlPerSecond * Time.deltaTime);
+            moved += accepted;
+            physicalPresentation.ObserveContainerTransfer(accepted);
+            yield return null;
+        }
+        preparationTrace.Record(action, null, moved, source.ContainerType, target.ContainerType);
+        yield return physicalPresentation.ReturnContainer();
+        preparationState.TrySetActiveTarget(BartendingContainerType.ServingGlass);
+        targetContainer = preparationState.ActiveTarget;
+        RefreshContents();
+        PhysicalTransferActive = false;
+        completed?.Invoke(moved);
     }
 
     private IEnumerator TransferMeasurement()

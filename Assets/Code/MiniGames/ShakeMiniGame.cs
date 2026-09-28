@@ -350,6 +350,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+        {
+            ingredientShelf.BeginPhysicalContainerTransfer(RecipePreparationAction.Strain, FinishPhysicalStrain);
+            return;
+        }
         if (ingredientShelf == null ||
             !ingredientShelf.TryStrainActiveTargetToServingGlass(out float transferredMl))
         {
@@ -357,6 +362,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
+        FinishPhysicalStrain(transferredMl);
+    }
+
+    private void FinishPhysicalStrain(float transferredMl)
+    {
         state = State.AwaitingGarnish;
 
         ingredientShelf.SetVisible(true);
@@ -384,6 +394,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
+        if (ingredientShelf != null && ingredientShelf.PhysicalPresentation != null)
+        {
+            ingredientShelf.BeginPhysicalContainerTransfer(RecipePreparationAction.PourFromContainer, FinishPhysicalPourFromContainer);
+            return;
+        }
         if (ingredientShelf == null ||
             !ingredientShelf.TryPourActiveTargetToServingGlass(out float transferredMl))
         {
@@ -391,6 +406,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
+        FinishPhysicalPourFromContainer(transferredMl);
+    }
+
+    private void FinishPhysicalPourFromContainer(float transferredMl)
+    {
         state = State.AwaitingGarnish;
         ingredientShelf.SetVisible(true);
         garnishController?.BeginSelection();
@@ -1008,7 +1028,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         // than showing a strained drink's garnish on the source Shaker.
         garnishController.Initialize(
             ingredientShelf != null ? ingredientShelf.ServingGlass : null,
-            null,
+            ingredientShelf?.PhysicalPresentation?.GetVessel(ingredientShelf.ServingGlass),
             hintText,
             ingredientShelf != null ? ingredientShelf.PreparationTrace : null);
         garnishController.SetExpectedRecipe(expectedRecipe);

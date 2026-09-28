@@ -93,3 +93,21 @@ Jigger and tools returning (`Logs/phase-k3-playmode.log`). Programmatic inputs;
 not human gameplay. Integrated existing campaign/bartending regressions PASS
 (`Logs/phase-k3-regression.log`, exit 0). Dotnet PASS, 0 errors, 8 existing
 warnings (`Logs/phase-k3-dotnet.log`). No prefab/scene/content/save edits.
+
+## K4 — Working-container transfer
+
+Stir/Shake production transfer buttons now orchestrate movement and tilt,
+then progressive authoritative liquid transfer, stream, upright return and
+only then the garnish/serve stage. Strain and PourFromContainer retain their
+distinct trace actions and existing liquid-only semantics. The same pose path
+serves Jigger transfers. Motion runs on the method root while the shelf panel
+is hidden. Mixing Glass front/back now move together. Garnish binds the actual
+destination visual instead of creating a second placeholder glass.
+
+Dotnet PASS (0 errors, existing warnings). Focused Play Mode PASS
+(`Logs/phase-k4-playmode.log`): source/destination conservation each frame,
+retained source ice/no destination duplication, duplicate-click rejection,
+correct final target and action trace for Strain and PourFromContainer. The
+shared campaign test driver now waits for these real asynchronous transfers;
+its assertions are unchanged. Full campaign replay follows K11. No serialized
+scene/prefab changes. Tool timing/art remain HUMAN_TUNING_LATER/DEFERRED_ART.

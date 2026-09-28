@@ -64,6 +64,9 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
             methodRoot.Find("UI/CupBack") as RectTransform, new Vector2(0f, 10f));
         Register(state.GetContainer(BartendingContainerType.Shaker),
             methodRoot.Find("UI/Shaker") as RectTransform, new Vector2(0f, 10f));
+        var front = methodRoot.Find("UI/CupFront");
+        if (front != null)
+            front.SetParent(GetVessel(state.GetContainer(BartendingContainerType.MixingGlass)), true);
         // Show only the method's working vessel plus its final destination.
         foreach (var pair in vessels)
             pair.Value.gameObject.SetActive(pair.Key.ContainerType == BartendingContainerType.ServingGlass ||
