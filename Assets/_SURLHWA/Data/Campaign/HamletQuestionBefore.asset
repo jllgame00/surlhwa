@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
   m_Name: HamletQuestionBefore
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   onEnterLines:
   - "햄릿: 시간이 멈춘 것 같군요."
   - "햄릿 앞의 빛만 차갑게 남는다. 그는 빈 잔 받침을 한 번 돌리고 원래대로 놓는다."

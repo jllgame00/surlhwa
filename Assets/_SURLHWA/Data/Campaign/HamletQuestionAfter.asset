@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
   m_Name: HamletQuestionAfter
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   onEnterLines:
   - "햄릿이 잔을 든다. 입술에 닿기 전에 다시 내려놓는다."
   - "햄릿: 지금 나가면 늦지 않을 텐데."

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
   m_Name: HamletStillnessOrder
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   orderName: "햄릿: 답을 주실 필요는 없습니다. 곁에 놓아 둘 수 있는, 맑거나 따뜻한 잔이면 됩니다."
   reputationReward: 1
   miniGameType: 2
@@ -19,7 +19,7 @@ MonoBehaviour:
   requestType: 1
   desiredEmotionTags: 0600000007000000
   preBrewDialogue: {fileID: 11400000, guid: e30e566322be453094977a06709422f9, type: 2}
-  recipeKnowledgeHintLine: 
+  recipeKnowledgeHintLine:
   recipeKnowledgeHintReveals: []
   requiresSuccessfulDiscovery: 0
-  discoveryRetryFeedback: 
+  discoveryRetryFeedback:

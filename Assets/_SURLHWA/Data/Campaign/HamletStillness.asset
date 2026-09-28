@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c8385e82e084ddf9f119ab6632271ed, type: 3}
   m_Name: HamletStillness
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   visit: 9
   guestName: "햄릿"
   order: {fileID: 11400000, guid: 7d72ee2667e54e5f8991f523ccad2ccb, type: 2}
