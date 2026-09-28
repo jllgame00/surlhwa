@@ -118,6 +118,9 @@ public class CustomerController : MonoBehaviour
     private bool isLittlePrinceFollowupNarrative;
     private bool isLittlePrinceClosingNarrative;
     private float serviceFeedbackDuration;
+    private CampaignEncounterData campaignEncounter;
+    private bool campaignServiceSucceeded;
+    public CampaignEncounterData CampaignEncounter => campaignEncounter;
     public int LittlePrinceVisitNumber => isLittlePrinceFirstVisitNarrative ? 1 :
         isLittlePrinceFollowupNarrative ? 2 : isLittlePrinceClosingNarrative ? 3 : 0;
     private float patienceDuration;
@@ -208,6 +211,13 @@ public class CustomerController : MonoBehaviour
 
         orderData = request;
         dialogueData = request.PreBrewDialogue;
+    }
+
+    public void ConfigureCampaignEncounter(CampaignEncounterData encounter)
+    {
+        campaignEncounter = encounter;
+        ConfigureDedicatedEncounter(encounter.order);
+        name = encounter.guestName;
     }
 
     /// <summary>
@@ -587,6 +597,7 @@ public class CustomerController : MonoBehaviour
     public void OnServedWithReaction(GuestServiceResult serviceResult, float feedbackDuration = 4.2f)
     {
         serviceFeedbackDuration = feedbackDuration;
+        campaignServiceSucceeded = LittlePrinceVisitPersistence.IsSuccessfulService(serviceResult);
         if (LittlePrinceVisitNumber > 0)
             LittlePrinceVisitPersistence.RecordServiceOutcome(LittlePrinceVisitNumber,
                 LittlePrinceVisitPersistence.IsSuccessfulService(serviceResult));
@@ -765,6 +776,20 @@ public class CustomerController : MonoBehaviour
                 Debug.LogError("[Customer] Closing visit requires its authored farewell and reading UI.");
                 yield break;
             }
+        }
+
+        if (campaignEncounter != null && campaignEncounter.afterService != null)
+        {
+            yield return new WaitForSeconds(Mathf.Max(0f, serviceFeedbackDuration - 4.2f));
+            string[] lines = campaignEncounter.GetDepartureLines(campaignServiceSucceeded);
+            if (interactionUI == null || lines.Length == 0)
+            {
+                Debug.LogError("[Customer] Campaign visit requires departure dialogue and reading UI.");
+                yield break;
+            }
+            bool read = false;
+            interactionUI.ShowDepartureDialogue(this, lines, () => read = true);
+            yield return new WaitUntil(() => read);
         }
 
         state = State.Leaving;

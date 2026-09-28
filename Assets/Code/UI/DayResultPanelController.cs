@@ -16,6 +16,8 @@ public class DayResultPanelController : MonoBehaviour
 
     private bool openingResult;
     private bool isDemoCompletionResult;
+    private string[] endingLines;
+    private int endingLineIndex;
     private const string NextNightButtonLabel = "다음 밤으로";
     private const string ReturnToTitleButtonLabel = "처음 화면으로";
     private const string NewRecipesRecordedPrefix = "오늘 기록한 칵테일";
@@ -102,6 +104,56 @@ public class DayResultPanelController : MonoBehaviour
             panelRoot.SetActive(true);
             openingResult = false;
         }
+    }
+
+    public void OpenCampaignEnding(DialogueData ending)
+    {
+        EnsurePanel();
+        BindButtons();
+        endingLines = ending != null ? ending.onEnterLines : null;
+        endingLineIndex = 0;
+        isDemoCompletionResult = true;
+        ConfigureDemoNavigationButton();
+        if (reputationText != null) reputationText.text = string.Empty;
+        if (unlockedRecipesText != null) unlockedRecipesText.text = string.Empty;
+        if (titleText != null) titleText.text = "불빛이 남은 자리";
+        panelRoot.SetActive(true);
+        if (CampaignProgressPersistence.EndingRead) ShowCampaignCoda();
+        else
+        {
+            if (endingLines == null || endingLines.Length == 0)
+            {
+                Debug.LogError("[Campaign] Missing authored ending.");
+                return;
+            }
+            restartButton.onClick.RemoveListener(ReturnToTitle);
+            restartButton.onClick.RemoveListener(NextEndingLine);
+            restartButton.onClick.AddListener(NextEndingLine);
+            SetButtonLabel(restartButton, "계속 읽기");
+            if (closeButton != null) closeButton.gameObject.SetActive(false);
+            if (customerCountText != null) customerCountText.text = endingLines[0];
+        }
+    }
+
+    private void NextEndingLine()
+    {
+        endingLineIndex++;
+        if (endingLineIndex < endingLines.Length)
+        {
+            if (customerCountText != null) customerCountText.text = endingLines[endingLineIndex];
+            return;
+        }
+        CampaignProgressPersistence.MarkEndingRead();
+        ShowCampaignCoda();
+    }
+
+    private void ShowCampaignCoda()
+    {
+        restartButton.onClick.RemoveListener(NextEndingLine);
+        ConfigureDemoNavigationButton();
+        if (customerCountText != null) customerCountText.text = "이야기는 이곳에 남아 있습니다.";
+        if (unlockedRecipesText != null) unlockedRecipesText.text = "잔을 닦고, 불빛을 남겨 둡니다.";
+        if (closeButton != null) closeButton.gameObject.SetActive(true);
     }
 
     public void Close()

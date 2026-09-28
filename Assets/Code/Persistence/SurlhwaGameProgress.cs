@@ -14,7 +14,8 @@ public static class SurlhwaGameProgress
                LittlePrinceVisitPersistence.HasSavedFollowupVisitState() ||
                LittlePrinceVisitPersistence.HasSavedClosureState() ||
                LittlePrinceNarrativePersistence.HasSavedChoice() ||
-               DemoCompletionPersistence.HasSavedDemoCompletionState();
+               DemoCompletionPersistence.HasSavedDemoCompletionState() ||
+               CampaignProgressPersistence.HasProgress;
     }
 
     /// <summary>
@@ -30,6 +31,7 @@ public static class SurlhwaGameProgress
         LittlePrinceVisitPersistence.ClearClosureProgress();
         LittlePrinceNarrativePersistence.ClearChoice();
         DemoCompletionPersistence.ClearDemoCompletion();
+        CampaignProgressPersistence.Clear();
         SurlhwaPlayerPrefsStore.Save();
     }
 }

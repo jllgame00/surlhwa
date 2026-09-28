@@ -72,6 +72,7 @@ public class CustomerSpawner : MonoBehaviour
     private bool activeCustomerIsLittlePrinceFollowupVisit;
     private bool activeCustomerIsLittlePrinceClosingVisit;
     private Coroutine spawnRoutine;
+    private CampaignEncounterData activeCampaignEncounter;
 
     private void Awake()
     {
@@ -111,6 +112,12 @@ public class CustomerSpawner : MonoBehaviour
 
     private void Start()
     {
+        if (businessDayManager != null && businessDayManager.HasCampaign &&
+            businessDayManager.CurrentDay >= CampaignData.FirstExtendedNight)
+        {
+            spawnedCount = businessDayManager.ServedCustomerCount;
+            servedCount = spawnedCount;
+        }
         if (autoStart && IsGameplaySessionStarted())
             SpawnNextCustomer();
     }
@@ -162,7 +169,10 @@ public class CustomerSpawner : MonoBehaviour
             return;
         }
 
-        GameObject prefabToSpawn = GetCustomerPrefabForNextSpawn();
+        CampaignEncounterData campaignEncounter = businessDayManager != null && businessDayManager.HasCampaign
+            ? businessDayManager.Campaign.GetEncounter(businessDayManager.CurrentDay, spawnedCount) : null;
+        GameObject prefabToSpawn = campaignEncounter != null && campaignEncounter.customerPrefab != null
+            ? campaignEncounter.customerPrefab : GetCustomerPrefabForNextSpawn();
         if (prefabToSpawn == null)
         {
             Debug.LogError("[CustomerSpawner] Selected customer prefab is null.");
@@ -192,9 +202,11 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         activeCustomer = customer;
-        OrderData authoredOrder = GetAuthoredOrderForNextSpawn();
+        activeCampaignEncounter = campaignEncounter;
+        OrderData authoredOrder = campaignEncounter != null ? campaignEncounter.order : GetAuthoredOrderForNextSpawn();
         if (authoredOrder != null)
             customer.ConfigureDedicatedEncounter(authoredOrder);
+        if (campaignEncounter != null) customer.ConfigureCampaignEncounter(campaignEncounter);
 
         activeCustomerIsLittlePrinceFirstVisit =
             prefabToSpawn == littlePrincePrefab && ShouldSpawnLittlePrinceFirstVisit();
@@ -214,7 +226,7 @@ public class CustomerSpawner : MonoBehaviour
         customer.SetLoopManager(this);
         bool requiresSuccessfulDiscovery = customer.TryGetDedicatedRequest(out OrderData activeOrder) &&
                                            activeOrder.RequiresSuccessfulDiscovery;
-        customer.SetUsesPatience(!IsTutorialSpawn() && !requiresSuccessfulDiscovery &&
+        customer.SetUsesPatience(campaignEncounter == null && !IsTutorialSpawn() && !requiresSuccessfulDiscovery &&
             !activeCustomerIsLittlePrinceFirstVisit && !activeCustomerIsLittlePrinceFollowupVisit &&
             !activeCustomerIsLittlePrinceClosingVisit);
         spawnedCount++;
@@ -230,8 +242,15 @@ public class CustomerSpawner : MonoBehaviour
 
     public void NotifyCustomerLeft(CustomerController customer)
     {
+        if (activeCustomer != customer) return;
         if (activeCustomer == customer)
         {
+            if (activeCampaignEncounter != null)
+            {
+                CampaignProgressPersistence.RecordDeparture(businessDayManager.CurrentDay,
+                    servedCount + 1, activeCampaignEncounter.visit);
+                activeCampaignEncounter = null;
+            }
             int visit = activeCustomerIsLittlePrinceFirstVisit ? 1 :
                 activeCustomerIsLittlePrinceFollowupVisit ? 2 : activeCustomerIsLittlePrinceClosingVisit ? 3 : 0;
             if (visit > 0 && LittlePrinceVisitPersistence.GetServiceOutcome(visit) == 0)

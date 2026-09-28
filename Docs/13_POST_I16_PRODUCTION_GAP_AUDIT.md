@@ -1982,3 +1982,8 @@ Each item below has exactly one final classification; separate technical prerequ
 ### Owner review handoff
 
 Use Docs/RELEASE_REVIEW.md for the physical playtest. Prioritize one fresh complete run, required-discovery failure/retry, alternate Recommendation drinks/methods, one failed Prince service versus all-three success, reading/settings pauses, night Continue/completed Continue/reset, then 1280x720 and 1920x1080 readability and audible mix. The existing untracked .codex/ and root AGENTS.md are preserved outside this work's commits. No push or publication is performed. Final finished-game/public-release approval remains with the owner.
+
+## C1 — Full Campaign Infrastructure (2026-09-28)
+
+The owner explicitly expanded scope beyond the completed four-night review demo. See Docs/16_FIRST_PASS_CAMPAIGN.md for the repository audit, bounded 18-night plan and authority decisions. Optional schedule data, departure checkpoints, post-service reading and ending-read infrastructure are implemented without activating unfinished content. Existing save IDs/formats remain intact. dotnet compile and Unity campaign persistence validation PASS; runtime full-route proof remains pending. No scene/prefab changes in C1. Historical demo closure above remains valid for its bounded scope.
+

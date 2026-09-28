@@ -452,6 +452,11 @@ public class InteractionUIController : MonoBehaviour
 
     public void ShowLittlePrinceFarewell(CustomerController customer, string[] lines, Action completed)
     {
+        ShowDepartureDialogue(customer, lines, completed);
+    }
+
+    public void ShowDepartureDialogue(CustomerController customer, string[] lines, Action completed)
+    {
         ResetPreRequestDialogue();
         activeCustomer = customer;
         farewellLines = lines;

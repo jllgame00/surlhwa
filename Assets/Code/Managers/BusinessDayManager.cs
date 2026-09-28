@@ -13,6 +13,8 @@ public class BusinessDayManager : MonoBehaviour
     [Tooltip("Customer targets for demo nights 1 through 4. Later content may tune these counts without changing day progression code.")]
     [SerializeField] private int[] demoCustomerCountsByDay = { 5, 4, 4, 4 };
     [SerializeField, Min(1)] private int demoNightCount = 4;
+    [Header("Campaign Extension (optional)")]
+    [SerializeField] private CampaignData campaign;
 
     private int servedCustomerCount;
     private bool dayEnded;
@@ -29,17 +31,28 @@ public class BusinessDayManager : MonoBehaviour
     // Unity reads that missing scalar as zero, so retain the intended J1
     // four-night default without requiring an unrelated scene rewrite.
     public int DemoNightCount => demoNightCount > 0 ? demoNightCount : DefaultDemoNightCount;
-    public bool IsDemoComplete => DemoCompletionPersistence.IsDemoComplete();
-    public bool IsConfiguredFinalDemoNight => CurrentDay >= DemoNightCount && !IsDemoComplete;
+    public CampaignData Campaign => campaign;
+    public bool HasCampaign => campaign != null && campaign.nights.Length > 0;
+    public bool IsDemoComplete => !HasCampaign && DemoCompletionPersistence.IsDemoComplete();
+    public bool IsConfiguredFinalDemoNight => !HasCampaign && CurrentDay >= DemoNightCount && !IsDemoComplete;
 
     private void Awake()
     {
         currentDay = Mathf.Max(1, BusinessDayPersistence.LoadCurrentDay(startingDay));
 
+        // A completed legacy demo continues after its authored four nights.
+        // Keep its completion key and Prince history; neither implies successful service.
+        if (HasCampaign && DemoCompletionPersistence.IsDemoComplete() && currentDay <= DemoNightCount)
+            currentDay = CampaignData.FirstExtendedNight;
+        if (HasCampaign && currentDay > campaign.FinalNight)
+            currentDay = CampaignData.FirstExtendedNight;
+        if (HasCampaign && currentDay >= CampaignData.FirstExtendedNight)
+            servedCustomerCount = CampaignProgressPersistence.LoadSlot(currentDay, MaxCustomersPerDay);
+
         // Existing saves from the former unbounded loop may already point past
         // the configured four-night demo. Treat them as completed rather than
         // reopening Day 5 or silently corrupting their saved day value.
-        if (currentDay > DemoNightCount && !DemoCompletionPersistence.IsDemoComplete())
+        if (!HasCampaign && currentDay > DemoNightCount && !DemoCompletionPersistence.IsDemoComplete())
             DemoCompletionPersistence.MarkDemoComplete();
 
         ResolveReferences();
@@ -47,7 +60,7 @@ public class BusinessDayManager : MonoBehaviour
 
     private void Start()
     {
-        if (DemoCompletionPersistence.IsDemoComplete())
+        if (IsDemoComplete)
         {
             dayEnded = true;
             ShowCompletedDemoState();
@@ -55,11 +68,13 @@ public class BusinessDayManager : MonoBehaviour
         }
 
         CaptureKnownRecipesAtNightStart();
+        if (HasCampaign && servedCustomerCount >= MaxCustomersPerDay)
+            EndDay();
     }
 
     public bool CanSpawnMoreCustomers()
     {
-        if (dayEnded || DemoCompletionPersistence.IsDemoComplete())
+        if (dayEnded || IsDemoComplete || (HasCampaign && CampaignProgressPersistence.EndingRead))
             return false;
 
         if (!endDayWhenMaxCustomersServed)
@@ -85,6 +100,13 @@ public class BusinessDayManager : MonoBehaviour
             return;
 
         dayEnded = true;
+        if (HasCampaign && CurrentDay == campaign.FinalNight)
+        {
+            ResolveReferences();
+            if (resultPanel == null) resultPanel = DayResultPanelController.CreateRuntimePanel();
+            resultPanel.OpenCampaignEnding(campaign.ending);
+            return;
+        }
         int completedNightCustomerTarget = MaxCustomersPerDay;
         bool completedDemo = IsConfiguredFinalDemoNight;
         if (completedDemo)
@@ -187,6 +209,8 @@ public class BusinessDayManager : MonoBehaviour
     private int GetCustomerTargetForDay(int day)
     {
         int normalizedDay = Mathf.Max(1, day);
+        CampaignNight night = HasCampaign ? campaign.GetNight(normalizedDay) : null;
+        if (night != null) return night.encounters.Length;
         if (demoCustomerCountsByDay != null && normalizedDay <= demoCustomerCountsByDay.Length)
             return Mathf.Max(1, demoCustomerCountsByDay[normalizedDay - 1]);
 
