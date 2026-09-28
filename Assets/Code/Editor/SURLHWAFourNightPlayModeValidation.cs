@@ -20,8 +20,13 @@ public static class SURLHWAFourNightPlayModeValidation
         EditorApplication.playModeStateChanged += Changed;
     }
     [MenuItem("SURLHWA/Validation/Run Four Night Production Play Mode")]
-    public static void Run()
+    public static void Run() => Start(false);
+    [MenuItem("SURLHWA/Validation/Render Production Entry Review")]
+    public static void RunReview() => Start(true);
+    internal static bool ReviewOnly => SessionState.GetBool(Prefix + "ReviewOnly", false);
+    private static void Start(bool reviewOnly)
     {
+        SessionState.SetBool(Prefix + "ReviewOnly", reviewOnly);
         Require(!EditorApplication.isPlayingOrWillChangePlaymode, "Exit Play Mode first.");
         foreach (string key in AllKeys())
         {
@@ -60,7 +65,7 @@ public static class SURLHWAFourNightPlayModeValidation
         else RecipeProgressPersistence.ClearLegacyUnlockedRecipeIds();
         SurlhwaPlayerPrefsStore.Save();
         int code = SessionState.GetBool(Prefix + "Success", false) ? 0 : 1;
-        foreach (string key in new[] { "HadKnowledge", "HadLegacy", "Pending", "Complete", "Success" }) SessionState.EraseBool(Prefix + key);
+        foreach (string key in new[] { "HadKnowledge", "HadLegacy", "Pending", "Complete", "Success", "ReviewOnly" }) SessionState.EraseBool(Prefix + key);
         SessionState.EraseString(Prefix + "Knowledge");
         SessionState.EraseString(Prefix + "Legacy");
         EditorApplication.Exit(code);
@@ -207,6 +212,25 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                         }
                         yield return Wait(() => Find<IngredientShelfController>() != null &&
                             Find<BartendingFlowCoordinator>().IsBartendingActive, "additive bartending entry");
+                        if (SURLHWAFourNightPlayModeValidation.ReviewOnly)
+                        {
+                            yield return null;
+                            var stirUi = Find<StirMiniGame>();
+                            var center = (RectTransform)Get(stirUi, "spoonInCup");
+                            var canvasRect = center.GetComponentInParent<Canvas>().GetComponent<RectTransform>();
+                            Vector2 pointerCenter = RectTransformUtility.WorldToScreenPoint(null, center.position);
+                            Require(RectTransformUtility.RectangleContainsScreenPoint(canvasRect, pointerCenter + Vector2.up * 100f) &&
+                                RectTransformUtility.RectangleContainsScreenPoint(canvasRect, pointerCenter - Vector2.up * 100f),
+                                "Stir cursor orbit lies outside the visible canvas.");
+                            SURLHWAReviewCapture.Save("stir-preparation", 1280, 720);
+                            var guide = Find<RecipeGuidePanelController>();
+                            ClickField(guide, "openButton");
+                            var cards = (List<Button>)Get(guide, "spawnedButtons");
+                            foreach (var card in cards) if (card.GetComponentInChildren<TMP_Text>().text == "설야") { Click(card); break; }
+                            yield return null;
+                            SURLHWAReviewCapture.Save("stir-guide", 1280, 720);
+                            ClickField(guide, "closeButton");
+                        }
                         yield return ExecuteDrink(recipe, failPrince, retry && attempt == 0);
                         yield return Wait(() => !Find<BartendingFlowCoordinator>().IsBartendingActive,
                             "actual result and additive unload");
@@ -219,6 +243,12 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                     }
                     yield return Wait(() => guest == null, "feedback and natural departure");
                     Require(day.ServedCustomerCount == slot, "Departure count mismatch.");
+                    if (SURLHWAFourNightPlayModeValidation.ReviewOnly)
+                    {
+                        Debug.Log("[Presentation Review] PASS: current production entry, dialogue and first bartending/departure route. This shortened run does not replace Four Night validation.");
+                        Finish(true);
+                        yield break;
+                    }
                     if (!failPrince)
                         Require(Find<RecipeUnlockManager>().IsKnown(recipe), "Actual service did not retain recipe knowledge.");
                     if (night == 2 && slot == 1)

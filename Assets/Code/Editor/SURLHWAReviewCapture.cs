@@ -24,6 +24,7 @@ internal static class SURLHWAReviewCapture
             if (canvas.isRootCanvas && canvas.renderMode == RenderMode.ScreenSpaceOverlay) canvases.Add(canvas);
         var previousCameras = new List<Camera>();
         var previousDistances = new List<float>();
+        var previousOrders = new List<int>();
         var target = RenderTexture.GetTemporary(width, height, 24);
         RenderTexture previousActive = RenderTexture.active;
         RenderTexture previousTarget = camera.targetTexture;
@@ -37,11 +38,16 @@ internal static class SURLHWAReviewCapture
             {
                 previousCameras.Add(canvas.worldCamera);
                 previousDistances.Add(canvas.planeDistance);
+                previousOrders.Add(canvas.sortingOrder);
+                canvas.sortingOrder += 10000; // Overlay UI must remain above world sprites in the temporary camera projection.
                 canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.worldCamera = camera;
                 canvas.planeDistance = camera.nearClipPlane + 1f;
             }
             Canvas.ForceUpdateCanvases();
+            foreach (var text in UnityEngine.Object.FindObjectsByType<TMPro.TMP_Text>(FindObjectsSortMode.None)) text.ForceMeshUpdate();
+            Canvas.ForceUpdateCanvases();
+            foreach (var mask in UnityEngine.Object.FindObjectsByType<UnityEngine.UI.RectMask2D>(FindObjectsSortMode.None)) mask.PerformClipping();
             camera.Render();
             RenderTexture.active = target;
             image = new Texture2D(width, height, TextureFormat.RGB24, false);
@@ -58,6 +64,7 @@ internal static class SURLHWAReviewCapture
                 canvases[i].renderMode = RenderMode.ScreenSpaceOverlay;
                 canvases[i].worldCamera = previousCameras[i];
                 canvases[i].planeDistance = previousDistances[i];
+                canvases[i].sortingOrder = previousOrders[i];
             }
             camera.targetTexture = previousTarget;
             camera.aspect = previousAspect;
