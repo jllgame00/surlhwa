@@ -109,6 +109,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         yield return null;
         var audio = FindFirstObjectByType<DemoAudioController>();
         Require(audio != null, "Missing serialized Bar audio controller.");
+        Require(ActiveListeners() == 1, "Bar requires exactly one active audio listener.");
         var sources = audio.GetComponents<AudioSource>();
         Require(sources.Length == 4, "Unexpected audio ownership/duplicate sources.");
         foreach (var field in new[] { "musicClip", "ambienceClip", "pourClip", "iceClip", "glassClip", "doorClip", "pageClip" })
@@ -162,6 +163,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
             yield return null;
         }
         yield return null;
+        Require(ActiveListeners() == 1, "Bartending lost its audio listener or duplicated the Bar listener.");
         var shake = FindFirstObjectByType<ShakeMiniGame>();
         var shelf = FindFirstObjectByType<IngredientShelfController>();
         Require(ReferenceEquals(Get(audio, "shelf"), shelf), "Audio has no explicit runner shelf handoff.");
@@ -222,14 +224,23 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         while (!completed)
         {
             Require(Time.realtimeSinceStartup < deadline, "Bartending unload timed out.");
+            Require(ActiveListeners() == 1, "Audio listener disappeared during asynchronous result cleanup.");
             yield return null;
         }
+        Require(ActiveListeners() == 1, "Bar audio listener was not restored after unload.");
         Require(!coordinator.IsBartendingActive && !((AudioSource)Get(audio, "pour")).isPlaying,
             "Bartending audio/lifecycle did not stop after unload.");
-        Debug.Log("[Audio PlayMode] PASS: imported clips, scene-owned playback, actual volume/mute controls, " +
+        Debug.Log("[Audio PlayMode] PASS: imported clips, scene-owned playback, one active listener before/during/after bartending, actual volume/mute controls, " +
             "preference reset isolation, explicit additive handoff, accepted pour start/stop, " +
             "Guide/settings pause preserves Shake timing, resume and unload. Auditory mix remains human sign-off.");
         Complete(true);
+    }
+    private static int ActiveListeners()
+    {
+        int count = 0;
+        foreach (var listener in FindObjectsByType<AudioListener>(FindObjectsSortMode.None))
+            if (listener.enabled && listener.gameObject.activeInHierarchy) count++;
+        return count;
     }
     private void Complete(bool success)
     {

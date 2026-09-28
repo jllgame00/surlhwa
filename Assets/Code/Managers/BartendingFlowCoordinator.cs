@@ -349,6 +349,12 @@ public class BartendingFlowCoordinator : MonoBehaviour
                     return;
 
                 capturedResult = result;
+                // MiniGameManager destroys its prefab (and listener) on completion.
+                // Hand audio back synchronously; the Bar camera still waits for unload.
+                foreach (AudioListener listener in runner.GetComponentsInChildren<AudioListener>(true))
+                    listener.enabled = false;
+                if (barAudioListener != null)
+                    barAudioListener.enabled = barAudioListenerWasEnabled;
             });
             presentationAudio?.ObserveBartending(runner);
         }
