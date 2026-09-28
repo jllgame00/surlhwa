@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: OdysseusReturnAfter
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "오디세우스는 연꽃 곁에 번지는 물결을 한동안 바라본다."
+  - "오디세우스: 돌아온 자리에서 잠시 멈추어도 되는군요."
+  - "그는 일어서다가 의자를 한 번 돌아본다."
+  onSuccessLines:
+  - "오디세우스: 길에서는 이렇게 천천히 마실 수 없었지요."
+  onFailLines:
+  - "오디세우스: 제가 떠올린 맛과는 다릅니다. 떠나기 전의 입맛만 기억하고 있었나 봅니다."
+  onEnterKnowledgeReveals: []

@@ -2006,3 +2006,7 @@ Two visits connect wanting knowledge, recalled signing and the cost that cannot 
 ## C6 — Sim Cheong Main ACT (2026-09-28)
 
 Three visits preserve the roadmap's talkative uncertainty, self-owned resolve before the boat and changed, calm return after meeting her father. Her decision is not a bartender success reward; fear and agency remain explicit without staging the original event. Warmth/Clarity/Bitterness requests retain alternatives. Compile PASS (0 errors), Unity authored-ACT validation PASS (14 visits), Logs/campaign-simcheong.log exit 0. No scene/prefab changes. Lotus memory and normal-play remain integration dependencies; emotional/pacing quality is HUMAN_SIGNOFF_REQUIRED. Father revisit excluded.
+
+## C7 — Odysseus Main ACT (2026-09-28)
+
+Two visits move from silence and changed return to staying after the glass is empty. The lotus connection recalls return without inventing a new plot between guests. No later revisit or completed-ship upgrade. Compile PASS (0 errors), Unity authored-ACT validation PASS (16 main visits), Logs/campaign-odysseus.log exit 0. No scene/prefab changes. Anchor/ship memory and full-route proof remain integration dependencies. The main ACT ends in staying; the later campaign coda must preserve that meaning. Tone/pacing: HUMAN_SIGNOFF_REQUIRED.
