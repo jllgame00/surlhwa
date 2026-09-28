@@ -299,6 +299,9 @@ public class CustomerController : MonoBehaviour
 
     public EmotionTag[] GetDesiredEmotionTags()
     {
+        if (orderData != null && orderData.RequestType == GuestRequestType.Recommendation)
+            return orderData.DesiredEmotionTags;
+
         return emotionRequest != null
             ? emotionRequest.ToArray()
             : System.Array.Empty<EmotionTag>();
@@ -871,6 +874,9 @@ public class CustomerController : MonoBehaviour
 
     private string BuildHintLine()
     {
+        if (orderData != null && orderData.RequestType == GuestRequestType.Recommendation)
+            return orderData.orderName;
+
         if (IsInForcedFirstCustomerRoute())
             return FirstRouteHintLine;
 

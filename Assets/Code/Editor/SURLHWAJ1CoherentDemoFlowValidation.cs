@@ -45,6 +45,7 @@ public static class SURLHWAJ1CoherentDemoFlowValidation
                 dryMartini,
                 incompatibleStir);
             ValidateExactRequestProjection(dryMartiniAttempt, littlePrinceFirst, dryMartini);
+            ValidateAuthoredRecommendationSelection();
             ValidateNightDiscoveryDelta(catalog, dryMartini);
             ValidateFinalNightCompletion(scene);
             ValidateReadStateContract();
@@ -205,6 +206,45 @@ public static class SURLHWAJ1CoherentDemoFlowValidation
         Require(princeContext.RequestType == GuestRequestType.ExactCocktail &&
                 princeContext.RequestedCocktail == littlePrinceFirst.requestedCocktail,
             "Little Prince Manwol request must remain an authored ExactCocktail request.");
+    }
+
+    private static void ValidateAuthoredRecommendationSelection()
+    {
+        OrderData request = LoadRequired<OrderData>(
+            "Assets/_SURLHWA/Data/Orders/ClarityRecommendationOrder.asset");
+        GameObject host = new("J3 Authored Recommendation Routing Validation")
+        {
+            hideFlags = HideFlags.HideAndDontSave
+        };
+        try
+        {
+            CustomerController customer = host.AddComponent<CustomerController>();
+            customer.ConfigureDedicatedEncounter(request);
+            // An unrelated generated mood must never replace authored intent.
+            GetPrivateField<GuestEmotionRequest>(customer, "emotionRequest")
+                .Set(EmotionTag.Bitterness, EmotionTag.Warmth);
+            EmotionTag[] tags = customer.GetDesiredEmotionTags();
+            Require(tags.Length == 1 && tags[0] == EmotionTag.Clarity &&
+                    customer.GetInteractionHintLine() == request.orderName,
+                "Authored Recommendation intent was replaced by generic customer mood.");
+
+            InteractionUIController interaction = host.AddComponent<InteractionUIController>();
+            SetPrivateField(interaction, "activeCustomer", customer);
+            Require(!(bool)InvokePrivate(interaction, "TryStartDedicatedRequest", null),
+                "A dedicated Recommendation must open method selection, not force its template method.");
+            Require(typeof(OrderManager).GetMethod("PlayAuthoredRecommendationOrder") != null,
+                "Authored requests need a method-independent OrderManager entry point.");
+            GuestRequestContext context = GuestRequestContext.FromOrder(request);
+            Require(context.RequestType == GuestRequestType.Recommendation &&
+                    context.RequestedCocktail == null &&
+                    context.DisplayTitle == request.orderName &&
+                    context.ReputationReward == request.reputationReward,
+                "Authored Recommendation projection lost request semantics.");
+        }
+        finally
+        {
+            UnityEngine.Object.DestroyImmediate(host);
+        }
     }
 
     private static void ValidateNightDiscoveryDelta(

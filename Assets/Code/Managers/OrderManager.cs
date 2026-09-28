@@ -595,6 +595,23 @@ public class OrderManager : MonoBehaviour
         PlayOrder(methodTemplate, customer, guestRequest);
     }
 
+    /// <summary>
+    /// Uses a method template only for the preparation route. Authored request
+    /// tags, title and reward remain owned by the guest's Recommendation asset.
+    /// </summary>
+    public void PlayAuthoredRecommendationOrder(
+        OrderData methodTemplate, OrderData authoredRequest, CustomerController customer)
+    {
+        if (authoredRequest == null ||
+            authoredRequest.RequestType != GuestRequestType.Recommendation)
+        {
+            Debug.LogError("[OrderManager] An authored Recommendation is required.");
+            return;
+        }
+
+        PlayOrder(methodTemplate, customer, GuestRequestContext.FromOrder(authoredRequest));
+    }
+
     private void PlayOrder(
         OrderData order,
         CustomerController customer,

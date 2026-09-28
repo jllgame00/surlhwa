@@ -1434,3 +1434,45 @@ Original audit-delivery status, before the subsequently authorized Markdown expo
 > No documentation file was created, no project files were modified, and no commit was made.
 
 This file is the subsequently authorized documentation output. No recommended production work is implemented by saving it, and no automatic commit is made.
+
+
+## Production Autopilot Startup Audit / J3 Routing (2026-09-28)
+
+Baseline: branch `refactor/project-rebuild`, HEAD `39a8888`. The only
+pre-existing untracked paths were `AGENTS.md` and `.codex/`; neither is
+part of this implementation. Historical findings above remain historical.
+
+Current source and serialized data confirm J1 COMPLETE; J2/J2.1 and J4
+IMPLEMENTED_WITH_VALIDATION_DEBT; J3 PARTIAL (metadata and generic routing
+exist, authored production request coverage and final schedule do not); J5
+PARTIAL (first visit and recall only). J6/J7 are PARTIAL at the functional
+presentation level, with art/audio direction HUMAN_SIGNOFF_REQUIRED. J8/J9
+and the final release candidate are NOT_STARTED as full four-night acceptance
+phases. No checked-in J3A implementation record was found; this audit does
+not infer completion from the expected starting-point prompt.
+
+This bounded change removes the method lock from authored Recommendation
+orders. Brew now uses the existing method selection; OrderManager projects
+the authored request into GuestRequestContext independently of the selected
+method template. Customer hint/reaction tags retain authored intent even if
+the generic mood generator has run. Exact orders, discovery gating, recipe
+recognition, FIT, supply and persistence authorities are unchanged. No scene,
+prefab or data asset serialization changed in this routing phase.
+
+Validation: baseline and changed Editor C# builds pass with zero errors and
+one existing MSB3277 System.Threading.Tasks.Extensions conflict warning.
+The J1 validator now checks authored-request selection and separation from
+generated mood while retaining all exact/generic regression assertions.
+Unity 6000.3.7f1 batch J4 execution exited before validators ran: missing
+`com.unity.editor.headless` entitlement / access token, plus Package Manager
+startup failure from a missing environment path. Classification:
+VALIDATION_BLOCKED_BY_ENVIRONMENT. Log: local ignored
+`Logs/production-autopilot-j4.log`. No new Editor or Play Mode PASS is claimed.
+
+Remaining dependencies: four supported request types and twelve phrasings,
+eight FIT responses, normal-play multi-answer scheduling, and final 5/4/4/4
+counts. Dry Martini's current experiment teaches no amounts or preparation;
+its reference design intentionally hides those facts, so production fairness
+needs an explicit reconciliation rather than silent validator relaxation.
+J5 closure meaning and failed-service semantics require the owner's decision
+under AGENTS.md section 6 and J5 acceptance.

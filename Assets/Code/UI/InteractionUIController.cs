@@ -667,6 +667,11 @@ public class InteractionUIController : MonoBehaviour
         if (!activeCustomer.TryGetDedicatedRequest(out OrderData dedicatedRequest))
             return false;
 
+        // A Recommendation carries the guest's meaning, not a required method.
+        // Reuse the existing method selection while retaining this authored request.
+        if (dedicatedRequest.RequestType == GuestRequestType.Recommendation)
+            return false;
+
         if (orderManager == null)
             orderManager = FindFirstObjectByType<OrderManager>();
 
@@ -767,6 +772,11 @@ public class InteractionUIController : MonoBehaviour
             // Legacy forced routes remain explicit compatibility/debug routes.
             // Normal generic service must preserve the generated Recommendation.
             orderManager.PlaySpecificOrder(order, activeCustomer);
+        }
+        else if (activeCustomer.TryGetDedicatedRequest(out OrderData authoredRequest) &&
+                 authoredRequest.RequestType == GuestRequestType.Recommendation)
+        {
+            orderManager.PlayAuthoredRecommendationOrder(order, authoredRequest, activeCustomer);
         }
         else
         {
