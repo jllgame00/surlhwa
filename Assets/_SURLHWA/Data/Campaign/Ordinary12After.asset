@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: Ordinary12After
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "손님은 잔 곁에 두었던 장갑을 챙긴다."
+  - "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다."
+  onSuccessLines:
+  - "오늘 제 이야기를 잘 들어 주셨네요."
+  onFailLines:
+  - "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다."
+  onEnterKnowledgeReveals: []

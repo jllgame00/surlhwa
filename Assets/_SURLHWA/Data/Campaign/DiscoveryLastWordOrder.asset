@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: DiscoveryLastWordOrder
+  m_EditorClassIdentifier:
+  orderName: "말다툼을 하고 왔어요. 마지막 말은 제가 했는데 마음은 하나도 정리되지 않았네요. 라스트 워드를 부탁해요."
+  reputationReward: 1
+  miniGameType: 3
+  requestedCocktail: {fileID: 11400000, guid: a9baa4cbd3907a44fa1a8550debf4798, type: 2}
+  requestType: 0
+  desiredEmotionTags:
+  preBrewDialogue: {fileID: 11400000, guid: 8cc0f78b85f945a0a099b7e98367ef30, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 1
+  discoveryRetryFeedback: "서두르지 않아도 돼요. 도감에 적힌 양과 순서를 보며 다시 만들어 볼까요?"

@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -55,6 +56,34 @@ public static class SURLHWACampaignValidation
     public static void Require(bool value, string message)
     {
         if (!value) throw new InvalidOperationException(message);
+    }
+
+    public static void RunContent()
+    {
+        RunInfrastructure();
+        RunAuthoredActs();
+        SURLHWAIngredientAvailabilityValidation.Run();
+        var catalog = AssetDatabase.LoadAssetAtPath<RecipeCatalogData>("Assets/_SURLHWA/Data/Recipes/RecipeCatalog.asset");
+        foreach (string name in new[] { "HankyPanky", "French75", "LastWord" })
+        {
+            var encounter = AssetDatabase.LoadAssetAtPath<CampaignEncounterData>(
+                "Assets/_SURLHWA/Data/Campaign/Discovery" + name + ".asset");
+            Require(encounter != null && !encounter.IsSpecial, "Discovery must belong to an ordinary guest.");
+            var order = encounter.order;
+            var recipe = catalog.FindRecipeForCocktail(order.requestedCocktail, order.miniGameType);
+            Require(recipe != null && !catalog.IsUnlockedByDefault(recipe) && order.RequiresSuccessfulDiscovery,
+                "Discovery must be reachable through retry, without default knowledge.");
+            var reveals = Enumerable.Range(0, order.PreBrewDialogue.onEnterLines.Length)
+                .SelectMany(order.PreBrewDialogue.GetOnEnterKnowledgeReveals).ToArray();
+            Require(reveals.All(r => r.Recipe == recipe), "Teaching targets another recipe.");
+            foreach (var fact in new[] { RecipeKnowledgeFact.Identity, RecipeKnowledgeFact.Method,
+                RecipeKnowledgeFact.Preparation, RecipeKnowledgeFact.Garnish })
+                Require(reveals.Any(r => r.Fact == fact), "Missing player-visible fact: " + fact);
+            foreach (var item in recipe.ingredients)
+                Require(reveals.Any(r => r.Fact == RecipeKnowledgeFact.IngredientAmount && r.Ingredient == item.ingredient),
+                    "Missing exact ingredient/quantity before discovery: " + name);
+        }
+        Debug.Log("[Campaign Content] PASS: three ordinary discoveries teach all required facts, retain retry and preserve catalog knowledge boundaries.");
     }
 
     [MenuItem("SURLHWA/Validation/Campaign Authored ACTs")]

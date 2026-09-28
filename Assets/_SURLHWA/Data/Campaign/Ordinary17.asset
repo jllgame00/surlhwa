@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8385e82e084ddf9f119ab6632271ed, type: 3}
+  m_Name: Ordinary17
+  m_EditorClassIdentifier:
+  visit: 0
+  guestName: "야간 역무원"
+  order: {fileID: 11400000, guid: 91b1b425b8eb446e9deee57ebd0d8858, type: 2}
+  customerPrefab: {fileID: 4898275966391150351, guid: 43b8b1b7d7afeb847bbd018220b17f41, type: 3}
+  afterService: {fileID: 11400000, guid: 1f1661a35976439c9d02687104ff107d, type: 2}
+  stillness: 0
+  sharedGlass: 0

@@ -2010,3 +2010,10 @@ Three visits preserve the roadmap's talkative uncertainty, self-owned resolve be
 ## C7 — Odysseus Main ACT (2026-09-28)
 
 Two visits move from silence and changed return to staying after the glass is empty. The lotus connection recalls return without inventing a new plot between guests. No later revisit or completed-ship upgrade. Compile PASS (0 errors), Unity authored-ACT validation PASS (16 main visits), Logs/campaign-odysseus.log exit 0. No scene/prefab changes. Anchor/ship memory and full-route proof remain integration dependencies. The main ACT ends in staying; the later campaign coda must preserve that meaning. Tone/pacing: HUMAN_SIGNOFF_REQUIRED.
+
+
+## C8 ? Ordinary Guests and Three Spaced IBA Discoveries (2026-09-28)
+
+Four ordinary voices recur across 14 extended-night blocks, reflecting work, waiting and the changing bar. Three teach the existing Hanky Panky, French 75 and Last Word recipes before required attempts, with retry-safe OrderData and full typed Partial facts. Supply opens at nights 6/10/15 through existing IngredientAvailabilityData; no knowledge auto-grant. Official recipe/source audit is recorded in Docs/15_IBA_COCKTAIL_CATALOG.md. Stable IDs, recipe amounts and catalog membership unchanged.
+
+Compile PASS (0 errors). Logs/campaign-content.log PASS, exit 0: 16 unique main visits, checkpoint/reset, all three discovery fact sets and strict supply/shelf tiers (13/15/17/20/20/22/23/26 across nights 1/2/3/4/5/6/10/15). I10 assertions now test the explicit campaign tiers, including exclusion before each tier. No scene/prefab changes. Normal-play recognition, retry and Recommendation alternatives remain integration validation dependencies. Dialogue/pacing: HUMAN_SIGNOFF_REQUIRED.

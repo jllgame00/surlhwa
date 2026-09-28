@@ -51,7 +51,16 @@ public static class SURLHWAIngredientAvailabilityValidation
             ValidateTier(shelf, availability, catalog, 4, 20,
                 new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan", "recipe_gin_fizz" },
                 new[] { "recipe_french_75", "recipe_hanky_panky", "recipe_last_word" });
-            ValidateTier(shelf, availability, catalog, 5, 26,
+            ValidateTier(shelf, availability, catalog, 5, 20,
+                new[] { "recipe_gin_fizz", "recipe_manhattan" },
+                new[] { "recipe_hanky_panky", "recipe_french_75", "recipe_last_word" });
+            ValidateTier(shelf, availability, catalog, 6, 22,
+                new[] { "recipe_hanky_panky" },
+                new[] { "recipe_french_75", "recipe_last_word" });
+            ValidateTier(shelf, availability, catalog, 10, 23,
+                new[] { "recipe_hanky_panky", "recipe_french_75" },
+                new[] { "recipe_last_word" });
+            ValidateTier(shelf, availability, catalog, 15, 26,
                 new[] { "recipe_dry_martini", "recipe_negroni", "recipe_manhattan", "recipe_hanky_panky", "recipe_gin_fizz", "recipe_french_75", "recipe_last_word" },
                 Array.Empty<string>());
 
@@ -117,8 +126,8 @@ public static class SURLHWAIngredientAvailabilityValidation
         shelf.Initialize(
             MiniGameType.Build,
             BartendingContainerType.ServingGlass,
-            new IngredientAvailabilityContext(5));
-        Require(shelf.TrySelectIngredient(greenChartreuse), "Could not select an available Day 5 ingredient.");
+            new IngredientAvailabilityContext(15));
+        Require(shelf.TrySelectIngredient(greenChartreuse), "Could not select an available Day 15 ingredient.");
 
         shelf.SetAvailabilityContext(new IngredientAvailabilityContext(1));
         Require(shelf.SelectedIngredient == null,

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: Ordinary18Order
+  m_EditorClassIdentifier:
+  orderName: "오늘은 이름을 말하지 않아도 되겠죠. 여기 앉아 천천히 마실 수 있는, 편안하거나 고요한 잔을 주세요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 0700000006000000
+  preBrewDialogue: {fileID: 11400000, guid: b1ee1f4e325a41a4a06579a8571b28c9, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 0
+  discoveryRetryFeedback:

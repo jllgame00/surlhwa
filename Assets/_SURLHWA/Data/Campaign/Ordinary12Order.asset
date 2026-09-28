@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: Ordinary12Order
+  m_EditorClassIdentifier:
+  orderName: "그 얼굴이 자꾸 생각나요. 눈을 깨우거나 머리를 맑게 하는 잔을 주세요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 0200000006000000
+  preBrewDialogue: {fileID: 11400000, guid: f2502b87e9c44e29b5dd70ca1cac3ce3, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 0
+  discoveryRetryFeedback:
