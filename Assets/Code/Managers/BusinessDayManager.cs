@@ -85,6 +85,7 @@ public class BusinessDayManager : MonoBehaviour
             return;
 
         dayEnded = true;
+        int completedNightCustomerTarget = MaxCustomersPerDay;
         bool completedDemo = IsConfiguredFinalDemoNight;
         if (completedDemo)
         {
@@ -106,7 +107,7 @@ public class BusinessDayManager : MonoBehaviour
             resultPanel.OpenResult(
                 GetCurrentReputation(),
                 servedCustomerCount,
-                MaxCustomersPerDay,
+                completedNightCustomerTarget,
                 GetNewlyKnownRecipeNames(),
                 completedDemo
             );

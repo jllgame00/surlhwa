@@ -1778,3 +1778,51 @@ J6 as a whole remains PARTIAL: ingredient and character presentation are still
 open. Audio selection/integration and full normal-input four-night/build acceptance
 remain outstanding as previously recorded. No final game-readiness or technical
 production-closure claim is made by this art-only phase.
+
+
+## J8 Integrated Four-Night Runtime Evidence (2026-09-28)
+
+Resumed from `88ad960` after the owner's instruction to continue. J1-J4/I10-I16
+baseline regression passed in licensed Unity (`Logs/production-resume-baseline.log`).
+A source audit found that EndDay advanced currentDay before reading the completed
+night's target, so the first-night result could show 5/4. BusinessDayManager now
+captures that target before advancing; no schedule or save identity changes.
+
+`SURLHWAFourNightPlayModeValidation` executes two fresh complete production runs:
+entry New Game, automatic spawn/seat/arrival, consumed dialogue and A/B choice,
+Brew/method controls, actual additive bartending scene, ingredient selection and
+transfer, technique input, preparation/garnish, normal recognition/discovery,
+feedback/natural departure, 5/4/4/4 results and night reloads. No MiniGameResult,
+preparation trace, Known flag, grade, visit outcome or day outcome is injected.
+The first three clue guests receive the already Known Seolya; the fourth teaches
+and discovers Dry Martini. Early clue requests can therefore receive unsatisfied
+FIT without preventing the learning arc; this is not claimed as successful
+service of a recipe the player has not learned.
+
+The second run fails the Prince's first Float technique, resolves that visit,
+fails required Negroni garnish then retries the same guest, and learns Manwol
+through independent recovery practice. Day-3 Warmth and Bitterness use alternative
+Seolya/Manhattan and Negroni/Manhattan choices across runs. Day-4 Clarity uses
+Manwol/Gin Fizz and the closing visit also exercises learned Dry Martini. All
+three successful Prince visits yield open closure; first failure remains quiet
+through recovery and Continue. Both runs reach Demo Complete and completed-save
+Continue without Day 5. New Game between runs resets actual gameplay knowledge.
+The test snapshots/restores existing player progress using SessionState.
+
+Validation: Unity 6000.3.7f1 Play Mode PASS in `Logs/production-four-night.log`;
+34 normal departures plus one same-guest practice retry. Runtime assertions verify
+night result counts, persisted knowledge/choice/history, learning prerequisites,
+ordinary supply on the live shelf and all four method routes. C# Editor build
+passes; serialized scenes/prefabs are unchanged. UserSettings scene-history churn
+is excluded. This is deterministic production-input-seam simulation: mouse angles,
+pour increments, Float durations and Shake key judgements are automated through
+the existing input paths, not OS-level mouse/keyboard events. Physical control
+feel, raycast hit-target usability, pacing and full visual review remain
+HUMAN_SIGNOFF_REQUIRED / their unobserved runtime cases VALIDATION_DEBT.
+
+A separate source finding remains for the next bounded UI/audio phase: Shake's
+unscaled rhythm clock advances while the Guide's read-state pauses input. The
+pause must preserve remaining note times; this is an objective fix, not polish.
+J6/J7 presentation work and standalone delivery are still open. The owner has
+now authorized temporary winter-bar audio and character drafts as well as their
+technical integration; final aesthetic approval remains human-owned.
