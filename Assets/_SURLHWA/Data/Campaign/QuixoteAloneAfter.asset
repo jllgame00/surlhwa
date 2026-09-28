@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: QuixoteAloneAfter
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "돈키호테: 그래도 저는 봤습니다."
+  - "그는 더 설명하지 않는다. 문을 향하는 발걸음도 서두르지 않는다."
+  - "선반 아래에 작은 풍차 조각이 남아 있다. 날개 하나는 기울었지만 떨어지지는 않았다."
+  onSuccessLines:
+  - "돈키호테: 듣고 있었다는 건, 이 정도 맛으로도 알겠군요."
+  onFailLines:
+  - "돈키호테: 오늘의 제 마음과는 조금 어긋났소. 그래도 끝까지 앉아 주셨군요."
+  onEnterKnowledgeReveals: []

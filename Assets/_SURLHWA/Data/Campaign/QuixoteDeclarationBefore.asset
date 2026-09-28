@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: QuixoteDeclarationBefore
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "돈키호테: 저건 거인이었습니다. 날개가 돌아갈 때마다 길 위의 그림자가 커졌지요."
+  - "돈키호테: 여관에서는 다들 웃더군요. 제 갑옷보다 먼저 그 웃음이 문을 통과했습니다."
+  - "그가 웃음소리를 흉내 내려다가 그만둔다. 구부러진 손가락이 탁자 위에 가만히 놓인다."
+  - "돈키호테: 다시 길에 설 수 있게 해 주는 잔을 부탁합니다. 몸을 덥혀 주어도, 눈을 깨워 주어도 좋겠소."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals: []

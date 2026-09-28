@@ -1990,3 +1990,7 @@ The owner explicitly expanded scope beyond the completed four-night review demo.
 ## C2 — Chunhyang / Mongryong Main ACT (2026-09-28)
 
 Five authored visits cover opposite meeting perspectives, departure, silent humiliation and shared-glass reunion. Requests remain target-free Recommendations; both service responses continue to the same authored story beat. All text is readable through the existing Next flow. dotnet compile and Unity authored-ACT asset/reference validation PASS (5 unique visits). No scene/prefab changes. Pair staging, swing memory and campaign normal-play proof depend on the planned presentation/integration phases; emotional interpretation and pacing require owner playtesting. No secret revisit implemented.
+
+## C3 — Don Quixote Main ACT (2026-09-28)
+
+Declaration and remembered ridicule lead to clearer conviction and a solitary departure; the ideal is not played as a drunken joke. Authored requests, pre-service dialogue, separate successful/weak-service responses and read-before-departure lines are implemented. dotnet compile and Unity authored-ACT validation PASS (7 cumulative unique visits). No scene/prefab changes or future revisits. Normal-play, memory and localized presentation proof remain dependent on campaign integration; subjective tone/pacing remain HUMAN_SIGNOFF_REQUIRED.

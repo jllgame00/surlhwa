@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: QuixoteAloneBefore
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "돈키호테: 오늘은 아무도 따라오지 않았습니다. 그러니 제 이야기도 좀 조용하겠군요."
+  - "돈키호테: 부서진 것은 고칠 수 있소. 하지만 보았다는 말을 거두면, 무엇을 고쳐야 할지도 모르겠어요."
+  - "그가 빈 옆자리 쪽으로 고개를 돌린다. 이번에는 웃음소리가 없다."
+  - "돈키호테: 씁쓸함을 지우지 않는 잔도 좋겠소. 길 위에서 식은 손을 덥히는 잔도요."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals: []
