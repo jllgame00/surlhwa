@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: MongryongMeetingAfter
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "몽룡: 다음에는 바라보기만 하지 않으려고요."
+  - "손님은 빈 옆자리를 돌아보고 문을 연다."
+  onSuccessLines:
+  - "몽룡: 너무 많은 말을 준비할 필요는 없겠네요."
+  onFailLines:
+  - "몽룡: 입에 익지는 않네요. 그래도 여기 앉아 있으니 서두르지 않게 됩니다."
+  onEnterKnowledgeReveals: []

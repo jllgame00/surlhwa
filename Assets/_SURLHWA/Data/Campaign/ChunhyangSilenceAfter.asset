@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: ChunhyangSilenceAfter
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "춘향은 두 손 사이에 잔을 둔다. 대답을 재촉하는 사람은 없다."
+  - "춘향: 제 이름은 제가 기억하고 있어요."
+  - "그녀가 일어난 자리에는 접힌 잔 받침만 남아 있다."
+  onSuccessLines:
+  - "춘향: …고마워요."
+  onFailLines:
+  - "춘향은 잠시 잔을 내려놓는다. 바텐더는 조용히 물을 곁에 둔다."
+  onEnterKnowledgeReveals: []

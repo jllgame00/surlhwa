@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: ChunhyangSilenceOrder
+  m_EditorClassIdentifier:
+  orderName: "춘향: 오늘은 묻지 않아 주셨으면 해요. 목을 세우지 않아도 넘길 수 있는, 부드럽고 따뜻한 잔을요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 0300000007000000
+  preBrewDialogue: {fileID: 11400000, guid: 444051d99a274d69aca273984d8ba548, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 0
+  discoveryRetryFeedback:

@@ -1987,3 +1987,6 @@ Use Docs/RELEASE_REVIEW.md for the physical playtest. Prioritize one fresh compl
 
 The owner explicitly expanded scope beyond the completed four-night review demo. See Docs/16_FIRST_PASS_CAMPAIGN.md for the repository audit, bounded 18-night plan and authority decisions. Optional schedule data, departure checkpoints, post-service reading and ending-read infrastructure are implemented without activating unfinished content. Existing save IDs/formats remain intact. dotnet compile and Unity campaign persistence validation PASS; runtime full-route proof remains pending. No scene/prefab changes in C1. Historical demo closure above remains valid for its bounded scope.
 
+## C2 — Chunhyang / Mongryong Main ACT (2026-09-28)
+
+Five authored visits cover opposite meeting perspectives, departure, silent humiliation and shared-glass reunion. Requests remain target-free Recommendations; both service responses continue to the same authored story beat. All text is readable through the existing Next flow. dotnet compile and Unity authored-ACT asset/reference validation PASS (5 unique visits). No scene/prefab changes. Pair staging, swing memory and campaign normal-play proof depend on the planned presentation/integration phases; emotional interpretation and pacing require owner playtesting. No secret revisit implemented.

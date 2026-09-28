@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: LoversReunionOrder
+  m_EditorClassIdentifier:
+  orderName: "춘향: 잔은 하나면 돼요. 둘이 나눌 거예요. 서로의 얼굴이 잘 보이는, 마음 놓이는 잔으로요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 0700000006000000
+  preBrewDialogue: {fileID: 11400000, guid: 77237f08f0a9408cb84dd16b265a31f6, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 0
+  discoveryRetryFeedback:

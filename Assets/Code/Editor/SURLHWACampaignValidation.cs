@@ -56,5 +56,33 @@ public static class SURLHWACampaignValidation
     {
         if (!value) throw new InvalidOperationException(message);
     }
+
+    [MenuItem("SURLHWA/Validation/Campaign Authored ACTs")]
+    public static void RunAuthoredActs()
+    {
+        var ids = new HashSet<CampaignVisitId>();
+        int count = 0;
+        foreach (string guid in AssetDatabase.FindAssets("t:CampaignEncounterData", new[] { "Assets/_SURLHWA/Data/Campaign" }))
+        {
+            var encounter = AssetDatabase.LoadAssetAtPath<CampaignEncounterData>(AssetDatabase.GUIDToAssetPath(guid));
+            Require(encounter != null && encounter.order != null && !string.IsNullOrWhiteSpace(encounter.guestName), "Incomplete encounter.");
+            Require(encounter.order.PreBrewDialogue != null && encounter.order.PreBrewDialogue.onEnterLines.Length >= 2,
+                "Missing authored entrance: " + encounter.name);
+            if (!encounter.IsSpecial) continue;
+            count++;
+            Require(ids.Add(encounter.visit), "Duplicate visit identity.");
+            Require(encounter.customerPrefab != null && encounter.customerPrefab.GetComponent<CustomerController>() != null,
+                "Missing guest runtime: " + encounter.name);
+            Require(encounter.order.RequestType == GuestRequestType.Recommendation && encounter.order.requestedCocktail == null &&
+                encounter.order.DesiredEmotionTags.Length > 0 && !encounter.order.RequiresSuccessfulDiscovery,
+                "New ACT must preserve interpretation without forced success: " + encounter.name);
+            Require(encounter.afterService != null && encounter.afterService.onEnterLines.Length >= 2 &&
+                encounter.afterService.onSuccessLines.Length > 0 && encounter.afterService.onFailLines.Length > 0,
+                "Missing service/departure alternatives: " + encounter.name);
+            if (encounter.visit == CampaignVisitId.LoversReunion) Require(encounter.sharedGlass, "Reunion must share one glass.");
+        }
+        Require(count > 0, "No authored main ACTs found.");
+        Debug.Log("[Campaign ACTs] PASS: " + count + " authored visits, unique IDs, prefab/request/dialogue references and both service paths.");
+    }
 }
 #endif

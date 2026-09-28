@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c0148c0b4e884caf404fdc1f7b432, type: 3}
+  m_Name: LoversDepartureBefore
+  m_EditorClassIdentifier:
+  onEnterLines:
+  - "몽룡: 떠나야 해요. 오래 걸리지는 않을 겁니다. 일이 끝나면, 길이 열리면…"
+  - "춘향은 손끝으로 잔 받침의 가장자리를 누른다. 아무 말도 하지 않는다."
+  - "몽룡: 제가 자꾸 설명만 하는군요. 당신이 무슨 말을 하려는지도 듣지 않고."
+  - "몽룡: 오늘은 달래 주어도 좋고, 이 씁쓸함을 그대로 두어도 좋아요. 한 잔 부탁합니다."
+  onSuccessLines: []
+  onFailLines: []
+  onEnterKnowledgeReveals: []

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273200d5d6ee3c4a82ce5ca1a777293, type: 3}
+  m_Name: ChunhyangMeetingOrder
+  m_EditorClassIdentifier:
+  orderName: "춘향: 그날처럼 오래 품고 싶은 잔이면 좋겠어요. 따뜻해도, 조금 그리워져도요."
+  reputationReward: 1
+  miniGameType: 2
+  requestedCocktail: {fileID: 0}
+  requestType: 1
+  desiredEmotionTags: 0700000009000000
+  preBrewDialogue: {fileID: 11400000, guid: 99cd0efce4464cb8be7987f6ab899c7a, type: 2}
+  recipeKnowledgeHintLine:
+  recipeKnowledgeHintReveals: []
+  requiresSuccessfulDiscovery: 0
+  discoveryRetryFeedback:
