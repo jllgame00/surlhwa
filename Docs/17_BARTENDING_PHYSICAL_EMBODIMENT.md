@@ -163,3 +163,22 @@ Compile PASS, 0 errors. `Logs/phase-k7-playmode.log` PASS: no Dash before tool
 positioning, exact existing Dash/Splash quantities, TopUp trace, and previous
 measurement/transfer/Shake checks. All inputs are programmatic. Final visual
 composition and broad recipe/campaign replay remain K11 work.
+
+## K8 — Surface-following Float
+
+Float liquid bands grow against a fixed 240 ml visual reference, rather than
+normalizing every tiny pour to a full glass. The existing bands and boundary
+judgments remain authoritative ordered-layer presentation. Their surface
+anchor drives the spoon and low pour point; the generic mixed-liquid fill is
+disabled only for that layered serving vessel. Direct bottle and optional
+Jigger pours share that surface. Measured transfers report only accepted ml
+to `BartendingLayeredDrinkState`; Shift/normal/Ctrl use the existing 15/30/60
+ml/s later-layer rules. The source Jigger actually empties. Bottle availability
+still has no modeled stock quantity. No density/fluid model was added.
+Changing a bottle while holding Space ends the old layer before a new source
+can contribute, preserving visible ingredient ownership and the real trace.
+
+Compile PASS. Four-method Play Mode PASS (`Logs/phase-k8-playmode.log`), including
+measured Float allocation matching serving volume and a Clean boundary from
+actual gentle transfer. Earlier measurement, overflow, Dash/Splash/TopUp,
+container transfer and Shake checks also pass. No serialized asset changes.

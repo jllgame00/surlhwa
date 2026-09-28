@@ -42,6 +42,10 @@ public class IngredientShelfController : MonoBehaviour
     public BartendingPhysicalPresentation PhysicalPresentation => physicalPresentation;
     public bool PhysicalTransferActive { get; private set; }
     public bool Measuring { get; private set; }
+    public event Action<IngredientData> MeasuredPourStarted;
+    public event Action<float, float> MeasuredPourAccepted;
+    public event Action MeasuredPourEnded;
+    public Func<float> MeasuredPourRate { get; set; }
     public BartendingContainerState Jigger => preparationState?.GetContainer(BartendingContainerType.Jigger);
     public bool HasPendingMeasurement => Jigger != null && Jigger.CurrentLiquidVolumeMl > 0f;
     public bool ToolsReady => !PhysicalTransferActive && !HasPendingMeasurement &&
@@ -443,21 +447,25 @@ public class IngredientShelfController : MonoBehaviour
         var target = targetContainer;
         var measuredIngredient = source.LiquidEntries[0].Ingredient;
         yield return physicalPresentation.MoveContainerToPour(source, target);
+        MeasuredPourStarted?.Invoke(measuredIngredient);
         while (source.CurrentLiquidVolumeMl > 0f)
         {
             if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
             { yield return null; continue; }
-            float accepted = source.TransferLiquidTo(target, jiggerTransferMlPerSecond * Time.deltaTime);
+            float rate = MeasuredPourRate != null ? MeasuredPourRate() : jiggerTransferMlPerSecond;
+            float accepted = source.TransferLiquidTo(target, Mathf.Max(1f, rate) * Time.deltaTime);
             if (accepted > 0f)
             {
                 preparationTrace.RecordMeasuredPour(measuredIngredient, accepted, target.ContainerType);
                 NotifyIngredientUsed(measuredIngredient);
                 RefreshContents();
+                MeasuredPourAccepted?.Invoke(accepted, accepted / Mathf.Max(1f, rate));
             }
             physicalPresentation.ObserveContainerTransfer(accepted);
             physicalPresentation.ShowMeasurement(Measuring);
             yield return null;
         }
+        MeasuredPourEnded?.Invoke();
         yield return physicalPresentation.ReturnContainer();
         PhysicalTransferActive = false;
     }
@@ -538,6 +546,7 @@ public class IngredientShelfController : MonoBehaviour
     /// </summary>
     public bool TrySetActiveTarget(BartendingContainerType containerType)
     {
+        if (PhysicalTransferActive || HasPendingMeasurement || containerType == BartendingContainerType.Jigger) return false;
         EndSelectedPour();
         if (preparationState == null || !preparationState.TrySetActiveTarget(containerType))
             return false;

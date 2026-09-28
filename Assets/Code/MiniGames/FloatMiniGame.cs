@@ -63,6 +63,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     [Header("Display")]
     [SerializeField] private string defaultDisplayName = "Float";
     [SerializeField] private float spoonOffsetY = 6f;
+    [SerializeField, Min(1f)] private float visualVolumeMl = 240f;
+    private RectTransform physicalSurface;
+    private FloatPourIntensity measuredPourIntensity = FloatPourIntensity.Normal;
 
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
@@ -133,6 +136,24 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         ResetActiveLayerMetrics();
         activePourIntensity = FloatPourIntensity.Normal;
         ResetLayerVisuals();
+        if (ingredientShelf.PhysicalPresentation != null && liquidArea != null)
+        {
+            var vessel = ingredientShelf.PhysicalPresentation.GetVessel(ingredientShelf.ServingGlass);
+            liquidArea.SetParent(vessel, false);
+            liquidArea.anchorMin = new Vector2(.12f, .08f);
+            liquidArea.anchorMax = new Vector2(.88f, .88f);
+            liquidArea.offsetMin = liquidArea.offsetMax = Vector2.zero;
+            physicalSurface = new GameObject("FloatLiquidSurface", typeof(RectTransform)).GetComponent<RectTransform>();
+            physicalSurface.SetParent(liquidArea, false);
+            physicalSurface.anchorMin = physicalSurface.anchorMax = new Vector2(.5f, 0f);
+            ingredientShelf.PhysicalPresentation.BindLayerSurface(ingredientShelf.ServingGlass, physicalSurface);
+            ingredientShelf.MeasuredPourStarted += _ => BeginLayerPour(measuredPourIntensity);
+            ingredientShelf.MeasuredPourAccepted += (ml, seconds) => RecordAcceptedLayer(ml, seconds, measuredPourIntensity);
+            ingredientShelf.MeasuredPourEnded += () => EndActiveLayerPour();
+            ingredientShelf.MeasuredPourRate = () => GetLayerPourRate(
+                layeredDrinkState.HasActiveLayer ? layeredDrinkState.ActiveLayer.OrderIndex : layeredDrinkState.Layers.Count,
+                measuredPourIntensity);
+        }
 
         if (spoon != null)
         {
@@ -237,6 +258,14 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (transferredMl <= 0f)
             return 0f;
 
+        RecordAcceptedLayer(transferredMl, safeDuration, intensity);
+        return transferredMl;
+    }
+
+    private void RecordAcceptedLayer(float transferredMl, float safeDuration, FloatPourIntensity intensity)
+    {
+        if (layeredDrinkState == null || !layeredDrinkState.HasActiveLayer || transferredMl <= 0f) return;
+        var activeLayer = layeredDrinkState.ActiveLayer;
         layeredDrinkState.AddToActiveLayer(transferredMl);
         activeLayerDuration += safeDuration;
         activeLayerTransferredMl += transferredMl;
@@ -245,8 +274,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         UpdateLayerVisuals();
         UpdateProgressText();
-        return transferredMl;
     }
+
+    public void SetMeasuredPourIntensity(FloatPourIntensity intensity) => measuredPourIntensity = intensity;
 
     /// <summary>
     /// Ends one addition and permanently records its single adjacent boundary
@@ -297,6 +327,17 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (state != State.Preparing || ingredientShelf == null || ingredientShelf.SelectedIngredient == null)
             return false;
 
+        if (ingredientShelf.PhysicalPresentation != null)
+        {
+            var source = ingredientShelf.SelectedIngredient;
+            return ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Dash, 0f, accepted =>
+            {
+                if (!layeredDrinkState.HasActiveLayer) layeredDrinkState.TryBeginLayer(source);
+                RecordAcceptedLayer(accepted, .01f, FloatPourIntensity.Gentle);
+                EndActiveLayerPour();
+            });
+        }
+
         if (!BeginLayerPour(FloatPourIntensity.Gentle))
             return false;
 
@@ -330,6 +371,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void CompleteFloat()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != State.Preparing)
             return;
 
@@ -367,6 +409,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     /// </summary>
     public void ServeFloat()
     {
+        if (ingredientShelf != null && !ingredientShelf.ToolsReady) return;
         if (state != State.AwaitingGarnish)
         {
             Debug.LogWarning("[Float] Serve ignored. state=" + state);
@@ -410,6 +453,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private void UpdatePreparationInput()
     {
+        SetMeasuredPourIntensity(ResolveInputIntensity());
+        if (ingredientShelf != null && ingredientShelf.HandlePhysicalTools(firstLayerPourRateMlPerSecond)) return;
         if (ingredientShelf == null || !ingredientShelf.isActiveAndEnabled)
         {
             EndActiveLayerPour();
@@ -429,9 +474,13 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         }
 
         FloatPourIntensity intensity = ResolveInputIntensity();
+        if (layeredDrinkState.HasActiveLayer && layeredDrinkState.ActiveLayer.Ingredient != ingredientShelf.SelectedIngredient)
+            EndActiveLayerPour();
         if (Input.GetKeyDown(KeyCode.Space))
             BeginLayerPour(intensity);
 
+        if (Input.GetKey(KeyCode.Space) && !layeredDrinkState.HasActiveLayer)
+            BeginLayerPour(intensity);
         if (Input.GetKey(KeyCode.Space) && ingredientShelf.PreparePhysicalPour())
             PourActiveLayerForDuration(Time.deltaTime, intensity);
 
@@ -609,7 +658,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         for (int index = 0; index < layeredDrinkState.Layers.Count && index < layerVisuals.Count; index++)
         {
             BartendingLayer layer = layeredDrinkState.Layers[index];
-            float layerHeight = totalMl > 0f ? height * (Mathf.Max(0f, layer.AmountMl) / totalMl) : 0f;
+            float layerHeight = height * (Mathf.Max(0f, layer.AmountMl) / Mathf.Max(visualVolumeMl, totalMl));
             LayoutLiquidVisual(layerVisuals[index], currentY, layerHeight, GetLayerColor(index));
             currentY += layerHeight;
         }
@@ -617,10 +666,11 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         for (int index = 0; index < layeredDrinkState.Boundaries.Count && index < boundaryVisuals.Count; index++)
         {
             BartendingLayerBoundary boundary = layeredDrinkState.Boundaries[index];
-            float boundaryY = GetLayerSurfaceY(boundary.LowerLayerIndex, totalMl, height);
+            float boundaryY = GetLayerSurfaceY(boundary.LowerLayerIndex, Mathf.Max(visualVolumeMl, totalMl), height);
             LayoutBoundaryVisual(boundaryVisuals[index].GetComponent<RectTransform>(), boundaryY, boundary.Quality);
         }
 
+        if (physicalSurface != null) physicalSurface.anchoredPosition = new Vector2(0f, currentY);
         UpdateSpoonPosition(currentY);
     }
 
@@ -754,7 +804,10 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         if (spoon == null || !spoon.gameObject.activeSelf)
             return;
 
-        spoon.anchoredPosition = spoonStartPosition + new Vector2(0f, currentSurfaceY + spoonOffsetY);
+        if (physicalSurface != null)
+            spoon.position = physicalSurface.position + spoon.parent.TransformVector(Vector3.up * spoonOffsetY);
+        else
+            spoon.anchoredPosition = spoonStartPosition + new Vector2(0f, currentSurfaceY + spoonOffsetY);
     }
 
     private static Color GetLayerColor(int index)

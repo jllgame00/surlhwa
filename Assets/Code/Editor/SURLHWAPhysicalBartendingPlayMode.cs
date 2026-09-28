@@ -67,7 +67,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
 
     private IEnumerator Validate()
     {
-        foreach (string method in new[] { "Build", "Stir", "Shake" })
+        foreach (string method in new[] { "Build", "Stir", "Shake", "Float" })
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
                 "Assets/_SURLHWA/Prefabs/Bartending/" + method + "MiniGame.prefab");
@@ -85,21 +85,28 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             var view = shelf.PhysicalPresentation;
             Require(view != null, "Production route did not install physical view.");
             float original = shelf.TargetContainer.CurrentLiquidVolumeMl;
+            var floating = game as FloatMiniGame;
+            if (floating != null) floating.BeginLayerPour(FloatMiniGame.FloatPourIntensity.Gentle);
             while (!shelf.PreparePhysicalPour())
             {
                 Require(shelf.TargetContainer.CurrentLiquidVolumeMl == original, "Liquid moved during bottle alignment.");
                 yield return null;
             }
-            Require(shelf.PourSelectedIngredient(12.5f) == 12.5f && view.StreamVisible, "Accepted bottle stream missing.");
+            float bottleMl = floating != null
+                ? floating.PourActiveLayerForDuration(12.5f / 30f, FloatMiniGame.FloatPourIntensity.Gentle)
+                : shelf.PourSelectedIngredient(12.5f);
+            Require(Mathf.Abs(bottleMl - 12.5f) < .001f && view.StreamVisible, "Accepted bottle stream missing.");
+            if (floating != null) floating.EndActiveLayerPour();
             shelf.EndSelectedPour();
             Require(!view.StreamVisible, "Release continued pouring.");
             while (!view.IsResting) yield return null;
             while (!view.PrepareBottle(ingredient, shelf.Jigger)) yield return null;
             float measured = shelf.FillJigger(72f);
             Require(measured == 60f && shelf.Jigger.CurrentLiquidVolumeMl == 60f, "Overflow accounting wrong.");
-            Require(shelf.TargetContainer.CurrentLiquidVolumeMl == 12.5f, "Measuring changed destination.");
+            Require(Mathf.Abs(shelf.TargetContainer.CurrentLiquidVolumeMl - 12.5f) < .001f, "Measuring changed destination.");
             shelf.PhysicalPresentation.EndBottle();
             while (!view.IsResting) yield return null;
+            if (floating != null) floating.SetMeasuredPourIntensity(FloatMiniGame.FloatPourIntensity.Gentle);
             Require(shelf.BeginMeasuredTransfer(), "Measured transfer did not start.");
             Require(!shelf.TrySelectIngredient(null), "Invalid selection accepted.");
             float previous = 60f;
@@ -116,6 +123,17 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             }
             Require(observedPartial && shelf.Jigger.CurrentLiquidVolumeMl == 0f, "Transfer must visibly empty over frames.");
             Require(shelf.ToolsReady, "Tools remained locked after return.");
+            if (floating != null)
+            {
+                Require(floating.LayeredDrinkState.Layers.Count == 2 && floating.LayeredDrinkState.Boundaries.Count == 1,
+                    "Measured Float lost its ordered layer allocation.");
+                Require(floating.LayeredDrinkState.Boundaries[0].Quality == BartendingLayerBoundaryQuality.Clean,
+                    "Measured gentle flow changed Float judgment.");
+                float allocated = 0f;
+                foreach (var layer in floating.LayeredDrinkState.Layers) allocated += layer.AmountMl;
+                Require(Mathf.Abs(allocated - shelf.ServingGlass.CurrentLiquidVolumeMl) < .002f,
+                    "Layer allocation differs from actual serving liquid.");
+            }
             if (method == "Build")
             {
                 float beforeDose = shelf.ServingGlass.CurrentLiquidVolumeMl;
@@ -136,7 +154,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 Require(shelf.PreparationTrace.Actions[shelf.PreparationTrace.Actions.Count - 1].Action == RecipePreparationAction.TopUp,
                     "TopUp changed into an ordinary Pour.");
             }
-            if (method != "Build")
+            if (method == "Stir" || method == "Shake")
             {
                 var source = shelf.TargetContainer;
                 source.TryAddIce();

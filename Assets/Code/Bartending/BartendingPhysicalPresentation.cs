@@ -23,6 +23,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     [SerializeField, Min(.01f)] private float containerMoveSeconds = .3f;
     [SerializeField] private float containerTiltDegrees = 105f;
     [SerializeField, Min(.01f)] private float spillSeconds = .3f;
+    [SerializeField] private float surfacePourHeight = 12f;
 
     private enum Motion { Rest, Approach, Tilt, Pour, Upright, Return }
     private Motion motion;
@@ -43,6 +44,8 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private float spillRemaining;
     private TMP_Text measurementText;
     private BartendingContainerState jiggerState;
+    private BartendingContainerState surfaceContainer;
+    private RectTransform liquidSurface;
     private readonly Dictionary<BartendingContainerState, RectTransform> vessels = new();
     private readonly Dictionary<BartendingContainerState, RectTransform> fills = new();
 
@@ -53,6 +56,13 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     public RectTransform Neck => neck;
     public RectTransform GetVessel(BartendingContainerState state) =>
         state != null && vessels.TryGetValue(state, out var vessel) ? vessel : null;
+
+    public void BindLayerSurface(BartendingContainerState state, RectTransform surface)
+    {
+        surfaceContainer = state;
+        liquidSurface = surface;
+        if (fills.TryGetValue(state, out var fill)) fill.gameObject.SetActive(false);
+    }
 
     public void Initialize(Transform methodRoot, BartendingPreparationState state)
     {
@@ -181,7 +191,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         if (movingVessel == null) yield break;
         vesselHomePosition = movingVessel.position;
         vesselHomeRotation = movingVessel.rotation;
-        Vector3 rim = TargetWorldRim(target) + ui.TransformVector(Vector3.up * pourHeight);
+        Vector3 rim = TargetWorldRim(target) + ui.TransformVector(Vector3.up * CurrentPourHeight);
         Vector3 lip = new Vector3(0f, movingVessel.rect.yMax, 0f);
         Vector3 start = movingVessel.position;
         Vector3 upright = rim - (movingVessel.TransformPoint(lip) - movingVessel.position);
@@ -200,6 +210,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
 
     private Vector3 TargetWorldRim(BartendingContainerState target)
     {
+        if (target == surfaceContainer && liquidSurface != null) return liquidSurface.position;
         var vessel = GetVessel(target);
         return vessel.TransformPoint(new Vector3(0f, vessel.rect.yMax, 0f));
     }
@@ -214,6 +225,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         RefreshState();
         if (movingVessel == null || acceptedMl <= 0f) { stream.gameObject.SetActive(false); return; }
+        PoseContainer(TargetWorldRim(destination) + ui.TransformVector(Vector3.up * CurrentPourHeight), 1f);
         Vector3 lip = movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
         DrawStreamBetween(lip, TargetWorldRim(destination));
     }
@@ -253,16 +265,18 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         var vessel = GetVessel(destination);
         return vessel != null
-            ? (Vector2)ui.InverseTransformPoint(vessel.TransformPoint(new Vector3(0f, vessel.rect.yMax, 0f))) - ui.rect.center
+            ? (Vector2)ui.InverseTransformPoint(TargetWorldRim(destination)) - ui.rect.center
             : Vector2.zero;
     }
+
+    private float CurrentPourHeight => destination == surfaceContainer && liquidSurface != null ? surfacePourHeight : pourHeight;
 
     // Align the neck in a common coordinate space; tilt about the held grip.
     private void AlignNeck(float degrees)
     {
         bottle.localRotation = Quaternion.Euler(0f, 0f, degrees);
         Vector2 neckOffset = (Vector2)(bottle.localRotation * new Vector3(0f, 81f, 0f));
-        bottle.anchoredPosition = TargetPoint() + Vector2.up * pourHeight - neckOffset;
+        bottle.anchoredPosition = TargetPoint() + Vector2.up * CurrentPourHeight - neckOffset;
     }
 
     public void TickMotion(float deltaTime)
@@ -273,7 +287,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         {
             case Motion.Approach:
                 bottle.anchoredPosition = Vector2.Lerp(motionStart,
-                    TargetPoint() + Vector2.up * (pourHeight - 81f), Smooth(elapsed / approachSeconds));
+                    TargetPoint() + Vector2.up * (CurrentPourHeight - 81f), Smooth(elapsed / approachSeconds));
                 if (elapsed >= approachSeconds) Enter(Motion.Tilt);
                 break;
             case Motion.Tilt:
@@ -320,6 +334,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         foreach (var pair in fills)
         {
+            if (pair.Key == surfaceContainer) continue;
             float scale = pair.Key.CapacityMl > 0f ? pair.Key.CapacityMl : Mathf.Max(1f, displayVolumeMl);
             float level = Mathf.Clamp01(pair.Key.CurrentLiquidVolumeMl / scale);
             pair.Value.anchorMax = new Vector2(.88f, .08f + .8f * level);
