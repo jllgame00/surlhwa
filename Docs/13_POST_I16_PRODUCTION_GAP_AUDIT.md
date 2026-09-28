@@ -2012,17 +2012,33 @@ Three visits preserve the roadmap's talkative uncertainty, self-owned resolve be
 Two visits move from silence and changed return to staying after the glass is empty. The lotus connection recalls return without inventing a new plot between guests. No later revisit or completed-ship upgrade. Compile PASS (0 errors), Unity authored-ACT validation PASS (16 main visits), Logs/campaign-odysseus.log exit 0. No scene/prefab changes. Anchor/ship memory and full-route proof remain integration dependencies. The main ACT ends in staying; the later campaign coda must preserve that meaning. Tone/pacing: HUMAN_SIGNOFF_REQUIRED.
 
 
-## C8 ? Ordinary Guests and Three Spaced IBA Discoveries (2026-09-28)
+## C8 — Ordinary Guests and Three Spaced IBA Discoveries (2026-09-28)
 
 Four ordinary voices recur across 14 extended-night blocks, reflecting work, waiting and the changing bar. Three teach the existing Hanky Panky, French 75 and Last Word recipes before required attempts, with retry-safe OrderData and full typed Partial facts. Supply opens at nights 6/10/15 through existing IngredientAvailabilityData; no knowledge auto-grant. Official recipe/source audit is recorded in Docs/15_IBA_COCKTAIL_CATALOG.md. Stable IDs, recipe amounts and catalog membership unchanged.
 
 Compile PASS (0 errors). Logs/campaign-content.log PASS, exit 0: 16 unique main visits, checkpoint/reset, all three discovery fact sets and strict supply/shelf tiers (13/15/17/20/20/22/23/26 across nights 1/2/3/4/5/6/10/15). I10 assertions now test the explicit campaign tiers, including exclusion before each tier. No scene/prefab changes. Normal-play recognition, retry and Recommendation alternatives remain integration validation dependencies. Dialogue/pacing: HUMAN_SIGNOFF_REQUIRED.
 
 
-## C9 ? Local Guest Staging and Spatial Memory Drafts (2026-09-28)
+## C9 — Local Guest Staging and Spatial Memory Drafts (2026-09-28)
 
 One scene-bound presentation component derives seven small bar traces from existing completion records. The Prince leaves an empty chair after either departure; the small star still requires his canonical open-farewell eligibility. Other traces use the roadmap's swing, windmill, stage/skull, circle/cracked glass, half-submerged lotus and anchor/ship fragment. No collection UI, counters, rewards or new persisted state.
 
 The reunited pair and departure use one CustomerController with a visual companion; reunion displays one served glass during departure reading. Hamlet uses only a muted local sprite and still pool of light. Global time, audio, input, other customers and preparation are untouched. Existing character silhouettes and restrained world-space contours are first-pass placeholders.
 
 Compile PASS (0 errors); Unity content regression PASS, exit 0 in Logs/campaign-presentation-compile.log. Inspected scene diff: one component plus its explicit day-manager reference; no transform/prefab churn. New presentation is dormant without campaign data. Rendered placement/restoration proof remains an integration dependency; final art, stillness and emotional impact require human review.
+
+## C10 — Campaign Schedule and Authored Ending (2026-09-28)
+
+The scene now references the 18-night schedule: the canonical first 17 encounters, followed by 16 new special visits and 14 ordinary visits. Every added night includes an ordinary guest. The ending audit in Docs/16_FIRST_PASS_CAMPAIGN.md precedes authoring: after Odysseus stays and leaves, the bartender tends the room's accumulated traces and leaves a light. Eight readable lines and a persistent final coda replace the demo endpoint in this configured campaign. The optional standalone four-night endpoint remains available when no campaign is assigned.
+
+The first full production run, Logs/campaign-full-playmode.log, completed all 47 natural departures, live discovery/retry, Recommendation alternatives, weak-service Hamlet continuation, representative Continue points and seven memory projections. It then failed entering the ending: activating the initially inactive serialized panel ran Awake after navigation setup and closed the panel. This run is NOT a full-campaign PASS. OpenCampaignEnding now activates under the existing opening guard before binding ending navigation; its reading area is sized for authored text. Logs/campaign-ending-fixture.log subsequently passed first activation, every line's measured fit, interrupted replay and completed Continue. The fixture seeds only the final checkpoint and is not full-route evidence.
+
+Rendered review also exposed the reunion glass and Hamlet light behind the dialogue region. Their local positions were raised without changing global time, input, audio or scene transforms. Final screenshots and a fresh full-route run are required after these corrections. Compile PASS in Logs/campaign-ending-dotnet.log; earlier integrated static regression PASS in Logs/campaign-integrated-r2.log. Final runtime/build evidence is recorded below when executed.
+
+### Corrected full-route result
+
+Logs/campaign-full-quiet-playmode.log: PASS, fresh New Game through all 47 natural departures and the authored ending. This run uses Prince choice B and an actual failed Float service, followed by independent Manwol recovery and the canonical quiet farewell. It performs all four methods, all three added discoveries, a garnish failure/retry for Hanky Panky, learned/supplied Recommendation alternatives, weak-service Hamlet continuation, departure checkpoints and seven restored memory projections. It invokes production UI callbacks and bartending input seams; it never injects successful service/knowledge into the full route.
+
+Continue is exercised after the second night, inside nights 6/10/15, during Quixote's dialogue, during ending reading and after the completed ending. The final Continue returns to the coda without night 19. New Game clears campaign/knowledge/memories. A separate restored legacy fixture then verifies completed-demo handoff to night 5 without invented Prince successes or Hanky Panky knowledge. Editor saves are restored by the runner. The earlier open-Prince run reached all 47 departures before the now-fixed panel defect; it is not relabeled as a full ending PASS.
+
+Latest rendered reunion and Hamlet captures confirm the corrected glass/light positions. Ending and coda captures show seven spatial traces, readable lines and navigation. The focused ending fixture measures all eight lines against the text area. These are objective rendering checks at 1280×720, not aesthetic approval. Final C# compile: PASS, 0 errors and one existing assembly-reference warning in Logs/campaign-final-dotnet.log.

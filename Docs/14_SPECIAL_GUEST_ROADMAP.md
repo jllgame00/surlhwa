@@ -16,6 +16,24 @@
 
 # 1. Purpose
 
+## Current first-pass campaign scope — 2026-09-28
+
+The owner explicitly authorized all seven main ACTs for the first campaign.
+The current contract is in `16_FIRST_PASS_CAMPAIGN.md`; implementation and
+validation records are in `13_POST_I16_PRODUCTION_GAP_AUDIT.md`. Prince remains
+canonical. Chunhyang/Mongryong, Quixote, Hamlet, Faust, Sim Cheong and Odysseus
+now have authored main visits through the existing architecture. Their small
+memory drafts derive from completed departures. These main ACTs are CURRENT;
+the FUTURE/CONCEPT classifications later in this document record the earlier
+roadmap baseline and still apply to omitted revisits and stronger presentation.
+
+The first-pass schedule replaces optional hidden unlock concepts within this
+scope: no idle waiting, repeated statue clicks or score grind is required.
+The owner's explicit Odysseus request resolves the naming ambiguity for this
+campaign; no Oedipus subplot is introduced. No companion/rose/secret revisit or
+memory upgrade tree is included. Final narrative pacing and art remain subject
+to the owner's complete playthrough.
+
 SURLHWA의 특수 손님은 단순히 특별한 주문을 주는 NPC가 아니다.
 
 각 인물은 하나의 인간적 주제와 질문을 대표하며, 여러 번의 방문을 통해 자신의 이야기를 남긴다.

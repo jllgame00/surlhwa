@@ -109,7 +109,13 @@ public class DayResultPanelController : MonoBehaviour
     public void OpenCampaignEnding(DialogueData ending)
     {
         EnsurePanel();
+        // The serialized panel host starts inactive. Awake must run before the
+        // ending binds its navigation, and must not close this first opening.
+        openingResult = true;
+        panelRoot.SetActive(true);
+        openingResult = false;
         BindButtons();
+        ConfigureCampaignEndingLayout();
         endingLines = ending != null ? ending.onEnterLines : null;
         endingLineIndex = 0;
         isDemoCompletionResult = true;
@@ -117,7 +123,6 @@ public class DayResultPanelController : MonoBehaviour
         if (reputationText != null) reputationText.text = string.Empty;
         if (unlockedRecipesText != null) unlockedRecipesText.text = string.Empty;
         if (titleText != null) titleText.text = "불빛이 남은 자리";
-        panelRoot.SetActive(true);
         if (CampaignProgressPersistence.EndingRead) ShowCampaignCoda();
         else
         {
@@ -132,6 +137,42 @@ public class DayResultPanelController : MonoBehaviour
             SetButtonLabel(restartButton, "계속 읽기");
             if (closeButton != null) closeButton.gameObject.SetActive(false);
             if (customerCountText != null) customerCountText.text = endingLines[0];
+        }
+    }
+
+    private void ConfigureCampaignEndingLayout()
+    {
+        if (customerCountText == null) return;
+        customerCountText.fontSize = 22f;
+        customerCountText.textWrappingMode = TextWrappingModes.Normal;
+        var content = customerCountText.transform.parent as RectTransform;
+        if (content == null || content.GetComponent<LayoutGroup>() != null) return;
+        content.sizeDelta = new Vector2(640f, 350f);
+        customerCountText.rectTransform.anchoredPosition = new Vector2(0, 28f);
+        customerCountText.rectTransform.sizeDelta = new Vector2(560f, 120f);
+        if (titleText != null)
+        {
+            titleText.fontSize = 26f;
+            titleText.rectTransform.anchoredPosition = new Vector2(0, 125f);
+            titleText.rectTransform.sizeDelta = new Vector2(560f, 38f);
+        }
+        if (unlockedRecipesText != null)
+        {
+            unlockedRecipesText.fontSize = 18f;
+            unlockedRecipesText.rectTransform.anchoredPosition = new Vector2(0, -64f);
+            unlockedRecipesText.rectTransform.sizeDelta = new Vector2(560f, 36f);
+        }
+        if (restartButton != null)
+        {
+            var rect = restartButton.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(-100f, -125f);
+            rect.sizeDelta = new Vector2(180f, 44f);
+        }
+        if (closeButton != null)
+        {
+            var rect = closeButton.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(100f, -125f);
+            rect.sizeDelta = new Vector2(180f, 44f);
         }
     }
 

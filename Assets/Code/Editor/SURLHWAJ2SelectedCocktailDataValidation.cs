@@ -126,8 +126,7 @@ public static class SURLHWAJ2SelectedCocktailDataValidation
         {
             "whiskey", "vermouth", "water", "rum", "lime", "syrup", "tonic", "lemon",
             "vodka", "coffee_liqueur", "cream", "gin", "dry_vermouth", "sweet_red_vermouth", "campari",
-            "rye_whiskey", "angostura_bitters", "fresh_lemon_juice", "simple_syrup", "soda_water",
-            "champagne", "fernet", "london_dry_gin", "fresh_lime_juice", "green_chartreuse", "maraschino_luxardo"
+            "rye_whiskey", "angostura_bitters", "fresh_lemon_juice", "simple_syrup", "soda_water"
         }
     };
 

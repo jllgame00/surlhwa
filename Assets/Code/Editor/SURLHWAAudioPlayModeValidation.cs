@@ -41,6 +41,7 @@ public static class SURLHWAAudioPlayModeValidation
     {
         foreach (var key in Keys) yield return key;
         foreach (var key in ExtraKeys) yield return key;
+        foreach (var key in SURLHWACampaignValidation.ProgressKeys()) yield return key;
         foreach (var key in new[] { DemoAudioController.MasterKey, DemoAudioController.MusicKey, DemoAudioController.EffectsKey, DemoAudioController.MuteKey }) yield return key;
     }
     private static void Changed(PlayModeStateChange state)

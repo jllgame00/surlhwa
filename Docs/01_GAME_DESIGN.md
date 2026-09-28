@@ -2,6 +2,39 @@
 
 Last Updated: 2026-09-28
 
+## Current full-campaign contract
+
+The owner-authorized first pass extends the existing four-night opening to
+18 nights and an authored ending. The first 17 encounters and the Prince's
+three-service open/quiet farewell retain their existing contracts. Nights 5–18
+add 16 special visits and 14 ordinary visits through the existing customer,
+dialogue, order and bartending flow. Every added night includes an ordinary
+guest. Main ACTs follow love, ideal, inaction, choice/cost, sacrifice/agency and
+return; future companion/secret revisits remain outside this campaign.
+
+New special visits use interpretation-based Recommendations with learned,
+supplied alternatives. Poor service changes the immediate response while the
+person's story continues. Reading the departure lines precedes completion.
+Ordinary guests teach Hanky Panky, French 75 and Last Word at nights 6, 10 and
+15; their required discovery attempts retain retry. Supplies expand on those
+nights without granting recipe knowledge.
+
+Completed ACTs leave small spatial traces derived from departure records.
+Prince's empty chair recalls either farewell; its small star retains the
+existing open-farewell condition. Memories have no progress meter or reward.
+Hamlet's first-pass staging is local and does not slow input or global time.
+
+From night 5, Continue resumes after the last completed departure. Interrupted
+dialogue/preparation restarts that encounter. The ending follows Odysseus's
+last visit: the bartender closes this sequence of nights among the traces and
+leaves a light. Interrupted ending reading replays; completed Continue returns
+to the coda without night 19. New Game clears campaign visits, memories and
+ending state through the existing persistence owners. A completed legacy demo
+continues at night 5 without invented service successes or knowledge.
+
+The J/I sections below retain their historical four-night scope. Technical
+evidence and human review status belong in the production audit.
+
 ## J1 Coherent Demo Flow Closure (Implemented; validated)
 
 J1 closes the narrow lifecycle and routing gaps identified by the POST-I16

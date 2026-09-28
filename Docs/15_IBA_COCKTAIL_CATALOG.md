@@ -83,6 +83,11 @@ IBA 공식 목록은 향후 변경될 수 있다.
 
 # 4. IBA Implementation Status
 
+Current campaign scope extends this historical demo table: Hanky Panky,
+French 75 and Last Word are now authored campaign discoveries, bringing the
+campaign IBA set to 7. See the dated expansion record at the end for sources,
+supply timing and validation boundaries. The four-night set remains unchanged.
+
 ## CURRENT_PRODUCTION
 
 현재 bounded production demo에 실제 사용되는 IBA 칵테일.
@@ -470,7 +475,7 @@ IBA Collection의 목적은 체크리스트 102개를 채우는 것 자체가 �
 IBA 레시피들은 플레이어 자신이 바텐더로서 쌓아온 지식을 남긴다.
 
 
-## First-pass campaign expansion ? 2026-09-28
+## First-pass campaign expansion — 2026-09-28
 
 The status tables above describe the historical four-night baseline. The owner-authorized campaign now promotes the three existing reserve recipes to campaign content: Hanky Panky on night 6, French 75 on night 10, Last Word on night 15. Current campaign IBA scope is 7, remaining future scope 95; no new cocktail/ingredient IDs or catalog entries were needed. Ordinary guests teach complete quantities, method, preparation and garnish before a retry-safe discovery attempt. Supply opens on those nights without granting knowledge. Runtime normal-play proof is pending integration.
 
@@ -481,3 +486,9 @@ Official recipes rechecked on 2026-09-28:
 - [Last Word](https://iba-world.com/iba-cocktail/last-word/): Gin, Green Chartreuse, Maraschino Luxardo and Fresh Lime Juice, 22.5 ml each; shake with ice and strain; no garnish.
 
 Existing exact identities, ounce storage conversion, glassware and preparation assets match these quantities and sequences. Chilled glass is presentation metadata, not a new temperature simulation. Modest Bitterness / Awakening / Clarity interpretations accompany new authored Korean descriptions; they are SURLHWA authorship, not IBA facts. No special character is assigned one of these as a password.
+
+Integration result: all three discoveries completed through actual preparation
+and recognition in the fresh full campaign, including Hanky Panky failure/retry
+and representative knowledge reloads. See production audit C10 and
+Logs/campaign-full-quiet-playmode.log. Physical input and subjective teaching
+clarity still require the owner's playthrough.

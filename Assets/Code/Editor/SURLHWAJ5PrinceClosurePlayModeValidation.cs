@@ -42,6 +42,7 @@ public static class SURLHWAJ5PrinceClosurePlayModeValidation
     {
         foreach (var key in Keys) yield return key;
         foreach (var key in ExtraKeys) yield return key;
+        foreach (var key in SURLHWACampaignValidation.ProgressKeys()) yield return key;
     }
     private static void Changed(PlayModeStateChange state)
     {
@@ -126,6 +127,8 @@ internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
         narrative = Load<LittlePrinceNarrativeData>("Narrative/LittlePrinceNarrative.asset");
         Require(spawner != null && day != null && interaction != null && orders != null && knowledge != null, "Production controllers missing.");
         spawner.enabled = false;
+        // This focused fixture explicitly exercises the retained standalone demo endpoint.
+        Set(day, "campaign", null);
         Set(day, "endDayWhenMaxCustomersServed", false);
         var gm = FindFirstObjectByType<GameManager>();
         ((GameObject)Get(gm, "entryPanel"))?.SetActive(false);

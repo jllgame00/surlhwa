@@ -85,3 +85,36 @@ Validation: dotnet compile PASS (0 errors; 8 existing warnings on full rebuild);
 Unity batch `SURLHWACampaignValidation.RunInfrastructure` PASS, exit 0 in
 `Logs/campaign-infrastructure.log`. No license blocker occurred. Scene/prefab
 diffs: none. Campaign route/runtime and presentation validation remain pending.
+
+
+## Ending audit and current meaning
+
+Audited 00_PROJECT_VISION again against the completed authored ACT assets and the spatial memory implementation before authoring the ending. The consistent resolution is a quiet closing of this sequence of nights: people return to their own lives; their unfinished questions and traces remain; the bartender cleans the last glass and leaves a light for someone else. Odysseus stays before departing, without a new journey/twist. The bartender has learned to hear requests and make room, not to solve every life.
+
+The ending does not cure Hamlet, cancel Faust's cost, reward Sim Cheong's sacrifice, judge the lovers or erase either Prince farewell. It recalls spaces without promising a star on the quiet Prince route. There is no score gate or perfect-service ending. This is the smallest ending directly supported by the vision's central sentence and seven ACTs; final dialogue, emotional impact and pacing are HUMAN_SIGNOFF_REQUIRED.
+
+The 14 extended nights contain 30 encounters (16 special visits and 14 ordinary visits), following the unchanged first 17 demo encounters. Each extended night includes one ordinary encounter; nights 5 and 7 include two major beats. Three discoveries occur at nights 6/10/15. The last guest is Odysseus.
+
+## Integrated schedule
+
+| Night | Encounters, in order |
+|---|---|
+| 5 | Chunhyang meeting; postman; Mongryong meeting |
+| 6 | Lovers' departure; Hanky Panky discovery |
+| 7 | Chunhyang's silence; repairer; shared-glass reunion |
+| 8 | Postman; Quixote's declaration |
+| 9 | Quixote alone; ordinary guest |
+| 10 | French 75 discovery; Hamlet's question |
+| 11 | Repairer; Hamlet's stillness |
+| 12 | Faust's contract; ordinary guest |
+| 13 | Ordinary guest; Faust's cost |
+| 14 | Repairer; Sim Cheong before deciding |
+| 15 | Sim Cheong's resolve; Last Word discovery |
+| 16 | Sim Cheong's return; ordinary guest |
+| 17 | Ordinary guest; Odysseus's return |
+| 18 | Postman; Odysseus stays; authored ending |
+
+The canonical serialized schedule is `Assets/_SURLHWA/Data/Campaign/Campaign.asset`.
+C2–C10 in the production audit record the separate ACT, discovery, presentation
+and integration milestones. Remaining review classifications and executed test
+evidence are maintained there, rather than treating this plan as proof of play.

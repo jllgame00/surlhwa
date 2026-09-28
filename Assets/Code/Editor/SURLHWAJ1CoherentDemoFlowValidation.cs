@@ -30,7 +30,7 @@ public static class SURLHWAJ1CoherentDemoFlowValidation
             "SURLHWA_LITTLE_PRINCE_SERVICE_OUTCOME_1", "SURLHWA_LITTLE_PRINCE_SERVICE_OUTCOME_2",
             "SURLHWA_LITTLE_PRINCE_SERVICE_OUTCOME_3" };
         Dictionary<string, int?> closureSnapshot = new();
-        foreach (string key in closureKeys)
+        foreach (string key in System.Linq.Enumerable.Concat(closureKeys, SURLHWACampaignValidation.ProgressKeys()))
             closureSnapshot[key] = SurlhwaPlayerPrefsStore.HasKey(key)
                 ? SurlhwaPlayerPrefsStore.GetInt(key, 0) : null;
         Scene scene = default;

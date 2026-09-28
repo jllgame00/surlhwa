@@ -31,6 +31,7 @@ public sealed class CampaignGuestPresentation : MonoBehaviour
         {
             var light = new GameObject("Still pool of light");
             light.transform.SetParent(transform, false);
+            light.transform.localPosition = Vector3.up * 1.5f;
             CampaignBarMemories.DrawLine(light.transform, lineMaterial, new Color(.56f, .65f, .78f, .45f), .05f,
                 -.6f, -.35f, 0f, -.5f, .6f, -.35f);
             HasStillness = true;
@@ -39,7 +40,7 @@ public sealed class CampaignGuestPresentation : MonoBehaviour
         {
             glass = new GameObject("One shared glass");
             glass.transform.SetParent(transform, false);
-            glass.transform.localPosition = new Vector3(.36f, .25f, 0);
+            glass.transform.localPosition = new Vector3(.36f, 1.05f, 0);
             CampaignBarMemories.DrawLine(glass.transform, lineMaterial, new Color(.86f, .75f, .58f), .035f,
                 -.13f, .22f, -.09f, 0f, .09f, 0f, .13f, .22f, -.13f, .22f);
             glass.SetActive(false);

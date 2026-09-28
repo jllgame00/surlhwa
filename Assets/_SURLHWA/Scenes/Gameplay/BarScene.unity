@@ -15116,6 +15116,7 @@ MonoBehaviour:
   startingDay: 1
   demoCustomerCountsByDay: 05000000040000000400000004000000
   demoNightCount: 4
+  campaign: {fileID: 11400000, guid: bbb94704ebd348ce817e2529d25778f1, type: 2}
 --- !u!114 &1712809652
 MonoBehaviour:
   m_ObjectHideFlags: 0

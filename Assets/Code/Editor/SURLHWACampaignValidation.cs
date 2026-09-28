@@ -86,6 +86,35 @@ public static class SURLHWACampaignValidation
         Debug.Log("[Campaign Content] PASS: three ordinary discoveries teach all required facts, retain retry and preserve catalog knowledge boundaries.");
     }
 
+    public static void RunIntegrated()
+    {
+        RunContent();
+        var campaign = AssetDatabase.LoadAssetAtPath<CampaignData>(SchedulePath);
+        Require(campaign != null && campaign.FinalNight == 18 && campaign.nights.Length == 14,
+            "Campaign must end at its authored eighteenth night.");
+        Require(campaign.ending != null && campaign.ending.onEnterLines.Length >= 6, "Missing authored ending.");
+        int expectedVisit = 1, encounters = 0;
+        foreach (var night in campaign.nights)
+        {
+            Require(night.encounters.Length >= 2 && night.encounters.All(e => e != null && e.order != null),
+                "Incomplete night.");
+            Require(night.encounters.Any(e => !e.IsSpecial), "Every night needs an ordinary voice.");
+            foreach (var encounter in night.encounters)
+            {
+                encounters++;
+                if (encounter.IsSpecial) Require((int)encounter.visit == expectedVisit++, "Skipped/reordered main visit.");
+            }
+        }
+        Require(expectedVisit == 17 && encounters == 30, "All 16 main visits and 14 ordinary encounters are required.");
+        Require(campaign.GetNight(18).encounters.Last().visit == CampaignVisitId.OdysseusStay,
+            "Odysseus must remain the final guest.");
+        Require(campaign.GetNight(6).encounters.Any(e => e.name == "DiscoveryHankyPanky") &&
+            campaign.GetNight(10).encounters.Any(e => e.name == "DiscoveryFrench75") &&
+            campaign.GetNight(15).encounters.Any(e => e.name == "DiscoveryLastWord"), "Discovery pacing differs from supply.");
+        SURLHWAJ5PrinceClosureValidation.RunProductionRegression();
+        Debug.Log("[Campaign Integrated] PASS: 18 nights, 47 total encounters, all ACTs, ordinary pacing, discoveries and authored ending; legacy static regression retained.");
+    }
+
     [MenuItem("SURLHWA/Validation/Campaign Authored ACTs")]
     public static void RunAuthoredActs()
     {

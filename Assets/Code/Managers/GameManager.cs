@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         contentImage.color = new Color(0.12f, 0.1f, 0.09f, 1f);
 
         CreateEntryText("Title", "SURLHWA", 42f, content.transform);
-        CreateEntryText("Subtitle", "네 번의 밤 · Esc 소리 설정", 20f, content.transform);
+        CreateEntryText("Subtitle", "기억이 남는 바 · Esc 설정", 20f, content.transform);
         CreateEntryButton("NewGameButton", "새 게임", BeginNewGame, true, content.transform);
         CreateEntryButton(
             "ContinueButton",

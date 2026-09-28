@@ -46,6 +46,7 @@ public static class SURLHWAFourNightPlayModeValidation
     {
         foreach (var key in Keys) yield return key;
         foreach (var key in ExtraKeys) yield return key;
+        foreach (var key in SURLHWACampaignValidation.ProgressKeys()) yield return key;
     }
     private static void Changed(PlayModeStateChange state)
     {
@@ -231,6 +232,7 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                             SURLHWAReviewCapture.Save("stir-guide", 1280, 720);
                             ClickField(guide, "closeButton");
                         }
+                        methods.Add(recipe.method);
                         yield return ExecuteDrink(recipe, failPrince, retry && attempt == 0);
                         yield return Wait(() => !Find<BartendingFlowCoordinator>().IsBartendingActive,
                             "actual result and additive unload");
@@ -260,7 +262,8 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                 var result = Find<DayResultPanelController>();
                 Require(((TMP_Text)Get(result, "customerCountText")).text.EndsWith(count + "/" + count),
                     "Night summary used the next night's guest target.");
-                Require(BusinessDayPersistence.LoadCurrentDay(1) == (night == 4 ? 4 : night + 1),
+                bool campaignAttached = day.HasCampaign;
+                Require(BusinessDayPersistence.LoadCurrentDay(1) == (night == 4 && !campaignAttached ? 4 : night + 1),
                     "Wrong save boundary or unintended Day 5.");
                 ClickField(result, "restartButton");
                 yield return null;
@@ -284,6 +287,17 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                             "Required knowledge lost on Continue.");
                     }
                 }
+                else if (campaignAttached)
+                {
+                    yield return Wait(() => Find<BusinessDayManager>() != null && Find<BusinessDayManager>().CurrentDay == 5,
+                        "campaign extension after canonical Prince farewell");
+                    Require(!DemoCompletionPersistence.IsDemoComplete() &&
+                        LittlePrinceVisitPersistence.IsStatueEligible() == (scenario == 0),
+                        "Campaign extension changed Prince history or marked demo complete.");
+                    GameManager.ReturnToDemoEntry();
+                    yield return null;
+                    yield return Wait(() => NamedButton("NewGameButton") != null, "entry after first four nights");
+                }
                 else
                 {
                     yield return Wait(() => NamedButton("ContinueButton") != null, "completed entry");
@@ -302,19 +316,18 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
             }
         }
         Require(methods.Count == 4, "All four methods must execute in production context.");
-        Debug.Log("[Four Night] PASS: two complete New Game -> 5/4/4/4 -> Demo Complete routes; " +
+        Debug.Log("[Four Night] PASS: two complete New Game -> 5/4/4/4 routes and configured endpoint; " +
             "actual containers/technique/preparation/recognition, discovery/retry, A/B history, cross-method alternatives, " +
-            "night reload/Continue and no Day 5. Input seams are automated; physical mouse/keyboard and subjective feel remain human checks.");
+            "night reload/Continue and campaign handoff (or terminal standalone demo). Input seams are automated; physical mouse/keyboard and subjective feel remain human checks.");
         Finish(true);
     }
-    private IEnumerator ExecuteDrink(CocktailRecipeData recipe, bool failTechnique, bool omitRequiredGarnish)
+    internal static IEnumerator ExecuteDrink(CocktailRecipeData recipe, bool failTechnique, bool omitRequiredGarnish)
     {
         var shelf = Find<IngredientShelfController>();
         var stir = Find<StirMiniGame>();
         var build = Find<BuildMiniGame>();
         var shake = Find<ShakeMiniGame>();
         var floating = Find<FloatMiniGame>();
-        methods.Add(recipe.method);
         Require(shelf != null, "No actual shelf.");
         // This driver reads an authored plan only after the same facts are visible
         // in consumed teaching or Known Guide knowledge. It never writes a result,
@@ -371,9 +384,18 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                     ClickField(stir, "startButton");
                     break;
                 case RecipePreparationAction.GentleStir:
-                    build.BeginGentleStir();
-                    for (int i = 0; i <= 180; i++) build.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
-                    build.FinishGentleStir();
+                    if (build != null)
+                    {
+                        build.BeginGentleStir();
+                        for (int i = 0; i <= 180; i++) build.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
+                        build.FinishGentleStir();
+                    }
+                    else
+                    {
+                        shake.BeginGentleStir();
+                        for (int i = 0; i <= 180; i++) shake.TryRecordGentleStirAngle(i * 3f, 1f / 60f);
+                        shake.FinishGentleStir();
+                    }
                     break;
                 case RecipePreparationAction.Shake:
                     ClickField(shake, "startButton");
