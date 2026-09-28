@@ -127,3 +127,22 @@ tip inside the scaled vessel and a bounded shaft at every 30 degrees; GentleStir
 still accumulates two input revolutions. Existing I15 and integrated campaign
 regressions PASS (`Logs/phase-k5-regression.log`, exit 0). Visual feel is not
 approved; runtime integrated technique validation follows K11.
+
+## K6 — Held Shake motion
+
+The entire existing Shaker transform (including attached liquid) follows L/R
+translation, 24-unit vertical travel and a limited 12-degree rotation, with a
+serialized movement curve and return duration. Motion pauses with reading/
+settings. BPM, eight-note sequence, timing windows, misses and completion
+remain unchanged. A transfer clicked during the final shake waits for its
+return, preventing competing transform writers. Existing regression drivers
+wait for that pending transfer.
+
+Dotnet/Unity compile PASS, 0 errors. `Logs/phase-k6-playmode-r3.log` PASS for
+all eight actual-time L/R inputs, directional translation, limited rotation,
+exactly unchanged pre/post-shake contents and subsequent transfer. The first
+run was interrupted by an agent edit causing domain reload; r2 exposed a
+test's exact comparison to a decimal literal after float accumulation. R3
+compares the actual pre-shake value to the actual post-shake value without
+tolerance and passes. Neither earlier run is claimed as PASS. No rhythm
+assertion was weakened. Ice visuals follow K10; no human feel claim.

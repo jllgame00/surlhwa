@@ -120,6 +120,33 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             {
                 var source = shelf.TargetContainer;
                 source.TryAddIce();
+                if (method == "Shake")
+                {
+                    var shake = (ShakeMiniGame)game;
+                    var body = view.GetVessel(source);
+                    Vector2 home = body.anchoredPosition;
+                    float beforeShakeMl = source.CurrentLiquidVolumeMl;
+                    shake.BeginShake();
+                    for (int note = 0; note < shake.NoteCount; note++)
+                    {
+                        while (Time.unscaledTime < shake.GetExpectedNoteTime(note)) yield return null;
+                        var direction = note % 2 == 0 ? ShakeMiniGame.ShakeDirection.Left : ShakeMiniGame.ShakeDirection.Right;
+                        Require(shake.TryJudgeShakeInput(direction, Time.unscaledTime) != ShakeMiniGame.ShakeJudgement.Miss,
+                            "Physical Shake changed rhythm judgment.");
+                        float observeUntil = Time.unscaledTime + .05f;
+                        while (Time.unscaledTime < observeUntil) yield return null;
+                        Require((body.anchoredPosition.x - home.x) * (note % 2 == 0 ? -1f : 1f) > 0f,
+                            "Shake translation did not follow direction.");
+                        Require(Mathf.Abs(Mathf.DeltaAngle(0f, body.localEulerAngles.z)) > .1f &&
+                            Mathf.Abs(Mathf.DeltaAngle(0f, body.localEulerAngles.z)) <= 12.1f,
+                            "Shake rotation absent or unbounded.");
+                        Require(source.CurrentLiquidVolumeMl == beforeShakeMl && shelf.ServingGlass.CurrentLiquidVolumeMl == 0f,
+                            "Shake released its contents before transfer.");
+                    }
+                    float settle = Time.unscaledTime + .3f;
+                    while (Time.unscaledTime < settle) yield return null;
+                    Require(Vector2.Distance(body.anchoredPosition, home) < .01f, "Shake did not return.");
+                }
                 bool complete = false;
                 Require(shelf.BeginPhysicalContainerTransfer(method == "Stir" ? RecipePreparationAction.Strain :
                     RecipePreparationAction.PourFromContainer, _ => complete = true), "Working transfer rejected.");

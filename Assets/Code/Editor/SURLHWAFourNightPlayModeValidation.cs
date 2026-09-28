@@ -409,11 +409,11 @@ internal sealed class SURLHWAFourNightRunner : MonoBehaviour
                     break;
                 case RecipePreparationAction.Strain:
                     ClickField(stir != null ? (object)stir : shake, "startButton");
-                    while (shelf.PhysicalTransferActive) yield return null;
+                    while (shelf.PhysicalTransferActive || (shake != null && shake.IsPhysicalTransferPending)) yield return null;
                     break;
                 case RecipePreparationAction.PourFromContainer:
                     shake.PourFromContainerAndContinue();
-                    while (shelf.PhysicalTransferActive) yield return null;
+                    while (shelf.PhysicalTransferActive || shake.IsPhysicalTransferPending) yield return null;
                     break;
                 case RecipePreparationAction.Splash:
                     Require(shake.TryAddSplashToServingGlass(), "Splash rejected.");

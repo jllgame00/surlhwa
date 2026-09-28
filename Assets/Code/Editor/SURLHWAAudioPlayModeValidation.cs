@@ -219,6 +219,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Require(shake.MissCount == 0 && shake.CorrectHitCount == shake.NoteCount,
             "Resumed rhythm was not playable after both read pauses.");
         shake.StrainAndSubmit();
+        while (shake.IsPhysicalTransferPending) yield return null;
         SURLHWAReviewCapture.Save("garnish", 1280, 720);
         shake.ServeShake();
         deadline = Time.realtimeSinceStartup + 15f;

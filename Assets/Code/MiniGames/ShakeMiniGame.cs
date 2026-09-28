@@ -69,6 +69,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     [SerializeField] private float shakeMoveX = 80f;
     [SerializeField] private float shakeDuration = 0.08f;
     [SerializeField] private float returnDuration = 0.08f;
+    [SerializeField] private float shakeMoveY = 24f;
+    [SerializeField] private float shakeRotationDegrees = 12f;
+    [SerializeField] private AnimationCurve shakeMovementCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     [Header("Ingredient Shelf")]
     [SerializeField] private IngredientShelfController ingredientShelf;
@@ -83,6 +86,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     private Action<MiniGameResult> onDone;
     private Coroutine shakerMotion;
     private Vector2 shakerOrigin;
+    private Quaternion shakerOriginRotation;
+    private bool transferQueued;
     private ShakeGrade completedGrade;
     private bool isPouring;
     private float rhythmStartTime;
@@ -99,6 +104,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     private IngredientAvailabilityContext ingredientAvailabilityContext;
 
     public int NoteCount => Mathf.Max(1, defaultPatternNoteCount);
+    public bool IsPhysicalTransferPending => transferQueued ||
+        (ingredientShelf != null && ingredientShelf.PhysicalTransferActive);
     public int PerfectHitCount => perfectHitCount;
     public int GoodHitCount => goodHitCount;
     public int MissCount => missCount;
@@ -344,6 +351,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     /// </summary>
     public void StrainAndSubmit()
     {
+        if (transferQueued) return;
+        if (shakerMotion != null) { StartCoroutine(WaitForShakerReturn(true)); return; }
         if (state != State.AwaitingStrain)
         {
             Debug.LogWarning($"[Shake] Strain ignored. state={state}");
@@ -388,6 +397,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     /// </summary>
     public void PourFromContainerAndContinue()
     {
+        if (transferQueued) return;
+        if (shakerMotion != null) { StartCoroutine(WaitForShakerReturn(false)); return; }
         if (state != State.AwaitingStrain)
         {
             Debug.LogWarning($"[Shake] PourFromContainer ignored. state={state}");
@@ -791,14 +802,15 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     {
         Vector2 start = shaker.anchoredPosition;
         float directionMultiplier = direction == ShakeDirection.Left ? -1f : 1f;
-        Vector2 target = shakerOrigin + new Vector2(directionMultiplier * Mathf.Max(0f, shakeMoveX), 0f);
+        Vector2 target = shakerOrigin + new Vector2(directionMultiplier * Mathf.Max(0f, shakeMoveX), shakeMoveY);
+        Quaternion tilt = shakerOriginRotation * Quaternion.Euler(0f, 0f, -directionMultiplier * shakeRotationDegrees);
 
-        yield return LerpShakerPosition(start, target, shakeDuration);
-        yield return LerpShakerPosition(target, shakerOrigin, returnDuration);
+        yield return LerpShakerPosition(start, target, shaker.localRotation, tilt, shakeDuration);
+        yield return LerpShakerPosition(target, shakerOrigin, tilt, shakerOriginRotation, returnDuration);
         shakerMotion = null;
     }
 
-    private IEnumerator LerpShakerPosition(Vector2 from, Vector2 to, float duration)
+    private IEnumerator LerpShakerPosition(Vector2 from, Vector2 to, Quaternion fromRotation, Quaternion toRotation, float duration)
     {
         if (shaker == null)
             yield break;
@@ -807,13 +819,29 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         float elapsed = 0f;
         while (elapsed < safeDuration)
         {
-            elapsed += Time.unscaledDeltaTime;
-            shaker.anchoredPosition = Vector2.Lerp(from, to, Mathf.Clamp01(elapsed / safeDuration));
+            if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+            { yield return null; continue; }
+            elapsed += Time.deltaTime;
+            float fraction = Mathf.Clamp01(shakeMovementCurve.Evaluate(Mathf.Clamp01(elapsed / safeDuration)));
+            shaker.anchoredPosition = Vector2.Lerp(from, to, fraction);
+            shaker.localRotation = Quaternion.Slerp(fromRotation, toRotation, fraction);
             yield return null;
         }
 
         if (shaker != null)
+        {
             shaker.anchoredPosition = to;
+            shaker.localRotation = toRotation;
+        }
+    }
+
+    private IEnumerator WaitForShakerReturn(bool strain)
+    {
+        transferQueued = true;
+        while (shakerMotion != null) yield return null;
+        transferQueued = false;
+        if (strain) StrainAndSubmit();
+        else PourFromContainerAndContinue();
     }
 
     private void TryDispenseDash()
@@ -997,12 +1025,16 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         }
 
         shaker.anchoredPosition = shakerOrigin;
+        shaker.localRotation = shakerOriginRotation;
     }
 
     private void CaptureShakerOrigin()
     {
         if (shaker != null)
+        {
             shakerOrigin = shaker.anchoredPosition;
+            shakerOriginRotation = shaker.localRotation;
+        }
     }
 
     private static string DirectionLabel(ShakeDirection direction)
