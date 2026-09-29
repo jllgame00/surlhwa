@@ -239,9 +239,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         bool isFirstLayer = layeredDrinkState.ActiveLayer.OrderIndex == 0;
         SetSpoonVisible(!isFirstLayer);
         SetHint(isFirstLayer
-            ? "Pouring bottom layer: " + ingredient.displayName + ". Flow: " + DescribeFlow(intensity) + "."
-            : "Pouring Layer " + (layeredDrinkState.ActiveLayer.OrderIndex + 1) +
-              ": " + DescribeFlow(intensity) + " spoon-assisted flow.");
+            ? "첫 층 붓기: " + ingredient.displayName + " · " + DescribeFlow(intensity)
+            : "층 " + (layeredDrinkState.ActiveLayer.OrderIndex + 1) +
+              " · 스푼을 따라 " + DescribeFlow(intensity));
         UpdateProgressText();
 
         Debug.Log("[Float] Begin layer=" + layeredDrinkState.ActiveLayer.OrderIndex +
@@ -312,8 +312,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (completed)
         {
-            string boundaryLabel = boundaryQuality.HasValue ? boundaryQuality.Value.ToString() : "Base";
-            SetHint("Layer " + (completedLayer.OrderIndex + 1) + " complete: " +
+            string boundaryLabel = !boundaryQuality.HasValue ? "첫 층" : boundaryQuality.Value switch {
+                BartendingLayerBoundaryQuality.Clean => "선명한 경계", BartendingLayerBoundaryQuality.Partial => "일부 섞인 경계", _ => "섞인 경계" };
+            SetHint("층 " + (completedLayer.OrderIndex + 1) + " 완성: " +
                     completedLayer.Ingredient.displayName + " " + completedLayer.AmountMl.ToString("0.0") +
                     " ml / " + boundaryLabel + ".");
             Debug.Log("[Float] Layer complete index=" + completedLayer.OrderIndex +
@@ -373,7 +374,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         EndActiveLayerPour();
 
         SetHint(activeLayer.Ingredient.displayName + ": " + totalDashCount +
-                " dash (" + afterMl.ToString("0.0") + " ml total).");
+                " 대시 (총 " + afterMl.ToString("0.0") + " ml)");
         return acceptedMl > 0f;
     }
 
@@ -833,14 +834,14 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         int layerCount = layeredDrinkState != null ? layeredDrinkState.Layers.Count : 0;
         int boundaryCount = layeredDrinkState != null ? layeredDrinkState.Boundaries.Count : 0;
         string active = layeredDrinkState != null && layeredDrinkState.HasActiveLayer
-            ? " / Layer " + (layeredDrinkState.ActiveLayer.OrderIndex + 1) +
+            ? " / 층 " + (layeredDrinkState.ActiveLayer.OrderIndex + 1) +
               " " + activeLayerTransferredMl.ToString("0.0") + " ml" +
-              " / Flow " + DescribeFlow(activePourIntensity)
+              " / 흐름 " + DescribeFlow(activePourIntensity)
             : string.Empty;
 
-        progressText.text = "Serving Glass " +
+        progressText.text = "서빙 잔 " +
             (servingGlass != null ? servingGlass.CurrentLiquidVolumeMl : 0f).ToString("0.0") +
-            " ml / Layers " + layerCount + " / Boundaries " + boundaryCount + active;
+            " ml / 층 " + layerCount + " / 경계 " + boundaryCount + active;
     }
 
     private void SetPrimaryAction(UnityEngine.Events.UnityAction action, string label, bool visible)
@@ -871,11 +872,11 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         switch (intensity)
         {
             case FloatPourIntensity.Gentle:
-                return "Gentle [Shift]";
+                return "천천히 [Shift]";
             case FloatPourIntensity.Aggressive:
-                return "Aggressive [Ctrl]";
+                return "세게 [Ctrl]";
             default:
-                return "Normal";
+                return "보통";
         }
     }
 

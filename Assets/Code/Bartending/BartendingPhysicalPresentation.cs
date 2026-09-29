@@ -193,9 +193,9 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         var labelObject = new GameObject("Measurement", typeof(RectTransform), typeof(TextMeshProUGUI));
         measurementText = labelObject.GetComponent<TextMeshProUGUI>();
         measurementText.rectTransform.SetParent(ui, false);
-        measurementText.rectTransform.sizeDelta = new Vector2(220f, 55f);
+        measurementText.rectTransform.sizeDelta = new Vector2(240f, 76f);
         measurementText.rectTransform.anchoredPosition = new Vector2(-150f, -100f);
-        measurementText.fontSize = 16f;
+        SurlhwaUITheme.Text(measurementText, 18);
         measurementText.alignment = TextAlignmentOptions.Center;
         measurementText.raycastTarget = false;
         spill = Shape("JiggerOverflow", jiggerVisual, new Vector2(4f, 65f), new Color(.85f, .78f, .55f, .9f));
@@ -380,7 +380,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     public void ShowMeasurement(bool measuring)
     {
         if (measurementText != null && jiggerState != null)
-            measurementText.text = $"Jigger {jiggerState.CurrentLiquidVolumeMl:0.0} / {jiggerState.CapacityMl:0} ml\nM: {(measuring ? "Direct" : "Measure")} · T: Transfer";
+            measurementText.text = $"지거 {jiggerState.CurrentLiquidVolumeMl:0.0} / {jiggerState.CapacityMl:0} ml\nM: {(measuring ? "직접 붓기" : "계량")} · T: 옮기기";
     }
 
     public void ObserveSpill(float lostMl)

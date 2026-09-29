@@ -136,6 +136,7 @@ public class MiniGameManager : MonoBehaviour
             SetMainSceneActive(true);
             onDone?.Invoke(result);
         });
+        SurlhwaBartendingPresentation.Apply(currentMiniGame, request.DisplayTitle);
     }
 
     private GameObject GetPrefabForPlay(BartendingRequestContext request)

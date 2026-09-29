@@ -167,27 +167,27 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         if (!selectionActive)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.Alpha1))
             selectedGarnish = BartendingGarnishId.LemonTwist;
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.Alpha2))
             selectedGarnish = BartendingGarnishId.Cherry;
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.Alpha3))
             selectedGarnish = BartendingGarnishId.Olive;
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.Alpha4))
             selectedGarnish = BartendingGarnishId.OrangeSlice;
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.Alpha5))
             selectedGarnish = BartendingGarnishId.LemonSlice;
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.Alpha6))
             selectedGarnish = BartendingGarnishId.OrangeZest;
-        else if (Input.GetKeyDown(KeyCode.Q))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.Q))
             selectedPlacement = BartendingGarnishPlacement.Rim;
-        else if (Input.GetKeyDown(KeyCode.W))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.W))
             selectedPlacement = BartendingGarnishPlacement.InGlass;
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.E))
             selectedPlacement = BartendingGarnishPlacement.Surface;
-        else if (Input.GetKeyDown(KeyCode.G))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.G))
             TryApplyGarnish(selectedGarnish, selectedPlacement);
-        else if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Backspace))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.X) || SurlhwaModalSurface.GetKeyDown(KeyCode.Backspace))
             ClearGarnish();
 
         RefreshSelectionText();
@@ -257,11 +257,13 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         panelRect.anchorMax = new Vector2(0.5f, 0f);
         panelRect.pivot = new Vector2(0.5f, 0f);
         panelRect.anchoredPosition = new Vector2(0f, 18f);
-        panelRect.sizeDelta = new Vector2(510f, 102f);
+        panelRect.sizeDelta = new Vector2(860f, 114f);
         Image panelImage = selectionPanel.AddComponent<Image>();
-        panelImage.color = new Color(0.04f, 0.06f, 0.08f, 0.85f);
+        panelImage.color = SurlhwaUITheme.Surface;
+        panelImage.raycastTarget = false;
 
-        selectionText = CreateText("Instructions", panelRect, string.Empty, 14f);
+        selectionText = CreateText("Instructions", panelRect, string.Empty, 18f);
+        selectionText.raycastTarget = false;
         RectTransform selectionRect = selectionText.rectTransform;
         selectionRect.anchorMin = Vector2.zero;
         selectionRect.anchorMax = Vector2.one;
@@ -294,7 +296,7 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
             return;
 
         string current = CurrentGarnish == null
-            ? "none"
+            ? "없음"
             : CurrentGarnish.DisplayName + " / " + GetPlacementLabel(CurrentGarnish.Placement);
         string requirement = expectedGarnishRequired ? "필수" : "선택";
         selectionText.text =
@@ -395,7 +397,11 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         switch (placement)
         {
             case BartendingGarnishPlacement.InGlass:
-                return "In Glass";
+                return "잔 안";
+            case BartendingGarnishPlacement.Rim:
+                return "테두리";
+            case BartendingGarnishPlacement.Surface:
+                return "표면";
             default:
                 return placement.ToString();
         }

@@ -444,7 +444,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         }
 
         float ingredientMl = GetMixingGlass().GetLiquidAmountMl(ingredient);
-        SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in Mixing Glass.");
+        SetHint($"{ingredient.displayName} 붓는 중 · 믹싱 글라스에 {ingredientMl:0.0} ml");
         UpdateProgressText();
     }
 
@@ -536,13 +536,13 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         if (!ingredientShelf.TryDashSelectedIngredient(out int totalDashCount))
         {
-            SetHint("That dash could not be added to the Mixing Glass.");
+            SetHint("믹싱 글라스에 대시를 더할 수 없습니다.");
             return;
         }
 
         IngredientData ingredient = ingredientShelf.SelectedIngredient;
         float ingredientMl = GetMixingGlass().GetLiquidAmountMl(ingredient);
-        SetHint($"{ingredient.displayName} — {totalDashCount} dash ({ingredientMl:0.0} ml).");
+        SetHint($"{ingredient.displayName} — {totalDashCount} 대시 ({ingredientMl:0.0} ml).");
         UpdateProgressText();
         Debug.Log($"[Dash] Ingredient={ingredient.ingredientId} count={totalDashCount} compatibilityMl={ingredientMl:0.###}");
     }
@@ -673,30 +673,30 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         {
             case State.Preparing:
                 progressText.text = mixingGlass == null
-                    ? "Mixing Glass 0.0 ml"
-                    : $"Mixing Glass {mixingGlass.CurrentLiquidVolumeMl:0.0} ml{(mixingGlass.HasIce ? " / ice" : string.Empty)}";
+                    ? "믹싱 글라스 0.0 ml"
+                    : $"믹싱 글라스 {mixingGlass.CurrentLiquidVolumeMl:0.0} ml{(mixingGlass.HasIce ? " / 얼음" : string.Empty)}";
                 break;
 
             case State.Stirring:
                 progressText.text =
-                    $"Stir {techniqueTracker.ElapsedSeconds:0.0} / {targetStirDurationSeconds:0.0}s  " +
-                    $"{StirRevolutions:0.00} rev  {StirConsistency:0.00} consistency";
+                    $"젓기 {techniqueTracker.ElapsedSeconds:0.0} / {targetStirDurationSeconds:0.0}s  " +
+                    $"{StirRevolutions:0.00}회전  {StirConsistency:0.00} 안정도";
                 break;
 
             case State.AwaitingStrain:
-                progressText.text = $"Mixing Glass {mixingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml → ready to strain";
+                progressText.text = $"믹싱 글라스 {mixingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml → 걸러 따르기 가능";
                 break;
 
             case State.AwaitingGarnish:
                 progressText.text =
-                    $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / garnish " +
+                    $"서빙 잔 {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / 가니시 " +
                     (garnishController != null && garnishController.IsExpectedGarnishRequired
                         ? "필수"
                         : "선택");
                 break;
 
             case State.Result:
-                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml";
+                progressText.text = $"서빙 잔 {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml";
                 break;
         }
     }

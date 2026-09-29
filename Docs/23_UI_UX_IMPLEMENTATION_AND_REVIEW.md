@@ -116,3 +116,29 @@ The harness now fails on any runtime error, including errors outside its own
 coroutine. Earlier development iterations with layout and CanvasGroup errors
 are not PASS evidence. Compile remains 0 errors / 8 existing warnings; integrated
 campaign static contracts passed. Full normal-play regression remains M10 work.
+
+### M5: work surface and contextual instructions
+
+`SurlhwaBartendingPresentation` arranges existing hint/progress controls above
+the tools and displays the request's existing public title. The coordinator's
+existing audio observer supplies a local Settings button; it has no new settings
+or gameplay authority. Shelf rows preserve actual ml and oz values on separate
+lines, increase text/row height, and mark the selected ingredient. Container,
+measurement, rhythm, flow and garnish labels are Korean-first. Guide remains
+the only recipe facts source in the workspace. No tool transforms, liquid
+colors, timings, matcher, FIT or preparation rules changed.
+
+Phase K Play Mode passed all four routes: real tool transforms, measured finite
+capacity / overflow, partial transfer, ice, spoon motion, Shake motion, garnish
+placement and actual served appearance. These are programmatic input seams,
+not human mouse/keyboard tests. A rendering iteration caught truncated ingredient
+names caused by the old row's 30-unit LayoutElement; its height is now 50 within
+a 56-unit row. The corrected names and ml/oz rows were inspected in the physical
+fixture capture. Production workspace captures use the Phase M probe.
+
+Static Phase K + campaign/knowledge/request/preparation regressions pass when
+started from an empty clean Editor scene. An earlier repeated invocation reused
+a scene modified in memory by a legacy I16 validator and failed its five-guest
+fixture assertion. Running the unchanged validator with isolated scene setup
+passed; no authored schedule or assertion was changed. Compile: 0 errors,
+8 existing warnings. Held native input remains physical-input validation debt.

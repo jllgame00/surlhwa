@@ -108,6 +108,8 @@ public class IngredientShelfController : MonoBehaviour
         RefreshTexts();
 
         gameObject.SetActive(true);
+        SurlhwaUITheme.Text(titleText, 22);
+        SurlhwaUITheme.Text(summaryText, 18);
     }
 
     /// <summary>
@@ -238,7 +240,7 @@ public class IngredientShelfController : MonoBehaviour
     private void RefreshTexts()
     {
         if (titleText != null)
-            titleText.text = $"재료 · {currentMethod}";
+            titleText.text = $"재료 · {SurlhwaUITheme.Method(currentMethod)}";
 
         if (summaryText == null)
             return;
@@ -248,7 +250,7 @@ public class IngredientShelfController : MonoBehaviour
         if (!HasAnySelectedIngredient())
         {
             summaryText.text = targetContainer != null
-                ? $"{targetContainer.ContainerType} · 비어 있음{iceText}"
+                ? $"{SurlhwaUITheme.Container(targetContainer.ContainerType)} · 비어 있음{iceText}"
                 : "용기 없음";
             return;
         }
@@ -260,7 +262,7 @@ public class IngredientShelfController : MonoBehaviour
         // this fixed-height summary bounded so a multi-liquid drink cannot
         // drive TMP's wrapped-ellipsis layout into recursive line breaking.
         summaryText.text =
-            $"{targetContainer.ContainerType} {targetContainer.CurrentLiquidVolumeMl:0.0} ml / " +
+            $"{SurlhwaUITheme.Container(targetContainer.ContainerType)} {targetContainer.CurrentLiquidVolumeMl:0.0} ml\n" +
             $"재료 {liquidCount}종{iceText}";
     }
 

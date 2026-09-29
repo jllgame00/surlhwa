@@ -15,7 +15,9 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
     static int boundaryFrame = -1;
     static readonly HashSet<KeyCode> heldKeys = new();
     static readonly KeyCode[] actionKeys = { KeyCode.Space, KeyCode.M, KeyCode.T, KeyCode.D, KeyCode.S,
-        KeyCode.I, KeyCode.J, KeyCode.P, KeyCode.A, KeyCode.LeftArrow, KeyCode.RightArrow };
+        KeyCode.I, KeyCode.J, KeyCode.P, KeyCode.A, KeyCode.LeftArrow, KeyCode.RightArrow,
+        KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.G, KeyCode.X, KeyCode.Backspace,
+        KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6 };
     bool configured, registered, pauses;
     int order;
     Action back;

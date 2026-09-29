@@ -550,7 +550,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         }
 
         float ingredientMl = GetShaker().GetLiquidAmountMl(ingredient);
-        SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in Shaker.");
+        SetHint($"{ingredient.displayName} 붓는 중 · 셰이커에 {ingredientMl:0.0} ml");
         UpdateProgressText();
     }
 
@@ -882,13 +882,13 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         if (!ingredientShelf.TryDashSelectedIngredient(out int totalDashCount))
         {
-            SetHint("That dash could not be added to the Shaker.");
+            SetHint("셰이커에 대시를 더할 수 없습니다.");
             return;
         }
 
         IngredientData ingredient = ingredientShelf.SelectedIngredient;
         float ingredientMl = GetShaker().GetLiquidAmountMl(ingredient);
-        SetHint($"{ingredient.displayName} — {totalDashCount} dash ({ingredientMl:0.0} ml).");
+        SetHint($"{ingredient.displayName} — {totalDashCount} 대시 ({ingredientMl:0.0} ml).");
         UpdateProgressText();
         Debug.Log($"[Dash] Ingredient={ingredient.ingredientId} count={totalDashCount} compatibilityMl={ingredientMl:0.###}");
     }
@@ -963,8 +963,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             case State.Preparing:
                 progressText.text = shakerState == null
-                    ? "Shaker 0.0 ml"
-                    : $"Shaker {shakerState.CurrentLiquidVolumeMl:0.0} ml{(shakerState.HasIce ? " / ice" : string.Empty)}";
+                    ? "셰이커 0.0 ml"
+                    : $"셰이커 {shakerState.CurrentLiquidVolumeMl:0.0} ml{(shakerState.HasIce ? " / 얼음" : string.Empty)}";
                 break;
 
             case State.Rhythm:
@@ -976,33 +976,33 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
                 float untilNext = GetExpectedNoteTime(nextNoteIndex) - Time.unscaledTime;
                 progressText.text =
-                    $"Next: {DirectionLabel(GetExpectedDirection(nextNoteIndex))} " +
+                    $"다음: {DirectionLabel(GetExpectedDirection(nextNoteIndex))} " +
                     (GetExpectedDirection(nextNoteIndex) == ShakeDirection.Left ? "[A / ←]" : "[D / →]") + "  " +
                     $"{Mathf.Max(0f, untilNext):0.00}s  " +
-                    $"{nextNoteIndex + 1}/{NoteCount}  P{perfectHitCount} G{goodHitCount} M{missCount}";
+                    $"{nextNoteIndex + 1}/{NoteCount}  정확 {perfectHitCount} · 안정 {goodHitCount} · 놓침 {missCount}";
                 break;
 
             case State.AwaitingStrain:
                 progressText.text =
-                    $"Rhythm {CorrectHitCount}/{NoteCount} correct — Shaker " +
-                    $"{shakerState?.CurrentLiquidVolumeMl ?? 0f:0.0} ml ready to " +
-                    (UsesExpectedPourFromContainerTransfer() ? "pour to glass" : "strain");
+                    $"박자 {CorrectHitCount}/{NoteCount} 일치 · 셰이커 " +
+                    $"{shakerState?.CurrentLiquidVolumeMl ?? 0f:0.0} ml · 다음 동작: " +
+                    (UsesExpectedPourFromContainerTransfer() ? "잔으로 붓기" : "걸러 따르기");
                 break;
 
             case State.AwaitingGarnish:
                 progressText.text =
-                    $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / " +
+                    $"서빙 잔 {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml / " +
                     (garnishController != null && garnishController.IsExpectedGarnishRequired
                         ? "가니시 필수"
                         : "가니시·가볍게 젓기 선택");
                 break;
 
             case State.GentleStirring:
-                progressText.text = $"Gentle Stir {gentleStirInteraction?.Revolutions ?? 0f:0.00} rotations";
+                progressText.text = $"가볍게 젓기 {gentleStirInteraction?.Revolutions ?? 0f:0.00}회전";
                 break;
 
             case State.Result:
-                progressText.text = $"Serving Glass {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml";
+                progressText.text = $"서빙 잔 {servingGlass?.CurrentLiquidVolumeMl ?? 0f:0.0} ml";
                 break;
         }
     }

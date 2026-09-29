@@ -313,7 +313,7 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         float ingredientMl = ingredientShelf.ServingGlass.GetLiquidAmountMl(ingredient);
         if (!ShowTopUpGuidance(ingredient))
-            SetHint($"Pouring {ingredient.displayName}: {ingredientMl:0.0} ml in Serving Glass.");
+            SetHint($"{ingredient.displayName} 붓는 중 · 서빙 잔에 {ingredientMl:0.0} ml");
 
         UpdateProgressText();
     }
@@ -365,13 +365,13 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (!ingredientShelf.TryDashSelectedIngredient(out int totalDashCount))
         {
-            SetHint("That dash could not be added to the Serving Glass.");
+            SetHint("서빙 잔에 대시를 더할 수 없습니다.");
             return;
         }
 
         IngredientData ingredient = ingredientShelf.SelectedIngredient;
         float ingredientMl = ingredientShelf.ServingGlass.GetLiquidAmountMl(ingredient);
-        SetHint($"{ingredient.displayName} — {totalDashCount} dash ({ingredientMl:0.0} ml).");
+        SetHint($"{ingredient.displayName} — {totalDashCount} 대시 ({ingredientMl:0.0} ml).");
         UpdateProgressText();
 
         Debug.Log(
@@ -468,17 +468,17 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         float currentMl = ingredientShelf.ServingGlass.CurrentLiquidVolumeMl;
         float signedRemainingMl = topUpGuidance.GetSignedRemainingMl(currentMl);
         string status = signedRemainingMl > 0f
-            ? $"{signedRemainingMl:0.0} ml remaining"
+            ? $"{signedRemainingMl:0.0} ml 남음"
             : signedRemainingMl < 0f
-                ? $"{-signedRemainingMl:0.0} ml over"
-                : "at target";
+                ? $"{-signedRemainingMl:0.0} ml 초과"
+                : "목표량";
 
         SetHint(
-            $"Top up {selectedIngredient.displayName}: {currentMl:0.0} / " +
+            $"{selectedIngredient.displayName} 채우기: {currentMl:0.0} / " +
             $"{topUpGuidance.TargetFinalVolumeMl:0.0} ml ({status}).");
 
         if (progressText != null)
-            progressText.text = $"Top Up {currentMl:0.0} / {topUpGuidance.TargetFinalVolumeMl:0.0} ml";
+            progressText.text = $"채우기 {currentMl:0.0} / {topUpGuidance.TargetFinalVolumeMl:0.0} ml";
 
         return true;
     }
@@ -518,12 +518,12 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (servingGlass == null)
         {
-            progressText.text = "Serving Glass 0.0 ml";
+            progressText.text = "서빙 잔 0.0 ml";
             return;
         }
 
-        string iceText = servingGlass.HasIce ? " / ice" : string.Empty;
-        progressText.text = $"Serving Glass {servingGlass.CurrentLiquidVolumeMl:0.0} ml{iceText}";
+        string iceText = servingGlass.HasIce ? " / 얼음" : string.Empty;
+        progressText.text = $"서빙 잔 {servingGlass.CurrentLiquidVolumeMl:0.0} ml{iceText}";
     }
 
     private void SetPrimaryAction(Action action, string label, bool visible)

@@ -65,7 +65,11 @@ public sealed class DemoAudioController : MonoBehaviour
         observedContainer = null;
         observedVolume = 0f;
         if (shelf != null) shelf.IngredientUsed += OnLiquid;
-        if (runner != null) BindButtons(runner.gameObject);
+        if (runner != null)
+        {
+            SurlhwaBartendingPresentation.AddSettings(runner.gameObject, ToggleSettings);
+            BindButtons(runner.gameObject);
+        }
     }
     private void BindButtons(GameObject root)
     {

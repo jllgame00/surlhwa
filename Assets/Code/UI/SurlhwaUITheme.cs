@@ -59,6 +59,11 @@ public static class SurlhwaUITheme
         if (root == null) return;
         foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) Text(text, Mathf.Max(18, text.fontSize));
         foreach (var button in root.GetComponentsInChildren<Button>(true)) Button(button);
+        foreach (var scroll in root.GetComponentsInChildren<Scrollbar>(true))
+        {
+            var track = scroll.GetComponent<Image>(); if (track != null) track.color = Raised;
+            if (scroll.targetGraphic != null) scroll.targetGraphic.color = Brass;
+        }
     }
     public static RectTransform Rect(string name, Transform parent, Vector2 size, Vector2 position)
     {
