@@ -249,7 +249,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         ingredientShelf.SetVisible(false);
         SetPrimaryAction(null, string.Empty, false);
         SetHint("왼쪽·오른쪽 박자를 따라 눌러 주세요. 왼쪽: A / ← · 오른쪽: D / →");
-        SetRhythmFeedback("Ready", new Color(0.8f, 0.86f, 0.92f, 1f));
+        SetRhythmFeedback("박자 준비", new Color(0.8f, 0.86f, 0.92f, 1f));
         UpdateProgressText();
 
         Debug.Log(
@@ -288,7 +288,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             extraInputCount++;
             SetHint("다음 방향과 박자를 확인해 주세요.");
-            SetRhythmFeedback("Off Beat", new Color(0.95f, 0.65f, 0.32f, 1f));
+            SetRhythmFeedback("박자가 어긋났어요", new Color(0.95f, 0.65f, 0.32f, 1f));
             UpdateProgressText();
             return ShakeJudgement.Extra;
         }
@@ -299,7 +299,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             wrongDirectionCount++;
             ConsumeMiss();
             SetHint($"다음 방향은 {DirectionLabel(expectedDirection)}입니다.");
-            SetRhythmFeedback("Miss", new Color(0.88f, 0.42f, 0.42f, 1f));
+            SetRhythmFeedback("놓친 박자", new Color(0.88f, 0.42f, 0.42f, 1f));
             UpdateProgressText();
             TryCompleteRhythm();
             return ShakeJudgement.Miss;
@@ -310,7 +310,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             perfectHitCount++;
             nextNoteIndex++;
             SetHint($"정확하게 · {DirectionLabel(expectedDirection)}");
-            SetRhythmFeedback("Perfect", new Color(0.78f, 0.93f, 0.72f, 1f));
+            SetRhythmFeedback("정확한 박자", new Color(0.78f, 0.93f, 0.72f, 1f));
             UpdateProgressText();
             TryCompleteRhythm();
             return ShakeJudgement.Perfect;
@@ -319,7 +319,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         goodHitCount++;
         nextNoteIndex++;
         SetHint($"안정적으로 · {DirectionLabel(expectedDirection)}");
-        SetRhythmFeedback("Good", new Color(0.8f, 0.86f, 0.92f, 1f));
+        SetRhythmFeedback("맞는 박자", new Color(0.8f, 0.86f, 0.92f, 1f));
         UpdateProgressText();
         TryCompleteRhythm();
         return ShakeJudgement.Good;
@@ -727,7 +727,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         missCount++;
         nextNoteIndex++;
-        SetRhythmFeedback("Miss", new Color(0.88f, 0.42f, 0.42f, 1f));
+        SetRhythmFeedback("놓친 박자", new Color(0.88f, 0.42f, 0.42f, 1f));
     }
 
     private bool TryCompleteRhythm()
@@ -744,14 +744,14 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
         if (resultLabel != null)
         {
-            resultLabel.text = completedGrade.ToString();
+            resultLabel.text = "조주: " + GuestServiceFeedbackFormatter.TechniqueLabel(completedGrade.ToString());
             resultLabel.color = Color.white;
         }
 
         bool usePourFromContainer = UsesExpectedPourFromContainerTransfer();
         SetPrimaryAction(
             usePourFromContainer ? PourFromContainerAndContinue : StrainAndSubmit,
-            usePourFromContainer ? "잔으로 붓기" : "Strain",
+            usePourFromContainer ? "잔으로 붓기" : "걸러 따르기",
             true);
         SetHint(usePourFromContainer
             ? "흔들기를 마쳤습니다. 셰이커의 내용물을 서빙 잔으로 부어 주세요."

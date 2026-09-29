@@ -262,7 +262,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
         if (spoon != null) spoon.gameObject.SetActive(false);
 
         if (resultLabel != null)
-            resultLabel.text = completedGrade.ToString();
+            resultLabel.text = "조주: " + GuestServiceFeedbackFormatter.TechniqueLabel(completedGrade.ToString());
 
         SetPrimaryAction(StrainAndSubmit, "걸러 따르기", true);
         SetHint("젓기를 마쳤습니다. 걸러 따르기를 눌러 서빙 잔으로 옮겨 주세요.");

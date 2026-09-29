@@ -97,7 +97,7 @@ public static class GuestServiceFeedbackFormatter
             : result.MatchedCocktail.cocktailName;
     }
 
-    private static string TechniqueLabel(string grade) => grade switch {
+    public static string TechniqueLabel(string grade) => grade switch {
         "Good" => "안정적", "Acceptable" => "기본", "Poor" => "미흡", "Complete" => "마무리", _ => grade };
 
     private static string GetTitle(GuestReactionResolver.GuestResponseOutcome response)

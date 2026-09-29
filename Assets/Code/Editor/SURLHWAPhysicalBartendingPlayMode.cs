@@ -78,6 +78,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             // keyboard polling from an unattended Editor mouse/keyboard.
             ((MonoBehaviour)game).enabled = false;
             game.StartGame(_ => { });
+            SurlhwaBartendingPresentation.Apply(root, "물리 조주 검증"); // Explicit fixture label, not a guest request.
             var shelf = root.GetComponentInChildren<IngredientShelfController>(true);
             var ingredient = shelf.ConfiguredIngredients[0];
             foreach (var candidate in shelf.ConfiguredIngredients)
@@ -274,6 +275,8 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                         "Surface garnish is detached from liquid surface.");
             }
             SURLHWAReviewCapture.Save("phase-k-" + method + "-finished", 1280, 720);
+            SURLHWAReviewCapture.Save("phase-m-physical-" + method + "-finished", 1280, 720);
+            SURLHWAReviewCapture.Save("phase-m-physical-" + method + "-finished", 1920, 1080);
             var appearance = ServedDrinkAppearance.Capture(root);
             Require(appearance != null && appearance.Garnish == shelf.ServingGlass.Garnish &&
                 appearance.HasIce == shelf.ServingGlass.HasIce, "Final drawing differs from actual glass.");

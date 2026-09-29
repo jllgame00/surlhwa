@@ -11,11 +11,15 @@ public static class SurlhwaBartendingPresentation
         var ui = root.transform.Find("UI");
         if (ui == null) return;
         SurlhwaUITheme.Tree(ui.gameObject);
+        // Build/Float's legacy title repeats the same public request at 36 units.
+        // Keep one request reading area, clear of technique instructions.
+        var legacyTitle = ui.Find("IngredientText");
+        if (legacyTitle != null) legacyTitle.gameObject.SetActive(false);
         var shelf = root.GetComponentInChildren<IngredientShelfController>(true);
         foreach (var option in root.GetComponentsInChildren<BrewIngredientOptionView>(true))
             option.SetSelectedVisual(shelf != null && option.Ingredient == shelf.SelectedIngredient);
         var request = SurlhwaUITheme.Label("RequestContext", ui, "손님의 부탁 · " + requestTitle,
-            22, new Vector2(720, 44), new Vector2(-120, 316));
+            22, new Vector2(720, 64), new Vector2(-120, 306));
         request.alignment = TextAlignmentOptions.MidlineLeft;
         foreach (var name in new[] { "HintText", "StartHintText" })
         {
@@ -29,6 +33,13 @@ public static class SurlhwaBartendingPresentation
         {
             SurlhwaUITheme.Text(progress, 20, true);
             SurlhwaUITheme.Place(progress.rectTransform, new Vector2(800, 48), new Vector2(170, 178));
+        }
+        foreach (var result in root.GetComponentsInChildren<TMP_Text>(true))
+        {
+            if (result.name != "ResultLabel") continue;
+            result.transform.SetParent(ui, false);
+            SurlhwaUITheme.Text(result, 20);
+            SurlhwaUITheme.Place(result.rectTransform, new Vector2(800, 36), new Vector2(170, 124));
         }
         foreach (var name in new[] { "StartupButton", "StartButton", "FinishButton" })
         {

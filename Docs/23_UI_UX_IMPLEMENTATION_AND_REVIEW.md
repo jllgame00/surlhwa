@@ -200,3 +200,92 @@ Unity version/time/result/warnings, current review images and these documents.
 It refuses dirty implementation/scenes, preserves the Editor scene setup, and
 isolates legacy static validators. Build completion and final full campaign
 evidence are recorded below after execution, not inferred from this tooling.
+
+## Final coverage boundaries
+
+Candidate `c26a9dd` passed compile, the complete UI probe, audio pause and
+physical regression. Its first full campaign run was deliberately interrupted
+after the visual corrections described below were identified. It is not final
+campaign PASS evidence. Final source/build identity is recorded below; subsequent
+documentation-only commits do not change executable behavior.
+
+### Render-driven corrections before final campaign
+
+Native Build/Float captures exposed an old 36-unit request title still visible
+under the new request band. The redundant label is now hidden in presentation;
+the public request is shown once in a 64-unit area. Technique result labels have
+a separate 20-unit row below measurements, and reuse the service formatter's
+Korean grade labels. Shake's momentary beat words are also Korean; judgments,
+timing and scores are unchanged.
+
+The first real discovery capture exposed the serialized yellow `UnlockPanel`
+below the animated root: styling the root alone had not changed the background.
+The actual background now uses the opaque shared surface; the popup sits below
+the corner settings icon. Queue/acknowledgment/knowledge timing is unchanged.
+The interrupted campaign restored the exact progress/audio/knowledge hash.
+The complete UI probe passed the Build/Float correction. The physical fixture
+now applies the same presentation entry point and retains additional, explicitly
+labelled `phase-m-physical-*-finished` captures at both resolutions. Final
+campaign and physical regression are rerun after the corrections.
+
+| Required scenario | Evidence and boundary |
+|---|---|
+| Fresh entry → New Game → first guest | Phase M pointer/raycast path; absent-save Continue is disabled; full campaign uses callbacks |
+| Early and extended Continue | UI fixture nights 2/5/18; campaign exercises persisted departure checkpoints and interrupted encounter restart |
+| Dialogue → choice → request → method | actual authored production controls; pointer reading boundary; current request routing also covered by integrated request validators |
+| Four method selections, back/reopen/confirm | center raycasts + down/up/click; explicit check mark; each reaches exactly one active method workspace |
+| Guide/read/resume | all four actual route surfaces; nested Settings retains Guide pause; audio regression proves unscaled Shake notes resume without misses |
+| Settings/resume | three pointer-operated cycles, actual volume persistence, underlying Guide button shielded, prior 0.5 time scale restored; native held-input edge cases remain debt |
+| Complete Build/Stir/Shake/Float | Phase K uses actual physical input seams and containers; campaign uses reachable authored recipes; Float is the existing controlled physical fixture |
+| Partial, retry, successful learning | real filtered Partial/Known views; existing static knowledge contracts; normal campaign discovery/retry regression |
+| Reaction → feedback → discovery → departure | existing queue retained; campaign observer captures actual first service/discovery and rejects overlap; 47-departure run checks completion continuity |
+| Summary → Codex → close | production panel fixture retains same summary; full campaign checks nightly lifecycle; the fixture is not a claim that a summary normally overlaps dialogue |
+| Ending interruption/coda/entry/reset | existing ending regression plus programmatic pointer navigation; cancel preserves progress, confirm resets, entry has no hidden ending panel |
+| Repeated surfaces/scene returns | repeated settings, four additive route returns and multiple title reloads; no leftover modal/pause lock or runtime errors in complete UI probe |
+
+### Evidence levels
+
+- **A — compile/static:** C# and unchanged-authority regression validators.
+- **B — callbacks/input seams:** full campaign, physical mechanics, audio pause,
+  Codex detail selection and some fixture setup. A callback is not a hit-area test.
+- **C — pointer/raycast:** Phase M constructs PointerEventData, checks the actual
+  EventSystem top raycast, then dispatches pointer down/up/click to the reached
+  control. Includes the guest prompt, dialogue/choice, four method controls,
+  Guide close/open, Settings close/volume and ending/reset navigation. This
+  exercises uGUI routing, not the native OS/input-module event stream.
+- **D — render:** production scene/prefab/controller output at both required
+  resolutions, using the existing offscreen Canvas projection helper. Review
+  fixtures are explicitly seeded; normal-service captures come from the campaign.
+- **E — standalone:** see build/smoke record below. Editor tests do not substitute
+  for a complete standalone navigation or campaign run.
+- **F — human:** not performed by the agent. Physical mouse/keyboard feel,
+  held-input opening/releasing/closing overlays and full human playthrough remain
+  VALIDATION_DEBT, with visual/pacing preference HUMAN_UI_TUNING_LATER.
+
+No native mouse test, accessibility certification, controller support or untested
+aspect ratio is claimed. Masked/offscreen scrolling entries and dragging a native
+pointer across panel boundaries have narrower render/code evidence and require
+physical-input review. Current desktop project defaults are 1920×1080, 16:9;
+1280×720 is a reviewed equivalent-ratio presentation, not a new display framework.
+
+### Fonts, assets and review files
+
+TMP's existing LiberationSans SDF uses `KoreanFallback.asset` (dynamic Noto Sans
+KR) from the existing project. No new font download or dependency. Native captures
+show Korean dialogue, punctuation, choices, ingredient labels, ml/oz, recipe
+instructions and ending without observed missing glyphs. This is sampled rendered
+coverage, not a claim that every possible Unicode character is supported.
+
+Retained art: book/settings icons, all cocktail/glass illustrations and colors,
+Shaker, 31 physical pixel assets, modular bar, chibi special cast and charcoal
+ordinary guests. No new UI raster artwork was needed; panels/edges are deterministic
+uGUI graphics with live text. Owner reference inputs were unchanged.
+
+Individual captures: `Logs/Review/phase-m-review-*-1280x720.png` and
+`*-1920x1080.png` (entry, idle, dialogue, choice, request, selected methods,
+four workspaces/Guides, Partial/Known Codex, summary/return, settings, ending,
+coda and reset confirmation). Matching `.txt` files contain bounds/raycast/text
+observations. `phase-m-normal-service-*` and `phase-m-normal-discovery-*` are
+automated normal-campaign captures. Baseline and earlier navigation captures
+retain their distinct prefixes. Native images were inspected separately from
+the contact sheet; thumbnails alone were not used to approve text readability.

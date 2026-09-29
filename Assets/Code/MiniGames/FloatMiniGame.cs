@@ -401,7 +401,7 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         state = State.AwaitingGarnish;
 
         if (resultLabel != null)
-            resultLabel.text = completedGrade.ToString();
+            resultLabel.text = "조주: " + GuestServiceFeedbackFormatter.TechniqueLabel(completedGrade.ToString());
 
         ingredientShelf.SetVisible(false);
         garnishController?.BeginSelection();
