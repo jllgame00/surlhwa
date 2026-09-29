@@ -32,6 +32,8 @@ public static class SURLHWAPhaseMUIValidation
     public static void RunNavigation() => Start("navigation");
     public static void RunInputModule() => Start("input-module");
     public static void RunDiegetic() => Start("diegetic");
+    public static void RunStagingBefore() => Start("staging-before");
+    public static void RunStagingAfter() => Start("staging-after");
     public static void RunNotificationLayout() => Start("notification-layout");
     static void Start(string mode)
     {
@@ -54,7 +56,7 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
-        if (mode == "input-module" || mode == "diegetic") EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
+        if (mode == "input-module" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -230,6 +232,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Run()
     {
+        if (SURLHWAPhaseMUIValidation.Mode.StartsWith("staging-")) { yield return StagingFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "diegetic") { yield return DiegeticFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "notification-layout") { yield return NotificationLayout(); yield break; }
@@ -394,6 +397,45 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         yield return ModuleClick(Named("CloseSoundSettings"));
         if (Time.timeScale != 1 || SurlhwaModalSurface.Top != null) throw new InvalidOperationException("Module flow left a modal lock");
         Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/Codex masked cards/wheel/detail/back focus/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
+    }
+    IEnumerator StagingFlow()
+    {
+        UnityEngine.Random.InitState(42); // Comparable checkpoint fixtures, not a production random policy.
+        probeMouse = UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Mouse>("Staging review mouse");
+        yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();
+        var ui = Find<InteractionUIController>();
+        foreach (var method in new[] { MiniGameType.Stir, MiniGameType.Shake, MiniGameType.Build, MiniGameType.Float })
+        {
+            yield return ModuleClick(ButtonField(ui, "brewButton"));
+            var target = ButtonField(ui, method.ToString().ToLowerInvariant() + "Button");
+            var rect = (RectTransform)target.transform;
+            var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+            UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+            yield return new WaitForSecondsRealtime(.25f);
+            var state = target.GetComponent("SurlhwaMethodSetupTarget");
+            if (!CanPointAt(target) || !(bool)state.GetType().GetProperty("Hovered").GetValue(state) || (bool)Get(ui, "hasMethodSelected"))
+                throw new InvalidOperationException("Expected reachable, hovered, unselected setup");
+            if (SURLHWAPhaseMUIValidation.Mode == "staging-after")
+            {
+                var shadow = target.transform.Find("CountertopArrangement/ContactShadow").GetComponent<Graphic>();
+                if (shadow.canvasRenderer == null) throw new InvalidOperationException("Contact shadow has no renderer");
+                var mesh = shadow.canvasRenderer.GetMesh();
+                if (mesh == null || mesh.vertexCount == 0 || shadow.raycastTarget)
+                    throw new InvalidOperationException("Contact shadow is empty or blocks input");
+                foreach (var graphic in target.GetComponentsInChildren<Graphic>())
+                    if (graphic.transform != target.transform && graphic.raycastTarget)
+                        throw new InvalidOperationException("Setup decoration blocks the hit area: " + graphic.name);
+            }
+            yield return Capture(method + "-hover");
+            yield return ModuleClick(target);
+            UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = new Vector2(40, Screen.height / 2) });
+            yield return new WaitForSecondsRealtime(.25f);
+            if (!(bool)state.GetType().GetProperty("Chosen").GetValue(state) || (bool)state.GetType().GetProperty("Hovered").GetValue(state))
+                throw new InvalidOperationException("Expected selected setup after pointer exit");
+            yield return Capture(method + "-selected");
+            yield return ModuleClick(ButtonField(ui, "cancelButton"));
+        }
+        Debug.Log("[Staging] PASS: four hover and selected states, selected emphasis after pointer exit, at " + Screen.width + "x" + Screen.height);
     }
     IEnumerator DiegeticFlow()
     {

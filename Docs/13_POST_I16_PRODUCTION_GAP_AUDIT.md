@@ -2405,3 +2405,26 @@ after its Pipeline commands stopped responding. All 63 baseline dirty paths,
 including the protected config, retain their initial byte hashes. Native-input
 and patch standalone coverage remain VALIDATION_DEBT; human UI preference is
 HUMAN_UI_TUNING_LATER. Character animation remains actual deferred implementation.
+
+### Countertop staging polish, 2026-09-29
+
+Based on `ca16d95`, the diegetic selector now groups each tool arrangement with
+soft contact shadows and warm object-centered hover/selected light. Float gains
+a small pouring vessel and a spoon placed at the glass rim. Korean labels shrink
+to 16 units; opaque bars and selection underlines are removed. Existing hit areas,
+modal/input policy, route callbacks, request note and Start/Back are preserved.
+No gameplay, world composition, scene/prefab or asset importer change is required.
+
+Both resolutions passed four-method virtual pointer entry/modal regression and
+hover/selected capture checks. Compile, physical prefab and integrated campaign
+edit-mode regression passed. A chained common-menu input run reported a modal
+lock; the unchanged test passed in a fresh session. Both results and exact source
+hashes are recorded in Docs/23. This does not claim human input, full campaign
+Play Mode, arbitrary long-session behavior or an updated standalone build.
+
+All four hover/selected states have before/after full-resolution images at
+1280×720 and 1920×1080, indexed in `Logs/Review/phase-m-staging-review.html`.
+The 63 baseline dirty files retain their byte hashes; protected config is
+untouched. Human visual approval remains HUMAN_UI_TUNING_LATER; native-input,
+long-session and current-package checks remain VALIDATION_DEBT. Deferred
+character animation and audio are unchanged.

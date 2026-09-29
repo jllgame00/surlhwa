@@ -69,7 +69,7 @@ must never bind unfiltered recipe facts. Supply remains independent of knowledge
 |---|---|
 | `Assets/Code/UI/SurlhwaUITheme.cs` | palette, 1-unit panel edge, 2-unit focus edge, 0.10 s button tint, 64×64 corner icons |
 | `InteractionUIController` | existing method selection/confirmation ownership; dialogue 1040×224 with 22-unit body and 54-unit actions |
-| `SurlhwaMethodSetupView` | counter-projected tool setups, 128×132 hit areas; compact Korean labels 18; request note 1040×136 with body 20 and small confirm/back controls |
+| `SurlhwaMethodSetupView` | counter-projected tool setups, 128×132 hit areas; compact Korean labels 16; request note 1040×136 with body 20 and small confirm/back controls |
 | `SurlhwaReadingClickBoundary` | shared 0.24 s pointer beat boundary; authored reading still requires explicit advancement |
 | `CocktailCodexPanelController` / `RecipeGuidePanelController` | opaque knowledge surfaces, 20-unit recipe text, scroll areas; Guide close 160×44 |
 | `BrewIngredientOptionView` / `IngredientShelfController` | 56-unit ingredient row; name 18, actual quantity 16; selected check mark |
@@ -97,9 +97,9 @@ retain their existing direct entry (including discovery and the first Manwol).
 | Setup | Method | Support |
 |---|---|---|
 | Mixing glass with upright spoon | 젓기 / Stir | slow stirring description |
-| Existing Shaker artwork | 흔들기 / Shake | sideways shaking description |
+| Existing Shaker artwork with small Jigger | 흔들기 / Shake | sideways shaking description |
 | Serving glass with small bottle | 잔에 만들기 / Build | add ingredients directly |
-| Empty glass with horizontal spoon | 층 쌓기 / Float | explicitly explains pouring slowly along the spoon to form layers |
+| Empty glass with spoon across the rim and small Jigger | 층 쌓기 / Float | explicitly explains pouring slowly along the spoon to form layers |
 
 The tools are uGUI sprite projections anchored to fixed world points on the
 existing countertop, not new world physics or interaction objects. Counter
@@ -107,9 +107,11 @@ anchors, sizes and text live in `SurlhwaMethodSetupView`. World composition,
 camera, furniture and characters are untouched. No prepared cocktail is
 invented in these empty setup previews.
 
-Each transparent button is larger than its visible tool. Hover/focus adds a
-thin tool outline and one-line help. Selection adds a check mark, brass label
-and short underline. Only the existing controller owns the selected method.
+Each transparent button is larger than its visible tool. Hover/focus adds warm
+tool edges, gentle brightening, soft countertop light and one-line help.
+Selection sustains stronger object-centered light after pointer exit, with a
+secondary check mark. Opaque label bars and underlines are removed. Only the
+existing controller owns the selected method.
 The request note repeats already-visible guest context, identifies recommendation
 versus exact, and retains small Start/Back actions. Confirm remains disabled
 until an explicit choice. Back returns to dialogue; reopening clears selection.
@@ -120,6 +122,32 @@ their existing shade. Decorative sprites, shadows, labels and selection markers
 do not raycast. Codex/Settings keep their existing priority and return behavior;
 Guide remains available after entering the chosen workspace. No new shortcut,
 pause owner, request state, liquid state or recipe-knowledge source is added.
+
+#### Countertop staging defaults (polish patch)
+
+`CountertopArrangement` groups each setup inside the unchanged hit area. Stir's
+spoon sits inside the mixing glass; Shake gains a small adjacent Jigger; Build's
+bottle stands behind the serving glass; Float places a horizontal spoon at the
+glass rim with a small pouring vessel alongside. Art-only depth offsets are
++2 units for Shake and -2 for Build; world anchors and camera stay unchanged.
+
+`SurlhwaSetupSoftOval` is a deterministic, non-raycasting uGUI mesh helper in the
+same source file. It uses 32 segments and four radial alpha bands, with an
+explicit CanvasRenderer. No sprite import, texture, material or font is added.
+
+| Presentation | Reference-unit defaults |
+|---|---|
+| Shared contact shadow | 82×18 at y=-33, alpha .48 |
+| Individual tool footprints | .95×tool width, height 9, alpha .75 |
+| Countertop light | 100×28, warm ivory/brass, maximum alpha .30 |
+| Tool light and rim | 82×96 halo, maximum alpha .13; 1-unit outline, alpha .62 |
+| State emphasis | idle 0, keyboard focus .30, hover .65, selected 1; .14 s full-range unscaled fade |
+| Labels | 16-unit live Korean text, 1-unit text shadow; small soft backing alpha .26–.36, no opaque plate |
+
+Props brighten from muted ivory to white. There is no movement, scale pulse or
+timing change. The small check remains a non-color selection cue; it is no longer
+the primary emphasis. Request/help and Start/Back sizes are unchanged. Final
+subjective balance remains human tuning; capture and input evidence is in Docs/23.
 
 No new image or font assets were needed. All changes use live TMP text, uGUI
 graphics and owned art. Korean fallback remains the existing project font setup.

@@ -39,6 +39,14 @@ playthrough are not certified by the automated checks.
 
 ## Phase M package identity
 
+The countertop staging polish adds contact shadows, grouped supporting tools,
+warm hover/selected light and smaller labels without opaque menu bars. At both
+review resolutions, inspect all four hover and selected states, especially the
+spoon/Jigger/glass layering arrangement. Judge whether the tools feel grounded
+and the light stays quiet. Human aesthetic approval remains pending. The local
+before/after index is `Logs/Review/phase-m-staging-review.html`; Docs/23 records
+source hashes, executed tests and remaining native-input/standalone coverage.
+
 The countertop method-selection patch is documented in Docs/23 and implemented
 in `72ff492`. The package below predates that patch; do not use it as evidence
 of the new tool-selection UX. Patch validation used an isolated Editor copy.

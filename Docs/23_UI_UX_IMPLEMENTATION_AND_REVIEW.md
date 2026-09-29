@@ -623,3 +623,121 @@ release, a patch standalone package/navigation, and full human playthrough.
 HUMAN_UI_TUNING_LATER covers final preference for scale, labels and feel.
 CHARACTER_ANIMATION_DEFERRED, DEFERRED_AUDIO, FUTURE_EXPANSION and OUT_OF_SCOPE
 remain as above. No required method-selection implementation is left as tuning.
+
+## Method-selection polish — countertop staging and light (2026-09-29)
+
+### Scope and current presentation
+
+Start: `ca16d956c2589fdef6aa007a501db9547b7a2906` on
+`refactor/project-rebuild`. The previous patch was functionally intact. Its
+thin flat contact strokes, separate upright props, 120×28 opaque label bars
+and check/underline emphasis still made the setups resemble a row of buttons.
+This pass changes only their presentation and focused capture validation.
+
+- Stir: larger mixing glass, with the spoon overlapping inside it.
+- Shake: existing Shaker remains dominant; a small adjacent Jigger completes
+  the arrangement.
+- Build: serving glass dominates, with the small bottle behind and beside it.
+- Float: horizontal spoon rests at the glass rim, with a small Jigger alongside.
+  The existing explicit layering help remains in the request note.
+- Every arrangement has a soft oval contact shadow and individual prop
+  footprints. Minor art offsets vary depth without moving any hit area.
+- Hover gently brightens the props and adds warm rim/countertop light. Selected
+  light persists after pointer exit. The check is a secondary non-color cue.
+- Labels shrink from 18 to 16 reference units; opaque bars and underlines are
+  removed. A small soft text backing and one-unit shadow preserve legibility.
+- Existing 128×132 targets, anchors, request note, Start/Back, controller
+  callbacks, modal shield, focus/input policy and method mapping are unchanged.
+  No order, technique, liquid, preparation, knowledge, progression or save
+  authority changes. Exact direct entry and Recommendation choice remain intact.
+
+All tools reuse the existing art catalog and Shaker reference. `Jigger` is the
+only additional reused catalog sprite. The helper `SurlhwaSetupSoftOval` makes
+contact/light/text-backdrop meshes with four alpha bands and 32 segments. This
+is deterministic code geometry, not generated bitmap or AI artwork. No new
+asset, font, scene, prefab, world transform, importer or GUID change is needed.
+Docs/22 lists sizes, alpha values and tuning locations.
+
+### Source and validation identity
+
+The final runtime source is the implementation included with this section,
+based on the starting revision above. Executed copy and original sources were
+SHA256-compared after the last runtime change:
+
+| Source | SHA256 |
+|---|---|
+| `Assets/Code/UI/SurlhwaMethodSetupView.cs` | `533452C273B2A11A23D4CA4CB33448E262E8E94EB7E1AEBED5971FC45E7E2046` |
+| `Assets/Code/Editor/SURLHWAPhaseMUIValidation.cs` | `0BAC14AB6BC927D3F78A0A64ACB3B8F16C7C5533B8E5DA3356F2F24233D17428` |
+
+The original Editor still timed out on a five-second Pipeline probe. Validation
+used the existing source-only copy in `Temp/PhaseMDiegetic/ValidationProject`
+with Unity 6000.3.7f1. Only the two changed source files were updated there.
+The original Editor was not terminated. Owned validation Editors closed
+normally after tests. Each UI run snapshot/restored and verified progress and
+sound preferences; no owner New Game reset was left behind.
+
+| Evidence level | Result and boundary |
+|---|---|
+| A compile/static | `dotnet build Assembly-CSharp-Editor.csproj --no-restore`: zero errors, eight existing warnings (MSB3277 and seven CS0252). Scoped diff whitespace check passes; baseline metadata/font whitespace is preserved. |
+| B callback fixtures | Existing diegetic regression directly opens nested Codex/Settings as fixtures; this does not imply their corner buttons are available through the method modal. |
+| C pointer/raycast | `RunStagingAfter` passes all four hover and selected states at both resolutions, including selection after pointer exit, actual nonempty shadow CanvasRenderer meshes and non-raycasting decorations. `RunDiegetic` passes all four route starts, center/four padded hit samples, disabled confirm, shield, selection changes, Back/reopen, unchanged Recommendation context, Guide return and nested modal blocking/close. These use queued virtual mouse states through InputSystemUIInputModule. |
+| C shared input regression | Fresh-session `RunInputModule` passes entry/settings/New Game, Codex masked cards/wheel/detail/back focus, guest/dialogue, Exact Stir entry, Guide/settings and no remaining modal/time lock. |
+| D rendered inspection | Before/after hover and selected PNGs for every method at actual 1280×720 and 1920×1080 Game Views. Inspected representative full-resolution outputs across both sizes: lighter labels, tool grouping, readable request/help/Start/Back, contact shadows and restrained selected light. Contact shadow also darkens sampled countertop pixels; it is rendered, not just a populated component. |
+| Physical/campaign regression | `SURLHWAPhysicalBartendingValidation.RunRegression` passes four production prefab hierarchies, measurement/mixed transfer, spoon orbit, bottle pose/stream/state isolation, and campaign integrated static/edit-mode checks including request/knowledge/discovery and 18 nights/47 encounters. Four route entry checks are Play Mode; this polish pass does not claim four complete physical-input cocktails or a new full-campaign Play Mode run. |
+| E standalone | No new package or standalone navigation run for this polish. Existing package predates both selector patches. |
+| F human | No human mouse/keyboard playtest or aesthetic approval claimed. |
+
+Final executions, **2026-09-29 UTC**, after the final runtime change:
+
+- Staging captures/checks: **12:09:16** at 720p, **12:09:34** at 1080p.
+- Four-method diegetic regression: **12:10:27** at 720p, **12:11:22** at 1080p.
+- Physical/campaign integrated edit-mode regression followed the 1080p run.
+- Fresh-session common input-module regression: **12:15:47**.
+
+Earlier attempts remain recorded. An early TMP measurement while the panel was
+inactive threw before font initialization; fixed label widths remove that call.
+The first custom shadow lacked a CanvasRenderer, found during rendered review;
+the helper now requires it and the capture validator checks real mesh output.
+A test API compile error was corrected before final compilation. A temporary
+orchestration flag was lost on Editor restart and mislabeled one later capture
+run as before; those copy-local images are excluded. The original baseline PNGs
+had already been preserved separately. The explicit final after-run above is
+the source of all after evidence.
+
+The common input test appended to the final multi-run sequence reported a
+remaining modal lock at 12:11:38. Its cause was not conclusively isolated. The
+same unchanged assertions passed in a fresh Editor session at 12:15:47, while
+both dedicated diegetic modal runs passed. Both results remain in the logs;
+fresh-session success does not certify arbitrary long-session or native-input
+behavior. No assertion or input policy was weakened to pass.
+
+### Retained review evidence
+
+These are production hierarchies reached from a deterministic **Night 5
+checkpoint fixture**, then the normal Chunhyang dialogue/request flow. They
+are not evidence of playing the preceding nights or human mouse input.
+Baseline runtime is `ca16d95`; before captures completed at 11:51:08/11:51:26 UTC.
+
+- [Before/after review index](../Logs/Review/phase-m-staging-review.html)
+- `Logs/Review/phase-m-staging-{before,after}-{Stir,Shake,Build,Float}-{hover,selected}-{1280x720,1920x1080}.png`
+- 32 method-state PNGs retained, plus four dialogue context captures and
+  corresponding text/raycast reports. Individual full-size PNGs remain
+  available from the review index.
+- [Float before 720p](../Logs/Review/phase-m-staging-before-Float-selected-1280x720.png)
+  / [Float after 720p](../Logs/Review/phase-m-staging-after-Float-selected-1280x720.png).
+- `Temp/PhaseMStaging/compile-polish.log`, `editor-final-after.log`,
+  `input-final.log`, `validation-results-final-sequence.txt`,
+  `input-final-results.txt`, `runtime-manifest.json` and `baseline.json`.
+
+Captures, review HTML, logs and validation copy are ignored local artifacts;
+private progress snapshots are not copied into review material. All 63 baseline
+dirty paths match their starting byte hashes, including protected config,
+56 metadata files, two UserSettings and four prior build-generated files. No
+additional tracked asset/settings churn was caused by this task.
+
+PASS: bounded presentation implementation and the checks above.
+VALIDATION_DEBT: native/held-input checks, full long-session playtesting and a
+current standalone package. HUMAN_UI_TUNING_LATER: owner approval of grounding,
+light strength, subordinate labels and physical feel. CHARACTER_ANIMATION_DEFERRED
+remains real unfinished animation work; DEFERRED_AUDIO, FUTURE_EXPANSION and
+OUT_OF_SCOPE remain unchanged. This patch does not reopen broad UI or bar design.
