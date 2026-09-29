@@ -88,8 +88,10 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
         if (Top != this) return;
         RefreshGates(); // Includes controls populated after the surface opens.
         var focus = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
-        if (focus != null && !focus.transform.IsChildOf(transform)) FocusFirst();
+        if (!UsableFocus(focus) || !focus.transform.IsChildOf(transform)) FocusFirst();
     }
+    static bool UsableFocus(GameObject focus) => focus != null && focus.activeInHierarchy &&
+        focus.TryGetComponent<Selectable>(out var control) && control.IsActive() && control.IsInteractable();
     public static bool Back()
     {
         var top = Top;
@@ -143,7 +145,7 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
         Boundary(); RefreshGates();
         if (wasTop && EventSystem.current != null)
         {
-            if (previousFocus != null && previousFocus.activeInHierarchy && Allows(previousFocus.transform))
+            if (UsableFocus(previousFocus) && Allows(previousFocus.transform))
                 EventSystem.current.SetSelectedGameObject(previousFocus);
             else if (Top != null) Top.FocusFirst();
             else EventSystem.current.SetSelectedGameObject(null);

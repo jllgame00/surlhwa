@@ -311,9 +311,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         Find<CocktailCodexPanelController>().Close(); yield return Capture("summary-return");
         yield return Navigation();
     }
-    IEnumerator ModuleClick(Button button)
+    IEnumerator ModuleClick(Button button, bool disabledProbe = false)
     {
-        if (button == null || !CanPointAt(button)) throw new InvalidOperationException("Input-module target is blocked");
+        if (button == null || (!disabledProbe && !CanPointAt(button))) throw new InvalidOperationException("Input-module target is blocked");
         string controlName = button.name;
         var rect = (RectTransform)button.transform;
         var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
@@ -344,6 +344,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (EventSystem.current.GetComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>() == null)
             throw new InvalidOperationException("Unexpected production input module");
         probeMouse = UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Mouse>("Phase M validation mouse");
+        if (Named("ContinueButton").IsInteractable()) throw new InvalidOperationException("Fresh Continue is enabled");
+        yield return ModuleClick(Named("ContinueButton"), true);
+        if (Find<GameManager>().IsGameplaySessionStarted) throw new InvalidOperationException("Disabled Continue started gameplay");
         yield return ModuleClick(Named("SoundSettingsButton"));
         if (!DemoAudioController.IsSettingsOpen) throw new InvalidOperationException("Module click did not open Settings");
         if (CanPointAt(Named("NewGameButton"))) throw new InvalidOperationException("Settings click leaks into entry");
@@ -351,6 +354,26 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (DemoAudioController.IsSettingsOpen) throw new InvalidOperationException("Module click did not close Settings");
         yield return ModuleClick(Named("NewGameButton"));
         yield return Guest();
+        yield return ModuleClick(Named("CodexButton"));
+        var codex = Find<CocktailCodexPanelController>();
+        var cards = (Transform)Get(codex, "cardParent");
+        var scroll = cards.GetComponentInParent<ScrollRect>();
+        var lastCard = cards.GetChild(cards.childCount - 1).GetComponent<Button>();
+        if (CanPointAt(lastCard)) throw new InvalidOperationException("Masked final Codex card receives a pointer before scrolling");
+        float initialScroll = scroll.verticalNormalizedPosition;
+        var wheelPoint = RectTransformUtility.WorldToScreenPoint(null, scroll.viewport.TransformPoint(scroll.viewport.rect.center));
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = wheelPoint, scroll = new Vector2(0, -120) });
+        yield return null;
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = wheelPoint });
+        yield return new WaitForSecondsRealtime(.3f);
+        if (scroll.verticalNormalizedPosition >= initialScroll || !CanPointAt(lastCard))
+            throw new InvalidOperationException("Input-module wheel did not expose final Codex card");
+        yield return ModuleClick(lastCard);
+        yield return ModuleClick(ButtonField(codex, "backButton"));
+        var returnedFocus = EventSystem.current.currentSelectedGameObject;
+        if (returnedFocus == null || !returnedFocus.activeInHierarchy || !returnedFocus.GetComponent<Selectable>().IsInteractable())
+            throw new InvalidOperationException("Codex Back leaves focus on a hidden or disabled control");
+        yield return ModuleClick(ButtonField(codex, "closeButton"));
         var ui = Find<InteractionUIController>();
         yield return ModuleClick(ButtonField(ui, "ellipsisButton"));
         for (int i = 0; i < 50 && ButtonField(ui, "nextButton").gameObject.activeInHierarchy; i++)
@@ -365,7 +388,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         yield return ModuleClick(Named("BartendingSettings"));
         yield return ModuleClick(Named("CloseSoundSettings"));
         if (Time.timeScale != 1 || SurlhwaModalSurface.Top != null) throw new InvalidOperationException("Module flow left a modal lock");
-        Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
+        Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/Codex masked cards/wheel/detail/back focus/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
     }
     IEnumerator Navigation()
     {

@@ -264,9 +264,9 @@ campaign and physical regression are rerun after the corrections.
   VALIDATION_DEBT, with visual/pacing preference HUMAN_UI_TUNING_LATER.
 
 No native mouse test, accessibility certification, controller support or untested
-aspect ratio is claimed. Masked/offscreen scrolling entries and dragging a native
-pointer across panel boundaries have narrower render/code evidence and require
-physical-input review. Current desktop project defaults are 1920×1080, 16:9;
+aspect ratio is claimed. Masked/offscreen cards and wheel scrolling are covered
+by the input-module probe; native pointer dragging across panel boundaries still
+requires physical-input review. Current desktop project defaults are 1920×1080, 16:9;
 1280×720 is a reviewed equivalent-ratio presentation, not a new display framework.
 
 ### Fonts, assets and review files
@@ -328,3 +328,25 @@ manufacturing a gameplay result. Native 1080p discovery/service images were
 inspected for text contrast, bounds and icon separation. Compile and the full
 static integration passed after this correction. Earlier interrupted campaigns
 are not counted as complete runs; final normal-play evidence follows below.
+
+### Final campaign and focus regression
+
+At `4dac780f45f7337f56139c1f9e0516a7f687b104`, the full 18-night/47-encounter
+campaign passed on 2026-09-29 at 08:43:12 UTC. All 47 natural departures,
+discovery failure/retry, alternatives, weak-service continuation, checkpoint and
+ending resume, seven memories, terminal Continue and reset were exercised.
+The owner's progress/knowledge/audio hash exactly matched the pre-test hash.
+Normal-service and discovery captures were refreshed from this complete run.
+
+The subsequent expanded virtual input-module probe exposed a real focus defect:
+after opening a scrolled Codex card and pressing Back, EventSystem retained the
+now-hidden Back button. The same probe first verified that the final card was
+masked, then used a real module wheel event to expose and open it. The modal
+utility now repairs null, inactive or non-interactable focus and refuses to
+restore unusable parent focus. This is transient UI ownership only. The failing
+assertion is retained; final regression results below include this correction.
+
+The corrected module probe passed, including an attempted click on disabled
+fresh-entry Continue (no session start), masked-card rejection, wheel scrolling,
+detail/Back focus recovery and the full entry-to-workspace overlay path.
+Compilation: zero errors, eight existing warnings (MSB3277 and seven CS0252).
