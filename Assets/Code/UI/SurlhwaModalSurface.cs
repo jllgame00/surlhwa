@@ -22,6 +22,7 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
     int order;
     Action back;
     GameObject shield, previousFocus;
+    Color shieldColor = SurlhwaUITheme.Shade;
     public static bool IsPaused => pauseOwners > 0;
     public static int InputBoundaryVersion { get; private set; }
     public static SurlhwaModalSurface Top
@@ -38,11 +39,12 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
     {
         open.Clear(); gates.Clear(); heldKeys.Clear(); pauseOwners = 0; boundaryFrame = -1; InputBoundaryVersion = 0;
     }
-    public static SurlhwaModalSurface Configure(GameObject root, int sortingOrder, Action onBack, bool pause = false)
+    public static SurlhwaModalSurface Configure(GameObject root, int sortingOrder, Action onBack, bool pause = false, Color? shade = null)
     {
         if (root == null || !Application.isPlaying) return null;
         var surface = root.GetComponent<SurlhwaModalSurface>() ?? root.AddComponent<SurlhwaModalSurface>();
         surface.order = sortingOrder; surface.back = onBack; surface.pauses = pause;
+        surface.shieldColor = shade ?? SurlhwaUITheme.Shade;
         var canvas = root.GetComponent<Canvas>();
         if (canvas == null) canvas = root.AddComponent<Canvas>();
         canvas.overrideSorting = true; canvas.sortingOrder = sortingOrder;
@@ -68,7 +70,7 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
         var rect = (RectTransform)shield.transform;
         rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one;
         rect.offsetMin = rect.offsetMax = Vector2.zero;
-        shield.GetComponent<Image>().color = SurlhwaUITheme.Shade;
+        shield.GetComponent<Image>().color = shieldColor;
         var layer = shield.GetComponent<Canvas>(); layer.overrideSorting = true; layer.sortingOrder = order - 1;
         open.Add(this);
         if (pauses && pauseOwners++ == 0) { previousTimeScale = Time.timeScale; Time.timeScale = 0; }

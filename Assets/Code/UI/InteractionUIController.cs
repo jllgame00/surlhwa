@@ -24,6 +24,7 @@ public class InteractionUIController : MonoBehaviour
     [SerializeField] private Button floatButton;
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
+    [SerializeField] private Sprite methodShaker;
 
     [Header("Prototype Technique Requests")]
     [SerializeField] private OrderData[] prototypeTechniqueOrders;
@@ -92,7 +93,7 @@ public class InteractionUIController : MonoBehaviour
     private int farewellLineIndex;
     private string defaultNextButtonLabel;
     private string defaultBrewButtonLabel;
-    private TMP_Text methodExplanation;
+    private SurlhwaMethodSetupView methodSetupView;
 
     public bool IsForcedFirstCustomerRouteActive => activeCustomerUsesFirstCustomerRoute;
     public bool IsForcedSecondCustomerRouteActive => activeCustomerUsesSecondCustomerRoute;
@@ -133,7 +134,7 @@ public class InteractionUIController : MonoBehaviour
         ConfigureDialoguePresentation();
         ClosePanels(false);
         ConfigureMethodPresentation();
-        SurlhwaModalSurface.Configure(brewPanel, 200, OnClickCancel);
+        SurlhwaModalSurface.Configure(brewPanel, 200, OnClickCancel, shade: Color.clear);
         RefreshMethodVisuals();
         RefreshConfirmState();
     }
@@ -285,7 +286,7 @@ public class InteractionUIController : MonoBehaviour
 
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (brewPanel != null) brewPanel.SetActive(true);
-        if (overlayBlocker != null) overlayBlocker.SetActive(true);
+        if (overlayBlocker != null) overlayBlocker.SetActive(false); // The method surface owns its transparent input shield.
         if (ellipsisPrompt != null) ellipsisPrompt.gameObject.SetActive(false);
         if (waitIndicator != null) waitIndicator.SetVisible(false);
 
@@ -693,7 +694,7 @@ public class InteractionUIController : MonoBehaviour
 
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (brewPanel != null) brewPanel.SetActive(true);
-        if (overlayBlocker != null) overlayBlocker.SetActive(true);
+        if (overlayBlocker != null) overlayBlocker.SetActive(false); // The method surface owns its transparent input shield.
 
         hasMethodSelected = false;
         RefreshMethodVisuals();
@@ -758,16 +759,12 @@ public class InteractionUIController : MonoBehaviour
 
     private void RefreshMethodVisuals()
     {
-        SetButtonSelected(stirButton, hasMethodSelected && selectedMethod == MiniGameType.Stir);
-        SetButtonSelected(shakeButton, hasMethodSelected && selectedMethod == MiniGameType.Shake);
-        SetButtonSelected(buildButton, hasMethodSelected && selectedMethod == MiniGameType.Build);
-        SetButtonSelected(floatButton, hasMethodSelected && selectedMethod == MiniGameType.Float);
-        if (methodExplanation != null)
-            methodExplanation.text = !hasMethodSelected ? "조주법을 고른 뒤 시작하세요." : selectedMethod switch {
-                MiniGameType.Stir => "얼음과 함께 믹싱 글라스에서 천천히 젓습니다.",
-                MiniGameType.Shake => "셰이커를 좌우로 흔들어 재료를 섞습니다.",
-                MiniGameType.Build => "서빙 잔에 재료를 차례로 붓습니다.",
-                _ => "스푼을 따라 부으며 잔에 층을 쌓습니다." };
+        if (methodSetupView == null) return;
+        methodSetupView.ShowSelection(hasMethodSelected ? selectedMethod : (MiniGameType?)null);
+        string guest = activeCustomer?.CampaignEncounter?.guestName ?? "손님";
+        bool exact = activeCustomer != null && activeCustomer.TryGetDedicatedRequest(out var request) &&
+            request.RequestType == GuestRequestType.ExactCocktail;
+        methodSetupView.ShowRequest(guest + (exact ? " · 지정 주문" : " · 추천 요청"), dialogueText != null ? dialogueText.text : "");
     }
 
     private void RefreshConfirmState()
@@ -776,45 +773,12 @@ public class InteractionUIController : MonoBehaviour
             confirmButton.interactable = hasMethodSelected;
     }
 
-    private void SetButtonSelected(Button button, bool selected)
-    {
-        if (button == null || button.image == null)
-            return;
-
-        SurlhwaUITheme.Button(button, selected);
-        string label = button == stirButton ? "젓기\n<size=16>Stir</size>" : button == shakeButton ? "흔들기\n<size=16>Shake</size>" :
-            button == buildButton ? "잔에 만들기\n<size=16>Build</size>" : "층 쌓기\n<size=16>Float</size>";
-        SurlhwaUITheme.LabelButton(button, (selected ? "✓ " : "") + label);
-    }
-
     private void ConfigureMethodPresentation()
     {
         if (brewPanel == null) return;
-        SurlhwaUITheme.Panel(brewPanel);
-        var rect = brewPanel.GetComponent<RectTransform>();
-        SurlhwaUITheme.Place(rect, new Vector2(800, 224), Vector2.zero);
-        rect.anchorMin = rect.anchorMax = new Vector2(.5f, 1);
-        rect.pivot = new Vector2(.5f, 1); rect.anchoredPosition = new Vector2(0, -24);
-        var heading = brewPanel.transform.Find("TitleText")?.GetComponent<TMP_Text>();
-        if (heading != null)
-        {
-            SurlhwaUITheme.Text(heading, 26); heading.text = "어떤 방식으로 만들까요?";
-            SurlhwaUITheme.Place(heading.rectTransform, new Vector2(752, 36), new Vector2(0, 82));
-        }
-        Button[] methods = { stirButton, shakeButton, buildButton, floatButton };
-        for (int i = 0; i < methods.Length; i++)
-            if (methods[i] != null)
-            {
-                methods[i].transform.SetParent(brewPanel.transform, false);
-                SurlhwaUITheme.Place(methods[i].GetComponent<RectTransform>(), new Vector2(176, 70), new Vector2(-282 + i * 188, 23));
-            }
-        if (cancelButton != null) cancelButton.transform.SetParent(brewPanel.transform, false);
-        if (confirmButton != null) confirmButton.transform.SetParent(brewPanel.transform, false);
-        SurlhwaUITheme.Place(cancelButton?.GetComponent<RectTransform>(), new Vector2(120, 44), new Vector2(168, -76));
-        SurlhwaUITheme.Place(confirmButton?.GetComponent<RectTransform>(), new Vector2(132, 44), new Vector2(306, -76));
-        SurlhwaUITheme.Button(cancelButton); SurlhwaUITheme.Button(confirmButton, true);
-        SurlhwaUITheme.LabelButton(cancelButton, "돌아가기"); SurlhwaUITheme.LabelButton(confirmButton, "조주 시작");
-        methodExplanation = SurlhwaUITheme.Label("MethodExplanation", brewPanel.transform, "", 18, new Vector2(440, 52), new Vector2(-150, -70));
+        methodSetupView = brewPanel.AddComponent<SurlhwaMethodSetupView>();
+        methodSetupView.Configure(new[] { stirButton, shakeButton, buildButton, floatButton },
+            confirmButton, cancelButton, methodShaker, worldCamera != null ? worldCamera : Camera.main);
     }
 
     private void ConfigureInteractionPrompt()

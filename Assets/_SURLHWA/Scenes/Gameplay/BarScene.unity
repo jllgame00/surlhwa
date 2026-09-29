@@ -17413,6 +17413,7 @@ MonoBehaviour:
   ellipsisPrompt: {fileID: 571973487}
   dialoguePanel: {fileID: 320107919}
   brewPanel: {fileID: 1959601546}
+  methodShaker: {fileID: 1093289712599410244, guid: 2d74780392c1cae4aae4c06003b223fd, type: 3}
   overlayBlocker: {fileID: 954143926}
   dialogueText: {fileID: 1902416506}
   ellipsisButton: {fileID: 693251334}

@@ -31,6 +31,7 @@ public static class SURLHWAPhaseMUIValidation
     public static void Run() => Start("review");
     public static void RunNavigation() => Start("navigation");
     public static void RunInputModule() => Start("input-module");
+    public static void RunDiegetic() => Start("diegetic");
     public static void RunNotificationLayout() => Start("notification-layout");
     static void Start(string mode)
     {
@@ -53,7 +54,7 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
-        if (mode == "input-module") EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
+        if (mode == "input-module" || mode == "diegetic") EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -175,6 +176,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         string prefix = "phase-m-" + SURLHWAPhaseMUIValidation.Mode + "-" + name;
         SURLHWAReviewCapture.Save(prefix, 1280, 720);
         SURLHWAReviewCapture.Save(prefix, 1920, 1080);
+        // Offscreen capture temporarily changes canvas dimensions. Let the real
+        // Game View scaler/projected targets settle before the next input event.
+        yield return null;
         Canvas.ForceUpdateCanvases();
         var report = new List<string> { "Production screen fixture: " + name, "Button center raycasts; not physical input." };
         foreach (var canvas in FindObjectsByType<Canvas>(FindObjectsSortMode.None))
@@ -226,6 +230,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Run()
     {
+        if (SURLHWAPhaseMUIValidation.Mode == "diegetic") { yield return DiegeticFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "notification-layout") { yield return NotificationLayout(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
@@ -389,6 +394,88 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         yield return ModuleClick(Named("CloseSoundSettings"));
         if (Time.timeScale != 1 || SurlhwaModalSurface.Top != null) throw new InvalidOperationException("Module flow left a modal lock");
         Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/Codex masked cards/wheel/detail/back focus/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
+    }
+    IEnumerator DiegeticFlow()
+    {
+        yield return null;
+        probeMouse = UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Mouse>("Diegetic validation mouse");
+        foreach (var method in new[] { MiniGameType.Stir, MiniGameType.Shake, MiniGameType.Build, MiniGameType.Float })
+        {
+            yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();
+            var ui = Find<InteractionUIController>();
+            var customer = (CustomerController)Get(ui, "activeCustomer");
+            if (!customer.TryGetDedicatedRequest(out var authored) || authored.RequestType != GuestRequestType.Recommendation)
+                throw new InvalidOperationException("Expected normal Night 5 Recommendation");
+            string requestText = ((TMP_Text)Get(ui, "dialogueText")).text;
+            yield return ModuleClick(ButtonField(ui, "brewButton"));
+            var panel = (GameObject)Get(ui, "brewPanel");
+            if (!panel.activeInHierarchy || (bool)Get(ui, "hasMethodSelected") || ButtonField(ui, "confirmButton").IsInteractable())
+                throw new InvalidOperationException("Selection entry: visible=" + panel.activeInHierarchy +
+                    ", selected=" + Get(ui, "hasMethodSelected") + ", confirm=" + ButtonField(ui, "confirmButton").IsInteractable() +
+                    ", appFocused=" + Application.isFocused + ", editorFocus=" + EditorWindow.focusedWindow?.GetType().Name);
+            if (panel.GetComponent<Image>().enabled || GameObject.Find("RequestContext").GetComponent<TMP_Text>().text != requestText)
+                throw new InvalidOperationException("Legacy panel or request changed");
+            yield return ModuleClick(ButtonField(ui, "confirmButton"), true);
+            if (!panel.activeInHierarchy || (bool)Get(ui, "hasMethodSelected"))
+                throw new InvalidOperationException("Disabled confirm activated or clicked through");
+            var backgroundHits = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = new Vector2(40, Screen.height / 2) }, backgroundHits);
+            if (backgroundHits.Count == 0 || backgroundHits[0].gameObject.name != "ModalInputShield")
+                throw new InvalidOperationException("Transparent selection shield does not block the bar");
+            foreach (string field in new[] { "stirButton", "shakeButton", "buildButton", "floatButton" })
+            {
+                var target = ButtonField(ui, field);
+                var rect = (RectTransform)target.transform;
+                var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+                UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+                yield return new WaitForSecondsRealtime(.15f);
+                var state = target.GetComponent("SurlhwaMethodSetupTarget");
+                if (!(bool)state.GetType().GetProperty("Hovered").GetValue(state) || !CanPointAt(target))
+                    throw new InvalidOperationException("Hover did not reach " + field);
+                // Sample the generous hit area, not just the tool's opaque pixels.
+                foreach (var offset in new[] { new Vector2(-54, 0), new Vector2(54, 0), new Vector2(0, 56), new Vector2(0, -58) })
+                {
+                    var hits = new List<RaycastResult>();
+                    EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(offset)) }, hits);
+                    if (hits.Count == 0 || hits[0].gameObject.GetComponentInParent<Button>() != target)
+                        throw new InvalidOperationException("Setup hit area obstructed: " + field);
+                }
+                yield return ModuleClick(target);
+                if (!(bool)state.GetType().GetProperty("Chosen").GetValue(state)) throw new InvalidOperationException("Missing selected marker");
+            }
+            yield return Capture("all-setups-float-selected-" + method);
+            var chosen = ButtonField(ui, method.ToString().ToLowerInvariant() + "Button");
+            yield return ModuleClick(chosen);
+            var codex = Find<CocktailCodexPanelController>();
+            codex.Open(); yield return null;
+            if (CanPointAt(chosen)) throw new InvalidOperationException("Codex leaks to setup");
+            yield return ModuleClick(ButtonField(codex, "closeButton"));
+            if (!panel.activeInHierarchy || (MiniGameType)Get(ui, "selectedMethod") != method)
+                throw new InvalidOperationException("Child overlay lost selection");
+            Find<DemoAudioController>().ToggleSettings(); yield return null;
+            if (CanPointAt(chosen) || Time.timeScale != 0) throw new InvalidOperationException("Settings failed to block/pause");
+            yield return ModuleClick(Named("CloseSoundSettings"));
+            if (Time.timeScale != 1 || !CanPointAt(chosen)) throw new InvalidOperationException("Settings did not return to setup");
+            yield return ModuleClick(ButtonField(ui, "cancelButton"));
+            yield return ModuleClick(ButtonField(ui, "brewButton"));
+            if ((bool)Get(ui, "hasMethodSelected")) throw new InvalidOperationException("Reopened selection retained stale choice");
+            yield return ModuleClick(chosen);
+            yield return Capture("selected-" + method);
+            yield return ModuleClick(ButtonField(ui, "confirmButton"));
+            yield return Wait(() => Find<IngredientShelfController>() != null);
+            var manager = Find<OrderManager>();
+            var request = (GuestRequestContext)Get(manager, "currentGuestRequest");
+            var order = (OrderData)Get(manager, "currentOrder");
+            if (order.miniGameType != method || request.RequestType != authored.RequestType || request.RequestedCocktail != authored.requestedCocktail ||
+                !request.DesiredEmotionTags.SequenceEqual(authored.DesiredEmotionTags))
+                throw new InvalidOperationException("Wrong route or request semantics changed");
+            var guide = Find<RecipeGuidePanelController>();
+            yield return ModuleClick(ButtonField(guide, "openButton"));
+            yield return ModuleClick(ButtonField(guide, "closeButton"));
+            if (guide.IsReading || Time.timeScale != 1) throw new InvalidOperationException("Guide did not resume route");
+            yield return Capture("workspace-" + method);
+            Debug.Log("[Diegetic] PASS " + method + ": hover/hit area/selection/change/back/reopen/Codex/Settings/route/request/Guide. Virtual InputSystem mouse at " + Screen.width + "x" + Screen.height);
+        }
     }
     IEnumerator Navigation()
     {
