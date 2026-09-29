@@ -51,6 +51,12 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private RectTransform bottleAccent;
     private RectTransform droplet;
     private Color transferColor;
+    private Sprite shakerClosedSprite;
+    private Sprite shakerOpenSprite;
+    private RectTransform shakerShell;
+    private RectTransform shakerMouth;
+    private bool shakerClosed = true;
+    private const float ShakerBodyFraction = .6f;
     private readonly Dictionary<BartendingContainerState, RectTransform> masks = new();
     private readonly Dictionary<BartendingContainerState, Vector2> fillRanges = new();
     private readonly Dictionary<BartendingContainerState, RectTransform> shells = new();
@@ -71,6 +77,42 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         state != null && iceVisuals.TryGetValue(state, out var ice) ? ice : null;
     public RectTransform GetLiquidMask(BartendingContainerState state) => masks[state];
 
+    public bool TryGetLiquidBounds(RectTransform vessel, out float bottom, out float surface)
+    {
+        foreach (var pair in vessels)
+            if (pair.Value == vessel && fills.TryGetValue(pair.Key, out var fill))
+            {
+                bottom = vessel.InverseTransformPoint(fill.TransformPoint(new Vector3(0f, fill.rect.yMin, 0f))).y;
+                surface = vessel.InverseTransformPoint(GetLiquidSurfaceWorld(pair.Key)).y;
+                return true;
+            }
+        bottom = surface = 0f;
+        return false;
+    }
+
+    // View-only lid state, driven by existing preparation/technique transitions.
+    // The open cup is a crop of the approved sprite, never a replacement asset.
+    public void SetShakerClosed(bool closed)
+    {
+        if (shakerClosedSprite == null || shakerShell == null) return;
+        shakerClosed = closed;
+        if (!closed && shakerOpenSprite == null)
+        {
+            Rect crop = shakerClosedSprite.rect;
+            crop.height = Mathf.Floor(crop.height * ShakerBodyFraction);
+            shakerOpenSprite = Sprite.Create(shakerClosedSprite.texture, crop, new Vector2(.5f, .5f),
+                shakerClosedSprite.pixelsPerUnit, 0, SpriteMeshType.FullRect);
+            shakerOpenSprite.name = "PreservedShakerOpenCup";
+        }
+        shakerShell.GetComponent<Image>().sprite = closed ? shakerClosedSprite : shakerOpenSprite;
+        shakerShell.anchorMax = new Vector2(1f, closed ? 1f : ShakerBodyFraction);
+        shakerMouth.gameObject.SetActive(!closed);
+    }
+
+    private Vector3 MouthLocal(RectTransform vessel) => new Vector3(0f,
+        Mathf.Lerp(vessel.rect.yMin, vessel.rect.yMax,
+            shakerShell != null && shakerShell.parent == vessel && !shakerClosed ? ShakerBodyFraction : 1f), 0f);
+
     public Vector3 GetLiquidSurfaceWorld(BartendingContainerState state)
     {
         if (state == surfaceContainer && liquidSurface != null) return liquidSurface.position;
@@ -83,10 +125,12 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         if (!visible) { if (strainer != null) strainer.gameObject.SetActive(false); return; }
         var vessel = GetVessel(source);
+        if (source.ContainerType == BartendingContainerType.Shaker) SetShakerClosed(false);
         if (strainer == null) strainer = Shape("Strainer", vessel, Vector2.one, Color.white);
         strainer.SetParent(vessel, false);
         PixelBartendingArt.Apply(strainer, "Strainer");
-        strainer.anchorMin = strainer.anchorMax = new Vector2(.5f, 1f);
+        strainer.anchorMin = strainer.anchorMax = new Vector2(.5f,
+            source.ContainerType == BartendingContainerType.Shaker ? ShakerBodyFraction : 1f);
         strainer.pivot = new Vector2(.5f, .8f);
         strainer.sizeDelta = new Vector2(88f, 128f);
         strainer.anchoredPosition = Vector2.zero;
@@ -240,6 +284,15 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         {
             vessel.sizeDelta = new Vector2(130f, 240f);
             shell.GetComponent<Image>().sprite = preservedShaker;
+            shakerClosedSprite = preservedShaker;
+            shakerShell = shell;
+            mask.anchorMin = new Vector2(.18f, 0f);
+            mask.anchorMax = new Vector2(.82f, ShakerBodyFraction);
+            shakerMouth = Shape("OpenShakerMouth", vessel, new Vector2(112f, 6f), new Color(.12f, .14f, .19f));
+            shakerMouth.anchorMin = shakerMouth.anchorMax = new Vector2(.5f, ShakerBodyFraction);
+            var rim = Shape("SteelRim", shakerMouth, new Vector2(108f, 2f), new Color(.75f, .8f, .84f));
+            rim.anchoredPosition = new Vector2(0f, -3f);
+            shakerMouth.gameObject.SetActive(false);
             // Contents are attached behind opaque steel, never painted on its face.
             PixelBartendingArt.Grip(vessel, new Vector2(55f, -15f), 1.8f).gameObject.SetActive(false);
         }
@@ -343,6 +396,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
 
     public IEnumerator MoveContainerToPour(BartendingContainerState source, BartendingContainerState target)
     {
+        if (source.ContainerType == BartendingContainerType.Shaker) SetShakerClosed(false);
         movingVessel = GetVessel(source);
         transferColor = PixelBartendingArt.Liquid(source);
         if (movingVessel != null) PixelBartendingArt.Grip(movingVessel, new Vector2(movingVessel.rect.width * .4f, -10f)).gameObject.SetActive(true);
@@ -351,7 +405,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         vesselHomePosition = movingVessel.position;
         vesselHomeRotation = movingVessel.rotation;
         Vector3 rim = TargetWorldRim(target) + ui.TransformVector(Vector3.up * CurrentPourHeight);
-        Vector3 lip = new Vector3(0f, movingVessel.rect.yMax, 0f);
+        Vector3 lip = MouthLocal(movingVessel);
         Vector3 start = movingVessel.position;
         Vector3 upright = rim - (movingVessel.TransformPoint(lip) - movingVessel.position);
         for (float t = 0f; t < containerMoveSeconds; t += MotionDeltaTime)
@@ -371,13 +425,13 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         if (target == surfaceContainer && liquidSurface != null) return liquidSurface.position;
         var vessel = GetVessel(target);
-        return vessel.TransformPoint(new Vector3(0f, vessel.rect.yMax, 0f));
+        return vessel.TransformPoint(MouthLocal(vessel));
     }
 
     private void PoseContainer(Vector3 rim, float tilt)
     {
         movingVessel.rotation = vesselHomeRotation * Quaternion.Euler(0f, 0f, containerTiltDegrees * tilt);
-        movingVessel.position += rim - movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
+        movingVessel.position += rim - movingVessel.TransformPoint(MouthLocal(movingVessel));
     }
 
     public void ObserveContainerTransfer(float acceptedMl)
@@ -385,7 +439,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         RefreshState();
         if (movingVessel == null || acceptedMl <= 0f) { stream.gameObject.SetActive(false); return; }
         PoseContainer(TargetWorldRim(destination) + ui.TransformVector(Vector3.up * CurrentPourHeight), 1f);
-        Vector3 lip = movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
+        Vector3 lip = movingVessel.TransformPoint(MouthLocal(movingVessel));
         DrawStreamBetween(lip, TargetWorldRim(destination));
     }
 
@@ -393,7 +447,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         stream.gameObject.SetActive(false);
         if (movingVessel == null) yield break;
-        Vector3 rim = movingVessel.TransformPoint(new Vector3(0f, movingVessel.rect.yMax, 0f));
+        Vector3 rim = movingVessel.TransformPoint(MouthLocal(movingVessel));
         for (float t = 0f; t < tiltSeconds; t += MotionDeltaTime)
         {
             PoseContainer(rim, 1f - Smooth(t / tiltSeconds));
@@ -550,5 +604,12 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private void OnDisable()
     {
         if (stream != null) stream.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (shakerOpenSprite == null) return;
+        if (Application.isPlaying) Destroy(shakerOpenSprite);
+        else DestroyImmediate(shakerOpenSprite);
     }
 }

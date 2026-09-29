@@ -2193,3 +2193,74 @@ overflow, movement and garnish. Final dotnet log: 0 errors, 8 existing warnings.
 Rendered inspection confirms distinct glass silhouettes, attached tools and
 restored Shaker. Full campaign replay is running separately; no PASS is claimed
 for that unfinished run here.
+
+### L14 — Final contact refinement and executed regression
+
+The final rendered review exposed two bounded presentation gaps: the Shaker
+still looked closed while ingredients entered, and the Stir bowl could sit
+above a partially filled mixing glass. The loading/transfer view now crops the
+lower 60% of the original Shaker slice, with a narrow dark mouth and steel rim.
+Held Shake restores the exact approved original sprite. All neck/transfer
+alignment follows that visible opening. Source pixels, original import and
+sprite identity remain unchanged. Stir/GentleStir visual orbits now sit in the
+actual liquid region while preserving Phase K tracking, scoring and shaft lean.
+Garnish sizes preserve source aspect in preparation and the small service view.
+
+- `Logs/phase-l-campaign-playmode.log`: PASS at `2474082`, all 18 nights and
+  47 departures, nine recipes, ending, discovery/retry, genuine Recommendation
+  alternatives, weak-service continuation, checkpoint/mid-dialogue/ending
+  Continue, seven memories, reset and legacy handoff. This run preceded only
+  the final contact/aspect adjustments described above.
+- `Logs/phase-l-closure-editor.log`: PASS after those adjustments; 31 sprites,
+  import/pivot/scale/fill/overflow/snapshot contracts, Phase K and integrated
+  I/J/full campaign Editor regressions.
+- `Logs/phase-l-closure-dotnet.log`: PASS, 0 errors and 8 existing warnings.
+- `Logs/phase-l-closure-physical.log`: PASS after final adjustments, all four
+  real method prefabs. Adds actual liquid-region spoon assertions and exact
+  original closed-Shaker identity checks; existing conservation, overflow,
+  rhythm, ice, Float and garnish checks remain intact.
+- Rendered 1280×720 pour/measurement/final views plus `phase-l-Stir-action`
+  and `phase-l-Shake-held` were inspected. Open Shaker receives at its mouth;
+  attached grip follows closed motion; spoon remains in the liquid; actual
+  cream/dark Float layers and garnish remain attached. This is technical and
+  first-pass drift inspection, not human aesthetic approval.
+
+No scene or prefab was reserialized. Production BartendingScene uses the same
+four prefab routes; their existing components assign the new presentation
+library at runtime. No recipe, catalog, stable identity, save format, supply,
+knowledge, matching, FIT, story or campaign authority changed. Historical
+records above remain historical. Current source/asset records and future
+instructions are Docs/18, Docs/19 and Docs/20.
+
+The service drawing capture also exposed a pre-existing overlap between the
+toast's title and multiline body. ResultToastController now sizes those two
+existing regions from preferred text height with a small gap. No text, feedback
+order, delay, reward or new UI state changed. The focused fixture dismisses the
+entry overlay and constructs a 120 ml drawing with its existing test ratios;
+it is not a second normal-play campaign proof.
+`Logs/phase-l-service-drawing-r3.log`: PASS, both good/poor FIT feedback routes,
+actual drawing presence, title/body separation and existing discovery timing.
+The final `phase-l-served-drink-1280x720.png` was inspected. Earlier capture r1
+was obscured by the test's entry menu; r2 exposed the text overlap; r3 is the
+accepted technical capture. `Logs/phase-l-handoff-dotnet.log`: 0 errors,
+8 existing warnings after this final layout change.
+
+### Phase L handoff classification
+
+| Classification | Final scope |
+|---|---|
+| PASS | Original anchors preserved; bounded Shaker crop/scale; 31 sprites and reproducible source pipeline; actual-volume presentation; all four methods and served composition; nine reachable cocktail presentation records; technical import/state/transform checks; campaign/knowledge/supply/Recommendation/persistence/ending regression evidence above. |
+| VALIDATION_DEBT | Human mouse/keyboard handling and additional display/device/aspect ratios; updated standalone packaging/playthrough. Existing Builds/Windows predates Phase K/L. Licensed Editor execution succeeded, so no outstanding licensing blocker is asserted. The full 18-night replay predates the final view-only contact/aspect/toast fixes, which have focused final checks. |
+| HUMAN_ART_TUNING_LATER | Overall SURLHWA fit, hands, apparent tool proportions, glass curvature/transparency, metal glints, liquid appetite, Float beauty, movement/pacing, garnish placement, rotational shimmer and UI contrast/readability. Public-release confirmation of pre-existing art provenance remains owner-held as recorded in CREDITS. |
+| DEFERRED_AUDIO | Final sound mix and additional tool accents; no audio changes in Phase L. |
+| FUTURE_EXPANSION | Separately approved ingredients, cocktail families, bespoke art only when composition is insufficient, additional hand poses and environments. |
+| OUT_OF_SCOPE | Full IBA mass generation, new story/guest content, camera/render replacement, fluid simulation, rigs, new gameplay authorities and save migration. |
+
+No known objective Phase L implementation defect remains from this audit.
+Source generation uses one original imagegen sheet plus deterministic raster
+authoring; generated success alone was not acceptance. The 31 final PNG hashes
+match the manifest and repeat preparation reproduces them. No scene/prefab,
+original Shaker/Codex PNG/meta, or unrelated setting is part of the final diff.
+Owner config remains byte-for-byte unchanged. Editor-generated font whitespace
+and recent-scene settings are excluded. Human artistic/finished-game approval
+is not claimed; no public release or push was performed.

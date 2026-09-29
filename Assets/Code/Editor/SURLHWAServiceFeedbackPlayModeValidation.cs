@@ -231,6 +231,9 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
     private bool PrepareProductionScene()
     {
         DisableAutomaticCustomers();
+        // This focused fixture bypasses entry navigation; expose the service UI
+        // for rendering without starting/resetting a separate campaign.
+        GameObject.Find("DemoEntryCanvas")?.SetActive(false);
 
         orderManager = FindFirstObjectByType<OrderManager>();
         knowledgeManager = FindFirstObjectByType<RecipeUnlockManager>();
@@ -422,6 +425,16 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
 
         scenarioBEvents.Add("toast: \"" + toastTitle.text + "\" | \"" +
                             EscapeForLog(toastMessage.text) + "\"");
+        if (!Require(resultToast.transform.Find("ServedPixelDrink/Glass") != null,
+                "Phase L actual drink drawing missing from the production service panel."))
+            yield break;
+        var titleCorners = new Vector3[4];
+        var bodyCorners = new Vector3[4];
+        toastTitle.rectTransform.GetWorldCorners(titleCorners);
+        toastMessage.rectTransform.GetWorldCorners(bodyCorners);
+        if (!Require(bodyCorners[1].y < titleCorners[0].y, "Service title and body overlap."))
+            yield break;
+        SURLHWAReviewCapture.Save("phase-l-served-drink", 1280, 720);
 
         yield return new WaitForSeconds(ScenarioBSettleWait);
         TrackPopupActivation();
@@ -470,8 +483,17 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
                 "Recipe has no expected preparation steps.");
         }
 
+        // Presentation fixture follows the same composition used by this existing
+        // feedback test; runtime capture remains owned by MiniGameManager.
+        var serving = new BartendingContainerState(BartendingContainerType.ServingGlass);
+        float totalRatio = 0f;
+        foreach (var entry in recipe.ingredients)
+            if (entry?.ingredient != null) totalRatio += entry.ratio;
+        foreach (var entry in recipe.ingredients)
+            if (entry?.ingredient != null) serving.AddLiquid(entry.ingredient, 120f * entry.ratio / totalRatio);
         return new MiniGameResult
         {
+            appearance = new ServedDrinkAppearance(serving, null, "RocksGlass"),
             success = true,
             repDelta = 2,
             grade = "Good",

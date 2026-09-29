@@ -600,6 +600,16 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             Mathf.Sin(radians) * radius * spoonOrbitYScale);
         Vector3 origin = center.TransformPoint(center.rect.center + Vector2.up * center.rect.height * .12f);
         spoon.position = origin + spoon.parent.TransformVector(orbit);
+        if (ingredientShelf?.PhysicalPresentation != null &&
+            ingredientShelf.PhysicalPresentation.TryGetLiquidBounds(center, out float bottom, out float surface))
+        {
+            float low = bottom + 2f;
+            float high = Mathf.Max(low, surface - 24f);
+            float horizontal = Mathf.Min(spoonOrbitRadius, center.rect.width * .25f);
+            float vertical = Mathf.Min(horizontal * spoonOrbitYScale, (high - low) * .4f);
+            spoon.position = center.TransformPoint(new Vector3(Mathf.Cos(radians) * horizontal,
+                (low + high) * .5f + Mathf.Sin(radians) * vertical, 0f));
+        }
         spoon.localRotation = Quaternion.Euler(0f, 0f,
             spoonBaseAngleDeg + Mathf.Cos(radians) * spoonShaftTiltDegrees);
     }

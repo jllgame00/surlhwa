@@ -194,6 +194,29 @@ public class ResultToastController : MonoBehaviour
 
         if (messageText != null)
             messageText.text = message;
+        LayoutContent();
+    }
+
+    private void LayoutContent()
+    {
+        if (titleText == null || messageText == null || transform is not RectTransform panel) return;
+        const float padding = 12f;
+        const float gap = 8f;
+        float width = Mathf.Max(1f, panel.rect.width - padding * 2f);
+        float titleHeight = titleText.GetPreferredValues(titleText.text, width, Mathf.Infinity).y + 2f;
+        float bodyHeight = messageText.GetPreferredValues(messageText.text, width, Mathf.Infinity).y + 2f;
+        panel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, padding * 2f + titleHeight + gap + bodyHeight);
+        PlaceText(titleText.rectTransform, padding, titleHeight, padding);
+        PlaceText(messageText.rectTransform, padding + titleHeight + gap, bodyHeight, padding);
+    }
+
+    private static void PlaceText(RectTransform rect, float top, float height, float padding)
+    {
+        rect.anchorMin = new Vector2(0f, 1f);
+        rect.anchorMax = Vector2.one;
+        rect.pivot = new Vector2(.5f, 1f);
+        rect.sizeDelta = new Vector2(-padding * 2f, height);
+        rect.anchoredPosition = new Vector2(0f, -top);
     }
 
     private IEnumerator FadeTo(float targetAlpha)

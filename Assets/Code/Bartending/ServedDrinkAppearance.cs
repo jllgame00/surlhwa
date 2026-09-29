@@ -92,6 +92,8 @@ public sealed class ServedDrinkAppearance
         {
             var garnish = BartendingPhysicalPresentation.Shape("ActualGarnish",root,new Vector2(14f,14f),Color.white);
             PixelBartendingArt.Apply(garnish,Garnish.GarnishId.ToString());
+            var garnishSprite = PixelBartendingArt.Get(Garnish.GarnishId.ToString());
+            if (garnishSprite != null) garnish.sizeDelta = garnishSprite.rect.size * .9f;
             garnish.anchorMin=garnish.anchorMax=Garnish.Placement==BartendingGarnishPlacement.Rim
                 ? new Vector2(.83f,.92f) : new Vector2(.5f,Garnish.Placement==BartendingGarnishPlacement.Surface
                     ? height : Mathf.Lerp(bottom,height,.45f));

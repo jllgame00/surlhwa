@@ -186,6 +186,15 @@ public sealed class ServingGlassGentleStirInteraction
         spoonVisual.anchoredPosition = new Vector2(
             Mathf.Cos(radians) * spoonOrbitRadius,
             Mathf.Sin(radians) * spoonOrbitRadius * 0.65f);
+        var physical = center.GetComponentInParent<BartendingPhysicalPresentation>();
+        if (physical != null && physical.TryGetLiquidBounds(center, out float bottom, out float surface))
+        {
+            float low = bottom + 2f;
+            float high = Mathf.Max(low, surface - 24f);
+            float radius = Mathf.Min(spoonOrbitRadius, center.rect.width * .2f);
+            spoonVisual.position = center.TransformPoint(new Vector3(Mathf.Cos(radians) * radius,
+                (low + high) * .5f + Mathf.Sin(radians) * Mathf.Min(radius * .65f, (high - low) * .4f), 0f));
+        }
         spoonVisual.localRotation = Quaternion.Euler(0f, 0f, Mathf.Cos(radians) * shaftTiltDegrees);
     }
 

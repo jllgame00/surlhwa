@@ -72,6 +72,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
                 "Assets/_SURLHWA/Prefabs/Bartending/" + method + "MiniGame.prefab");
             var root = Instantiate(prefab);
+            var approvedShaker = root.transform.Find("UI/Shaker")?.GetComponent<UnityEngine.UI.Image>()?.sprite;
             var game = root.GetComponent<IMiniGame>();
             // Drive the production input seams explicitly, without competing
             // keyboard polling from an unattended Editor mouse/keyboard.
@@ -84,6 +85,9 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             Require(shelf.SelectedIngredient != null, "No supplied selectable ingredient.");
             var view = shelf.PhysicalPresentation;
             Require(view != null, "Production route did not install physical view.");
+            if (method == "Shake")
+                Require(view.GetVessel(shelf.TargetContainer).Find("OpenShakerMouth").gameObject.activeSelf,
+                    "Shaker must be open while receiving ingredients.");
             Require(view.GetVessel(shelf.ServingGlass).Find("PixelShell").GetComponent<UnityEngine.UI.Image>().sprite != null,
                 "Phase L serving shell missing in production Play Mode.");
             float original = shelf.TargetContainer.CurrentLiquidVolumeMl;
@@ -178,6 +182,28 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 while (shelf.PhysicalTransferActive) yield return null;
                 Require(source.HasIce && view.GetIceVisual(source).gameObject.activeInHierarchy,
                     "Authoritative ice has no attached visual.");
+                if (method == "Stir")
+                {
+                    var stir = (StirMiniGame)game;
+                    var bowl = root.transform.Find("UI/Spoon") as RectTransform;
+                    var vessel = view.GetVessel(source);
+                    var update = typeof(StirMiniGame).GetMethod("UpdateSpoonVisual",
+                        System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                    stir.BeginStir();
+                    for (int step = 0; step <= 72; step++)
+                    {
+                        stir.TryRecordStirAngle(step * 10f, .05f);
+                        update.Invoke(stir, new object[] { .05f });
+                        Require(view.TryGetLiquidBounds(vessel, out float bottom, out float surface), "Liquid bounds missing.");
+                        var tip = vessel.InverseTransformPoint(bowl.position);
+                        Require(tip.y >= bottom && tip.y <= surface && vessel.rect.Contains(tip),
+                            "Stir bowl left the actual liquid region.");
+                        Require(Mathf.Abs(Mathf.DeltaAngle(90f, bowl.localEulerAngles.z)) <= 8.1f,
+                            "Pixel spoon shaft became a windmill.");
+                    }
+                    SURLHWAReviewCapture.Save("phase-l-Stir-action", 1280, 720);
+                    stir.FinishStir();
+                }
                 if (method == "Shake")
                 {
                     var shake = (ShakeMiniGame)game;
@@ -185,6 +211,9 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                     Vector2 home = body.anchoredPosition;
                     float beforeShakeMl = source.CurrentLiquidVolumeMl;
                     shake.BeginShake();
+                    Require(body.Find("PixelShell").GetComponent<UnityEngine.UI.Image>().sprite == approvedShaker &&
+                        !body.Find("OpenShakerMouth").gameObject.activeSelf,
+                        "Held Shake must restore the exact approved closed sprite.");
                     for (int note = 0; note < shake.NoteCount; note++)
                     {
                         while (Time.unscaledTime < shake.GetExpectedNoteTime(note)) yield return null;
@@ -200,6 +229,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                             "Shake rotation absent or unbounded.");
                         Require(source.CurrentLiquidVolumeMl == beforeShakeMl && shelf.ServingGlass.CurrentLiquidVolumeMl == 0f,
                             "Shake released its contents before transfer.");
+                        if (note == 2) SURLHWAReviewCapture.Save("phase-l-Shake-held", 1280, 720);
                     }
                     float settle = Time.unscaledTime + .3f;
                     while (Time.unscaledTime < settle) yield return null;
@@ -219,6 +249,9 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 }
                 Require(complete && source.CurrentLiquidVolumeMl == 0f && shelf.TargetContainer == shelf.ServingGlass,
                     "Transfer did not complete in the final glass.");
+                if (method == "Shake")
+                    Require(view.GetVessel(source).Find("OpenShakerMouth").gameObject.activeSelf,
+                        "Shaker transfer must use its open mouth.");
                 Require(shelf.PreparationTrace.Actions[shelf.PreparationTrace.Actions.Count - 1].Action ==
                     (method == "Stir" ? RecipePreparationAction.Strain : RecipePreparationAction.PourFromContainer),
                     "Transfer trace did not preserve action semantics.");

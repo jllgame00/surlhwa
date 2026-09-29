@@ -353,6 +353,8 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
 
     private static Vector2 GetGarnishSize(BartendingGarnishId garnishId)
     {
+        var sprite = PixelBartendingArt.Get(garnishId.ToString());
+        if (sprite != null) return sprite.rect.size * 1.4f;
         switch (garnishId)
         {
             case BartendingGarnishId.LemonTwist:

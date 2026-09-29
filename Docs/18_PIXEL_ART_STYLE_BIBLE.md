@@ -67,8 +67,10 @@ isometric tools with frontal glassware. Silhouette readability comes first.
   follow silhouette; two-pixel transparent margins where useful.
 - At 1280×720 reference Canvas, default two UI units per source pixel. Keep
   transforms at unit scale and set RectTransform dimensions. Shaker is an
-  explicit preserved high-resolution exception, displayed at its existing size.
-- Jigger approximately one third of Shaker height; bottle around its height;
+  explicit preserved high-resolution exception, displayed at 130×240 UI units
+  to keep the pouring bottle below the technique readout. Its existing 304×605
+  slice has coarse pixel clusters; do not pretend it is native low-resolution art.
+- Jigger about 40% of closed Shaker height; bottle around its height;
   spoon elongated; strainer head fits a working mouth; garnish 16–32 UI units.
 - Existing ScreenSpaceOverlay Canvas and camera settings remain. No global
   PixelPerfectCamera replacement. Static positions should use integer UI units.
@@ -121,6 +123,13 @@ frames. Bottle pivot is grip; a named neck determines stream origin. Vessel
 root is center with rim at upper edge. Spoon is bowl-end; horizontal source
 with left pivot for Stir, upright bottom pivot for GentleStir. Garnish pivots
 center. PNG pivots and UI RectTransform pivots must both be checked.
+
+The Shaker's open loading/transfer view crops the lower 60% of its existing
+slice at runtime and adds a restrained dark mouth/silver rim. Closed Shake uses
+the exact original sprite. Mouth alignment follows that visible opening; this
+is a bounded technical adjustment, not a new Shaker design. Opaque steel hides
+internal fill/ice. Spoon orbits use the actual liquid region as their visual
+center, retaining Phase K input, direction reversal and restrained shaft lean.
 
 Back-to-front within vessel: bowl mask → fill/surface → ice → shell highlights
 → garnish/tool grip. Opaque metal hides internal contents; contents remain

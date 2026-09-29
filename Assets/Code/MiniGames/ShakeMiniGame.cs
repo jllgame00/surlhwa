@@ -144,6 +144,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         ingredientShelf.PhysicalPresentation?.SetServingGlass(
             expectedRecipe != null && expectedRecipe.targetCocktail != null
                 ? expectedRecipe.targetCocktail.glassware : CocktailGlassware.TallTumbler);
+        ingredientShelf.PhysicalPresentation?.SetShakerClosed(false);
         ConfigureGarnishController();
 
         state = State.Preparing;
@@ -234,6 +235,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         }
 
         StopDirectPour("Shake started");
+        ingredientShelf.PhysicalPresentation?.SetShakerClosed(true);
         state = State.Rhythm;
         shaker?.Find("PixelGrip")?.gameObject.SetActive(true);
         ResetRhythmState();
