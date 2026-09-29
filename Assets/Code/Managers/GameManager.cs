@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private static bool launchGameplayOnNextSceneLoad;
     private bool gameplaySessionStarted;
     private GameObject entryPanel;
+    private GameObject newGameConfirmation;
+    private bool entryTransition;
+    private bool entryHadProgress;
 
     public bool IsGameplaySessionStarted => gameplaySessionStarted;
 
@@ -71,6 +74,17 @@ public class GameManager : MonoBehaviour
 
     private void BeginNewGame()
     {
+        if (entryTransition) return;
+        // Default recipe initialization later in Awake may write its baseline.
+        // Confirm only the saved run observed when this entry surface opened.
+        if (entryHadProgress) { ShowNewGameConfirmation(); return; }
+        ConfirmNewGame();
+    }
+
+    private void ConfirmNewGame()
+    {
+        if (entryTransition) return;
+        entryTransition = true;
         SurlhwaGameProgress.ResetGameProgress();
         BusinessDayPersistence.SaveCurrentDay(1);
         ContinueDemoGameplay();
@@ -78,9 +92,9 @@ public class GameManager : MonoBehaviour
 
     private void ContinueGame()
     {
-        if (!SurlhwaGameProgress.HasMeaningfulProgress())
+        if (entryTransition || !SurlhwaGameProgress.HasMeaningfulProgress())
             return;
-
+        entryTransition = true;
         ReloadCurrentScene(true);
     }
 
@@ -103,6 +117,7 @@ public class GameManager : MonoBehaviour
     {
         if (entryPanel != null)
             return;
+        entryHadProgress = SurlhwaGameProgress.HasMeaningfulProgress();
 
         GameObject canvasObject = new GameObject("DemoEntryCanvas");
         Canvas canvas = canvasObject.AddComponent<Canvas>();
@@ -111,7 +126,8 @@ public class GameManager : MonoBehaviour
 
         CanvasScaler scaler = canvasObject.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.referenceResolution = new Vector2(1280f, 720f);
+        scaler.matchWidthOrHeight = .5f;
         canvasObject.AddComponent<GraphicRaycaster>();
 
         entryPanel = CreateRectObject("DemoEntryPanel", canvasObject.transform);
@@ -122,7 +138,7 @@ public class GameManager : MonoBehaviour
         panelRect.offsetMax = Vector2.zero;
 
         Image overlay = entryPanel.AddComponent<Image>();
-        overlay.color = new Color(0.04f, 0.035f, 0.05f, 0.96f);
+        overlay.color = Color.clear;
         overlay.raycastTarget = true;
 
         GameObject content = CreateRectObject("DemoEntryContent", entryPanel.transform);
@@ -140,21 +156,41 @@ public class GameManager : MonoBehaviour
         layout.childForceExpandHeight = false;
 
         Image contentImage = content.AddComponent<Image>();
-        contentImage.color = new Color(0.12f, 0.1f, 0.09f, 1f);
+        contentImage.color = SurlhwaUITheme.Surface;
 
         CreateEntryText("Title", "SURLHWA", 42f, content.transform);
-        CreateEntryText("Subtitle", "기억이 남는 바 · Esc 설정", 20f, content.transform);
+        CreateEntryText("Subtitle", "기억이 남는 바", 20f, content.transform);
         CreateEntryButton("NewGameButton", "새 게임", BeginNewGame, true, content.transform);
         CreateEntryButton(
             "ContinueButton",
-            "이어하기",
+            !SurlhwaGameProgress.HasMeaningfulProgress() ? "이어하기 · 저장 기록 없음" : CampaignProgressPersistence.EndingRead ? "이어하기 · 이야기 이후" : "이어하기 · " + BusinessDayPersistence.LoadCurrentDay(1) + "번째 밤",
             ContinueGame,
             SurlhwaGameProgress.HasMeaningfulProgress(),
             content.transform);
         DemoAudioController audio = GetComponent<DemoAudioController>();
         if (audio != null)
             CreateEntryButton("SoundSettingsButton", "소리 설정", audio.ToggleSettings, true, content.transform);
+        SurlhwaUITheme.Panel(content);
+        SurlhwaModalSurface.Configure(entryPanel, 2000, null);
     }
+
+    private void ShowNewGameConfirmation()
+    {
+        if (newGameConfirmation != null) { newGameConfirmation.SetActive(true); return; }
+        newGameConfirmation = CreateRectObject("NewGameConfirmation", entryPanel.transform);
+        SurlhwaUITheme.Place(newGameConfirmation.GetComponent<RectTransform>(), new Vector2(480, 340), Vector2.zero);
+        newGameConfirmation.AddComponent<Image>(); SurlhwaUITheme.Panel(newGameConfirmation);
+        var layout = newGameConfirmation.AddComponent<VerticalLayoutGroup>();
+        layout.padding = new RectOffset(24, 24, 24, 24); layout.spacing = 10;
+        layout.childControlHeight = true; layout.childForceExpandHeight = false;
+        CreateEntryText("Title", "처음부터 시작할까요?", 26, newGameConfirmation.transform);
+        var explanation = CreateEntryText("Explanation", "지금까지의 이야기와 레시피 기록을 지우고\n첫날부터 다시 시작합니다.", 20, newGameConfirmation.transform);
+        explanation.GetComponent<LayoutElement>().preferredHeight = 72;
+        CreateEntryButton("ConfirmNewGameButton", "기록을 지우고 시작", ConfirmNewGame, true, newGameConfirmation.transform);
+        CreateEntryButton("CancelNewGameButton", "돌아가기", CloseNewGameConfirmation, true, newGameConfirmation.transform);
+        SurlhwaModalSurface.Configure(newGameConfirmation, 2100, CloseNewGameConfirmation);
+    }
+    private void CloseNewGameConfirmation() { if (newGameConfirmation != null) newGameConfirmation.SetActive(false); }
 
     private static GameObject CreateRectObject(string objectName, Transform parent)
     {
@@ -175,6 +211,7 @@ public class GameManager : MonoBehaviour
         text.fontSize = fontSize;
         text.alignment = TextAlignmentOptions.Center;
         text.color = new Color(0.96f, 0.92f, 0.84f, 1f);
+        SurlhwaUITheme.Text(text, fontSize);
 
         LayoutElement element = obj.AddComponent<LayoutElement>();
         element.minHeight = Mathf.CeilToInt(fontSize * 1.45f);
@@ -209,6 +246,7 @@ public class GameManager : MonoBehaviour
         labelRect.anchorMax = Vector2.one;
         labelRect.offsetMin = Vector2.zero;
         labelRect.offsetMax = Vector2.zero;
+        SurlhwaUITheme.Button(button, objectName == "ContinueButton" || objectName == "ConfirmNewGameButton" || (objectName == "NewGameButton" && !SurlhwaGameProgress.HasMeaningfulProgress()));
         return button;
     }
 }

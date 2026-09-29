@@ -60,7 +60,8 @@ public static class SURLHWACampaignPlayModeValidation
     {
         if (state == PlayModeStateChange.EnteredPlayMode && SessionState.GetBool(Prefix + "Pending", false))
             EditorApplication.delayCall += () => new GameObject("Campaign Runtime Validation").AddComponent<SURLHWACampaignRunner>();
-        if (state != PlayModeStateChange.EnteredEditMode || !SessionState.GetBool(Prefix + "Complete", false)) return;
+        if (state != PlayModeStateChange.EnteredEditMode ||
+            (!SessionState.GetBool(Prefix + "Complete", false) && !SessionState.GetBool(Prefix + "Pending", false))) return;
         foreach (string key in AllKeys())
         {
             if (SessionState.GetBool(Prefix + "Had" + key, false)) SurlhwaPlayerPrefsStore.SetInt(key, SessionState.GetInt(Prefix + key, 0));
@@ -364,6 +365,9 @@ internal sealed class SURLHWACampaignRunner : MonoBehaviour
         ClickField(Find<DayResultPanelController>(),"restartButton"); yield return null;
         yield return Wait(() => NamedButton("NewGameButton") != null,"completed title");
         Click(NamedButton("NewGameButton")); yield return null;
+        Require(NamedButton("ConfirmNewGameButton") != null && CampaignProgressPersistence.HasProgress,
+            "Completed progress must survive until New Game confirmation.");
+        Click(NamedButton("ConfirmNewGameButton")); yield return null;
         yield return Wait(() => Find<GameManager>() != null && Find<GameManager>().IsGameplaySessionStarted,"reset gameplay");
         ValidateMemories();
         Require(!CampaignProgressPersistence.HasProgress && Find<CampaignBarMemories>().VisibleMemoryCount == 0 &&

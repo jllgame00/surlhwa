@@ -142,3 +142,32 @@ a scene modified in memory by a legacy I16 validator and failed its five-guest
 fixture assertion. Running the unchanged validator with isolated scene setup
 passed; no authored schedule or assertion was changed. Compile: 0 errors,
 8 existing warnings. Held native input remains physical-input validation debt.
+
+### M7–M8: entry, settings, result and ending navigation
+
+Entry keeps the accepted bar visible behind its menu. Continue names the saved
+night or completed coda; an absent save is visibly disabled. New Game asks once
+before erasing the run observed when entry opened. Fresh initialization of the
+default recipe does not turn the first New Game click into a reset confirmation.
+Cancellation preserves the run. Settings shares 1280×720 scaling, numeric
+volume values and correctly bounded slider handles. Values/persistence remain
+with DemoAudioController.
+
+Night summary and ending share a readable panel and primary navigation. The
+result remains underneath Codex. Reading controls reject rapid pointer repeats;
+scene-return actions have a local duplicate-transition guard. BusinessDayManager
+now waits for GameManager's accepted gameplay session before opening a terminal
+night/ending: the previous Start path opened a coda underneath the entry menu.
+The day/ending owner, save keys, authored ending and no-night-19 rules are intact.
+Service toast and discovery popup use the shared colors, larger reading areas
+and nonblocking decoration; their existing timing/queue is unchanged.
+
+Compile: 0 errors / 8 existing warnings. Full Phase M pointer fixtures passed
+before the terminal-entry correction; the affected `RunNavigation()` then passed
+ending → coda → entry → cancel reset → confirm reset, with no runtime errors.
+The existing Campaign Ending fixture also passed interruption/replay, every
+line fitting, completed Continue and no extra night. Native 720p entry/settings/
+summary/confirmation and 1080p ending captures were inspected. Updated navigation
+captures are `phase-m-navigation-*`; final M10 supersedes these with the complete
+review set. Actual service/discovery sequencing and normal-play captures remain
+part of the full campaign run, not inferred from layout changes.

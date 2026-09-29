@@ -15,6 +15,7 @@ public class DayResultPanelController : MonoBehaviour
     [SerializeField] private CocktailCodexPanelController codexPanel;
 
     private bool openingResult;
+    private bool presentationReady, navigationRequested;
     private bool isDemoCompletionResult;
     private string[] endingLines;
     private int endingLineIndex;
@@ -28,6 +29,7 @@ public class DayResultPanelController : MonoBehaviour
     {
         EnsurePanel();
         BindButtons();
+        ConfigurePresentation();
 
         if (!openingResult)
             Close();
@@ -53,6 +55,9 @@ public class DayResultPanelController : MonoBehaviour
     {
         EnsurePanel();
         BindButtons();
+        ConfigurePresentation();
+        ConfigureReadingLayout(false);
+        navigationRequested = false;
         isDemoCompletionResult = demoComplete;
         ConfigureDemoNavigationButton();
 
@@ -142,38 +147,48 @@ public class DayResultPanelController : MonoBehaviour
 
     private void ConfigureCampaignEndingLayout()
     {
+        ConfigurePresentation();
+        ConfigureReadingLayout(true);
+    }
+
+    private void ConfigurePresentation()
+    {
+        if (presentationReady || panelRoot == null) return;
+        presentationReady = true;
+        var canvas = panelRoot.GetComponentInParent<Canvas>(true)?.rootCanvas;
+        var scaler = canvas != null ? canvas.GetComponent<CanvasScaler>() : null;
+        if (scaler != null) { scaler.referenceResolution = new Vector2(1280, 720); scaler.matchWidthOrHeight = .5f; }
+        SurlhwaUITheme.Tree(panelRoot);
+        var backdrop = panelRoot.GetComponent<Image>(); if (backdrop != null) backdrop.color = Color.clear;
+        SurlhwaModalSurface.Configure(panelRoot, 1000, null);
+        SurlhwaReadingClickBoundary.Bind(restartButton, closeButton);
+        ConfigureReadingLayout(false);
+    }
+    private void ConfigureReadingLayout(bool ending)
+    {
         if (customerCountText == null) return;
-        customerCountText.fontSize = 22f;
-        customerCountText.textWrappingMode = TextWrappingModes.Normal;
         var content = customerCountText.transform.parent as RectTransform;
-        if (content == null || content.GetComponent<LayoutGroup>() != null) return;
-        content.sizeDelta = new Vector2(640f, 350f);
-        customerCountText.rectTransform.anchoredPosition = new Vector2(0, 28f);
-        customerCountText.rectTransform.sizeDelta = new Vector2(560f, 120f);
-        if (titleText != null)
+        if (content == null) return;
+        var layout = content.GetComponent<LayoutGroup>(); if (layout != null) layout.enabled = false;
+        SurlhwaUITheme.Place(content, new Vector2(680, 380), Vector2.zero);
+        SurlhwaUITheme.Panel(content.gameObject);
+        LayoutText(titleText, new Vector2(624, 44), new Vector2(0, 140), 28);
+        LayoutText(reputationText, new Vector2(624, 30), new Vector2(0, 88), 20);
+        LayoutText(customerCountText, new Vector2(624, ending ? 160 : 40), new Vector2(0, ending ? 30 : 42), 22);
+        LayoutText(unlockedRecipesText, new Vector2(624, ending ? 42 : 100), new Vector2(0, ending ? -76 : -38), 20);
+        Button[] buttons = { restartButton, closeButton };
+        for (int i = 0; i < buttons.Length; i++)
         {
-            titleText.fontSize = 26f;
-            titleText.rectTransform.anchoredPosition = new Vector2(0, 125f);
-            titleText.rectTransform.sizeDelta = new Vector2(560f, 38f);
+            if (buttons[i] == null) continue;
+            buttons[i].transform.SetParent(content, false);
+            SurlhwaUITheme.Place(buttons[i].GetComponent<RectTransform>(), new Vector2(240, 48), new Vector2(-132 + i * 264, -144));
+            SurlhwaUITheme.Button(buttons[i], i == 0);
         }
-        if (unlockedRecipesText != null)
-        {
-            unlockedRecipesText.fontSize = 18f;
-            unlockedRecipesText.rectTransform.anchoredPosition = new Vector2(0, -64f);
-            unlockedRecipesText.rectTransform.sizeDelta = new Vector2(560f, 36f);
-        }
-        if (restartButton != null)
-        {
-            var rect = restartButton.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector2(-100f, -125f);
-            rect.sizeDelta = new Vector2(180f, 44f);
-        }
-        if (closeButton != null)
-        {
-            var rect = closeButton.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector2(100f, -125f);
-            rect.sizeDelta = new Vector2(180f, 44f);
-        }
+    }
+    private static void LayoutText(TMP_Text text, Vector2 area, Vector2 position, float size)
+    {
+        if (text == null) return;
+        SurlhwaUITheme.Place(text.rectTransform, area, position); SurlhwaUITheme.Text(text, size);
     }
 
     private void NextEndingLine()
@@ -217,11 +232,15 @@ public class DayResultPanelController : MonoBehaviour
 
     private void Restart()
     {
+        if (navigationRequested) return;
+        navigationRequested = true;
         GameManager.ContinueDemoGameplay();
     }
 
     private void ReturnToTitle()
     {
+        if (navigationRequested) return;
+        navigationRequested = true;
         GameManager.ReturnToDemoEntry();
     }
 

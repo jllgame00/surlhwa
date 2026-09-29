@@ -50,7 +50,7 @@ public static class SurlhwaUITheme
         foreach (var text in button.GetComponentsInChildren<TMP_Text>(true))
         {
             Text(text);
-            text.color = primary ? Surface : Ink;
+            text.color = !button.interactable ? Muted : primary ? Surface : Ink;
             text.margin = new Vector4(8, 2, 8, 2);
         }
     }

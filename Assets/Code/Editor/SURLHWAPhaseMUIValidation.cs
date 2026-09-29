@@ -29,6 +29,7 @@ public static class SURLHWAPhaseMUIValidation
     static SURLHWAPhaseMUIValidation() { EditorApplication.playModeStateChanged += Changed; }
     public static void RunBaseline() => Start("baseline");
     public static void Run() => Start("review");
+    public static void RunNavigation() => Start("navigation");
     static void Start(string mode)
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode || SessionState.GetBool(Pending, false))
@@ -205,6 +206,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Run()
     {
+        if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
         yield return Capture("entry");
         Find<DemoAudioController>().ToggleSettings();
         yield return Capture("settings");
@@ -256,11 +258,29 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         panel.OpenResult(1, 4, 4, new[] { "네그로니" }); yield return Capture("night-summary");
         panel.OpenCodexAndClose(); yield return Capture("summary-codex");
         Find<CocktailCodexPanelController>().Close(); yield return Capture("summary-return");
+        yield return Navigation();
+    }
+    IEnumerator Navigation()
+    {
         yield return SeedNight(18); yield return Capture("ending");
-        panel = Find<DayResultPanelController>();
+        var panel = Find<DayResultPanelController>();
         int lines = Find<BusinessDayManager>().Campaign.ending.onEnterLines.Length;
-        for (int i = 0; i < lines; i++) { Click(ButtonField(panel, "restartButton")); yield return null; }
+        for (int i = 0; i < lines; i++) { Click(ButtonField(panel, "restartButton")); yield return new WaitForSecondsRealtime(.26f); }
         yield return Capture("coda");
+        Click(ButtonField(panel, "restartButton")); yield return null;
+        yield return Wait(() => Named("NewGameButton") != null);
+        yield return new WaitForSecondsRealtime(.2f);
+        if (Find<DayResultPanelController>() != null) throw new InvalidOperationException("Ending opened underneath entry");
+        yield return Capture("post-ending-entry");
+        Click(Named("NewGameButton")); yield return Capture("new-game-confirmation");
+        if (!SurlhwaGameProgress.HasMeaningfulProgress()) throw new InvalidOperationException("New Game erased progress before confirmation");
+        Click(Named("CancelNewGameButton")); yield return null;
+        if (!SurlhwaGameProgress.HasMeaningfulProgress()) throw new InvalidOperationException("Cancel erased progress");
+        Click(Named("NewGameButton")); yield return null;
+        Click(Named("ConfirmNewGameButton")); yield return null;
+        yield return Wait(() => Find<GameManager>() != null && Find<GameManager>().IsGameplaySessionStarted);
+        if (CampaignProgressPersistence.HasProgress || BusinessDayPersistence.LoadCurrentDay(1) != 1)
+            throw new InvalidOperationException("Confirmed reset failed");
     }
 }
 #endif

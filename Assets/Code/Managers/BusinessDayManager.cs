@@ -60,6 +60,9 @@ public class BusinessDayManager : MonoBehaviour
 
     private void Start()
     {
+        // Entry is a navigation surface. Resume the night/ending only after
+        // GameManager accepts Continue and reloads the gameplay session.
+        if (gameManager != null && !gameManager.IsGameplaySessionStarted) return;
         if (IsDemoComplete)
         {
             dayEnded = true;

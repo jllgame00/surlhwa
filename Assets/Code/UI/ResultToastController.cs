@@ -26,6 +26,20 @@ public class ResultToastController : MonoBehaviour
         if (canvasGroup == null)
             canvasGroup = GetComponent<CanvasGroup>();
 
+        SurlhwaUITheme.Panel(gameObject);
+        var rect = GetComponent<RectTransform>();
+        if (rect != null)
+        {
+            SurlhwaUITheme.Place(rect, new Vector2(640, 188), Vector2.zero);
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(.5f, 1);
+            rect.anchoredPosition = new Vector2(0, -24);
+        }
+        if (titleText != null)
+        { SurlhwaUITheme.Text(titleText, 26); SurlhwaUITheme.Place(titleText.rectTransform, new Vector2(592, 38), new Vector2(0, 60)); }
+        if (messageText != null)
+        { SurlhwaUITheme.Text(messageText, 20); SurlhwaUITheme.Place(messageText.rectTransform, new Vector2(592, 110), new Vector2(0, -20)); }
+        foreach (var graphic in GetComponentsInChildren<UnityEngine.UI.Graphic>(true)) graphic.raycastTarget = false;
+
         HideImmediate();
     }
 

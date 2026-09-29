@@ -26,6 +26,14 @@ public class RecipeUnlockPopupController : MonoBehaviour
     {
         if (popupRoot != null)
         {
+            SurlhwaUITheme.Panel(popupRoot.gameObject);
+            SurlhwaUITheme.Place(popupRoot, new Vector2(440, 164), Vector2.zero);
+            popupRoot.anchorMin = popupRoot.anchorMax = popupRoot.pivot = Vector2.one;
+            hiddenPosition = new Vector2(500, -24); shownPosition = new Vector2(-24, -24);
+            if (titleText != null) { SurlhwaUITheme.Text(titleText, 24); SurlhwaUITheme.Place(titleText.rectTransform, new Vector2(292, 42), new Vector2(48, 44)); }
+            if (messageText != null) { SurlhwaUITheme.Text(messageText, 20); SurlhwaUITheme.Place(messageText.rectTransform, new Vector2(292, 90), new Vector2(48, -24)); }
+            if (cocktailImage != null) { SurlhwaUITheme.Place(cocktailImage.rectTransform, new Vector2(88, 116), new Vector2(-156, 0)); cocktailImage.preserveAspect = true; }
+            foreach (var graphic in popupRoot.GetComponentsInChildren<Graphic>(true)) graphic.raycastTarget = false;
             popupRoot.anchoredPosition = hiddenPosition;
             popupRoot.gameObject.SetActive(false);
         }

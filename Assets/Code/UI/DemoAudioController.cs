@@ -185,37 +185,40 @@ public sealed class DemoAudioController : MonoBehaviour
         canvas.GetComponent<Canvas>().sortingOrder = 2500;
         var scaler = canvas.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920, 1080);
+        scaler.referenceResolution = new Vector2(1280, 720);
+        scaler.matchWidthOrHeight = .5f;
         var backdrop = Rect("SoundSettings", canvas.transform, Vector2.zero);
         backdrop.anchorMin = Vector2.zero; backdrop.anchorMax = Vector2.one;
         backdrop.offsetMin = backdrop.offsetMax = Vector2.zero;
-        backdrop.gameObject.AddComponent<Image>().color = new Color(.02f, .025f, .04f, .8f);
+        backdrop.gameObject.AddComponent<Image>().color = Color.clear;
         settingsRoot = backdrop.gameObject;
         var panel = Rect("SoundPanel", backdrop, new Vector2(520, 490));
         panel.gameObject.AddComponent<Image>().color = new Color(.12f, .10f, .09f, 1);
-        Text("Title", panel, "소리 설정", 195);
+        SurlhwaUITheme.Text(Text("Title", panel, "소리 설정", 210), 26);
         Slider(panel, "전체", MasterKey, 70, 115);
         Slider(panel, "음악", MusicKey, 35, 20);
         Slider(panel, "효과와 바람", EffectsKey, 60, -75);
         muteLabel = Button(panel, "Mute", Muted ? "소리 켜기" : "모든 소리 끄기", -155, ToggleMute);
         Button(panel, "CloseSoundSettings", "돌아가기 · Esc", -210, CloseSettings);
+        SurlhwaUITheme.Panel(panel.gameObject); SurlhwaUITheme.Tree(panel.gameObject);
         settingsRoot.SetActive(false);
         SurlhwaModalSurface.Configure(settingsRoot, 3000, CloseSettings, true);
     }
     private void Slider(Transform parent, string label, string key, int fallback, float y)
     {
-        Text(key + "Label", parent, label, y + 30);
-        var track = Rect(key, parent, new Vector2(380, 18));
+        var valueLabel = Text(key + "Label", parent, label, y + 44);
+        var track = Rect(key, parent, new Vector2(380, 32));
         track.anchoredPosition = new Vector2(0, y);
-        track.gameObject.AddComponent<Image>().color = new Color(.3f, .27f, .23f);
-        var handle = Rect("Handle", track, new Vector2(24, 32));
+        track.gameObject.AddComponent<Image>().color = SurlhwaUITheme.Raised;
+        var handle = Rect("Handle", track, new Vector2(24, 8));
         var image = handle.gameObject.AddComponent<Image>();
         image.color = new Color(.82f, .68f, .43f);
         var slider = track.gameObject.AddComponent<UnityEngine.UI.Slider>();
         slider.minValue = 0; slider.maxValue = 100; slider.wholeNumbers = true;
         slider.handleRect = handle; slider.targetGraphic = image;
         slider.SetValueWithoutNotify(Volume(key, fallback) * 100);
-        slider.onValueChanged.AddListener(value => SetVolume(key, value));
+        valueLabel.text = label + " · " + slider.value.ToString("0") + "%";
+        slider.onValueChanged.AddListener(value => { SetVolume(key, value); valueLabel.text = label + " · " + value.ToString("0") + "%"; });
     }
     private TMP_Text Button(Transform parent, string name, string label, float y, UnityEngine.Events.UnityAction action)
     {
