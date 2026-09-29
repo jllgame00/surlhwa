@@ -16,6 +16,8 @@ MonoBehaviour:
   guestName: "심청"
   order: {fileID: 11400000, guid: 0297485629064bb582784fa6f648ca33, type: 2}
   customerPrefab: {fileID: 4898275966391150351, guid: 43b8b1b7d7afeb847bbd018220b17f41, type: 3}
+  characterSprite: {fileID: 21300000, guid: 749897401df15391a22f1eded27196c4, type: 3}
+  companionSprite: {fileID: 0}
   afterService: {fileID: 11400000, guid: dfa1eb6711ae4605a9313b32a9e2e677, type: 2}
   stillness: 0
   sharedGlass: 0

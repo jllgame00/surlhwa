@@ -67,3 +67,14 @@ top and face occupy disjoint pixels on an aligned canvas. Ordinary guests use
 a fixed five-color charcoal ramp and featureless faces. Prepared-assets.png
 was visually inspected; all outputs remain FIRST_PASS / HUMAN_ART_TUNING_LATER.
 The bounded importer leaves the 100 PPU bartending art and anchors untouched.
+
+## L4R character presentation
+
+Existing ordinary A/B prefabs now bind the two charcoal sprites; the Prince
+prefab binds its referenced chibi. Sixteen existing special encounters carry
+presentation-only character/companion sprite references. Existing movement
+and seating use the same pose, with feet pivots and an overhead interaction
+anchor. Lovers use separate Chunhyang/Mongryong art and companion depth follows
+the existing customer. No visit IDs, dialogue, orders or routing changed.
+Character Editor validation passed in the live Unity Editor. Reusable poses
+remain HUMAN_ART_TUNING_LATER.

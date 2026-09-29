@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class SURLHWAPresentationValidation
 {
-    [MenuItem("SURLHWA/Validation/Run Character Draft References")]
+    [MenuItem("SURLHWA/Validation/Run Character Presentation References")]
     public static void RunCharacters()
     {
         string[] prefabs =
@@ -14,19 +14,20 @@ public static class SURLHWAPresentationValidation
             "Assets/_SURLHWA/Prefabs/Customers/General/Customer_A.prefab",
             "Assets/Assets/Prefab/Character/Customer_B.prefab"
         };
-        string[] names = { "LittlePrince", "WinterGuestA", "WinterGuestB" };
+        string[] names = { "LittlePrince", "OrdinaryCoat", "OrdinaryPonytail" };
         for (int i = 0; i < prefabs.Length; i++)
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabs[i]);
             Require(prefab != null, "Missing existing guest prefab.");
             var guest = prefab.GetComponent<CustomerController>();
             var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(
-                "Assets/_SURLHWA/Art/Characters/" + names[i] + "-Draft.png");
+                SURLHWAModularBarImport.CharacterRoot + names[i] + ".png");
             Require(sprite != null && guest != null && guest.standSprite == sprite &&
                 guest.sitSprite == sprite && prefab.GetComponent<SpriteRenderer>().sprite == sprite,
-                "Character draft is not connected to both movement and seating presentation.");
-            Require(sprite.bounds.size.y <= 2.01f && sprite.bounds.size.y >= 1.5f,
-                "Character import changed the established two-unit world scale.");
+                "Character is not connected to both movement and seating presentation.");
+            Require(sprite.bounds.size.y <= 2.76f && sprite.bounds.size.y >= 2.6f &&
+                sprite.pixelsPerUnit == 32 && sprite.pivot.y == 0,
+                "Character must use the reference-derived furniture scale and feet pivot.");
             var serialized = new SerializedObject(guest);
             Require(serialized.FindProperty("interactionAnchor").objectReferenceValue != null,
                 "Guest interaction anchor is missing.");
@@ -40,7 +41,16 @@ public static class SURLHWAPresentationValidation
             }
             finally { UnityEngine.Object.DestroyImmediate(png); }
         }
-        Debug.Log("[Character Draft Validation] PASS: three distinct sprites, existing prefab references, " +
+        foreach (var guid in AssetDatabase.FindAssets("t:CampaignEncounterData"))
+        {
+            var encounter = AssetDatabase.LoadAssetAtPath<CampaignEncounterData>(AssetDatabase.GUIDToAssetPath(guid));
+            if (!encounter.IsSpecial) continue;
+            Require(encounter.characterSprite != null, "Current special guest has no authored character sprite.");
+            if (encounter.sharedGlass || encounter.visit == CampaignVisitId.LoversDeparture)
+                Require(encounter.companionSprite != null && encounter.companionSprite != encounter.characterSprite,
+                    "Lovers must retain distinct character silhouettes.");
+        }
+        Debug.Log("[Character Presentation Validation] PASS: three distinct prefab sprites, current campaign cast, " +
             "world scale, interaction anchors and source alpha. Final art/pose approval remains human-owned.");
     }
     private static void Require(bool condition, string detail)

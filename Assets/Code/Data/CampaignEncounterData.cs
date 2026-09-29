@@ -7,6 +7,9 @@ public sealed class CampaignEncounterData : ScriptableObject
     public string guestName;
     public OrderData order;
     public GameObject customerPrefab;
+    [Header("Presentation only")]
+    public Sprite characterSprite;
+    public Sprite companionSprite;
     // onEnterLines are the common departure beat; success/fail lines respond to service.
     public DialogueData afterService;
     public bool stillness;

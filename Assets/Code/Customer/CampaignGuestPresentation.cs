@@ -1,30 +1,37 @@
 using UnityEngine;
 
-/// <summary>Encounter-local draft staging. Never changes time, input, audio or customer state.</summary>
+/// <summary>Encounter-local visual staging. Never changes time, input, audio or customer state.</summary>
 public sealed class CampaignGuestPresentation : MonoBehaviour
 {
     public bool HasCompanion { get; private set; }
     public bool HasStillness { get; private set; }
     private GameObject glass;
     private Material lineMaterial;
+    private SpriteRenderer companionBody;
 
     public void Configure(CampaignEncounterData encounter)
     {
         var body = GetComponent<SpriteRenderer>();
         if (body == null || !encounter.IsSpecial) return;
         lineMaterial = new Material(Shader.Find("Sprites/Default"));
-        // Reuse the approved draft silhouette; authored names/dialogue carry identity.
+        if (encounter.characterSprite != null)
+        {
+            body.sprite = encounter.characterSprite;
+            var customer = GetComponent<CustomerController>();
+            if (customer != null) customer.standSprite = customer.sitSprite = encounter.characterSprite;
+        }
         body.color = encounter.stillness ? new Color(.62f, .65f, .72f) : Color.white;
         if (encounter.sharedGlass || encounter.visit == CampaignVisitId.LoversDeparture)
         {
             var companion = new GameObject("Mongryong companion").AddComponent<SpriteRenderer>();
             companion.transform.SetParent(transform, false);
-            companion.transform.localPosition = Vector3.right * .72f;
-            companion.sprite = body.sprite;
+            companion.transform.localPosition = Vector3.right * 1.15f;
+            companion.sprite = encounter.companionSprite != null ? encounter.companionSprite : body.sprite;
             companion.sharedMaterial = body.sharedMaterial;
-            companion.color = new Color(.72f, .83f, .88f);
+            companion.color = Color.white;
             companion.sortingOrder = body.sortingOrder;
             companion.flipX = true;
+            companionBody = companion;
             HasCompanion = true;
         }
         if (encounter.stillness)
@@ -48,5 +55,10 @@ public sealed class CampaignGuestPresentation : MonoBehaviour
     }
 
     public void ShowServedGlass() { if (glass != null) glass.SetActive(true); }
+    private void LateUpdate()
+    {
+        // The existing customer owns feet-based depth, including during departure.
+        if (companionBody != null) companionBody.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder + 1;
+    }
     private void OnDestroy() { if (lineMaterial != null) Destroy(lineMaterial); }
 }
