@@ -26,6 +26,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
     {
         if (popupRoot != null)
         {
+            SurlhwaUITheme.ScaleReadingCanvas(popupRoot);
             // The serialized background lives below the animated root.
             var background = popupRoot.Find("UnlockPanel");
             SurlhwaUITheme.Panel(background != null ? background.gameObject : popupRoot.gameObject);

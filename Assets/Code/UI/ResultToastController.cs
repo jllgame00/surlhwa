@@ -26,6 +26,7 @@ public class ResultToastController : MonoBehaviour
         if (canvasGroup == null)
             canvasGroup = GetComponent<CanvasGroup>();
 
+        SurlhwaUITheme.ScaleReadingCanvas(transform);
         SurlhwaUITheme.Panel(gameObject);
         var rect = GetComponent<RectTransform>();
         if (rect != null)

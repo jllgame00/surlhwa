@@ -31,6 +31,15 @@ public static class SurlhwaUITheme
         edge.effectDistance = new Vector2(1, -1);
         edge.useGraphicAlpha = false;
     }
+    public static void ScaleReadingCanvas(Transform content)
+    {
+        var canvas = content.GetComponentInParent<Canvas>(true)?.rootCanvas;
+        var scaler = canvas != null ? canvas.GetComponent<CanvasScaler>() : null;
+        if (scaler == null) return;
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1280, 720);
+        scaler.matchWidthOrHeight = .5f;
+    }
     public static void Button(Button button, bool primary = false)
     {
         if (button == null) return;

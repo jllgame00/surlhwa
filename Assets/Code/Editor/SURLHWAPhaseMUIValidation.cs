@@ -31,6 +31,7 @@ public static class SURLHWAPhaseMUIValidation
     public static void Run() => Start("review");
     public static void RunNavigation() => Start("navigation");
     public static void RunInputModule() => Start("input-module");
+    public static void RunNotificationLayout() => Start("notification-layout");
     static void Start(string mode)
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode || SessionState.GetBool(Pending, false))
@@ -226,6 +227,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     IEnumerator Run()
     {
         if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
+        if (SURLHWAPhaseMUIValidation.Mode == "notification-layout") { yield return NotificationLayout(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
         yield return Capture("entry");
         if (Named("ContinueButton").IsInteractable()) throw new InvalidOperationException("Fresh entry allowed Continue");
@@ -322,6 +324,19 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
         yield return new WaitForSecondsRealtime(.3f);
         Debug.Log("[Phase M Input Module] virtual mouse down/up via existing InputSystemUIInputModule: " + controlName);
+    }
+    IEnumerator NotificationLayout()
+    {
+        yield return null;
+        Click(Named("NewGameButton")); yield return null; yield return Guest();
+        // Explicit layout fixture, not a synthesized gameplay service or discovery.
+        var toast = Find<ResultToastController>();
+        toast.Show("잔을 건넨 뒤", "내어준 잔: 설야\n준비 순서가 레시피와 달랐습니다.\n조주: 안정적\n평판: +1 (요청 보상 없음)");
+        yield return new WaitForSecondsRealtime(.3f); yield return Capture("service-fixture");
+        yield return new WaitForSecondsRealtime(toast.DisplayCycleDuration);
+        var knowledge = Find<RecipeUnlockManager>();
+        Find<RecipeUnlockPopupController>().Show(knowledge.GetAllRecipes().First(knowledge.IsKnown));
+        yield return new WaitForSecondsRealtime(.3f); yield return Capture("discovery-fixture");
     }
     IEnumerator InputModuleFlow()
     {

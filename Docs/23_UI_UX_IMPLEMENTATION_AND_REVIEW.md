@@ -310,3 +310,21 @@ This is stronger programmatic C evidence, not a human mouse test or legacy held-
 test. The first unfocused attempt failed to open Settings under the project's
 `PointersAndKeyboardsRespectGameViewFocus` policy; no production setting was
 changed to force a pass. Keep the Editor/Game view focused when rerunning.
+
+### Notification scaling correction
+
+The 1080p normal capture showed NotificationCanvas still using ConstantPixelSize
+at its legacy 800×600 reference, while the bar used 1280×720 screen scaling.
+This made notification text smaller and reduced its separation from the corner
+icon at 1080p. Both notification controllers now request the shared reading
+Canvas scale (1280×720, match 0.5). This is a runtime presentation change only;
+no serialized Canvas, world scale, queue or timing changed. A third in-progress
+campaign attempt was interrupted to apply this correction, with snapshot restore.
+
+The new `RunNotificationLayout()` fixture passed and produced separate
+`phase-m-notification-layout-*-fixture` images at both sizes. It invokes visual
+presentation with explicit fixture content, without granting knowledge or
+manufacturing a gameplay result. Native 1080p discovery/service images were
+inspected for text contrast, bounds and icon separation. Compile and the full
+static integration passed after this correction. Earlier interrupted campaigns
+are not counted as complete runs; final normal-play evidence follows below.
