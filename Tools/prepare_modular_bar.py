@@ -122,7 +122,12 @@ modules = [
     ('CounterDressing', (1118, 835, 1425, 1038), (47, 30)),
 ]
 for name, rect, size in modules:
-    save(name, crop('Environment-source.png', rect, size), 'Environment-source.png', rect)
+    image = crop('Environment-source.png', rect, size)
+    if name == 'Floor':
+        # Repeated floor sections use interior planks, excluding the atlas frame.
+        image = image.crop((3, 3, image.width - 3, image.height - 3)).resize(size, Image.Resampling.NEAREST)
+        image.putalpha(255)
+    save(name, image, 'Environment-source.png', rect)
 
 # Separate occlusion planes share one canvas and transform, with no duplicated pixels.
 counter_rect = (15, 434, 600, 740)

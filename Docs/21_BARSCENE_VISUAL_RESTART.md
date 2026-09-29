@@ -78,3 +78,34 @@ anchor. Lovers use separate Chunhyang/Mongryong art and companion depth follows
 the existing customer. No visit IDs, dialogue, orders or routing changed.
 Character Editor validation passed in the live Unity Editor. Reusable poses
 remain HUMAN_ART_TUNING_LATER.
+
+## L5R–L7R integrated room and UI
+
+BarScene now contains ModularWinterBar.prefab: repeated floor/wall sections,
+two winter windows, shelves and independent bottle dressing, a central niche,
+three counter occlusion planes, bartender, three stools, two lamps, side
+plants and six supporting pedestals. Seven serialized anchors place the
+existing departure-derived memory contours in display furniture. Their unlock
+logic is unchanged. The old SnowBackground renderer is disabled; its source
+and inactive prototype geometry remain for dependency-safe history.
+
+Character feet are at the stool line y -3.3; approach and exit markers retain
+the existing relationships. The spawn line follows this seating adjustment.
+The camera remains orthographic 5.4. The method panel is a compact upper
+selector; dialogue stays in the lower reading band. Dark wood controls with
+cream labels correct the rendered white-on-white method-button issue.
+Codex/settings keep their established corner positions.
+
+Compile: zero errors (existing eight warnings). Live Editor modular/character,
+Phase L pixel/physical and integrated campaign static checks passed. Play Mode
+fixtures captured and inspected empty, ordinary, Prince, Chunhyang, method-ready
+and dialogue views. They verify visual staging, not a full campaign run.
+The live Editor external-change Reload dialog was resolved; no environmental
+validation blocker remains. Full-route and physical Play Mode evidence follows.
+
+Phase K Play Mode passed for Build, Stir, Shake and Float after room integration.
+Existing containers, amounts, streams, overflow and tool transforms remain
+authoritative. L6R preserves all 31 prior pixel sprites, original Shaker, Codex
+glasses and cocktail color extraction. The bartending workspace remains the
+existing additive close view; its finer 100 PPU tools coexist with 32 PPU world
+art rather than being rescaled through the Bar canvas.

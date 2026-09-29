@@ -5,6 +5,8 @@ using UnityEngine;
 public sealed class CampaignBarMemories : MonoBehaviour
 {
     [SerializeField] private BusinessDayManager businessDayManager;
+    [Tooltip("Presentation anchors in existing memory order; no unlock or persistence state.")]
+    [SerializeField] private Transform[] displayAnchors;
     private readonly Dictionary<string, GameObject> memories = new();
     private Material material;
     private GameObject star;
@@ -56,6 +58,9 @@ public sealed class CampaignBarMemories : MonoBehaviour
         var root = new GameObject(title);
         root.transform.SetParent(transform, false);
         root.transform.position = new Vector3(x, y, 0);
+        int index = memories.Count;
+        if (displayAnchors != null && index < displayAnchors.Length && displayAnchors[index] != null)
+            root.transform.position = displayAnchors[index].position;
         memories.Add(title, root);
         return root.transform;
     }
