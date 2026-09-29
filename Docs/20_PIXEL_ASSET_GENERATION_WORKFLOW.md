@@ -42,6 +42,9 @@ Current gameplay needs control scope; generated art never unlocks content.
     provenance/hashes. Record environmental debt without claiming runtime PASS.
 12. Inspect all diffs, including every serialized asset/scene/prefab touched.
     Exclude Editor-local/generated font churn, compile, and commit bounded work.
+    Check the complete phase range as well as unstaged changes. Unity can add
+    trailing spaces to empty meta fields; trim only new Phase L metadata and
+    verify an ignore-end-of-line-whitespace diff is empty before committing.
 
 ## Reproduce existing runtime pixels
 

@@ -2264,3 +2264,8 @@ original Shaker/Codex PNG/meta, or unrelated setting is part of the final diff.
 Owner config remains byte-for-byte unchanged. Editor-generated font whitespace
 and recent-scene settings are excluded. Human artistic/finished-game approval
 is not claimed; no public release or push was performed.
+
+Final range hygiene: Unity's initial import had added trailing spaces in 33 new
+Phase L meta files. Removed only trailing whitespace; the substantive diff is
+empty and GUID/import values are unchanged. Full baseline-to-worktree
+`git diff --check` passes. Original anchor metas and owner config are excluded.
