@@ -120,6 +120,9 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             MiniGameType.Stir,
             BartendingContainerType.MixingGlass,
             ingredientAvailabilityContext);
+        ingredientShelf.PhysicalPresentation?.SetServingGlass(
+            expectedRecipe != null && expectedRecipe.targetCocktail != null
+                ? expectedRecipe.targetCocktail.glassware : CocktailGlassware.CocktailGlass);
         ConfigureGarnishController();
 
         state = State.Preparing;
@@ -612,6 +615,10 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             return;
 
         spoon.pivot = new Vector2(0f, .5f);
+        spoon.localScale = Vector3.one;
+        spoon.sizeDelta = new Vector2(256f, 24f);
+        PixelBartendingArt.Apply(spoon, "SpoonHorizontal");
+        PixelBartendingArt.Grip(spoon, new Vector2(204f, -10f));
         spoon.gameObject.SetActive(false);
         RectTransform center = GetSpoonCenter();
         if (center != null)

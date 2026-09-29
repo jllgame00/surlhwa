@@ -253,7 +253,7 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
-    "sha256": "c5af2cb44c8305679ad475c17a883878f2f09f68dedc02805228a5fcb132b794"
+    "sha256": "edbb61395d2f19afe6daec7592b14ffb4f42587f5781d1f6073988d8384bedae"
   },
   {
     "id": "MixingGlassMask",
@@ -285,7 +285,7 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
-    "sha256": "7f8219a5b4ec8f7692c7cb2e8703071f93f81703e3b64ee49c01bd0686949593"
+    "sha256": "5fbeacf8480f86aeb2529c5e6a8153db54660de01353a75ff1ae1cbef82fdcc5"
   },
   {
     "id": "RocksGlassMask",
@@ -317,7 +317,7 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
-    "sha256": "05ad26140f55e6dc00ca221972470f9b025991c0a08144436deaa3287e4eb2a2"
+    "sha256": "a15ba0efe038941b8e9f4b40621447cce47553f059bb44a12ad9d02d5e3b361e"
   },
   {
     "id": "CocktailGlassMask",
@@ -349,7 +349,7 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
-    "sha256": "df3be04979fc77e334c6ff847e5799f1f5d6af63477d640376e56eb68162fbb3"
+    "sha256": "101d6e7013c8665ab3a82b2e297ea61a49edde14a9ab125b23c1917c482d1bc4"
   },
   {
     "id": "TallGlassMask",
@@ -381,7 +381,7 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
-    "sha256": "8017c6baf90186860244ed816130bae0348003499fd3f86f03a17dfdebed421f"
+    "sha256": "efc48693abb2184089af1caf64769e74098ff2aa6f06f34421de5455a09ed6c7"
   },
   {
     "id": "FluteMask",

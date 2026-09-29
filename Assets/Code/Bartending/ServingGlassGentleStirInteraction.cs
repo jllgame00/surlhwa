@@ -154,7 +154,9 @@ public sealed class ServingGlassGentleStirInteraction
         rect.anchorMax = new Vector2(0.5f, 0.5f);
         rect.pivot = new Vector2(0.5f, 0f);
         rect.anchoredPosition = new Vector2(spoonOrbitRadius, 0f);
-        rect.sizeDelta = new Vector2(10f, 76f);
+        rect.sizeDelta = new Vector2(18f, 192f);
+        PixelBartendingArt.Apply(rect, "Spoon");
+        PixelBartendingArt.Grip(rect, new Vector2(16f, 150f), .9f);
         return rect;
     }
 

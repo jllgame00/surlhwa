@@ -20,3 +20,4 @@ MonoBehaviour:
     \uB9D1\uC740 \uADF8\uB9AC\uC6C0\uC744 \uB744\uC6B4\uB2E4."
   emotionTags: 0900000006000000
   cocktailSprite: {fileID: 4527184514431334382, guid: ad7f718406ab075418f392d94cfeee69, type: 3}
+  liquidColor: {r: 0.9137254901960784, g: 0.8705882352941177, b: 0.7529411764705882, a: 0.9}

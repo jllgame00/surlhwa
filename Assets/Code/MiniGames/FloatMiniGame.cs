@@ -128,6 +128,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             MiniGameType.Float,
             BartendingContainerType.ServingGlass,
             ingredientAvailabilityContext);
+        ingredientShelf.PhysicalPresentation?.SetServingGlass(
+            expectedRecipe != null && expectedRecipe.targetCocktail != null
+                ? expectedRecipe.targetCocktail.glassware : CocktailGlassware.OldFashionedGlass);
         ConfigureGarnishController();
 
         state = State.Preparing;
@@ -138,11 +141,12 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         ResetLayerVisuals();
         if (ingredientShelf.PhysicalPresentation != null && liquidArea != null)
         {
-            var vessel = ingredientShelf.PhysicalPresentation.GetVessel(ingredientShelf.ServingGlass);
+            var vessel = ingredientShelf.PhysicalPresentation.GetLiquidMask(ingredientShelf.ServingGlass);
             liquidArea.SetParent(vessel, false);
             liquidArea.anchorMin = new Vector2(.12f, .08f);
             liquidArea.anchorMax = new Vector2(.88f, .88f);
             liquidArea.offsetMin = liquidArea.offsetMax = Vector2.zero;
+            liquidArea.SetAsFirstSibling();
             physicalSurface = new GameObject("FloatLiquidSurface", typeof(RectTransform)).GetComponent<RectTransform>();
             physicalSurface.SetParent(liquidArea, false);
             physicalSurface.anchorMin = physicalSurface.anchorMax = new Vector2(.5f, 0f);
@@ -157,6 +161,11 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
         if (spoon != null)
         {
+            spoon.localScale = Vector3.one;
+            spoon.sizeDelta = new Vector2(200f, 19f);
+            spoon.pivot = new Vector2(0f, .5f);
+            PixelBartendingArt.Apply(spoon, "SpoonHorizontal");
+            PixelBartendingArt.Grip(spoon, new Vector2(155f, -8f));
             spoonStartPosition = spoon.anchoredPosition;
             spoon.gameObject.SetActive(false);
         }
@@ -660,7 +669,8 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         {
             BartendingLayer layer = layeredDrinkState.Layers[index];
             float layerHeight = height * (Mathf.Max(0f, layer.AmountMl) / Mathf.Max(visualVolumeMl, totalMl));
-            LayoutLiquidVisual(layerVisuals[index], currentY, layerHeight, GetLayerColor(index));
+            LayoutLiquidVisual(layerVisuals[index], currentY, layerHeight,
+                layer.Ingredient != null ? layer.Ingredient.liquidColor : Color.clear);
             currentY += layerHeight;
         }
 
@@ -763,15 +773,15 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         {
             case BartendingLayerBoundaryQuality.Clean:
                 thickness = 2f;
-                color = new Color(1f, 1f, 1f, 0.9f);
+                color = new Color(.93f, .9f, .8f, .5f);
                 break;
             case BartendingLayerBoundaryQuality.Partial:
                 thickness = 5f;
-                color = new Color(1f, 0.78f, 0.38f, 0.9f);
+                color = new Color(.67f, .64f, .57f, .55f);
                 break;
             default:
                 thickness = 9f;
-                color = new Color(0.48f, 0.25f, 0.4f, 0.9f);
+                color = new Color(.4f, .42f, .41f, .6f);
                 break;
         }
 
@@ -809,18 +819,6 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             spoon.position = physicalSurface.position + spoon.parent.TransformVector(Vector3.up * spoonOffsetY);
         else
             spoon.anchoredPosition = spoonStartPosition + new Vector2(0f, currentSurfaceY + spoonOffsetY);
-    }
-
-    private static Color GetLayerColor(int index)
-    {
-        Color[] colors =
-        {
-            new Color(0.35f, 0.18f, 0.08f, 0.95f),
-            new Color(0.96f, 0.88f, 0.67f, 0.95f),
-            new Color(0.46f, 0.24f, 0.52f, 0.95f),
-            new Color(0.2f, 0.52f, 0.7f, 0.95f)
-        };
-        return colors[Mathf.Abs(index) % colors.Length];
     }
 
     private void UpdateProgressText()

@@ -115,6 +115,8 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
     {
         var held = BartendingPhysicalPresentation.Shape("HeldGarnish", visualAnchor,
             GetGarnishSize(garnishId), GetGarnishColor(garnishId));
+        PixelBartendingArt.Apply(held, garnishId.ToString());
+        PixelBartendingArt.Grip(held, new Vector2(18f, 10f), .8f);
         Vector2 destination = GetPlacementPosition(placement);
         for (float t = 0f; t < placementSeconds; t += BartendingPhysicalPresentation.MotionDeltaTime)
         {
@@ -281,7 +283,9 @@ public sealed class ServingGlassGarnishController : MonoBehaviour
         garnishMarker.anchoredPosition = GetPlacementPosition(garnish.Placement);
         garnishMarker.sizeDelta = GetGarnishSize(garnish.GarnishId);
         garnishMarkerImage.color = GetGarnishColor(garnish.GarnishId);
-        garnishMarkerText.text = garnish.DisplayName + "\n" + GetPlacementLabel(garnish.Placement);
+        PixelBartendingArt.Apply(garnishMarker, garnish.GarnishId.ToString());
+        // The existing selection panel supplies the label; keep text off the drink.
+        garnishMarkerText.text = string.Empty;
     }
 
     private void RefreshSelectionText()

@@ -18,3 +18,4 @@ MonoBehaviour:
   description: "허브의 쓴 향 사이로 감귤 향이 남는다. 익숙한 두 재료가 낯선 여운을 품는다."
   emotionTags: 04000000
   cocktailSprite: {fileID: 21300000, guid: c2c3f9a8d2e9499f9d8a69f3e93a3d0c, type: 3}
+  liquidColor: {r: 0.596078431372549, g: 0.3764705882352941, b: 0.23137254901960785, a: 0.9}

@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Vodka
   category: 0
   icon: {fileID: 0}
+  liquidColor: {r: 0.7647058823529411, g: 0.807843137254902, b: 0.8156862745098039, a: 0.9}
+  bottleShape: 0

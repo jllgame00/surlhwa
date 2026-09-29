@@ -19,3 +19,4 @@ MonoBehaviour:
     \uCCAB \uC794.\n\uC678\uB85C\uC6C0\uACFC \uC628\uAE30\uB97C \uD568\uAED8 \uB2F4\uB294\uB2E4."
   emotionTags: 0300000007000000
   cocktailSprite: {fileID: 21300000, guid: 6b8201adbe1c6dc4980376c7d0c3f81e, type: 3}
+  liquidColor: {r: 0.8431372549019608, g: 0.6470588235294118, b: 0.3254901960784314, a: 0.9}

@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Coffee Liqueur
   category: 1
   icon: {fileID: 0}
+  liquidColor: {r: 0.20392156862745098, g: 0.2627450980392157, b: 0.30980392156862746, a: 0.9}
+  bottleShape: 1

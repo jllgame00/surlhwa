@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Whiskey
   category: 0
   icon: {fileID: 0}
+  liquidColor: {r: 0.7803921568627451, g: 0.5803921568627451, b: 0.30196078431372547, a: 0.9}
+  bottleShape: 1

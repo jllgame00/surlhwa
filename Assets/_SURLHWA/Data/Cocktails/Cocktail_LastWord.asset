@@ -18,3 +18,4 @@ MonoBehaviour:
   description: "같은 양의 네 재료가 서로의 끝을 누그러뜨린다. 오래 남는 허브와 라임의 맑은 여운."
   emotionTags: 06000000
   cocktailSprite: {fileID: 21300000, guid: 0d445a9b8a854c4cb063d332a2e329ff, type: 3}
+  liquidColor: {r: 0.7098039215686275, g: 0.7294117647058823, b: 0.49019607843137253, a: 0.9}

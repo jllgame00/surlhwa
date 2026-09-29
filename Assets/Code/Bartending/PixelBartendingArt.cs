@@ -7,6 +7,16 @@ public sealed class PixelBartendingArt : ScriptableObject
     public Sprite[] sprites;
     private static PixelBartendingArt loaded;
 
+    public static Color Liquid(BartendingContainerState state)
+    {
+        Color mixed = Color.clear;
+        if (state == null || state.CurrentLiquidVolumeMl <= 0f) return mixed;
+        foreach (var entry in state.LiquidEntries)
+            if (entry.Ingredient != null)
+                mixed += entry.Ingredient.liquidColor * (entry.AmountMl / state.CurrentLiquidVolumeMl);
+        return mixed;
+    }
+
     public static Sprite Get(string name)
     {
         if (loaded == null) loaded = Resources.Load<PixelBartendingArt>("PixelBartendingArt");
@@ -35,6 +45,7 @@ public sealed class PixelBartendingArt : ScriptableObject
         var grip = BartendingPhysicalPresentation.Shape("PixelGrip", owner,
             new Vector2(40f, 32f) * scale, Color.white);
         Apply(grip, "Grip");
+        if (owner is RectTransform rect) grip.anchorMin = grip.anchorMax = rect.pivot;
         grip.anchoredPosition = position;
         return grip;
     }

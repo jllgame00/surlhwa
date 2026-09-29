@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Syrup
   category: 2
   icon: {fileID: 0}
+  liquidColor: {r: 0.8509803921568627, g: 0.7686274509803922, b: 0.5686274509803921, a: 0.9}
+  bottleShape: 0

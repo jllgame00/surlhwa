@@ -119,11 +119,14 @@ def crop(box, size, palette=None):
 def glass(name, size, bowl, stem=None):
     shell = blank(*size)
     d = ImageDraw.Draw(shell)
+    d.polygon(bowl, fill=(129,153,168,18))
     d.line(bowl + [bowl[0]], fill=GLASS[0], width=2)
     d.line([(x+1,y) for x,y in bowl], fill=GLASS[2], width=1)
     x0, y0 = bowl[0]; x1, _ = bowl[-1]
     d.ellipse((x0,y0-2,x1,y0+3), outline=GLASS[2], width=1)
     d.line((x0+2,y0,x1-3,y0),fill=GLASS[3])
+    nx, ny = bowl[1]
+    d.line((x0+3,y0+7,round(x0+(nx-x0)*.4)+3,round(y0+(ny-y0)*.4)),fill=GLASS[2])
     if stem:
         cx, top, bottom, half = stem
         d.line((cx,top,cx,bottom), fill=GLASS[2],width=2)
@@ -182,16 +185,15 @@ def main():
         if folder.is_dir() and not Path(str(folder)+'.meta').exists():
             Path(str(folder)+'.meta').write_text(f'fileFormatVersion: 2\nguid: {guid(folder)}\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {{}}\n  userData:\n  assetBundleName:\n  assetBundleVariant:\n',encoding='utf-8')
     (SOURCE/'assets.json').write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8')
-    board=Image.new('RGBA',(1000,700),'#20282c');d=ImageDraw.Draw(board)
+    board=Image.new('RGBA',(1200,1100),'#20282c');d=ImageDraw.Draw(board)
     d.text((20,12),'SURLHWA / Phase L - preserved anchors + runtime extensions',fill='#eee5cd')
     for p,x,y,w,h in [('Assets/_SURLHWA/Art/Bartending/Props/shaker.png',20,50,140,280),('Assets/_SURLHWA/Art/Cocktails/설야.png',180,50,220,250),('Assets/_SURLHWA/Art/Cocktails/DryMartini-Draft.png',420,50,220,250)]:
-        im=Image.open(ROOT/p).convert('RGBA');im.thumbnail((w,h),Image.Resampling.NEAREST);board.alpha_composite(im,(x,y))
+        im=Image.open(ROOT/p).convert('RGBA');im=im.crop(im.getbbox());im.thumbnail((w,h),Image.Resampling.NEAREST);board.alpha_composite(im,(x,y))
     x,y=20,370
     for r in records:
         if r['id'].endswith('Mask') or r['id'] in ('SpoonHorizontal','Fill'):continue
         im=Image.open(ROOT/r['path']);im=im.resize((im.width*2,im.height*2),Image.Resampling.NEAREST)
-        if x+im.width>970:x=20;y+=270
-        if y+im.height>700:continue
+        if x+im.width>1170:x=20;y+=290
         board.alpha_composite(im,(x,y));d.text((x,y+im.height+3),r['id'],fill='#eee5cd');x+=max(im.width+16,80)
     board.save(SOURCE/'StyleLock-board.png')
     print(f'Prepared {len(records)} deterministic runtime sprites; anchors unchanged.')

@@ -21,6 +21,8 @@ public class CocktailData : ScriptableObject
 
     [Header("Visual")]
     public Sprite cocktailSprite;
+    [Tooltip("Liquid tint derived from the preserved Codex illustration. Presentation only.")]
+    public Color liquidColor = new Color(.78f, .81f, .76f, .85f);
 }
 
 /// <summary>

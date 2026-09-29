@@ -81,6 +81,9 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             MiniGameType.Build,
             BartendingContainerType.ServingGlass,
             ingredientAvailabilityContext);
+        ingredientShelf.PhysicalPresentation?.SetServingGlass(
+            expectedRecipe != null && expectedRecipe.targetCocktail != null
+                ? expectedRecipe.targetCocktail.glassware : CocktailGlassware.OldFashionedGlass);
         ConfigureGarnishController();
 
         state = BuildState.Preparing;

@@ -17,3 +17,5 @@ MonoBehaviour:
   category: 1
   icon: {fileID: 0}
   sortOrder: 105
+  liquidColor: {r: 0.7607843137254902, g: 0.38823529411764707, b: 0.26666666666666666, a: 0.9}
+  bottleShape: 0

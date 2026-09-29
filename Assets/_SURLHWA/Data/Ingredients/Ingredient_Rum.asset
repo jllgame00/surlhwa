@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Rum
   category: 0
   icon: {fileID: 0}
+  liquidColor: {r: 0.7372549019607844, g: 0.6274509803921569, b: 0.44313725490196076, a: 0.9}
+  bottleShape: 0

@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Cream
   category: 2
   icon: {fileID: 0}
+  liquidColor: {r: 0.9333333333333333, g: 0.8862745098039215, b: 0.7725490196078432, a: 0.9}
+  bottleShape: 1

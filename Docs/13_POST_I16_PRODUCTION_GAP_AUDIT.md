@@ -2138,3 +2138,39 @@ pixel assets/hand poses/final composition; DEFERRED_AUDIO for final mix/new tool
 accents; FUTURE_EXPANSION for separately scoped stock/content/tools; OUT_OF_SCOPE
 for campaign rewrites, replacement authorities, save migration and fluid physics.
 See Docs/17 for exact defaults, limitations, controls and the owner checklist.
+
+## Phase L — Pixel style and generated assets (2026-09-29)
+
+Baseline `9d052cb`, branch `refactor/project-rebuild`; the owner config is
+excluded. Docs/18 records the anchor audit and first-pass style. Source sheet,
+exact prompt, deterministic crop/palette/raster script and output hashes are
+under ArtSource/Pixel/StyleReference and Tools/generate_pixel_bartending.py.
+
+Preserved Shaker pixels/sliced identity, all Codex images and existing colors.
+Phase K had cleared the Shaker Image at runtime: Phase L restores that same
+sprite on its moving shell. Bounded display scaling keeps bottle motion clear
+of the readout. New 100-PPU Point/uncompressed sprites cover three reusable bottle
+shapes, Jigger, two orientations of one spoon, strainer, five glass families
+with bowl masks, streams/overflow/droplet, ice, six authored garnishes and one
+grip. No scene/prefab rewrite or original asset deletion is involved.
+
+IngredientData now owns ingredient presentation tint and bottle shape;
+CocktailData has a Codex-derived liquid swatch. These are visual metadata,
+not recipe data. Float uses actual ordered ingredient colors. Glass masks,
+volume-driven fill, retained ice, garnish and grips follow existing state and
+Phase K transforms. Preparation, matching, FIT, knowledge, supply, campaign
+and persistence authorities remain unchanged.
+
+Executed evidence: licensed baseline four-method Play Mode PASS;
+`Logs/phase-l-integrated-playmode.log` four-method physical regression PASS
+with new art; rendered pour/measure/garnish images inspected at 1280x720.
+`Logs/phase-l-pixel-regression-r2.log` PASS for import/pivot/sprite contracts,
+preserved Shaker, relative Jigger scale, state fill/overflow, all glass masks,
+plus existing Phase K and campaign Editor regressions. Dotnet compilation
+passes with 0 errors and 8 existing warnings. Initial sandbox Unity startup
+failed licensing/package-manager initialization; normal licensed execution
+works. First pipeline compile corrected an inaccessible Editor API; first
+pixel test corrected its Editor-only setup. Neither failed run is a PASS.
+
+Current records do not claim human art approval. Final composition, complete
+campaign replay and final handoff evidence follow in subsequent records.

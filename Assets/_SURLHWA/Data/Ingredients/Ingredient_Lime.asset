@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Lime
   category: 2
   icon: {fileID: 0}
+  liquidColor: {r: 0.7411764705882353, g: 0.7647058823529411, b: 0.5372549019607843, a: 0.9}
+  bottleShape: 0

@@ -16,3 +16,5 @@ MonoBehaviour:
   displayName: Water
   category: 2
   icon: {fileID: 0}
+  liquidColor: {r: 0.7254901960784313, g: 0.788235294117647, b: 0.8117647058823529, a: 0.9}
+  bottleShape: 0

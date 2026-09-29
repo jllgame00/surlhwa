@@ -48,6 +48,12 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private BartendingContainerState surfaceContainer;
     private RectTransform liquidSurface;
     private RectTransform strainer;
+    private RectTransform bottleAccent;
+    private RectTransform droplet;
+    private Color transferColor;
+    private readonly Dictionary<BartendingContainerState, RectTransform> masks = new();
+    private readonly Dictionary<BartendingContainerState, Vector2> fillRanges = new();
+    private readonly Dictionary<BartendingContainerState, RectTransform> shells = new();
     private readonly Dictionary<BartendingContainerState, RectTransform> vessels = new();
     private readonly Dictionary<BartendingContainerState, RectTransform> fills = new();
     private readonly Dictionary<BartendingContainerState, RectTransform> iceVisuals = new();
@@ -63,6 +69,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         state != null && vessels.TryGetValue(state, out var vessel) ? vessel : null;
     public RectTransform GetIceVisual(BartendingContainerState state) =>
         state != null && iceVisuals.TryGetValue(state, out var ice) ? ice : null;
+    public RectTransform GetLiquidMask(BartendingContainerState state) => masks[state];
 
     public Vector3 GetLiquidSurfaceWorld(BartendingContainerState state)
     {
@@ -76,17 +83,21 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         if (!visible) { if (strainer != null) strainer.gameObject.SetActive(false); return; }
         var vessel = GetVessel(source);
-        if (strainer == null) strainer = Shape("Strainer", vessel, Vector2.one, new Color(.75f, .8f, .84f, 1f));
+        if (strainer == null) strainer = Shape("Strainer", vessel, Vector2.one, Color.white);
         strainer.SetParent(vessel, false);
-        strainer.anchorMin = new Vector2(.05f, .95f);
-        strainer.anchorMax = new Vector2(.95f, 1f);
-        strainer.offsetMin = strainer.offsetMax = Vector2.zero;
+        PixelBartendingArt.Apply(strainer, "Strainer");
+        strainer.anchorMin = strainer.anchorMax = new Vector2(.5f, 1f);
+        strainer.pivot = new Vector2(.5f, .8f);
+        strainer.sizeDelta = new Vector2(88f, 128f);
+        strainer.anchoredPosition = Vector2.zero;
         strainer.gameObject.SetActive(true);
     }
 
     public IEnumerator PlaceIce(BartendingContainerState target)
     {
         var ice = Shape("HeldIce", ui, new Vector2(24f, 24f), new Color(.7f, .88f, 1f, .9f));
+        PixelBartendingArt.Apply(ice, "IceCluster");
+        PixelBartendingArt.Grip(ice, new Vector2(18f, 8f), .8f);
         Vector3 from = ui.TransformPoint(ui.rect.center + new Vector2(-290f, -150f));
         Vector3 to = GetVessel(target).TransformPoint(GetVessel(target).rect.center);
         for (float t = 0f; t < icePlacementSeconds; t += MotionDeltaTime)
@@ -134,7 +145,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         jiggerState = state.GetContainer(BartendingContainerType.Jigger);
         Register(jiggerState, null, new Vector2(-150f, -20f));
         var jiggerVisual = GetVessel(jiggerState);
-        jiggerVisual.sizeDelta = new Vector2(55f, 70f);
+        jiggerVisual.sizeDelta = new Vector2(56f, 96f);
         var labelObject = new GameObject("Measurement", typeof(RectTransform), typeof(TextMeshProUGUI));
         measurementText = labelObject.GetComponent<TextMeshProUGUI>();
         measurementText.rectTransform.SetParent(ui, false);
@@ -144,15 +155,22 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         measurementText.alignment = TextAlignmentOptions.Center;
         measurementText.raycastTarget = false;
         spill = Shape("JiggerOverflow", jiggerVisual, new Vector2(4f, 65f), new Color(.85f, .78f, .55f, .9f));
-        spill.anchoredPosition = new Vector2(30f, -10f);
+        PixelBartendingArt.Apply(spill, "OverflowStream");
+        spill.anchoredPosition = new Vector2(25f, 8f);
+        droplet = Shape("SmallDroplet", spill, new Vector2(4f, 6f), Color.white);
+        PixelBartendingArt.Apply(droplet, "SmallDroplet");
+        droplet.anchoredPosition = new Vector2(0f, -38f);
         spill.gameObject.SetActive(false);
-        bottle = Shape("PhysicalBottleGrip", ui, new Vector2(48f, 108f), new Color(.2f, .42f, .32f, 1f));
+        bottle = Shape("PhysicalBottleGrip", ui, new Vector2(64f, 224f), Color.white);
+        PixelBartendingArt.Apply(bottle, "BottleTall");
         bottle.anchoredPosition = bottleHome;
-        var top = Shape("BottleNeck", bottle, new Vector2(16f, 30f), new Color(.3f, .52f, .4f, 1f));
-        top.anchoredPosition = new Vector2(0f, 66f);
+        bottleAccent = Shape("IngredientAccent", bottle, new Vector2(40f, 8f), Color.white);
+        bottleAccent.anchoredPosition = new Vector2(0f, -22f);
+        PixelBartendingArt.Grip(bottle, new Vector2(22f, -45f), 1.4f);
         neck = Shape("PourOrigin", bottle, Vector2.one, Color.clear);
-        neck.anchoredPosition = new Vector2(0f, 81f);
+        neck.anchoredPosition = new Vector2(0f, bottle.rect.height * .5f);
         stream = Shape("LiquidStream", ui, Vector2.one, new Color(.85f, .78f, .55f, .9f));
+        PixelBartendingArt.Apply(stream, "NormalStream");
         stream.pivot = new Vector2(.5f, 0f);
         stream.gameObject.SetActive(false);
         bottle.gameObject.SetActive(false);
@@ -168,38 +186,89 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
             vessel.anchoredPosition = fallbackPosition;
         }
         vessels.Add(state, vessel);
+        vessel.localScale = Vector3.one;
+        vessel.anchorMin = vessel.anchorMax = new Vector2(.5f, .5f);
+        vessel.pivot = new Vector2(.5f, .5f);
+        vessel.anchoredPosition = fallbackPosition;
         var body = vessel.GetComponent<Image>();
+        Sprite preservedShaker = state.ContainerType == BartendingContainerType.Shaker && body != null ? body.sprite : null;
         if (body != null)
         {
             body.sprite = null;
-            body.color = new Color(.22f, .32f, .36f, .3f);
+            body.color = Color.clear;
+            body.raycastTarget = false;
         }
-        for (int side = 0; side < 3; side++)
-        {
-            var wall = Shape("VesselWall" + side, vessel, Vector2.zero, new Color(.7f, .8f, .84f, .9f));
-            wall.anchorMin = side == 0 ? new Vector2(.04f, .04f) : side == 1 ? new Vector2(.94f, .04f) : new Vector2(.04f, .04f);
-            wall.anchorMax = side == 0 ? new Vector2(.06f, .98f) : side == 1 ? new Vector2(.96f, .98f) : new Vector2(.96f, .06f);
-            wall.offsetMin = wall.offsetMax = Vector2.zero;
-        }
-        var fill = Shape("StateLiquid", vessel, Vector2.zero, new Color(.7f, .48f, .22f, .65f));
-        fill.anchorMin = new Vector2(.12f, .08f);
-        fill.anchorMax = new Vector2(.88f, .08f);
+        var mask = Shape("LiquidMask", vessel, Vector2.zero, Color.white);
+        Stretch(mask);
+        mask.gameObject.AddComponent<Mask>().showMaskGraphic = false;
+        masks.Add(state, mask);
+        var fill = Shape("StateLiquid", mask, Vector2.zero, Color.white);
+        PixelBartendingArt.Apply(fill, "Fill");
+        fill.anchorMin = new Vector2(0f, .08f);
+        fill.anchorMax = new Vector2(1f, .08f);
         fill.offsetMin = fill.offsetMax = Vector2.zero;
         fills.Add(state, fill);
+        var surface = Shape("Surface", fill, new Vector2(0f, 2f), new Color(.93f, .9f, .8f, .65f));
+        surface.anchorMin = new Vector2(0f, 1f);
+        surface.anchorMax = Vector2.one;
+        surface.pivot = new Vector2(.5f, 1f);
         var iceRoot = new GameObject("StateIce", typeof(RectTransform)).GetComponent<RectTransform>();
-        iceRoot.SetParent(vessel, false);
+        iceRoot.SetParent(mask, false);
         iceRoot.anchorMin = Vector2.zero;
         iceRoot.anchorMax = Vector2.one;
         iceRoot.offsetMin = iceRoot.offsetMax = Vector2.zero;
-        for (int i = 0; i < 3; i++)
-        {
-            var cube = Shape("IceCube" + i, iceRoot, Vector2.zero, new Color(.7f, .88f, 1f, .85f));
-            cube.anchorMin = new Vector2(.23f + i * .15f, .3f + (i % 2) * .12f);
-            cube.anchorMax = cube.anchorMin + new Vector2(.18f, .16f);
-            cube.offsetMin = cube.offsetMax = Vector2.zero;
-        }
+        var cube = Shape("IceCluster", iceRoot, new Vector2(52f, 48f), Color.white);
+        PixelBartendingArt.Apply(cube, "IceCluster");
         iceRoot.gameObject.SetActive(state.HasIce);
         iceVisuals.Add(state, iceRoot);
+        var shell = Shape("PixelShell", vessel, Vector2.zero, Color.white);
+        Stretch(shell);
+        shells.Add(state, shell);
+        string family = state.ContainerType == BartendingContainerType.MixingGlass ? "MixingGlass" : "RocksGlass";
+        SetGlass(state, family);
+        if (state.ContainerType == BartendingContainerType.Jigger)
+        {
+            PixelBartendingArt.Apply(shell, "Jigger");
+            vessel.sizeDelta = new Vector2(56f, 96f);
+            // A small top-cup cutaway is a volume cue; shell remains metal.
+            mask.SetAsLastSibling();
+            mask.anchorMin = new Vector2(.25f, .55f);
+            mask.anchorMax = new Vector2(.75f, .94f);
+            fillRanges[state] = new Vector2(.02f, .94f);
+        }
+        if (state.ContainerType == BartendingContainerType.Shaker)
+        {
+            vessel.sizeDelta = new Vector2(130f, 240f);
+            shell.GetComponent<Image>().sprite = preservedShaker;
+            // Contents are attached behind opaque steel, never painted on its face.
+            PixelBartendingArt.Grip(vessel, new Vector2(55f, -15f), 1.8f).gameObject.SetActive(false);
+        }
+    }
+
+    private static void Stretch(RectTransform rect)
+    {
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = rect.offsetMax = Vector2.zero;
+    }
+
+    public void SetServingGlass(CocktailGlassware glassware)
+    {
+        foreach (var pair in vessels)
+            if (pair.Key.ContainerType == BartendingContainerType.ServingGlass)
+                SetGlass(pair.Key, glassware == CocktailGlassware.CocktailGlass ? "CocktailGlass" :
+                    glassware == CocktailGlassware.TallTumbler ? "TallGlass" :
+                    glassware == CocktailGlassware.ChampagneFlute ? "Flute" : "RocksGlass");
+    }
+
+    private void SetGlass(BartendingContainerState state, string family)
+    {
+        PixelBartendingArt.Apply(shells[state], family);
+        PixelBartendingArt.Apply(masks[state], family + "Mask");
+        var sprite = PixelBartendingArt.Get(family);
+        if (sprite != null) vessels[state].sizeDelta = sprite.rect.size * 2f;
+        fillRanges[state] = family == "CocktailGlass" ? new Vector2(.48f, .92f) :
+            family == "Flute" ? new Vector2(.38f, .95f) : new Vector2(.09f, .9f);
     }
 
     public bool PrepareBottle(IngredientData source, BartendingContainerState target)
@@ -214,6 +283,14 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         if (motion == Motion.Rest)
         {
             ingredient = source;
+            string family = source.bottleShape == IngredientBottleShape.Small ? "BottleSmall" :
+                source.bottleShape == IngredientBottleShape.Broad ? "BottleBroad" : "BottleTall";
+            PixelBartendingArt.Apply(bottle, family);
+            bottle.GetComponent<Image>().color = Color.Lerp(Color.white, source.liquidColor, .25f);
+            var sprite = PixelBartendingArt.Get(family);
+            if (sprite != null) bottle.sizeDelta = sprite.rect.size * 2f;
+            bottleAccent.GetComponent<Image>().color = source.liquidColor;
+            neck.anchoredPosition = Vector2.up * bottle.rect.height * .5f;
             destination = target;
             bottle.gameObject.SetActive(true);
             Enter(Motion.Approach);
@@ -257,6 +334,8 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     {
         if (lostMl <= 0f || spill == null) return;
         spillRemaining = spillSeconds;
+        spill.GetComponent<Image>().color = ingredient != null ? ingredient.liquidColor : PixelBartendingArt.Liquid(jiggerState);
+        droplet.GetComponent<Image>().color = spill.GetComponent<Image>().color;
         spill.gameObject.SetActive(true);
         // Incoming stream continues over the finite rim, even when accepted ml is zero.
         if (IsAtPourPose) { acceptedFrame = Time.frameCount; DrawStream(); }
@@ -265,6 +344,8 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     public IEnumerator MoveContainerToPour(BartendingContainerState source, BartendingContainerState target)
     {
         movingVessel = GetVessel(source);
+        transferColor = PixelBartendingArt.Liquid(source);
+        if (movingVessel != null) PixelBartendingArt.Grip(movingVessel, new Vector2(movingVessel.rect.width * .4f, -10f)).gameObject.SetActive(true);
         destination = target;
         if (movingVessel == null) yield break;
         vesselHomePosition = movingVessel.position;
@@ -327,6 +408,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         }
         movingVessel.position = vesselHomePosition;
         movingVessel.rotation = vesselHomeRotation;
+        movingVessel.Find("PixelGrip")?.gameObject.SetActive(false);
         movingVessel = null;
         destination = null;
     }
@@ -353,7 +435,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     private void AlignNeck(float degrees)
     {
         bottle.localRotation = Quaternion.Euler(0f, 0f, degrees);
-        Vector2 neckOffset = (Vector2)(bottle.localRotation * new Vector3(0f, 81f, 0f));
+        Vector2 neckOffset = (Vector2)(bottle.localRotation * (Vector3)neck.anchoredPosition);
         bottle.anchoredPosition = TargetPoint() + Vector2.up * CurrentPourHeight - neckOffset;
     }
 
@@ -365,7 +447,7 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         {
             case Motion.Approach:
                 bottle.anchoredPosition = Vector2.Lerp(motionStart,
-                    TargetPoint() + Vector2.up * (CurrentPourHeight - 81f), Smooth(elapsed / approachSeconds));
+                    TargetPoint() + Vector2.up * (CurrentPourHeight - neck.anchoredPosition.y), Smooth(elapsed / approachSeconds));
                 if (elapsed >= approachSeconds) Enter(Motion.Tilt);
                 break;
             case Motion.Tilt:
@@ -410,13 +492,22 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
 
     public void RefreshState()
     {
-        foreach (var pair in iceVisuals) pair.Value.gameObject.SetActive(pair.Key.HasIce);
+        foreach (var pair in iceVisuals)
+        {
+            pair.Value.gameObject.SetActive(pair.Key.HasIce);
+            var cluster = pair.Value.Find("IceCluster") as RectTransform;
+            cluster.anchorMin = cluster.anchorMax = new Vector2(.5f, fillRanges[pair.Key].x + .18f);
+            cluster.anchoredPosition = Vector2.zero;
+        }
         foreach (var pair in fills)
         {
             if (pair.Key == surfaceContainer) continue;
             float scale = pair.Key.CapacityMl > 0f ? pair.Key.CapacityMl : Mathf.Max(1f, displayVolumeMl);
             float level = Mathf.Clamp01(pair.Key.CurrentLiquidVolumeMl / scale);
-            pair.Value.anchorMax = new Vector2(.88f, .08f + .8f * level);
+            Vector2 range = fillRanges[pair.Key];
+            pair.Value.anchorMin = new Vector2(0f, range.x);
+            pair.Value.anchorMax = new Vector2(1f, Mathf.Lerp(range.x, range.y, level));
+            pair.Value.GetComponent<Image>().color = PixelBartendingArt.Liquid(pair.Key);
             pair.Value.gameObject.SetActive(level > 0f);
         }
     }
@@ -433,7 +524,11 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
         Vector2 to = (Vector2)ui.InverseTransformPoint(worldTo) - ui.rect.center;
         Vector2 delta = to - from;
         stream.anchoredPosition = from;
-        stream.sizeDelta = new Vector2(streamWidth, delta.magnitude);
+        bool thin = destination == surfaceContainer && liquidSurface != null;
+        PixelBartendingArt.Apply(stream, thin ? "ThinFloatStream" : movingVessel != null ? "TransferStream" : "NormalStream");
+        stream.GetComponent<Image>().color = movingVessel != null ? transferColor :
+            ingredient != null ? ingredient.liquidColor : Color.white;
+        stream.sizeDelta = new Vector2(thin ? streamWidth * .5f : streamWidth, delta.magnitude);
         stream.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg - 90f);
         stream.gameObject.SetActive(true);
     }
