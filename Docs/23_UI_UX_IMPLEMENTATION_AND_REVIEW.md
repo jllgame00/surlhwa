@@ -985,3 +985,415 @@ collects probe results and exceptions without raw Editor startup output. An earl
 process inspection unintentionally printed an Editor launch token to tool output;
 subsequent process inspection was restricted. No token or config content is
 included in this record or commits.
+
+
+## Targeted event trace follow-up — 2026-09-29
+
+### Separate issues and safety baseline
+
+Start HEAD `cef41122eae3a4c451702a17656dab8ecd4fc9e2`, branch
+`refactor/project-rebuild`; previous diagnostic revision `424b65b`, staging
+revision `a027d6c`. The actual dirty inventory again contains 63 tracked files,
+recorded by path and SHA256 in `Temp/PhaseMEventTrace/baseline.json`. No protected
+config contents are read or printed. Reference art, staged tools, hit areas,
+request semantics, gameplay and persistence are outside this change.
+
+**A — Settings-close state mismatch remains a separate historical issue.**
+The original exception at `Temp/PhaseMStaging/editor-final-after.log:17929`
+combined time scale and top-modal tests without recording either value.
+`input-final.log:2185` records the unchanged successful run. The earlier
+investigation's sequence, revision hashes and failure evidence above remain
+valid historical records. Neither a callback nor actual close completion was
+established in the original failure.
+
+**B — Brew activation failure is not an established modal-lock defect.**
+`Temp/PhaseMModalFollowup/reproduce-chain.log:145236` records inactive selection
+following a queued Brew attempt. Its adjacent state snapshots show a valid
+manual raycast, no modal/pause lock, and active Game View focus. They do not
+establish delivered Down/Up/Click, production callback entry, guard rejection,
+or transient open/close. A relationship between A and B is unproven.
+
+Original logs were re-inspected using allowlisted diagnostic prefixes only;
+raw Editor startup output and process arguments were not printed. The extracted
+metadata is `Temp/PhaseMEventTrace/original-observations.json`.
+
+### Small observational extension of the existing runner
+
+Installed and locked packages: Input System **1.18.0**, uGUI **2.0.0**. Runtime
+traces confirm `InputSystemUIInputModule`, with enabled Point and Click actions.
+The installed module dispatches Down through `ExecuteHierarchy`, then stores
+pointerPress/pointerClick. On release it compares the current click handler and
+eligibility before dispatching Up and Click. This distinction matters: an
+independent RaycastAll does not prove that dispatch occurred.
+
+Opt in with Editor SessionState `SURLHWA_UI_EVENT_TRACE=true`, then invoke the
+existing Phase M probes. Ordinary use leaves the sink unbound. The existing
+runner owns an **8,192-event ring buffer**, flushed on success or first failure
+before ordinary fixture teardown. Headers report dropped old entries. Files
+are local under the validation copy's `Temp/PhaseM/EventTraces/`, archived for
+this investigation at `Logs/Review/phase-m-event-trace/traces/` (with a working
+copy under `Temp/PhaseMEventTrace/traces/`). Nothing is streamed from
+process arguments, environment, authentication files, dialogue or save values.
+
+Every module click has a run/attempt/control correlation ID. Boundaries record
+frame, monotonic realtime and unscaled game time:
+
+- queued virtual mouse state;
+- input event received before application, post-update device state, and the
+  actual UI action's Performed/Canceled notification;
+- actual module raycast after processing;
+- delivered PointerDown, PointerUp and PointerClick with pointer identity,
+  position, current/press raycasts, press/click targets and eligibility;
+- production Brew callback entry and each existing early-return/route branch;
+- selection open request/completion, cancel, controller disable and panel close;
+- existing modal acquisition/release, including pause count and restored scale;
+- Settings callback entry and completed visibility change.
+
+State includes enabled UI actions, target/component instance identities,
+active/interactable/allowed state, focus, app/Game View focus, current modal,
+shared pause state, route-busy state and only the relevant guest/reading guards.
+Object and component instance IDs differ normally; both retain their type context.
+The selection's active-in-hierarchy state is recorded alongside its own state.
+
+The Editor-only pointer observer is added to the **same existing Button object**
+which already implements Down/Up/Click. The fixture asserts handler resolution
+is unchanged before/after attachment. It adds no graphic or raycast target,
+never consumes/forwards events, changes focus, retries a click or invokes a
+fallback callback. Observer Click runs after Button's original handler in that
+same dispatch, so the production callback can appear earlier in the trace.
+Input action subscriptions and the diagnostic sink are removed at teardown.
+The final trace records post-input updates only after a received event and
+module state only when its target/device state changes; it does not flood the
+buffer with unchanged frames. All instrumentation has some execution overhead;
+a non-recurrence under tracing cannot establish timing independence.
+No package source is patched. Production-source hooks are conditional on
+`UNITY_EDITOR`; standalone calls and their argument evaluation are omitted.
+
+Settings checks now capture the legitimate state **before opening**: time scale,
+top modal, shared pause, opener permission and interactability. Closing reports
+separate expected/actual values and whether both Settings visibility and its
+active modal have gone away. A one-second realtime deadline observes close
+completion only if necessary; it can expire while paused. It supplies no input
+and does not turn a mismatch into a reset. Existing click timing is unchanged.
+The owner currently closes synchronously. Entry Settings legitimately restores
+the entry modal; workspace Settings normally restores no modal. An Exact Brew
+may directly start its authored route, so selection-open is not applicable to
+that route and is not treated as a missing boundary.
+
+### Declared reproduction budget and execution policy
+
+Before execution: **one original-order chain**, then **one legal same-Play-Mode
+navigation probe at each resolution**, with a stop at the first failure. At most
+one comparison run was reserved after preserving a failure. No repeated full
+campaign playthrough was budgeted. The chain retains the recorded order and
+Play Mode boundaries: staging 720p/1080p, diegetic 720p/1080p, existing physical
+and campaign static regressions, then InputModuleFlow at 1080p.
+
+The legal navigation probe provides focused Brew repetition and focused Settings
+cycles within one session: four successive services, all four targets, three
+selection/change/Back cycles per service, idle Codex/Settings and workspace
+Guide/Settings cycles, actual supported service/departure and Next Night return.
+It seeds only the initial checkpoint. It does not clear locks, reset global state
+or restart between steps. The older diegetic probe's directly opened nested
+overlays remain explicitly fixture coverage, not legal pointer reachability.
+
+Execution uses the existing validation copy at
+`Temp/PhaseMDiegetic/ValidationProject`, Unity 6000.3.7f1. All **1,251 original
+files** under Assets, Packages and ProjectSettings matched by byte hash, including
+metadata and dirty settings. The only copy-only source is the existing isolated
+Editor launcher and its metadata; caches/UserSettings are local. Host dispatch
+uses the copy's existing Unity Pipeline connection and disables only that old
+launcher's automatic scheduling, as documented previously. The source manifest,
+finite host dispatch and compile result are in `Temp/PhaseMEventTrace/`.
+
+### Sensitive-output containment and owner action
+
+Exposure metadata: on 2026-09-29, a prior process-command-line inspection placed
+an **Editor launch access credential** in tool output. Its exact scope, validity
+and revocation state have not been established. It is not reproduced, used,
+parsed for claims of expiry, or included in this record. Not committing it does
+not contain the earlier tool-output exposure.
+
+This follow-up allowlists process ID/name/start time only and extracts only
+known diagnostic messages from raw logs. No environment/authentication dump,
+account action, session revocation, log purge or history rewrite was performed.
+The owner's running Editor is preserved.
+
+Supported owner actions are available under Unity Dashboard → Account → Security:
+review Sessions and Security history, end an unrecognized session, and reset the
+password. Unity states a password change signs devices out. These are owner
+actions; this investigation does not claim they invalidate this particular
+launch credential. Consult Unity Support for token-specific containment if
+needed. Source: [Unity account security documentation](https://docs.unity.com/en-us/cloud/accounts/manage-account-security),
+checked 2026-09-29. Authentication SDK player-token instructions were not applied
+to an Editor/Hub credential.
+
+
+### Bounded replay results and last confirmed boundaries
+
+The declared reproduction budget completed without a new A or B failure:
+
+| UTC completion, 2026-09-29 | Probe | Result |
+|---|---|---|
+| 14:08:21 | Staging 1280×720 | PASS |
+| 14:08:45 | Staging 1920×1080 | PASS |
+| 14:09:42 | Diegetic 1280×720 | PASS |
+| 14:10:43 | Diegetic 1920×1080 | PASS |
+| 14:11:06 | Original InputModuleFlow, 1920×1080 | PASS |
+| 14:13:51 | Same-session navigation, 1280×720 | PASS |
+| 14:16:25 | Same-session navigation, 1920×1080 | PASS |
+
+Each same-session run completed Stir, Shake, Build and Float through natural
+service/departure and the night boundary. Together: eight services, 24 idle
+overlay cycles, 24 selection/Back cycles and 24 workspace overlay cycles. The
+original chain includes the existing physical and campaign static regression.
+The reserved comparison was not needed during those seven probes; it was later
+used after the final verification failed, as recorded below.
+
+**A: UNRESOLVED / VALIDATION_DEBT.** Last historically confirmed successful state:
+Guide closed and time scale was 1. The Settings close was queued. First missing
+boundary: actual delivery of that close and entry to its callback. First known
+incorrect observation: the combined final state assertion, without individual
+values. The new successful trace establishes the close callback, owner release,
+visibility completion and separate expected/actual values only for this run.
+
+**B: UNRESOLVED / VALIDATION_DEBT.** Last historically confirmed boundary:
+preflight/manual raycast and queued virtual activation, with no lock in before/
+after snapshots. First missing boundary: actual input-module press delivery to
+Brew; Up/Click/callback/guards were also unobserved. First known incorrect state:
+selection remained inactive at the old post-attempt check. There is no captured
+new failure timeline that narrows these historical boundaries further.
+
+**Relationship: not demonstrated.** Neither production cleanup, invalid test
+sequencing, timing, nor environment has been established as either root cause.
+No speculative gameplay/input fix is justified. The remaining evidence needed
+is an actual failed correlated attempt showing where delivery or restoration
+diverges, compared with a successful attempt at that same request/parent state.
+
+A complete successful Brew reference is retained in
+`traces/20260929T140808211-staging-after-pass.txt`, attempt `/1/BrewButton`:
+
+| Frame | Monotonic seconds | Observed boundary |
+|---|---|---|
+| 2454 | 9.854926 | Queue position/released state |
+| 2455 | 9.859223 | Input received; Point performed at 9.859728 |
+| 2455 | 9.860490 | Queue pressed state |
+| 2456 | 9.862791 | Receive press; Click action performed at 9.863982 |
+| 2456 | 9.865226 | PointerDown, current/press ray = BrewButton |
+| 2456 | 9.865695 | Queue released state |
+| 2457 | 9.867987 | Receive release; Click action performed at 9.868207 |
+| 2457 | 9.868635 | PointerUp, eligible, same press/current target |
+| 2457 | 9.868907 | Production Brew callback entry; guards permit selection |
+| 2457 | 9.869212 | Selection open requested |
+| 2457 | 9.870648 | Selection active in hierarchy; method modal acquired |
+| 2457 | 9.871289 | PointerClick observer in the original dispatch |
+| 2564 | 10.167034 | One callback; selection still visible |
+
+Pointer device 14, position (892,56). This is a Night 5 Recommendation fixture,
+matching the historical failed probe's setup, not a captured failure. The new
+InputModuleFlow Exact request correctly uses its existing dedicated route;
+selection opening there is not applicable.
+
+Successful Settings reference:
+`traces/20260929T141055872-input-module-pass.txt`, attempt `/15/CloseSoundSettings`.
+At frame 4003, monotonic 14.387526: close callback entered while paused. At
+14.388453 the modal owner released to zero owners, scale 1, no top modal. At
+14.388784 visibility close completed. Frame 4105 / 14.685512 recorded:
+closeComplete=true; scale expected/actual 1/1; top NONE/NONE; paused false/false;
+opener allowed true/true and interactable true/true. Earlier entry Settings in
+that trace restored DemoEntryPanel, demonstrating why an empty-stack assumption
+cannot be applied to every close.
+
+### Final diagnostic review and test-copy interruption
+
+Diff review retained the previous open-state pause, shield-count and focus
+assertions inside the new Settings helper, now relative to its legitimate
+parent. It also reduced repeated trace samples to changed module state and
+post-update samples following actual received events. The original budget's
+longer traces had dropped old entries from the ring; this is recorded in their
+headers, not hidden. The complete first Brew reference above has no drops.
+The test refinement does not change a production guard or click timing.
+
+A finite final verification was declared: one 720p same-session probe, one 1080p
+InputModuleFlow, and the existing Phase K Play Mode regression. Its first launch
+could not start because Assets and some settings had disappeared from the copy:
+CLI reported `Not a Unity project`, with 28/1,251 files still matching in the
+failed copy manifest. No test result was manufactured from that invocation.
+The original owner Editor PID was no longer present; no agent close/kill command
+was issued. The mechanism causing the filesystem change was not established.
+This later interruption is not evidence about A or B.
+
+All seven completed buffers and the private progress snapshot survived. They
+were archived before recovery; independent read-back matched saved progress,
+knowledge and all audio preferences. Source/assets/settings were recopied
+additively from the current original, matching 1,251/1,251 files again. The same
+owned validation Editor process (PID 6612) was retained. The old copy-only
+launcher had disappeared, so final host dispatch omitted that launcher's
+unsubscription preamble and invoked the existing validators directly. No
+production modal, EventSystem or save reset was used as a recovery workaround.
+
+Two unrelated original paths changed bytes during this interval:
+`ProjectSettings/ProjectSettings.asset` and `UserSettings/Layouts/default-6000.dwlt`.
+They were not edited, staged, restored or committed by this task. Their new bytes
+are preserved. The other 61 baseline paths, including protected config, retained
+the recorded hashes at recovery. This is not reported as 63 byte-identical files.
+`budget-source-manifest.json` records the completed reproduction source state;
+`final-source-manifest.json` records the recovered copy and final diagnostic
+source state. The failed intermediate `copy-manifest.json` remains retained.
+
+
+### New failed verification: delivery observations, not a retrospective diagnosis
+
+The final verification did **not** pass. In the 720p run starting 14:20:20,
+ordinary Brew and the stricter Settings cycles worked before service/farewell.
+A later Next activation lost delivery. The inherited farewell loop did not
+assert the callback count and kept attempting Next. Thus its intended
+stop-on-first-failure policy was not met: the first retained zero-delivery action
+was attempt 51, and the loop reached attempt 826 before the investigation stopped
+it through the runner's normal failure/ExitPlayMode path at **14:24:58**.
+No gameplay locks were cleared. Save restoration then verified successfully.
+
+The pre-stop buffer retains the first missed attempt and its preceding success:
+[full live trace](../Logs/Review/phase-m-event-trace/traces/live-before-stop.txt).
+The later automatic flush has dropped older events, as its header records:
+[failed final verification](../Logs/Review/phase-m-event-trace/traces/20260929T142020944-modal-sequence-FAIL.txt).
+
+Relevant sequence (monotonic seconds):
+
+- Attempt 50 / Next: Down, Up and Click delivered, one callback.
+- Frame 15400 / 43.341284: Point canceled from probe device 21;
+  appFocus=false. Click canceled at 43.341787.
+- Frame 15401 / 43.348434: Point performed from **non-probe device 2**;
+  appFocus=true. This is device evidence, not a claim that a human moved a mouse.
+- Attempt 51: desired point (388,56), valid preflight. Probe device 21 received
+  press/release and generated Click action notifications on frames 15403/15404.
+  There was no new Point action from device 21; actual module raycast was NONE.
+  No Down, Up, Click or button callback reached Next.
+
+**Last confirmed boundary:** the module's Click action notification, with actual
+raycast NONE. **First missing boundary:** PointerDown delivery to Next. A shared
+mouse pointer handoff is a supported explanation from the installed module:
+`SingleMouseOrPenButMultiTouchAndTrack` shares mouse position, and
+`OnPointCallback` updates that position. The trace does not contain the module's
+internal position for this earlier revision, so this explanation remains an
+inference. Focus had returned by attempt 51; simply blaming its failure on an
+unfocused app would be inaccurate. This is a new observation, not a demonstrated
+cause of historical A or B.
+
+**Demonstrated harness defect and correction:** `ModuleClick` logged zero
+callbacks but allowed its caller to continue. It now requires one callback for
+an enabled action and zero only for an explicitly disabled-control probe. A
+mismatch throws immediately after the existing observation window; the runner
+flushes and exits. It never supplies a second click. Existing successful buffers
+contain zero callbacks only for their explicit disabled Continue/Confirm probes.
+No production handler or input policy was changed to compensate.
+
+### Reserved comparison: Brew failed before the negative fixture
+
+The one reserved comparison ran at 720p. `RunPointerHandoffDiagnostic` uses the
+existing snapshot, guest/request setup and ModuleClick runner. It is designed to
+compare a normal Brew with a deliberately competing diagnostic mouse on the same
+request, clearly labeled as a negative fixture. **The negative fixture was never
+reached.** Its first ordinary Brew failed and the corrected harness stopped on
+attempt 1 at **14:29:46**, proving immediate failure retention instead of the
+previous farewell retry loop.
+
+[Complete failed Brew trace](../Logs/Review/phase-m-event-trace/traces/20260929T142937378-pointer-handoff-FAIL.txt),
+correlation `20260929T142937378-pointer-handoff/1/BrewButton`:
+
+| Frame | Monotonic seconds | Boundary / actual state |
+|---|---|---|
+| 3234 | 13.340846 | Active/interactable Brew; no modal/pause lock; appFocus=false, no focused Editor window |
+| 3234 | 13.344641 | Queue position (892,56), released, virtual device 22 |
+| 3234 | 13.351835 | Event received before application |
+| 3235 | 13.352637 | Dynamic post-update position remains (0,0), left=0 |
+| 3235 | 13.353140 | Queue press; event received at 13.355273 |
+| 3236 | 13.355911 | Dynamic state still (0,0), left=0 |
+| 3236 | 13.356484 | Queue release; received at 13.358235 |
+| 3237 | 13.358727 | Dynamic state still unchanged; module pointer records empty |
+| 3372 | 13.657807 | Zero callbacks; selection inactive |
+| 3372 | 13.659230 | Immediate delivery-mismatch exception, then failure flush |
+
+**Last confirmed boundary:** raw virtual event receipt before application.
+**First incorrect/missing boundary:** the queued position/press never appeared
+in the player's Dynamic state; no Point/Click action, Down/Up/Click dispatch,
+Brew callback or selection-open request followed. A callback guard did not reject
+this attempt: the callback was never entered. No panel opened then closed.
+
+The installed policy was read without changing it:
+`ResetAndDisableNonBackgroundDevices`, `PointersAndKeyboardsRespectGameViewFocus`,
+`ProcessEventsInDynamicUpdate`. Input System 1.18.0's `InputManager.cs` around
+line 3323 routes pointer/keyboard events to Editor updates when the game lacks
+focus; `InputSystemUIInputModule` then has no player pointer to dispatch here.
+This establishes an upstream input-routing limitation for **this new unfocused
+Brew attempt**, consistent with the recorded unchanged player state. The exact
+reason the Editor lost focus was not established. No focus, action binding,
+background policy or device was changed to make the attempt succeed.
+
+**Historical B remains UNRESOLVED:** its snapshots had app/Game View focus and
+lack the per-boundary evidence above. A transient loss or device handoff could
+only be a hypothesis for that older run. **Historical A also remains UNRESOLVED.**
+No relationship between A and either new failure was demonstrated. The budget
+ended here; the planned final 1080p InputModuleFlow was **not run**. The controlled
+second-mouse comparison remains **VALIDATION_DEBT**, not a passed regression.
+
+### Tested source identity and final coverage
+
+Executable diagnostic commit: **`bf89c6dbea1a93191c0b4a0d6742ebc0ad887c2f`**.
+The later handoff commit changes this document only. No executable edit follows
+the final compilation, failed Brew trace and physical regression.
+
+The exact Editor test source bytes differ across the bounded investigation:
+
+| Test source SHA256 | Evidence |
+|---|---|
+| `44feab960afbec0fa7a02221063c17ca3cc19105adf72f0c318af672ab648793` | Seven initial budget probes passed; unchanged-frame sampling still present |
+| `3b2064ae86266e3f166f6193a1107f6f88f7352b9f52e229f3a6383294badc23` | Restored strict Settings checks and reduced sampling; final navigation failed at Next |
+| `35b76f25201c31495496af670385eb7d14d4176de28e5ff4f29d4e20fd9ad862` | Final commit above: stop on missing callback, module instance/pointer records, bounded comparison entry; first Brew failed and stopped |
+
+The three production files contain only conditional Editor observations; their
+runtime guards, selection logic, modal ownership and Settings behavior are
+unchanged throughout these runs. The source/settings manifests distinguish the
+original and recovered copies. A final comparison still matches 1,251/1,251 files.
+
+- **Compile/static:** final C# compile PASS, zero errors/eight existing warnings;
+  scoped and staged diff checks PASS. No scene/prefab, art or package edits.
+- **Callback-only:** existing guest/dialogue/checkpoint setup and older direct
+  nested-overlay fixtures remain fixture evidence. They do not establish input
+  delivery. No fallback callback was used after a module click failed.
+- **Programmatic pointer/input module:** initial seven-probe budget passed both
+  resolutions and all targets. Final navigation and Brew comparison failed as
+  detailed above; no complete final-revision UI pass is claimed. The immediate
+  failure guard is demonstrated by the final one-attempt Brew failure.
+- **Physical:** final existing Phase K Play Mode regression passed Build, Stir,
+  Shake and Float measurement/overflow/source-transfer/tool checks. Input is
+  programmatic through physical seams, not human mouse input. The original-order
+  chain also ran physical and campaign static regressions; the full campaign was
+  not repeatedly played.
+- **Rendered inspection:** no new aesthetic review or approval. Existing
+  [staging review](../Logs/Review/phase-m-staging-review.html), hover and selected
+  captures remain unchanged. Staging probes rendered the current production UI;
+  their success is not substituted for visual inspection.
+- **Standalone:** no new build or standalone run. Conditional diagnostic calls
+  are excluded from player compilation. The old executable is not new evidence.
+- **Human physical input:** not tested or claimed.
+
+Final independent snapshot read-back at **14:34:40 UTC** verified progress,
+knowledge and sound preferences after all tests. The private snapshot hash
+matched the one retained before copy recovery. This verifies the fixture's
+snapshot restoration, not unobserved concurrent edits by another Editor.
+After normal test exit: no pending fixture, diagnostic sink, pause owner,
+active modal or Settings; time scale 1. No manual state clear produced that state.
+61/63 baseline files retain their initial byte hashes; the two unrelated changes
+listed above remain excluded. Protected config is unchanged and unstaged.
+No task-generated importer/scene/settings changes are committed. Local test-copy,
+trace, snapshot and build/cache files are excluded. The owned validation Editor
+closed normally after verification; no agent action closed the owner Editor.
+
+Safe artifacts: `Logs/Review/phase-m-event-trace/` contains trace buffers,
+source manifests, original-evidence hashes and the result index. The private
+snapshot is separate and is not linked as a public review artifact. Original A/B
+logs still exist with recorded hashes; they were not purged or rewritten.
+**Disposition:** diagnostic coverage and the harness stopping correction are
+implemented; A/B causality and final complete UI regression remain open validation
+debt. No new gameplay or presentation fix is claimed.
