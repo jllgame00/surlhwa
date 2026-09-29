@@ -759,7 +759,7 @@ edits/staging; only its hash is used. No owner Editor is force-closed.
 
 Original evidence retained:
 
-- Failed: `Temp/PhaseMStaging/editor-final-after.log`, assertion at line 17928,
+- Failed: `Temp/PhaseMStaging/editor-final-after.log`, assertion at line 17929,
   result **2026-09-29 12:11:38.7304364 UTC**.
 - Successful fresh Editor: `Temp/PhaseMStaging/input-final.log`, result
   **12:15:47.5410781 UTC**. It used the unchanged test, not a corrected test.
@@ -873,6 +873,10 @@ input and aesthetic approval are not claimed. A successful instrumented run
 must not be used to close the original issue without identifying its cause.
 
 ### Follow-up results
+
+Test implementation commit: **`424b65bdb3979ae6a8016e295b420112c375ec99`**.
+The following handoff correction is documentation-only; no further executable
+change was made after the recorded final checks.
 
 Executed production C# revision: **`a027d6c`**, unchanged, with the preserved
 asset/settings baseline recorded in the manifest. The final follow-up test source
