@@ -485,3 +485,141 @@ also remain ignored. Private save snapshots are never copied into the review pac
 No known required Phase M screen implementation is left as aesthetic tuning.
 The owner retains final human approval; this record does not certify accessibility
 or claim a complete human playthrough.
+
+## Phase M patch — countertop method selection (2026-09-29)
+
+This section supersedes the large method menu as the current presentation
+contract. Earlier Phase M screenshots and PASS records remain historical.
+
+### Baseline and bounded implementation
+
+- Start: `aa4fc33b87791757f4642f4665c04b17314a9227`, branch
+  `refactor/project-rebuild`; no reset or switch.
+- Actual baseline: 63 dirty paths: protected config, 56 whitespace-only sprite
+  metadata files, two UserSettings files and the four build-generated files
+  already described above. Ignored `Temp/PhaseMDiegetic/baseline.json` records
+  their byte hashes. Config contents are never read into reports or staged.
+- Previous UX: Recommendation Brew opened an 800×224 charcoal menu with four
+  176×70 technique tiles, explanation, confirmation and Back.
+- New UX: the same controller/buttons present small counter-anchored tool
+  setups. The legacy menu surface/title/tiles are hidden at runtime. A lower
+  request note retains the guest, request type, already-visible request text,
+  contextual help and small Start/Back controls. Selection is explicit; no
+  route starts from hover or selection alone.
+- `SurlhwaMethodSetupView` owns presentation only. `InteractionUIController`
+  still owns the selected method and the sole existing confirmation callback.
+  `OnClickConfirm`, authored Recommendation routing and Exact direct entry are
+  unchanged. No authored dialogue, OrderData, recipe, save or bartending
+  container/trace/timing/matching/evaluation/knowledge code changes.
+- Back returns to the current request dialogue. Reopening clears local
+  selection; a retry-safe route failure preserves the controller's selection.
+  Codex/Settings keep existing modal priority; Guide remains local to the
+  entered workspace. No new permanent corner controls or shortcuts.
+
+### Visuals, mapping and input contract
+
+| Counter setup | Existing route |
+|---|---|
+| Mixing glass and upright bar spoon | Stir / 젓기 |
+| Existing illustrated Shaker | Shake / 흔들기 |
+| Empty serving glass and small bottle | Build / 잔에 만들기 |
+| Empty serving glass and horizontal spoon | Float / 층 쌓기 |
+
+Float help explicitly describes pouring slowly along the spoon to form layers.
+These are tool choices, not previews of an intended or already prepared drink.
+The tools are uGUI images projected from four fixed world countertop points;
+they do not add colliders or another world-input system. Camera, furniture,
+characters, bar layout and reference inputs stay intact.
+
+Each target is 128×132 reference units, with an 18-unit Korean label. Hover and
+focus outline the tool; selection also has a check mark and short underline.
+The transparent modal shield blocks underlying controls without dimming the
+counter. All tool/shadow/label/marker graphics are non-raycasting. The request
+note backs live text; its controls use the existing theme. See Docs/22 for
+precise tuning locations and navigation rules.
+
+Reused assets: `Assets/_SURLHWA/Art/Bartending/Props/shaker.png`, plus
+`MixingGlass`, `RocksGlass`, `Spoon`, `SpoonHorizontal`, and `BottleSmall` from
+the existing `PixelBartendingArt` catalog. BarScene gains one serialized Shaker
+sprite reference; no world transforms or prefab changes. Shadows, label plates,
+outline and underline are deterministic uGUI graphics. No new bitmap art,
+external font or AI-generated image is introduced.
+
+### Patch validation record
+
+- A: `dotnet build Assembly-CSharp-Editor.csproj --no-restore` passes with zero
+  errors and the eight existing warnings (MSB3277 and seven CS0252). Patch-only
+  `git diff --check` passes. Repository-wide whitespace checking still reports
+  the preserved pre-existing metadata/font whitespace; it is not normalized.
+- Tested implementation: **`72ff492700b6ec74ff70ba5ff655710e68b6f4f5`**.
+  Validation used the identical working sources before committing. All five
+  changed source/scene files were SHA256-compared with the executed copy;
+  ignored `Temp/PhaseMDiegetic/runtime-manifest.json` records those hashes.
+  The following documentation commit has no runtime changes.
+- The original Editor's Pipeline main-thread commands timed out (5/10/60 s).
+  Automatic approval review rejected forced termination because unsaved Editor
+  state could not be established. No forced termination occurred. The safe
+  alternative was a source-only copy under
+  `Temp/PhaseMDiegetic/ValidationProject`, opened with the same Unity 6000.3.7f1.
+  No config, Library, UserSettings or save snapshot was copied into it. Its
+  fresh import and temporary orchestration script are ignored test artifacts.
+  Original Editor restart permission is no longer needed for this patch.
+- Final executions on **2026-09-29 UTC**:
+  `RunDiegetic` at **11:01:02** (1280×720) and **11:02:03** (1920×1080);
+  physical/campaign integrated Editor regression at **11:02:04**;
+  four-method physical Play Mode regression followed by `RunInputModule`,
+  completed **11:02:57**. Each UI run restored and verified progress and sound
+  preferences. The physical regression uses independent prefab fixtures.
+
+| Evidence | Executed coverage and limits |
+|---|---|
+| A compile/static | zero compile errors; physical measurement/transfer/Stir/prefab checks; I10–I16, J1–J5 and campaign integrated regressions. Covers request identity, knowledge/supply, discovery retry, 18-night/47-encounter configuration and ending/persistence contracts. This is not a new full-campaign Play Mode run. |
+| B direct invocation | nested Codex/Settings opening while method selection is visible is deliberately invoked as an overlay fixture. It checks restoration and blocking, not normal-play availability of those open buttons. |
+| C raycast and input module | at both real Game View sizes, all four targets receive queued virtual mouse hover/down/up through the existing InputSystemUIInputModule. Center plus four padded hit-area samples; disabled confirmation; transparent background shield; selected marks; change/Back/reopen; correct route and unchanged Recommendation type/cocktail/tags; Guide open/close. Child overlays block targets and close through module clicks. |
+| C existing input regression | fresh entry, disabled Continue, New Game, Codex masked cards/wheel/detail/back focus, guest prompt/dialogue, first Exact Stir route, Guide and Settings return. Exact/Recommendation semantics also pass the independent request regressions. |
+| D rendered inspection | 26 retained production-hierarchy PNGs at 720p and 1080p, including all four selected setups and entered workspaces. Inspected native-size selected Stir, Shake, Build and Float examples across both resolutions: readable Korean/check marks, tool/label alignment, no missing glyphs or clipped request/help in the sampled authored request. Float moved right to clear the guest's head. |
+| Physical regression | all four actual production prefabs: bottle pose/stream, finite Jigger measurement/overflow, transfer conservation, Stir motion, Shake presentation and Float layering paths. Programmatic mechanic seams in separate fixtures; not four human-made complete cocktails after selection. |
+| E standalone | no new patch build or standalone navigation test. |
+| F human | no human-input or complete human-playthrough claim. |
+
+`RunDiegetic` seeds Night 5, then uses the normal Chunhyang guest/request flow
+before opening the selector. Captures are **checkpoint fixtures**, not evidence
+of playing nights 1–4 first. Existing bar corner buttons remain gated by the
+method modal; Back returns to the request before opening Codex. Guide is
+available inside the chosen workspace. The fixture-opened overlays do not add
+another player-facing access route.
+
+Earlier attempts are retained: the first 720p run timed out after capture
+temporarily changed Canvas dimensions; the harness now yields a frame before
+computing the next pointer position. A later run missed entry input during external
+window activity, consistent with Game View focus interference. The final uninterrupted pair passed every assertion without
+changing input policy or weakening checks. No game-rule change was made to
+obtain a pass. Logs retain the early failures separately from final results.
+
+Evidence paths (ignored, retained locally):
+
+- `Temp/PhaseMDiegetic/isolated-editor.log`, `validation-results.txt`,
+  `compile-final.log`, `runtime-manifest.json` and `baseline.json`.
+- `Logs/Review/phase-m-diegetic-selected-{Stir,Shake,Build,Float}-{1280x720,1920x1080}.png`
+  and corresponding `workspace-*`, `all-setups-float-selected-*`, dialogue PNGs
+  and text/raycast reports. Individual images are retained; no thumbnail board
+  substitutes for them.
+- Examples: [Float 720p](../Logs/Review/phase-m-diegetic-selected-Float-1280x720.png),
+  [Build 1080p](../Logs/Review/phase-m-diegetic-selected-Build-1920x1080.png).
+
+All 63 baseline paths retained their exact byte hashes after validation and
+implementation commit. The config remained untouched and unstaged. No additional
+tracked importer/settings changes were caused in the original project. Generated
+state in the isolated copy is excluded along with logs and captures. The only
+committed scene delta is the Shaker sprite reference; the new script metadata
+introduces one new GUID and changes no existing GUID.
+
+The existing Windows package remains source `ba4346f`, predating this patch.
+No patch standalone build or standalone navigation result is claimed.
+
+PASS applies to this bounded implementation and the executed A–D/physical
+contracts above. VALIDATION_DEBT remains for native physical input/held-button
+release, a patch standalone package/navigation, and full human playthrough.
+HUMAN_UI_TUNING_LATER covers final preference for scale, labels and feel.
+CHARACTER_ANIMATION_DEFERRED, DEFERRED_AUDIO, FUTURE_EXPANSION and OUT_OF_SCOPE
+remain as above. No required method-selection implementation is left as tuning.

@@ -25,7 +25,7 @@ The authoritative technical results and remaining classifications are in 13_POST
 
 ## Phase M focused human review
 
-1. At both 1280×720 and 1920×1080, click the visible guest prompt, read long Korean lines/choices, change all four methods, go back and reopen. Check that a fast second click does not skip a reading beat.
+1. At both 1280×720 and 1920×1080, click the visible guest prompt and read long Korean lines/choices. In a Recommendation, choose the countertop mixing glass/spoon, Shaker, glass/bottle and glass/horizontal-spoon setups; check hover help, selected mark, change, Back and reopen before starting. Float should clearly communicate layering. Exact authored requests retain direct entry. Check that a fast second click does not skip a reading beat.
 2. Hold Space while pouring, open Guide or Settings, release while reading, close, and press again. Repeat while stirring and during Shake notes. Confirm no queued pour, motion, note or serve; liquids and pending transfers must retain their actual state.
 3. Open Guide → Esc Settings → close Settings → close Guide. Check the appropriate top surface closes and reading does not consume Shake time. Repeat opening/closing and returning between scenes.
 4. Scroll ingredient/recipe lists, including bottom entries. Check visible targets, masks, disabled Continue and click/drag release near other controls. Keyboard focus should stay inside the active modal and return to its opener.
@@ -38,6 +38,10 @@ Human UI preference, auditory mix, narrative pacing and full physical-input
 playthrough are not certified by the automated checks.
 
 ## Phase M package identity
+
+The countertop method-selection patch is documented in Docs/23 and implemented
+in `72ff492`. The package below predates that patch; do not use it as evidence
+of the new tool-selection UX. Patch validation used an isolated Editor copy.
 
 `Builds/Windows-PhaseM-ba4346f/SURLHWA.exe` was built from runtime source
 `ba4346f14a1aa9dfd73f5083399ca1230f0bd1fe` with Unity 6000.3.7f1 for Windows x64

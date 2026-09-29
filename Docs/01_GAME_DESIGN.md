@@ -126,7 +126,10 @@ and Awakening, with three phrasings each. A request is offered only when an
 existing Known recipe can answer it using that night's ordinary supply.
 Selection never grants knowledge or injects ingredients.
 
-Recommendation Brew opens the existing four-method selection. The selected
+Recommendation Brew presents four selectable tool setups on the bar counter:
+mixing glass/spoon (Stir), Shaker (Shake), serving glass/bottle (Build), and
+glass/horizontal spoon (Float). Choosing a setup and confirming uses the
+existing four-method selection. The selected
 method determines preparation controls; the authored guest request retains
 its own meaning, title, and reward. Recipe recognition and FIT stay separate.
 Exact discovery and the Prince’s first Manwol request keep their required methods.

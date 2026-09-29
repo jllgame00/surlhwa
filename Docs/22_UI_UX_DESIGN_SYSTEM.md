@@ -68,7 +68,8 @@ must never bind unfiltered recipe facts. Supply remains independent of knowledge
 | Implementation | Presentation-only values |
 |---|---|
 | `Assets/Code/UI/SurlhwaUITheme.cs` | palette, 1-unit panel edge, 2-unit focus edge, 0.10 s button tint, 64×64 corner icons |
-| `InteractionUIController` | method 800×224; four 176×70 options; dialogue 1040×224 with 22-unit body and 54-unit actions |
+| `InteractionUIController` | existing method selection/confirmation ownership; dialogue 1040×224 with 22-unit body and 54-unit actions |
+| `SurlhwaMethodSetupView` | counter-projected tool setups, 128×132 hit areas; compact Korean labels 18; request note 1040×136 with body 20 and small confirm/back controls |
 | `SurlhwaReadingClickBoundary` | shared 0.24 s pointer beat boundary; authored reading still requires explicit advancement |
 | `CocktailCodexPanelController` / `RecipeGuidePanelController` | opaque knowledge surfaces, 20-unit recipe text, scroll areas; Guide close 160×44 |
 | `BrewIngredientOptionView` / `IngredientShelfController` | 56-unit ingredient row; name 18, actual quantity 16; selected check mark |
@@ -84,6 +85,41 @@ shared reading pause. Closing either restores the previous owner/time scale.
 The existing Escape route closes the top surface, including nested Settings;
 it does not skip authored ending text. A method selection is transient until
 confirmation; no route template supplies a secret emotional answer.
+
+### Diegetic method-selection patch
+
+Recommendation Brew now presents tools on the accepted front countertop. The
+old 800×224 menu background, heading and option tiles are hidden at runtime;
+the serialized BrewPanel and its original buttons remain the modal/callback
+owner. This does not create another route-start path. Exact authored requests
+retain their existing direct entry (including discovery and the first Manwol).
+
+| Setup | Method | Support |
+|---|---|---|
+| Mixing glass with upright spoon | 젓기 / Stir | slow stirring description |
+| Existing Shaker artwork | 흔들기 / Shake | sideways shaking description |
+| Serving glass with small bottle | 잔에 만들기 / Build | add ingredients directly |
+| Empty glass with horizontal spoon | 층 쌓기 / Float | explicitly explains pouring slowly along the spoon to form layers |
+
+The tools are uGUI sprite projections anchored to fixed world points on the
+existing countertop, not new world physics or interaction objects. Counter
+anchors, sizes and text live in `SurlhwaMethodSetupView`. World composition,
+camera, furniture and characters are untouched. No prepared cocktail is
+invented in these empty setup previews.
+
+Each transparent button is larger than its visible tool. Hover/focus adds a
+thin tool outline and one-line help. Selection adds a check mark, brass label
+and short underline. Only the existing controller owns the selected method.
+The request note repeats already-visible guest context, identifies recommendation
+versus exact, and retains small Start/Back actions. Confirm remains disabled
+until an explicit choice. Back returns to dialogue; reopening clears selection.
+
+The method surface uses a transparent full-screen modal shield: the counter
+stays visible while underlying controls remain blocked. Other surfaces retain
+their existing shade. Decorative sprites, shadows, labels and selection markers
+do not raycast. Codex/Settings keep their existing priority and return behavior;
+Guide remains available after entering the chosen workspace. No new shortcut,
+pause owner, request state, liquid state or recipe-knowledge source is added.
 
 No new image or font assets were needed. All changes use live TMP text, uGUI
 graphics and owned art. Korean fallback remains the existing project font setup.

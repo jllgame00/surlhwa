@@ -2379,3 +2379,29 @@ PlayerSettings preloaded input-action/batching serialization). Those four change
 are functional/generated serialization, not whitespace-only cleanup; they remain
 visible and uncommitted. Docs/23 records exact paths and scope. No baseline edit,
 secret configuration content or generated build output was staged.
+
+### Phase M patch — diegetic method selection, 2026-09-29
+
+Implementation `72ff492` replaces the visible four-tile method menu with
+counter-anchored mixing glass/spoon, Shaker, glass/bottle and layering-spoon
+setups. Existing selection/confirmation callbacks, Exact direct entry,
+Recommendation meaning, physical bartending and modal owners are preserved.
+The request note and small Start/Back actions remain. No world composition,
+character, recipe, narrative, identity or save migration was made.
+
+Final isolated-Editor source hashes match the implementation commit. Both
+1280×720 and 1920×1080 passed all four virtual InputSystem pointer routes,
+hover/hit-area checks, selection changes, disabled confirmation, Back/reopen,
+request preservation and Guide return. Child-overlay opening is a direct-method
+fixture; blocking and close/return are tested separately. Physical four-prefab
+Play Mode and physical/campaign integrated Editor regressions passed, including
+knowledge/request/discovery contracts. This patch does not claim another full
+18-night/47-encounter Play Mode run, human input, or a new standalone build.
+
+Docs/22 defines the current screen contract; Docs/23 records the exact UTC runs,
+failed probe history, 26 PNG paths, source identity and validation limits.
+The source-only validation copy safely avoided terminating the original Editor
+after its Pipeline commands stopped responding. All 63 baseline dirty paths,
+including the protected config, retain their initial byte hashes. Native-input
+and patch standalone coverage remain VALIDATION_DEBT; human UI preference is
+HUMAN_UI_TUNING_LATER. Character animation remains actual deferred implementation.
