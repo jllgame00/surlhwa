@@ -77,7 +77,7 @@ public static class SURLHWACampaignPlayModeValidation
         foreach (string key in new[] { "HadKnowledge", "HadLegacy", "Pending", "Complete", "Success", "QuietPrince", "EndingFixture" }) SessionState.EraseBool(Prefix + key);
         SessionState.EraseString(Prefix + "Knowledge");
         SessionState.EraseString(Prefix + "Legacy");
-        EditorApplication.Exit(code);
+        if (Application.isBatchMode) EditorApplication.Exit(code);
     }
     internal static void Complete(bool success)
     {
@@ -242,6 +242,10 @@ internal sealed class SURLHWACampaignRunner : MonoBehaviour
                 yield return Wait(() => Get(ui,"activeCustomer") != null &&
                     ((Button)Get(ui,"ellipsisButton")).gameObject.activeInHierarchy, "guest arrival");
                 var guest = (CustomerController)Get(ui,"activeCustomer");
+                if (night == 1 && slot == 1) SURLHWAReviewCapture.Save("restart-normal-play-ordinary",1280,720);
+                if (guest.LittlePrinceVisitNumber == 1) SURLHWAReviewCapture.Save("restart-normal-play-prince",1280,720);
+                if (guest.CampaignEncounter != null && guest.CampaignEncounter.visit == CampaignVisitId.ChunhyangMeeting)
+                    SURLHWAReviewCapture.Save("restart-normal-play-chunhyang",1280,720);
                 var encounter = guest.CampaignEncounter;
                 Require(guest.TryGetDedicatedRequest(out var order), "Missing authored order.");
                 if (encounter != null)
@@ -288,6 +292,7 @@ internal sealed class SURLHWACampaignRunner : MonoBehaviour
                     }
                     yield return Wait(() => Find<IngredientShelfController>() != null &&
                         Find<BartendingFlowCoordinator>().IsBartendingActive,"bartending entry");
+                    if (night == 1 && slot == 1) SURLHWAReviewCapture.Save("restart-normal-play-workspace",1280,720);
                     methods.Add(recipe.method);
                     yield return SURLHWAFourNightRunner.ExecuteDrink(recipe,failPrince,retry && attempt == 0);
                     yield return Wait(() => !Find<BartendingFlowCoordinator>().IsBartendingActive,"actual result and unload");
@@ -335,6 +340,13 @@ internal sealed class SURLHWACampaignRunner : MonoBehaviour
         Require(LittlePrinceVisitPersistence.IsStatueEligible() == !SURLHWACampaignPlayModeValidation.QuietPrince, "Prince farewell differs from actual services.");
         Require(departures == 47 && methods.Count == 4,"Incomplete campaign route/method coverage.");
         Require(Find<CampaignBarMemories>().VisibleMemoryCount == 7,"Missing completed ACT memory.");
+        // Earned through all 47 departures; briefly hide only UI for the display review.
+        var reviewCanvases = FindObjectsByType<Canvas>(FindObjectsSortMode.None);
+        var enabledCanvases = new System.Collections.Generic.List<Canvas>();
+        foreach (var canvas in reviewCanvases)
+            if (canvas.enabled) { enabledCanvases.Add(canvas); canvas.enabled = false; }
+        SURLHWAReviewCapture.Save("restart-earned-memories",1280,720);
+        foreach (var canvas in enabledCanvases) canvas.enabled = true;
         Require(!CampaignProgressPersistence.EndingRead,"Ending completed before reading.");
         var endingPanel = Find<DayResultPanelController>();
         ClickField(endingPanel,"restartButton"); ClickField(endingPanel,"restartButton");

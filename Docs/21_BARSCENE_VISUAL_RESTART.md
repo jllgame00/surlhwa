@@ -82,9 +82,9 @@ remain HUMAN_ART_TUNING_LATER.
 ## L5R–L7R integrated room and UI
 
 BarScene now contains ModularWinterBar.prefab: repeated floor/wall sections,
-two winter windows, shelves and independent bottle dressing, a central niche,
+two winter windows, shelves and independent bottle dressing, three rear niches,
 three counter occlusion planes, bartender, three stools, two lamps, side
-plants and six supporting pedestals. Seven serialized anchors place the
+plants and four supporting pedestals. Seven serialized anchors place the
 existing departure-derived memory contours in display furniture. Their unlock
 logic is unchanged. The old SnowBackground renderer is disabled; its source
 and inactive prototype geometry remain for dependency-safe history.
@@ -109,3 +109,16 @@ authoritative. L6R preserves all 31 prior pixel sprites, original Shaker, Codex
 glasses and cocktail color extraction. The bartending workspace remains the
 existing additive close view; its finer 100 PPU tools coexist with 32 PPU world
 art rather than being rescaled through the Bar canvas.
+
+A follow-up depth audit found the Quixote/Faust positions behind counter arms.
+They now occupy two additional rear niches beside the central Hamlet niche;
+shelves/windows move outward within the same camera. A pixel-alpha contract
+checks all seven anchors against foreground counter occlusion. The first full
+campaign attempt was interrupted through its normal cleanup/restore path; it
+is not counted as a completed regression. The complete run restarts after
+these view-only corrections. The separate display-layout capture is explicitly
+a visibility fixture; earned-memory evidence comes from the complete campaign.
+
+The corrected display-layout fixture shows all seven contours above their
+furniture, with counter occlusion checks and Play Mode fixtures passing.
+Final compile after this correction: zero errors, eight existing warnings.

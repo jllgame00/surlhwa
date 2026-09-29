@@ -25,7 +25,7 @@ public static class SURLHWAPhysicalBartendingPlayMode
         {
             int code = SessionState.GetInt(Key, 0) == 2 ? 0 : 1;
             SessionState.EraseInt(Key);
-            EditorApplication.Exit(code);
+            if (Application.isBatchMode) EditorApplication.Exit(code);
         }
     }
     internal static void Complete(bool success)
