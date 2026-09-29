@@ -741,3 +741,243 @@ current standalone package. HUMAN_UI_TUNING_LATER: owner approval of grounding,
 light strength, subordinate labels and physical feel. CHARACTER_ANIMATION_DEFERRED
 remains real unfinished animation work; DEFERRED_AUDIO, FUTURE_EXPANSION and
 OUT_OF_SCOPE remain unchanged. This patch does not reopen broad UI or bar design.
+
+## Chained modal-lock follow-up (2026-09-29)
+
+**Original issue: UNRESOLVED / VALIDATION_DEBT.** A fresh-session pass did not
+resolve the chained failure. The investigation below preserves that failure;
+successful repetition is evidence of the observed runs, not a root-cause fix.
+
+### Baseline and original evidence
+
+Start: `a027d6c6536c96dedded6050e83846217e1dc9e5`, branch
+`refactor/project-rebuild`. Staging history: diegetic implementation `72ff492`,
+handoff `ca16d95`, countertop polish `a027d6c`. Actual baseline was inventoried
+again: 63 dirty files, recorded by path and byte hash in
+`Temp/PhaseMModalFollowup/baseline.json`. Protected config is excluded from
+edits/staging; only its hash is used. No owner Editor is force-closed.
+
+Original evidence retained:
+
+- Failed: `Temp/PhaseMStaging/editor-final-after.log`, assertion at line 17928,
+  result **2026-09-29 12:11:38.7304364 UTC**.
+- Successful fresh Editor: `Temp/PhaseMStaging/input-final.log`, result
+  **12:15:47.5410781 UTC**. It used the unchanged test, not a corrected test.
+- Both executed the runtime/test sources subsequently committed in `a027d6c`.
+  Their two SHA256 values are recorded in the preceding section and
+  `Temp/PhaseMStaging/runtime-manifest.json`. There was no intervening production
+  input fix. At execution time these were working sources based on `ca16d95`.
+
+The failed chain used one Editor process, with normal Play Mode exit/entry
+between probes: staging-after 720p, staging-after 1080p, diegetic 720p,
+diegetic 1080p, physical/campaign edit-mode regression, then `RunInputModule`.
+Each UI probe used its existing save snapshot/restore fixture. The final test
+performed disabled Continue, entry Settings open/close, New Game, Codex scroll,
+detail/Back/close, guest/dialogue, first Exact Stir entry, Guide open/close,
+bartending Settings open/close.
+
+Expected final state: time scale exactly 1 and `SurlhwaModalSurface.Top == null`.
+Actual original evidence: `InputModuleFlow` threw
+`InvalidOperationException: Module flow left a modal lock`, caught by the
+test runner's `Guarded` coroutine. This is an assertion exception, not a timeout
+or an identified production lock owner. The preceding Guide-close assertion
+passed. A queued click on `CloseSoundSettings` was logged, but that log alone
+does not prove the callback executed. The old assertion joined two conditions
+and recorded neither their values nor the top modal name. It cannot distinguish
+a missed close, pause restoration problem, unexpected surface or another cause.
+
+`SurlhwaModalSurface` owns the observed modal list, gates and shared pause count;
+`DemoAudioController` owns Settings visibility and its close callback;
+`RecipeGuidePanelController` owns the technique read flag. Only the modal owner
+sets/restores time scale in production. No evidence identifies which of these,
+if any, was responsible in the original run. Environment/focus interference,
+fixture teardown and production cleanup remain hypotheses, not diagnoses.
+
+### Investigation changes and production policy
+
+Only `Assets/Code/Editor/SURLHWAPhaseMUIValidation.cs` changes executable code.
+Production modal/input, tools, hit areas, callbacks, requests, knowledge,
+preparation, progression and persistence are unchanged.
+
+Read-only traces now record before/after module clicks: frame, time scale,
+pause-owner count and saved prior scale, top/active surfaces and instance IDs,
+Settings/Guide flags, selected control, top center raycast, active bartending
+route, button runtime-listener count, liquid observer count and Editor/app focus.
+The original input-module click timing and final assertion are retained.
+After a later unapplied Brew action, diagnostics also record callback delivery
+and up to 16 processed mouse events per click (device, frame, position, button).
+The temporary observer is removed after the click; the input-event subscription
+is removed with the runner. Original click timing, input devices/bindings and
+production callbacks are retained; missed clicks are not retried.
+
+`RunModalSequence` uses one initial Night 5 checkpoint per resolution. Thereafter
+it makes no checkpoint reset, forced scene return, lock clear, time-scale write
+or Play Mode restart between customers. Each of four consecutive services:
+
+1. Repeats legal idle-bar Codex/Settings open/close three times.
+2. Reads the normal request, repeats all four setup selections and Back three
+   times, verifies corner controls stay blocked, then reopens and confirms the
+   chosen route. Request type, requested cocktail and emotion tags are compared.
+3. Repeats Guide/Settings open/close three times in the workspace, checking one
+   surface/shield while open and none when closed, pause state and focus.
+4. Makes a supplied, deliberately imperfect single-ingredient preparation
+   through public physical action seams; uses pointer clicks for technique/serve
+   controls, then waits for actual result, additive unload, authored farewell
+   and natural departure. The ordinary Next Night control continues the sequence.
+
+This is legal experimentation, not a recipe-success test. Preparation uses
+programmatic action seams, including finite Jigger measurement for Stir; no
+result, knowledge, guest completion or narrative outcome is injected. During
+the preparation seam only, legacy keyboard polling is suppressed as in the
+existing campaign driver, then restored before technique/UI checks.
+
+The new fixture's development failures are separate from the original issue:
+it first attempted Codex after Back, but request dialogue's `OverlayBlocker`
+correctly blocks corner controls. It now tests them at the idle bar. A direct
+bottle seam initially conflicted with legacy released-Space polling and was
+interrupted normally; save restoration ran. Its new logger also needed Unity
+destroyed-object handling for focus after unload. Finally it needed a rendered
+frame after newly revealed Shake and night-summary controls before raycasting.
+Those fixture changes do not weaken the old post-Settings assertion or alter
+production input policy. Failed attempt logs remain retained.
+
+### Execution environment and visual scope
+
+The same owned validation Editor process uses
+`Temp/PhaseMDiegetic/ValidationProject`, Unity 6000.3.7f1. A byte-hash comparison
+of all **1,251 original files under Assets, Packages and ProjectSettings** matched
+the executed copy, including runtime assets, metadata, package lock and the
+existing dirty project settings. The copy's extra temporary launcher and its
+metadata are test orchestration only. Library/import caches and UserSettings are
+local to the copy. No config or private save snapshot is copied into review
+artifacts. The existing snapshot/restore harness protects shared PlayerPrefs.
+
+The old launcher's delayed Editor callbacks did not advance in this run. Host
+dispatch therefore invoked the same probes through the copy's Unity Pipeline
+connection, retaining the Editor process and original probe order/Play Mode
+boundaries. This scheduling difference is a reproduction limit. Full comparison
+and dispatch records are retained under `Temp/PhaseMModalFollowup/`.
+
+Rendered inspection used existing staging captures. The Stir hover image shows
+brightened tool edges; the Shake selected image shows brighter object surfaces
+and rim light. Other, unhovered setups in those frames show the idle treatment.
+There is no separate all-idle capture claimed. Countertop light/contact shadows
+support the tool emphasis. No aesthetic edit was made.
+
+- [Stir hover / other idle tools, 720p](../Logs/Review/phase-m-staging-after-Stir-hover-1280x720.png)
+- [Shake selected, 1080p](../Logs/Review/phase-m-staging-after-Shake-selected-1920x1080.png)
+- [Existing complete before/after index](../Logs/Review/phase-m-staging-review.html)
+
+No new standalone build or standalone navigation is claimed. Human physical
+input and aesthetic approval are not claimed. A successful instrumented run
+must not be used to close the original issue without identifying its cause.
+
+### Follow-up results
+
+Executed production C# revision: **`a027d6c`**, unchanged, with the preserved
+asset/settings baseline recorded in the manifest. The final follow-up test source
+has SHA256 **`5F12E74A17639013FBE90E8FC104D6974615C53BC61A4B06B8D8CEDED1D75B08`**;
+it matches the executed copy. The earlier state-trace/repeated-navigation version
+was **`94BD5F658AE25439F2535C8B3587F770465C691BD1B06E484915F999E3BB1A23`**.
+The only subsequent change adds callback/device-event observations. Test-only
+changes and this record are included in the follow-up commit. The full comparison is
+`Temp/PhaseMModalFollowup/copy-manifest.json`.
+
+Confirmed **2026-09-29 UTC**:
+
+- Initial instrumented original-order replay: staging 720p **12:45:45**,
+  staging 1080p **12:48:05**, diegetic 720p **12:49:35**, diegetic 1080p
+  **12:51:16**, physical/campaign regression then input-module **12:52:05**.
+  All passed without restarting the Editor. An additional input-module run
+  passed at **12:53:18**. This first replay used the initial trace-only test
+  revision, before the repeated-navigation fixture was added.
+- Final same-Play-Mode legal navigation: **13:13:09** at 1280×720 and
+  **13:15:42** at 1920×1080. Each run completed four consecutive services
+  (Stir, Shake, Build, Float), 12 idle Codex/Settings cycles, 12 method
+  selection/Back cycles and 12 workspace Guide/Settings cycles. Only the
+  initial checkpoint was seeded. Both crossed the ordinary Night 5→6 boundary.
+- Both legal runs kept the original request semantics, released modal shields
+  and pause ownership on ordinary close/unload, and restored usable focus on
+  overlay close. Settings/Guide runtime button listeners remained one; the
+  visible workspace shelf had one liquid observer. No duplicate active modal
+  or shield was accepted by the assertions.
+
+Three further original-order chains used the `94BD...` test revision in the same
+Editor process. The first two completed every probe; the third stopped at a
+different assertion, which is **not counted as a passed chain**:
+
+| Chain | Staging 720p / 1080p | Diegetic 720p / 1080p | Physical/campaign → input-module |
+|---|---|---|---|
+| 1 | 13:16:41 / 13:17:04 PASS | 13:18:01 / 13:19:02 PASS | 13:19:23 PASS |
+| 2 | 13:19:45 / 13:20:08 PASS | 13:21:06 / 13:22:07 PASS | 13:22:28 PASS |
+| 3 | 13:22:50 / 13:23:14 PASS | 13:23:29 FAIL at Brew entry / not reached | not reached |
+
+At the third chain's Brew failure, both before/after traces showed time scale 1,
+zero pause owners, no top/active surface, an inactive bartending route, one Brew
+listener, a BrewButton center raycast and active Game View/app focus. Selection
+did not open and focus remained on NextButton. Thus this observation is **not a
+retained modal/pause lock**. At that revision the trace did not count delivered
+callbacks, so it cannot distinguish input delivery from a guarded callback.
+Nor does focus sampled before/after settle transient focus changes between them.
+Its cause and relationship to the original post-Settings failure remain unknown.
+No production or input-isolation workaround was added.
+
+After adding the callback/device observations (`5F12...`), diegetic 720p passed
+at **13:28:59**. Six further `RunInputModule` probes alternated 720p/1080p in the
+same Editor and passed at **13:30:11, 13:30:32, 13:30:53, 13:31:14, 13:31:35,
+13:31:56**. Every sampled Settings close delivered one callback; its queued
+virtual events arrived on separate frames, and no external mouse event was
+observed in those sampled click windows. This does not establish that the old
+failures were caused by external input, timing, fixture teardown or production.
+
+Final `5F12...` validation then passed diegetic 1080p at **13:34:32**, and reran
+the complete legal same-Play-Mode sequence at **13:37:08** (720p) and **13:39:42**
+(1080p). These final two runs again completed eight total services and 24 cycles
+each of idle overlays, selection/Back and workspace overlays. No production
+change occurred between any of the replays.
+
+After those final UI runs, physical/campaign edit-mode regression passed,
+including measurement, mixed transfer, Stir motion, four prefab hierarchies,
+request/knowledge/discovery and 18-night/47-encounter configuration. The existing
+Phase K Play Mode regression also passed Build, Stir, Shake and Float physical
+tool/measurement/overflow/transfer fixtures. This is not a new full-campaign
+Play Mode or human-input run. Compilation passed with zero errors and eight
+pre-existing warnings; scoped `git diff --check` passed.
+
+An independent read-back at **13:41:06 UTC** verified all snapshotted progress,
+knowledge and sound preferences after the final physical tests. The private
+snapshot's hash also matched the earlier follow-up snapshot. No save contents
+are in review artifacts. All 63 original dirty files retain their baseline byte
+hashes; config remains untouched and unstaged. No task-induced tracked importer,
+scene, prefab or settings changes remain. The owned validation Editor closed
+normally; the owner's original Editor was not closed.
+
+**Disposition:** retain the original post-Settings assertion as open
+UNRESOLVED / VALIDATION_DEBT, along with the later unapplied Brew action. Three
+complete original-order replays passed (initial plus two final-order chains);
+a fourth stopped at Brew. Successful focused and legal-navigation repetitions
+do not identify either original cause. There is insufficient evidence for a
+production cleanup fix or for declaring an environmental/test-harness root
+cause. The added traces provide the missing state and delivery evidence for
+the next recurrence. No blanket lock clear, time reset, automatic retry or
+production input change was used to make a result pass.
+
+Evidence levels remain separate: the repeated navigation uses actual EventSystem
+raycasts and queued virtual mouse input through InputSystemUIInputModule.
+Dialogue setup also uses the existing programmatic pointer helper. Physical
+preparation uses action seams, while technique/serve/navigation buttons use
+module clicks. The original diegetic fixture's directly opened nested overlays
+remain callback-only setup evidence; they are not confused with the legal
+pointer-only overlay access exercised by `RunModalSequence`.
+
+Original logs remain under `Temp/PhaseMStaging/`. Follow-up logs and reproducible
+host dispatch scripts are under `Temp/PhaseMModalFollowup/`, including
+`reproduce-chain.log`, `latest-results.txt`, `dispatch.log`, `compile.log`,
+`baseline.json`, `copy-manifest.json` and `run.py`. These are ignored local
+artifacts. The actual tests and this investigation record are tracked.
+
+A [sanitized local evidence index](../Logs/Review/phase-m-modal-followup-evidence.txt)
+collects probe results and exceptions without raw Editor startup output. An early
+process inspection unintentionally printed an Editor launch token to tool output;
+subsequent process inspection was restricted. No token or config content is
+included in this record or commits.

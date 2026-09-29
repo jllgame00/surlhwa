@@ -2428,3 +2428,14 @@ The 63 baseline dirty files retain their byte hashes; protected config is
 untouched. Human visual approval remains HUMAN_UI_TUNING_LATER; native-input,
 long-session and current-package checks remain VALIDATION_DEBT. Deferred
 character animation and audio are unchanged.
+
+### Chained modal-lock follow-up, 2026-09-29
+
+The staging patch's original chained input assertion remains **UNRESOLVED /
+VALIDATION_DEBT**. Its old log did not record whether time scale, the top modal,
+or both differed. The fresh-session pass is not a resolution. Docs/23 now records
+the original sequence and source identity, read-only modal/input diagnostics,
+reproduction attempts and legal repeated navigation through four actual service
+returns at both resolutions. Only Editor validation code changes; no production
+lock reset, pause workaround or staging redesign is introduced. New fixture
+development failures are recorded separately from the original failure.

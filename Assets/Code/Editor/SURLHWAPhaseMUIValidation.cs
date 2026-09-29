@@ -11,6 +11,8 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 /// <summary>Production UI fixtures. Seeded screens are not normal-play evidence.
 /// Progress is restored on every exit, including an interrupted probe.</summary>
@@ -31,6 +33,7 @@ public static class SURLHWAPhaseMUIValidation
     public static void Run() => Start("review");
     public static void RunNavigation() => Start("navigation");
     public static void RunInputModule() => Start("input-module");
+    public static void RunModalSequence() => Start("modal-sequence");
     public static void RunDiegetic() => Start("diegetic");
     public static void RunStagingBefore() => Start("staging-before");
     public static void RunStagingAfter() => Start("staging-after");
@@ -56,7 +59,7 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
-        if (mode == "input-module" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
+        if (mode == "input-module" || mode == "modal-sequence" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -90,6 +93,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     bool previousBackground;
     bool runtimeError;
     UnityEngine.InputSystem.Mouse probeMouse;
+    readonly List<string> pointerEvents = new();
+    bool tracingPointer;
     static readonly BindingFlags Fields = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
     static T Find<T>() where T : UnityEngine.Object => FindFirstObjectByType<T>();
     static object Get(object owner, string field) => owner.GetType().GetField(field, Fields).GetValue(owner);
@@ -129,6 +134,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         Application.logMessageReceived += OnLog;
+        InputSystem.onEvent += TracePointerEvent;
         previousBackground = Application.runInBackground;
         Application.runInBackground = true;
         began = Time.realtimeSinceStartup;
@@ -142,7 +148,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             object next = null;
             try
             {
-                if (Time.realtimeSinceStartup - began > 300) throw new TimeoutException("Phase M UI probe");
+                if (Time.realtimeSinceStartup - began > (SURLHWAPhaseMUIValidation.Mode == "modal-sequence" ? 600 : 300)) throw new TimeoutException("Phase M UI probe");
                 if (!work.Peek().MoveNext()) { work.Pop(); continue; }
                 next = work.Peek().Current;
                 if (next is IEnumerator nested) { work.Push(nested); continue; }
@@ -165,6 +171,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     void OnDestroy()
     {
         Application.logMessageReceived -= OnLog;
+        InputSystem.onEvent -= TracePointerEvent;
         if (probeMouse != null && probeMouse.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(probeMouse);
     }
     IEnumerator Wait(Func<bool> ready)
@@ -235,6 +242,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (SURLHWAPhaseMUIValidation.Mode.StartsWith("staging-")) { yield return StagingFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "diegetic") { yield return DiegeticFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
+        if (SURLHWAPhaseMUIValidation.Mode == "modal-sequence") { yield return ModalSequence(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "notification-layout") { yield return NotificationLayout(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
         yield return Capture("entry");
@@ -321,8 +329,13 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator ModuleClick(Button button, bool disabledProbe = false)
     {
+        TraceModal("before " + (button != null ? button.name : "MISSING"), button);
         if (button == null || (!disabledProbe && !CanPointAt(button))) throw new InvalidOperationException("Input-module target is blocked");
         string controlName = button.name;
+        pointerEvents.Clear(); tracingPointer = true;
+        int delivered = 0;
+        UnityEngine.Events.UnityAction observed = () => delivered++;
+        button.onClick.AddListener(observed);
         var rect = (RectTransform)button.transform;
         var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
         UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
@@ -331,7 +344,190 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         yield return null;
         UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
         yield return new WaitForSecondsRealtime(.3f);
+        tracingPointer = false;
+        if (button != null) button.onClick.RemoveListener(observed);
+        Debug.Log("[Pointer delivery] " + controlName + " callbacks=" + delivered + " events=" + string.Join(";", pointerEvents));
         Debug.Log("[Phase M Input Module] virtual mouse down/up via existing InputSystemUIInputModule: " + controlName);
+        TraceModal("after " + controlName, button);
+    }
+    void TracePointerEvent(InputEventPtr data, InputDevice device)
+    {
+        if (!tracingPointer || device is not Mouse mouse || pointerEvents.Count >= 16 ||
+            (!data.IsA<StateEvent>() && !data.IsA<DeltaStateEvent>())) return;
+        bool position = mouse.position.ReadValueFromEvent(data, out Vector2 point);
+        bool button = mouse.leftButton.ReadValueFromEvent(data, out float pressed);
+        pointerEvents.Add("frame=" + Time.frameCount + " device=" + device.deviceId +
+            (device == probeMouse ? " virtual" : " external") + " pos=" + (position ? point.ToString() : "unchanged") +
+            " left=" + (button ? pressed.ToString() : "unchanged"));
+    }
+    static void TraceModal(string stage, Button target = null)
+    {
+        var modalType = typeof(SurlhwaModalSurface);
+        var statics = BindingFlags.Static | BindingFlags.NonPublic;
+        var surfaces = FindObjectsByType<SurlhwaModalSurface>(FindObjectsSortMode.None);
+        var hits = new List<RaycastResult>();
+        var calls = target != null ? typeof(UnityEngine.Events.UnityEventBase).GetField("m_Calls", Fields)?.GetValue(target.onClick) : null;
+        var listeners = calls != null ? (ICollection)calls.GetType().GetField("m_RuntimeCalls", Fields)?.GetValue(calls) : null;
+        var shelf = Find<IngredientShelfController>();
+        var liquidObservers = shelf != null ? (Delegate)Get(shelf, "IngredientUsed") : null;
+        if (target != null && EventSystem.current != null)
+        {
+            var rect = (RectTransform)target.transform;
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) {
+                position = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center)) }, hits);
+        }
+        Debug.Log("[Modal trace] " + stage + " frame=" + Time.frameCount + " time=" + Time.timeScale +
+            " owners=" + modalType.GetField("pauseOwners", statics).GetValue(null) +
+            " previous=" + modalType.GetField("previousTimeScale", statics).GetValue(null) +
+            " top=" + SurlhwaModalSurface.Top?.name + " settings=" + DemoAudioController.IsSettingsOpen +
+            " guide=" + RecipeGuidePanelController.IsTechniqueReadStateActive +
+            " focus=" + SafeName(EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null) +
+            " ray=" + (hits.Count > 0 ? hits[0].gameObject.name : "NONE") +
+            " route=" + Find<BartendingFlowCoordinator>()?.IsBartendingActive +
+            " buttonListeners=" + listeners?.Count + " liquidObservers=" + (liquidObservers?.GetInvocationList().Length ?? 0) +
+            " surfaces=" + string.Join(",", surfaces.Select(s => s.name + "#" + s.GetInstanceID())) +
+            " appFocus=" + Application.isFocused + " editorFocus=" + EditorWindow.focusedWindow?.GetType().Name);
+    }
+    static string SafeName(UnityEngine.Object value) => value != null ? value.name : "NONE";
+    static void ExpectSurface(string name, bool paused)
+    {
+        var surfaces = FindObjectsByType<SurlhwaModalSurface>(FindObjectsSortMode.None);
+        var shields = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None).Count(r => r.name == "ModalInputShield");
+        if ((SurlhwaModalSurface.Top != null ? SurlhwaModalSurface.Top.name : null) != name ||
+            SurlhwaModalSurface.IsPaused != paused || Time.timeScale != (paused ? 0 : 1) ||
+            surfaces.Length != (name == null ? 0 : 1) || shields != surfaces.Length)
+        {
+            TraceModal("unexpected surface; expected=" + name);
+            throw new InvalidOperationException("Modal sequence surface/pause/shield mismatch");
+        }
+        if (name != null && (EventSystem.current.currentSelectedGameObject == null ||
+            !SurlhwaModalSurface.Allows(EventSystem.current.currentSelectedGameObject.transform)))
+            throw new InvalidOperationException("Focus escaped the active surface");
+    }
+    IEnumerator ModalSequence()
+    {
+        probeMouse = UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Mouse>("Same-session modal mouse");
+        // One initial checkpoint only. Subsequent guests, service, departure and
+        // next-night entry use the production flow; no lock/state reset in the loop.
+        yield return SeedNight(5);
+        int services = 0;
+        foreach (var method in new[] { MiniGameType.Stir, MiniGameType.Shake, MiniGameType.Build, MiniGameType.Float })
+        {
+            yield return Guest();
+            for (int repeat = 0; repeat < 3; repeat++)
+            {
+                yield return ModuleClick(Named("CodexButton")); ExpectSurface("CodexPanel", false);
+                yield return ModuleClick(ButtonField(Find<CocktailCodexPanelController>(), "closeButton")); ExpectSurface(null, false);
+                yield return ModuleClick(Named("SettingsButton")); ExpectSurface("SoundSettings", true);
+                yield return ModuleClick(Named("CloseSoundSettings")); ExpectSurface(null, false);
+            }
+            yield return ReadToRequest();
+            var ui = Find<InteractionUIController>();
+            var guest = (CustomerController)Get(ui, "activeCustomer");
+            if (!guest.TryGetDedicatedRequest(out var authored) || authored.RequestType != GuestRequestType.Recommendation)
+                throw new InvalidOperationException("Expected scheduled Recommendation");
+            for (int repeat = 0; repeat < 3; repeat++)
+            {
+                yield return ModuleClick(ButtonField(ui, "brewButton")); ExpectSurface("BrewPanel", false);
+                if (CanPointAt(Named("CodexButton")) || CanPointAt(Named("SettingsButton")))
+                    throw new InvalidOperationException("Bar overlay control leaks through method selection");
+                foreach (string field in new[] { "stirButton", "shakeButton", "buildButton", "floatButton" })
+                {
+                    var target = ButtonField(ui, field);
+                    yield return ModuleClick(target);
+                    var state = target.GetComponent("SurlhwaMethodSetupTarget");
+                    if (!(bool)state.GetType().GetProperty("Chosen").GetValue(state) ||
+                        !(bool)state.GetType().GetProperty("Hovered").GetValue(state))
+                        throw new InvalidOperationException("Missing selected/hovered tool in repeated flow");
+                }
+                // Both the selector and request dialogue block corner controls.
+                // Their legal pointer access was exercised at the idle bar above.
+                yield return ModuleClick(ButtonField(ui, "cancelButton")); ExpectSurface(null, false);
+            }
+            yield return ModuleClick(ButtonField(ui, "brewButton"));
+            if ((bool)Get(ui, "hasMethodSelected")) throw new InvalidOperationException("Reopen kept stale method");
+            yield return ModuleClick(ButtonField(ui, method.ToString().ToLowerInvariant() + "Button"));
+            yield return ModuleClick(ButtonField(ui, "confirmButton"));
+            yield return Wait(() => Find<IngredientShelfController>() != null);
+            var order = (OrderData)Get(Find<OrderManager>(), "currentOrder");
+            var request = (GuestRequestContext)Get(Find<OrderManager>(), "currentGuestRequest");
+            if (order.miniGameType != method || request.RequestType != authored.RequestType ||
+                request.RequestedCocktail != authored.requestedCocktail || !request.DesiredEmotionTags.SequenceEqual(authored.DesiredEmotionTags))
+                throw new InvalidOperationException("Repeated navigation changed route/request");
+            var guide = Find<RecipeGuidePanelController>();
+            for (int repeat = 0; repeat < 3; repeat++)
+            {
+                yield return ModuleClick(ButtonField(guide, "openButton")); ExpectSurface("RecipeGuidePanel", true);
+                yield return ModuleClick(ButtonField(guide, "closeButton")); ExpectSurface(null, false);
+                yield return ModuleClick(Named("BartendingSettings")); ExpectSurface("SoundSettings", true);
+                yield return ModuleClick(Named("CloseSoundSettings")); ExpectSurface(null, false);
+            }
+            yield return ServeSimplePreparation(method);
+            yield return Wait(() => !Find<BartendingFlowCoordinator>().IsBartendingActive);
+            ExpectSurface(null, false);
+            yield return Wait(() => Get(ui, "farewellCompleted") != null);
+            while (Get(ui, "farewellCompleted") != null) yield return ModuleClick(ButtonField(ui, "nextButton"));
+            yield return Wait(() => guest == null);
+            services++;
+            Debug.Log("[Modal sequence] PASS service " + services + " " + method + "; three bar and three workspace overlay cycles, natural result/unload/departure.");
+            if (Find<BusinessDayManager>().IsDayEnded)
+            {
+                yield return Wait(() => SurlhwaModalSurface.Top != null);
+                yield return null; // newly enabled summary Canvas must render first
+                var summary = Find<DayResultPanelController>();
+                yield return ModuleClick(ButtonField(summary, "restartButton"));
+            }
+        }
+        Debug.Log("[Modal sequence] PASS four consecutive services / 12 idle Codex-Settings cycles / 12 selection-Back cycles / 12 Guide-Settings cycles at " + Screen.width + "x" + Screen.height);
+    }
+    IEnumerator ServeSimplePreparation(MiniGameType method)
+    {
+        // Deliberately imperfect, supplied single-ingredient drink. This exercises
+        // real preparation/result/unload without injecting completion or knowledge.
+        // Preparation uses public action seams; UI navigation uses pointer events.
+        var shelf = Find<IngredientShelfController>();
+        MonoBehaviour game = method == MiniGameType.Stir ? (MonoBehaviour)Find<StirMiniGame>() : method == MiniGameType.Shake ? Find<ShakeMiniGame>() : method == MiniGameType.Build ? Find<BuildMiniGame>() : Find<FloatMiniGame>();
+        // As in the existing campaign driver, suppress keyboard polling only
+        // while its action seam is driven. Otherwise "Space not held" ends the
+        // programmatic bottle pickup every frame. Restore before technique/UI.
+        game.enabled = false;
+        var ingredient = shelf.ConfiguredIngredients.First(shelf.IsIngredientVisible);
+        if (!shelf.TrySelectIngredient(ingredient)) throw new InvalidOperationException("No supplied ingredient");
+        var floating = Find<FloatMiniGame>();
+        if (floating != null && !floating.BeginLayerPour(FloatMiniGame.FloatPourIntensity.Gentle))
+            throw new InvalidOperationException("Layer rejected");
+        if (method == MiniGameType.Stir)
+        {
+            yield return Wait(() => shelf.PhysicalPresentation.PrepareBottle(ingredient, shelf.Jigger));
+            if (shelf.FillJigger(10) != 10) throw new InvalidOperationException("Measurement rejected");
+            shelf.EndSelectedPour(); yield return Wait(() => shelf.PhysicalPresentation.IsResting);
+            if (!shelf.BeginMeasuredTransfer()) throw new InvalidOperationException("Transfer rejected");
+        }
+        else
+        {
+            if (floating == null && !shelf.BeginSelectedPour()) throw new InvalidOperationException("Pour rejected");
+            yield return Wait(() => shelf.PreparePhysicalPour());
+            if (floating != null) { floating.PourActiveLayerForDuration(1f / 3, FloatMiniGame.FloatPourIntensity.Gentle); floating.EndActiveLayerPour(); }
+            else { shelf.PourSelectedIngredient(10); shelf.EndSelectedPour(); }
+        }
+        yield return Wait(() => shelf.ToolsReady);
+        game.enabled = true;
+        if (method == MiniGameType.Stir || method == MiniGameType.Shake)
+        {
+            if (!shelf.TryAddIceToActiveTarget()) throw new InvalidOperationException("Ice rejected");
+            yield return Wait(() => shelf.ToolsReady);
+            yield return ModuleClick(ButtonField(game, "startButton"));
+            if (method == MiniGameType.Stir) { yield return new WaitForSecondsRealtime(3); yield return ModuleClick(ButtonField(game, "startButton")); }
+            else yield return Wait(() => Get(game, "state").ToString() == "AwaitingStrain");
+            // A technique can reveal its next control during Update. Let its
+            // visible Canvas frame settle before asking the pointer to hit it.
+            yield return null;
+            yield return ModuleClick(ButtonField(game, "startButton"));
+            yield return Wait(() => Get(game, "state").ToString() == "AwaitingGarnish" && shelf.ToolsReady);
+            yield return null;
+        }
+        else yield return ModuleClick(ButtonField(game, "startButton"));
+        yield return ModuleClick(ButtonField(game, "startButton"));
     }
     IEnumerator NotificationLayout()
     {
