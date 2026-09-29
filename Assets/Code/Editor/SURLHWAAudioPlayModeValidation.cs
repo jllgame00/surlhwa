@@ -48,7 +48,8 @@ public static class SURLHWAAudioPlayModeValidation
     {
         if (state == PlayModeStateChange.EnteredPlayMode && SessionState.GetBool(Prefix + "Pending", false))
             EditorApplication.delayCall += () => new GameObject("Audio Runtime Validation").AddComponent<SURLHWAAudioRunner>();
-        if (state != PlayModeStateChange.EnteredEditMode || !SessionState.GetBool(Prefix + "Complete", false)) return;
+        if (state != PlayModeStateChange.EnteredEditMode ||
+            (!SessionState.GetBool(Prefix + "Complete", false) && !SessionState.GetBool(Prefix + "Pending", false))) return;
         foreach (string key in AllKeys())
         {
             if (SessionState.GetBool(Prefix + "Had" + key, false)) SurlhwaPlayerPrefsStore.SetInt(key, SessionState.GetInt(Prefix + key, 0));
@@ -65,7 +66,7 @@ public static class SURLHWAAudioPlayModeValidation
         foreach (string key in new[] { "HadKnowledge", "HadLegacy", "Pending", "Complete", "Success" }) SessionState.EraseBool(Prefix + key);
         SessionState.EraseString(Prefix + "Knowledge");
         SessionState.EraseString(Prefix + "Legacy");
-        EditorApplication.Exit(code);
+        if (Application.isBatchMode) EditorApplication.Exit(code);
     }
     internal static void Complete(bool success)
     {

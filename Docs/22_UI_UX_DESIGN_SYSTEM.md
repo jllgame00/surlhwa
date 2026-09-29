@@ -59,7 +59,35 @@ RequestEvaluation judges FIT separately. Knowledge is projected through
 RecipeUnlockManager and RecipeKnowledgeGuideFormatter. Unknown/Partial/Known
 must never bind unfiltered recipe facts. Supply remains independent of knowledge.
 
-## Deferred implementation
+## Tuning locations and final screen defaults
+
+| Implementation | Presentation-only values |
+|---|---|
+| `Assets/Code/UI/SurlhwaUITheme.cs` | palette, 1-unit panel edge, 2-unit focus edge, 0.10 s button tint, 64×64 corner icons |
+| `InteractionUIController` | method 800×224; four 176×70 options; dialogue 1040×224 with 22-unit body and 54-unit actions |
+| `SurlhwaReadingClickBoundary` | shared 0.24 s pointer beat boundary; authored reading still requires explicit advancement |
+| `CocktailCodexPanelController` / `RecipeGuidePanelController` | opaque knowledge surfaces, 20-unit recipe text, scroll areas; Guide close 160×44 |
+| `BrewIngredientOptionView` / `IngredientShelfController` | 56-unit ingredient row; name 18, actual quantity 16; selected check mark |
+| `SurlhwaBartendingPresentation` | public request 22; contextual instructions 20; no recipe/FIT computation |
+| `GameManager` / `DemoAudioController` | 1280×720, match 0.5; entry 460×400, confirmation 480×340; settings 520×490 |
+| `DayResultPanelController` | 680×380 reading surface; authored ending body 22; result remains behind Codex |
+| `ResultToastController` / `RecipeUnlockPopupController` | nonblocking service toast with content-fit height; discovery 440×164; existing queue/timing |
+
+Modal sorting: method 200, result 1000, Codex 1800, entry 2000,
+reset confirmation 2100, Guide 2200, Settings 3000. Each visible modal owns
+one shield immediately below itself. Only Guide and Settings acquire the
+shared reading pause. Closing either restores the previous owner/time scale.
+The existing Escape route closes the top surface, including nested Settings;
+it does not skip authored ending text. A method selection is transient until
+confirmation; no route template supplies a secret emotional answer.
+
+No new image or font assets were needed. All changes use live TMP text, uGUI
+graphics and owned art. Korean fallback remains the existing project font setup.
+English ingredient names remain authored IngredientData presentation; established
+Stir/Shake/Build/Float labels accompany Korean technique controls. Service grade
+copy is Korean, while original grade values and every evaluation remain unchanged.
+
+## Deferred implementation status
 
 CHARACTER_ANIMATION_DEFERRED: walking animation, turning, seated poses and
 full-body transitions remain unimplemented work. Existing pose reuse is not

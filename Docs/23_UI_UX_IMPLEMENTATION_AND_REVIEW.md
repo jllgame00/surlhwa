@@ -171,3 +171,32 @@ summary/confirmation and 1080p ending captures were inspected. Updated navigatio
 captures are `phase-m-navigation-*`; final M10 supersedes these with the complete
 review set. Actual service/discovery sequencing and normal-play captures remain
 part of the full campaign run, not inferred from layout changes.
+
+### M9–M10: integrated presentation and review tooling
+
+Service technique labels now translate existing grades without changing grade
+values, recipe identity, preparation compliance or FIT. Guide's close action
+was widened after a native 1080p capture exposed an unwanted line wrap. No
+scene, prefab, art importer, font or authored content change was needed.
+
+The complete Phase M probe passed after these runtime changes. It tests four
+method choices/cancel/reopen, actual top raycasts and pointer events, an immediate
+second reading click being rejected, three repeated Settings cycles, shielded
+underlying Guide controls, pointer-operated volume persistence, restoration of
+an original 0.5 time scale, and final absence of modal/pause locks. It restores
+and verifies the owner's progress/audio snapshot. This is PROGRAMMATIC INPUT,
+not native input-module or human mouse evidence.
+
+Audio/reading Play Mode passed: real imported sources, persisted sliders/mute,
+reset isolation, Guide and Settings preserving the unscaled Shake note timeline,
+all eight notes hit after resume, service/unload and one listener throughout.
+The existing audio harness now restores on interrupted Play Mode exit and only
+exits the Editor in batch mode. Static service feedback and Phase K/campaign
+integrated contracts pass; C# compile has 0 errors / 8 existing warnings.
+
+The established Windows build pipeline now offers `RunPhaseM()`: an explicitly
+versioned output directory, exact Git revision, path-only dirty inventory, target,
+Unity version/time/result/warnings, current review images and these documents.
+It refuses dirty implementation/scenes, preserves the Editor scene setup, and
+isolates legacy static validators. Build completion and final full campaign
+evidence are recorded below after execution, not inferred from this tooling.

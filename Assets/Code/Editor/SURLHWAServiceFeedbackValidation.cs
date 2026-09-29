@@ -63,7 +63,7 @@ public static class SURLHWAServiceFeedbackValidation
             "Good FIT + good execution must lead with positive FIT.");
         RequireContains(presentation.Message, "내어준 잔: " + recipe.targetCocktail.cocktailName,
             "Recognized known cocktail must be named in the diagnostic summary.");
-        RequireContains(presentation.Message, "조주: Good",
+        RequireContains(presentation.Message, "조주: 안정적",
             "Good technique must remain a secondary diagnostic.");
         RequireContains(presentation.Message, "요청 +" + recommendation.reputationReward,
             "Granted request reward must be visible separately from mechanical reputation.");
@@ -93,7 +93,7 @@ public static class SURLHWAServiceFeedbackValidation
             "Poor execution must not turn a fitting recommendation into poor FIT.");
         RequireContains(presentation.Message, "준비 순서가 레시피와 달랐습니다.",
             "Only failed preparation should add the concise HOW diagnostic.");
-        RequireContains(presentation.Message, "조주: Poor",
+        RequireContains(presentation.Message, "조주: 미흡",
             "Poor technique must remain visible without replacing FIT.");
     }
 
@@ -119,7 +119,7 @@ public static class SURLHWAServiceFeedbackValidation
 
         Require(presentation.Title == "잘 만들었지만 다른 마음의 잔",
             "Poor FIT + good execution must communicate both truths in priority order.");
-        RequireContains(presentation.Message, "조주: Good",
+        RequireContains(presentation.Message, "조주: 안정적",
             "Good technique must remain visible when the recommendation was wrong.");
         RequireContains(presentation.Message, "요청 보상 없음",
             "Unsatisfied FIT must communicate the existing withheld request reward.");
@@ -147,7 +147,7 @@ public static class SURLHWAServiceFeedbackValidation
 
         Require(presentation.Title == "마음과 조금 다른 잔",
             "Poor FIT + poor execution must not use positive wording.");
-        RequireContains(presentation.Message, "조주: Poor",
+        RequireContains(presentation.Message, "조주: 미흡",
             "Poor FIT + poor execution must still expose technique quality.");
     }
 

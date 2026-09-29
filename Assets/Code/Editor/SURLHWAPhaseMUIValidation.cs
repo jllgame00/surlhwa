@@ -89,6 +89,15 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     static Button ButtonField(object owner, string field) => (Button)Get(owner, field);
     static Button Named(string name) => FindObjectsByType<Button>(FindObjectsSortMode.None).FirstOrDefault(b => b.name == name);
     static void Call(object owner, string method) => owner.GetType().GetMethod(method, Fields).Invoke(owner, null);
+    static bool CanPointAt(Button button)
+    {
+        Canvas.ForceUpdateCanvases();
+        var rect = (RectTransform)button.transform;
+        var hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) {
+            position = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center)) }, hits);
+        return hits.Count > 0 && hits[0].gameObject.GetComponentInParent<Button>() == button && button.IsInteractable();
+    }
     static void Click(Button button)
     {
         if (button == null || !button.gameObject.activeInHierarchy || !button.interactable) throw new InvalidOperationException("Missing active button");
@@ -140,6 +149,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     {
         success &= !runtimeError;
         Debug.Log("[Phase M UI] " + SURLHWAPhaseMUIValidation.Mode + " " + (success ? "COMPLETE" : "FAILED") + ": staged production-screen fixtures; callback invocation and raycast observations, not human input.");
+        File.AppendAllText("Temp/PhaseM/validation-results.txt", DateTime.UtcNow.ToString("O") + " UI " + SURLHWAPhaseMUIValidation.Mode + " " + success + "\n");
         Application.runInBackground = previousBackground;
         EditorApplication.ExitPlaymode();
     }
@@ -201,6 +211,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         {
             if ((bool)Get(ui, "isLittlePrinceChoiceActive")) yield return Capture("choice");
             Click(ButtonField(ui, "nextButton"));
+            if (SURLHWAPhaseMUIValidation.Mode != "baseline" && ButtonField(ui, "nextButton").gameObject.activeInHierarchy && CanPointAt(ButtonField(ui, "nextButton")))
+                throw new InvalidOperationException("Reading beat accepted an immediate second pointer click");
             yield return new WaitForSecondsRealtime(.26f);
         }
     }
@@ -208,6 +220,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     {
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
         yield return Capture("entry");
+        if (Named("ContinueButton").IsInteractable()) throw new InvalidOperationException("Fresh entry allowed Continue");
         Find<DemoAudioController>().ToggleSettings();
         yield return Capture("settings");
         Find<DemoAudioController>().ToggleSettings();
@@ -238,6 +251,34 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         }
         Click(ButtonField(guide, "closeButton"));
         if (Time.timeScale != 1) throw new InvalidOperationException("Guide close did not restore original time");
+        if (SURLHWAPhaseMUIValidation.Mode != "baseline")
+        {
+            for (int cycle = 0; cycle < 3; cycle++)
+            {
+                Time.timeScale = .5f;
+                Click(Named("BartendingSettings")); yield return null;
+                if (Time.timeScale != 0 || CanPointAt(ButtonField(guide, "openButton")))
+                    throw new InvalidOperationException("Settings failed to shield/pause workspace");
+                var slider = FindObjectsByType<Slider>(FindObjectsSortMode.None).First(s => s.name == DemoAudioController.MasterKey);
+                var sliderRect = (RectTransform)slider.transform;
+                var pointer = new PointerEventData(EventSystem.current) {
+                    position = RectTransformUtility.WorldToScreenPoint(null, sliderRect.TransformPoint(new Vector2(sliderRect.rect.xMin + sliderRect.rect.width * .25f, 0))),
+                    button = PointerEventData.InputButton.Left };
+                var hits = new List<RaycastResult>(); EventSystem.current.RaycastAll(pointer, hits);
+                if (hits.Count == 0 || hits[0].gameObject.GetComponentInParent<Slider>() != slider)
+                    throw new InvalidOperationException("Volume slider cannot receive pointer");
+                pointer.pointerCurrentRaycast = pointer.pointerPressRaycast = hits[0];
+                ExecuteEvents.ExecuteHierarchy(hits[0].gameObject, pointer, ExecuteEvents.pointerDownHandler);
+                ExecuteEvents.Execute(slider.gameObject, pointer, ExecuteEvents.pointerUpHandler);
+                if (Mathf.Abs(slider.value - 25) > 1 || SurlhwaPlayerPrefsStore.GetInt(DemoAudioController.MasterKey, -1) != Mathf.RoundToInt(slider.value))
+                    throw new InvalidOperationException("Pointer volume change was not saved");
+                Click(Named("CloseSoundSettings")); yield return null;
+                if (Time.timeScale != .5f || SurlhwaModalSurface.Top != null || SurlhwaModalSurface.IsPaused)
+                    throw new InvalidOperationException("Repeated Settings left a lock or lost prior time scale");
+                Time.timeScale = 1;
+            }
+            Debug.Log("[Phase M Pointer] Repeated settings, shield, prior .5 time scale restoration and reading double-click boundary PASS.");
+        }
         foreach (string method in new[] { "stirButton", "shakeButton", "buildButton", "floatButton" })
         {
             yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();

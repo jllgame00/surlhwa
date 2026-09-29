@@ -78,7 +78,7 @@ public static class GuestServiceFeedbackFormatter
         }
 
         if (!string.IsNullOrWhiteSpace(result.BartendingResult.grade))
-            lines.Add("조주: " + result.BartendingResult.grade);
+            lines.Add("조주: " + TechniqueLabel(result.BartendingResult.grade));
 
         lines.Add(BuildRewardLine(result));
 
@@ -96,6 +96,9 @@ public static class GuestServiceFeedbackFormatter
             ? UnknownCocktailLabel
             : result.MatchedCocktail.cocktailName;
     }
+
+    private static string TechniqueLabel(string grade) => grade switch {
+        "Good" => "안정적", "Acceptable" => "기본", "Poor" => "미흡", "Complete" => "마무리", _ => grade };
 
     private static string GetTitle(GuestReactionResolver.GuestResponseOutcome response)
     {

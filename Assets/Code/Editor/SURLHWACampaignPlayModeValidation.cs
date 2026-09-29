@@ -95,6 +95,7 @@ internal sealed class SURLHWACampaignRunner : MonoBehaviour
     private float began;
     private bool finished;
     private bool previousBackground;
+    private bool capturedService, capturedDiscovery;
     private readonly System.Collections.Generic.Stack<IEnumerator> work = new();
     private readonly System.Collections.Generic.HashSet<MiniGameType> methods = new();
     private void Start()
@@ -105,6 +106,33 @@ internal sealed class SURLHWACampaignRunner : MonoBehaviour
         Application.runInBackground = true;
         work.Push(Run());
         StartCoroutine(Guarded());
+    }
+    private void LateUpdate()
+    {
+        // Observe real scheduled service; never manufacture a result or knowledge event.
+        var toast = Find<ResultToastController>();
+        if (!capturedService && toast != null && ((CanvasGroup)Get(toast, "canvasGroup")).alpha >= .999f)
+        {
+            capturedService = true;
+            SURLHWAReviewCapture.Save("phase-m-normal-service", 1280, 720);
+            SURLHWAReviewCapture.Save("phase-m-normal-service", 1920, 1080);
+        }
+        var popup = Find<RecipeUnlockPopupController>();
+        if (!capturedDiscovery && popup != null)
+        {
+            var root = (RectTransform)Get(popup, "popupRoot");
+            if (root.gameObject.activeInHierarchy && Vector2.Distance(root.anchoredPosition, (Vector2)Get(popup, "shownPosition")) < .1f)
+            {
+                if (toast != null && ((CanvasGroup)Get(toast, "canvasGroup")).alpha > .01f)
+                {
+                    Debug.LogError("[Phase M sequence] Discovery overlaps service feedback.");
+                    Finish(false); return;
+                }
+                capturedDiscovery = true;
+                SURLHWAReviewCapture.Save("phase-m-normal-discovery", 1280, 720);
+                SURLHWAReviewCapture.Save("phase-m-normal-discovery", 1920, 1080);
+            }
+        }
     }
     private IEnumerator Guarded()
     {

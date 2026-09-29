@@ -321,7 +321,7 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
         yield return new WaitForSeconds(ToastWait - InitialReactionWait);
         TrackPopupActivation();
         string expectedMessage = "내어준 잔: " + dryMartini.targetCocktail.cocktailName + "\n" +
-                                 "조주: Good\n" +
+                                 "조주: 안정적\n" +
                                  "평판: +3 (조주 +2, 요청 +1)";
         if (!Require(toastCanvas.alpha > 0.01f && !IsPopupActive() &&
                      toastTitle.text == "마음에 닿은 잔" &&
@@ -405,7 +405,7 @@ internal sealed class SURLHWAServiceFeedbackPlayModeRunner : MonoBehaviour
         yield return new WaitForSeconds(ToastWait - InitialReactionWait);
         TrackPopupActivation();
         string expectedMessage = "내어준 잔: " + incompatibleRecipe.targetCocktail.cocktailName + "\n" +
-                                 "조주: Good\n" +
+                                 "조주: 안정적\n" +
                                  "평판: +2 (요청 보상 없음)";
         if (!Require(toastCanvas.alpha > 0.01f && !IsPopupActive() &&
                      toastTitle.text == "잘 만들었지만 다른 마음의 잔" &&

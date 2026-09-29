@@ -9,15 +9,32 @@ using UnityEngine;
 public static class SURLHWAWindowsBuild
 {
     [MenuItem("SURLHWA/Build/Windows Review Campaign")]
-    public static void Run()
+    public static void Run() => Build("Builds/Windows", false);
+    [MenuItem("SURLHWA/Build/Windows Phase M Review")]
+    public static void RunPhaseM() => Build("Builds/Windows-PhaseM-" + Git("rev-parse --short HEAD").Trim(), true);
+    private static void Build(string output, bool phaseM)
     {
+        if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Exit Play Mode before building.");
+        var setup = UnityEditor.SceneManagement.EditorSceneManager.GetSceneManagerSetup();
+        for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+            if (UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)
+                throw new InvalidOperationException("Preserve unsaved scene edits before building.");
+        string revision = Git("rev-parse HEAD").Trim();
+        string dirty = Git("status --short"); // File names only; never read protected configuration.
+        if (phaseM && dirty.Split('\n').Any(line => line.Contains("Assets/Code/") || line.Contains(".unity") || line.Contains(".prefab") || line.Contains("ProjectSettings/")))
+            throw new InvalidOperationException("Commit intended implementation before a versioned review build.");
         string[] scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
         string[] required = { "Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity", "Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity" };
         if (!scenes.SequenceEqual(required)) throw new InvalidOperationException("Production scene order differs from the audited two-scene contract.");
-        SURLHWACampaignValidation.RunIntegrated();
-        SURLHWAPresentationValidation.RunCharacters();
-        ValidateSceneDependencies(scenes);
-        const string output = "Builds/Windows";
+        try
+        {
+            // Legacy static validators borrow/open scenes. Give them an isolated empty scene.
+            UnityEditor.SceneManagement.EditorSceneManager.NewScene(UnityEditor.SceneManagement.NewSceneSetup.EmptyScene, UnityEditor.SceneManagement.NewSceneMode.Single);
+            SURLHWACampaignValidation.RunIntegrated();
+            SURLHWAPresentationValidation.RunCharacters();
+            ValidateSceneDependencies(scenes);
+        }
+        finally { UnityEditor.SceneManagement.EditorSceneManager.RestoreSceneManagerSetup(setup); }
         Directory.CreateDirectory(output);
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
@@ -40,10 +57,32 @@ public static class SURLHWAWindowsBuild
             File.Copy("Docs/" + name, output + "/Docs/" + name, true);
         foreach (string file in Directory.GetFiles("Docs/Licenses"))
             File.Copy(file, output + "/Docs/Licenses/" + Path.GetFileName(file), true);
+        if (phaseM)
+        {
+            foreach (string name in new[] { "22_UI_UX_DESIGN_SYSTEM.md", "23_UI_UX_IMPLEMENTATION_AND_REVIEW.md" })
+                File.Copy("Docs/" + name, output + "/Docs/" + name, true);
+            foreach (string file in Directory.GetFiles("Logs/Review", "phase-m-*.png").Where(f => !Path.GetFileName(f).Contains("baseline")))
+                File.Copy(file, output + "/Review/" + Path.GetFileName(file), true);
+        }
         File.WriteAllText(output + "/BUILD_INFO.txt", "SURLHWA first-pass full campaign (18 nights / 47 encounters)\nUnity " + Application.unityVersion +
-            "\nBuilt UTC: " + DateTime.UtcNow.ToString("O") + "\nNot a claim of final art, audio, feel or public-release approval.\n");
+            "\nReview: " + (phaseM ? "Phase M" : "Campaign") + "\nSource commit: " + revision +
+            "\nTarget: StandaloneWindows64\nResult: " + report.summary.result + "\nDuration: " + report.summary.totalTime +
+            "\nWarnings: " + report.summary.totalWarnings + "\nOutput: " + Path.GetFullPath(output) +
+            "\nBuilt UTC: " + DateTime.UtcNow.ToString("O") + "\nTracked worktree at build (paths only):\n" + dirty +
+            "\nNot a claim of final art, audio, feel or public-release approval.\n");
         Debug.Log("[Windows Build] PASS: " + Path.GetFullPath(output + "/SURLHWA.exe") +
             " / bytes=" + report.summary.totalSize + " / warnings=" + report.summary.totalWarnings);
+    }
+    private static string Git(string arguments)
+    {
+        using var process = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("git", arguments) {
+            WorkingDirectory = Directory.GetCurrentDirectory(), UseShellExecute = false,
+            CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true });
+        string result = process.StandardOutput.ReadToEnd();
+        string error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        if (process.ExitCode != 0) throw new InvalidOperationException("Build identity lookup failed: " + error);
+        return result;
     }
     private static void ValidateSceneDependencies(string[] scenes)
     {
@@ -57,7 +96,9 @@ public static class SURLHWAWindowsBuild
         }
         foreach (string path in scenes)
         {
-            var scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(path, UnityEditor.SceneManagement.OpenSceneMode.Additive);
+            var scene = UnityEngine.SceneManagement.SceneManager.GetSceneByPath(path);
+            bool opened = !scene.IsValid() || !scene.isLoaded;
+            if (opened) scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(path, UnityEditor.SceneManagement.OpenSceneMode.Additive);
             try
             {
                 foreach (var root in scene.GetRootGameObjects())
@@ -65,7 +106,7 @@ public static class SURLHWAWindowsBuild
                         if (GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(transform.gameObject) != 0)
                             throw new InvalidOperationException("Missing script in build scene: " + path);
             }
-            finally { UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true); }
+            finally { if (opened) UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true); }
         }
         Debug.Log("[Release References] PASS: both enabled scenes and their prefab dependencies have no missing scripts.");
     }

@@ -424,8 +424,10 @@ public class RecipeGuidePanelController : MonoBehaviour
         if (closeButton != null)
         {
             closeButton.transform.SetParent(panelRoot.transform, false);
-            SurlhwaUITheme.Place(closeButton.GetComponent<RectTransform>(), new Vector2(104, 44), new Vector2(416, 288));
+            SurlhwaUITheme.Place(closeButton.GetComponent<RectTransform>(), new Vector2(160, 44), new Vector2(388, 288));
             SurlhwaUITheme.LabelButton(closeButton, "닫기 · Esc");
+            var label = closeButton.GetComponentInChildren<TMP_Text>(true);
+            if (label != null) SurlhwaUITheme.Place(label.rectTransform, new Vector2(160, 44), Vector2.zero);
         }
     }
 
