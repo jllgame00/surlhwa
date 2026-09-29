@@ -62,8 +62,9 @@ coverage; no fabricated baseline evidence is claimed for them.
 
 ## Implementation and final evidence
 
-Milestone records will be appended after each bounded implementation and validation.
-No final Phase M PASS is implied by the audit or design contract.
+The following records describe each bounded implementation and its evidence at
+that point. The final source/handoff record below supersedes earlier pending
+validation status without rewriting the historical findings.
 
 ### M2–M3: input foundations and representative method selector
 
@@ -350,3 +351,137 @@ The corrected module probe passed, including an attempted click on disabled
 fresh-entry Continue (no session start), masked-card rejection, wheel scrolling,
 detail/Back focus recovery and the full entry-to-workspace overlay path.
 Compilation: zero errors, eight existing warnings (MSB3277 and seven CS0252).
+
+## Final source and handoff record
+
+Final runtime source is `ba4346f14a1aa9dfd73f5083399ca1230f0bd1fe` on
+`refactor/project-rebuild`. Later documentation-only work does not change the
+executable source. Focused commits since the verified starting HEAD:
+
+| Commit | Scope |
+|---|---|
+| `6a731b4` | current-screen audit and design contracts |
+| `47d7c0c` | shared theme, modal/input boundaries, guest prompt and method selector |
+| `5140a3c` | dialogue and knowledge reading surfaces |
+| `64bbd95` | actual bartending state presentation |
+| `bd0c0dd` | entry/reset, settings, results and ending navigation |
+| `c26a9dd` | integrated readability and review harness |
+| `1b7ed5c` | rendered workspace overlap and discovery contrast corrections |
+| `1182d37` | existing input-module virtual pointer verification |
+| `4dac780` | notification Canvas scaling |
+| `ba4346f` | usable focus restoration and masked/scroll/disabled module regression |
+
+The complete UI probe passed again on `ba4346f` at 08:53:42 UTC, refreshing
+individual 720p/1080p production UI captures. The review board is
+`Logs/Review/phase-m-review-board.png`; F means checkpoint/setup fixture and N
+means the automated normal campaign. The board is a deterministic Pillow
+composition outside runtime assets, not new game artwork or image-generation output.
+
+Final-source Phase K Play Mode passed all four routes, including finite Jigger
+measurement/overflow, source reduction/target growth, actual tool transforms,
+technique results, Float layers and prepared-glass visuals. Updated controlled
+physical-fixture captures use `phase-m-physical-*-finished-*`. These fixtures
+exercise direct transfers and are not normal-play UI sequence evidence.
+The audio/reading-pause Play Mode regression also passed: one active listener,
+volume/mute persistence isolation, pour audio, Guide/Settings preserving all eight
+Shake notes, resume and unload. Progress/knowledge/audio hashes restored exactly.
+
+### Final validation matrix
+
+The final 18-night/47-encounter rerun on `ba4346f` completed **PASS at
+2026-09-29 09:19:38 UTC**. It included all 47 natural departures, 16 extended
+special visits, actual discovery/retry/alternatives, weak-service continuation,
+checkpoint/mid-dialogue/ending Continue, seven memories, terminal coda, reset and
+legacy handoff. No runtime errors were logged during this run. Owner progress,
+both knowledge payloads and audio preferences matched their pre-run hash exactly.
+Evidence: ignored `Temp/PhaseM/campaign-ba4346f-evidence.json`; the previous complete
+`4dac780` run is retained separately. Only the normal Prince route was rerun as
+the full campaign in Phase M; this is not a claim of two full branch playthroughs.
+
+| Level | Final coverage and result |
+|---|---|
+| A — compile/static | 0 errors, 8 existing warnings; physical static regression including campaign/knowledge/request/preparation/FIT integration and service-feedback assertions PASS |
+| B — callbacks/input seams | final-source complete 18-night/47-encounter campaign, all four Phase K physical routes and audio/reading-pause regression PASS; not pointer or human proof |
+| C — pointer/raycast/module | complete UI review checks actual top raycasts plus pointer dispatch; virtual Mouse through existing InputSystemUIInputModule checks disabled Continue, Settings shielding, masked Codex card, wheel, detail/Back focus, dialogue, Guide and workspace Settings; PROGRAMMATIC INPUT |
+| D — rendered inspection | individual production UI captures at 1280×720 and 1920×1080 inspected; seeded fixtures identified; actual normal service/discovery captures from the final campaign; no missing glyphs or clipping observed in reviewed samples |
+| E — standalone | Windows build and graphics-enabled 15-second startup smoke PASS; standalone UI navigation/full playthrough not exercised |
+| F — human | not performed; native held-input/drag-release paths, physical feel and full human campaign remain open |
+
+The input-module probe passed once more on the committed final source at
+**09:20:33 UTC**, after the build and full campaign. Its save/knowledge/audio
+snapshot restored exactly. No further runtime-affecting edits followed.
+
+### Windows review package
+
+- Source: `ba4346f14a1aa9dfd73f5083399ca1230f0bd1fe`; no dirty implementation
+  files. Only baseline excluded paths and in-progress handoff documentation were
+  dirty; their path-only inventory is in `BUILD_INFO.txt`.
+- Existing `SURLHWAWindowsBuild.RunPhaseM()` pipeline, Unity **6000.3.7f1**,
+  **StandaloneWindows64**, normal non-development build, two production scenes.
+- **Succeeded**, 2026-09-29 **08:57:17 UTC** (17:57:17 KST), **37.678 seconds**,
+  report size **210,556,945 bytes**. Output:
+  `Builds/Windows-PhaseM-ba4346f/SURLHWA.exe`. Keep the entire folder together.
+- One build warning: no RuntimePipelineConfig asset, so the Unity tooling
+  pipeline is disabled in Player builds. This is the existing configuration;
+  no runtime remote-control dependency was enabled for validation.
+- Executable SHA256:
+  `4BF762016829B0C975960CF300AAC5A5BB1F84D25745F2AA8F4A508F9AF5243F`.
+  Game assembly SHA256:
+  `D703707B7119DEAA9DDCC53BF7014260F9E28082BDE8A22C1E34961B4957DE43`.
+- Startup smoke at **08:57:51 UTC**: new executable, hidden batch mode with
+  graphics enabled at 1280×720; Direct3D11/RTX3070 initialized, game assembly
+  loaded, BarScene SeatManager/OrderManager initialized, process alive after
+  15 seconds, no logged exception. The owned process was then stopped.
+- Standalone `HKCU/Software/DefaultCompany/surlhwa` values were snapshotted and
+  exactly restored, including original value types. No other running game was
+  touched. Evidence: ignored `Temp/PhaseM/standalone-smoke.json` and
+  `standalone-player.log`; the private preference snapshot is not distributed.
+- **E coverage is startup only.** No supported player UI automation connection
+  was available with the existing build configuration. Standalone navigation,
+  native input and a complete standalone playthrough remain VALIDATION_DEBT.
+  Editor virtual input-module evidence is listed separately above.
+- Package `Review/` retains individual Phase M images and the board; final
+  documentation is refreshed after the handoff commit without rebuilding or
+  changing the executable source identity. Generated builds/logs are untracked.
+
+### Worktree preservation and build-generated exclusions
+
+All 59 pre-existing dirty paths retain their original byte hashes, including the
+protected config and both UserSettings files. They were never staged. No accepted
+reference/world sprite, scene, prefab, recipe, identity or narrative data was
+committed by Phase M.
+
+The Windows build additionally serialized four previously clean tracked files:
+
+| Excluded path | Inspected change |
+|---|---|
+| `Assets/Settings/UniversalRP.asset` | shader prefilter flags derived during build |
+| `Assets/UniversalRenderPipelineGlobalSettings.asset` | generated runtime settings list |
+| `Assets/_SURLHWA/Art/Fonts/KoreanFallback.asset` | additional dynamic 1024×1024 atlas texture plus whitespace; source-font GUID/population contract unchanged |
+| `ProjectSettings/ProjectSettings.asset` | existing InputSystem_Actions asset added to preloadedAssets; Standalone batching defaults serialized |
+
+These are **non-whitespace build-generated changes**, not user baseline changes
+or authored Phase M implementation. They remain visible and excluded from commits;
+no blanket restore/cleanup was run. Their hashes are in ignored
+`Temp/PhaseM/build-generated-files.json`. The post-build full-campaign rerun uses
+the committed game code with these generated Editor files present. The build
+started with no dirty implementation/settings files; its own serialization is
+reported here separately from the pre-build inventory in BUILD_INFO.txt.
+Local screenshots, manifests, test snapshots/logs and versioned build output
+also remain ignored. Private save snapshots are never copied into the review package.
+
+### Remaining classifications
+
+| Classification | Scope |
+|---|---|
+| PASS | implemented Phase M screen contracts; compile/static checks; programmatic UI routing and sampled rendered readability, subject to the exact execution records |
+| VALIDATION_DEBT | OS/physical held-input boundaries, native drag/release paths, full standalone UI navigation and human campaign playthrough; Editor virtual pointer events do not settle these |
+| HUMAN_UI_TUNING_LATER | final font/spacing preference, visual balance, narrative reading cadence and overall feel |
+| CHARACTER_ANIMATION_DEFERRED | walking, turning, seated poses and full-body transitions: real unimplemented work, explicitly excluded from Phase M |
+| DEFERRED_AUDIO | final sound assets/mix and subjective auditory review |
+| FUTURE_EXPANSION | bounded future guest/cocktail/revisit content, not triggered by this UI pass |
+| OUT_OF_SCOPE | mobile/ultrawide/controller expansion, new UI/input/render frameworks, game-rule or save-format redesign |
+
+No known required Phase M screen implementation is left as aesthetic tuning.
+The owner retains final human approval; this record does not certify accessibility
+or claim a complete human playthrough.

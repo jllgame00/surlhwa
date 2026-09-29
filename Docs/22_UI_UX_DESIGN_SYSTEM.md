@@ -42,6 +42,8 @@ settings, Shaker and cocktail illustrations. No baked text or global sprite chan
 - A blocking surface owns its full-screen raycast shield while visible. Its
   close/back operation affects only the topmost surface and returns focus to
   the opener. Inactive surfaces release shields, focus and pause ownership.
+  Page changes also repair focus when the previous control becomes hidden or
+  disabled; restoration only targets an active, interactable control.
 - Escape closes Settings, Guide, Codex detail/grid or method selection in that
   order of visible topmost surface; otherwise it opens existing Settings.
   Narrative reading and ending completion are never skipped by Escape.

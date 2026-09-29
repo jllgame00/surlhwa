@@ -2312,3 +2312,70 @@ DEFERRED_AUDIO unchanged; FUTURE_EXPANSION requires bounded approval;
 gameplay/render replacement and bulk future art remain OUT_OF_SCOPE.
 The owner's config and all starting dirty files remain unchanged and excluded.
 This record does not claim human aesthetic or finished-game approval.
+
+## Phase M — coherent UI and input-safe flow (2026-09-29)
+
+Owner direction accepts the Phase L restart bar/cast as the first-pass baseline.
+Phase M preserves the modular U-shaped bar, bartender/guest placement, chibi and
+charcoal cast, memory locations/progression, approved Shaker, cocktail/glass art
+and Phase K physical behavior. No scene/prefab, recipe/catalog, stable ID, save
+format, authored dialogue or world-art change was required.
+
+Implemented shared charcoal/ivory/brass uGUI presentation; readable method,
+dialogue, request, four workspaces, Guide, Codex, result/discovery, summary, entry,
+settings and ending surfaces. A bounded modal helper owns only shields/focus/
+reading pause and input boundaries. It preserves nested pause/time scale and
+returns to the parent screen. Runtime truth remains with the existing order,
+customer, knowledge, supply, container, preparation, technique, matching, FIT,
+campaign and persistence owners.
+
+Concrete defects corrected: guest prompt visuals and hit rectangle were separated;
+legacy Codex detail close had no listener; meaningful New Game reset had no
+confirmation; terminal BusinessDay startup could open ending underneath entry.
+Render review also caught and fixed inherited button/row layout constraints,
+duplicate Build/Float request titles, the discovery popup's actual child background
+and fixed-pixel notification scaling. These are implementation corrections, not
+deferred subjective tuning.
+
+Docs/22 defines tokens, field locations and navigation contracts. Docs/23 contains
+the full screen/owner matrix, milestones, capture provenance, validation levels,
+interrupted-run history and final build evidence. RELEASE_REVIEW adds focused
+physical-input checks. No generated UI artwork or new font dependency was added.
+
+CHARACTER_ANIMATION_DEFERRED remains real unfinished walking, turning, seated-pose
+and full-body transition work. The accepted sprite style does not complete those
+features. Audio refinement remains DEFERRED_AUDIO. Final UI preference, pacing and
+physical play feel remain human-owned. Phase M does not declare the game finished.
+
+Final runtime source: `ba4346f14a1aa9dfd73f5083399ca1230f0bd1fe`. Compile passed
+with zero errors/eight existing warnings. Final-source static integration, full
+UI pointer fixtures, actual InputSystemUIInputModule virtual-mouse tests, Phase K
+physical regressions and audio/nested-reading-pause regression passed. The expanded
+Codex probe found and fixed hidden Back-button focus; masked cards, wheel scrolling
+and disabled Continue now have module-path evidence. This remains programmatic
+input, not human physical input.
+
+Windows review build succeeded using the existing pipeline: Unity 6000.3.7f1,
+StandaloneWindows64, `Builds/Windows-PhaseM-ba4346f`, 2026-09-29 08:57:17 UTC,
+37.678 seconds. One warning says the existing runtime tooling pipeline is disabled
+in Player builds. Hidden graphics-enabled startup smoke loaded BarScene and stayed
+alive for 15 seconds; standalone preferences were restored and verified. Full
+standalone UI navigation/native-input playthrough remains VALIDATION_DEBT. The old
+`Builds/Windows` executable was not reused as new evidence. Exact hashes and
+capture/build identities are in Docs/23 and the package BUILD_INFO.txt.
+
+The final-source full campaign rerun passed at 2026-09-29 09:19:38 UTC:
+18 nights / 47 natural departures, 16 extended special visits, recipe discovery
+failure/retry, genuine alternatives, weak-service story continuation, checkpoint/
+mid-dialogue/ending Continue, seven memories, completed coda without night 19,
+New Game reset and legacy handoff. The owner's progress/knowledge/audio hash was
+exactly restored. This is automated normal-play state progression through existing
+input seams, not a human playthrough. The earlier `4dac780` complete run remains
+historical evidence; final focus-corrected code was rerun rather than inferred.
+
+Final tracked exclusions comprise the unchanged 59 baseline paths plus four
+build-generated files (URP prefilter/runtime lists, dynamic Korean font atlas,
+PlayerSettings preloaded input-action/batching serialization). Those four changes
+are functional/generated serialization, not whitespace-only cleanup; they remain
+visible and uncommitted. Docs/23 records exact paths and scope. No baseline edit,
+secret configuration content or generated build output was staged.

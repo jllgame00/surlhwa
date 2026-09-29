@@ -1,6 +1,6 @@
 # Windows first-pass campaign review
 
-This package is for owner playtesting, not final public-release approval. Keep the whole Windows folder together. Start SURLHWA.exe and use the Korean New Game / Continue controls. README.md contains controls; CREDITS.md records provenance and remaining ownership checks.
+This package is for owner playtesting, not final public-release approval. Keep the whole Windows folder together. Start SURLHWA.exe and use the Korean New Game / Continue controls. README.md contains controls; CREDITS.md records provenance and remaining ownership checks. For Phase M use the versioned `Windows-PhaseM-*` package and check its `BUILD_INFO.txt`; the old `Builds/Windows` executable is not Phase M evidence.
 
 ## Human playtest
 
@@ -14,11 +14,35 @@ This package is for owner playtesting, not final public-release approval. Keep t
 
 ## Current limits
 
-- Input-seam automation proves production state transitions, not physical pointer hit-testing or subjective feel.
+- Input-seam automation proves production state transitions. Phase M additionally tests actual EventSystem raycasts and the existing InputSystemUIInputModule with programmatic virtual mouse events. This is not a human or OS mouse test.
 - Save resumes night/knowledge/story state and, after night 4, the last departure checkpoint; no in-progress liquid or exact dialogue cursor save.
-- Cocktail, character, backdrop and audio additions are drafts. Seated poses, refined glass/garnish visuals, additional dressing and a demonstration video remain presentation work.
-- Prince leaves an empty chair after his closing visit; the small star respects his existing open-farewell eligibility. New guest silhouettes, shared-glass staging and spatial memory contours are temporary. Hamlet's stillness is local; stronger animation/audio treatment is deferred.
+- The owner accepted the Phase L modular bar and character style as the first-pass baseline. CHARACTER_ANIMATION_DEFERRED is real unfinished walking, turning, seated-pose and full-body transition implementation. It is not animation completion or merely subjective tuning. Glass/garnish refinement, final memory art and a demonstration video remain later presentation work.
+- Prince leaves an empty chair after his closing visit; the small star respects his existing open-farewell eligibility. Chibi special guests and charcoal ordinary guests retain the accepted style. Shared-glass staging and spatial memory contours preserve current behavior. Hamlet's stillness is local; stronger animation/audio treatment is deferred.
 - Companion/rose/secret revisits, memory upgrade trees and additional IBA expansion are FUTURE_EXPANSION. Other aspect ratios/platforms and broad quest/economy systems are OUT_OF_SCOPE.
 - Public distribution requires owner review of the pre-existing artwork's source/permission and final credits.
 
 The authoritative technical results and remaining classifications are in 13_POST_I16_PRODUCTION_GAP_AUDIT.md. Build and standalone smoke evidence are appended there after execution; do not infer them from this checklist.
+
+## Phase M focused human review
+
+1. At both 1280×720 and 1920×1080, click the visible guest prompt, read long Korean lines/choices, change all four methods, go back and reopen. Check that a fast second click does not skip a reading beat.
+2. Hold Space while pouring, open Guide or Settings, release while reading, close, and press again. Repeat while stirring and during Shake notes. Confirm no queued pour, motion, note or serve; liquids and pending transfers must retain their actual state.
+3. Open Guide → Esc Settings → close Settings → close Guide. Check the appropriate top surface closes and reading does not consume Shake time. Repeat opening/closing and returning between scenes.
+4. Scroll ingredient/recipe lists, including bottom entries. Check visible targets, masks, disabled Continue and click/drag release near other controls. Keyboard focus should stay inside the active modal and return to its opener.
+5. Check Unknown/Partial/Known Codex entries without inferring unavailable recipe facts. Summary → Codex → close must return to the same summary. Read service quality, preparation and suitability as separate feedback.
+6. On a disposable run, cancel New Game reset and verify progress survives; confirm once and verify a fresh first night. Continue must not promise mid-drink restoration. Check ending interruption, completed coda and return to entry.
+
+Docs/22 contains tuning locations. Docs/23 contains screen ownership, exact
+evidence levels, fixture labels, source revision, captures and build/smoke limits.
+Human UI preference, auditory mix, narrative pacing and full physical-input
+playthrough are not certified by the automated checks.
+
+## Phase M package identity
+
+`Builds/Windows-PhaseM-ba4346f/SURLHWA.exe` was built from runtime source
+`ba4346f14a1aa9dfd73f5083399ca1230f0bd1fe` with Unity 6000.3.7f1 for Windows x64
+on 2026-09-29. The build succeeded; graphics-enabled startup loaded BarScene and
+remained alive for 15 seconds with saved preferences restored afterward.
+This is startup evidence only. Standalone UI navigation and a full physical-input
+playthrough remain to be done. See Docs/23 for exact timestamps, hashes, warning,
+Editor test coverage and build-generated worktree exclusions.
