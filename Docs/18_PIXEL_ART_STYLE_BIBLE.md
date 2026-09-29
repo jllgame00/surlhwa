@@ -1,9 +1,43 @@
 # SURLHWA pixel art style bible — Phase L
 
-First-pass lock, 2026-09-29. Product authority remains Docs/00 and Docs/01;
+Revised by the owner-authorized Phase L restart, 2026-09-29.
+The whole-scene authority is now the five owner references in
+`ArtSource/Reference/VisualDirection/`, classified in Docs/21. They supersede
+the painted room and individually colored ordinary-guest drafts.
+Product authority remains Docs/00 and Docs/01;
 physical state and choreography remain Docs/11 and Docs/17. This document owns
 presentation rules, never recipes, knowledge, supply, technique or persistence.
 Human aesthetic approval remains HUMAN_ART_TUNING_LATER.
+
+## Current whole-scene contract
+
+- Frontal, slightly elevated 2.5D room. A U/ㄷ counter opens toward the rear
+  wall and encloses the central bartender workspace. Guests occupy the outside
+  seating line. Snow belongs in windows/outside framing; avoid empty-floor sprawl.
+- Bartender and special guests are distinct chibi figures with compact limbs,
+  large heads and readable costumes. Prince/Chunhyang anchors define the language.
+  Ordinary guests are anonymous charcoal winter silhouettes with no readable
+  facial features. Coat/hair variation stays bounded. The explicit anonymity
+  rule overrides the visible eyes/skin in the ordinary proportion references.
+- Separate floor, wall, window, shelf, bottle dressing, counter arms/top/front,
+  stools, lamps, side decor and display furniture. No scenic card substitutes
+  for character grounding or occlusion. Use the smallest useful module set.
+- World art uses 32 PPU; characters are roughly 80–96 source pixels high.
+  Stool/counter relationships establish scale. Keep the existing orthographic
+  camera and scene lifecycle. UI scaling does not determine character size.
+- Sort floor/outside, rear furniture, working area/bartender, counter foreground,
+  guest seating, then UI. Keep feet-based guest sorting and compatible explicit
+  counter orders. Display zones hold existing departure-derived memories;
+  empty furniture must not imply a new unlock or already-earned statue.
+- Codex/settings stay in upper corners; reading/results occupy a lower band.
+  Method selection belongs above the central counter. The existing additive
+  bartending scene remains the close view for physical preparation.
+- Preserve the 31 prior bartending sprites, original Shaker, Codex color/glass
+  language and state-driven motion. Their 100 PPU UI contract is separate from
+  the 32 PPU world environment. Judge compatibility in rendered views.
+
+Earlier sections below retain their bartending-specific scope. Their technical
+success did not establish approval of the previous whole-scene direction.
 
 ## 1. Preserve → analyze → normalize → extend
 

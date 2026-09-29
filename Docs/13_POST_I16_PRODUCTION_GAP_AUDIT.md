@@ -2269,3 +2269,13 @@ Final range hygiene: Unity's initial import had added trailing spaces in 33 new
 Phase L meta files. Removed only trailing whitespace; the substantive diff is
 empty and GUID/import values are unchanged. Full baseline-to-worktree
 `git diff --check` passes. Original anchor metas and owner config are excluded.
+
+## Phase L restart — owner visual-direction correction (2026-09-29)
+
+Baseline `8e8ac61`. The owner rejected the whole-scene direction while retaining
+useful prior bartending work. Five supplied references now govern a frontal,
+slightly elevated U-counter bar, chibi specials/bartender and anonymous ordinary
+silhouettes. Docs/18 is revised; Docs/21 records the reference/scene audit and
+bounded modular implementation contract. Prior Phase L technical findings
+remain historical. Config and other starting worktree changes are excluded.
+Runtime/visual acceptance of the restart is pending implementation.

@@ -2,6 +2,17 @@
 
 Last Updated: 2026-09-28
 
+## Current visual composition contract — owner revision 2026-09-29
+
+BarScene is a frontal, slightly elevated 2.5D winter bar. A U/ㄷ-shaped counter
+encloses the central chibi bartender; guests occupy the outside seating line.
+Rear shelves, lamps and windows provide depth; snow remains outside/background
+atmosphere. Ordinary guests are anonymous dark silhouettes; special guests
+have distinct chibi costume/prop identities. Modular environment pieces support
+character grounding, sorting and existing memory displays. Owner images in
+`ArtSource/Reference/VisualDirection/` and revised Docs/18 define presentation.
+Gameplay, campaign and persistence contracts below remain unchanged.
+
 ## Current full-campaign contract
 
 The owner-authorized first pass extends the existing four-night opening to
