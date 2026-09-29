@@ -122,3 +122,12 @@ a visibility fixture; earned-memory evidence comes from the complete campaign.
 The corrected display-layout fixture shows all seven contours above their
 furniture, with counter occlusion checks and Play Mode fixtures passing.
 Final compile after this correction: zero errors, eight existing warnings.
+
+The same foreground-depth audit was extended to encounter-local contours.
+The lovers' shared glass now follows guest depth in front of their bodies;
+Hamlet's local stillness contour follows the feet below the sprite. Reaction
+bubbles/hearts use the actual sprite bounds to stay above the larger chibi
+heads. These are view-only adjustments; service outcomes, timing and story
+flags are unchanged. Focused fixtures cover paired guests, stillness and
+reaction separation. Both early interrupted campaign attempts are excluded
+from completed-run evidence; each exited via progress-restoring cleanup.

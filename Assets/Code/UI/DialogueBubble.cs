@@ -12,6 +12,9 @@ public class DialogueBubble : MonoBehaviour
     public void Init(Transform followTarget, string message)
     {
         target = followTarget;
+        var body = followTarget != null ? followTarget.GetComponentInParent<SpriteRenderer>() : null;
+        if (body != null)
+            offset.y = Mathf.Max(offset.y, body.bounds.max.y - followTarget.position.y + .55f);
         text.text = message;
         Destroy(gameObject, lifetime);
     }

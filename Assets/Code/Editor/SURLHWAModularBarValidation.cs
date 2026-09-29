@@ -126,12 +126,16 @@ internal sealed class SURLHWAModularBarReview : MonoBehaviour
         SURLHWAModularBarValidation.Require(anchors.Length == 7 && anchors.All(a => a != null), "Scene memory anchor binding broke.");
         SURLHWAReviewCapture.Save("restart-empty", 1280, 720);
         var seat = FindObjectsByType<SeatPoint>(FindObjectsSortMode.None).Single(s => s.name == "SeatPoint_Left");
-        foreach (string kind in new[] { "ordinary", "prince", "chunhyang" })
+        foreach (string kind in new[] { "ordinary", "prince", "chunhyang", "lovers", "hamlet" })
         {
+            typeof(InteractionUIController).GetMethod("ClosePanels", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(ui, new object[] { false });
             string prefab = kind == "prince" ? "SpecialGuests/LittlePrinceCustomer" : "General/Customer_A";
             var guest = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_SURLHWA/Prefabs/Customers/" + prefab + ".prefab")).GetComponent<CustomerController>();
             guest.SetUsesPatience(false);
             if (kind == "chunhyang") guest.ConfigureCampaignEncounter(AssetDatabase.LoadAssetAtPath<CampaignEncounterData>("Assets/_SURLHWA/Data/Campaign/ChunhyangMeeting.asset"));
+            if (kind == "lovers") guest.ConfigureCampaignEncounter(AssetDatabase.LoadAssetAtPath<CampaignEncounterData>("Assets/_SURLHWA/Data/Campaign/LoversReunion.asset"));
+            if (kind == "hamlet") guest.ConfigureCampaignEncounter(AssetDatabase.LoadAssetAtPath<CampaignEncounterData>("Assets/_SURLHWA/Data/Campaign/HamletStillness.asset"));
             guest.transform.position = seat.approachMarker.position;
             seat.Reserve(guest);
             guest.AssignSeat(seat);
@@ -139,9 +143,42 @@ internal sealed class SURLHWAModularBarReview : MonoBehaviour
             while (Vector3.Distance(guest.transform.position, seat.sitMarker.position) > .01f && Time.realtimeSinceStartup < deadline) yield return null;
             for (int i = 0; i < 4; i++) yield return null;
             var body = guest.GetComponent<SpriteRenderer>();
+            if (kind == "lovers")
+            {
+                guest.GetComponent<CampaignGuestPresentation>().ShowServedGlass();
+                yield return null;
+                var contour = guest.transform.Find("One shared glass").GetComponentInChildren<LineRenderer>();
+                SURLHWAModularBarValidation.Require(contour.sortingOrder > body.sortingOrder,
+                    "Shared-glass presentation must stay visible in front of the guests/counter.");
+            }
+            if (kind == "hamlet")
+            {
+                var light = guest.transform.Find("Still pool of light");
+                SURLHWAModularBarValidation.Require(light.GetComponentInChildren<LineRenderer>().sortingOrder == body.sortingOrder - 1 &&
+                    Mathf.Approximately(light.localPosition.y, .35f), "Stillness must follow guest depth at the feet.");
+            }
             SURLHWAModularBarValidation.Require(Vector3.Distance(guest.transform.position, seat.sitMarker.position) < .01f &&
                 body.bounds.size.y >= 2.6f && body.sortingOrder > 200, "Seated guest scale/depth/feet drift.");
             SURLHWAReviewCapture.Save("restart-" + kind, 1280, 720);
+            if (kind == "ordinary")
+            {
+                typeof(InteractionUIController).GetMethod("ClosePanels", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(ui, new object[] { false });
+                typeof(CustomerController).GetMethod("SayLine", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(guest, new object[] { "따뜻한 한 잔이네요." });
+                typeof(CustomerController).GetMethod("ShowHearts", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(guest, new object[] { 2 });
+                yield return null;
+                var bubble = FindFirstObjectByType<DialogueBubble>();
+                var hearts = FindFirstObjectByType<HeartPopup>();
+                SURLHWAModularBarValidation.Require(bubble != null && hearts != null &&
+                    bubble.transform.position.y > body.bounds.max.y + .5f &&
+                    hearts.transform.position.y > bubble.transform.position.y + .5f,
+                    "Reaction overlays must clear the current character head and each other.");
+                SURLHWAReviewCapture.Save("restart-reaction", 1280, 720);
+                Destroy(bubble.gameObject);
+                Destroy(hearts.gameObject);
+            }
             if (kind == "chunhyang")
             {
                 ((GameObject)Field(ui, "brewPanel")).SetActive(true);

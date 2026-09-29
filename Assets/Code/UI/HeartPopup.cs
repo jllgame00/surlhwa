@@ -14,6 +14,9 @@ public class HeartPopup : MonoBehaviour
     public void Init(Transform target, int hearts)
     {
         followTarget = target;
+        var body = target != null ? target.GetComponentInParent<SpriteRenderer>() : null;
+        if (body != null)
+            offset.y = Mathf.Max(offset.y, body.bounds.max.y - target.position.y + 1.2f);
 
         if (heartText != null)
         {
