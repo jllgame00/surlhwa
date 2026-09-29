@@ -64,3 +64,32 @@ coverage; no fabricated baseline evidence is claimed for them.
 
 Milestone records will be appended after each bounded implementation and validation.
 No final Phase M PASS is implied by the audit or design contract.
+
+### M2–M3: input foundations and representative method selector
+
+Added `SurlhwaUITheme` and a bounded `SurlhwaModalSurface`: visible shields,
+topmost Escape, focus restoration, underlying Selectable gates, shared nested
+reading pause, and release-before-next-action keyboard boundaries. Guide and
+Settings retain technique read semantics, including the unscaled Shake clock.
+Stir/GentleStir rebase their angle after reading; continuous pours stop at an
+overlay boundary without replacing container or preparation truth.
+
+Pointer audit found a real baseline defect: only the guest prompt's visual
+child followed the guest; its invisible parent button stayed at screen center.
+The visible prompt and its hit rectangle now follow together. Method selection
+uses a compact Korean-first panel, explicit selected check, short technique
+explanation and separate confirm/back actions. Request routing is unchanged.
+
+Review iterations caught inactive nested Canvas initialization resetting its
+sort override, and a layout inherited from the old method button parent.
+Overrides are applied on activation and method controls have one panel parent.
+These were corrected before committing. The test waits one rendered frame
+after a newly opened surface, as real successive pointer input does.
+
+Evidence: `SURLHWAPhaseMUIValidation.Run()` exercises top raycast plus
+programmatic pointer down/up/click through all four method choices, cancel /
+reopen, Guides, and nested Guide → Settings → Guide pause restoration. Later
+night/summary/ending screens remain seeded fixtures. Both-resolution captures
+are `Logs/Review/phase-m-review-*`. The method screen at 1280×720 was inspected
+at native size. Compile: 0 errors, 8 existing warnings. Full campaign, physical
+held-key/mouse, final restyled screens and standalone coverage remain pending.

@@ -153,7 +153,11 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
     private void Update()
     {
         if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+        {
+            techniqueTracker?.RecordIdle(0f);
+            if (ingredientShelf != null && !ingredientShelf.PhysicalTransferActive) StopDirectPour("reading overlay");
             return;
+        }
 
         switch (state)
         {
@@ -398,19 +402,19 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.I))
         {
             AddIceToMixingGlass();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.D))
         {
             TryDispenseDash();
             return;
         }
 
-        if (!Input.GetKey(KeyCode.Space))
+        if (!SurlhwaModalSurface.GetKey(KeyCode.Space))
         {
             StopDirectPour("input released");
             return;

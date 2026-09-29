@@ -201,7 +201,10 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void Update()
     {
         if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+        {
+            if (ingredientShelf != null && !ingredientShelf.PhysicalTransferActive) EndActiveLayerPour();
             return;
+        }
 
         if (state == State.Preparing)
             UpdatePreparationInput();
@@ -471,13 +474,13 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.I))
         {
             TryAddIceToServingGlass();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.D))
         {
             TryDispenseDashAsLayer();
             return;
@@ -486,15 +489,15 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
         FloatPourIntensity intensity = ResolveInputIntensity();
         if (layeredDrinkState.HasActiveLayer && layeredDrinkState.ActiveLayer.Ingredient != ingredientShelf.SelectedIngredient)
             EndActiveLayerPour();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.Space))
             BeginLayerPour(intensity);
 
-        if (Input.GetKey(KeyCode.Space) && !layeredDrinkState.HasActiveLayer)
+        if (SurlhwaModalSurface.GetKey(KeyCode.Space) && !layeredDrinkState.HasActiveLayer)
             BeginLayerPour(intensity);
-        if (Input.GetKey(KeyCode.Space) && ingredientShelf.PreparePhysicalPour())
+        if (SurlhwaModalSurface.GetKey(KeyCode.Space) && ingredientShelf.PreparePhysicalPour())
             PourActiveLayerForDuration(Time.deltaTime, intensity);
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (SurlhwaModalSurface.GetKeyUp(KeyCode.Space))
             EndActiveLayerPour();
     }
 
@@ -517,9 +520,9 @@ public class FloatMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
 
     private FloatPourIntensity ResolveInputIntensity()
     {
-        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        if (SurlhwaModalSurface.GetKey(KeyCode.LeftControl) || SurlhwaModalSurface.GetKey(KeyCode.RightControl))
             return FloatPourIntensity.Aggressive;
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        if (SurlhwaModalSurface.GetKey(KeyCode.LeftShift) || SurlhwaModalSurface.GetKey(KeyCode.RightShift))
             return FloatPourIntensity.Gentle;
         return FloatPourIntensity.Normal;
     }

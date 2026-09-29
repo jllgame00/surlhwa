@@ -24,7 +24,6 @@ public sealed class DemoAudioController : MonoBehaviour
     private float lastLiquidTime = -10f;
     private GameObject settingsRoot;
     private TMP_Text muteLabel;
-    private float previousTimeScale;
     private bool settingsOpen;
     private static DemoAudioController settingsOwner;
     public static bool IsSettingsOpen => settingsOwner != null && settingsOwner.settingsOpen;
@@ -79,8 +78,7 @@ public sealed class DemoAudioController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !RecipeGuidePanelController.IsTechniqueReadStateActive)
-            ToggleSettings();
+        if (Input.GetKeyDown(KeyCode.Escape) && !SurlhwaModalSurface.Back()) ToggleSettings();
         if (shelf != null && shelf.TargetContainer != null)
         {
             var target = shelf.TargetContainer;
@@ -132,12 +130,9 @@ public sealed class DemoAudioController : MonoBehaviour
     public void ToggleSettings()
     {
         if (settingsOpen) { CloseSettings(); return; }
-        if (RecipeGuidePanelController.IsTechniqueReadStateActive) return;
         if (settingsRoot == null) BuildSettings();
         settingsOpen = true;
         settingsOwner = this;
-        previousTimeScale = Time.timeScale;
-        Time.timeScale = 0f;
         settingsRoot.SetActive(true);
     }
     private void CloseSettings()
@@ -145,7 +140,6 @@ public sealed class DemoAudioController : MonoBehaviour
         if (!settingsOpen) return;
         settingsOpen = false;
         if (settingsRoot != null) settingsRoot.SetActive(false);
-        if (Mathf.Approximately(Time.timeScale, 0f)) Time.timeScale = previousTimeScale;
         if (settingsOwner == this) settingsOwner = null;
     }
     private void OnDestroy()
@@ -198,6 +192,7 @@ public sealed class DemoAudioController : MonoBehaviour
         muteLabel = Button(panel, "Mute", Muted ? "소리 켜기" : "모든 소리 끄기", -155, ToggleMute);
         Button(panel, "CloseSoundSettings", "돌아가기 · Esc", -210, CloseSettings);
         settingsRoot.SetActive(false);
+        SurlhwaModalSurface.Configure(settingsRoot, 3000, CloseSettings, true);
     }
     private void Slider(Transform parent, string label, string key, int fallback, float y)
     {

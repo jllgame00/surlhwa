@@ -229,7 +229,10 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
     private void Update()
     {
         if (RecipeGuidePanelController.IsTechniqueReadStateActive || DemoAudioController.IsSettingsOpen)
+        {
+            if (ingredientShelf != null && !ingredientShelf.PhysicalTransferActive) StopDirectPour("reading overlay");
             return;
+        }
 
         if (state == BuildState.Preparing)
             UpdateDirectPour();
@@ -250,31 +253,31 @@ public class BuildMiniGame : MonoBehaviour, IMiniGame, IRequestDisplayTitleRecei
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.D))
         {
             TryDispenseDash();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.S))
         {
             ingredientShelf.BeginPhysicalDose(RecipePreparationAction.Splash, BartendingVolume.DefaultSplashMilliliters);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.I))
         {
             AddIceToServingGlass();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.J))
         {
             BeginGentleStir();
             return;
         }
 
-        if (!Input.GetKey(KeyCode.Space))
+        if (!SurlhwaModalSurface.GetKey(KeyCode.Space))
         {
             StopDirectPour("input released");
             ShowTopUpGuidance(ingredientShelf.SelectedIngredient);

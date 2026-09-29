@@ -21,6 +21,9 @@ public class CustomerWaitIndicator : MonoBehaviour
     private bool basePositionCaptured;
     private bool isVisible = true;
     private float urgency;
+    private bool followsWithParent;
+
+    public void SetParentOwnsFollow(bool value) => followsWithParent = value;
 
     private void Awake()
     {
@@ -49,7 +52,7 @@ public class CustomerWaitIndicator : MonoBehaviour
             return;
         }
 
-        UpdateFollowPosition();
+        if (!followsWithParent) UpdateFollowPosition();
         ApplyShake();
     }
 

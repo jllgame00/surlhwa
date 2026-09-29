@@ -75,6 +75,12 @@ public sealed class ServingGlassGentleStirInteraction
         if (!active)
             return;
 
+        if (inputBoundary != SurlhwaModalSurface.InputBoundaryVersion)
+        {
+            inputBoundary = SurlhwaModalSurface.InputBoundaryVersion;
+            tracker.RecordIdle(0f);
+        }
+
         Camera uiCamera = ResolveUiCamera(center);
         Vector2 centerScreen = RectTransformUtility.WorldToScreenPoint(uiCamera, center.position);
         Vector2 offset = (Vector2)Input.mousePosition - centerScreen;
@@ -88,6 +94,8 @@ public sealed class ServingGlassGentleStirInteraction
         float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         TryRecordAngle(angle, Time.deltaTime);
     }
+
+    private int inputBoundary;
 
     /// <summary>
     /// The same wrapped-angle path used by runtime mouse input, exposed for

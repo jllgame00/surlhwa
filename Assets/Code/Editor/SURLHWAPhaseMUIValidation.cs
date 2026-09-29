@@ -90,7 +90,22 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     static void Click(Button button)
     {
         if (button == null || !button.gameObject.activeInHierarchy || !button.interactable) throw new InvalidOperationException("Missing active button");
-        button.onClick.Invoke(); // Baseline callback evidence only. Pointer checks are logged separately.
+        if (SURLHWAPhaseMUIValidation.Mode == "baseline") { button.onClick.Invoke(); return; }
+        Canvas.ForceUpdateCanvases();
+        var rect = (RectTransform)button.transform;
+        var data = new PointerEventData(EventSystem.current) {
+            position = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center)),
+            button = PointerEventData.InputButton.Left, clickCount = 1, eligibleForClick = true };
+        var hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(data, hits);
+        if (hits.Count == 0 || hits[0].gameObject.GetComponentInParent<Button>() != button || !button.IsInteractable())
+            throw new InvalidOperationException("Pointer cannot reach " + button.name + "; top=" + (hits.Count > 0 ? hits[0].gameObject.name : "NONE"));
+        data.pointerPressRaycast = data.pointerCurrentRaycast = hits[0];
+        data.pressPosition = data.position;
+        data.pointerPress = ExecuteEvents.ExecuteHierarchy(hits[0].gameObject, data, ExecuteEvents.pointerDownHandler);
+        ExecuteEvents.Execute(button.gameObject, data, ExecuteEvents.pointerUpHandler);
+        ExecuteEvents.Execute(button.gameObject, data, ExecuteEvents.pointerClickHandler);
+        Debug.Log("[Phase M Pointer] " + button.name + ": top raycast + pointer down/up/click. Programmatic input.");
     }
     void Start()
     {
@@ -131,12 +146,14 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Capture(string name)
     {
-        yield return null;
+        yield return new WaitForSecondsRealtime(.15f);
         string prefix = "phase-m-" + SURLHWAPhaseMUIValidation.Mode + "-" + name;
         SURLHWAReviewCapture.Save(prefix, 1280, 720);
         SURLHWAReviewCapture.Save(prefix, 1920, 1080);
         Canvas.ForceUpdateCanvases();
         var report = new List<string> { "Production screen fixture: " + name, "Button center raycasts; not physical input." };
+        foreach (var canvas in FindObjectsByType<Canvas>(FindObjectsSortMode.None))
+            report.Add("CANVAS\t" + canvas.name + "\tparent=" + canvas.transform.parent?.name + "\troot=" + canvas.rootCanvas.name + "\torder=" + canvas.sortingOrder + "\toverride=" + canvas.overrideSorting);
         foreach (var button in FindObjectsByType<Button>(FindObjectsSortMode.None))
         {
             var point = RectTransformUtility.WorldToScreenPoint(null, ((RectTransform)button.transform).TransformPoint(((RectTransform)button.transform).rect.center));
@@ -158,6 +175,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         GameManager.ReturnToDemoEntry();
         yield return null;
         yield return Wait(() => Named("ContinueButton") != null);
+        yield return new WaitForSecondsRealtime(.2f); // Let the new scene's CanvasScaler/layout tick.
         Click(Named("ContinueButton"));
         yield return null;
         yield return Wait(() => Find<GameManager>() != null && Find<GameManager>().IsGameplaySessionStarted);
@@ -165,6 +183,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     IEnumerator Guest()
     {
         yield return Wait(() => Find<InteractionUIController>() != null && Get(Find<InteractionUIController>(), "activeCustomer") != null && ButtonField(Find<InteractionUIController>(), "ellipsisButton").gameObject.activeInHierarchy);
+        yield return new WaitForSecondsRealtime(.2f); // Guest follow runs in LateUpdate, before the visible frame.
     }
     IEnumerator ReadToRequest()
     {
@@ -199,14 +218,24 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         yield return Capture("bartending-stir");
         var guide = Find<RecipeGuidePanelController>();
         Click(ButtonField(guide, "openButton")); yield return Capture("guide-partial");
+        if (SURLHWAPhaseMUIValidation.Mode != "baseline")
+        {
+            if (!guide.IsReading || Time.timeScale != 0) throw new InvalidOperationException("First Guide open must pause");
+            Find<DemoAudioController>().ToggleSettings();
+            yield return Capture("guide-settings");
+            SurlhwaModalSurface.Back();
+            if (Time.timeScale != 0 || !guide.IsReading) throw new InvalidOperationException("Child settings lost Guide pause");
+        }
         Click(ButtonField(guide, "closeButton"));
+        if (Time.timeScale != 1) throw new InvalidOperationException("Guide close did not restore original time");
         foreach (string method in new[] { "stirButton", "shakeButton", "buildButton", "floatButton" })
         {
             yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();
             var ui = Find<InteractionUIController>();
-            Click(ButtonField(ui, "brewButton")); Click(ButtonField(ui, method));
+            Click(ButtonField(ui, "brewButton")); yield return null; Click(ButtonField(ui, method));
             yield return Capture("method-" + method);
-            Click(ButtonField(ui, "cancelButton")); Click(ButtonField(ui, "brewButton")); Click(ButtonField(ui, method));
+            Click(ButtonField(ui, "cancelButton")); yield return null;
+            Click(ButtonField(ui, "brewButton")); yield return null; Click(ButtonField(ui, method));
             Click(ButtonField(ui, "confirmButton"));
             yield return Wait(() => Find<IngredientShelfController>() != null);
             yield return Capture("bartending-" + method);

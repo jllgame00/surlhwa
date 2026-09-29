@@ -361,18 +361,18 @@ public class IngredientShelfController : MonoBehaviour
     {
         physicalPresentation?.ShowMeasurement(Measuring);
         if (PhysicalTransferActive || GarnishPlacementActive) return true;
-        if (Input.GetKeyDown(KeyCode.M) && !HasPendingMeasurement)
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.M) && !HasPendingMeasurement)
         {
             EndSelectedPour();
             Measuring = !Measuring;
         }
         if (!Measuring) return false;
-        if (Input.GetKeyDown(KeyCode.T))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.T))
         {
             BeginMeasuredTransfer();
             return true;
         }
-        if (!Input.GetKey(KeyCode.Space))
+        if (!SurlhwaModalSurface.GetKey(KeyCode.Space))
         {
             physicalPresentation?.EndBottle();
             return true;

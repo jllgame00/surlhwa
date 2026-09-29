@@ -181,6 +181,11 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         {
             // Input and the unscaled rhythm timeline must pause together.
             if (state == State.Rhythm) rhythmStartTime += Time.unscaledDeltaTime;
+            if (ingredientShelf != null && !ingredientShelf.PhysicalTransferActive)
+            {
+                StopDirectPour("reading overlay");
+                StopServingPour("reading overlay");
+            }
             return;
         }
 
@@ -501,19 +506,19 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.I))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.I))
         {
             AddIceToShaker();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.D))
         {
             TryDispenseDash();
             return;
         }
 
-        if (!Input.GetKey(KeyCode.Space))
+        if (!SurlhwaModalSurface.GetKey(KeyCode.Space))
         {
             StopDirectPour("input released");
             return;
@@ -551,7 +556,7 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
 
     private void UpdatePostRhythmInput()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.P))
             PourFromContainerAndContinue();
     }
 
@@ -568,19 +573,19 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.J))
         {
             BeginGentleStir();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.S))
         {
             TryAddSplashToServingGlass();
             return;
         }
 
-        if (!Input.GetKey(KeyCode.Space))
+        if (!SurlhwaModalSurface.GetKey(KeyCode.Space))
         {
             StopServingPour("input released");
             return;
@@ -700,9 +705,9 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
         if (TryCompleteRhythm())
             return;
 
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.A) || SurlhwaModalSurface.GetKeyDown(KeyCode.LeftArrow))
             TryJudgeShakeInput(ShakeDirection.Left, now);
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        else if (SurlhwaModalSurface.GetKeyDown(KeyCode.D) || SurlhwaModalSurface.GetKeyDown(KeyCode.RightArrow))
             TryJudgeShakeInput(ShakeDirection.Right, now);
     }
 

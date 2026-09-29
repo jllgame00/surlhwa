@@ -44,7 +44,6 @@ public class RecipeGuidePanelController : MonoBehaviour
     private Action<string, string> firstRecipeRevealRequested;
     private bool missingContextWarningLogged;
     private bool readStatePauseActive;
-    private float timeScaleBeforeReadState = 1f;
     private static RecipeGuidePanelController activeReadStateOwner;
 
     public bool IsReading => panelRoot != null && panelRoot.activeSelf;
@@ -65,6 +64,7 @@ public class RecipeGuidePanelController : MonoBehaviour
 
         if (panelRoot != null)
             panelRoot.SetActive(false);
+        SurlhwaModalSurface.Configure(panelRoot, 2200, ClosePanel, true);
     }
 
     public void Initialize(
@@ -138,8 +138,6 @@ public class RecipeGuidePanelController : MonoBehaviour
         if (!Application.isPlaying || readStatePauseActive)
             return;
 
-        timeScaleBeforeReadState = Time.timeScale;
-        Time.timeScale = 0f;
         readStatePauseActive = true;
         activeReadStateOwner = this;
     }
@@ -148,9 +146,6 @@ public class RecipeGuidePanelController : MonoBehaviour
     {
         if (!readStatePauseActive)
             return;
-
-        if (Mathf.Approximately(Time.timeScale, 0f))
-            Time.timeScale = timeScaleBeforeReadState;
 
         readStatePauseActive = false;
         if (activeReadStateOwner == this)

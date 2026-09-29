@@ -51,6 +51,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
         if (panelRoot != null)
             panelRoot.SetActive(false);
+        SurlhwaModalSurface.Configure(panelRoot, 1800, BackOrClose);
 
         ShowGridPage();
         ClearDetail();
@@ -87,6 +88,12 @@ public class CocktailCodexPanelController : MonoBehaviour
     {
         if (panelRoot != null)
             panelRoot.SetActive(false);
+    }
+
+    private void BackOrClose()
+    {
+        if (detailPage != null && detailPage.activeSelf) BackToGrid();
+        else Close();
     }
 
     public void BackToGrid()
