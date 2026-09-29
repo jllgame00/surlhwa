@@ -1397,3 +1397,131 @@ logs still exist with recorded hashes; they were not purged or rewritten.
 **Disposition:** diagnostic coverage and the harness stopping correction are
 implemented; A/B causality and final complete UI regression remain open validation
 debt. No new gameplay or presentation fix is claimed.
+
+## Focused input preflight — 2026-09-29
+
+**Disposition: BLOCKED_TEST_ENVIRONMENT / VALIDATION_DEBT.** The 720p preflight
+passed and 26 subsequent clicks reached their callbacks. Unexpected application
+focus loss stopped the first navigation sequence. No retry or 1080p run followed.
+Historical **A (Settings-close mismatch) and B (Brew activation failure) remain
+UNRESOLVED**, independently. This run establishes no causal relationship between
+them and does not retroactively explain either failure.
+
+### Reconciled source and settings
+
+- Start: `5a748765168887eb226986bf6af04dc291ffaaee`, branch
+  `refactor/project-rebuild`; diagnostic predecessor `bf89c6d`.
+- Actual baseline: 63 dirty paths. All 63 retain their starting SHA256 after this
+  task, including protected `.codex/config.toml`. No baseline path was staged.
+- The earlier changed path `ProjectSettings/ProjectSettings.asset` lost the
+  `preloadedAssets` reference `{fileID: -944628639613478452,
+  guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}`. Re-inserting that one entry
+  into the current bytes with LF reproduces the previous SHA256 exactly:
+  `3c96e7c360c7b2eb8f7b0874d2b56bb4acf177acf648dedbe70aba65cf952d61`.
+  Current original/copy SHA256 is
+  `7164a495ab0f50825079f51dec8bdc2e70b531a0341121d868cda53434cda827`.
+  This is a functional preload-list difference, not whitespace. Authorship is
+  unknown; no restoration or normalization was performed. The remaining Git
+  difference is Standalone batching (static 1, dynamic 0).
+- Current BarScene's UI module explicitly references the separate action asset
+  `ca9f5fa95ffab41fb9a615ab714db018`. No project code consumer of
+  `InputSystem.actions` was found. The missing preload is therefore not a missing
+  reference for this UI module; its actions were enabled and delivered input in
+  this run. This does not establish equivalence with the older preload behavior.
+- The other earlier changed path is `UserSettings/Layouts/default-6000.dwlt`.
+  The retained `Logs/PhaseLRestartBaseline/` copy matches the previous hash
+  `83e0f8340d11261bec227c870506d408f5f511be9cb9d1a930ad58e00dc1e1f6`.
+  Changed serialized keys are `x`, `y`, `controlID`, `m_Title`, `m_Data` (Editor
+  geometry/control identities/stored view data). Embedded data was not printed.
+  Current hash is `86bd9574a92eaaf1503bb377e6dce00858b920bcd6970a39258ba691ea75fddd`.
+  The test copy has its own layout; focus was observed live rather than inferred
+  from either layout. Both original files remain excluded and unmodified here.
+- Tested project: `Temp/PhaseMDiegetic/ValidationProject`. All **1,251/1,251**
+  files under Assets, Packages and ProjectSettings matched the original at run
+  start, including dirty generated assets and metadata. Separate Library,
+  UserSettings and fixed-resolution Game View are testing-only differences.
+  PlayerSettings: input handler Both, runInBackground false, 1920×1080 default,
+  fullscreen mode 1. No original setting was changed to accommodate testing.
+
+### Preflight and finite budget
+
+`RunForegroundNavigation()` reuses `ModalSequence`, its event ring buffer,
+fail-fast callback check, Settings assertions and save snapshot/restore. Budget:
+one 720p and one 1080p run, four consecutive routes per run, one overlay/Back
+cycle per route. Stop the entire budget at its first block/failure. No campaign
+replay or deliberate focus-loss scenario was included.
+
+One native foreground request targeted only the newly launched validation Editor
+(PID 41308); the observed foreground PID matched. Game View focus was requested
+before Play Mode, never by a Brew click. Runtime readiness requires application
+and Game View focus, an unpaused Editor, enabled UI actions, advancing Dynamic
+updates, virtual mouse state, Point action delivery, and the input module's actual
+pointer-enter/hover records on the harmless Codex target. Deadlines use unscaled
+time (10 seconds), without forced updates or retry clicks. This mode retains
+`Application.runInBackground=false`; older harness modes' override is not used.
+Focus is monitored through application-focus callbacks, input updates and frames.
+
+Actual installed/runtime configuration: Input System **1.18.0**, uGUI **2.0.0**,
+`InputSystemUIInputModule`, `ProcessEventsInDynamicUpdate`,
+`PointersAndKeyboardsRespectGameViewFocus`,
+`ResetAndDisableNonBackgroundDevices`. No input/background policy was modified.
+
+### Observed sequence and first incorrect boundary
+
+Trace: `Logs/Review/phase-m-preflight/20260929T145613251-foreground-navigation-FAIL.txt`
+(1280×720, no dropped buffered events). `timeline.txt` is its compact index.
+
+| Boundary | Evidence |
+|---|---|
+| Preflight, frame 3114 / monotonic 11.861394 | Ready: two Dynamic updates, Point action, device 14 and UI pointer at (56,668), Codex hover; focus true |
+| Attempts 1–9 | Idle Codex and Settings open/close, guest/dialogue input delivered |
+| Attempts 10–18 | Brew, all four setup selections/hover checks, Back, reopen, Stir confirmation; request comparison passed |
+| Attempts 19–22 | Guide and bartending Settings open/close delivered |
+| Settings close, frame 6016 / 19.232745 | Close complete; expected/actual scale 1/1, top NONE/NONE, paused false/false, input allowed true/true, interactable true/true |
+| Attempt 26, frame 9234 / 26.435774 | Final Stir service-button attempt completed with exactly one callback; route had returned inactive |
+| Frame 9965 / 27.963988 | First incorrect precondition: application focus false while Editor focused-window type still GameView; immediate stop, no further click |
+
+The focus-changing actor is **unproven**. No external interference or
+application-induced cause is assigned. Departure completion and the next guest
+were not reached. Shake/Build/Float **selection targets** were exercised, but
+their route entries were not; 1080p and repeated four-route completion remain
+blocked. Both current Settings-close checks passed separately; this does not
+resolve historical A. Both Brew attempts delivered; this does not resolve B.
+
+### Revision, preservation and coverage limits
+
+Runtime-tested tree: starting HEAD plus the Editor validator whose SHA256 is
+`309979e9db84e3ead09e3843a486e80dd02888eac824b6b29448617d35636444`.
+The retained `tested-ui-validation.cs` and `source-manifest.json` identify those
+exact bytes. Final validator SHA256 is
+`9a27d69363fe5d885f7858c7c27991f3a06cff3058c8de405a8c69a9e00f702e`:
+after the stop, a small cleanup reused the existing Point observer (avoiding a
+local subscription surviving interruption) and classified absent preflight
+module/actions/target as an environment block. Those final changes are
+compile-reviewed only; no final-source runtime replay is claimed.
+
+- **Compile/static:** final C# build, zero errors/eight existing warnings;
+  intentional two-file diff, no production/scene/asset/settings changes.
+  Scoped/staged diff checks pass. The whole-worktree check still reports the
+  preserved baseline sprite/font trailing whitespace; it was not normalized.
+- **Callback setup:** existing initial Night 5 checkpoint and Continue fixture;
+  not normal-play reachability evidence. Preparation uses existing physical
+  action seams. No callback fallback followed a missing input event.
+- **Programmatic input module:** partial 720p coverage above; all 26 attempts
+  delivered once. No complete navigation PASS. The previous missed-callback
+  fail-fast correction is retained; unrelated Phase K/static results are not
+  invalidated. No additional physical regression or full campaign run here.
+- **Rendered / standalone / human:** no new visual review, build, standalone run
+  or human physical-input test. Countertop staging and production logic unchanged.
+- Independent snapshot read-back verified progress, knowledge and sound values
+  after exit. Pending fixture, diagnostic sink, modal, Settings and pause all
+  cleared through ordinary teardown; no manual lock clearing. Save content stays
+  private. `save-preservation-final.txt` and `preservation.json` record checks.
+- Only allowlisted process metadata was observed. No process arguments, token,
+  environment or authentication content was printed. Prior exposure evidence
+  remains unchanged; no claim of credential expiry/safety or revocation is made.
+
+Remaining execution needs an uninterrupted foreground **Game tab in the
+ValidationProject Editor**, without switching windows during the bounded run.
+No automatic refocus/retry will conceal interruption. Full traces/manifests are
+under ignored `Logs/Review/phase-m-preflight/`; private save snapshots are separate.

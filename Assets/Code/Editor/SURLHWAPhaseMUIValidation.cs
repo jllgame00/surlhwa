@@ -34,6 +34,7 @@ public static class SURLHWAPhaseMUIValidation
     public static void RunNavigation() => Start("navigation");
     public static void RunInputModule() => Start("input-module");
     public static void RunModalSequence() => Start("modal-sequence");
+    public static void RunForegroundNavigation() => Start("foreground-navigation");
     public static void RunPointerHandoffDiagnostic() => Start("pointer-handoff");
     public static void RunDiegetic() => Start("diegetic");
     public static void RunStagingBefore() => Start("staging-before");
@@ -60,7 +61,7 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
-        if (mode == "input-module" || mode == "modal-sequence" || mode == "pointer-handoff" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
+        if (mode == "foreground-navigation" || mode == "input-module" || mode == "modal-sequence" || mode == "pointer-handoff" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -102,6 +103,22 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     int attempt, droppedTraceEvents;
     bool traceEnabled;
     bool inputObservationPending;
+    bool foregroundArmed, finished;
+    bool preflightPointObserved;
+    int dynamicUpdates;
+    string environmentBlock;
+    bool ForegroundRun => SURLHWAPhaseMUIValidation.Mode == "foreground-navigation";
+    static bool HasGameFocus => Application.isFocused && EditorWindow.focusedWindow != null &&
+        EditorWindow.focusedWindow.GetType().Name == "GameView" && !EditorApplication.isPaused;
+    void CheckForeground(bool lostApplicationFocus = false)
+    {
+        if (!foregroundArmed || (!lostApplicationFocus && HasGameFocus) || finished) return;
+        environmentBlock = "Unexpected Game View focus loss; no refocus or retry. Source of focus change unproven.";
+        Record("BLOCKED_TEST_ENVIRONMENT " + environmentBlock);
+        StopAllCoroutines();
+        Finish(false);
+    }
+    void OnApplicationFocus(bool focused) { if (!focused) CheckForeground(true); }
     string lastModuleObservation;
     Button traceTarget;
     UnityEngine.InputSystem.UI.InputSystemUIInputModule traceModule;
@@ -134,6 +151,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     void LateUpdate()
     {
+        CheckForeground();
         if (traceEnabled && tracingPointer && traceModule != null && probeMouse != null)
         {
             string observation = "module.afterProcess ray=" + Identity(traceModule.GetLastRaycastResult(probeMouse.deviceId).gameObject) +
@@ -145,6 +163,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     void TraceAction(InputAction.CallbackContext context)
     {
+        if (context.action == traceModule?.point?.action && context.performed && context.control?.device == probeMouse)
+            preflightPointObserved = true;
         if (tracingPointer) Record("ui.action " + context.action.name + " phase=" + context.phase +
             " device=" + context.control?.device.deviceId + " control=" + context.control?.name);
     }
@@ -164,6 +184,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     void TraceInputProcessed()
     {
+        if (InputState.currentUpdateType == InputUpdateType.Dynamic) dynamicUpdates++;
+        CheckForeground();
         if (traceEnabled && tracingPointer && inputObservationPending && probeMouse != null)
         {
             inputObservationPending = false;
@@ -228,8 +250,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         InputSystem.onEvent += TracePointerEvent;
         InputSystem.onAfterUpdate += TraceInputProcessed;
         previousBackground = Application.runInBackground;
-        Application.runInBackground = true;
-        traceEnabled = SessionState.GetBool("SURLHWA_UI_EVENT_TRACE", false);
+        if (!ForegroundRun) Application.runInBackground = true;
+        traceEnabled = ForegroundRun || SessionState.GetBool("SURLHWA_UI_EVENT_TRACE", false);
         traceRun = DateTime.UtcNow.ToString("yyyyMMddTHHmmssfff") + "-" + SURLHWAPhaseMUIValidation.Mode;
         if (traceEnabled) SurlhwaModalSurface.DiagnosticTrace = Record;
         began = Time.realtimeSinceStartup;
@@ -238,12 +260,12 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Guarded()
     {
-        while (work.Count > 0)
+        while (work.Count > 0 && !finished)
         {
             object next = null;
             try
             {
-                if (Time.realtimeSinceStartup - began > (SURLHWAPhaseMUIValidation.Mode == "modal-sequence" ? 600 : 300)) throw new TimeoutException("Phase M UI probe");
+                if (Time.realtimeSinceStartup - began > (ForegroundRun || SURLHWAPhaseMUIValidation.Mode == "modal-sequence" ? 600 : 300)) throw new TimeoutException("Phase M UI probe");
                 if (!work.Peek().MoveNext()) { work.Pop(); continue; }
                 next = work.Peek().Current;
                 if (next is IEnumerator nested) { work.Push(nested); continue; }
@@ -255,7 +277,11 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     void Finish(bool success)
     {
+        if (finished) return;
+        finished = true;
+        foregroundArmed = false;
         success &= !runtimeError;
+        Record("probe.classification=" + (environmentBlock != null ? "BLOCKED_TEST_ENVIRONMENT " + environmentBlock : success ? "PASS" : "FAILED"));
         Record("probe.finish success=" + success);
         if (traceEnabled)
         {
@@ -346,6 +372,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Run()
     {
+        if (ForegroundRun) { yield return ModalSequence(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode.StartsWith("staging-")) { yield return StagingFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "diegetic") { yield return DiegeticFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
@@ -437,6 +464,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator ModuleClick(Button button, bool disabledProbe = false)
     {
+        if (foregroundArmed && !HasGameFocus) { CheckForeground(); yield break; }
         correlation = traceRun + "/" + (++attempt) + "/" + SafeName(button);
         traceTarget = button;
         Record("attempt.begin");
@@ -548,22 +576,35 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         // One initial checkpoint only. Subsequent guests, service, departure and
         // next-night entry use the production flow; no lock/state reset in the loop.
         yield return SeedNight(5);
+        if (ForegroundRun)
+        {
+            yield return Guest();
+            yield return ForegroundPreflight(Named("CodexButton"));
+        }
+        int repetitions = ForegroundRun ? 1 : 3;
         int services = 0;
         foreach (var method in new[] { MiniGameType.Stir, MiniGameType.Shake, MiniGameType.Build, MiniGameType.Float })
         {
             yield return Guest();
-            for (int repeat = 0; repeat < 3; repeat++)
+            for (int repeat = 0; repeat < repetitions; repeat++)
             {
                 yield return ModuleClick(Named("CodexButton")); ExpectSurface("CodexPanel", false);
                 yield return ModuleClick(ButtonField(Find<CocktailCodexPanelController>(), "closeButton")); ExpectSurface(null, false);
                 yield return SettingsCycle(Named("SettingsButton")); ExpectSurface(null, false);
             }
-            yield return ReadToRequest();
+            if (ForegroundRun)
+            {
+                var dialogue = Find<InteractionUIController>();
+                yield return ModuleClick(ButtonField(dialogue, "ellipsisButton"));
+                for (int line = 0; line < 50 && ButtonField(dialogue, "nextButton").gameObject.activeInHierarchy; line++)
+                    yield return ModuleClick(ButtonField(dialogue, "nextButton"));
+            }
+            else yield return ReadToRequest();
             var ui = Find<InteractionUIController>();
             var guest = (CustomerController)Get(ui, "activeCustomer");
             if (!guest.TryGetDedicatedRequest(out var authored) || authored.RequestType != GuestRequestType.Recommendation)
                 throw new InvalidOperationException("Expected scheduled Recommendation");
-            for (int repeat = 0; repeat < 3; repeat++)
+            for (int repeat = 0; repeat < repetitions; repeat++)
             {
                 yield return ModuleClick(ButtonField(ui, "brewButton")); ExpectSurface("BrewPanel", false);
                 if (CanPointAt(Named("CodexButton")) || CanPointAt(Named("SettingsButton")))
@@ -592,7 +633,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
                 request.RequestedCocktail != authored.requestedCocktail || !request.DesiredEmotionTags.SequenceEqual(authored.DesiredEmotionTags))
                 throw new InvalidOperationException("Repeated navigation changed route/request");
             var guide = Find<RecipeGuidePanelController>();
-            for (int repeat = 0; repeat < 3; repeat++)
+            for (int repeat = 0; repeat < repetitions; repeat++)
             {
                 yield return ModuleClick(ButtonField(guide, "openButton")); ExpectSurface("RecipeGuidePanel", true);
                 yield return ModuleClick(ButtonField(guide, "closeButton")); ExpectSurface(null, false);
@@ -605,7 +646,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             while (Get(ui, "farewellCompleted") != null) yield return ModuleClick(ButtonField(ui, "nextButton"));
             yield return Wait(() => guest == null);
             services++;
-            Debug.Log("[Modal sequence] PASS service " + services + " " + method + "; three bar and three workspace overlay cycles, natural result/unload/departure.");
+            Record("service.complete method=" + method + " services=" + services + " cycles=" + repetitions);
+            Debug.Log("[Modal sequence] PASS service " + services + " " + method + "; " + repetitions + " bar and workspace overlay cycles, natural result/unload/departure.");
             if (Find<BusinessDayManager>().IsDayEnded)
             {
                 yield return Wait(() => SurlhwaModalSurface.Top != null);
@@ -614,7 +656,68 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
                 yield return ModuleClick(ButtonField(summary, "restartButton"));
             }
         }
-        Debug.Log("[Modal sequence] PASS four consecutive services / 12 idle Codex-Settings cycles / 12 selection-Back cycles / 12 Guide-Settings cycles at " + Screen.width + "x" + Screen.height);
+        Debug.Log("[Modal sequence] PASS four consecutive services / " + (4 * repetitions) + " cycles of idle Codex-Settings, selection-Back, Guide-Settings at " + Screen.width + "x" + Screen.height);
+    }
+    IEnumerator ForegroundPreflight(Button target)
+    {
+        correlation = traceRun + "/preflight";
+        traceTarget = target;
+        Record("preflight.policy input=" + typeof(InputSystem).Assembly.GetName().Version +
+            " editor=" + InputSystem.settings.editorInputBehaviorInPlayMode + " update=" + InputSystem.settings.updateMode +
+            " background=" + InputSystem.settings.backgroundBehavior + " runInBackground=" + Application.runInBackground);
+        // Start() requested Game View focus once, before Play Mode. Only observe
+        // here: no focus clicks, forced updates, callback fallback or retry.
+        double until = Time.realtimeSinceStartupAsDouble + 10;
+        while (!HasGameFocus && Time.realtimeSinceStartupAsDouble < until) yield return null;
+        if (!HasGameFocus)
+        {
+            environmentBlock = "Game View focus not established in 10 unscaled seconds.";
+            Record("BLOCKED_TEST_ENVIRONMENT " + environmentBlock);
+            Finish(false); yield break;
+        }
+        foregroundArmed = true;
+        traceModule = EventSystem.current.currentInputModule as UnityEngine.InputSystem.UI.InputSystemUIInputModule;
+        if (traceModule == null || traceModule.point?.action?.enabled != true || traceModule.leftClick?.action?.enabled != true || !CanPointAt(target))
+        {
+            environmentBlock = "Preflight lacks the expected active module/actions or harmless hover target.";
+            Record("BLOCKED_TEST_ENVIRONMENT " + environmentBlock);
+            Finish(false); yield break;
+        }
+        tracingPointer = true; pointerEvents.Clear(); BindTraceActions(true);
+        int updatesBefore = dynamicUpdates, frameBefore = Time.frameCount;
+        preflightPointObserved = false;
+        var rect = (RectTransform)target.transform;
+        var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+        QueuePointer(point + Vector2.left * 3, 0);
+        yield return null;
+        QueuePointer(point, 0);
+        until = Time.realtimeSinceStartupAsDouble + 10;
+        bool ready = false;
+        while (Time.realtimeSinceStartupAsDouble < until)
+        {
+            var states = Get(traceModule, "m_PointerStates") as IEnumerable;
+            bool hover = false;
+            if (states != null) foreach (object state in states)
+            {
+                var data = (UnityEngine.InputSystem.UI.ExtendedPointerEventData)Get(state, "eventData");
+                hover |= data.device == probeMouse && Vector2.Distance(data.position, point) < .5f &&
+                    data.pointerEnter != null && data.pointerEnter.GetComponentInParent<Button>() == target &&
+                    data.hovered.Contains(target.gameObject);
+            }
+            ready = dynamicUpdates > updatesBefore && Time.frameCount > frameBefore && preflightPointObserved && hover &&
+                Vector2.Distance(probeMouse.position.ReadValue(), point) < .5f && probeMouse.leftButton.ReadValue() == 0;
+            if (ready) break;
+            yield return null;
+        }
+        BindTraceActions(false); tracingPointer = false;
+        Record("preflight.result ready=" + ready + " dynamicUpdates=" + (dynamicUpdates - updatesBefore) +
+            " pointAction=" + preflightPointObserved + " pointers=" + ModulePointers());
+        if (!ready)
+        {
+            environmentBlock = "Harmless pointer movement did not reach player state and UI hover within 10 unscaled seconds.";
+            Record("BLOCKED_TEST_ENVIRONMENT " + environmentBlock);
+            Finish(false);
+        }
     }
     IEnumerator ServeSimplePreparation(MiniGameType method)
     {
