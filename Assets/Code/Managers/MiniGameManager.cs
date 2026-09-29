@@ -128,6 +128,7 @@ public class MiniGameManager : MonoBehaviour
         {
             if (currentMiniGame != null)
             {
+                result.appearance = ServedDrinkAppearance.Capture(currentMiniGame);
                 Destroy(currentMiniGame);
                 currentMiniGame = null;
             }

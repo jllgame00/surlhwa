@@ -16,6 +16,7 @@ public class ResultToastController : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.25f;
 
     private Coroutine showRoutine;
+    private RectTransform servedDrink;
 
     public float DisplayCycleDuration => Mathf.Max(0f, displayTime) +
                                          Mathf.Max(0f, fadeDuration) * 2f;
@@ -30,6 +31,7 @@ public class ResultToastController : MonoBehaviour
 
     public void Show(string title, string message)
     {
+        ClearDrink();
         if (canvasGroup == null)
         {
             Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
@@ -45,6 +47,7 @@ public class ResultToastController : MonoBehaviour
 
     public void ShowDelayed(string title, string message, float delay)
     {
+        ClearDrink();
         if (canvasGroup == null)
         {
             Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
@@ -66,6 +69,20 @@ public class ResultToastController : MonoBehaviour
     {
         ServiceFeedbackPresentation presentation = GuestServiceFeedbackFormatter.Build(result);
         ShowDelayed(presentation.Title, presentation.Message, delay);
+        if (result.BartendingResult.appearance != null)
+        {
+            servedDrink = result.BartendingResult.appearance.Draw(transform,
+                result.CanRevealMatchedCocktail ? result.MatchedCocktail : null);
+            servedDrink.anchorMin = servedDrink.anchorMax = new Vector2(0f, .5f);
+            servedDrink.pivot = new Vector2(1f, .5f);
+            servedDrink.anchoredPosition = new Vector2(-16f, 0f);
+        }
+    }
+
+    private void ClearDrink()
+    {
+        if (servedDrink != null) Destroy(servedDrink.gameObject);
+        servedDrink = null;
     }
 
     public void ShowRecipeMatched(string recipeName)

@@ -84,6 +84,8 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             Require(shelf.SelectedIngredient != null, "No supplied selectable ingredient.");
             var view = shelf.PhysicalPresentation;
             Require(view != null, "Production route did not install physical view.");
+            Require(view.GetVessel(shelf.ServingGlass).Find("PixelShell").GetComponent<UnityEngine.UI.Image>().sprite != null,
+                "Phase L serving shell missing in production Play Mode.");
             float original = shelf.TargetContainer.CurrentLiquidVolumeMl;
             var floating = game as FloatMiniGame;
             if (floating != null) floating.BeginLayerPour(FloatMiniGame.FloatPourIntensity.Gentle);
@@ -101,6 +103,10 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             shelf.EndSelectedPour();
             Require(!view.StreamVisible, "Release continued pouring.");
             while (!view.IsResting) yield return null;
+            if (floating != null)
+                foreach (var candidate in shelf.ConfiguredIngredients)
+                    if (candidate.ingredientId == "cream" && shelf.TrySelectIngredient(candidate))
+                    { ingredient = candidate; break; }
             while (!view.PrepareBottle(ingredient, shelf.Jigger)) yield return null;
             float measured = shelf.FillJigger(72f);
             Require(measured == 60f && shelf.Jigger.CurrentLiquidVolumeMl == 60f, "Overflow accounting wrong.");
@@ -138,6 +144,11 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 foreach (var layer in floating.LayeredDrinkState.Layers) allocated += layer.AmountMl;
                 Require(Mathf.Abs(allocated - shelf.ServingGlass.CurrentLiquidVolumeMl) < .002f,
                     "Layer allocation differs from actual serving liquid.");
+                var layerImage = root.transform.GetComponentInChildren<FloatMiniGame>().transform
+                    .GetComponentInChildren<IngredientShelfController>(true).PhysicalPresentation
+                    .GetLiquidMask(shelf.ServingGlass).Find("LiquidArea/TopLiquid")?.GetComponent<UnityEngine.UI.Image>();
+                Require(layerImage != null && layerImage.color == ingredient.liquidColor,
+                    "Float color does not follow the actual second ingredient.");
             }
             if (method == "Build")
             {
@@ -230,6 +241,9 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                         "Surface garnish is detached from liquid surface.");
             }
             SURLHWAReviewCapture.Save("phase-k-" + method + "-finished", 1280, 720);
+            var appearance = ServedDrinkAppearance.Capture(root);
+            Require(appearance != null && appearance.Garnish == shelf.ServingGlass.Garnish &&
+                appearance.HasIce == shelf.ServingGlass.HasIce, "Final drawing differs from actual glass.");
             Debug.Log("[Phase K Play Mode] " + method + " physical bottle/measure/transfer PASS.");
             Destroy(root);
             yield return null;

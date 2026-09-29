@@ -23,6 +23,23 @@ public static class SURLHWAPixelArtValidation
                 importer.spritePivot.y >= 0f && importer.spritePivot.y <= 1f, "Invalid pivot.");
         }
         var liquid = AssetDatabase.LoadAssetAtPath<IngredientData>("Assets/_SURLHWA/Data/Ingredients/Ingredient_Cream.asset");
+        var serving = new BartendingContainerState(BartendingContainerType.ServingGlass);
+        serving.AddLiquid(liquid, 60f);
+        serving.TryAddIce();
+        serving.TryApplyGarnish(BartendingGarnishId.Cherry, BartendingGarnishPlacement.Surface);
+        var appearance = new ServedDrinkAppearance(serving, null, "RocksGlass");
+        serving.RemoveLiquid(liquid, 60f);
+        Require(appearance.Bands.Count == 1 && Mathf.Approximately(appearance.Bands[0].Height, .25f) &&
+            appearance.HasIce && appearance.Garnish.GarnishId == BartendingGarnishId.Cherry,
+            "Final drawing snapshot changed after source disposal/mutation.");
+        var host = new GameObject("PixelDrawingTest", typeof(RectTransform));
+        try
+        {
+            var drawing = appearance.Draw(host.transform, null);
+            Require(drawing.Find("Bowl/ActualIce") != null && drawing.Find("ActualGarnish") != null,
+                "Final composition lost actual ice/garnish.");
+        }
+        finally { UnityEngine.Object.DestroyImmediate(host); }
         foreach (string method in new[] { "Build", "Stir", "Shake", "Float" })
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_SURLHWA/Prefabs/Bartending/" + method + "MiniGame.prefab");

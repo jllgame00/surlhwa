@@ -2174,3 +2174,22 @@ pixel test corrected its Editor-only setup. Neither failed run is a PASS.
 
 Current records do not claim human art approval. Final composition, complete
 campaign replay and final handoff evidence follow in subsequent records.
+
+### L13 — Actual serving composition handoff
+
+The existing MiniGameManager completion seam captures immutable drawing data
+from the actual serving container/layers before unloading. The existing service
+result panel draws that fill, ice and garnish; when identity disclosure is
+allowed, it uses OrderManager's already-resolved cocktail color/glass metadata.
+No matcher/catalog access was added to presentation, no expected contents are
+painted into the glass, and the drawing is never persisted or used by gameplay.
+Codex illustrations remain unchanged. No bespoke cocktail PNGs were added.
+
+`Logs/phase-l-final-editor.log`: PASS for drawing immutability/actual decoration,
+all pixel contracts and existing physical/campaign Editor checks. Final physical
+graphical run `Logs/phase-l-final-physical.log`: all four methods PASS, including
+cream as an actual second Float layer, final drawing state, retained source ice,
+overflow, movement and garnish. Final dotnet log: 0 errors, 8 existing warnings.
+Rendered inspection confirms distinct glass silhouettes, attached tools and
+restored Shaker. Full campaign replay is running separately; no PASS is claimed
+for that unfinished run here.
