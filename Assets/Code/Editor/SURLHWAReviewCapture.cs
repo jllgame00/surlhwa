@@ -20,11 +20,16 @@ internal static class SURLHWAReviewCapture
             camera.backgroundColor = Color.black;
         }
         var canvases = new List<Canvas>();
+        var overlayOrders = new Dictionary<Canvas, int>();
         foreach (var canvas in UnityEngine.Object.FindObjectsByType<Canvas>(FindObjectsSortMode.None))
+        {
             if (canvas.isRootCanvas && canvas.renderMode == RenderMode.ScreenSpaceOverlay) canvases.Add(canvas);
+            if ((canvas.isRootCanvas || canvas.overrideSorting) &&
+                canvas.rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
+                overlayOrders.Add(canvas, canvas.sortingOrder);
+        }
         var previousCameras = new List<Camera>();
         var previousDistances = new List<float>();
-        var previousOrders = new List<int>();
         var target = RenderTexture.GetTemporary(width, height, 24);
         RenderTexture previousActive = RenderTexture.active;
         RenderTexture previousTarget = camera.targetTexture;
@@ -34,12 +39,13 @@ internal static class SURLHWAReviewCapture
         {
             camera.targetTexture = target;
             camera.aspect = (float)width / height;
+            // Nested override canvases (including the ending panel) must keep
+            // their overlay relationship when temporarily projected in world space.
+            foreach (var pair in overlayOrders) pair.Key.sortingOrder = pair.Value + 10000;
             foreach (var canvas in canvases)
             {
                 previousCameras.Add(canvas.worldCamera);
                 previousDistances.Add(canvas.planeDistance);
-                previousOrders.Add(canvas.sortingOrder);
-                canvas.sortingOrder += 10000; // Overlay UI must remain above world sprites in the temporary camera projection.
                 canvas.renderMode = RenderMode.ScreenSpaceCamera;
                 canvas.worldCamera = camera;
                 canvas.planeDistance = camera.nearClipPlane + 1f;
@@ -64,8 +70,8 @@ internal static class SURLHWAReviewCapture
                 canvases[i].renderMode = RenderMode.ScreenSpaceOverlay;
                 canvases[i].worldCamera = previousCameras[i];
                 canvases[i].planeDistance = previousDistances[i];
-                canvases[i].sortingOrder = previousOrders[i];
             }
+            foreach (var pair in overlayOrders) pair.Key.sortingOrder = pair.Value;
             camera.targetTexture = previousTarget;
             camera.aspect = previousAspect;
             RenderTexture.active = previousActive;
