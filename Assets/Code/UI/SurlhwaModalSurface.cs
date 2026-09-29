@@ -8,6 +8,17 @@ using UnityEngine.UI;
 /// Does not own requests, technique, completion or persistence.</summary>
 public sealed class SurlhwaModalSurface : MonoBehaviour
 {
+#if UNITY_EDITOR
+    // Opt-in observation only. The validation runner owns the bounded buffer.
+    public static Action<string> DiagnosticTrace;
+#endif
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    public static void Trace(string boundary)
+    {
+#if UNITY_EDITOR
+        DiagnosticTrace?.Invoke(boundary);
+#endif
+    }
     static readonly List<SurlhwaModalSurface> open = new();
     static readonly Dictionary<Selectable, CanvasGroup> gates = new();
     static float previousTimeScale;
@@ -77,6 +88,8 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
         Boundary();
         RefreshGates();
         FocusFirst();
+        Trace("modal.acquire name=" + name + "#" + GetInstanceID() + " pauses=" + pauses +
+            " owners=" + pauseOwners + " previous=" + previousTimeScale + " scale=" + Time.timeScale);
     }
     void FocusFirst()
     {
@@ -140,6 +153,7 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
     void Release()
     {
         if (!registered) return;
+        Trace("modal.release.begin name=" + name + "#" + GetInstanceID() + " owners=" + pauseOwners);
         bool wasTop = Top == this || (open.Count > 0 && open[open.Count - 1] == this);
         registered = false; open.Remove(this);
         if (shield != null) { shield.SetActive(false); Destroy(shield); }
@@ -152,5 +166,7 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
             else if (Top != null) Top.FocusFirst();
             else EventSystem.current.SetSelectedGameObject(null);
         }
+        Trace("modal.release.end name=" + name + " owners=" + pauseOwners + " scale=" + Time.timeScale +
+            " top=" + (Top != null ? Top.name : "NONE"));
     }
 }

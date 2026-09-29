@@ -149,6 +149,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnDisable()
     {
+        TraceBrew("controller.disable");
         ResetPreRequestDialogue();
     }
 
@@ -673,25 +674,28 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickBrew()
     {
-        if (farewellCompleted != null) return;
+        TraceBrew("brew.callback.entry");
+        if (farewellCompleted != null) { TraceBrew("brew.reject.farewell"); return; }
         if (activeCustomer == null)
-            return;
+        { TraceBrew("brew.reject.no-customer"); return; }
 
         if (isLittlePrinceChoiceActive)
         {
+            TraceBrew("brew.route.narrative-choice");
             CommitLittlePrinceChoice(LittlePrinceNarrativeChoice.SeekTheStar);
             return;
         }
 
         if (isPreRequestDialogueActive)
-            return;
+        { TraceBrew("brew.reject.pre-request-dialogue"); return; }
 
         if (isLittlePrinceChoiceResponseActive)
             ResetPreRequestDialogue();
 
         if (TryStartDedicatedRequest())
-            return;
+        { TraceBrew("brew.route.dedicated"); return; }
 
+        TraceBrew("selection.open.request");
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (brewPanel != null) brewPanel.SetActive(true);
         if (overlayBlocker != null) overlayBlocker.SetActive(false); // The method surface owns its transparent input shield.
@@ -702,6 +706,23 @@ public class InteractionUIController : MonoBehaviour
 
         if (activeCustomerUsesForcedRoute && autoSelectForcedMethodOnBrew)
             SelectMethod(activeForcedMethod);
+        TraceBrew("selection.open.complete");
+    }
+
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    private void TraceBrew(string boundary)
+    {
+#if UNITY_EDITOR
+        if (SurlhwaModalSurface.DiagnosticTrace == null) return;
+        SurlhwaModalSurface.Trace(boundary + " controller=" + GetInstanceID() +
+            " customer=" + (activeCustomer != null ? activeCustomer.GetInstanceID() : 0) +
+            " farewell=" + (farewellCompleted != null) + " choice=" + isLittlePrinceChoiceActive +
+            " preRequest=" + isPreRequestDialogueActive + " choiceResponse=" + isLittlePrinceChoiceResponseActive +
+            " forced=" + activeCustomerUsesForcedRoute + " orderManager=" + (orderManager != null) +
+            " panelSelf=" + (brewPanel != null && brewPanel.activeSelf) +
+            " panelHierarchy=" + (brewPanel != null && brewPanel.activeInHierarchy) +
+            " selected=" + hasMethodSelected);
+#endif
     }
 
     private bool TryStartDedicatedRequest()
@@ -722,6 +743,7 @@ public class InteractionUIController : MonoBehaviour
 
         if (orderManager == null)
         {
+            TraceBrew("brew.reject.dedicated-missing-order-manager");
             Debug.LogError("[InteractionUI] OrderManager is NULL for dedicated request.");
             return true;
         }
@@ -1114,6 +1136,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void OnClickCancel()
     {
+        TraceBrew("selection.cancel");
         if (farewellCompleted != null) return;
         // BrewPanel에서 취소하면 DialoguePanel로 복귀
         ResetPreRequestDialogue();
@@ -1132,6 +1155,7 @@ public class InteractionUIController : MonoBehaviour
 
     private void ClosePanels(bool keepEllipsis)
     {
+        TraceBrew("selection.close-panels");
         ResetPreRequestDialogue();
         wantsEllipsisVisible = keepEllipsis;
 

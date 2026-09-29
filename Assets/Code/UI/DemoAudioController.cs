@@ -137,18 +137,22 @@ public sealed class DemoAudioController : MonoBehaviour
     }
     public void ToggleSettings()
     {
+        SurlhwaModalSurface.Trace("settings.toggle.entry open=" + settingsOpen);
         if (settingsOpen) { CloseSettings(); return; }
         if (settingsRoot == null) BuildSettings();
         settingsOpen = true;
         settingsOwner = this;
         settingsRoot.SetActive(true);
+        SurlhwaModalSurface.Trace("settings.open.complete active=" + settingsRoot.activeInHierarchy);
     }
     private void CloseSettings()
     {
+        SurlhwaModalSurface.Trace("settings.close.entry open=" + settingsOpen);
         if (!settingsOpen) return;
         settingsOpen = false;
         if (settingsRoot != null) settingsRoot.SetActive(false);
         if (settingsOwner == this) settingsOwner = null;
+        SurlhwaModalSurface.Trace("settings.close.complete active=" + (settingsRoot != null && settingsRoot.activeInHierarchy));
     }
     private void OnDestroy()
     {

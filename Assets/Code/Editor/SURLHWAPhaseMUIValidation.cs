@@ -34,6 +34,7 @@ public static class SURLHWAPhaseMUIValidation
     public static void RunNavigation() => Start("navigation");
     public static void RunInputModule() => Start("input-module");
     public static void RunModalSequence() => Start("modal-sequence");
+    public static void RunPointerHandoffDiagnostic() => Start("pointer-handoff");
     public static void RunDiegetic() => Start("diegetic");
     public static void RunStagingBefore() => Start("staging-before");
     public static void RunStagingAfter() => Start("staging-after");
@@ -59,7 +60,7 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
-        if (mode == "input-module" || mode == "modal-sequence" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
+        if (mode == "input-module" || mode == "modal-sequence" || mode == "pointer-handoff" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -93,8 +94,98 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     bool previousBackground;
     bool runtimeError;
     UnityEngine.InputSystem.Mouse probeMouse;
+    UnityEngine.InputSystem.Mouse handoffMouse;
     readonly List<string> pointerEvents = new();
     bool tracingPointer;
+    readonly Queue<string> eventTrace = new();
+    string traceRun, correlation = "setup";
+    int attempt, droppedTraceEvents;
+    bool traceEnabled;
+    bool inputObservationPending;
+    string lastModuleObservation;
+    Button traceTarget;
+    UnityEngine.InputSystem.UI.InputSystemUIInputModule traceModule;
+    string TraceState()
+    {
+        var module = EventSystem.current != null ? EventSystem.current.currentInputModule : null;
+        var input = module as UnityEngine.InputSystem.UI.InputSystemUIInputModule;
+        var ui = Find<InteractionUIController>();
+        var panel = ui != null ? Get(ui, "brewPanel") as GameObject : null;
+        return " module=" + Identity(module) + "/" + (module != null ? module.GetType().Name : "NONE") +
+            " pointEnabled=" + (input != null && input.point?.action?.enabled == true) +
+            " clickEnabled=" + (input != null && input.leftClick?.action?.enabled == true) +
+            " focus=" + Identity(EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null) +
+            " appFocus=" + Application.isFocused + " editorFocus=" + EditorWindow.focusedWindow?.GetType().Name +
+            " target=" + Identity(traceTarget) + " active=" + (traceTarget != null && traceTarget.IsActive()) +
+            " interactable=" + (traceTarget != null && traceTarget.IsInteractable()) +
+            " allowed=" + (traceTarget != null && SurlhwaModalSurface.Allows(traceTarget.transform)) +
+            " scale=" + Time.timeScale + " paused=" + SurlhwaModalSurface.IsPaused +
+            " top=" + Identity(SurlhwaModalSurface.Top) + " settings=" + DemoAudioController.IsSettingsOpen +
+            " routeBusy=" + Find<BartendingFlowCoordinator>()?.IsBartendingActive +
+            " selection=" + Identity(panel) + " visible=" + (panel != null && panel.activeInHierarchy);
+    }
+    static string Identity(UnityEngine.Object value) => value != null ? value.name + "#" + value.GetInstanceID() : "NONE";
+    void Record(string boundary)
+    {
+        if (!traceEnabled) return;
+        if (eventTrace.Count == 8192) { eventTrace.Dequeue(); droppedTraceEvents++; }
+        eventTrace.Enqueue(correlation + " frame=" + Time.frameCount + " mono=" + Time.realtimeSinceStartupAsDouble.ToString("F6") +
+            " unscaled=" + Time.unscaledTimeAsDouble.ToString("F6") + " " + boundary + TraceState());
+    }
+    void LateUpdate()
+    {
+        if (traceEnabled && tracingPointer && traceModule != null && probeMouse != null)
+        {
+            string observation = "module.afterProcess ray=" + Identity(traceModule.GetLastRaycastResult(probeMouse.deviceId).gameObject) +
+                " pointers=" + ModulePointers() +
+                " device=" + probeMouse.deviceId + " position=" + probeMouse.position.ReadValue() + " left=" + probeMouse.leftButton.ReadValue();
+            if (observation != lastModuleObservation) Record(observation);
+            lastModuleObservation = observation;
+        }
+    }
+    void TraceAction(InputAction.CallbackContext context)
+    {
+        if (tracingPointer) Record("ui.action " + context.action.name + " phase=" + context.phase +
+            " device=" + context.control?.device.deviceId + " control=" + context.control?.name);
+    }
+    string ModulePointers()
+    {
+        // Read the installed Input System 1.18.0 pointer records, never mutate them.
+        var states = Get(traceModule, "m_PointerStates") as IEnumerable;
+        if (states == null) return "UNAVAILABLE";
+        var values = new List<string>();
+        foreach (object state in states)
+        {
+            var data = (UnityEngine.InputSystem.UI.ExtendedPointerEventData)Get(state, "eventData");
+            values.Add("id=" + data.pointerId + "/device=" + data.device?.deviceId + "/pos=" + data.position +
+                "/ray=" + Identity(data.pointerCurrentRaycast.gameObject));
+        }
+        return string.Join(";", values);
+    }
+    void TraceInputProcessed()
+    {
+        if (traceEnabled && tracingPointer && inputObservationPending && probeMouse != null)
+        {
+            inputObservationPending = false;
+            Record("input.afterUpdate device=" + probeMouse.deviceId + " position=" + probeMouse.position.ReadValue() +
+                " left=" + probeMouse.leftButton.ReadValue() + " update=" + InputState.currentUpdateType);
+        }
+    }
+    void BindTraceActions(bool bind)
+    {
+        if (traceModule == null) return;
+        foreach (var action in new[] { traceModule.point?.action, traceModule.leftClick?.action })
+        {
+            if (action == null) continue;
+            if (bind) { action.performed += TraceAction; action.canceled += TraceAction; }
+            else { action.performed -= TraceAction; action.canceled -= TraceAction; }
+        }
+    }
+    void QueuePointer(Vector2 point, ushort buttons)
+    {
+        Record("input.queue device=" + probeMouse.deviceId + " position=" + point + " left=" + buttons);
+        InputSystem.QueueStateEvent(probeMouse, new MouseState { position = point, buttons = buttons });
+    }
     static readonly BindingFlags Fields = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
     static T Find<T>() where T : UnityEngine.Object => FindFirstObjectByType<T>();
     static object Get(object owner, string field) => owner.GetType().GetField(field, Fields).GetValue(owner);
@@ -135,8 +226,12 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Application.logMessageReceived += OnLog;
         InputSystem.onEvent += TracePointerEvent;
+        InputSystem.onAfterUpdate += TraceInputProcessed;
         previousBackground = Application.runInBackground;
         Application.runInBackground = true;
+        traceEnabled = SessionState.GetBool("SURLHWA_UI_EVENT_TRACE", false);
+        traceRun = DateTime.UtcNow.ToString("yyyyMMddTHHmmssfff") + "-" + SURLHWAPhaseMUIValidation.Mode;
+        if (traceEnabled) SurlhwaModalSurface.DiagnosticTrace = Record;
         began = Time.realtimeSinceStartup;
         work.Push(Run());
         StartCoroutine(Guarded());
@@ -153,7 +248,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
                 next = work.Peek().Current;
                 if (next is IEnumerator nested) { work.Push(nested); continue; }
             }
-            catch (Exception e) { Debug.LogException(e); Finish(false); yield break; }
+            catch (Exception e) { Record("probe.exception " + e.GetType().Name + " " + e.Message); Debug.LogException(e); Finish(false); yield break; }
             yield return next;
         }
         Finish(true);
@@ -161,6 +256,14 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     void Finish(bool success)
     {
         success &= !runtimeError;
+        Record("probe.finish success=" + success);
+        if (traceEnabled)
+        {
+            Directory.CreateDirectory("Temp/PhaseM/EventTraces");
+            File.WriteAllLines("Temp/PhaseM/EventTraces/" + traceRun + (success ? "-pass" : "-FAIL") + ".txt",
+                new[] { "UTC run=" + traceRun + " screen=" + Screen.width + "x" + Screen.height +
+                    " boundedEvents=8192 dropped=" + droppedTraceEvents + " input=PROGRAMMATIC" }.Concat(eventTrace));
+        }
         Debug.Log("[Phase M UI] " + SURLHWAPhaseMUIValidation.Mode + " " + (success ? "COMPLETE" : "FAILED") + ": staged production-screen fixtures; callback invocation and raycast observations, not human input.");
         File.AppendAllText("Temp/PhaseM/validation-results.txt", DateTime.UtcNow.ToString("O") + " UI " + SURLHWAPhaseMUIValidation.Mode + " " + success + "\n");
         Application.runInBackground = previousBackground;
@@ -172,7 +275,11 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     {
         Application.logMessageReceived -= OnLog;
         InputSystem.onEvent -= TracePointerEvent;
+        InputSystem.onAfterUpdate -= TraceInputProcessed;
+        BindTraceActions(false);
+        if (traceEnabled) SurlhwaModalSurface.DiagnosticTrace = null;
         if (probeMouse != null && probeMouse.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(probeMouse);
+        if (handoffMouse != null && handoffMouse.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(handoffMouse);
     }
     IEnumerator Wait(Func<bool> ready)
     {
@@ -243,6 +350,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (SURLHWAPhaseMUIValidation.Mode == "diegetic") { yield return DiegeticFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "modal-sequence") { yield return ModalSequence(); yield break; }
+        if (SURLHWAPhaseMUIValidation.Mode == "pointer-handoff") { yield return PointerHandoffDiagnostic(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "notification-layout") { yield return NotificationLayout(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
         yield return Capture("entry");
@@ -329,26 +437,52 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator ModuleClick(Button button, bool disabledProbe = false)
     {
+        correlation = traceRun + "/" + (++attempt) + "/" + SafeName(button);
+        traceTarget = button;
+        Record("attempt.begin");
         TraceModal("before " + (button != null ? button.name : "MISSING"), button);
         if (button == null || (!disabledProbe && !CanPointAt(button))) throw new InvalidOperationException("Input-module target is blocked");
         string controlName = button.name;
         pointerEvents.Clear(); tracingPointer = true;
+        inputObservationPending = false; lastModuleObservation = null;
+        SURLHWAButtonEventObservation observer = null;
+        if (traceEnabled)
+        {
+            // Button already implements these three interfaces. An observer on
+            // that same object cannot introduce a new ancestor/child target.
+            var down = ExecuteEvents.GetEventHandler<IPointerDownHandler>(button.gameObject);
+            var up = ExecuteEvents.GetEventHandler<IPointerUpHandler>(button.gameObject);
+            var click = ExecuteEvents.GetEventHandler<IPointerClickHandler>(button.gameObject);
+            observer = button.gameObject.AddComponent<SURLHWAButtonEventObservation>();
+            observer.record = Record;
+            if (down != ExecuteEvents.GetEventHandler<IPointerDownHandler>(button.gameObject) ||
+                up != ExecuteEvents.GetEventHandler<IPointerUpHandler>(button.gameObject) ||
+                click != ExecuteEvents.GetEventHandler<IPointerClickHandler>(button.gameObject))
+                throw new InvalidOperationException("Observation changed event target resolution");
+            traceModule = EventSystem.current.currentInputModule as UnityEngine.InputSystem.UI.InputSystemUIInputModule;
+            BindTraceActions(true);
+        }
         int delivered = 0;
-        UnityEngine.Events.UnityAction observed = () => delivered++;
+        UnityEngine.Events.UnityAction observed = () => { delivered++; Record("button.onClick.observer count=" + delivered); };
         button.onClick.AddListener(observed);
         var rect = (RectTransform)button.transform;
         var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
-        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+        QueuePointer(point, 0);
         yield return null;
-        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point, buttons = 1 });
+        QueuePointer(point, 1);
         yield return null;
-        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+        QueuePointer(point, 0);
         yield return new WaitForSecondsRealtime(.3f);
+        Record("attempt.end callbacks=" + delivered);
         tracingPointer = false;
+        BindTraceActions(false);
+        if (observer != null) { observer.record = null; Destroy(observer); }
         if (button != null) button.onClick.RemoveListener(observed);
         Debug.Log("[Pointer delivery] " + controlName + " callbacks=" + delivered + " events=" + string.Join(";", pointerEvents));
         Debug.Log("[Phase M Input Module] virtual mouse down/up via existing InputSystemUIInputModule: " + controlName);
         TraceModal("after " + controlName, button);
+        if (delivered != (disabledProbe ? 0 : 1))
+            throw new InvalidOperationException("Input-module callback delivery mismatch: " + correlation + " callbacks=" + delivered);
     }
     void TracePointerEvent(InputEventPtr data, InputDevice device)
     {
@@ -356,6 +490,10 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             (!data.IsA<StateEvent>() && !data.IsA<DeltaStateEvent>())) return;
         bool position = mouse.position.ReadValueFromEvent(data, out Vector2 point);
         bool button = mouse.leftButton.ReadValueFromEvent(data, out float pressed);
+        inputObservationPending = true;
+        Record("input.received.beforeApply device=" + device.deviceId + (device == probeMouse ? " virtual" : " external") +
+            " eventTime=" + data.time.ToString("F6") + " position=" + (position ? point.ToString() : "unchanged") +
+            " left=" + (button ? pressed.ToString() : "unchanged"));
         pointerEvents.Add("frame=" + Time.frameCount + " device=" + device.deviceId +
             (device == probeMouse ? " virtual" : " external") + " pos=" + (position ? point.ToString() : "unchanged") +
             " left=" + (button ? pressed.ToString() : "unchanged"));
@@ -418,8 +556,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             {
                 yield return ModuleClick(Named("CodexButton")); ExpectSurface("CodexPanel", false);
                 yield return ModuleClick(ButtonField(Find<CocktailCodexPanelController>(), "closeButton")); ExpectSurface(null, false);
-                yield return ModuleClick(Named("SettingsButton")); ExpectSurface("SoundSettings", true);
-                yield return ModuleClick(Named("CloseSoundSettings")); ExpectSurface(null, false);
+                yield return SettingsCycle(Named("SettingsButton")); ExpectSurface(null, false);
             }
             yield return ReadToRequest();
             var ui = Find<InteractionUIController>();
@@ -459,8 +596,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             {
                 yield return ModuleClick(ButtonField(guide, "openButton")); ExpectSurface("RecipeGuidePanel", true);
                 yield return ModuleClick(ButtonField(guide, "closeButton")); ExpectSurface(null, false);
-                yield return ModuleClick(Named("BartendingSettings")); ExpectSurface("SoundSettings", true);
-                yield return ModuleClick(Named("CloseSoundSettings")); ExpectSurface(null, false);
+                yield return SettingsCycle(Named("BartendingSettings")); ExpectSurface(null, false);
             }
             yield return ServeSimplePreparation(method);
             yield return Wait(() => !Find<BartendingFlowCoordinator>().IsBartendingActive);
@@ -542,6 +678,69 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         Find<RecipeUnlockPopupController>().Show(knowledge.GetAllRecipes().First(knowledge.IsKnown));
         yield return new WaitForSecondsRealtime(.3f); yield return Capture("discovery-fixture");
     }
+    IEnumerator PointerHandoffDiagnostic()
+    {
+        probeMouse = InputSystem.AddDevice<Mouse>("Trace comparison mouse");
+        yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();
+        var ui = Find<InteractionUIController>();
+        // Positive comparison: same request and ordinary method-selection owner.
+        yield return ModuleClick(ButtonField(ui, "brewButton"));
+        ExpectSurface("BrewPanel", false);
+        yield return ModuleClick(ButtonField(ui, "cancelButton"));
+        var brew = ButtonField(ui, "brewButton");
+        var rect = (RectTransform)brew.transform;
+        var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+        QueuePointer(point, 0); yield return null;
+        // Explicit negative fixture: reproduce the observed second-device Point
+        // handoff, not human input or a new production navigation stack.
+        handoffMouse = InputSystem.AddDevice<Mouse>("Trace competing mouse");
+        Record("fixture.point-handoff device=" + handoffMouse.deviceId + " position=(-100,-100); expect first lost click to stop");
+        InputSystem.QueueStateEvent(handoffMouse, new MouseState { position = new Vector2(-100, -100) });
+        yield return null;
+        yield return ModuleClick(brew);
+        throw new InvalidOperationException("Pointer handoff did not reproduce; do not infer a cause from this fixture");
+    }
+    IEnumerator SettingsCycle(Button opener)
+    {
+        float expectedScale = Time.timeScale;
+        var expectedTop = SurlhwaModalSurface.Top;
+        bool expectedPause = SurlhwaModalSurface.IsPaused;
+        bool expectedAllowed = SurlhwaModalSurface.Allows(opener.transform);
+        bool expectedInteractable = opener.IsInteractable();
+        int expectedSurfaces = FindObjectsByType<SurlhwaModalSurface>(FindObjectsSortMode.None).Length;
+        int expectedShields = FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None).Count(r => r.name == "ModalInputShield");
+        Record("settings.prior scale=" + expectedScale + " top=" + Identity(expectedTop) +
+            " paused=" + expectedPause + " allowed=" + expectedAllowed + " interactable=" + expectedInteractable);
+        yield return ModuleClick(opener);
+        if (!DemoAudioController.IsSettingsOpen || SurlhwaModalSurface.Top == null || SurlhwaModalSurface.Top.name != "SoundSettings")
+            throw new InvalidOperationException("Settings open did not complete");
+        // Retain the original open-state pause, shield and focus assertions,
+        // relative to the legitimate parent rather than assuming an empty stack.
+        var focus = EventSystem.current.currentSelectedGameObject;
+        if (Time.timeScale != 0 || !SurlhwaModalSurface.IsPaused ||
+            FindObjectsByType<SurlhwaModalSurface>(FindObjectsSortMode.None).Length != expectedSurfaces + 1 ||
+            FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None).Count(r => r.name == "ModalInputShield") != expectedShields + 1 ||
+            focus == null || !SurlhwaModalSurface.Allows(focus.transform))
+            throw new InvalidOperationException("Settings open pause/shield/focus mismatch");
+        yield return ModuleClick(Named("CloseSoundSettings"));
+        // Owner closes synchronously today. This bounded readiness observation
+        // can expire while paused and never supplies input or alters a lock.
+        float until = Time.realtimeSinceStartup + 1;
+        while (DemoAudioController.IsSettingsOpen && Time.realtimeSinceStartup < until) yield return null;
+        bool complete = !DemoAudioController.IsSettingsOpen &&
+            !FindObjectsByType<SurlhwaModalSurface>(FindObjectsSortMode.None).Any(s => s.name == "SoundSettings") &&
+            FindObjectsByType<SurlhwaModalSurface>(FindObjectsSortMode.None).Length == expectedSurfaces &&
+            FindObjectsByType<GraphicRaycaster>(FindObjectsSortMode.None).Count(r => r.name == "ModalInputShield") == expectedShields;
+        bool scaleOK = Time.timeScale == expectedScale, topOK = SurlhwaModalSurface.Top == expectedTop;
+        bool inputOK = SurlhwaModalSurface.IsPaused == expectedPause && SurlhwaModalSurface.Allows(opener.transform) == expectedAllowed && opener.IsInteractable() == expectedInteractable;
+        Record("settings.restore closeComplete=" + complete + " scaleExpected=" + expectedScale + " scaleActual=" + Time.timeScale +
+            " topExpected=" + Identity(expectedTop) + " topActual=" + Identity(SurlhwaModalSurface.Top) +
+            " pauseExpected=" + expectedPause + " pauseActual=" + SurlhwaModalSurface.IsPaused +
+            " allowedExpected=" + expectedAllowed + " allowedActual=" + SurlhwaModalSurface.Allows(opener.transform) +
+            " interactableExpected=" + expectedInteractable + " interactableActual=" + opener.IsInteractable());
+        if (!complete || !scaleOK || !topOK || !inputOK)
+            throw new InvalidOperationException("Settings restoration: closeComplete=" + complete + " scaleOK=" + scaleOK + " topOK=" + topOK + " inputOK=" + inputOK);
+    }
     IEnumerator InputModuleFlow()
     {
         yield return null;
@@ -589,9 +788,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (!guide.IsReading || Time.timeScale != 0) throw new InvalidOperationException("Module click did not open/pause Guide");
         yield return ModuleClick(ButtonField(guide, "closeButton"));
         if (guide.IsReading || Time.timeScale != 1) throw new InvalidOperationException("Module click did not resume workspace");
-        yield return ModuleClick(Named("BartendingSettings"));
-        yield return ModuleClick(Named("CloseSoundSettings"));
-        if (Time.timeScale != 1 || SurlhwaModalSurface.Top != null) throw new InvalidOperationException("Module flow left a modal lock");
+        yield return SettingsCycle(Named("BartendingSettings"));
         Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/Codex masked cards/wheel/detail/back focus/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
     }
     IEnumerator StagingFlow()
@@ -606,7 +803,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             var target = ButtonField(ui, method.ToString().ToLowerInvariant() + "Button");
             var rect = (RectTransform)target.transform;
             var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
-            UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+            QueuePointer(point, 0);
             yield return new WaitForSecondsRealtime(.25f);
             var state = target.GetComponent("SurlhwaMethodSetupTarget");
             if (!CanPointAt(target) || !(bool)state.GetType().GetProperty("Hovered").GetValue(state) || (bool)Get(ui, "hasMethodSelected"))
@@ -665,7 +862,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
                 var target = ButtonField(ui, field);
                 var rect = (RectTransform)target.transform;
                 var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
-                UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+                QueuePointer(point, 0);
                 yield return new WaitForSecondsRealtime(.15f);
                 var state = target.GetComponent("SurlhwaMethodSetupTarget");
                 if (!(bool)state.GetType().GetProperty("Hovered").GetValue(state) || !CanPointAt(target))
@@ -737,5 +934,20 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (CampaignProgressPersistence.HasProgress || BusinessDayPersistence.LoadCurrentDay(1) != 1)
             throw new InvalidOperationException("Confirmed reset failed");
     }
+}
+// Attached only to an existing Button for the duration of an opted-in probe.
+// Never calls Use(), changes focus, forwards an event, or adds a new raycast target.
+internal sealed class SURLHWAButtonEventObservation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
+{
+    public Action<string> record;
+    static string Id(GameObject value) => value != null ? value.name + "#" + value.GetInstanceID() : "NONE";
+    void Observe(string edge, PointerEventData data) => record?.Invoke(edge + " receiver=" + Id(gameObject) +
+        " pointer=" + data.pointerId + " position=" + data.position + " button=" + data.button +
+        " currentRay=" + Id(data.pointerCurrentRaycast.gameObject) + " pressRay=" + Id(data.pointerPressRaycast.gameObject) +
+        " pointerPress=" + Id(data.pointerPress) + " pointerClick=" + Id(data.pointerClick) +
+        " eligible=" + data.eligibleForClick + " dragging=" + data.dragging + " used=" + data.used);
+    public void OnPointerDown(PointerEventData data) => Observe("PointerDown", data);
+    public void OnPointerUp(PointerEventData data) => Observe("PointerUp", data);
+    public void OnPointerClick(PointerEventData data) => Observe("PointerClick", data);
 }
 #endif
