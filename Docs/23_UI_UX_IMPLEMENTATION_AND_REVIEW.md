@@ -252,7 +252,8 @@ campaign and physical regression are rerun after the corrections.
   EventSystem top raycast, then dispatches pointer down/up/click to the reached
   control. Includes the guest prompt, dialogue/choice, four method controls,
   Guide close/open, Settings close/volume and ending/reset navigation. This
-  exercises uGUI routing, not the native OS/input-module event stream.
+  exercises uGUI routing. The additional input-module probe below exercises
+  the existing module with queued virtual mouse states, still not OS input.
 - **D — render:** production scene/prefab/controller output at both required
   resolutions, using the existing offscreen Canvas projection helper. Review
   fixtures are explicitly seeded; normal-service captures come from the campaign.
@@ -289,3 +290,23 @@ observations. `phase-m-normal-service-*` and `phase-m-normal-discovery-*` are
 automated normal-campaign captures. Baseline and earlier navigation captures
 retain their distinct prefixes. Native images were inspected separately from
 the contact sheet; thumbnails alone were not used to approve text readability.
+
+### Existing input-module verification
+
+Current production UI uses `InputSystemUIInputModule`, while physical technique
+scripts poll legacy `Input`. The legacy InputManager's duplicate Space Submit
+entry is not the active UI Submit binding. The active `*/{Submit}` resolves to
+`/Keyboard/enter`; Space has no Submit usage. No input settings or stack changed.
+A second campaign attempt was interrupted for this read-only check, not because
+of an observed campaign failure; progress/knowledge/audio hashes restored exactly.
+
+`SURLHWAPhaseMUIValidation.RunInputModule()` adds a temporary virtual Mouse,
+queues position/button states and lets the actual module drive the UI. With
+the existing Game view focused, it passed entry Settings/close, New Game,
+guest prompt, authored dialogue, bartending entry, Guide pause/resume and local
+Settings/close. No callback or ExecuteEvents call drives this probe. The virtual
+device is removed on exit; progress and sound preferences are restored.
+This is stronger programmatic C evidence, not a human mouse test or legacy held-key
+test. The first unfocused attempt failed to open Settings under the project's
+`PointersAndKeyboardsRespectGameViewFocus` policy; no production setting was
+changed to force a pass. Keep the Editor/Game view focused when rerunning.

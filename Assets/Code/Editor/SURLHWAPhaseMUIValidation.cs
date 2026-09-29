@@ -30,6 +30,7 @@ public static class SURLHWAPhaseMUIValidation
     public static void RunBaseline() => Start("baseline");
     public static void Run() => Start("review");
     public static void RunNavigation() => Start("navigation");
+    public static void RunInputModule() => Start("input-module");
     static void Start(string mode)
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode || SessionState.GetBool(Pending, false))
@@ -51,6 +52,7 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
+        if (mode == "input-module") EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -83,6 +85,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     float began;
     bool previousBackground;
     bool runtimeError;
+    UnityEngine.InputSystem.Mouse probeMouse;
     static readonly BindingFlags Fields = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
     static T Find<T>() where T : UnityEngine.Object => FindFirstObjectByType<T>();
     static object Get(object owner, string field) => owner.GetType().GetField(field, Fields).GetValue(owner);
@@ -155,7 +158,11 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     void OnLog(string message, string stackTrace, LogType type)
     { if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert) runtimeError = true; }
-    void OnDestroy() => Application.logMessageReceived -= OnLog;
+    void OnDestroy()
+    {
+        Application.logMessageReceived -= OnLog;
+        if (probeMouse != null && probeMouse.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(probeMouse);
+    }
     IEnumerator Wait(Func<bool> ready)
     {
         float until = Time.realtimeSinceStartup + 30;
@@ -218,6 +225,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Run()
     {
+        if (SURLHWAPhaseMUIValidation.Mode == "input-module") { yield return InputModuleFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
         yield return Capture("entry");
         if (Named("ContinueButton").IsInteractable()) throw new InvalidOperationException("Fresh entry allowed Continue");
@@ -300,6 +308,49 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         panel.OpenCodexAndClose(); yield return Capture("summary-codex");
         Find<CocktailCodexPanelController>().Close(); yield return Capture("summary-return");
         yield return Navigation();
+    }
+    IEnumerator ModuleClick(Button button)
+    {
+        if (button == null || !CanPointAt(button)) throw new InvalidOperationException("Input-module target is blocked");
+        string controlName = button.name;
+        var rect = (RectTransform)button.transform;
+        var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+        yield return null;
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point, buttons = 1 });
+        yield return null;
+        UnityEngine.InputSystem.InputSystem.QueueStateEvent(probeMouse, new UnityEngine.InputSystem.LowLevel.MouseState { position = point });
+        yield return new WaitForSecondsRealtime(.3f);
+        Debug.Log("[Phase M Input Module] virtual mouse down/up via existing InputSystemUIInputModule: " + controlName);
+    }
+    IEnumerator InputModuleFlow()
+    {
+        yield return null;
+        if (EventSystem.current.GetComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>() == null)
+            throw new InvalidOperationException("Unexpected production input module");
+        probeMouse = UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Mouse>("Phase M validation mouse");
+        yield return ModuleClick(Named("SoundSettingsButton"));
+        if (!DemoAudioController.IsSettingsOpen) throw new InvalidOperationException("Module click did not open Settings");
+        if (CanPointAt(Named("NewGameButton"))) throw new InvalidOperationException("Settings click leaks into entry");
+        yield return ModuleClick(Named("CloseSoundSettings"));
+        if (DemoAudioController.IsSettingsOpen) throw new InvalidOperationException("Module click did not close Settings");
+        yield return ModuleClick(Named("NewGameButton"));
+        yield return Guest();
+        var ui = Find<InteractionUIController>();
+        yield return ModuleClick(ButtonField(ui, "ellipsisButton"));
+        for (int i = 0; i < 50 && ButtonField(ui, "nextButton").gameObject.activeInHierarchy; i++)
+            yield return ModuleClick(ButtonField(ui, "nextButton"));
+        yield return ModuleClick(ButtonField(ui, "brewButton"));
+        yield return Wait(() => Find<IngredientShelfController>() != null);
+        var guide = Find<RecipeGuidePanelController>();
+        yield return ModuleClick(ButtonField(guide, "openButton"));
+        if (!guide.IsReading || Time.timeScale != 0) throw new InvalidOperationException("Module click did not open/pause Guide");
+        yield return ModuleClick(ButtonField(guide, "closeButton"));
+        if (guide.IsReading || Time.timeScale != 1) throw new InvalidOperationException("Module click did not resume workspace");
+        yield return ModuleClick(Named("BartendingSettings"));
+        yield return ModuleClick(Named("CloseSoundSettings"));
+        if (Time.timeScale != 1 || SurlhwaModalSurface.Top != null) throw new InvalidOperationException("Module flow left a modal lock");
+        Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
     }
     IEnumerator Navigation()
     {

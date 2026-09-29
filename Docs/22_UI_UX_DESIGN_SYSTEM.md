@@ -6,7 +6,9 @@ Docs/11, 13, 16–21 govern this presentation pass. No narrative or recipe edits
 
 ## First-pass defaults
 
-Use the existing uGUI / TextMesh Pro and legacy input. Reference size for new
+Use the existing uGUI / TextMesh Pro. UI events use the existing
+`InputSystemUIInputModule`; physical technique polling uses legacy `Input`.
+Neither input path is replaced. Reference size for new
 UI is 1280 × 720, Canvas scaling matches width/height equally. Existing world
 and tool scales remain independent. Review at 1280 × 720 and 1920 × 1080.
 
