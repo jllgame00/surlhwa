@@ -93,3 +93,26 @@ night/summary/ending screens remain seeded fixtures. Both-resolution captures
 are `Logs/Review/phase-m-review-*`. The method screen at 1280×720 was inspected
 at native size. Compile: 0 errors, 8 existing warnings. Full campaign, physical
 held-key/mouse, final restyled screens and standalone coverage remain pending.
+
+### M4 / M6: reading band and knowledge surfaces
+
+The lower dialogue band uses the authored speaker identity, 22-unit dialogue,
+wrapped 54-unit action rows, and a shared 0.24-second pointer boundary between
+reading beats. It does not change narrative text, reveal events or choice data.
+The existing book/settings artwork uses aligned 64-unit icons and hit areas.
+
+Codex now has an opaque reading surface, one wired close action for both pages,
+five-column scrolling cards, explicit Unknown/Partial/Known presentation, and
+separate artwork / description / method / scrollable preparation areas. The
+old detail-page close button had no listener and is retired. Card silhouettes
+and all cocktail artwork remain the existing assets. Guide retains its own
+method-local list, filtered detail and reading pause; its selection has a check
+mark and its close action supports Escape. No knowledge or supply data changed.
+
+`Run()` completed without runtime errors after this implementation, including
+Unknown/Partial/Known captures and all four route/Guide pointer paths. Native
+720p dialogue, card grid, Known detail, and method renders were inspected.
+The harness now fails on any runtime error, including errors outside its own
+coroutine. Earlier development iterations with layout and CanvasGroup errors
+are not PASS evidence. Compile remains 0 errors / 8 existing warnings; integrated
+campaign static contracts passed. Full normal-play regression remains M10 work.

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>First-pass visual tokens. No gameplay or saved state.</summary>
 public static class SurlhwaUITheme
@@ -15,6 +16,7 @@ public static class SurlhwaUITheme
     {
         if (text == null) return;
         text.fontSize = size;
+        text.enableAutoSizing = false;
         text.color = muted ? Muted : Ink;
         text.raycastTarget = false;
         text.textWrappingMode = TextWrappingModes.Normal;
@@ -44,6 +46,7 @@ public static class SurlhwaUITheme
         colors.fadeDuration = .1f;
         button.colors = colors;
         button.transition = Selectable.Transition.ColorTint;
+        if (button.GetComponent<SurlhwaControlFocus>() == null) button.gameObject.AddComponent<SurlhwaControlFocus>();
         foreach (var text in button.GetComponentsInChildren<TMP_Text>(true))
         {
             Text(text);
@@ -85,10 +88,38 @@ public static class SurlhwaUITheme
         var text = button.GetComponentInChildren<TMP_Text>(true);
         if (text != null) text.text = label;
     }
+    public static void CornerButton(Button button, bool right)
+    {
+        if (button == null) return;
+        var rect = button.GetComponent<RectTransform>();
+        Place(rect, new Vector2(64, 64), Vector2.zero);
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(right ? 1 : 0, 1);
+        rect.anchoredPosition = new Vector2(right ? -24 : 24, -20);
+        foreach (var image in button.GetComponentsInChildren<Image>(true))
+            if (image.transform != button.transform) { Place(image.rectTransform, new Vector2(64, 64), Vector2.zero); image.raycastTarget = false; }
+        foreach (var text in button.GetComponentsInChildren<TMP_Text>(true))
+        {
+            Text(text, 18); text.margin = Vector4.zero;
+            Place(text.rectTransform, new Vector2(64, 32), Vector2.zero);
+        }
+        if (button.GetComponent<SurlhwaControlFocus>() == null) button.gameObject.AddComponent<SurlhwaControlFocus>();
+    }
     public static string Method(MiniGameType method) => method switch {
         MiniGameType.Stir => "젓기", MiniGameType.Shake => "흔들기",
         MiniGameType.Build => "잔에 만들기", MiniGameType.Float => "층 쌓기", _ => "조주" };
     public static string Container(BartendingContainerType type) => type switch {
         BartendingContainerType.MixingGlass => "믹싱 글라스", BartendingContainerType.Shaker => "셰이커",
         BartendingContainerType.Jigger => "지거", _ => "서빙 잔" };
+}
+
+internal sealed class SurlhwaControlFocus : MonoBehaviour, ISelectHandler, IDeselectHandler
+{
+    Outline edge;
+    public void OnSelect(BaseEventData data)
+    {
+        if (edge == null) { edge = gameObject.AddComponent<Outline>(); edge.effectDistance = new Vector2(2, -2); edge.effectColor = SurlhwaUITheme.Ink; }
+        edge.enabled = true;
+    }
+    public void OnDeselect(BaseEventData data) { if (edge != null) edge.enabled = false; }
+    void OnDisable() { if (edge != null) edge.enabled = false; }
 }

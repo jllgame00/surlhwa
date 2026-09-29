@@ -81,6 +81,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     readonly Stack<IEnumerator> work = new();
     float began;
     bool previousBackground;
+    bool runtimeError;
     static readonly BindingFlags Fields = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
     static T Find<T>() where T : UnityEngine.Object => FindFirstObjectByType<T>();
     static object Get(object owner, string field) => owner.GetType().GetField(field, Fields).GetValue(owner);
@@ -110,6 +111,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        Application.logMessageReceived += OnLog;
         previousBackground = Application.runInBackground;
         Application.runInBackground = true;
         began = Time.realtimeSinceStartup;
@@ -135,10 +137,14 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     void Finish(bool success)
     {
+        success &= !runtimeError;
         Debug.Log("[Phase M UI] " + SURLHWAPhaseMUIValidation.Mode + " " + (success ? "COMPLETE" : "FAILED") + ": staged production-screen fixtures; callback invocation and raycast observations, not human input.");
         Application.runInBackground = previousBackground;
         EditorApplication.ExitPlaymode();
     }
+    void OnLog(string message, string stackTrace, LogType type)
+    { if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert) runtimeError = true; }
+    void OnDestroy() => Application.logMessageReceived -= OnLog;
     IEnumerator Wait(Func<bool> ready)
     {
         float until = Time.realtimeSinceStartup + 30;
@@ -194,7 +200,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         {
             if ((bool)Get(ui, "isLittlePrinceChoiceActive")) yield return Capture("choice");
             Click(ButtonField(ui, "nextButton"));
-            yield return null;
+            yield return new WaitForSecondsRealtime(.26f);
         }
     }
     IEnumerator Run()
@@ -212,7 +218,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         codex.Open(); yield return Capture("codex-grid");
         var knowledge = Find<RecipeUnlockManager>();
         var recipe = knowledge.GetAllRecipes().First(r => r.recipeId == "recipe_dry_martini");
-        codex.SelectRecipe(recipe); yield return Capture("codex-partial"); codex.Close();
+        codex.SelectRecipe(recipe); yield return Capture("codex-partial");
+        codex.SelectRecipe(knowledge.GetAllRecipes().First(knowledge.IsKnown)); yield return Capture("codex-known");
+        codex.Close();
         Click(ButtonField(Find<InteractionUIController>(), "brewButton"));
         yield return Wait(() => Find<IngredientShelfController>() != null);
         yield return Capture("bartending-stir");
@@ -234,7 +242,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             var ui = Find<InteractionUIController>();
             Click(ButtonField(ui, "brewButton")); yield return null; Click(ButtonField(ui, method));
             yield return Capture("method-" + method);
-            Click(ButtonField(ui, "cancelButton")); yield return null;
+            Click(ButtonField(ui, "cancelButton")); yield return new WaitForSecondsRealtime(.26f);
             Click(ButtonField(ui, "brewButton")); yield return null; Click(ButtonField(ui, method));
             Click(ButtonField(ui, "confirmButton"));
             yield return Wait(() => Find<IngredientShelfController>() != null);

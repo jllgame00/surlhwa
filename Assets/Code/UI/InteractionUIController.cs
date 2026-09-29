@@ -130,6 +130,7 @@ public class InteractionUIController : MonoBehaviour
         wantsEllipsisVisible = false;
 
         ConfigureInteractionPrompt();
+        ConfigureDialoguePresentation();
         ClosePanels(false);
         ConfigureMethodPresentation();
         SurlhwaModalSurface.Configure(brewPanel, 200, OnClickCancel);
@@ -515,6 +516,9 @@ public class InteractionUIController : MonoBehaviour
 
     private void ShowDialogue(string line, bool showNext)
     {
+        var speaker = dialoguePanel != null ? dialoguePanel.transform.Find("NameText")?.GetComponent<TMP_Text>() : null;
+        if (speaker != null) speaker.text = activeCustomer != null && activeCustomer.CampaignEncounter != null
+            ? activeCustomer.CampaignEncounter.guestName : "손님";
         wantsEllipsisVisible = false;
         hasMethodSelected = false;
 
@@ -829,6 +833,44 @@ public class InteractionUIController : MonoBehaviour
         var label = ellipsisButton.GetComponentInChildren<TMP_Text>(true);
         if (label == null) label = SurlhwaUITheme.Label("TalkLabel", ellipsisButton.transform, "대화", 20, new Vector2(80, 40), Vector2.zero);
         label.text = "대화"; label.alignment = TextAlignmentOptions.Center;
+    }
+
+    private void ConfigureDialoguePresentation()
+    {
+        if (dialoguePanel == null) return;
+        SurlhwaUITheme.Panel(dialoguePanel);
+        var rect = dialoguePanel.GetComponent<RectTransform>();
+        SurlhwaUITheme.Place(rect, new Vector2(1040, 224), Vector2.zero);
+        rect.anchorMin = rect.anchorMax = new Vector2(.5f, 0);
+        rect.pivot = new Vector2(.5f, 0); rect.anchoredPosition = new Vector2(0, 20);
+        var speaker = dialoguePanel.transform.Find("NameText")?.GetComponent<TMP_Text>();
+        if (speaker != null)
+        {
+            SurlhwaUITheme.Text(speaker, 20, true);
+            SurlhwaUITheme.Place(speaker.rectTransform, new Vector2(992, 28), new Vector2(0, 82));
+        }
+        if (dialogueText != null)
+        {
+            dialogueText.transform.SetParent(dialoguePanel.transform, false);
+            SurlhwaUITheme.Text(dialogueText, 22);
+            SurlhwaUITheme.Place(dialogueText.rectTransform, new Vector2(992, 92), new Vector2(0, 20));
+            dialogueText.alignment = TextAlignmentOptions.TopLeft;
+        }
+        Button[] actions = { nextButton, brewButton };
+        for (int i = 0; i < actions.Length; i++)
+        {
+            if (actions[i] == null) continue;
+            actions[i].transform.SetParent(dialoguePanel.transform, false);
+            SurlhwaUITheme.Place(actions[i].GetComponent<RectTransform>(), new Vector2(480, 54), new Vector2(-252 + i * 504, -76));
+            SurlhwaUITheme.Button(actions[i], i == 1);
+            var label = actions[i].GetComponentInChildren<TMP_Text>(true);
+            if (label != null)
+            {
+                label.rectTransform.anchorMin = Vector2.zero; label.rectTransform.anchorMax = Vector2.one;
+                label.rectTransform.offsetMin = label.rectTransform.offsetMax = Vector2.zero;
+            }
+        }
+        SurlhwaReadingClickBoundary.Bind(nextButton, brewButton);
     }
 
     private void OnClickConfirm()

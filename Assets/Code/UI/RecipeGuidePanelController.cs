@@ -53,6 +53,7 @@ public class RecipeGuidePanelController : MonoBehaviour
     {
         ResolveDetailTextReferences();
         RecipeDetailScrollArea.Ensure(recipeIngredientText);
+        ConfigurePresentation();
 
         if (openButton != null)
         {
@@ -349,10 +350,9 @@ public class RecipeGuidePanelController : MonoBehaviour
                 && buttonRecipes.TryGetValue(btn, out CocktailRecipeData recipe)
                 && recipe == selectedRecipe;
 
-            if (btn.image != null)
-                btn.image.color = selected ? RecipeButtonSelectedColor : RecipeButtonNormalColor;
-
-            label.color = selected ? RecipeButtonSelectedTextColor : RecipeButtonNormalTextColor;
+            SurlhwaUITheme.Button(btn, selected);
+            if (buttonRecipes.TryGetValue(btn, out var entry))
+                label.text = (selected ? "✓ " : "") + RecipeKnowledgeGuideFormatter.GetCardLabel(entry, recipeGuideContext.GetKnownFacts(entry));
             label.fontStyle = selected ? FontStyles.Bold : FontStyles.Normal;
         }
     }
@@ -399,18 +399,34 @@ public class RecipeGuidePanelController : MonoBehaviour
         colors.selectedColor = RecipeButtonSelectedColor;
         colors.colorMultiplier = 1f;
         btn.colors = colors;
+        SurlhwaUITheme.Button(btn);
     }
 
     private static void ConfigureRecipeButtonText(TMP_Text label)
     {
         label.alignment = TextAlignmentOptions.MidlineLeft;
         label.margin = new Vector4(16f, 0f, 16f, 0f);
-        label.enableAutoSizing = true;
-        label.fontSizeMin = 16f;
-        label.fontSizeMax = 24f;
-        label.textWrappingMode = TextWrappingModes.NoWrap;
+        label.enableAutoSizing = false;
+        label.fontSize = 20;
+        label.textWrappingMode = TextWrappingModes.Normal;
         label.overflowMode = TextOverflowModes.Ellipsis;
         label.color = RecipeButtonNormalTextColor;
+    }
+
+    private void ConfigurePresentation()
+    {
+        if (panelRoot == null) return;
+        SurlhwaUITheme.Panel(panelRoot); SurlhwaUITheme.Tree(panelRoot);
+        SurlhwaUITheme.Text(recipeNameText, 28);
+        SurlhwaUITheme.Text(recipeMethodText, 20, true);
+        SurlhwaUITheme.Text(recipeIngredientText, 20);
+        SurlhwaUITheme.Button(openButton); SurlhwaUITheme.LabelButton(openButton, "레시피 노트");
+        if (closeButton != null)
+        {
+            closeButton.transform.SetParent(panelRoot.transform, false);
+            SurlhwaUITheme.Place(closeButton.GetComponent<RectTransform>(), new Vector2(104, 44), new Vector2(416, 288));
+            SurlhwaUITheme.LabelButton(closeButton, "닫기 · Esc");
+        }
     }
 
     private void ResolveDetailTextReferences()

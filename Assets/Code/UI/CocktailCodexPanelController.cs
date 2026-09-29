@@ -42,6 +42,7 @@ public class CocktailCodexPanelController : MonoBehaviour
     {
         ResolveRecipeUnlockManager();
         RecipeDetailScrollArea.Ensure(ingredientsText);
+        ConfigurePresentation();
 
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
@@ -64,6 +65,73 @@ public class CocktailCodexPanelController : MonoBehaviour
 
         if (backButton != null)
             backButton.onClick.RemoveListener(BackToGrid);
+    }
+
+    private void ConfigurePresentation()
+    {
+        if (panelRoot == null) return;
+        SurlhwaUITheme.Panel(panelRoot); SurlhwaUITheme.Tree(panelRoot);
+        // The legacy detail page contained a second, unbound close button.
+        // Both pages now share the controller's one wired close action.
+        foreach (var button in panelRoot.GetComponentsInChildren<Button>(true))
+            if (button.name == "CloseButton" && button != closeButton) button.gameObject.SetActive(false);
+        SurlhwaUITheme.Place(panelRoot.GetComponent<RectTransform>(), new Vector2(1000, 632), Vector2.zero);
+        SurlhwaUITheme.Label("CodexHeading", panelRoot.transform, "기억한 한 잔", 26, new Vector2(400, 40), new Vector2(-210, 270));
+        Button[] navigation = { backButton, closeButton };
+        for (int i = 0; i < navigation.Length; i++)
+        {
+            if (navigation[i] == null) continue;
+            navigation[i].transform.SetParent(panelRoot.transform, false);
+            SurlhwaUITheme.Place(navigation[i].GetComponent<RectTransform>(), new Vector2(104, 44), new Vector2(280 + i * 116, 270));
+        }
+        SurlhwaUITheme.LabelButton(backButton, "목록으로"); SurlhwaUITheme.LabelButton(closeButton, "닫기");
+        if (detailPage != null)
+        {
+            var oldBacking = detailPage.transform.Find("InfoArea")?.GetComponent<Image>();
+            if (oldBacking != null) { oldBacking.enabled = false; oldBacking.raycastTarget = false; }
+            SurlhwaUITheme.Place(detailPage.GetComponent<RectTransform>(), new Vector2(944, 510), new Vector2(0, -30));
+            if (largeImage != null)
+            {
+                largeImage.transform.SetParent(detailPage.transform, false);
+                SurlhwaUITheme.Place(largeImage.rectTransform, new Vector2(260, 330), new Vector2(-286, 10));
+                largeImage.preserveAspect = true; largeImage.raycastTarget = false;
+            }
+            DetailLabel(nameText, 28, new Vector2(500, 48), new Vector2(188, 218));
+            DetailLabel(descriptionText, 20, new Vector2(500, 94), new Vector2(188, 140));
+            DetailLabel(methodText, 20, new Vector2(500, 32), new Vector2(188, 70));
+            DetailLabel(lockedDetailText, 22, new Vector2(500, 210), new Vector2(188, 20));
+            if (ingredientsText != null)
+            {
+                var viewport = ingredientsText.transform.parent as RectTransform;
+                viewport.SetParent(detailPage.transform, false);
+                SurlhwaUITheme.Place(viewport, new Vector2(500, 280), new Vector2(188, -94));
+                SurlhwaUITheme.Text(ingredientsText, 20);
+            }
+        }
+        if (cardParent != null)
+        {
+            SurlhwaUITheme.Place(gridPage.GetComponent<RectTransform>(), new Vector2(944, 510), new Vector2(0, -30));
+            var oldTitle = gridPage.transform.Find("TitleText");
+            if (oldTitle != null) oldTitle.gameObject.SetActive(false);
+            var scroll = cardParent.GetComponentInParent<ScrollRect>(true);
+            if (scroll != null)
+            {
+                SurlhwaUITheme.Place(scroll.GetComponent<RectTransform>(), new Vector2(900, 490), Vector2.zero);
+                scroll.horizontal = false; scroll.vertical = true; scroll.movementType = ScrollRect.MovementType.Clamped;
+                scroll.scrollSensitivity = 40;
+                if (scroll.viewport != null && scroll.viewport.GetComponent<RectMask2D>() == null) scroll.viewport.gameObject.AddComponent<RectMask2D>();
+            }
+            var grid = cardParent.GetComponent<GridLayoutGroup>();
+            if (grid != null) { grid.cellSize = new Vector2(148, 184); grid.spacing = new Vector2(16, 16); grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount; grid.constraintCount = 5; }
+        }
+    }
+    private void DetailLabel(TMP_Text text, float size, Vector2 area, Vector2 position)
+    {
+        if (text == null) return;
+        text.transform.SetParent(detailPage.transform, false);
+        SurlhwaUITheme.Text(text, size); text.enableAutoSizing = false;
+        SurlhwaUITheme.Place(text.rectTransform, area, position);
+        text.alignment = TextAlignmentOptions.TopLeft;
     }
 
     public void Open()
@@ -256,6 +324,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     private void ShowGridPage()
     {
+        if (backButton != null) backButton.gameObject.SetActive(false);
         if (gridPage != null)
             gridPage.SetActive(true);
 
@@ -265,6 +334,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     private void ShowDetailPage()
     {
+        if (backButton != null) backButton.gameObject.SetActive(true);
         if (gridPage != null)
             gridPage.SetActive(false);
 

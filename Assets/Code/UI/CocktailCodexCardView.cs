@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class CocktailCodexCardView : MonoBehaviour
 {
-    private static readonly Vector2 DefaultCardSize = new(120f, 150f);
+    private static readonly Vector2 DefaultCardSize = new(148f, 184f);
     private static readonly Vector2 DefaultIconSize = new(86f, 86f);
-    private static readonly Vector2 DefaultNameSize = new(108f, 42f);
+    private static readonly Vector2 DefaultNameSize = new(132f, 68f);
     private static readonly Color CardBackgroundColor = new(0.16f, 0.13f, 0.09f, 0.88f);
     private static readonly Color NameTextColor = new(0.96f, 0.91f, 0.82f, 1f);
 
@@ -50,10 +50,11 @@ public class CocktailCodexCardView : MonoBehaviour
         }
 
         if (nameText != null)
-            nameText.text = RecipeKnowledgeGuideFormatter.GetCardLabel(recipe, facts);
+            nameText.text = RecipeKnowledgeGuideFormatter.GetCardLabel(recipe, facts) + "\n<size=16>" +
+                (facts.State == RecipeKnowledgeState.Known ? "기록됨" : facts.State == RecipeKnowledgeState.Partial ? "배우는 중" : "기록 전") + "</size>";
 
         if (lockedOverlay != null)
-            lockedOverlay.SetActive(facts.State == RecipeKnowledgeState.Unknown);
+            lockedOverlay.SetActive(false); // Silhouette + explicit knowledge label replace the duplicate ??? overlay.
 
         Sprite sprite = RecipeKnowledgeGuideFormatter.IsFullyKnown(facts)
             ? GetRecipeSprite(recipe)
@@ -61,6 +62,8 @@ public class CocktailCodexCardView : MonoBehaviour
         ApplyIcon(sprite);
         ApplyRootBackground();
         LogBindState(facts);
+        SurlhwaUITheme.Button(button);
+        if (nameText != null) { nameText.enableAutoSizing = false; nameText.fontSize = 18; }
     }
 
     private void HandleClick()
