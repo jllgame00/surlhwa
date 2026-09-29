@@ -110,3 +110,17 @@ HUMAN_ART_TUNING_LATER; they do not require redefining the style each session.
 
 Future cocktails, ingredients and artwork require their own bounded scope.
 Do not generate the full IBA collection or new guest/environment art here.
+
+## Modular bar and chibi branch (Phase L restart)
+
+For world art, inspect all five owner references in
+`ArtSource/Reference/VisualDirection/` before the previous tool board.
+Use `ArtSource/Pixel/BarRestart/prompts.json` and the unmodified source atlases.
+Run `python Tools/prepare_modular_bar.py` to reproduce the 32 PPU world assets.
+The script records exact crops, dimensions, pivots, provenance and hashes in
+`ArtSource/Pixel/BarRestart/assets.json`; inspect Prepared-assets.png after
+changes. Never treat the atlas as a production backdrop. Import each module,
+keep character feet at the bottom-center pivot, and verify counter occlusion
+and seating in the actual scene. Preserve the separate 100 PPU bartending
+standard. New specials require current campaign reachability; ordinary figures
+remain anonymous charcoal silhouettes. No mass future-cast generation.

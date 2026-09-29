@@ -57,3 +57,13 @@ UserSettings/Layouts/default-6000.dwlt were already modified. Baseline bytes
 are retained separately; do not stage/revert them as restart work. The five
 untracked owner reference images are added unchanged as the authorized source
 set. No missing-reference stop condition applies.
+
+## L3R source and preparation milestone
+
+Three original imagegen source atlases and exact prompts are retained in
+`ArtSource/Pixel/BarRestart/`. `Tools/prepare_modular_bar.py` extracts 14
+environment sprites and 11 current character sprites at 32 PPU. Counter arms,
+top and face occupy disjoint pixels on an aligned canvas. Ordinary guests use
+a fixed five-color charcoal ramp and featureless faces. Prepared-assets.png
+was visually inspected; all outputs remain FIRST_PASS / HUMAN_ART_TUNING_LATER.
+The bounded importer leaves the 100 PPU bartending art and anchors untouched.

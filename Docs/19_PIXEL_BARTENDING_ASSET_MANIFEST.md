@@ -119,3 +119,41 @@ Objective import/state/transform checks are in SURLHWAPixelArtValidation and
 SURLHWAPhysicalBartendingPlayMode. Source art and all new assets remain
 FIRST_PASS / HUMAN_ART_TUNING_LATER; attractive glass, hands and final emotional
 fit require owner review. Logs/screenshots are local validation evidence.
+
+## Modular world and current chibi cast — Phase L restart
+
+The 31 bartending sprites above remain PRESERVED. World sprites below use
+32 PPU, Point/uncompressed/no mipmaps, binary alpha, zero borders and the
+existing world SpriteRenderer material. Character pivot is bottom-center;
+environment pivot is center. Source preparation/provenance/crop/hash are in
+`ArtSource/Pixel/BarRestart/assets.json`; original generation prompts and
+atlases remain beside it. All are FIRST_PASS with HUMAN_ART_TUNING_LATER.
+This milestone prepares assets; scene/encounter assignment follows separately.
+
+| Asset ID / use | Runtime path | Pixels | Physical size in world units | States |
+|---|---|---|---|---|
+| WallPanel | Assets/_SURLHWA/Art/Environment/ModularBar/WallPanel.png | 160 × 120 | 5.00 × 3.75 | static modular furniture |
+| WinterWindow | Assets/_SURLHWA/Art/Environment/ModularBar/WinterWindow.png | 82 × 96 | 2.56 × 3.00 | static modular furniture |
+| Shelf | Assets/_SURLHWA/Art/Environment/ModularBar/Shelf.png | 110 × 104 | 3.44 × 3.25 | static modular furniture |
+| ShelfBottles | Assets/_SURLHWA/Art/Environment/ModularBar/ShelfBottles.png | 88 × 34 | 2.75 × 1.06 | static modular furniture |
+| Stool | Assets/_SURLHWA/Art/Environment/ModularBar/Stool.png | 34 × 48 | 1.06 × 1.50 | static modular furniture |
+| Lantern | Assets/_SURLHWA/Art/Environment/ModularBar/Lantern.png | 28 × 70 | 0.88 × 2.19 | static modular furniture |
+| Pedestal | Assets/_SURLHWA/Art/Environment/ModularBar/Pedestal.png | 48 × 54 | 1.50 × 1.69 | static modular furniture |
+| Floor | Assets/_SURLHWA/Art/Environment/ModularBar/Floor.png | 256 × 128 | 8.00 × 4.00 | static modular furniture |
+| SidePlant | Assets/_SURLHWA/Art/Environment/ModularBar/SidePlant.png | 48 × 72 | 1.50 × 2.25 | static modular furniture |
+| DisplayNiche | Assets/_SURLHWA/Art/Environment/ModularBar/DisplayNiche.png | 70 × 64 | 2.19 × 2.00 | static modular furniture |
+| CounterDressing | Assets/_SURLHWA/Art/Environment/ModularBar/CounterDressing.png | 47 × 30 | 1.47 × 0.94 | static modular furniture |
+| CounterArms | Assets/_SURLHWA/Art/Environment/ModularBar/CounterArms.png | 448 × 168 | 14.00 × 5.25 | static modular furniture |
+| CounterTop | Assets/_SURLHWA/Art/Environment/ModularBar/CounterTop.png | 448 × 168 | 14.00 × 5.25 | static modular furniture |
+| CounterFace | Assets/_SURLHWA/Art/Environment/ModularBar/CounterFace.png | 448 × 168 | 14.00 × 5.25 | static modular furniture |
+| Bartender | Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png | 34 × 84 | 1.06 × 2.63 | idle/walk/seat reusable pose |
+| LittlePrince | Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png | 61 × 84 | 1.91 × 2.63 | idle/walk/seat reusable pose |
+| Chunhyang | Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png | 45 × 84 | 1.41 × 2.63 | idle/walk/seat reusable pose |
+| Mongryong | Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png | 44 × 84 | 1.38 × 2.63 | idle/walk/seat reusable pose |
+| DonQuixote | Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png | 60 × 88 | 1.88 × 2.75 | idle/walk/seat reusable pose |
+| Hamlet | Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png | 54 × 84 | 1.69 × 2.63 | idle/walk/seat reusable pose |
+| Faust | Assets/_SURLHWA/Art/Characters/Chibi/Faust.png | 44 × 84 | 1.38 × 2.63 | idle/walk/seat reusable pose |
+| SimCheong | Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png | 51 × 84 | 1.59 × 2.63 | idle/walk/seat reusable pose |
+| Odysseus | Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png | 62 × 88 | 1.94 × 2.75 | idle/walk/seat reusable pose |
+| OrdinaryCoat | Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png | 36 × 84 | 1.13 × 2.63 | idle/walk/seat reusable pose |
+| OrdinaryPonytail | Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png | 39 × 84 | 1.22 × 2.63 | idle/walk/seat reusable pose |

@@ -1,0 +1,627 @@
+[
+  {
+    "id": "WallPanel",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      38,
+      48,
+      370,
+      375
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/WallPanel.png",
+    "dimensions": [
+      160,
+      120
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "5e3fe98404b7a75fe3b8b7d3ec6efe3e625aefdf4db1b186f650dbbb5c5babe7"
+  },
+  {
+    "id": "WinterWindow",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      418,
+      42,
+      715,
+      380
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/WinterWindow.png",
+    "dimensions": [
+      82,
+      96
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "7c7fe11567179d565d9c64f0fa70f186c662c1dfd5380d8619a11677c91b3bbe"
+  },
+  {
+    "id": "Shelf",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      765,
+      60,
+      1070,
+      383
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/Shelf.png",
+    "dimensions": [
+      110,
+      104
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "398fe9e241f725e43dd7019ac5548777ca94d056636dc3cf0ce7c584d21acead"
+  },
+  {
+    "id": "ShelfBottles",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      1090,
+      183,
+      1422,
+      337
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/ShelfBottles.png",
+    "dimensions": [
+      88,
+      34
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "5a6ef09fb506b4f1fcb0b1accd8fa38d6ea68ecda5cb7f9e4bf0ba0957079f1f"
+  },
+  {
+    "id": "Stool",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      650,
+      485,
+      825,
+      735
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/Stool.png",
+    "dimensions": [
+      34,
+      48
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "9e5f442c5b088b6e55e15448664f6ec9417b00914a3888f1b7a5ce8955900f66"
+  },
+  {
+    "id": "Lantern",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      915,
+      421,
+      1055,
+      750
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/Lantern.png",
+    "dimensions": [
+      28,
+      70
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "e537c3b73b62eb96ba231c729f0391e0be76d18bf456c065430ebfba3c6e6152"
+  },
+  {
+    "id": "Pedestal",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      1168,
+      479,
+      1390,
+      723
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/Pedestal.png",
+    "dimensions": [
+      48,
+      54
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "ae0e8b38b74b0c582ccf96341a5e52ec57c2ffb63d85f6b867bad9c8d83f37d5"
+  },
+  {
+    "id": "Floor",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      29,
+      797,
+      475,
+      1048
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/Floor.png",
+    "dimensions": [
+      256,
+      128
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "75c0a7fa4a30053e19e974eb16465cfe47066448f1a932757aa17caa2318b9a9"
+  },
+  {
+    "id": "SidePlant",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      523,
+      747,
+      733,
+      1056
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/SidePlant.png",
+    "dimensions": [
+      48,
+      72
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "912c53b7674741de1d6a03c31b7fa3c66f8dbcd9d8c146648211ae4bd42bd51c"
+  },
+  {
+    "id": "DisplayNiche",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      795,
+      796,
+      1070,
+      1047
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/DisplayNiche.png",
+    "dimensions": [
+      70,
+      64
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "fda56b27d6adaa78d89f90a6c8ed6ba1f37b41f09159a766ba866a96a7d85eb4"
+  },
+  {
+    "id": "CounterDressing",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      1118,
+      835,
+      1425,
+      1038
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/CounterDressing.png",
+    "dimensions": [
+      47,
+      30
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "3b0fdcac645bd3822648b3bb865ff0bc4169262a805ddb3af8382e267a406aaa"
+  },
+  {
+    "id": "CounterArms",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      15,
+      434,
+      600,
+      740
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/CounterArms.png",
+    "dimensions": [
+      448,
+      168
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen U counter; crop/resample/palette; non-overlapping horizontal occlusion planes",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "8cfa0ed8732434f26267bc5e3d5064fa06b7ec498f681b7b2aa4d1e5e5445c5d"
+  },
+  {
+    "id": "CounterTop",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      15,
+      434,
+      600,
+      740
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/CounterTop.png",
+    "dimensions": [
+      448,
+      168
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen U counter; crop/resample/palette; non-overlapping horizontal occlusion planes",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "b6a9b72094e0d06845ec8695b463de23066e4af09c16bfaeb7ccec6754328787"
+  },
+  {
+    "id": "CounterFace",
+    "source": "ArtSource/Pixel/BarRestart/Environment-source.png",
+    "crop": [
+      15,
+      434,
+      600,
+      740
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Environment/ModularBar/CounterFace.png",
+    "dimensions": [
+      448,
+      168
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0.5
+    ],
+    "method": "imagegen U counter; crop/resample/palette; non-overlapping horizontal occlusion planes",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "7d029af97a9ace105ef3f0576bce543b670ec6c06108f40b22e7db84cbb2e3b8"
+  },
+  {
+    "id": "Bartender",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      110,
+      0,
+      405,
+      445
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png",
+    "dimensions": [
+      34,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "d5b8f5d0440f28340bc0933e7a4d7d1ab11870b2ee022f0cd37dc337768588af"
+  },
+  {
+    "id": "LittlePrince",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      455,
+      0,
+      859,
+      445
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "dimensions": [
+      61,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610"
+  },
+  {
+    "id": "Chunhyang",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      860,
+      0,
+      1235,
+      445
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "dimensions": [
+      45,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f"
+  },
+  {
+    "id": "Mongryong",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      100,
+      445,
+      420,
+      866
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "dimensions": [
+      44,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d"
+  },
+  {
+    "id": "DonQuixote",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      445,
+      445,
+      860,
+      866
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "dimensions": [
+      60,
+      88
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626"
+  },
+  {
+    "id": "Hamlet",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      861,
+      445,
+      1240,
+      866
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "dimensions": [
+      54,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982"
+  },
+  {
+    "id": "Faust",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      100,
+      866,
+      420,
+      1254
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "dimensions": [
+      44,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f"
+  },
+  {
+    "id": "SimCheong",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      445,
+      866,
+      860,
+      1254
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "dimensions": [
+      51,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865"
+  },
+  {
+    "id": "Odysseus",
+    "source": "ArtSource/Pixel/BarRestart/Characters-source.png",
+    "crop": [
+      861,
+      866,
+      1240,
+      1254
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "dimensions": [
+      62,
+      88
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen source; crop, nearest resample, palette reduction, binary alpha",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480"
+  },
+  {
+    "id": "OrdinaryCoat",
+    "source": "ArtSource/Pixel/BarRestart/Ordinary-source.png",
+    "crop": [
+      245,
+      0,
+      770,
+      1024
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "dimensions": [
+      36,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen silhouette; crop/resample/binary alpha; fixed five-color charcoal ramp",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a"
+  },
+  {
+    "id": "OrdinaryPonytail",
+    "source": "ArtSource/Pixel/BarRestart/Ordinary-source.png",
+    "crop": [
+      785,
+      0,
+      1340,
+      1024
+    ],
+    "runtime": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "dimensions": [
+      39,
+      84
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ],
+    "method": "imagegen silhouette; crop/resample/binary alpha; fixed five-color charcoal ramp",
+    "provenance": "Original OpenAI imagegen output; owner references; prompts.json",
+    "quality": "FIRST_PASS",
+    "tuning": "HUMAN_ART_TUNING_LATER",
+    "sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d"
+  }
+]
