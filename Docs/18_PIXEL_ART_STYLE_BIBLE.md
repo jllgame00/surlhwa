@@ -22,7 +22,7 @@ Human aesthetic approval remains HUMAN_ART_TUNING_LATER.
 - Separate floor, wall, window, shelf, bottle dressing, counter arms/top/front,
   stools, lamps, side decor and display furniture. No scenic card substitutes
   for character grounding or occlusion. Use the smallest useful module set.
-- World art uses 32 PPU; characters are roughly 80–96 source pixels high.
+- World art uses 32 PPU; current characters are 84–88 source pixels high.
   Stool/counter relationships establish scale. Keep the existing orthographic
   camera and scene lifecycle. UI scaling does not determine character size.
 - Sort floor/outside, rear furniture, working area/bartender, counter foreground,
@@ -41,7 +41,7 @@ success did not establish approval of the previous whole-scene direction.
 
 ## 1. Preserve → analyze → normalize → extend
 
-Baseline: `9d052cb`, `refactor/project-rebuild`. Only the owner's
+Historical pre-L audit baseline: `9d052cb`, `refactor/project-rebuild`. Only the owner's
 `.codex/config.toml` was modified before work; it is excluded from this phase.
 
 Primary anchors:
@@ -196,3 +196,31 @@ Exact hues, one-pixel cleanup, glass curvature, Jigger proportions, hand pose,
 garnish offsets, stream width, rotational shimmer, apparent metal/glass quality,
 and complete workspace composition require later owner review. This lock is
 a coherent implementation direction, not subjective approval or shipping art.
+
+## Restart world implementation standard
+
+| Contract | Locked first pass |
+|---|---|
+| Perspective | Frontal wall/characters, elevated floor and countertop planes; no isometric diamond grid. |
+| World density | 32 PPU; native character height 84 or 88 pixels (2.625 or 2.75 units), scale 1. |
+| Furniture scale | U counter 14 × 5.25 world units; stools 1.0625 × 1.5; seating x -3.2/0/3.2, feet y -3.3. |
+| Bartender | Central feet (0, -1.125); counter front hides lower body. |
+| Palette | Warm brown wood, small amber highlights, cool blue window snow. Specials use restrained costume colors; ordinary figures use five charcoal values. |
+| Outline/shading | Single source-pixel dark silhouette edges, compact stepped value regions, no smooth resampling. Prepared environment palette 40 colors (counter 48), characters 32; caps include every material in each piece. |
+| Highlights | Narrow warm wood edges, restrained metal accents and pale fabric highlights. Avoid broad white environmental glare. |
+| Sorting | Floor -100, wall -90, windows -80, shelves -70, dressing/niche -65, pedestals -30, side decor 15, counter arms 20, bartender 40, top 100, face 110, countertop dressing 120, lamps 150, stools 200. Guests retain feet-based order (330 at seats). Existing memory contours use 8 above rear furniture. |
+| Materials | Existing world SpriteRenderer material; existing Canvas/UI materials for preparation. |
+| Camera | Existing orthographic 5.4. At 1280×720, world pixels cover about 2.083 screen pixels; strict pixel-perfect output is not claimed. |
+| Movement | Existing customer walk/seat and Phase K transforms. Do not snap contact motion to force integer screen pixels. |
+| UI | Upper method selector, lower dialogue/results, corner Codex/settings. Cream labels on dark warm controls. |
+| Runtime composition | Prefab owns furniture only. Encounter sprite references own appearance only. Memories follow existing departure flags. Bartending visuals follow existing container state. |
+
+Standing and seated sprites currently reuse one pose. Seated posture, warmth,
+wood detail, head proportions, lamp balance, memory-contour polish and fractional
+pixel shimmer remain HUMAN_ART_TUNING_LATER. Replace modules independently;
+never return to a monolithic room or colorful ordinary cast to simplify wiring.
+
+Encounter-local effects follow guest depth: companion +1, shared glass +2,
+stillness -1 at the feet. Reaction bubbles clear the rendered head by at least
+0.55 world units; hearts use a separate higher row and restrained warm glyphs.
+These offsets never change service values or timing.

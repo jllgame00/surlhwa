@@ -17,7 +17,7 @@ are preserved unchanged as owner-provided direction authority.
 | ordinary_guest_male_style_ref.png | Short hair, scarf, long coat and compact proportions. Visible face is subordinated to the owner's explicit anonymity rule. |
 | ordinary_guest_female_style_ref.png | Tied hair, coat/scarf and bounded build variation. Remove individualized face/skin emphasis under the same anonymity rule. |
 
-## Current implementation audit
+## L1R starting implementation audit (before correction)
 
 - BarScene camera is orthographic, size 5.4. Three existing seats are at x
   -3.2/0/3.2 along y -2.55 with separate approach/sit/exit markers.
@@ -131,3 +131,74 @@ heads. These are view-only adjustments; service outcomes, timing and story
 flags are unchanged. Focused fixtures cover paired guests, stillness and
 reaction separation. Both early interrupted campaign attempts are excluded
 from completed-run evidence; each exited via progress-restoring cleanup.
+
+## L8R final executed validation and handoff
+
+The final production implementation at `52e8f6e` completed the full 18-night,
+47-departure Play Mode campaign. All four methods, sixteen later special
+visits, discovery/retry, learned/supplied Recommendation alternatives,
+weak-service ACT continuation, checkpoint/mid-dialogue/ending Continue,
+seven earned memories, New Game reset and legacy handoff passed. This uses
+automated input seams; it does not claim manual mouse/keyboard playtesting.
+The owner Editor remained open after cleanup.
+
+| Validation | Executed result |
+|---|---|
+| Compile/static | `dotnet build Assembly-CSharp-Editor.csproj --no-restore`: 0 errors, 8 existing warnings (Unity Pipeline assembly warning and legacy CS0252 checks). Final log: Logs/phase-l-restart-final-compile.log. |
+| Editor | Modular Bar References, character presentation, pixel/physical contracts and existing integrated campaign/J1–J5 checks passed. No missing assigned sprite, material, import or memory-anchor reference found. |
+| Play Mode scene | Production-scene fixtures passed for empty room, ordinary/Prince/Chunhyang/paired guests, seating scale/depth, ready/dialogue UI, reaction clearance, stillness/shared glass and all seven display positions. |
+| Phase K | Build, Stir, Shake and Float physical Play Mode passed: actual amounts, fill, overflow, streams, tools, original held Shaker, layers, ice and garnish. |
+| Full Campaign | PASS, all 47 departures and ending at final runtime state. Filtered evidence: Logs/phase-l-restart-full-campaign.log. |
+| Render review | Native 1280×720 empty, ordinary, Prince, Chunhyang, ready, dialogue, lovers, Hamlet, reaction, preparation and earned-memory views inspected. Six-view board linked below. |
+| Ending capture | An initial capture incorrectly placed world sprites above a nested override canvas. `7909760` fixes only the Editor screenshot helper. Focused ending replay/Continue/navigation and every-line fit passed; corrected campaign-ending-layout capture inspected. No production UI/render change was needed. |
+| Generation repeatability | Isolated preparation reproduced all 25 asset records and PNG hashes with Python 3.13.1 / Pillow 11.2.1. Source atlases and owner references remain unchanged. |
+| Human art validation | Not performed or claimed. All new art is FIRST_PASS / HUMAN_ART_TUNING_LATER. |
+
+The campaign validator restored its saved progress through its existing cleanup.
+An independent check confirmed both knowledge payloads against the pre-campaign
+snapshot. The temporary helper initially failed to serialize its integer array;
+that failed verification is not a PASS. After correcting the helper, the focused
+ending test independently verified restoration of all 29 saved integer keys and
+both knowledge payloads. No save format or persistence code changed.
+
+The final full-route run predates only the Editor capture-helper correction and
+documentation/review-board changes. Its runtime coverage is therefore current.
+The corrected ending check is a seeded endpoint fixture, not another full run.
+
+### Review artifacts and source pipeline
+
+- [Six rendered views](../ArtSource/Pixel/BarRestart/Review-board.png): first five
+  panels are staged production-scene fixtures; the last contains memories earned
+  by the full campaign. Native captures remain in ignored Logs/Review.
+- [Source set and reproduction](../ArtSource/Pixel/BarRestart/README.md): three
+  original imagegen atlases, exact prompts, preparation, hashes and integration.
+- [Style Bible](18_PIXEL_ART_STYLE_BIBLE.md), [manifest](19_PIXEL_BARTENDING_ASSET_MANIFEST.md)
+  and [generation workflow](20_PIXEL_ASSET_GENERATION_WORKFLOW.md) govern future work.
+
+The modular room has 40 SpriteRenderers from 14 environment modules plus the
+bartender, with seven stable memory anchors. Runtime art is under
+Assets/_SURLHWA/Art/Environment/ModularBar and Art/Characters/Chibi. BarScene
+contains one new visual prefab instance; the three existing customer prefabs
+and sixteen encounter assets bind the new cast. BartendingScene and its four
+method prefabs remain unchanged. Existing Shaker, Codex glass/art/colors and
+all 31 prior bartending pixel assets are PRESERVED. No recipe, story, knowledge,
+supply, matcher, campaign, save identity or Phase K authority changed.
+
+### Final classification
+
+| Classification | Scope |
+|---|---|
+| PASS | Owner reference audit; modular U-counter composition; central bartender, outer guest line, distinct chibi specials and anonymous silhouettes; bounded UI/depth integration; preserved bartending; executed technical and rendered checks above. |
+| VALIDATION_DEBT | Updated standalone packaging/playthrough, additional aspect ratios/devices and manual input coverage. No outstanding Unity licensing blocker. |
+| HUMAN_ART_TUNING_LATER | Overall visual identity, wood detail, exact proportions/palette, seated poses (currently shared with standing), memory-contour polish, tool/hand appeal and motion feel. This is not final owner art approval. |
+| DEFERRED_AUDIO | No audio changes; final mix and accents remain separate. |
+| FUTURE_EXPANSION | Separately approved poses, cast, display art and environment modules beyond current reachable content. |
+| OUT_OF_SCOPE | Gameplay/persistence/render architecture replacement, new story or cocktails, full IBA art generation and a generalized tile engine. |
+
+No known objective restart implementation defect remains. All 33 starting dirty
+files, including .codex/config.toml, remain byte-identical to their starting
+state. They are excluded from commits. Unity's additional recent-scene setting
+and whitespace-only rewrites of the 25 new world metas are also excluded. The
+open Editor recreates that metadata whitespace after normalization; import
+values and GUIDs remain identical. Scene/prefab diffs were inspected and the committed restart range
+passes git diff --check. No push or release was performed.

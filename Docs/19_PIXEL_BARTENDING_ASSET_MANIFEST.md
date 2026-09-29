@@ -128,7 +128,12 @@ existing world SpriteRenderer material. Character pivot is bottom-center;
 environment pivot is center. Source preparation/provenance/crop/hash are in
 `ArtSource/Pixel/BarRestart/assets.json`; original generation prompts and
 atlases remain beside it. All are FIRST_PASS with HUMAN_ART_TUNING_LATER.
-This milestone prepares assets; scene/encounter assignment follows separately.
+Integration: ACTIVE in BarScene through ModularWinterBar.prefab, the existing
+ordinary/Prince customer prefabs and sixteen current special encounters.
+Sorting layer: Default. The existing world sprite material is retained;
+per-piece sorting orders are in Docs/18. The prefab contains 40 independent
+SpriteRenderers and seven memory anchors. Character states reuse one pose;
+existing movement and seating remain authoritative.
 
 | Asset ID / use | Runtime path | Pixels | Physical size in world units | States |
 |---|---|---|---|---|
@@ -157,3 +162,28 @@ This milestone prepares assets; scene/encounter assignment follows separately.
 | Odysseus | Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png | 62 × 88 | 1.94 × 2.75 | idle/walk/seat reusable pose |
 | OrdinaryCoat | Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png | 36 × 84 | 1.13 × 2.63 | idle/walk/seat reusable pose |
 | OrdinaryPonytail | Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png | 39 × 84 | 1.22 × 2.63 | idle/walk/seat reusable pose |
+
+### Active dependencies and preservation decisions
+
+| Category | Restart decision | Active dependency / quality |
+|---|---|---|
+| All 14 environment modules | NEW, separated architecture/furniture | ModularWinterBar.prefab / FIRST_PASS |
+| Bartender | NEW, center inside counter | Same visual prefab / FIRST_PASS |
+| OrdinaryCoat / OrdinaryPonytail | Replace active colorful ordinary drafts | Existing Customer_A / Customer_B prefabs / FIRST_PASS |
+| LittlePrince | Replace active tall draft with referenced chibi | Existing LittlePrinceCustomer prefab / FIRST_PASS |
+| Chunhyang / Mongryong | NEW distinct identities and companion | Existing CampaignEncounterData sprite fields / FIRST_PASS |
+| DonQuixote / Hamlet / Faust / SimCheong / Odysseus | NEW current reachable cast only | Existing CampaignEncounterData sprite fields / FIRST_PASS |
+| Bottles, Jigger, spoon, strainer | PRESERVED | Existing PixelBartendingArt and Phase K presenters / FIRST_PASS |
+| Glass shells/masks, fill, streams, overflow | PRESERVED | Actual container state and existing composition / FIRST_PASS |
+| Ice, authored garnishes, grip | PRESERVED | Existing motion/placement adapters / FIRST_PASS |
+| Shaker | PRESERVED, no restart source/import changes | Original approved asset and prior bounded technical adaptation / ANCHOR_PRESERVE |
+| Codex glass/cocktail art and liquid colors | PRESERVED | CocktailData, existing swatch extraction and served drawing / ANCHOR_PRESERVE |
+| Final cocktails | PRESERVED runtime composition; no bespoke bulk PNGs | Recognized identity plus actual fill/layers/ice/garnish / FIRST_PASS |
+| Shared glass / stillness | BOUNDED_ADJUSTMENT to depth/attachment | Existing CampaignGuestPresentation, no story-state changes / HUMAN_ART_TUNING_LATER |
+| Reaction bubble / hearts | BOUNDED_ADJUSTMENT to head clearance; smaller warm hearts | Existing UI prefabs/components, same results and lifetimes / HUMAN_ART_TUNING_LATER |
+| Painted WinterBar-Draft and previous character drafts | LEGACY retained | Old background renderer disabled; previous PNGs not deleted |
+
+All new visual quality remains subject to HUMAN_ART_TUNING_LATER. Seven display
+zones hold existing memory contours; no new statue unlocks or story content were
+introduced. Source crops, precise per-asset dimensions/pivots and hashes are in
+assets.json. Runtime art is separate from original imagegen source sheets.

@@ -12,6 +12,7 @@ Current production references:
 - [Phase L pixel style bible](18_PIXEL_ART_STYLE_BIBLE.md)
 - [Pixel bartending asset manifest](19_PIXEL_BARTENDING_ASSET_MANIFEST.md)
 - [Future generated-asset workflow](20_PIXEL_ASSET_GENERATION_WORKFLOW.md)
+- [Modular bar restart and rendered review](21_BARSCENE_VISUAL_RESTART.md)
 - [Credits and provenance](CREDITS.md)
 
 Long-term [special guests](14_SPECIAL_GUEST_ROADMAP.md) and

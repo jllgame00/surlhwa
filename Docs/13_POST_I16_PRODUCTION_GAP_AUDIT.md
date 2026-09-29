@@ -2279,3 +2279,36 @@ silhouettes. Docs/18 is revised; Docs/21 records the reference/scene audit and
 bounded modular implementation contract. Prior Phase L technical findings
 remain historical. Config and other starting worktree changes are excluded.
 Runtime/visual acceptance of the restart is pending implementation.
+
+### Restart completion record
+
+Implemented the reference-derived modular U-counter in BarScene, central chibi
+bartender, two charcoal ordinary variants and the currently reachable distinct
+special cast. Fourteen environment modules provide separate floor, wall,
+windows, shelves/dressing, three counter planes, stools, lighting, side decor
+and display furniture. Seven anchors place existing earned-memory contours;
+no unlock or campaign authority changed. The monolithic painted background is
+disabled and retained as legacy. Previous Shaker, Codex colors/art and all 31
+bartending pixel assets are preserved.
+
+The final runtime state (`52e8f6e`) passed the 18-night/47-departure campaign,
+ending, discovery/retry/alternatives, Continue, seven memories, reset and legacy
+handoff. Four-method Phase K Play Mode, scene render fixtures and Editor
+contracts passed. Final compilation: zero errors, eight existing warnings.
+`7909760` subsequently corrects only screenshot projection of nested overlay
+canvases; focused ending replay/navigation/render checks passed. Native scene
+and preparation captures were inspected. All 25 generated world output hashes
+reproduce from retained sources.
+
+Docs/21 records detailed evidence, the two interrupted early runs, the corrected
+temporary verification helper, preservation decisions and remaining boundaries.
+The six-view board is ArtSource/Pixel/BarRestart/Review-board.png. Docs/18–20
+and the source README define future generation/import/layout rules.
+
+Classification: PASS for implemented first-pass contracts and executed checks;
+VALIDATION_DEBT for updated standalone/additional displays/manual input;
+HUMAN_ART_TUNING_LATER for visual quality, poses, contours and feel;
+DEFERRED_AUDIO unchanged; FUTURE_EXPANSION requires bounded approval;
+gameplay/render replacement and bulk future art remain OUT_OF_SCOPE.
+The owner's config and all starting dirty files remain unchanged and excluded.
+This record does not claim human aesthetic or finished-game approval.

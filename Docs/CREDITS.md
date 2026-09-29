@@ -19,4 +19,13 @@ Noto OFL source: https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/
 
 The Little Prince interpretation, dialogue tone, reference artwork permissions, and final title/author credit are human review items. This document records evidence and pending ownership checks; it does not declare public distribution clearance.
 
-The first-pass campaign reuses the existing draft guest silhouettes as temporary visuals for new special guests. Its small memory objects, local Hamlet light and shared-glass contour are project-authored Unity line geometry, with no external image source. New ACT dialogue and the ending are first-pass project text based on the repository's thematic roadmap; final editorial and character interpretation review remains with the owner.
+The initial campaign reused draft guest silhouettes; Phase L restart replaces that active presentation with the current chibi cast and anonymous ordinary silhouettes. Its small memory objects, local Hamlet light and shared-glass contour remain project-authored Unity line geometry, with no external image source. New ACT dialogue and the ending are first-pass project text based on the repository's thematic roadmap; final editorial and character interpretation review remains with the owner.
+
+Phase L restart uses five owner-supplied direction images preserved unchanged
+under ArtSource/Reference/VisualDirection/. Three original OpenAI imagegen
+source atlases, exact prompts and preparation provenance are retained under
+ArtSource/Pixel/BarRestart/. Tools/prepare_modular_bar.py performs deterministic
+crop, pixel resampling, palette and alpha preparation for 14 environment pieces
+and 11 current character sprites. These are FIRST_PASS, with human art approval
+pending. No external artwork was downloaded or named artist/game style imitated.
+The prior Shaker, Codex art/colors and 31 bartending pixel assets are preserved.

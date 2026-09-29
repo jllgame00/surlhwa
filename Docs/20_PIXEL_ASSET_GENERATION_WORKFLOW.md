@@ -109,7 +109,8 @@ Minor hues, hand anatomy, small offsets and apparent attractiveness are
 HUMAN_ART_TUNING_LATER; they do not require redefining the style each session.
 
 Future cocktails, ingredients and artwork require their own bounded scope.
-Do not generate the full IBA collection or new guest/environment art here.
+Do not generate the full IBA collection or future guest/environment sets.
+The current modular room and reachable cast use the restart branch below.
 
 ## Modular bar and chibi branch (Phase L restart)
 
@@ -124,3 +125,33 @@ keep character feet at the bottom-center pivot, and verify counter occlusion
 and seating in the actual scene. Preserve the separate 100 PPU bartending
 standard. New specials require current campaign reachability; ordinary figures
 remain anonymous charcoal silhouettes. No mass future-cast generation.
+
+### Import and integrate world modules
+
+1. Run preparation and inspect Prepared-assets.png against all five owner references.
+2. Let SURLHWAModularBarImport apply the bounded 32 PPU policy.
+3. Run **SURLHWA / Art / Rebuild Modular Winter Bar**. It writes only
+   Assets/_SURLHWA/Prefabs/Environment/ModularWinterBar.prefab. Unique child names
+   preserve references; keep the seven Memory_* anchors stable.
+4. Inspect the prefab instance in BarScene. Furniture, bartender, seats and
+   memory anchors must align; do not save unrelated scenes or broad prefab churn.
+5. Bind new current specials through CampaignEncounterData.characterSprite and,
+   when relevant, companionSprite. Keep ordinary A/B anonymous. These fields
+   never decide encounters, orders, knowledge, or unlocks.
+6. Run Modular Bar References and Modular Bar Play Mode Render Fixtures. Review
+   actual empty/ordinary/Prince/Chunhyang/ready/dialogue renders in Logs/Review.
+7. Run Physical Bartending Play Mode and Full Campaign Play Mode when shared
+   scene layout changes. Inspect earned memories and actual workspace captures.
+   The interactive Editor stays open; batch execution retains process exit codes.
+8. Update Docs/19, assets.json and Docs/21, inspect each scene/prefab diff, check
+   deterministic output hashes and git diff --check, then commit bounded work.
+
+Keep source prompts and PNGs in ArtSource/Pixel/BarRestart; environment runtime
+PNGs in Art/Environment/ModularBar and characters in Art/Characters/Chibi under
+Assets/_SURLHWA. Do not put world atlases in Resources or use them as backgrounds.
+
+After captures, `python Tools/build_bar_review_board.py` assembles six actual
+rendered views for review. Its earned-memory panel requires a completed campaign
+run. Inspect native captures as well as the half-size board. Capture tooling
+must preserve nested overlay sorting when temporarily projecting UI through a
+camera; a screenshot artifact must be traced before changing production UI.
