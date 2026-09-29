@@ -5,6 +5,7 @@ Only writes its declared Phase L runtime outputs and reference board.
 from pathlib import Path
 import hashlib
 import json
+import re
 import uuid
 from PIL import Image, ImageDraw
 
@@ -86,8 +87,20 @@ def save(category, name, image, method, pivot=(.5, .5)):
     path = folder / (name + '.png')
     image.save(path)
     meta(path, pivot)
+    states = {'Tools':'idle, held, technique/transfer', 'Bottles':'selected, held, pour, return',
+              'Glassware':'empty, actual fill, ice, garnish, transfer',
+              'Liquids':'accepted transfer/overflow only', 'Ice':'placement, attached, retained',
+              'Hands':'held/placement only', 'Garnishes':'Rim, InGlass, Surface'}
+    generated = 'imagegen' in method or name == 'SpoonHorizontal'
     records.append(dict(id=name, category=category, path=path.relative_to(ROOT).as_posix(),
                         dimensions=list(image.size), ppu=100, pivot=list(pivot), method=method,
+                        source='ArtSource/Pixel/StyleReference/Extensions-source.png' if generated else 'Tools/generate_pixel_bartending.py',
+                        displayScale='2 UI units per pixel; pose-specific overrides in Docs/19',
+                        sorting='existing Canvas hierarchy', material='UI/Default',
+                        requiredStates=('empty, partial, full, overflow, tilted transfer' if name == 'Jigger'
+                                        else 'empty, partial, full' if name == 'Fill' else states[category]), quality='FIRST_PASS',
+                        humanReview='HUMAN_ART_TUNING_LATER', integration='runtime library and Phase K presenter',
+                        dependency='Assets/Resources/PixelBartendingArt.asset',
                         sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
     return image
 
@@ -187,8 +200,18 @@ def main():
     (SOURCE/'assets.json').write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8')
     board=Image.new('RGBA',(1200,1100),'#20282c');d=ImageDraw.Draw(board)
     d.text((20,12),'SURLHWA / Phase L - preserved anchors + runtime extensions',fill='#eee5cd')
-    for p,x,y,w,h in [('Assets/_SURLHWA/Art/Bartending/Props/shaker.png',20,50,140,280),('Assets/_SURLHWA/Art/Cocktails/설야.png',180,50,220,250),('Assets/_SURLHWA/Art/Cocktails/DryMartini-Draft.png',420,50,220,250)]:
+    for p,x,y,w,h in [('Assets/_SURLHWA/Art/Bartending/Props/shaker.png',20,50,140,280),('Assets/_SURLHWA/Art/Cocktails/설야.png',180,50,220,250),('Assets/_SURLHWA/Art/Cocktails/DryMartini-Draft.png',420,50,220,250),('Assets/_SURLHWA/Art/Cocktails/만월.png',660,50,230,250)]:
         im=Image.open(ROOT/p).convert('RGBA');im=im.crop(im.getbbox());im.thumbnail((w,h),Image.Resampling.NEAREST);board.alpha_composite(im,(x,y))
+    sy=50
+    d.text((940,28),'Codex-derived liquid swatches',fill='#eee5cd')
+    for asset in sorted((ROOT/'Assets/_SURLHWA/Data/Cocktails').glob('*.asset')):
+        content=asset.read_text(encoding='utf-8')
+        color=re.search(r'liquidColor: \{r: ([^,]+), g: ([^,]+), b: ([^,]+)',content)
+        if not color:continue
+        rgb=tuple(round(float(c)*255) for c in color.groups())
+        d.rectangle((940,sy,970,sy+16),fill=rgb)
+        label=re.search(r'cocktailId: (\S+)',content).group(1).replace('cocktail_','')
+        d.text((980,sy+2),label,fill='#eee5cd');sy+=26
     x,y=20,370
     for r in records:
         if r['id'].endswith('Mask') or r['id'] in ('SpoonHorizontal','Fill'):continue

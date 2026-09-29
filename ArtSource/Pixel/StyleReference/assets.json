@@ -13,6 +13,15 @@
       0.5
     ],
     "method": "imagegen source; nearest crop; locked metal palette",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, partial, full, overflow, tilted transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "336c19ea3fb06c848b60034ad5aa53d919d088495a7c9d742ed44793903b55c4"
   },
   {
@@ -29,6 +38,15 @@
       0
     ],
     "method": "imagegen source; nearest crop; locked metal palette",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "idle, held, technique/transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "e4075323fb07469142bd5e589920f23b179156d05db890cff9958a4a91b74ea4"
   },
   {
@@ -45,6 +63,15 @@
       0.5
     ],
     "method": "same spoon rotated for Phase K left bowl pivot",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "idle, held, technique/transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "e275aa29fdb06427673be6b609f0bf00c7e4d701b82711fe5a550ba8690a24e1"
   },
   {
@@ -61,6 +88,15 @@
       0.5
     ],
     "method": "imagegen source; nearest crop; locked metal palette",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "idle, held, technique/transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "659b2218bc6f3a8ec8719aa793ccb5efac60f454216ef2a763d30f534ce94b13"
   },
   {
@@ -77,6 +113,15 @@
       0.5
     ],
     "method": "imagegen source; deterministic family and blank label",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "selected, held, pour, return",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "22f549c847f15a59c2e57ab7e2fa0205e411c2c7051f8d2d7812ded3b69f99a4"
   },
   {
@@ -93,6 +138,15 @@
       0.5
     ],
     "method": "imagegen source; deterministic family and blank label",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "selected, held, pour, return",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "cb4c907430dbd7d562e74b0d3f2a9ee7da82bf875deb504eed43b7ce0548225e"
   },
   {
@@ -109,6 +163,15 @@
       0.5
     ],
     "method": "imagegen source; deterministic family and blank label",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "selected, held, pour, return",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "04eba705613c784e00495a87d0496f16ffbf7bb11f14c9cf355b35382c3f5060"
   },
   {
@@ -125,6 +188,15 @@
       0.5
     ],
     "method": "imagegen source; nearest crop; locked ice palette",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "placement, attached, retained",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "bb8980081c88374d5984cf45fcd582c40aebe20f4e975b6239c01363a6ba65ed"
   },
   {
@@ -141,6 +213,15 @@
       0.5
     ],
     "method": "imagegen source; nearest crop; 16 colors",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "held/placement only",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "67a78c8eae4e23b99a88cc6bd78b1c230c46dbe54c5bac560c284638e8983a2b"
   },
   {
@@ -157,6 +238,15 @@
       0.5
     ],
     "method": "imagegen source; nearest crop; 16 colors",
+    "source": "ArtSource/Pixel/StyleReference/Extensions-source.png",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "Rim, InGlass, Surface",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "9a0ea6ff5f3bd4eb40d7adf7e989ad4e5649818c1ab045af5d080ab0b4113cb8"
   },
   {
@@ -173,6 +263,15 @@
       0.5
     ],
     "method": "original deterministic pixel garnish",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "Rim, InGlass, Surface",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "e4a6b89c4df00f47581287d882a6d3698e0192df5ff260b60a9fcd706aefab86"
   },
   {
@@ -189,6 +288,15 @@
       0.5
     ],
     "method": "original deterministic pixel garnish",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "Rim, InGlass, Surface",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "9802d97e2ef7feddb9a4b660f293bc913c21ba5c3fbf3d945b5e8d1aa3887e1d"
   },
   {
@@ -205,6 +313,15 @@
       0.5
     ],
     "method": "original deterministic pixel garnish",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "Rim, InGlass, Surface",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "a3664028db2dab95e838110c2c437d38811282f5d3b7faa7461b0784134f56f4"
   },
   {
@@ -221,6 +338,15 @@
       0.5
     ],
     "method": "original deterministic pixel garnish",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "Rim, InGlass, Surface",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "0335f751036b1bc114526139e9b074d9f7f48a8d768c426da691f0b62a330eb7"
   },
   {
@@ -237,6 +363,15 @@
       0.5
     ],
     "method": "original deterministic pixel garnish",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "Rim, InGlass, Surface",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "62f88645c7cf4db5bc7e348ed8ba6d9d7dee868629bef8285fee52ca9ba736f7"
   },
   {
@@ -253,6 +388,15 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "edbb61395d2f19afe6daec7592b14ffb4f42587f5781d1f6073988d8384bedae"
   },
   {
@@ -269,6 +413,15 @@
       0.5
     ],
     "method": "original deterministic bowl mask",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "c3ff1f592f8870ac8050efe11c1b92ee1ab21a56bbb58e63ed7b9618982db33a"
   },
   {
@@ -285,6 +438,15 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "5fbeacf8480f86aeb2529c5e6a8153db54660de01353a75ff1ae1cbef82fdcc5"
   },
   {
@@ -301,6 +463,15 @@
       0.5
     ],
     "method": "original deterministic bowl mask",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "2d4fe1c6226a1d8b75ca1836cabc0bef4ed131ad89bd80064cb57e21a76ee09a"
   },
   {
@@ -317,6 +488,15 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "a15ba0efe038941b8e9f4b40621447cce47553f059bb44a12ad9d02d5e3b361e"
   },
   {
@@ -333,6 +513,15 @@
       0.5
     ],
     "method": "original deterministic bowl mask",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "c32696f6a860ceed617aabe21288592d4c106ba37df5d496665dc2782e98bdc2"
   },
   {
@@ -349,6 +538,15 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "101d6e7013c8665ab3a82b2e297ea61a49edde14a9ab125b23c1917c482d1bc4"
   },
   {
@@ -365,6 +563,15 @@
       0.5
     ],
     "method": "original deterministic bowl mask",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "3c3b846bd77d56cf8c45b1c9751c814526b9111e9557d2fdde9b098e70f5475c"
   },
   {
@@ -381,6 +588,15 @@
       0.5
     ],
     "method": "original deterministic pixel geometry",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "efc48693abb2184089af1caf64769e74098ff2aa6f06f34421de5455a09ed6c7"
   },
   {
@@ -397,6 +613,15 @@
       0.5
     ],
     "method": "original deterministic bowl mask",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, actual fill, ice, garnish, transfer",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "4c952815ec8eb0f10fa08a87d294ac2dc99a46917f740e09e777927e12201f2a"
   },
   {
@@ -413,6 +638,15 @@
       0
     ],
     "method": "original deterministic pixel stream",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "accepted transfer/overflow only",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "9dd199bc2ba1973a663378a389532b1323c00bfed0f458a98077ac166d1fcb81"
   },
   {
@@ -429,6 +663,15 @@
       0
     ],
     "method": "original deterministic pixel stream",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "accepted transfer/overflow only",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "0c992c0ca12714f57bd6434271e7ac6a19658439ee76f66ba8b04003fb432342"
   },
   {
@@ -445,6 +688,15 @@
       0
     ],
     "method": "original deterministic pixel stream",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "accepted transfer/overflow only",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "bfb0f7e49b8098ab618b2683a860699bdeb223d5cfb146806a672c6ed86aba06"
   },
   {
@@ -461,6 +713,15 @@
       0
     ],
     "method": "original deterministic pixel stream",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "accepted transfer/overflow only",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "a4b61c2840d1cf97aabce39e2e7e3299f3c31b9af813d3bdb6cbe96dfddbc25f"
   },
   {
@@ -477,6 +738,15 @@
       0.5
     ],
     "method": "original deterministic pixel droplet",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "accepted transfer/overflow only",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "d9d183ad9411eed4f0a87ed0ad7077258a96981344ab27cecfda2ca933d9773b"
   },
   {
@@ -493,6 +763,15 @@
       0.5
     ],
     "method": "neutral tintable pixel fill",
+    "source": "Tools/generate_pixel_bartending.py",
+    "displayScale": "2 UI units per pixel; pose-specific overrides in Docs/19",
+    "sorting": "existing Canvas hierarchy",
+    "material": "UI/Default",
+    "requiredStates": "empty, partial, full",
+    "quality": "FIRST_PASS",
+    "humanReview": "HUMAN_ART_TUNING_LATER",
+    "integration": "runtime library and Phase K presenter",
+    "dependency": "Assets/Resources/PixelBartendingArt.asset",
     "sha256": "803f3b73e9e4960c1b25d25b1dcb493de6cb51a001fbcc7f604e4dfe62c8c26e"
   }
 ]
