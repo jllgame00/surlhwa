@@ -36,6 +36,10 @@ public static class SURLHWAPhaseMUIValidation
     public static void RunModalSequence() => Start("modal-sequence");
     public static void RunForegroundNavigation() => Start("foreground-navigation");
     public static void RunPointerHandoffDiagnostic() => Start("pointer-handoff");
+    public static void RunPointerControl() => Start("pointer-control");
+    public static void RunPointerReadyControl() => Start("pointer-ready");
+    internal static bool UsesPointer(string mode) => mode.StartsWith("pointer-") || mode.StartsWith("staging-") ||
+        mode == "foreground-navigation" || mode == "input-module" || mode == "modal-sequence" || mode == "diegetic";
     public static void RunDiegetic() => Start("diegetic");
     public static void RunStagingBefore() => Start("staging-before");
     public static void RunStagingAfter() => Start("staging-after");
@@ -47,6 +51,8 @@ public static class SURLHWAPhaseMUIValidation
         if (Enumerable.Range(0, UnityEngine.SceneManagement.SceneManager.sceneCount)
             .Any(i => UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty))
             throw new InvalidOperationException("Unsaved scene changes must be preserved.");
+        if (UsesPointer(mode) && (EditorWindow.focusedWindow == null || EditorWindow.focusedWindow.GetType().Name != "GameView"))
+            throw new InvalidOperationException("Select the validation Game View before starting; no automatic focus request.");
         var keys = SURLHWAJ5PrinceClosureValidation.Keys.Concat(SURLHWACampaignValidation.ProgressKeys())
             .Concat(new[] { "currentDay", "SURLHWA_DEMO_COMPLETE_V1", "SURLHWA_FIRST_RECIPE_REVEAL_SHOWN",
                 DemoAudioController.MasterKey, DemoAudioController.MusicKey, DemoAudioController.EffectsKey, DemoAudioController.MuteKey }).Distinct();
@@ -61,7 +67,6 @@ public static class SURLHWAPhaseMUIValidation
         SessionState.SetBool(Pending, true);
         SurlhwaGameProgress.ResetGameProgress();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
-        if (mode == "foreground-navigation" || mode == "input-module" || mode == "modal-sequence" || mode == "pointer-handoff" || mode == "diegetic" || mode.StartsWith("staging-")) EditorWindow.GetWindow(Type.GetType("UnityEditor.GameView,UnityEditor")).Focus();
         EditorApplication.EnterPlaymode();
     }
     static void Changed(PlayModeStateChange state)
@@ -104,6 +109,10 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     bool traceEnabled;
     bool inputObservationPending;
     bool foregroundArmed, finished;
+    int focusChecks;
+    bool protectPointer;
+    string pointerConflict;
+    bool PointerRun => SURLHWAPhaseMUIValidation.UsesPointer(SURLHWAPhaseMUIValidation.Mode);
     bool preflightPointObserved;
     int dynamicUpdates;
     string environmentBlock;
@@ -112,7 +121,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         EditorWindow.focusedWindow.GetType().Name == "GameView" && !EditorApplication.isPaused;
     void CheckForeground(bool lostApplicationFocus = false)
     {
-        if (!foregroundArmed || (!lostApplicationFocus && HasGameFocus) || finished) return;
+        if (!foregroundArmed || finished) return;
+        focusChecks++;
+        if (!lostApplicationFocus && HasGameFocus) return;
         environmentBlock = "Unexpected Game View focus loss; no refocus or retry. Source of focus change unproven.";
         Record("BLOCKED_TEST_ENVIRONMENT " + environmentBlock);
         StopAllCoroutines();
@@ -165,6 +176,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     {
         if (context.action == traceModule?.point?.action && context.performed && context.control?.device == probeMouse)
             preflightPointObserved = true;
+        if (protectPointer && context.performed && context.control?.device != probeMouse)
+            pointerConflict = "Competing UI action " + context.action.name + " device=" + context.control?.device.deviceId;
         if (tracingPointer) Record("ui.action " + context.action.name + " phase=" + context.phase +
             " device=" + context.control?.device.deviceId + " control=" + context.control?.name);
     }
@@ -177,8 +190,11 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         foreach (object state in states)
         {
             var data = (UnityEngine.InputSystem.UI.ExtendedPointerEventData)Get(state, "eventData");
+            var left = Get(state, "leftButton");
             values.Add("id=" + data.pointerId + "/device=" + data.device?.deviceId + "/pos=" + data.position +
-                "/ray=" + Identity(data.pointerCurrentRaycast.gameObject));
+                "/ray=" + Identity(data.pointerCurrentRaycast.gameObject) + "/eventButton=" + data.button +
+                "/eventPress=" + Identity(data.pointerPress) + "/leftPressed=" + Get(left, "m_IsPressed") +
+                "/leftPress=" + Identity((GameObject)Get(left, "m_PressObject")));
         }
         return string.Join(";", values);
     }
@@ -250,10 +266,12 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         InputSystem.onEvent += TracePointerEvent;
         InputSystem.onAfterUpdate += TraceInputProcessed;
         previousBackground = Application.runInBackground;
-        if (!ForegroundRun) Application.runInBackground = true;
-        traceEnabled = ForegroundRun || SessionState.GetBool("SURLHWA_UI_EVENT_TRACE", false);
+        if (!PointerRun) Application.runInBackground = true;
+        traceEnabled = PointerRun || SessionState.GetBool("SURLHWA_UI_EVENT_TRACE", false);
         traceRun = DateTime.UtcNow.ToString("yyyyMMddTHHmmssfff") + "-" + SURLHWAPhaseMUIValidation.Mode;
         if (traceEnabled) SurlhwaModalSurface.DiagnosticTrace = Record;
+        SessionState.SetBool("SURLHWA_UI_OBSERVERS_ACTIVE", true);
+        Record("focus.observer.registered onAfterUpdate=True applicationCallback=True LateUpdate=True");
         began = Time.realtimeSinceStartup;
         work.Push(Run());
         StartCoroutine(Guarded());
@@ -279,7 +297,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     {
         if (finished) return;
         finished = true;
+        Record("focus.observer.disarm wasArmed=" + foregroundArmed + " checks=" + focusChecks);
         foregroundArmed = false;
+        protectPointer = false;
         success &= !runtimeError;
         Record("probe.classification=" + (environmentBlock != null ? "BLOCKED_TEST_ENVIRONMENT " + environmentBlock : success ? "PASS" : "FAILED"));
         Record("probe.finish success=" + success);
@@ -306,6 +326,9 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (traceEnabled) SurlhwaModalSurface.DiagnosticTrace = null;
         if (probeMouse != null && probeMouse.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(probeMouse);
         if (handoffMouse != null && handoffMouse.added) UnityEngine.InputSystem.InputSystem.RemoveDevice(handoffMouse);
+        foregroundArmed = false;
+        SessionState.SetBool("SURLHWA_UI_OBSERVERS_ACTIVE", false);
+        Debug.Log("[Phase M UI] Focus/input observers removed; test devices removed; checks=" + focusChecks);
     }
     IEnumerator Wait(Func<bool> ready)
     {
@@ -372,6 +395,16 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
     }
     IEnumerator Run()
     {
+        if (PointerRun)
+        {
+            yield return null;
+            foregroundArmed = true;
+            Record("focus.observer.armed afterDomainReload=True");
+            CheckForeground();
+            if (finished) yield break;
+        }
+        if (SURLHWAPhaseMUIValidation.Mode == "pointer-control") { yield return PointerControl(); yield break; }
+        if (SURLHWAPhaseMUIValidation.Mode == "pointer-ready") { yield return PointerHandoffDiagnostic(true); yield break; }
         if (ForegroundRun) { yield return ModalSequence(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode.StartsWith("staging-")) { yield return StagingFlow(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "diegetic") { yield return DiegeticFlow(); yield break; }
@@ -462,7 +495,60 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         Find<CocktailCodexPanelController>().Close(); yield return Capture("summary-return");
         yield return Navigation();
     }
-    IEnumerator ModuleClick(Button button, bool disabledProbe = false)
+    // Read the live module record, not a separate RaycastAll at the desired point.
+    bool PointerAt(Button target, Vector2 point, bool pressed)
+    {
+        if (traceModule == null || EventSystem.current?.currentInputModule != traceModule ||
+            traceModule.point?.action?.enabled != true || traceModule.leftClick?.action?.enabled != true ||
+            Vector2.Distance(probeMouse.position.ReadValue(), point) >= .5f ||
+            probeMouse.leftButton.isPressed != pressed || target == null || !target.IsActive()) return false;
+        var states = Get(traceModule, "m_PointerStates") as IEnumerable;
+        if (states == null) return false;
+        foreach (object state in states)
+        {
+            var data = (UnityEngine.InputSystem.UI.ExtendedPointerEventData)Get(state, "eventData");
+            // ProcessPointer reuses eventData for left, right, then middle. Its
+            // final pointerPress is not the stored left-button press authority.
+            var left = Get(state, "leftButton");
+            var leftPress = (GameObject)Get(left, "m_PressObject");
+            if ((bool)Get(left, "m_IsPressed") == pressed &&
+                data.device == probeMouse && Vector2.Distance(data.position, point) < .5f &&
+                data.pointerCurrentRaycast.gameObject != null &&
+                data.pointerCurrentRaycast.gameObject.GetComponentInParent<Button>() == target &&
+                data.hovered.Contains(target.gameObject) &&
+                (pressed ? leftPress == target.gameObject && !(bool)Get(left, "m_IgnoreNextClick") &&
+                    !(bool)Get(left, "m_Dragging") : leftPress == null)) return true;
+        }
+        return false;
+    }
+    void RequirePointerUncontested()
+    {
+        if (pointerConflict != null) throw new InvalidOperationException("Test pointer action invalidated: " + correlation + " " + pointerConflict);
+    }
+    IEnumerator EstablishPointer(Button target, Vector2 point)
+    {
+        // Exactly one released move pair. The second coordinate really changes;
+        // resending the device's current coordinate need not perform Point.
+        int updatesBefore = dynamicUpdates;
+        QueuePointer(point + Vector2.left * 3, 0);
+        yield return null;
+        RequirePointerUncontested();
+        preflightPointObserved = false;
+        QueuePointer(point, 0);
+        double until = Time.realtimeSinceStartupAsDouble + 1;
+        yield return null;
+        while (!PointerAt(target, point, false) || !preflightPointObserved || dynamicUpdates <= updatesBefore)
+        {
+            RequirePointerUncontested();
+            if (Time.realtimeSinceStartupAsDouble >= until)
+                throw new InvalidOperationException("Test pointer readiness failed before press: " + correlation + " pointers=" + ModulePointers());
+            yield return null;
+        }
+        RequirePointerUncontested();
+        Record("pointer.ready device=" + probeMouse.deviceId + " position=" + probeMouse.position.ReadValue() +
+            " pointAction=" + preflightPointObserved + " pointers=" + ModulePointers());
+    }
+    IEnumerator ModuleClick(Button button, bool disabledProbe = false, bool originalSequence = false)
     {
         if (foregroundArmed && !HasGameFocus) { CheckForeground(); yield break; }
         correlation = traceRun + "/" + (++attempt) + "/" + SafeName(button);
@@ -472,6 +558,8 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (button == null || (!disabledProbe && !CanPointAt(button))) throw new InvalidOperationException("Input-module target is blocked");
         string controlName = button.name;
         pointerEvents.Clear(); tracingPointer = true;
+        protectPointer = !originalSequence;
+        pointerConflict = null;
         inputObservationPending = false; lastModuleObservation = null;
         SURLHWAButtonEventObservation observer = null;
         if (traceEnabled)
@@ -495,20 +583,60 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         button.onClick.AddListener(observed);
         var rect = (RectTransform)button.transform;
         var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
-        QueuePointer(point, 0);
-        yield return null;
+        bool validRelease = originalSequence;
+        int releases = 0;
+        if (observer != null && !originalSequence) observer.released = data =>
+        {
+            // PointerUp is delivered before Button's click callback can change the screen.
+            releases++;
+            validRelease = releases == 1 && pointerConflict == null &&
+                data is UnityEngine.InputSystem.UI.ExtendedPointerEventData extended && extended.device == probeMouse &&
+                data.button == PointerEventData.InputButton.Left && !probeMouse.leftButton.isPressed &&
+                Vector2.Distance(probeMouse.position.ReadValue(), point) < .5f && Vector2.Distance(data.position, point) < .5f &&
+                data.pointerCurrentRaycast.gameObject != null &&
+                data.pointerCurrentRaycast.gameObject.GetComponentInParent<Button>() == button &&
+                data.pointerPress == button.gameObject && data.eligibleForClick && !data.dragging;
+            Record("pointer.release.check valid=" + validRelease + " count=" + releases +
+                " devicePosition=" + probeMouse.position.ReadValue() + " uiPosition=" + data.position);
+            protectPointer = false; // The input action ends here; subsequent callback/transition is observed, not target-locked.
+        };
+        if (originalSequence)
+        {
+            Record("pointer.original-sequence noReadinessRepair=True");
+            QueuePointer(point, 0);
+            yield return null;
+        }
+        else
+        {
+            yield return EstablishPointer(button, point);
+            RequirePointerUncontested();
+            if ((!disabledProbe && !button.IsInteractable()) || !PointerAt(button, point, false))
+                throw new InvalidOperationException("Test pointer readiness changed before press: " + correlation);
+        }
         QueuePointer(point, 1);
         yield return null;
+        // Release our own device even if the action was invalidated. Never add
+        // another press, forward a callback, or reset the production module.
+        bool validPress = originalSequence || (pointerConflict == null && PointerAt(button, point, true));
+        Record("pointer.held.check valid=" + validPress + " originalSequence=" + originalSequence +
+            " devicePosition=" + probeMouse.position.ReadValue() + " pointers=" + ModulePointers());
         QueuePointer(point, 0);
         yield return new WaitForSecondsRealtime(.3f);
-        Record("attempt.end callbacks=" + delivered);
+        Record("attempt.end callbacks=" + delivered + " validPress=" + validPress + " validRelease=" + validRelease + " conflict=" + (pointerConflict ?? "NONE"));
         tracingPointer = false;
+        protectPointer = false;
         BindTraceActions(false);
-        if (observer != null) { observer.record = null; Destroy(observer); }
+        if (observer != null) { observer.record = null; observer.released = null; Destroy(observer); }
         if (button != null) button.onClick.RemoveListener(observed);
         Debug.Log("[Pointer delivery] " + controlName + " callbacks=" + delivered + " events=" + string.Join(";", pointerEvents));
         Debug.Log("[Phase M Input Module] virtual mouse down/up via existing InputSystemUIInputModule: " + controlName);
         TraceModal("after " + controlName, button);
+        if (!originalSequence)
+        {
+            RequirePointerUncontested();
+            if (!validPress) throw new InvalidOperationException("Live UI pointer diverged during press: " + correlation);
+            if (!validRelease) throw new InvalidOperationException("Live UI pointer diverged at release: " + correlation);
+        }
         if (delivered != (disabledProbe ? 0 : 1))
             throw new InvalidOperationException("Input-module callback delivery mismatch: " + correlation + " callbacks=" + delivered);
     }
@@ -665,13 +793,12 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         Record("preflight.policy input=" + typeof(InputSystem).Assembly.GetName().Version +
             " editor=" + InputSystem.settings.editorInputBehaviorInPlayMode + " update=" + InputSystem.settings.updateMode +
             " background=" + InputSystem.settings.backgroundBehavior + " runInBackground=" + Application.runInBackground);
-        // Start() requested Game View focus once, before Play Mode. Only observe
-        // here: no focus clicks, forced updates, callback fallback or retry.
-        double until = Time.realtimeSinceStartupAsDouble + 10;
-        while (!HasGameFocus && Time.realtimeSinceStartupAsDouble < until) yield return null;
+        // The runner arms the existing observer after domain reload. Only
+        // observe here; never acquire focus or wait through a lost-focus segment.
+        double until;
         if (!HasGameFocus)
         {
-            environmentBlock = "Game View focus not established in 10 unscaled seconds.";
+            environmentBlock = "Game View focus is not ready; no focus wait or retry.";
             Record("BLOCKED_TEST_ENVIRONMENT " + environmentBlock);
             Finish(false); yield break;
         }
@@ -781,15 +908,26 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         Find<RecipeUnlockPopupController>().Show(knowledge.GetAllRecipes().First(knowledge.IsKnown));
         yield return new WaitForSecondsRealtime(.3f); yield return Capture("discovery-fixture");
     }
-    IEnumerator PointerHandoffDiagnostic()
+    IEnumerator PointerControl()
+    {
+        probeMouse = InputSystem.AddDevice<Mouse>("Pointer control mouse");
+        yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();
+        var ui = Find<InteractionUIController>();
+        yield return ModuleClick(ButtonField(ui, "brewButton"));
+        ExpectSurface("BrewPanel", false);
+        yield return ModuleClick(ButtonField(ui, "cancelButton"));
+        ExpectSurface(null, false);
+        Record("control.A completed normal Brew/Back callbacks each exactly one");
+    }
+    IEnumerator PointerHandoffDiagnostic(bool establishReadiness = false)
     {
         probeMouse = InputSystem.AddDevice<Mouse>("Trace comparison mouse");
         yield return SeedNight(5); yield return Guest(); yield return ReadToRequest();
         var ui = Find<InteractionUIController>();
-        // Positive comparison: same request and ordinary method-selection owner.
-        yield return ModuleClick(ButtonField(ui, "brewButton"));
+        // Preserve the original experiment, including its uncorrected control.
+        yield return ModuleClick(ButtonField(ui, "brewButton"), originalSequence: true);
         ExpectSurface("BrewPanel", false);
-        yield return ModuleClick(ButtonField(ui, "cancelButton"));
+        yield return ModuleClick(ButtonField(ui, "cancelButton"), originalSequence: true);
         var brew = ButtonField(ui, "brewButton");
         var rect = (RectTransform)brew.transform;
         var point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
@@ -800,8 +938,12 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         Record("fixture.point-handoff device=" + handoffMouse.deviceId + " position=(-100,-100); expect first lost click to stop");
         InputSystem.QueueStateEvent(handoffMouse, new MouseState { position = new Vector2(-100, -100) });
         yield return null;
-        yield return ModuleClick(brew);
-        throw new InvalidOperationException("Pointer handoff did not reproduce; do not infer a cause from this fixture");
+        Record("control." + (establishReadiness ? "C corrected planned case" : "B original negative case") + " displaced pointers=" + ModulePointers());
+        yield return ModuleClick(brew, originalSequence: !establishReadiness);
+        if (!establishReadiness)
+            throw new InvalidOperationException("Pointer handoff did not reproduce; do not infer a cause from this fixture");
+        ExpectSurface("BrewPanel", false);
+        Record("control.C completed first prepared click callbacks exactly one");
     }
     IEnumerator SettingsCycle(Button opener)
     {
@@ -1011,6 +1153,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
             yield return ModuleClick(ButtonField(guide, "openButton"));
             yield return ModuleClick(ButtonField(guide, "closeButton"));
             if (guide.IsReading || Time.timeScale != 1) throw new InvalidOperationException("Guide did not resume route");
+            yield return SettingsCycle(Named("BartendingSettings"));
             yield return Capture("workspace-" + method);
             Debug.Log("[Diegetic] PASS " + method + ": hover/hit area/selection/change/back/reopen/Codex/Settings/route/request/Guide. Virtual InputSystem mouse at " + Screen.width + "x" + Screen.height);
         }
@@ -1043,6 +1186,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
 internal sealed class SURLHWAButtonEventObservation : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
     public Action<string> record;
+    public Action<PointerEventData> released;
     static string Id(GameObject value) => value != null ? value.name + "#" + value.GetInstanceID() : "NONE";
     void Observe(string edge, PointerEventData data) => record?.Invoke(edge + " receiver=" + Id(gameObject) +
         " pointer=" + data.pointerId + " position=" + data.position + " button=" + data.button +
@@ -1050,7 +1194,7 @@ internal sealed class SURLHWAButtonEventObservation : MonoBehaviour, IPointerDow
         " pointerPress=" + Id(data.pointerPress) + " pointerClick=" + Id(data.pointerClick) +
         " eligible=" + data.eligibleForClick + " dragging=" + data.dragging + " used=" + data.used);
     public void OnPointerDown(PointerEventData data) => Observe("PointerDown", data);
-    public void OnPointerUp(PointerEventData data) => Observe("PointerUp", data);
+    public void OnPointerUp(PointerEventData data) { Observe("PointerUp", data); released?.Invoke(data); }
     public void OnPointerClick(PointerEventData data) => Observe("PointerClick", data);
 }
 #endif
