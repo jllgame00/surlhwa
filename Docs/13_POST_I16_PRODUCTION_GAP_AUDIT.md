@@ -2510,3 +2510,20 @@ check; normal task-player closure and preference restoration were verified.
 This does not certify standalone gameplay or human input. Docs/25 retains the
 bridge timeout, packaging preparation, source-qualified campaign result and
 separate failed J5 popup assertion. All four original dirty-file hashes remain.
+
+
+### Phase O - audio implementation record
+
+`4c4f0d5` adds owned deterministic audio and bounded routing; `2ebd24b` connects
+actual rendered streams/tool motion, customer distance/state, shared service,
+Settings/Codex/guide and discovery. See Docs/26 for the audit, ownership, exact
+mapping and validation. Existing volume keys/defaults remain authoritative.
+No audio completion advances gameplay. The J5 visual-completion sequence is
+preserved and tested with a 30-second discovery clip. Accepted art, mechanics,
+seat/campaign authority and persistence formats remain unchanged.
+
+22 project-created cues replace active legacy draft playback without deleting
+those assets. Music composition is deferred. Human audio tuning/approval remains
+pending; technical fixture playback is not human listening. The release review
+records final campaign/build evidence and limits. Earlier DEFERRED_AUDIO entries
+remain historical descriptions of their respective milestones.

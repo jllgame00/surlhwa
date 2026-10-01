@@ -112,9 +112,11 @@ two physical loops, two ambience sources, discovery and reserved music total 12.
 A seventh simultaneous accent is dropped. Per-cue gaps are .07 seconds for feet
 and .12 seconds otherwise. No component is added per click/step.
 
-Footstep right pitch is .99, left 1.0; pan is clamped to +/- .25. Physical fades
-are .045 seconds. Scene/workspace removal stops playback immediately; normal
-visible flow endings use the fade. These are first-pass presentation values,
+Footstep right pitch is .99, left 1.0; pan is clamped to +/- .25. Periodic tool
+textures start at the current unscaled-time offset, so repeated short Shake
+gestures do not replay the identical noise fragment. Physical fades
+are .045 seconds. Workspace cancellation and normal visible flow endings use the fade; scene-owner
+disable/removal stops playback immediately. These are first-pass presentation values,
 not timing inputs to gameplay. Final comfort, repetition and tactile credibility
 remain HUMAN_AUDIO_TUNING_LATER.
 
@@ -161,3 +163,29 @@ separate. These are programmatic fixtures, not OS pointer or human listening.
 
 Fresh Windows packaging and the final review-output/campaign checks are recorded
 in the handoff below after execution; this section does not claim their results.
+
+### Cleanup follow-up and final integration
+
+A direct presentation-only check reproduced playback accepted by a disabled
+Soundscape. Play/StartDiscovery now reject disabled or destroyed owners. The
+existing audio fixture explicitly verifies this boundary. Live workspace
+cancellation uses the existing short fade; owner disable still stops all voices.
+Periodic texture offsets vary repeated short Shake fragments without varying
+movement timing. The complete extended Audio/Reading Pause fixture passes after
+these changes, including cancellation, disable, one ice cue, physical Shake /
+Strain, listener ownership, preferences and unload. Compile: zero errors,
+eight existing warnings. Evidence: `cleanup-final.log`, `compile-cleanup.log`.
+
+The single full campaign regression passed on `2ebd24b`: New Game, 47 natural
+departures, ending, 16 new special visits, ordinary voices, discovery/retry /
+alternatives, weak-service continuation, checkpoint/mid-dialogue/ending Continue,
+seven memories, reset and legacy handoff. Later changes affect only audio
+availability/fades/sample position and review packaging; those received focused
+validation rather than repeating all 47 encounters. The existing Phase M
+visual-after callback/raycast fixture also completed with preference restoration.
+No OS foreground-input or human listening claim is made.
+
+Measured physical traces contain 62 paired visual/audio loop transitions:
+starts in the same frame, stops 0-65 ms after observed visual stop. The short
+fade and frame cadence explain the bounded stop tail. These measurements do
+not establish tactile naturalness or artistic approval.

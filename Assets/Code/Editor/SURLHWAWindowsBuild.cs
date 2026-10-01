@@ -89,6 +89,12 @@ public static class SURLHWAWindowsBuild
             File.Copy("Docs/26_AUDIO_AND_AMBIENT_PRESENTATION.md", output + "/Docs/26_AUDIO_AND_AMBIENT_PRESENTATION.md", true);
             File.Copy("ArtSource/Audio/manifest.json", output + "/Docs/PhaseO-Audio-Provenance.json", true);
             File.Copy("ArtSource/Audio/README.md", output + "/Docs/PhaseO-Audio-Provenance.md", true);
+            if (Directory.Exists("Logs/Review/PhaseOAudio"))
+            {
+                Directory.CreateDirectory(output + "/Review/PhaseOAudio");
+                foreach (string file in Directory.GetFiles("Logs/Review/PhaseOAudio"))
+                    File.Copy(file, output + "/Review/PhaseOAudio/" + Path.GetFileName(file), true);
+            }
         }
         File.WriteAllText(output + "/BUILD_INFO.txt", "SURLHWA first-pass full campaign (18 nights / 47 encounters)\nUnity " + Application.unityVersion +
             "\nReview: " + (phaseM ? phase : "Campaign") + "\nSource commit: " + revision +

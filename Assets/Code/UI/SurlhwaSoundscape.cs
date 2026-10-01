@@ -75,7 +75,7 @@ public sealed class SurlhwaSoundscape : MonoBehaviour
     }
     public void Play(BarSound cue, float pan = 0, float level = 1)
     {
-        if (muted || master <= 0 || effectsGain <= 0 || Clip(cue) == null) return;
+        if (this == null || !isActiveAndEnabled || muted || master <= 0 || effectsGain <= 0 || Clip(cue) == null) return;
         float gap = cue == BarSound.FootLeft || cue == BarSound.FootRight ? .07f : .12f;
         if (Time.unscaledTime - lastCue[(int)cue] < gap) return;
         for (int i = 0; i < voices.Length; i++)
@@ -92,13 +92,14 @@ public sealed class SurlhwaSoundscape : MonoBehaviour
     }
     public void SetPour(BarSound? cue) => loops[0].desired = cue;
     public void SetTechnique(BarSound? cue) => loops[1].desired = cue;
-    public void StopPhysical()
+    public void StopPhysical(bool immediate = false)
     {
-        foreach (var loop in loops) { loop.desired = null; StopLoop(loop); }
+        // A live scene can release a cancelled workspace through the normal short fade.
+        foreach (var loop in loops) { loop.desired = null; if (immediate) StopLoop(loop); }
     }
     public void StartDiscovery()
     {
-        if (muted || Effective <= 0 || Clip(BarSound.Discovery) == null) return;
+        if (this == null || !isActiveAndEnabled || muted || Effective <= 0 || Clip(BarSound.Discovery) == null) return;
         discovery.Stop(); discovery.clip = Clip(BarSound.Discovery);
         discoveryEnding = false; discoveryFade = 1;
         discovery.volume = Effective * Gain(BarSound.Discovery);
@@ -125,6 +126,9 @@ public sealed class SurlhwaSoundscape : MonoBehaviour
             if (wants && !loop.source.isPlaying)
             {
                 loop.playing = loop.desired.Value; loop.source.clip = Clip(loop.playing);
+                // Short Shake gestures must not restart the identical noise fragment each time.
+                // These periodic textures have no authored attack; the envelope supplies it.
+                loop.source.time = Mathf.Repeat(Time.unscaledTime, loop.source.clip.length);
                 loop.source.volume = 0; loop.source.Play(); Report(loop.playing, true, "loop");
             }
         }
@@ -151,7 +155,7 @@ public sealed class SurlhwaSoundscape : MonoBehaviour
     }
     private void OnDisable()
     {
-        StopPhysical();
+        StopPhysical(true);
         if (room != null) room.Stop(); if (wind != null) wind.Stop();
         if (music != null) music.Stop(); if (discovery != null) discovery.Stop();
         foreach (var voice in voices) if (voice != null) voice.Stop();

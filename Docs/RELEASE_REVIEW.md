@@ -102,3 +102,35 @@ causation remains unproven. The packaged executable above predates this fix.
 Human review should still observe the transition; programmatic animation
 playback is not human testing. Historical Settings/Brew incidents are
 not declared resolved. See `Logs/Review/PhaseN/review.html` for motion evidence.
+
+
+## Phase O audio review
+
+Runtime audio source: `2ebd24b` (foundation `4c4f0d5`), built on the J5 sequencing
+fix `5b8ea90`. Phase M visuals, Phase N motion and accepted Shaker/Codex art are
+unchanged. The four protected local files remain outside these commits.
+
+Open `Logs/Review/PhaseOAudio/index.html` for 22 default-gain cue previews,
+combined room/winter ambience and actual Unity output. The latter is a
+68.992-second stereo cue fixture, not a normal-play recording. Its measured
+peak is .06735 full scale with zero clipped samples; comfort/beauty is not
+inferred from that measurement. Per-family trigger/import/provenance details
+are in Docs/26 and ArtSource/Audio.
+
+Listen at an ordinary volume. Check wind strength, loop repetition, footstep
+weight, stool/contact annoyance, pour/Strain texture, Stir and Shake, quiet
+Settings/Codex navigation, discovery restraint and space around dialogue.
+Idle guests and recurring bartender idles intentionally remain silent. No
+speech, character grunts, reward fanfares or new soundtrack were added.
+
+Passed targeted automated checks: C# compilation, owned asset references and
+imports, four-method physical motion/audio, reading pause and mute, Hamlet and
+paired foley/cleanup, six J5 scenarios with a deliberately long sound, and the
+existing Phase M callback/raycast fixture. Master-zero, Effects-zero and Mute
+were also checked in a live scene without changing preferences. The independent
+private snapshot check confirms progress, knowledge and audio preference
+restoration. No foreground pointer delivery or human listening is claimed.
+
+HUMAN_AUDIO_TUNING_LATER / HUMAN_AUDIO_APPROVAL_PENDING.
+MUSIC_COMPOSITION_DEFERRED. Historical Settings/Brew incidents remain separate.
+Final campaign and fresh Windows package identity follow in the executed handoff.

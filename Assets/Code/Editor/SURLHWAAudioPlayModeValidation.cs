@@ -262,7 +262,25 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
             "Guide/settings pause preserves Shake timing, resume and unload. Auditory mix remains human sign-off.");
         Require(!audio.Sounds.TechniqueSource.isPlaying && audio.GetComponents<AudioSource>().Length == SurlhwaSoundscape.SourceCount,
             "Stale loop or extra voice after additive unload.");
-        Debug.Log("[Phase O Audio] PASS: Shake motion/return, Strain stream, one ice cue, bounded source count.");
+        Debug.Log("[Phase O Audio] synthetic loop cancellation/disabled-owner fixture follows physical test");
+        audio.Sounds.SetPour(BarSound.Pour);
+        yield return null;
+        yield return null;
+        Require(audio.Sounds.PourSource.isPlaying, "Cancellation fixture failed to begin its loop.");
+        audio.Sounds.StopPhysical();
+        yield return new WaitForSecondsRealtime(.12f);
+        Require(!audio.Sounds.PourSource.isPlaying, "Cancelled workspace loop survived its short fade.");
+        bool disabledSilent = true;
+        try
+        {
+            audio.Sounds.enabled = false;
+            audio.Sounds.Play(BarSound.Select);
+            audio.Sounds.StartDiscovery();
+            foreach (var source in sources) disabledSilent &= !source.isPlaying;
+        }
+        finally { audio.Sounds.enabled = true; }
+        Require(disabledSilent, "Disabled audio owner accepted playback after cleanup.");
+        Debug.Log("[Phase O Audio] PASS: Shake motion/return, Strain stream, one ice cue, bounded sources, disabled-owner silence.");
         Complete(true);
     }
     private static int ActiveListeners()
