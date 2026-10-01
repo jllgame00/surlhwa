@@ -106,14 +106,14 @@ not declared resolved. See `Logs/Review/PhaseN/review.html` for motion evidence.
 
 ## Phase O audio review
 
-Runtime audio source: `2ebd24b` (foundation `4c4f0d5`), built on the J5 sequencing
+Runtime audio source: `f5bb936` (foundation `4c4f0d5`, connections `2ebd24b`), built on the J5 sequencing
 fix `5b8ea90`. Phase M visuals, Phase N motion and accepted Shaker/Codex art are
 unchanged. The four protected local files remain outside these commits.
 
 Open `Logs/Review/PhaseOAudio/index.html` for 22 default-gain cue previews,
 combined room/winter ambience and actual Unity output. The latter is a
 68.992-second stereo cue fixture, not a normal-play recording. Its measured
-peak is .06735 full scale with zero clipped samples; comfort/beauty is not
+peak is .06509 full scale with zero clipped samples; comfort/beauty is not
 inferred from that measurement. Per-family trigger/import/provenance details
 are in Docs/26 and ArtSource/Audio.
 
@@ -133,4 +133,19 @@ restoration. No foreground pointer delivery or human listening is claimed.
 
 HUMAN_AUDIO_TUNING_LATER / HUMAN_AUDIO_APPROVAL_PENDING.
 MUSIC_COMPOSITION_DEFERRED. Historical Settings/Brew incidents remain separate.
-Final campaign and fresh Windows package identity follow in the executed handoff.
+The single full campaign passed on `2ebd24b`; the later audio-only cleanup/sample
+offset changes passed focused audio regression. Fresh package:
+`Builds/Windows-PhaseO-f5bb936/SURLHWA.exe`, Unity 6000.3.7f1, source
+`f5bb936499da73ed6251d686c87c9a47d8081327`, built 2026-10-01 16:24:02 UTC.
+Build succeeded in 30.5 seconds with two warnings: KoreanFallback's existing
+NativeFormatImporter produced an inconsistent result, and the existing Pipeline
+runtime config is absent. No build error. The isolated project used committed
+PlayerSettings; the owner's unresolved local batching choice was untouched.
+
+The packaged player initialized the engine and remained alive/responsive at
+93 seconds without logged exceptions/audio errors. It closed through normal
+WM_CLOSE; standalone preferences were restored and verified. PrintWindow of the
+hidden window returned black, so it supplies no bar-render, Korean-text or
+standalone listening proof. Do the ordinary visible Korean-text/rendering check
+when reviewing this package. Full standalone play and foreground input remain
+VALIDATION_DEBT. Startup is not gameplay or human audio approval.

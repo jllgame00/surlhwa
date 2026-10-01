@@ -2527,3 +2527,14 @@ those assets. Music composition is deferred. Human audio tuning/approval remains
 pending; technical fixture playback is not human listening. The release review
 records final campaign/build evidence and limits. Earlier DEFERRED_AUDIO entries
 remain historical descriptions of their respective milestones.
+
+
+Phase O final runtime `f5bb936` adds tested disabled-owner rejection, cancellation
+fade and varied periodic texture offsets. One full 47-departure campaign run
+passed on `2ebd24b`; focused audio regression passed after the audio-only follow-up.
+Windows package `Builds/Windows-PhaseO-f5bb936` succeeded with two documented
+warnings. Startup remained responsive at 93 seconds and preferences were restored;
+the hidden-window capture was black and proves no visual/font result. Docs/26 and
+RELEASE_REVIEW separate this debt from the passed Editor/audio/campaign evidence.
+Actual Unity output and default-gain previews are in Logs/Review/PhaseOAudio.
+Human listening and visible standalone review remain pending.

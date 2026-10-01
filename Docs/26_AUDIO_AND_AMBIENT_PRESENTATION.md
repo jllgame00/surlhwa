@@ -189,3 +189,48 @@ Measured physical traces contain 62 paired visual/audio loop transitions:
 starts in the same frame, stops 0-65 ms after observed visual stop. The short
 fade and frame cadence explain the bounded stop tail. These measurements do
 not establish tactile naturalness or artistic approval.
+
+## Final package and evidence
+
+Runtime source: `f5bb936499da73ed6251d686c87c9a47d8081327`. Windows x64 review
+package: `Builds/Windows-PhaseO-f5bb936/SURLHWA.exe`. Existing RunPhaseO extension
+of SURLHWAWindowsBuild completed with Unity 6000.3.7f1 at 2026-10-01 16:24:02 UTC,
+in 30.500 seconds. 216,170,141 reported build bytes; two warnings, zero errors.
+The warnings are the KoreanFallback NativeFormatImporter consistency warning
+and the existing missing RuntimePipelineConfig warning. No font fix is claimed.
+The package was copied from the existing isolated project and hash-verified.
+Committed PlayerSettings were used for the build; original batching settings
+and all other protected files were not modified.
+
+The final actual Unity-output cue reel has 68.992 seconds of 48 kHz stereo PCM,
+peak .065094 and RMS .005672 full scale, no clipped samples. It includes imported
+ambience and all cue families at default gains. Earlier `2ebd24b` capture is
+retained separately. This is a scripted mix fixture, not captured human play.
+
+Review: `Logs/Review/PhaseOAudio/index.html`, individual WAVs, provenance/review
+manifests, `unity-output-metrics.json`, `visual-audio-transitions.json`,
+`audio-cleanup-final.txt`, four focused synchronization logs,
+`j5-after-timeline.txt`, `campaign-2ebd24b.txt`, compile/static records,
+`startup-result.json`, and `editor-preservation.txt`.
+
+Standalone startup was alive/responsive after 93 seconds and logged no exception
+or audio error. The task player closed normally through WM_CLOSE. Its private
+registry preferences were restored exactly. A hidden-window PrintWindow capture
+was black: it is retained as unsuccessful capture evidence, not a rendered bar
+or Korean-text check. No second foreground/focus campaign was attempted. Visible
+standalone review, Korean font/rendering confirmation, full standalone gameplay
+and native pointer input remain VALIDATION_DEBT. The Editor production-scene
+and audio-output evidence does not imply human listening or aesthetic approval.
+
+After tests/capture/build, the independent private Editor snapshot matched
+progress, recipe knowledge and all audio preferences. The idle task Editor had
+no dirty scene and exited normally. Four original dirty-file hashes remain
+unchanged. No scene, prefab, animation art, cocktail art, save format, recipe
+identity, gameplay lifecycle or audio preference key was changed by Phase O.
+
+Classification: PASS for implemented/automated scope; VALIDATION_DEBT as listed;
+HUMAN_AUDIO_TUNING_LATER / HUMAN_AUDIO_APPROVAL_PENDING;
+MUSIC_COMPOSITION_DEFERRED. Voice acting, external sample acquisition, adaptive
+music and further campaign/content expansion are OUT_OF_SCOPE. Historical
+Settings/Brew incidents remain separate. Human review still owns final warmth,
+physical credibility, balance and silence around dialogue.
