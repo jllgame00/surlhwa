@@ -117,6 +117,30 @@ def main():
     library = ROOT / 'Assets/Resources/CustomerMotionLibrary.asset'
     library.write_text('%YAML 1.1\n%TAG !u! tag:unity3d.com,2011:\n--- !u!114 &11400000\nMonoBehaviour:\n  m_ObjectHideFlags: 0\n  m_CorrespondingSourceObject: {fileID: 0}\n  m_PrefabInstance: {fileID: 0}\n  m_PrefabAsset: {fileID: 0}\n  m_GameObject: {fileID: 0}\n  m_Enabled: 1\n  m_EditorHideFlags: 0\n  m_Script: {fileID: 11500000, guid: ' + guid(library_script.relative_to(ROOT).as_posix()) + ', type: 3}\n  m_Name: CustomerMotionLibrary\n  m_EditorClassIdentifier:\n  characters:\n' + ''.join(entries), encoding='utf-8')
     meta(library, 'NativeFormatImporter:\n  externalObjects: {}\n  mainObjectFileID: 11400000\n  userData:\n  assetBundleName:\n  assetBundleVariant:\n')
+    if args.all:
+        bartender = Image.open(SOURCE / 'Bartender.png').convert('RGBA')
+        for pose in ('Rest', 'Acknowledge'):
+            im = bartender.copy()
+            # Shift only a bounded hand/head cutout by one source pixel.
+            box = (0, 0, im.width, 30) if pose == 'Acknowledge' else (0, 34, im.width // 2, 55)
+            piece = im.crop(box)
+            im.paste((0, 0, 0, 0), box)
+            im.alpha_composite(piece, (box[0], box[1] + 1))
+            path = OUT / ('Bartender-' + pose + '.png'); im.save(path)
+            ident = guid(path.relative_to(ROOT).as_posix())
+            m = Path(str(path) + '.meta')
+            if not m.exists():
+                content = re.sub(r'(?m)^(guid:|    spriteID:) .*$', lambda match: match.group(1) + ' ' + ident, template)
+                m.write_text(content.replace('PhaseLRestart', 'PhaseNMotion'), encoding='utf-8')
+            with library.open('a', encoding='utf-8') as f:
+                f.write('  bartender' + pose + ': {fileID: 21300000, guid: ' + ident + ', type: 3}\n')
+            records.append({'character': 'Bartender', 'pose': pose, 'runtime': path.relative_to(ROOT).as_posix(),
+                            'source': (SOURCE / 'Bartender.png').relative_to(ROOT).as_posix(),
+                            'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'ppu': 32, 'pivot': [.5, 0]})
+        stool_meta = (ROOT / 'Assets/_SURLHWA/Art/Environment/ModularBar/Stool.png.meta').read_text()
+        with library.open('a', encoding='utf-8') as f:
+            f.write('  companionStool: {fileID: 21300000, guid: ' + re.search(r'guid: (\w+)', stool_meta)[1] + ', type: 3}\n')
+        meta(ROOT / 'Assets/Code/Customer/BartenderMotionPresentation.cs', 'MonoImporter:\n  externalObjects: {}\n  serializedVersion: 2\n  defaultReferences: []\n  executionOrder: 0\n  icon: {instanceID: 0}\n  userData:\n  assetBundleName:\n  assetBundleVariant:\n')
     (RECORD / 'assets.json').write_text(json.dumps(records, indent=2) + '\n', encoding='utf-8')
     board.save(RECORD / 'Pose-board.png')
     print(f'Prepared {len(records)} poses for {len(names)} characters; source pixels unchanged.')

@@ -62,7 +62,9 @@ public class CustomerController : MonoBehaviour
     private float stateBegan;
 
     private SeatPoint targetSeat;
+    public SeatPoint AssignedSeat => targetSeat;
     private SpriteRenderer sr;
+    private BartenderMotionPresentation bartenderPresentation;
 
     public Sprite standSprite;
     public Sprite sitSprite;
@@ -156,6 +158,7 @@ public class CustomerController : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        bartenderPresentation = FindFirstObjectByType<BartenderMotionPresentation>();
 
         if (standSprite != null)
             sr.sprite = standSprite;
@@ -497,6 +500,7 @@ public class CustomerController : MonoBehaviour
     private void EnterWaitingState()
     {
         state = State.Waiting;
+        bartenderPresentation?.Attend(this);
 
         if (usesPatience)
             StartPatienceTimer();
@@ -621,6 +625,8 @@ public class CustomerController : MonoBehaviour
     public void OnServedWithReaction(GuestServiceResult serviceResult, float feedbackDuration = 4.2f)
     {
         GetComponent<CustomerMotionPresentation>()?.React();
+        GetComponent<CampaignGuestPresentation>()?.ReactToService();
+        bartenderPresentation?.Acknowledge(this);
         serviceFeedbackDuration = feedbackDuration;
         campaignServiceSucceeded = LittlePrinceVisitPersistence.IsSuccessfulService(serviceResult);
         if (LittlePrinceVisitNumber > 0)

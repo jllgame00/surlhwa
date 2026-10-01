@@ -70,4 +70,52 @@ now yields that frame. This does not change production input/UI.
 
 Initial evidence is retained under `Logs/Review/PhaseN/ordinary-foundation`.
 Full-cast integration and campaign/build coverage remain pending.
+
+## Current cast and paired/service extension
+
+The same eight-pose set now covers both ordinary silhouettes and Little Prince,
+Chunhyang, Mongryong, Don Quixote, Hamlet, Faust, Sim Cheong and Odysseus.
+Four walk slots intentionally repeat the neutral contact pose at slots 1/3;
+the alternating stride images differ. Wardrobe/head pixels remain the accepted
+source; this is limited pixel articulation, not newly painted directional art.
+Three-quarter inward facing is intentional; a bespoke rear-facing cast is not
+part of this first pass. No scarf physics or character-specific cinematic loop.
+
+The companion receives CustomerMotionPresentation with the existing customer's
+state as its owner. Spacing increases from 1.15 to 1.5 units; an existing stool
+sprite is drawn at the companion's seat position without reserving another
+gameplay seat. Both remain children and are destroyed with the one customer.
+The shared glass is centered between them at countertop height. Service cues
+come from OnServedWithReaction; departure hides the glass. The existing delayed
+shared-glass call remains idempotent. No second order/service callback exists.
+
+BartenderMotionPresentation is one added component on the existing bartender
+prefab child. It retains the centered root/depth and accepted sprite. A one-pixel
+hand-rest variation appears briefly every ten seconds only without an active
+guest. During conversation it stays still, looks toward the guest, and gives a
+.65-second head acknowledgment at the actual service-result seam. Two owned
+pixel variants supplement the unchanged original. No bartender locomotion.
+
+Service reaction lasts .8 seconds (.52 for Hamlet), then returns to the seated
+pose while the original feedback/dialogue sequence proceeds. FIT, recognition,
+knowledge, rewards and visit completion are unchanged. No new service glass is
+invented for ordinary guests; the existing served-result drawing remains intact.
+
+### Cast integration checks
+
+All ten guest sets plus the paired scene completed the bounded motion fixture.
+Both ordinary variants and all eight specials showed four walk slots, turn,
+sit, idle, service reaction, stand and leave; each released its seat. Repeated
+fixtures ended with no remaining customer presentation. The disabled-presenter
+case also completed. Compile: zero errors, eight existing warnings. Motion,
+modular-world and integrated campaign Editor validators passed. All 82 output
+PNGs passed exact source-palette membership, binary-alpha and recorded-hash
+checks. The only prefab diff adds the bartender component; BarScene is unchanged.
+
+`Logs/Review/PhaseN/review.html` indexes 720p motion sequences/GIFs, individual
+PNGs, native crops and 1080p seated stills. Prince, Hamlet, ordinary and paired
+renders were inspected at display size. The lovers occupy separate stools;
+costumes, face identity and inward facing remain readable. These observations
+are not owner aesthetic approval. Full campaign, physical regression and
+standalone verification are recorded separately below when executed.
 No subjective animation approval is claimed. DEFERRED_AUDIO remains unchanged.

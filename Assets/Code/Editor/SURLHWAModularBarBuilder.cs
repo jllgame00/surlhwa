@@ -73,6 +73,7 @@ public static class SURLHWAModularBarBuilder
         renderer.transform.SetParent(root.transform, false);
         renderer.transform.localPosition = new Vector3(x, y, 0);
         renderer.sprite = sprite;
+        if (asset == "Bartender") renderer.gameObject.AddComponent<BartenderMotionPresentation>();
         renderer.sharedMaterial = material;
         renderer.sortingOrder = order;
     }

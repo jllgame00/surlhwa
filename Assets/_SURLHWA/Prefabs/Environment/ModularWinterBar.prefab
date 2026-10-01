@@ -496,6 +496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8285564654941191147}
   - component: {fileID: 8100130176560912288}
+  - component: {fileID: 918220110000000001}
   m_Layer: 0
   m_Name: Bartender
   m_TagString: Untagged
@@ -3935,3 +3936,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &918220110000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858182449035238419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5aa2db6360d595393bc439867509e95, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  idleCadence: 10
+  acknowledgmentDuration: 0.65

@@ -1,5 +1,957 @@
 [
   {
+    "character": "Chunhyang",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Walk0.png",
+    "sha256": "e1cc0f898c7d9290ac5974586221f23289a25e02f21d525ee6e9760a3e0074a6",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Walk1.png",
+    "sha256": "071f4773b0593f070676b66d64f79c71de0d88aedf078fb4769dc5d78bbd44fd",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Walk2.png",
+    "sha256": "d990840011352c0ab1bb025baf33d8750af553f30e3f9377285d098166d391b0",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Walk3.png",
+    "sha256": "071f4773b0593f070676b66d64f79c71de0d88aedf078fb4769dc5d78bbd44fd",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Turn.png",
+    "sha256": "bad5d5648fa1660153a1694cf6b84b78e877fe9c798125cf834097b97d22c4fb",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Seated.png",
+    "sha256": "3698f4ca9beb66a476b1ebb37b2fdec86a24b0c4606cf9c75f8097e256c91ff6",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Listening.png",
+    "sha256": "e5560638332b821a8586e27787a7fdb40d9b1d0d964856b6bfbc4a62b826ca4a",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Chunhyang",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png",
+    "source_sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Chunhyang-Reaction.png",
+    "sha256": "3af0a03c0c4d84d8f1ce07cc82beb1737f775a3f1f5de6ff65a1f97236131a3e",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk0.png",
+    "sha256": "5c776b41f904bebadf6bf9168e3748bed9c385bd14183cee53a597dfb89e3fb6",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk1.png",
+    "sha256": "cd672403ccd79aceb8c5b7c168f382a0536b8114e52ccdfe187bb13c5a09b575",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk2.png",
+    "sha256": "adf1a340ffa41031759ffa5c4d660443fb3b7c06f1c1a1d1d0490954f5ae0461",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk3.png",
+    "sha256": "cd672403ccd79aceb8c5b7c168f382a0536b8114e52ccdfe187bb13c5a09b575",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Turn.png",
+    "sha256": "5ca60d5384ca8555c8dd28232dc5590c3f3dc94fbe1829a389f99482327e44a3",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Seated.png",
+    "sha256": "350bf887813acd3ffaeda87c9aea67eca87cefd40a4cb6a4cedf0679f6aa31e9",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Listening.png",
+    "sha256": "9951ba6579c7e8f9561d0ecb6bdcadddcc31dbe2c85826e072804ca05a1acf08",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "DonQuixote",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+    "source_sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Reaction.png",
+    "sha256": "4255ff362ff8c590e4b351926f48350c8fd60c55559fcd6a64447a9a5d8a3e2e",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk0.png",
+    "sha256": "b5909c904d175cf413f2603cced441dcd8aa53ab4d9152484736acf8d0960ebf",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk1.png",
+    "sha256": "abf4cae450796f53d8b90b8eba8c5e2373dc0723c3bc5845cc0264b6aadac5d2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk2.png",
+    "sha256": "5ca81eb23c73dc159422fdf70a695e4dcf1637db9593b4358dc018171fcb95d6",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk3.png",
+    "sha256": "abf4cae450796f53d8b90b8eba8c5e2373dc0723c3bc5845cc0264b6aadac5d2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Turn.png",
+    "sha256": "6f1af9734b05da9c99566ed7d2a4b2fb627ced38ba5dc6717106cbfcf8e3c59b",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Seated.png",
+    "sha256": "c4431e7b358106e98489850db9730c235740a4ef85cfba7999101bf95281a737",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Listening.png",
+    "sha256": "1fe658ebd7d6a4c4d344513b1e7810ed1e132034b4efb3877a05a46989d5cabe",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Faust",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+    "source_sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Faust-Reaction.png",
+    "sha256": "5fba0d34be79f7c3d5822549211c1cce7f24f6389f7a11dbdf0239c5ba308c17",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk0.png",
+    "sha256": "735a5863683e93f1cdc96a0acb19afd93ee76c0d9d392303f8d53814ed9a3084",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk1.png",
+    "sha256": "b0988e103fdf5af1e5d322a7eaee700d1509624e04b60274ac288219182b9aeb",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk2.png",
+    "sha256": "7d298f8d43e71e17d3fb7afaa4d56993812ff5d12c078618b94a7360057336bf",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk3.png",
+    "sha256": "b0988e103fdf5af1e5d322a7eaee700d1509624e04b60274ac288219182b9aeb",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Turn.png",
+    "sha256": "ad6822b8e6cbafce0dec5a7eb2dcd3188e19eb1ac0ad1e5a6c6109d51ffc1f4e",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Seated.png",
+    "sha256": "dbd31d227c4fc168fbd1cdd91867d9b694c7d1aeb420f0b6407f959866c508e4",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Listening.png",
+    "sha256": "dac8ef122347f30cdf17d12b34ec27549c5b7c1263eb12da55ee4c7f23ded9c2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Hamlet",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+    "source_sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Reaction.png",
+    "sha256": "4feb2a546294e910722de522b9cf425eef8241aadf3eb884b18911ec75c9aa37",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk0.png",
+    "sha256": "391f2db7b35fdceef7fb895285f929eccfbb74beefbd0d4fd23b020b7d455c43",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk1.png",
+    "sha256": "8408478b328481a1101f5e024d4968c8ec2f61b365054c49b30e0553789b27a8",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk2.png",
+    "sha256": "30ab352a5759f4a7a2ab877035d9405ef48549725c9b0018c589eae936d75a41",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk3.png",
+    "sha256": "8408478b328481a1101f5e024d4968c8ec2f61b365054c49b30e0553789b27a8",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Turn.png",
+    "sha256": "b38eada095e4ef13e8a68bd0f4c976ede31898b95a47de3420156f0d0658dd93",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Seated.png",
+    "sha256": "94e62dec9216e7671768b409c6fe184ac5f897700a0e0c86a54edf127995b33e",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Listening.png",
+    "sha256": "3720aa7e0e5fadfc5b355de11293b48a0e4e7f93f93216200272e0cbabde8595",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "LittlePrince",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "source_sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Reaction.png",
+    "sha256": "fd5de6b09fcd93a1df7221c105b50d97f232511e43acd8271226b3fbb603215b",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Walk0.png",
+    "sha256": "269c9721840339e54731d78110005ef0fc96e8415429a9d82b5287644682c559",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Walk1.png",
+    "sha256": "882e1a80f8e2fbc25a74276ba5fa3b1b5707032b59a8e186235d6c1241c8f7bf",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Walk2.png",
+    "sha256": "f105b3fed23d2c42ccff15829f6c05a5a8122d972d959b46de0891b8eac346ef",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Walk3.png",
+    "sha256": "882e1a80f8e2fbc25a74276ba5fa3b1b5707032b59a8e186235d6c1241c8f7bf",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Turn.png",
+    "sha256": "d29e401e1712e3e5b0e0b7eec9502aa8e29b68e167f1f84ae9f9dff2cf1aadfc",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Seated.png",
+    "sha256": "aaf772d2c3c34c56cf45799ba9663565d1e061432e46cc45bfc131f4451115ab",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Listening.png",
+    "sha256": "aa0f5fc8d5f8675152a98766209895cac12f0a8a13c5e5a593ca04c43c0f5496",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Mongryong",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png",
+    "source_sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Mongryong-Reaction.png",
+    "sha256": "e7c00d3501da4afff4069b28bb4125e55f1928aa462fef9009c3fd515269c904",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk0.png",
+    "sha256": "6e571523891bcae58632053a5cd2099420e9977f78df60b6b3f82715d821c5b2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk1.png",
+    "sha256": "f436a2c6cb7169c42b6326831ab3867bff961f4e06c3d599513af348012ea8a2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk2.png",
+    "sha256": "9e2db87915b1aa214d90f21113dbcea46f21f2bfc933711a6f63fc0c16a642d3",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk3.png",
+    "sha256": "f436a2c6cb7169c42b6326831ab3867bff961f4e06c3d599513af348012ea8a2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Turn.png",
+    "sha256": "78c58be958b69040c0145f80cc56828da7e3143aea6fc4b6fd201ee48d33efba",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Seated.png",
+    "sha256": "1ef2a9a91fd247cd964232bc781a68d981d8d9649c34ac9382f9a3a70b97072e",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Listening.png",
+    "sha256": "56dd7e32ba92690d8ff303a952736357f642b44bb9ddae1d053e1193ba7149d2",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Odysseus",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+    "source_sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Reaction.png",
+    "sha256": "64ab1ea1d6dca9ecec871c8f71846b62ad1f356d4a3e6ea0f5d6d5f73d0d0d2d",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
     "character": "OrdinaryCoat",
     "pose": "Walk0",
     "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
@@ -129,6 +1081,302 @@
       96,
       100
     ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Walk0.png",
+    "sha256": "707718483d092dcfad20cf8bf6997e14ffe2fec59221017535d02de30365ad4b",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Walk1.png",
+    "sha256": "176723c194da0cbca7a21331a7ebe537eff647e5e95efd4e1ec66da3f4d50531",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Walk2.png",
+    "sha256": "ec7763238ed6a30bedc5319f918b309441dde9f7711f8838c21ec245228bca1c",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Walk3.png",
+    "sha256": "176723c194da0cbca7a21331a7ebe537eff647e5e95efd4e1ec66da3f4d50531",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Turn.png",
+    "sha256": "48780bdb0dad9c566e17f04772d438c84a977779a9661f7a1248911faa06fc50",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Seated.png",
+    "sha256": "4f5174f7adef4bc713b0a1e55a5c52bff9b516fdf655aa91792a97fbcb9fd2eb",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Listening.png",
+    "sha256": "843cb35f9f0518d030ad4337fb626d6e7912f6c6ddf87e57d730764a573644e8",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryPonytail",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png",
+    "source_sha256": "5c44f4ac931eec22241eacea1231fae4fec7a70a37deab2a9b1db97d0679173d",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryPonytail-Reaction.png",
+    "sha256": "bfedbd83ef3b75ca33ebac4cd5b36cb7b7f3b2a8d7e63b8d6907d595d36322b5",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk0.png",
+    "sha256": "cda2125f0710ef80d994ae245f4312b406b074942d0dd730246e873a089f0bfa",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk1.png",
+    "sha256": "6d88374933c46ec3a0b2bd70e41a8b86be913ad1cb8e299867331efd83fa79aa",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk2.png",
+    "sha256": "5c0b3446835099ba2869dc52c2915e05e7c4c291e335b1ab1902d5e02b9ffc36",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk3.png",
+    "sha256": "6d88374933c46ec3a0b2bd70e41a8b86be913ad1cb8e299867331efd83fa79aa",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Turn.png",
+    "sha256": "2d5591214c1dd0a8153cf947a30c8a1bedcfdf9647ffe72262fb4d34fcd73600",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Seated.png",
+    "sha256": "db75b8fb4336f9627efdb4bb29a9105610bc8c42e6fad57c7dd89c65bb572d1c",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Listening.png",
+    "sha256": "e994915f20a17905050a3692ec78e201bdabb248622bc8cadc44b749b5345501",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "SimCheong",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+    "source_sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Reaction.png",
+    "sha256": "f2b70084a7a503a0b54cfba2beefcb7539735c3e0059f55d73551aac093b134f",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Bartender",
+    "pose": "Rest",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Bartender-Rest.png",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png",
+    "sha256": "c3114be2b0cdf8697a5558db15615cdb5c391de9a7e444d2220e33dc1d059177",
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "Bartender",
+    "pose": "Acknowledge",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Bartender-Acknowledge.png",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png",
+    "sha256": "588ac6c47c7344d3bd42f479ff4db40ba41af36e8ced84effd4754c85ab25a3e",
     "ppu": 32,
     "pivot": [
       0.5,

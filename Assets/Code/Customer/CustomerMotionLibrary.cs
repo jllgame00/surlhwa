@@ -12,5 +12,6 @@ public sealed class CustomerMotionLibrary : ScriptableObject
         public Sprite turn, seated, listening, reaction;
     }
     public Poses[] characters;
-    public Poses Find(string character) => Array.Find(characters, p => p.character == character);
+    public Sprite companionStool, bartenderRest, bartenderAcknowledge;
+    public Poses Find(string character) => characters == null ? null : Array.Find(characters, p => p.character == character);
 }

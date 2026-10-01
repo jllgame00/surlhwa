@@ -13,6 +13,76 @@ MonoBehaviour:
   m_Name: CustomerMotionLibrary
   m_EditorClassIdentifier:
   characters:
+  - character: Chunhyang
+    walk:
+    - {fileID: 21300000, guid: 138294cf68ef55c6aaad556019e6870b, type: 3}
+    - {fileID: 21300000, guid: b77c30c650ad5f5c9b5aa9911306aad2, type: 3}
+    - {fileID: 21300000, guid: f402c3db9bf35c67bdd192ede4c75a2f, type: 3}
+    - {fileID: 21300000, guid: 48c85e496cc9533d96fcb444261bf897, type: 3}
+    turn: {fileID: 21300000, guid: c7f19028e35a5f56959b41dcf9e76dc5, type: 3}
+    seated: {fileID: 21300000, guid: b8b419d0ca8f59c38a092a644dd5c70f, type: 3}
+    listening: {fileID: 21300000, guid: e6777f325f7b59aeaa4ed4be88feecc0, type: 3}
+    reaction: {fileID: 21300000, guid: 7ba7ca9152475b2abedc61b5d73bd19a, type: 3}
+  - character: DonQuixote
+    walk:
+    - {fileID: 21300000, guid: 529c4327de0f5bf4960d8219293a1a52, type: 3}
+    - {fileID: 21300000, guid: b6e73c4d012659889e8eb0890aebfdfc, type: 3}
+    - {fileID: 21300000, guid: 2510875b40e3512b924881dd5a2bd2ca, type: 3}
+    - {fileID: 21300000, guid: 97e15daf560d565ba050c2bbda835bdd, type: 3}
+    turn: {fileID: 21300000, guid: 58cdfe8c9688551c9a34ff30a641d40d, type: 3}
+    seated: {fileID: 21300000, guid: d76454f8856359f89aa58599d3281918, type: 3}
+    listening: {fileID: 21300000, guid: 9cc50cfee92c5626b63d5f648b9b44a6, type: 3}
+    reaction: {fileID: 21300000, guid: c8e967f380cf5a3c90a4f86cfaa4b369, type: 3}
+  - character: Faust
+    walk:
+    - {fileID: 21300000, guid: 3f64b94bf2fd5e6b9ebf188e39ccfe4c, type: 3}
+    - {fileID: 21300000, guid: 62406ec15a225027a0dbd6ebb1ebde19, type: 3}
+    - {fileID: 21300000, guid: 311417c19d79533fa339628668732360, type: 3}
+    - {fileID: 21300000, guid: 8f9a158394c35a289497a92258dd47c1, type: 3}
+    turn: {fileID: 21300000, guid: 1e5df4a20dcc5c4ea91406a9e3df3e56, type: 3}
+    seated: {fileID: 21300000, guid: d81ae60c9d7f5ed6a0016080716d2e72, type: 3}
+    listening: {fileID: 21300000, guid: 713688005f4b5b5891f0286887e9fe17, type: 3}
+    reaction: {fileID: 21300000, guid: ccee0f95b27e5513921090520faa2c32, type: 3}
+  - character: Hamlet
+    walk:
+    - {fileID: 21300000, guid: a0ad329d521054dc9829e38bba60907f, type: 3}
+    - {fileID: 21300000, guid: e1cbec1849c9562abcc1f37a0511f38f, type: 3}
+    - {fileID: 21300000, guid: 2010304ecc945cbf949f47c8707db121, type: 3}
+    - {fileID: 21300000, guid: e19eb6e093665b2c8fc5f8738e3de897, type: 3}
+    turn: {fileID: 21300000, guid: 174322debf7e51b38cd56691a1617919, type: 3}
+    seated: {fileID: 21300000, guid: 1a2981e5a664531dae68c6a3122af7b1, type: 3}
+    listening: {fileID: 21300000, guid: 72545cc7578c5674ab2b6a97697838e1, type: 3}
+    reaction: {fileID: 21300000, guid: 8a66bb7f03d954c5a2ff42ce7ab47752, type: 3}
+  - character: LittlePrince
+    walk:
+    - {fileID: 21300000, guid: a4c9ff0cc6435b0e9c219b20eddb0407, type: 3}
+    - {fileID: 21300000, guid: b2faa0cbc7e8525cb5c105a0288b6b43, type: 3}
+    - {fileID: 21300000, guid: 6f8e9f79d0f95a08978b93a1d46915e2, type: 3}
+    - {fileID: 21300000, guid: b1203d8d04485c659a1b0f35815b90ac, type: 3}
+    turn: {fileID: 21300000, guid: 851ddcf9b8ec5101a7fdf37491646211, type: 3}
+    seated: {fileID: 21300000, guid: be461a399e8e54c7b5927609cbdf62b2, type: 3}
+    listening: {fileID: 21300000, guid: 7d7e741d9eca55f6b1696f10b6a2bd71, type: 3}
+    reaction: {fileID: 21300000, guid: b931d49e94b65e6eaa0e829619be7261, type: 3}
+  - character: Mongryong
+    walk:
+    - {fileID: 21300000, guid: a49a96e276fe5f39b65b056071651378, type: 3}
+    - {fileID: 21300000, guid: b49c9363bc47528b8cbc92649c760d39, type: 3}
+    - {fileID: 21300000, guid: 8446bb485ea750a88a67bbf62bc58fe8, type: 3}
+    - {fileID: 21300000, guid: 644252ea1aa95cf197f38f4225ffa728, type: 3}
+    turn: {fileID: 21300000, guid: a9e0c8f112f25875890fa20be1b2c201, type: 3}
+    seated: {fileID: 21300000, guid: 886814828e2c594ab47a65c0338b6605, type: 3}
+    listening: {fileID: 21300000, guid: f4b588edecb85d5bbdb8dd2b5be42da0, type: 3}
+    reaction: {fileID: 21300000, guid: 49ea00df7dd55c24befb10c4ce6d7fe7, type: 3}
+  - character: Odysseus
+    walk:
+    - {fileID: 21300000, guid: bc66d00092135e59b05baa24362eef44, type: 3}
+    - {fileID: 21300000, guid: f9d9f135744250938cead4bfeef1b102, type: 3}
+    - {fileID: 21300000, guid: 6acbcead83c55fb19e014b9a7f37bf8a, type: 3}
+    - {fileID: 21300000, guid: 124498aa9cb059c78316ab1e122efecc, type: 3}
+    turn: {fileID: 21300000, guid: b3c132cc67dc566fb8cac326f28486b0, type: 3}
+    seated: {fileID: 21300000, guid: d0d68f06e2945875befefbb789aa0420, type: 3}
+    listening: {fileID: 21300000, guid: 5911375bcab251a69565762594ab654e, type: 3}
+    reaction: {fileID: 21300000, guid: e52ae2f01a7b54baa0309a8a756e8f97, type: 3}
   - character: OrdinaryCoat
     walk:
     - {fileID: 21300000, guid: 8fad4176a1b05af18bc5ad4a2a6ca491, type: 3}
@@ -23,3 +93,26 @@ MonoBehaviour:
     seated: {fileID: 21300000, guid: 5ded16221a46544b83f542506264240c, type: 3}
     listening: {fileID: 21300000, guid: 1e585a14fe745dacb5a21b95b610944e, type: 3}
     reaction: {fileID: 21300000, guid: ac13b63f4f9a5d7e940e39ae9f35ad20, type: 3}
+  - character: OrdinaryPonytail
+    walk:
+    - {fileID: 21300000, guid: 106408d011dd533399ced83a8545aeea, type: 3}
+    - {fileID: 21300000, guid: 56f26004e8565a33b0732ff4ec1eb705, type: 3}
+    - {fileID: 21300000, guid: 74827b820e825663b82d0cfa69403b34, type: 3}
+    - {fileID: 21300000, guid: 1269cb6b86fb5dd397c703c8432dd8e5, type: 3}
+    turn: {fileID: 21300000, guid: 5cf5eae69e0d5680889c591fb79e7ae6, type: 3}
+    seated: {fileID: 21300000, guid: 680ef4b171aa5800be0f62905ebff51d, type: 3}
+    listening: {fileID: 21300000, guid: 097c2b36756c5a48b103aefcad6d12b4, type: 3}
+    reaction: {fileID: 21300000, guid: f1661da032ef5bb6889077ece3a0d00b, type: 3}
+  - character: SimCheong
+    walk:
+    - {fileID: 21300000, guid: 0221b98bea3750a1b075870d38ac52ab, type: 3}
+    - {fileID: 21300000, guid: 9a235f502b0e50c1bcba6742ae85987c, type: 3}
+    - {fileID: 21300000, guid: 65ff5e2e436c539aacbd70ca38a543c2, type: 3}
+    - {fileID: 21300000, guid: 172947a6e7ab5dcc99e548185700d631, type: 3}
+    turn: {fileID: 21300000, guid: 2706f92bf8885acbb33ee646d0e185c5, type: 3}
+    seated: {fileID: 21300000, guid: f88f066550d75254a7c4f90fcc5b6d89, type: 3}
+    listening: {fileID: 21300000, guid: 607e1391c31b5fa68787d3249bf22b7d, type: 3}
+    reaction: {fileID: 21300000, guid: 137e0c0164965eeeb3e7b77bf7dca1fc, type: 3}
+  bartenderRest: {fileID: 21300000, guid: 9514ff88d4c1507d84d3e10d63affb8b, type: 3}
+  bartenderAcknowledge: {fileID: 21300000, guid: b9cc959ca9ca5138943bc43a6f4e633c, type: 3}
+  companionStool: {fileID: 21300000, guid: 4b8aa1c4bb9051f9ae7afc47de051bfd, type: 3}

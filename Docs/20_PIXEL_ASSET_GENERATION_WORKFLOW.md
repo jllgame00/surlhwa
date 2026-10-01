@@ -155,3 +155,22 @@ rendered views for review. Its earned-memory panel requires a completed campaign
 run. Inspect native captures as well as the half-size board. Capture tooling
 must preserve nested overlay sorting when temporarily projecting UI through a
 camera; a screenshot artifact must be traced before changing production UI.
+
+## Phase N motion preparation
+
+`python Tools/prepare_character_motion.py --all` prepares only the current
+cast from the accepted Chibi source PNGs. It does not regenerate character
+designs. The deterministic pixel-cutout recipe, eight-pose guest sets, two
+bartender accents, source hashes and native pose board live under
+`ArtSource/Pixel/CharacterMotion`. Runtime art uses
+`Assets/_SURLHWA/Art/Characters/Motion` and the art-only
+`Resources/CustomerMotionLibrary.asset`. Original sprites and GUIDs remain.
+New files use Point, 32 PPU, uncompressed alpha and stable bottom-center pivots.
+Do not apply the unrelated 100 PPU preparation-art policy to them.
+
+Run `SURLHWACharacterMotionValidation.References` and `.Run` for import and
+production-scene motion fixtures. `Tools/build_character_motion_review.py`
+indexes captured frames with game timestamps, GIFs and unscaled crops. These
+fixtures shorten post-service narrative waiting; the existing full campaign
+runner separately verifies authoritative service/departure/progression.
+Docs/25 records state ownership, fallback and human tuning boundaries.
