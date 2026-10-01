@@ -16,7 +16,7 @@ This package is for owner playtesting, not final public-release approval. Keep t
 
 - Input-seam automation proves production state transitions. Phase M additionally tests actual EventSystem raycasts and the existing InputSystemUIInputModule with programmatic virtual mouse events. This is not a human or OS mouse test.
 - Save resumes night/knowledge/story state and, after night 4, the last departure checkpoint; no in-progress liquid or exact dialogue cursor save.
-- The owner accepted the Phase L modular bar and character style as the first-pass baseline. CHARACTER_ANIMATION_DEFERRED is real unfinished walking, turning, seated-pose and full-body transition implementation. It is not animation completion or merely subjective tuning. Glass/garnish refinement, final memory art and a demonstration video remain later presentation work.
+- The owner accepted the Phase L modular bar and character style as the first-pass baseline. Phase N now adds first-pass walking, turning, seated poses, service response and departure over the same customer lifecycle. Pose quality and timing remain HUMAN_ANIMATION_TUNING_LATER. Glass/garnish refinement and final memory art remain later presentation work.
 - Prince leaves an empty chair after his closing visit; the small star respects his existing open-farewell eligibility. Chibi special guests and charcoal ordinary guests retain the accepted style. Shared-glass staging and spatial memory contours preserve current behavior. Hamlet's stillness is local; stronger animation/audio treatment is deferred.
 - Companion/rose/secret revisits, memory upgrade trees and additional IBA expansion are FUTURE_EXPANSION. Other aspect ratios/platforms and broad quest/economy systems are OUT_OF_SCOPE.
 - Public distribution requires owner review of the pre-existing artwork's source/permission and final credits.
@@ -58,3 +58,27 @@ remained alive for 15 seconds with saved preferences restored afterward.
 This is startup evidence only. Standalone UI navigation and a full physical-input
 playthrough remain to be done. See Docs/23 for exact timestamps, hashes, warning,
 Editor test coverage and build-generated worktree exclusions.
+
+## Phase N focused human review
+
+Use the versioned `Windows-PhaseN-*` package and its BUILD_INFO.txt when available;
+older Phase M executables do not contain the character work. Docs/25 records
+actual build execution and evidence separately from this review checklist.
+
+1. Watch an ordinary guest enter, walk, turn inward, sit, receive a drink,
+   stand and leave. Judge foot sliding, stool contact, cadence and stillness.
+2. Compare both ordinary silhouettes and all eight current special identities.
+   Faces/clothes should remain familiar. The first pass uses limited pixel
+   articulation and inward three-quarter views, not bespoke full directional art.
+3. Watch the lovers' arrival, separate stools, shared glass and departure. There
+   should still be one request/service and no companion remaining afterward.
+4. Read Hamlet slowly. His quiet idle is deliberate. The bartender should listen
+   without a busy loop and acknowledge service briefly from the central position.
+5. At 720p/1080p check silhouettes, bent knees, reaction/interaction indicators,
+   counter depth, earned memories and Korean text. The restored committed font
+   and rendering settings should receive this ordinary visual review too.
+6. Repeat service and Continue after an interrupted visit. Animation should
+   restart with the customer; exact mid-animation persistence is not promised.
+
+Human physical-input playtesting and aesthetic approval remain pending.
+DEFERRED_AUDIO is unchanged; future special revisits remain FUTURE_EXPANSION.

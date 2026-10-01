@@ -26,20 +26,21 @@ for kind, rows in groups.items():
     durations = [max(20, round((rows[i + 1][1] - row[1]) * 1000)) if i + 1 < len(rows) else 250 for i, row in enumerate(rows)]
     frames[0].save(OUT / (kind + '.gif'), save_all=True, append_images=frames[1:], duration=durations, loop=0)
     parts.append('<h2>' + html.escape(kind) + '</h2><img src="' + kind + '.gif">')
-    for pose in ('Walking', 'Turning', 'Sitting', 'SeatedIdle', 'ServiceReaction', 'Standing', 'Leaving'):
+    for pose in ('HandRest', 'Rest', 'Walking', 'Turning', 'Sitting', 'SeatedIdle', 'ServiceReaction', 'Standing', 'Leaving'):
         match = next(((i, row) for i, row in enumerate(rows) if row[3] == pose), None)
         if match is None:
             continue
         i, row = match
         # Native scale; no enlargement or resampling. Includes furniture/feet and bartender.
-        crop = frames[i].crop((100, 255, 820, 610))
+        crop = frames[i].crop((560, 255, 1280, 610) if 'Right' in kind else (100, 255, 820, 610))
         name = kind + '-' + pose + '-native.png'
         crop.save(OUT / name)
         parts.append('<figure><a href="' + row[0] + '-1280x720.png"><img src="' + name + '"></a><figcaption>' +
                      pose + ' — ' + str(row[1]) + ' s; native-scale crop, click for full 720p frame</figcaption></figure>')
         if kind in ('OrdinaryCoat', 'LittlePrince', 'Lovers', 'Hamlet') and pose in ('Walking', 'SeatedIdle', 'ServiceReaction', 'Leaving'):
             selected.append((kind + ' / ' + pose, crop))
-    parts.append('<p><a href="' + kind + '-seated-1920x1080.png">1080p seated still</a></p>')
+    still = 'idle' if kind == 'Bartender' else 'seated'
+    parts.append('<p><a href="' + kind + '-' + still + '-1920x1080.png">1080p ' + still + ' still</a></p>')
     parts.append('<details><summary>Individual full-resolution motion frames</summary>' + '<br>'.join(
         '<a href="' + r[0] + '-1280x720.png">' + r[0] + ' / ' + r[3] + ' / ' + str(r[1]) + ' s</a>' for r in rows) + '</details>')
 (OUT / 'review.html').write_text('\n'.join(parts), encoding='utf-8')

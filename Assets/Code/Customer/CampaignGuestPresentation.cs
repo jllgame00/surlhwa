@@ -68,7 +68,7 @@ public sealed class CampaignGuestPresentation : MonoBehaviour
         {
             glass = new GameObject("One shared glass");
             glass.transform.SetParent(transform, false);
-            glass.transform.localPosition = new Vector3(.75f, 2.05f, 0);
+            glass.transform.localPosition = new Vector3(.75f, 2.4f, 0);
             CampaignBarMemories.DrawLine(glass.transform, lineMaterial, new Color(.86f, .75f, .58f), .035f,
                 -.13f, .22f, -.09f, 0f, .09f, 0f, .13f, .22f, -.13f, .22f);
             glassContours = glass.GetComponentsInChildren<LineRenderer>();

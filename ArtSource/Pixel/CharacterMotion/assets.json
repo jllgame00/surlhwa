@@ -1364,6 +1364,11 @@
     "pose": "Rest",
     "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Bartender-Rest.png",
     "source": "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png",
+    "source_sha256": "d5b8f5d0440f28340bc0933e7a4d7d1ab11870b2ee022f0cd37dc337768588af",
+    "dimensions": [
+      34,
+      84
+    ],
     "sha256": "c3114be2b0cdf8697a5558db15615cdb5c391de9a7e444d2220e33dc1d059177",
     "ppu": 32,
     "pivot": [
@@ -1376,6 +1381,11 @@
     "pose": "Acknowledge",
     "runtime": "Assets/_SURLHWA/Art/Characters/Motion/Bartender-Acknowledge.png",
     "source": "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png",
+    "source_sha256": "d5b8f5d0440f28340bc0933e7a4d7d1ab11870b2ee022f0cd37dc337768588af",
+    "dimensions": [
+      34,
+      84
+    ],
     "sha256": "588ac6c47c7344d3bd42f479ff4db40ba41af36e8ced84effd4754c85ab25a3e",
     "ppu": 32,
     "pivot": [

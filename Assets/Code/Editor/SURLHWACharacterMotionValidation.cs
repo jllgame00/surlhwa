@@ -47,13 +47,17 @@ public static class SURLHWACharacterMotionValidation
     }
 
     [MenuItem("SURLHWA/Validation/Character Motion Fixtures")]
-    public static void Run()
+    public static void Run() => Start(false);
+    public static void RunSafety() => Start(true);
+    internal static bool Safety => SessionState.GetBool(Pending + "Safety", false);
+    private static void Start(bool safety)
     {
         Require(!EditorApplication.isPlayingOrWillChangePlaymode, "Finish the current validation first.");
         Require(!EditorSceneManager.GetActiveScene().isDirty, "Preserve unsaved scene work.");
         References();
         EditorSceneManager.OpenScene("Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity");
         SessionState.SetBool(Pending, true);
+        SessionState.SetBool(Pending + "Safety", safety);
         EditorApplication.EnterPlaymode();
     }
     internal static void Require(bool value, string message) { if (!value) throw new InvalidOperationException(message); }
@@ -64,6 +68,13 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
     private readonly Stack<IEnumerator> work = new();
     private readonly List<string> samples = new();
     private bool previousBackground;
+    private bool runtimeError;
+    private void OnEnable() => Application.logMessageReceived += ObserveLog;
+    private void OnDisable() => Application.logMessageReceived -= ObserveLog;
+    private void ObserveLog(string message, string trace, LogType type)
+    {
+        if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert) runtimeError = true;
+    }
     private IEnumerator Start()
     {
         previousBackground = Application.runInBackground;
@@ -83,7 +94,8 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
             yield return next;
         }
         Directory.CreateDirectory("Logs/Review/PhaseN");
-        File.WriteAllLines("Logs/Review/PhaseN/motion-samples.tsv", samples);
+        passed &= !runtimeError;
+        File.WriteAllLines("Logs/Review/PhaseN/" + (SURLHWACharacterMotionValidation.Safety ? "safety" : "motion") + "-samples.tsv", samples);
         Debug.Log("[Phase N Motion] " + (passed ? "PASS" : "FAIL") + ": production-scene fixtures; setup/service/departure callbacks, not pointer or human play evidence.");
         Application.runInBackground = previousBackground;
         EditorApplication.ExitPlaymode();
@@ -95,40 +107,104 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
         foreach (var spawner in FindObjectsByType<CustomerSpawner>(FindObjectsSortMode.None)) spawner.enabled = false;
         yield return null;
         GameObject.Find("DemoEntryCanvas")?.SetActive(false);
+        if (!SURLHWACharacterMotionValidation.Safety) yield return Bartender();
         var library = Resources.Load<CustomerMotionLibrary>("CustomerMotionLibrary");
         var seat = FindObjectsByType<SeatPoint>(FindObjectsSortMode.None).Single(s => s.name == "SeatPoint_Left");
-        foreach (var art in library.characters)
+        foreach (var art in library.characters.Where(p => !SURLHWACharacterMotionValidation.Safety || p.character == "Hamlet"))
             yield return Guest(seat, art.character, false);
         if (library.Find("Mongryong") != null) yield return Guest(seat, "Lovers", false);
+        foreach (var other in FindObjectsByType<SeatPoint>(FindObjectsSortMode.None).Where(s => s != seat))
+            yield return Guest(other, "Lovers", false);
         yield return Guest(seat, "OrdinaryCoat", true);
+        yield return Guest(seat, "OrdinaryCoat", false, true);
         SURLHWACharacterMotionValidation.Require(FindObjectsByType<CustomerMotionPresentation>(FindObjectsSortMode.None).Length == 0,
             "Orphan presentation survived customer removal.");
     }
 
-    private IEnumerator Guest(SeatPoint seat, string kind, bool fallback)
+    private IEnumerator Bartender()
+    {
+        var bartender = FindFirstObjectByType<BartenderMotionPresentation>();
+        var body = bartender.GetComponent<SpriteRenderer>();
+        var art = Resources.Load<CustomerMotionLibrary>("CustomerMotionLibrary");
+        Vector3 anchor = bartender.transform.position;
+        float start = Time.time, deadline = start + bartender.idleCadence + 2;
+        while (body.sprite != art.bartenderRest && Time.time < deadline) yield return null;
+        SURLHWACharacterMotionValidation.Require(body.sprite == art.bartenderRest, "Bartender hand-rest accent did not occur.");
+        float capturedAt = Time.time;
+        SURLHWAReviewCapture.Save("PhaseN/Bartender-000", 1280, 720);
+        samples.Add("Bartender-000\t0\tIdle\tHandRest\t0");
+        while (body.sprite == art.bartenderRest && Time.time < deadline) yield return null;
+        SURLHWACharacterMotionValidation.Require(body.sprite != art.bartenderRest && bartender.transform.position == anchor,
+            "Bartender idle failed to settle at its original anchor.");
+        SURLHWAReviewCapture.Save("PhaseN/Bartender-001", 1280, 720);
+        SURLHWAReviewCapture.Save("PhaseN/Bartender-idle", 1920, 1080);
+        samples.Add("Bartender-001\t" + (Time.time - capturedAt).ToString("F3") + "\tIdle\tRest\t0");
+        deadline = Time.time + bartender.idleCadence + 2;
+        while (body.sprite != art.bartenderRest && Time.time < deadline) yield return null;
+        SURLHWACharacterMotionValidation.Require(body.sprite == art.bartenderRest, "Bartender idle cadence did not repeat.");
+        SURLHWAReviewCapture.Save("PhaseN/Bartender-002", 1280, 720);
+        samples.Add("Bartender-002\t" + (Time.time - capturedAt).ToString("F3") + "\tIdle\tHandRest\t0");
+    }
+
+    private IEnumerator Guest(SeatPoint seat, string kind, bool fallback, bool missingFrames = false)
     {
         var ui = FindFirstObjectByType<InteractionUIController>();
         typeof(InteractionUIController).GetMethod("ClosePanels", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(ui, new object[] { false });
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_SURLHWA/Prefabs/Customers/General/Customer_A.prefab");
-        var guest = Instantiate(prefab, new Vector3(-7.4f, -3.3f, 0), Quaternion.identity).GetComponent<CustomerController>();
+        var spawner = FindFirstObjectByType<CustomerSpawner>();
+        var entry = (Transform)typeof(CustomerSpawner).GetField("spawnPoint", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spawner);
+        var guest = Instantiate(prefab, entry.position, Quaternion.identity).GetComponent<CustomerController>();
         guest.SetUsesPatience(false);
         var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(SURLHWAModularBarImport.CharacterRoot + (kind == "Lovers" ? "Chunhyang" : kind) + ".png");
         guest.standSprite = guest.sitSprite = sprite;
+        guest.GetComponent<SpriteRenderer>().sprite = sprite; // Fixture identity before its first rendered Start frame.
         if (kind == "Lovers") guest.ConfigureCampaignEncounter(AssetDatabase.LoadAssetAtPath<CampaignEncounterData>("Assets/_SURLHWA/Data/Campaign/LoversReunion.asset"));
         var view = guest.GetComponent<CustomerMotionPresentation>();
         if (fallback) view.enabled = false;
         SURLHWACharacterMotionValidation.Require(seat.Reserve(guest), "Previous guest failed to release seat.");
         guest.AssignSeat(seat);
-        string label = kind + (fallback ? "-no-presenter" : "");
+        if (missingFrames)
+        {
+            yield return null;
+            typeof(CustomerMotionPresentation).GetField("poses", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(view, null);
+        }
+        var bartender = FindFirstObjectByType<BartenderMotionPresentation>();
+        Vector3 bartenderRoot = bartender.transform.position;
+        var companion = guest.transform.Find("Mongryong companion");
+        var stool = guest.transform.Find("Companion stool");
+        string label = kind + (seat.name == "SeatPoint_Left" ? "" : "-" + seat.name) +
+            (fallback ? "-no-presenter" : missingFrames ? "-missing-frames" : "");
         var seen = new HashSet<CustomerController.State>();
         var frames = new HashSet<int>();
         float start = Time.time, captureAt = start, readyAt = -1, serviceAt = -1;
         int index = 0;
         Vector3 seatedRoot = Vector3.zero;
+        bool sawReaction = false, sawBartender = false, returnedIdle = false;
+        float lastDepartureX = 0;
         while (guest != null)
         {
             SURLHWACharacterMotionValidation.Require(Time.time - start < 22, "Motion fixture timed out: " + label);
             seen.Add(guest.CurrentState);
+            if (guest.CurrentState == CustomerController.State.Leaving) lastDepartureX = guest.transform.position.x;
+            SURLHWACharacterMotionValidation.Require(bartender.transform.position == bartenderRoot, "Bartender presentation moved its root.");
+            if (serviceAt > 0 && !fallback)
+            {
+                sawReaction |= view.PresentedPose == "ServiceReaction";
+                sawBartender |= bartender.GetComponent<SpriteRenderer>().sprite == Resources.Load<CustomerMotionLibrary>("CustomerMotionLibrary").bartenderAcknowledge;
+                returnedIdle |= sawReaction && view.PresentedPose == "SeatedIdle";
+                if (kind == "Lovers" && view.PresentedPose == "ServiceReaction")
+                    SURLHWACharacterMotionValidation.Require(companion.GetComponent<CustomerMotionPresentation>().PresentedPose == "ServiceReaction" &&
+                        guest.transform.Find("One shared glass").gameObject.activeSelf, "Shared service lost companion reaction/glass.");
+            }
+            if (kind == "Lovers" && guest.CurrentState == CustomerController.State.Waiting)
+            {
+                SURLHWACharacterMotionValidation.Require(companion != null && stool != null &&
+                    companion.GetComponent<CustomerMotionPresentation>().Owner == guest &&
+                    Mathf.Abs(companion.position.x - guest.transform.position.x - 1.5f) < .001f,
+                    "Companion ownership/spacing changed.");
+                SURLHWACharacterMotionValidation.Require(companion.GetComponent<SpriteRenderer>().sortingOrder == guest.GetComponent<SpriteRenderer>().sortingOrder + 1,
+                    "Companion depth drift.");
+            }
             if (guest.CurrentState == CustomerController.State.MovingToSeat && !fallback) frames.Add(view.WalkFrame);
             if (guest.CurrentState == CustomerController.State.Waiting)
             {
@@ -152,7 +228,7 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
                     typeof(CustomerController).GetMethod("BeginDeparture", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(guest, null);
                 }
             }
-            if (!fallback && Time.time >= captureAt)
+            if (!fallback && !missingFrames && !SURLHWACharacterMotionValidation.Safety && Time.time >= captureAt)
             {
                 string file = label + "-" + index.ToString("D3");
                 SURLHWAReviewCapture.Save("PhaseN/" + file, 1280, 720);
@@ -165,8 +241,12 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
             CustomerController.State.Waiting, CustomerController.State.Standing, CustomerController.State.Leaving })
             SURLHWACharacterMotionValidation.Require(seen.Contains(state), "Missing lifecycle state: " + label + "/" + state);
         SURLHWACharacterMotionValidation.Require(fallback || frames.Count == 4, "Walking stayed on a static frame: " + label);
+        SURLHWACharacterMotionValidation.Require(fallback || (sawReaction && sawBartender && returnedIdle), "Service acknowledgment/return missing: " + label);
         SURLHWACharacterMotionValidation.Require(!seat.IsOccupied && seat.Occupant == null, "Seat not released: " + label);
+        SURLHWACharacterMotionValidation.Require(Mathf.Abs(lastDepartureX) > 12,
+            "Guest/companion must clear the 16:9 camera before destruction: " + label);
         yield return null;
+        SURLHWACharacterMotionValidation.Require(companion == null && stool == null, "Companion visual leaked after departure.");
     }
 }
 #endif

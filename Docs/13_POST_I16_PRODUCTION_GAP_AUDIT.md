@@ -2452,3 +2452,51 @@ Foreground pointer regression remains VALIDATION_DEBT; completed A/B/C were not
 rerun and historical Settings/Brew incidents remain unresolved. All 63 baseline
 dirty-file hashes are preserved. HUMAN_VISUAL_APPROVAL_PENDING,
 CHARACTER_ANIMATION_DEFERRED and DEFERRED_AUDIO remain.
+
+## Phase N — character motion and service presentation (2026-10-01)
+
+Starting HEAD `1bb9e23`; ordinary foundation `d89b35f`, cast/service integration
+`3156429`. Four original local changes (config, PlayerSettings batching and two
+UserSettings files) remain hash-protected. Execution uses the existing isolated
+ValidationProject; no original Editor, owner saves or audio preferences are lost.
+
+The current cast now walks, turns inward, sits with a bent-leg pose, waits,
+responds to service, stands and leaves. CustomerController retains movement,
+readiness and departure; finite turn/sit/stand timers never wait for a clip.
+CustomerMotionPresentation only observes it. SeatManager/SeatPoint, Spawner,
+OrderManager, campaign and persistence ownership remain. Missing frames or a
+disabled presenter do not block departure. All ten guest sets reuse accepted
+source pixels; ordinary silhouettes and special identities remain. Hamlet has
+no repetitive listening accent. Paired guests retain one order/customer and
+gain separated contact, synchronized response and cleanup. The centered
+bartender gets a brief hand-rest variation and service acknowledgment.
+
+Rendered inspection corrected four entrance/exit marker x values so the pair
+clears the 16:9 frame before destruction, and placed the shared glass on the
+countertop. No existing furniture position, recipe, narrative, save ID, Phase K input,
+Phase M navigation or accepted Shaker/Codex art was changed. Detailed source,
+authority, tuning and evidence: Docs/25; asset provenance: CharacterMotion manifest.
+
+Executed: compile (0 errors/8 existing warnings), motion/import/world/integrated
+Editor checks, all-cast and three-seat paired motion/fallback/cleanup fixtures,
+four-method Phase K Play Mode and final Phase M callback/modal checks. The single
+full campaign on `3156429` passed 18 nights/47 natural departures, Continue,
+discovery/retry, weak service, memories and ending/reset. Later coordinate-only
+corrections have final local coverage, not a claimed second full-campaign run.
+Private progress/knowledge/audio snapshots matched after test restoration.
+
+Retained failure: the older J5 focused service runner's first closing scenario
+found the discovery popup still active at farewell entry. It failed before that
+guest's new standing interval. No causal link to Phase N is established; popup
+sequencing/its assertion were not weakened. Remaining focused J5 scenarios are
+unrun. This is explicit VALIDATION_DEBT, separate from the passed motion and
+campaign checks and from unresolved historical Settings/Brew incidents.
+
+Review: `Logs/Review/PhaseN/review.html` and `review-board.png`, 14 GIF sequences,
+812 individual 720p frames, native crops and 1080p stills. Fixtures and normal
+campaign evidence are labeled separately. Existing archives remain. First-pass
+character animation is implemented; subjective cadence/anatomy/feel remains
+HUMAN_ANIMATION_TUNING_LATER. Foreground pointer and human play remain debt;
+DEFERRED_AUDIO, FUTURE_EXPANSION and existing product scope boundaries remain.
+Standalone build results are recorded in Docs/25 after execution. No finished-game
+or human aesthetic approval is claimed.

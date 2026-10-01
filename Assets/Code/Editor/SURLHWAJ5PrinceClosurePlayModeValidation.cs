@@ -226,7 +226,14 @@ internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
                     }
                 }
                 else yield return new WaitForSeconds(4.4f);
-                Require(Get(customer, "state").ToString() == "Leaving", "Service/reading must finish with departure, even on failure.");
+                // This fixture disables customer Update above. Phase N's finite
+                // stand interval belongs to that Update, not an animation callback.
+                Require(customer.CurrentState == CustomerController.State.Standing,
+                    "Service/reading must request standing departure, even on failure.");
+                yield return new WaitForSeconds(customer.standDuration + .02f);
+                SURLHWAJ5PrinceClosureValidation.Invoke(customer, "Update");
+                Require(customer.CurrentState == CustomerController.State.Leaving,
+                    "The bounded stand interval must finish without an animation completion event.");
                 SURLHWAJ5PrinceClosureValidation.Invoke(customer, "LeaveAndDestroy");
                 customer = null;
                 spawner.StopAllCoroutines();

@@ -187,3 +187,24 @@ All new visual quality remains subject to HUMAN_ART_TUNING_LATER. Seven display
 zones hold existing memory contours; no new statue unlocks or story content were
 introduced. Source crops, precise per-asset dimensions/pivots and hashes are in
 assets.json. Runtime art is separate from original imagegen source sheets.
+
+## Phase N character motion extension (2026-10-01)
+
+The reusable standing art above remains the identity/fallback source. New
+`Assets/_SURLHWA/Art/Characters/Motion/` contains 80 guest frame assets (ten
+characters × four walk slots plus turn, seated, listening and reaction) and two
+bartender accents. Guest canvases are 96×100 with stable feet anchors; visible
+character size retains the source proportions. All use 32 PPU, Point and
+uncompressed binary alpha. No original Chibi, environment or cocktail PNG changed.
+
+Preparation: deterministic cutout/row translation using owned source pixels,
+`Tools/prepare_character_motion.py --all`. Exact paths, source/output hashes,
+dimensions and pose names: `ArtSource/Pixel/CharacterMotion/assets.json`.
+`Pose-board.png` is a source-art check; actual Unity motion review is linked in
+Docs/25. `CustomerMotionLibrary.asset` holds presentation references only.
+Four walk slots contain two alternating strides and a repeated neutral contact
+pose. Seated knees/hip differ from the standing shape; no clip controls gameplay.
+
+The existing stool sprite is reused for the paired companion's visual seat.
+Hamlet omits the repeating listening accent. All first-pass cadence and pose
+quality remain HUMAN_ANIMATION_TUNING_LATER; no new public art clearance is claimed.

@@ -79,8 +79,10 @@ def make(source):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--all', action='store_true')
+    parser.add_argument('--ordinary-only', action='store_true')
     args = parser.parse_args()
-    names = [p.stem for p in sorted(SOURCE.glob('*.png')) if p.stem != 'Bartender'] if args.all else ['OrdinaryCoat']
+    full = not args.ordinary_only
+    names = [p.stem for p in sorted(SOURCE.glob('*.png')) if p.stem != 'Bartender'] if full else ['OrdinaryCoat']
     OUT.mkdir(parents=True, exist_ok=True)
     RECORD.mkdir(parents=True, exist_ok=True)
     meta(OUT, 'folderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData:\n  assetBundleName:\n  assetBundleVariant:\n')
@@ -117,7 +119,7 @@ def main():
     library = ROOT / 'Assets/Resources/CustomerMotionLibrary.asset'
     library.write_text('%YAML 1.1\n%TAG !u! tag:unity3d.com,2011:\n--- !u!114 &11400000\nMonoBehaviour:\n  m_ObjectHideFlags: 0\n  m_CorrespondingSourceObject: {fileID: 0}\n  m_PrefabInstance: {fileID: 0}\n  m_PrefabAsset: {fileID: 0}\n  m_GameObject: {fileID: 0}\n  m_Enabled: 1\n  m_EditorHideFlags: 0\n  m_Script: {fileID: 11500000, guid: ' + guid(library_script.relative_to(ROOT).as_posix()) + ', type: 3}\n  m_Name: CustomerMotionLibrary\n  m_EditorClassIdentifier:\n  characters:\n' + ''.join(entries), encoding='utf-8')
     meta(library, 'NativeFormatImporter:\n  externalObjects: {}\n  mainObjectFileID: 11400000\n  userData:\n  assetBundleName:\n  assetBundleVariant:\n')
-    if args.all:
+    if full:
         bartender = Image.open(SOURCE / 'Bartender.png').convert('RGBA')
         for pose in ('Rest', 'Acknowledge'):
             im = bartender.copy()
@@ -136,6 +138,8 @@ def main():
                 f.write('  bartender' + pose + ': {fileID: 21300000, guid: ' + ident + ', type: 3}\n')
             records.append({'character': 'Bartender', 'pose': pose, 'runtime': path.relative_to(ROOT).as_posix(),
                             'source': (SOURCE / 'Bartender.png').relative_to(ROOT).as_posix(),
+                            'source_sha256': hashlib.sha256((SOURCE / 'Bartender.png').read_bytes()).hexdigest(),
+                            'dimensions': im.size,
                             'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'ppu': 32, 'pivot': [.5, 0]})
         stool_meta = (ROOT / 'Assets/_SURLHWA/Art/Environment/ModularBar/Stool.png.meta').read_text()
         with library.open('a', encoding='utf-8') as f:

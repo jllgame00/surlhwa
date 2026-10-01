@@ -118,4 +118,114 @@ renders were inspected at display size. The lovers occupy separate stools;
 costumes, face identity and inward facing remain readable. These observations
 are not owner aesthetic approval. Full campaign, physical regression and
 standalone verification are recorded separately below when executed.
+
+## Integration validation boundaries
+
+- The strengthened safety fixture checks service reaction/return, bartender
+  acknowledgment with a stationary root, companion owner/spacing/depth/cleanup,
+  missing pose data, and a disabled presenter. It observes runtime errors and
+  passed in the isolated Editor. No asset is mutated to simulate missing poses.
+- Existing Phase K Play Mode passed all four actual method prefabs and physical
+  measurement/transfer/overflow behavior. The scene/prefab change is confined to
+  the bartender component; no preparation prefab was modified.
+- Existing `RunVisualAfter` completed its four-route, Settings/Codex, Back,
+  repeated entry and modal/raycast callback fixtures. Saved progress/knowledge/
+  audio matched a separate private pre-run snapshot exactly after restoration.
+  This is direct-event/callback evidence, not foreground pointer delivery.
+  The A/B/C investigation was not reopened. Historical Settings/Brew incidents
+  remain unresolved; no resolution is attributed to Phase N.
+- 268 relevant source/art/prefab/scene/resource files matched main and isolated
+  copy byte-for-byte. Final compile at this point: zero errors, eight existing
+  warnings. Actual Korean reaction text and committed font/render baseline were
+  rendered; ordinary owner text/render review is still appropriate.
+- The older focused J5 service fixture disables customer Update. Its immediate
+  Leaving assertion must now observe Standing, advance the finite timer through
+  that same Update, and require Leaving. It still uses its original explicit
+  departure callback, so it is not natural movement evidence. The full campaign
+  separately waits for real destruction and checks exactly one departure.
+
+The current Windows pipeline adds a Phase N entry, retaining existing dependency
+validation and BuildPipeline.BuildPlayer. The isolated build requires committed
+PlayerSettings; original unresolved batching bytes are preserved. Package identity
+records the exact commit and this source-setting distinction. No new build system.
+
+### Rendered exit correction
+
+The first frame sequences exposed an existing staging defect: active seat exits
+were at world x ±8.3, inside the 16:9 camera's ±9.6 horizontal span. Destruction
+could therefore remove a visible walking guest, especially a trailing companion.
+Only four marker x coordinates in BarScene are adjusted: spawn to -12.5 and
+three active seat exits to world ±12.5. Seat roots, sit/approach markers, paths'
+direction, sorting, furniture, gameplay speed and completion callbacks remain.
+The original unreferenced/legacy markers are untouched. A pair now fully clears
+the review camera before the same controller releases the seat and destroys it.
+
+The full campaign was already running on the integrated lifecycle code when
+this render-only marker defect was identified; it is allowed to finish without
+source mutation in that Editor. Its evidence will be attributed to that source,
+with the marker correction covered by final production-spawn motion fixtures on
+all three seats. Initial captures remain archived; final captures use the real
+spawn marker rather than the earlier shortened in-frame visual setup.
+The shared-glass native crop also placed its base below the countertop lip;
+its local height is corrected from 2.05 to 2.4, keeping the existing contour
+and service trigger. This is checked in the final paired captures. The temporary
+companion stool is owned by the visit's presentation and is removed at the same
+cleanup; furniture handling itself has no separate animation.
+
+### Full campaign result
+
+The existing `SURLHWACampaignPlayModeValidation.Run` completed once on the
+`3156429` runtime integration: 18 nights, 47 natural departures, all 16 extended
+special visits, required discovery/retry and genuine alternatives, weak-service
+ACT continuation, checkpoint/mid-dialogue/ending Continue, seven memories,
+completed coda, reset and legacy handoff. Exact departure counts and existing
+visit persistence guards passed. No production gameplay event was synthesized
+by the animation layer. This is automated input-seam progression, not human play.
+
+Archive: `Logs/Review/PhaseN/campaign-and-safety.log` (completed 2026-10-01).
+The private progress/knowledge/audio snapshot exactly matched after the Editor
+restored and exited. The only later runtime differences are four entry/exit
+marker x values and the shared-glass y value described above; final local motion
+and paired contact checks cover those. A second 47-encounter run is not inferred
+or claimed for those presentation-coordinate edits.
+
+### Final local motion and retained failure
+
+Final motion fixtures passed after the marker/glass correction: all ten guest
+sets, paired guests on left/center/right seats, actual production spawn position,
+all four walk slots, turn/sit/stand, service reaction and return, bartender
+acknowledgment, stationary roots while seated, natural departure beyond world
+|x| > 12, seat release, and companion/stool cleanup. Missing pose data and a
+disabled presenter both completed. The bartender's real ten-second hand-rest
+cadence was captured. No runtime exception was observed by this fixture.
+The source-art recipe reproduced all 82 PNGs, metas and the runtime library
+byte-for-byte. Final source rendering keeps the shared-glass base on the wood
+surface; both companions clear the 16:9 frame before removal.
+
+Evidence: `Logs/Review/PhaseN/review.html`, `review-board.png`, 14 GIF sequences,
+812 individual 720p frames, native-scale crops and 1080p stills. `motion-samples.tsv`
+records game timestamps/states. `initial-staging/` retains the earlier short
+entrance and in-frame-exit captures; `ordinary-foundation/` retains N2 proof.
+These are production-scene fixtures with explicitly shortened narrative waiting,
+not OS input recordings or human aesthetic approval.
+
+The updated older J5 focused service fixture **failed** in its first scenario's
+closing visit: `Farewell must wait for a newly discovered recipe popup to close.`
+The failure occurs before the closing guest enters the new standing interval;
+the first two visits had passed the new finite standing-to-leaving assertions.
+No causal link to Phase N was demonstrated. Popup/service sequencing code was
+not changed and this assertion was not weakened. The remaining focused J5
+scenarios are unrun; retain this as separate VALIDATION_DEBT rather than a PASS
+or a claimed resolution of historical UI incidents. Full log:
+`Logs/Review/PhaseN/final-motion-and-prince.log`. Existing full-campaign evidence
+above does not silently substitute for this failed popup-visibility assertion.
+
+Final Editor/reference/integrated checks passed again after the coordinate
+correction. Final `RunVisualAfter` callback/modal regression also completed and
+restored preferences. Compilation remains 0 errors / 8 existing warnings.
+`validated-final-source-sha256.json` confirms 268 relevant files match the
+isolated source; protected-file hashes remain unchanged. Final scene diff is
+exactly four marker x coordinates; the prefab diff is one bartender component.
+Task/staged diff whitespace checks are clean. Protected config contents are not
+read into reports or included in diffs/staging.
 No subjective animation approval is claimed. DEFERRED_AUDIO remains unchanged.
