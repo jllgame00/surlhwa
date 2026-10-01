@@ -37,6 +37,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
     [Header("Spoon (UI)")]
     [SerializeField] private RectTransform cup;
+    public RectTransform PresentedSpoon => spoon;
     [SerializeField] private RectTransform spoon;
     [SerializeField] private RectTransform spoonInCup;
     [SerializeField] private float spoonOrbitRadius = 16f;

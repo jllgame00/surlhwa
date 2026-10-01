@@ -112,6 +112,9 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         var audio = FindFirstObjectByType<DemoAudioController>();
         Require(audio != null, "Missing serialized Bar audio controller.");
         Require(ActiveListeners() == 1, "Bar requires exactly one active audio listener.");
+        audio.Sounds.Trace = true;
+        var cueCounts = new Dictionary<BarSound, int>();
+        audio.Sounds.CueChanged += (cue, start, channel) => { if (start) cueCounts[cue] = cueCounts.GetValueOrDefault(cue) + 1; };
         var sources = audio.GetComponents<AudioSource>();
         Require(sources.Length == SurlhwaSoundscape.SourceCount, "Unexpected audio ownership/duplicate sources.");
         Require(audio.Sounds.Library != null && audio.Sounds.Library.cues.Length == 22, "Missing Phase O cue library.");
@@ -169,8 +172,15 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Require(ActiveListeners() == 1, "Bartending lost its audio listener or duplicated the Bar listener.");
         var shake = FindFirstObjectByType<ShakeMiniGame>();
         var shelf = FindFirstObjectByType<IngredientShelfController>();
-        Require(ReferenceEquals(Get(audio, "shelf"), shelf), "Audio has no explicit runner shelf handoff.");
+        Require(ReferenceEquals(Get(Get(audio, "preparationAudio"), "shelf"), shelf), "Audio has no explicit runner shelf handoff.");
         Require(shelf.TrySelectIngredient(recipe.ingredients[0].ingredient), "Gin unavailable.");
+        shake.enabled = false; // Explicit physical fixture; do not race unattended mouse polling.
+        deadline = Time.realtimeSinceStartup + 4;
+        while (!shelf.PreparePhysicalPour())
+        {
+            Require(Time.realtimeSinceStartup < deadline, "Visible bottle failed to reach pour pose.");
+            yield return null;
+        }
         for (int i = 0; i < 15; i++)
         {
             shelf.PourSelectedIngredient(1f);
@@ -181,8 +191,15 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         yield return new WaitForSecondsRealtime(.25f);
         Require(!audio.Sounds.PourSource.isPlaying, "Pour sound did not stop after transfer ended.");
         SURLHWAReviewCapture.Save("shake-preparation", 1280, 720);
+        deadline = Time.realtimeSinceStartup + 4;
+        while (!shelf.ToolsReady)
+        {
+            Require(Time.realtimeSinceStartup < deadline, "Bottle did not return before ice placement.");
+            yield return null;
+        }
         Require(shake.AddIceToShaker(), "Ice preparation failed.");
         while (shelf.PhysicalTransferActive) yield return null;
+        shake.enabled = true;
         shake.BeginShake();
         var guide = shake.GetComponentInChildren<RecipeGuidePanelController>(true);
         Require(guide != null, "No real Guide.");
@@ -221,8 +238,13 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         }
         Require(shake.MissCount == 0 && shake.CorrectHitCount == shake.NoteCount,
             "Resumed rhythm was not playable after both read pauses.");
+        yield return new WaitForSecondsRealtime(.3f);
+        Require(cueCounts.GetValueOrDefault(BarSound.Shake) > 0 && !audio.Sounds.TechniqueSource.isPlaying,
+            "Shake audio must follow actual motion and stop on its return.");
         shake.StrainAndSubmit();
         while (shake.IsPhysicalTransferPending) yield return null;
+        Require(cueCounts.GetValueOrDefault(BarSound.Strain) > 0, "Strainer stream produced no audio.");
+        Require(cueCounts.GetValueOrDefault(BarSound.Ice) == 1, "One ice placement must produce one ice cue.");
         SURLHWAReviewCapture.Save("garnish", 1280, 720);
         shake.ServeShake();
         deadline = Time.realtimeSinceStartup + 15f;
@@ -238,6 +260,9 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Debug.Log("[Audio PlayMode] PASS: imported clips, scene-owned playback, one active listener before/during/after bartending, actual volume/mute controls, " +
             "preference reset isolation, explicit additive handoff, accepted pour start/stop, " +
             "Guide/settings pause preserves Shake timing, resume and unload. Auditory mix remains human sign-off.");
+        Require(!audio.Sounds.TechniqueSource.isPlaying && audio.GetComponents<AudioSource>().Length == SurlhwaSoundscape.SourceCount,
+            "Stale loop or extra voice after additive unload.");
+        Debug.Log("[Phase O Audio] PASS: Shake motion/return, Strain stream, one ice cue, bounded source count.");
         Complete(true);
     }
     private static int ActiveListeners()

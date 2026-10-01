@@ -104,6 +104,9 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
     private IEnumerator Run()
     {
         Directory.CreateDirectory("Logs/Review/PhaseN");
+        var audio = FindFirstObjectByType<DemoAudioController>();
+        audio.Sounds.SetMix(.7f, .35f, .6f, false); // Presentation fixture, no preference writes.
+        audio.Sounds.Trace = true;
         foreach (var spawner in FindObjectsByType<CustomerSpawner>(FindObjectsSortMode.None)) spawner.enabled = false;
         yield return null;
         GameObject.Find("DemoEntryCanvas")?.SetActive(false);
@@ -174,6 +177,21 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
         var stool = guest.transform.Find("Companion stool");
         string label = kind + (seat.name == "SeatPoint_Left" ? "" : "-" + seat.name) +
             (fallback ? "-no-presenter" : missingFrames ? "-missing-frames" : "");
+        var audio = FindFirstObjectByType<DemoAudioController>();
+        int footsteps = 0, seatCues = 0, standCues = 0, serviceCues = 0;
+        bool idleStep = false;
+        Action<BarSound, bool, string> cueObserver = (cue, begins, channel) => {
+            if (!begins) return;
+            if (cue == BarSound.FootLeft || cue == BarSound.FootRight)
+            {
+                footsteps++;
+                idleStep |= guest != null && guest.CurrentState != CustomerController.State.MovingToSeat && guest.CurrentState != CustomerController.State.Leaving;
+            }
+            if (cue == BarSound.Seat) seatCues++;
+            if (cue == BarSound.Stand) standCues++;
+            if (cue == BarSound.GlassSet) serviceCues++;
+        };
+        audio.Sounds.CueChanged += cueObserver;
         var seen = new HashSet<CustomerController.State>();
         var frames = new HashSet<int>();
         float start = Time.time, captureAt = start, readyAt = -1, serviceAt = -1;
@@ -247,6 +265,13 @@ internal sealed class SURLHWACharacterMotionRunner : MonoBehaviour
             "Guest/companion must clear the 16:9 camera before destruction: " + label);
         yield return null;
         SURLHWACharacterMotionValidation.Require(companion == null && stool == null, "Companion visual leaked after departure.");
+        audio.Sounds.CueChanged -= cueObserver;
+        if (!fallback)
+            SURLHWACharacterMotionValidation.Require(footsteps > 0 && !idleStep && seatCues == 1 && standCues == 1 && serviceCues == 1,
+                "Audio lifecycle/paired shared service mismatch: " + label + $" steps={footsteps} idleStep={idleStep} seat={seatCues} stand={standCues} service={serviceCues}");
+        SURLHWACharacterMotionValidation.Require(FindObjectsByType<CustomerFoleyPresentation>(FindObjectsSortMode.None).Length == 0,
+            "Foley observer leaked after departure.");
+        Debug.Log($"[Phase O Character] PASS: {label} steps={footsteps} seatedSteps={idleStep} seat={seatCues} stand={standCues} service={serviceCues}; sources={audio.GetComponents<AudioSource>().Length}");
     }
 }
 #endif

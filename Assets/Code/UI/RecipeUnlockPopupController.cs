@@ -95,6 +95,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
         SetupContent(recipe, titleOverride, messageOverride);
 
         popupRoot.gameObject.SetActive(true);
+        DemoAudioController.Current?.Sounds?.StartDiscovery();
         popupRoot.anchoredPosition = hiddenPosition;
 
         yield return SlideTo(shownPosition);
@@ -122,6 +123,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
     // release the same request at most once, after its UI is hidden.
     private void CompletePresentation(bool completed)
     {
+        DemoAudioController.Current?.Sounds?.EndDiscovery();
         var callback = presentationCompleted;
         presentationCompleted = null;
         callback?.Invoke(completed);

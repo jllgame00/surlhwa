@@ -153,6 +153,7 @@ public sealed class ServingGlassGentleStirInteraction
         {
             runtimeSpoonObject = new GameObject("RuntimeGentleStirSpoon", typeof(RectTransform), typeof(Image));
             runtimeSpoonObject.transform.SetParent(parent, false);
+            runtimeSpoonObject.AddComponent<BartendingToolAudio>();
             Image image = runtimeSpoonObject.GetComponent<Image>();
             image.color = new Color(0.8f, 0.85f, 0.9f, 0.95f);
         }

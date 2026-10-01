@@ -101,6 +101,7 @@ public class RecipeGuidePanelController : MonoBehaviour
 
         if (panelRoot != null)
         {
+            if (!panelRoot.activeSelf) DemoAudioController.Current?.Sounds?.Play(BarSound.BookOpen);
             panelRoot.transform.SetAsLastSibling();
             panelRoot.SetActive(true);
         }
@@ -113,6 +114,7 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void ClosePanel()
     {
+        if (panelRoot != null && panelRoot.activeSelf) DemoAudioController.Current?.Sounds?.Play(BarSound.Back);
         if (panelRoot != null)
             panelRoot.SetActive(false);
 
@@ -231,6 +233,7 @@ public class RecipeGuidePanelController : MonoBehaviour
 
     private void SelectRecipe(CocktailRecipeData recipe)
     {
+        if (recipe != selectedRecipe) DemoAudioController.Current?.Sounds?.Play(BarSound.Select);
         selectedRecipe = recipe;
         RefreshDetail();
         RefreshButtonVisuals();

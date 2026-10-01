@@ -64,3 +64,100 @@ Guide/Settings pause, Shake resume and unload. PCM analysis found no clipping,
 bounded DC and endpoint/loop joins below .0001 full scale. This validates the
 routing foundation; detailed motion-to-sound coverage follows below. Evidence:
 `Temp/PhaseOAudio/foundation.log` and `compile-foundation.log`.
+
+## Event mapping and quiet behavior
+
+| Family | Existing presentation seam | Playback |
+| --- | --- | --- |
+| Room / winter | Scene-owned controller Awake/disable | 24/32-second loops, half-second entry fade; dialogue ducks the exterior more than the room |
+| Entrance / departure | Existing CustomerSpawner PlayDoor calls | Brief filtered exterior air; no invented bell or visible door hardware |
+| Footsteps | CustomerFoleyPresentation observes authoritative root distance while MovingToSeat/Leaving | Alternating .22/.25-second samples, .56 world-unit stride, pan limited to .25; companion half-stride offset and .55 level |
+| Seat / stand | Existing Sitting/Standing state entry | Quiet contact once; simultaneous paired contacts coalesce through per-cue debounce |
+| Service | Root CustomerMotionPresentation.React | One GlassSet; companion reaction never duplicates shared service |
+| Bottle / direct pour / Build | BartendingPhysicalPresentation rest transition and actual StreamVisible | Handle accent; Pour loop only during visible accepted flow |
+| Jigger | Actual vessel transfer and return | Transfer loop and small return contact |
+| Float | Existing surface-container destination | FinePour loop, including measured gentle Float |
+| Ice | Accepted AddIce trace after physical placement | One ice accent |
+| Stir | Actual active spoon displacement | Stir loop; stops on stillness, pause, finish or removal |
+| Shake | Actual shaker displacement while its existing motion coroutine is active | Shake loop; no sound for an idle rhythm timeline |
+| Strain | Visible stream with existing strainer visible | Strain loop; no clip-duration completion path |
+| Dash / Splash / Top-up | Their existing physical stream | Short duration follows actual flow; no canned full-length pour tail |
+| Settings / navigation | Existing open/close and accepted button callbacks | Select / Back, no hover tone or slider-update preview spam |
+| Codex / guide | Existing open, close, detail selection | BookOpen / BookClose / Select / Back, with state guards |
+| Discovery | Popup root becomes visible / CompletePresentation | Dedicated accent voice; visual completion/cancellation requests a .04-second fade |
+
+BartendingAudioPresentation is installed through the existing explicit runner
+handoff. BartendingToolAudio observes the local gentle-stir spoon through its
+workspace owner. Read-only tool getters do not alter liquid amount, preparation,
+input policy or method grading. Missing clips are silent fallbacks.
+
+The existing customer/controller/spawner, seat, order, recipe knowledge,
+campaign and persistence owners remain unchanged. CustomerMotionPresentation
+only installs a visual foley observer and emits the shared glass contact.
+AudioSource completion never advances those owners. J5's actual visual-feedback
+completion predicate remains untouched; there is no wait based on audio length.
+
+The bartender's recurring idle and guest seated idles remain silent. Hamlet is
+intentionally quiet. Garnish placement has no added arbitrary reward sound.
+No voice, character grunts, success fanfare, soundtrack or adaptive music system
+was introduced. Old draft music/door/foley assets remain available but unused.
+
+## Tuning and voice limits
+
+The cue library stores all per-cue gains; the exact values and measured PCM
+properties are in the source manifest. Master/Effects scale ambience, foley and
+UI; Music retains its original preference and a silent reserved source. There
+is no new AudioMixer or second preference store. Six reusable one-shot sources,
+two physical loops, two ambience sources, discovery and reserved music total 12.
+A seventh simultaneous accent is dropped. Per-cue gaps are .07 seconds for feet
+and .12 seconds otherwise. No component is added per click/step.
+
+Footstep right pitch is .99, left 1.0; pan is clamped to +/- .25. Physical fades
+are .045 seconds. Scene/workspace removal stops playback immediately; normal
+visible flow endings use the fade. These are first-pass presentation values,
+not timing inputs to gameplay. Final comfort, repetition and tactile credibility
+remain HUMAN_AUDIO_TUNING_LATER.
+
+## Review package
+
+`Tools/build_audio_review.py` writes `Logs/Review/PhaseOAudio/index.html`, 22
+individual default-gain PCM previews, a 60-second room/winter mix and a manifest.
+These are not loudness-normalized and are labeled as previews rather than
+captured gameplay. Master .70 x Effects .60 x the actual cue gain is retained.
+Runtime ambience uses Vorbis; the previews use its lossless source PCM.
+
+`SURLHWAAudioReviewCapture` is a bounded Editor-only cue reel through Unity's
+main AudioRenderer output. It sets only the fixture's in-memory mix, restores
+capture timing on disable, and does not drive a customer or save progress. Its
+output is an imported/runtime mix fixture, not human listening or normal play.
+
+### Integrated connection checks
+
+The final extended Audio/Reading Pause fixture passes: actual bottle setup and
+stream start/stop, single ice contact, Shake motion/return, Strain stream,
+Settings/Guide pause and additive cleanup. A same-frame ice/Guide boundary first
+revealed a dropped committed contact; that presentation regression is fixed.
+The validator now uses the physical pour gate and waits for the existing
+ToolsReady state instead of bypassing bottle movement. Its old reflection
+assertion follows the explicitly bound new observer. No gameplay policy was
+changed to obtain a pass.
+
+The extended Phase K fixture passes all four methods, direct release, finite
+Jigger transfer, Float intensity, Dash/Splash/Top-up, ice, primary Stir and Build
+gentle-stir motion/removal. No extra listener is installed in the fixture; it
+uses the actual method prefab listener. Phase N safety fixtures pass Hamlet,
+paired guests at three seats, missing-frame and missing-presenter fallbacks.
+There are no seated footstep starts or orphan observers; the pair emits one
+seat, stand and shared service contact, with 12 scene-owned sources throughout.
+A deliberately absent entire presenter remains silent and cannot block play.
+
+All six focused J5 scenarios pass, including no discovery, preparation/FIT
+negatives, cancellation, knowledge persistence, one farewell, natural stand /
+departure and seat release. The fixture replaces only the in-memory discovery
+clip with 30 seconds of silence and restores it afterward. Each visible popup
+starts one sound; visual completion cuts it and farewell never waits for the
+clip duration. Prior J5 evidence and historical Settings/Brew incidents remain
+separate. These are programmatic fixtures, not OS pointer or human listening.
+
+Fresh Windows packaging and the final review-output/campaign checks are recorded
+in the handoff below after execution; this section does not claim their results.

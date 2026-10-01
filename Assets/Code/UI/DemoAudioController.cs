@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -19,11 +17,7 @@ public sealed class DemoAudioController : MonoBehaviour
     public static DemoAudioController Current { get; private set; }
     public SurlhwaSoundscape Sounds { get; private set; }
     private InteractionUIController readingUI;
-    private IngredientShelfController shelf;
-    private int observedActions;
-    private BartendingContainerState observedContainer;
-    private float observedVolume;
-    private float lastLiquidTime = -10f;
+    private BartendingAudioPresentation preparationAudio;
     private GameObject settingsRoot;
     private TMP_Text muteLabel;
     private bool settingsOpen;
@@ -50,12 +44,15 @@ public sealed class DemoAudioController : MonoBehaviour
     }
     public void ObserveBartending(MiniGameManager runner)
     {
-        if (shelf != null) shelf.IngredientUsed -= OnLiquid;
-        shelf = runner != null ? runner.GetComponentInChildren<IngredientShelfController>(true) : null;
-        observedActions = 0;
-        observedContainer = null;
-        observedVolume = 0f;
-        if (shelf != null) shelf.IngredientUsed += OnLiquid;
+        if (preparationAudio != null) preparationAudio.Unbind();
+        preparationAudio = null;
+        Sounds.StopPhysical();
+        if (runner != null)
+        {
+            preparationAudio = runner.GetComponent<BartendingAudioPresentation>();
+            if (preparationAudio == null) preparationAudio = runner.gameObject.AddComponent<BartendingAudioPresentation>();
+            preparationAudio.Bind(Sounds);
+        }
         if (runner != null)
         {
             SurlhwaBartendingPresentation.AddSettings(runner.gameObject, ToggleSettings);
@@ -66,12 +63,15 @@ public sealed class DemoAudioController : MonoBehaviour
     {
         foreach (Button button in root.GetComponentsInChildren<Button>(true))
         {
+            // Physical actions and dedicated utility owners already emit their own cues.
+            if (button.name.Contains("Sound") || button.name.Contains("Settings") || button.name.Contains("Codex") ||
+                button.GetComponentInParent<CocktailCodexPanelController>() != null ||
+                button.GetComponentInParent<MiniGameManager>() != null) continue;
             var feedback = button.GetComponent<DemoAudioClickFeedback>();
             if (feedback == null) feedback = button.gameObject.AddComponent<DemoAudioClickFeedback>();
             feedback.Bind(this, button);
         }
     }
-    private void OnLiquid(IngredientData _) => lastLiquidTime = Time.unscaledTime;
     public void PlayPage() => Sounds?.Play(BarSound.Select);
     public void PlayDoor() => Sounds?.Play(BarSound.EntranceAir);
 
@@ -79,26 +79,6 @@ public sealed class DemoAudioController : MonoBehaviour
     {
         Sounds.Reading = readingUI != null && readingUI.IsReadingDialogue;
         if (Input.GetKeyDown(KeyCode.Escape) && !SurlhwaModalSurface.Back()) ToggleSettings();
-        if (shelf != null && shelf.TargetContainer != null)
-        {
-            var target = shelf.TargetContainer;
-            if (target == observedContainer && target.CurrentLiquidVolumeMl > observedVolume + .001f)
-                lastLiquidTime = Time.unscaledTime;
-            observedContainer = target;
-            observedVolume = target.CurrentLiquidVolumeMl;
-        }
-        bool reading = IsSettingsOpen || RecipeGuidePanelController.IsTechniqueReadStateActive;
-        bool pouring = !reading && shelf != null && Time.unscaledTime - lastLiquidTime < .12f;
-        Sounds.SetPour(pouring ? BarSound.Pour : null);
-        if (shelf == null || shelf.PreparationTrace == null) return;
-        var actions = shelf.PreparationTrace.Actions;
-        if (observedActions > actions.Count) observedActions = actions.Count;
-        while (observedActions < actions.Count)
-        {
-            var action = actions[observedActions++].Action;
-            if (!reading && action != RecipePreparationAction.Pour)
-                Sounds.Play(action == RecipePreparationAction.AddIce ? BarSound.Ice : BarSound.GlassSet);
-        }
     }
     public void SetVolume(string key, float value)
     {
@@ -125,6 +105,7 @@ public sealed class DemoAudioController : MonoBehaviour
         SurlhwaModalSurface.Trace("settings.toggle.entry open=" + settingsOpen);
         if (settingsOpen) { CloseSettings(); return; }
         if (settingsRoot == null) BuildSettings();
+        Sounds?.Play(BarSound.Select);
         settingsOpen = true;
         settingsOwner = this;
         settingsRoot.SetActive(true);
@@ -134,6 +115,7 @@ public sealed class DemoAudioController : MonoBehaviour
     {
         SurlhwaModalSurface.Trace("settings.close.entry open=" + settingsOpen);
         if (!settingsOpen) return;
+        Sounds?.Play(BarSound.Back);
         settingsOpen = false;
         if (settingsRoot != null) settingsRoot.SetActive(false);
         if (settingsOwner == this) settingsOwner = null;
@@ -143,7 +125,7 @@ public sealed class DemoAudioController : MonoBehaviour
     {
         CloseSettings();
         if (Current == this) Current = null;
-        if (shelf != null) shelf.IngredientUsed -= OnLiquid;
+        if (preparationAudio != null) preparationAudio.Unbind();
         if (settingsButton != null) settingsButton.onClick.RemoveListener(ToggleSettings);
     }
     private static RectTransform Rect(string name, Transform parent, Vector2 size)
@@ -221,11 +203,21 @@ public sealed class DemoAudioController : MonoBehaviour
     }
 }
 
-internal sealed class DemoAudioClickFeedback : MonoBehaviour, IPointerClickHandler, ISubmitHandler
+internal sealed class DemoAudioClickFeedback : MonoBehaviour
 {
     private DemoAudioController audioOwner;
     private Button button;
-    public void Bind(DemoAudioController owner, Button target) { audioOwner = owner; button = target; }
-    public void OnPointerClick(PointerEventData _) { if (button != null && button.IsInteractable()) audioOwner?.PlayPage(); }
-    public void OnSubmit(BaseEventData _) { if (button != null && button.IsInteractable()) audioOwner?.PlayPage(); }
+    public void Bind(DemoAudioController owner, Button target)
+    {
+        if (button != null) button.onClick.RemoveListener(Play);
+        audioOwner = owner; button = target;
+        button.onClick.AddListener(Play);
+    }
+    private void Play()
+    {
+        if (button == null || !button.IsInteractable()) return;
+        bool back = button.name.Contains("Back") || button.name.Contains("Close");
+        audioOwner?.Sounds?.Play(back ? BarSound.Back : BarSound.Select);
+    }
+    private void OnDestroy() { if (button != null) button.onClick.RemoveListener(Play); }
 }

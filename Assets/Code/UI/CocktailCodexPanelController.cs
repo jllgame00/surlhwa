@@ -137,6 +137,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     public void Open()
     {
+        if (!IsOpen) DemoAudioController.Current?.Sounds?.Play(BarSound.BookOpen);
         if (panelRoot != null)
         {
             panelRoot.SetActive(true);
@@ -155,6 +156,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     public void Close()
     {
+        if (IsOpen) DemoAudioController.Current?.Sounds?.Play(BarSound.BookClose);
         if (panelRoot != null)
             panelRoot.SetActive(false);
     }
@@ -167,6 +169,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     public void BackToGrid()
     {
+        if (detailPage != null && detailPage.activeSelf) DemoAudioController.Current?.Sounds?.Play(BarSound.Back);
         ShowGridPage();
     }
 
@@ -214,6 +217,7 @@ public class CocktailCodexPanelController : MonoBehaviour
             return;
         }
 
+        DemoAudioController.Current?.Sounds?.Play(BarSound.Select);
         ShowDetailPage();
 
         RecipeKnowledgeFacts facts = GetRecipeKnowledge(recipe);

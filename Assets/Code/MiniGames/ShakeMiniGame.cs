@@ -44,6 +44,8 @@ public class ShakeMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpecta
     }
 
     [Header("UI")]
+    public RectTransform PresentedShaker => shaker;
+    public bool IsShakerMoving => shakerMotion != null;
     [SerializeField] private RectTransform shaker;
     [SerializeField] private TMP_Text progressText;
     [SerializeField] private TMP_Text hintText;

@@ -27,6 +27,9 @@ public sealed class CustomerMotionPresentation : MonoBehaviour
         quiet = source != null && source.name == "Hamlet";
         lastPosition = owner.transform.position;
         walked = 0;
+        var foley = GetComponent<CustomerFoleyPresentation>();
+        if (foley == null) foley = gameObject.AddComponent<CustomerFoleyPresentation>();
+        foley.Configure(owner);
     }
 
     private void Start()
@@ -38,7 +41,13 @@ public sealed class CustomerMotionPresentation : MonoBehaviour
         }
     }
 
-    public void React() => reactionUntil = Time.time + reactionDuration * (quiet ? .65f : 1f);
+    public void React()
+    {
+        reactionUntil = Time.time + reactionDuration * (quiet ? .65f : 1f);
+        // The pair shares one service. Its companion never duplicates this contact.
+        if (Owner != null && Owner.gameObject == gameObject)
+            DemoAudioController.Current?.Sounds?.Play(BarSound.GlassSet);
+    }
 
     private void LateUpdate()
     {

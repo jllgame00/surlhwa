@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -67,6 +68,10 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
 
     private IEnumerator Validate()
     {
+        var sounds = gameObject.AddComponent<SurlhwaSoundscape>();
+        sounds.SetMix(.7f, .35f, .6f, false); sounds.Trace = true;
+        var cueCounts = new System.Collections.Generic.Dictionary<BarSound, int>();
+        sounds.CueChanged += (cue, start, channel) => { if (start) cueCounts[cue] = cueCounts.GetValueOrDefault(cue) + 1; };
         foreach (string method in new[] { "Build", "Stir", "Shake", "Float" })
         {
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(
@@ -80,6 +85,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             game.StartGame(_ => { });
             SurlhwaBartendingPresentation.Apply(root, "물리 조주 검증"); // Explicit fixture label, not a guest request.
             var shelf = root.GetComponentInChildren<IngredientShelfController>(true);
+            root.AddComponent<BartendingAudioPresentation>().Bind(sounds);
             var ingredient = shelf.ConfiguredIngredients[0];
             foreach (var candidate in shelf.ConfiguredIngredients)
                 if (shelf.TrySelectIngredient(candidate)) { ingredient = candidate; break; }
@@ -104,10 +110,14 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 : shelf.PourSelectedIngredient(12.5f);
             Require(Mathf.Abs(bottleMl - 12.5f) < .001f && view.StreamVisible, "Accepted bottle stream missing.");
             SURLHWAReviewCapture.Save("phase-k-" + method + "-pour", 1280, 720);
+            yield return null; // Let the actual visible stream reach the presentation observer.
+            Require(sounds.PourSource.isPlaying && sounds.PourSource.clip == sounds.Library.Get(view.StreamSound).clip,
+                method + " visible stream/audio start mismatch.");
             if (floating != null) floating.EndActiveLayerPour();
             shelf.EndSelectedPour();
             Require(!view.StreamVisible, "Release continued pouring.");
             while (!view.IsResting) yield return null;
+            Require(!sounds.PourSource.isPlaying, method + " audio remained after bottle return.");
             if (floating != null)
                 foreach (var candidate in shelf.ConfiguredIngredients)
                     if (candidate.ingredientId == "cream" && shelf.TrySelectIngredient(candidate))
@@ -118,6 +128,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
             Require(Mathf.Abs(shelf.TargetContainer.CurrentLiquidVolumeMl - 12.5f) < .001f, "Measuring changed destination.");
             shelf.PhysicalPresentation.EndBottle();
             while (!view.IsResting) yield return null;
+            Require(!sounds.PourSource.isPlaying, method + " audio remained after bottle return.");
             if (floating != null) floating.SetMeasuredPourIntensity(FloatMiniGame.FloatPourIntensity.Gentle);
             Require(shelf.BeginMeasuredTransfer(), "Measured transfer did not start.");
             Require(!shelf.TrySelectIngredient(null), "Invalid selection accepted.");
@@ -172,6 +183,7 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 shelf.PourSelectedIngredient(8f, RecipePreparationAction.TopUp);
                 shelf.EndSelectedPour();
                 while (!view.IsResting) yield return null;
+            Require(!sounds.PourSource.isPlaying, method + " audio remained after bottle return.");
                 Require(shelf.PreparationTrace.Actions[shelf.PreparationTrace.Actions.Count - 1].Action == RecipePreparationAction.TopUp,
                     "TopUp changed into an ordinary Pour.");
             }
@@ -201,7 +213,10 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                             "Stir bowl left the actual liquid region.");
                         Require(Mathf.Abs(Mathf.DeltaAngle(90f, bowl.localEulerAngles.z)) <= 8.1f,
                             "Pixel spoon shaft became a windmill.");
+                        yield return null;
                     }
+                    Require(sounds.TechniqueSource.isPlaying && cueCounts.GetValueOrDefault(BarSound.Stir) > 0,
+                        "Moving spoon has no Stir loop.");
                     SURLHWAReviewCapture.Save("phase-l-Stir-action", 1280, 720);
                     stir.FinishStir();
                 }
@@ -273,6 +288,21 @@ internal sealed class SURLHWAPhysicalRunner : MonoBehaviour
                 if (placement == BartendingGarnishPlacement.Surface)
                     Require(Vector3.Distance(marker.position, view.GetLiquidSurfaceWorld(shelf.ServingGlass)) < .1f,
                         "Surface garnish is detached from liquid surface.");
+            }
+            if (game is BuildMiniGame build)
+            {
+                build.BeginGentleStir();
+                for (int step = 0; step <= 36; step++)
+                {
+                    // StirTechniqueTracker.RecordAngle explicitly returns false for the first reference sample.
+                    bool accepted = build.TryRecordGentleStirAngle(step * 10f, .05f);
+                    Require(accepted == (step > 0), "Gentle stir reference/accepted-motion contract changed.");
+                    yield return null;
+                }
+                Require(sounds.TechniqueSource.isPlaying, "Build spoon motion had no sound.");
+                build.FinishGentleStir();
+                yield return new WaitForSecondsRealtime(.12f);
+                Require(!sounds.TechniqueSource.isPlaying, "Gentle stir loop survived spoon removal.");
             }
             SURLHWAReviewCapture.Save("phase-k-" + method + "-finished", 1280, 720);
             SURLHWAReviewCapture.Save("phase-m-physical-" + method + "-finished", 1280, 720);

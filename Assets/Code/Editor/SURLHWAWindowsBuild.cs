@@ -14,6 +14,8 @@ public static class SURLHWAWindowsBuild
     public static void RunPhaseM() => Build("Builds/Windows-PhaseM-" + Git("rev-parse --short HEAD").Trim(), true);
     [MenuItem("SURLHWA/Build/Windows Phase N Review")]
     public static void RunPhaseN() => Build("Builds/Windows-PhaseN-" + Git("rev-parse --short HEAD").Trim(), true, "Phase N");
+    [MenuItem("SURLHWA/Build/Windows Phase O Review")]
+    public static void RunPhaseO() => Build("Builds/Windows-PhaseO-" + Git("rev-parse --short HEAD").Trim(), true, "Phase O");
     private static void Build(string output, bool phaseM, string phase = "Phase M")
     {
         if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Exit Play Mode before building.");
@@ -24,15 +26,15 @@ public static class SURLHWAWindowsBuild
         string revision = Git("rev-parse HEAD").Trim();
         string dirty = Git("status --short"); // File names only; never read protected configuration.
         if (phaseM && dirty.Split('\n').Any(line => line.Contains("Assets/Code/") || line.Contains(".unity") || line.Contains(".prefab") ||
-            (phase != "Phase N" && line.Contains("ProjectSettings/"))))
+            (phase != "Phase N" && phase != "Phase O" && line.Contains("ProjectSettings/"))))
             throw new InvalidOperationException("Commit intended implementation before a versioned review build.");
         // Phase N builds in the existing isolated project using committed settings.
         // The original repository's unresolved batching choice remains untouched.
-        if (phase == "Phase N")
+        if (phase == "Phase N" || phase == "Phase O")
         {
             string expected = Git("show HEAD:ProjectSettings/ProjectSettings.asset").Replace("\r\n", "\n");
             if (File.ReadAllText("ProjectSettings/ProjectSettings.asset").Replace("\r\n", "\n") != expected)
-                throw new InvalidOperationException("Phase N review requires committed PlayerSettings in the isolated build project.");
+                throw new InvalidOperationException("Character/audio review requires committed PlayerSettings in the isolated build project.");
         }
         string[] scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
         string[] required = { "Assets/_SURLHWA/Scenes/Gameplay/BarScene.unity", "Assets/_SURLHWA/Scenes/Gameplay/BartendingScene.unity" };
@@ -75,12 +77,18 @@ public static class SURLHWAWindowsBuild
             foreach (string file in Directory.GetFiles("Logs/Review", "phase-m-*.png").Where(f => !Path.GetFileName(f).Contains("baseline")))
                 File.Copy(file, output + "/Review/" + Path.GetFileName(file), true);
         }
-        if (phase == "Phase N")
+        if (phase == "Phase N" || phase == "Phase O")
         {
             File.Copy("Docs/25_CHARACTER_ANIMATION_AND_SERVICE_PRESENTATION.md", output + "/Docs/25_CHARACTER_ANIMATION_AND_SERVICE_PRESENTATION.md", true);
             if (Directory.Exists("Logs/Review/PhaseN"))
                 foreach (string file in Directory.GetFiles("Logs/Review/PhaseN", "*-seated-1920x1080.png"))
                     File.Copy(file, output + "/Review/" + Path.GetFileName(file), true);
+        }
+        if (phase == "Phase O")
+        {
+            File.Copy("Docs/26_AUDIO_AND_AMBIENT_PRESENTATION.md", output + "/Docs/26_AUDIO_AND_AMBIENT_PRESENTATION.md", true);
+            File.Copy("ArtSource/Audio/manifest.json", output + "/Docs/PhaseO-Audio-Provenance.json", true);
+            File.Copy("ArtSource/Audio/README.md", output + "/Docs/PhaseO-Audio-Provenance.md", true);
         }
         File.WriteAllText(output + "/BUILD_INFO.txt", "SURLHWA first-pass full campaign (18 nights / 47 encounters)\nUnity " + Application.unityVersion +
             "\nReview: " + (phaseM ? phase : "Campaign") + "\nSource commit: " + revision +

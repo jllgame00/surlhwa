@@ -68,6 +68,10 @@ public sealed class BartendingPhysicalPresentation : MonoBehaviour
     public static float MotionDeltaTime => RecipeGuidePanelController.IsTechniqueReadStateActive ||
         DemoAudioController.IsSettingsOpen ? 0f : Time.deltaTime;
     public bool IsResting => motion == Motion.Rest;
+    public bool IsTransferringVessel => movingVessel != null;
+    public BarSound StreamSound => strainer != null && strainer.gameObject.activeInHierarchy ? BarSound.Strain :
+        destination != null && destination == surfaceContainer ? BarSound.FinePour :
+        movingVessel != null ? BarSound.Transfer : BarSound.Pour;
     public bool StreamVisible => stream != null && stream.gameObject.activeSelf;
     public RectTransform Bottle => bottle;
     public RectTransform Neck => neck;

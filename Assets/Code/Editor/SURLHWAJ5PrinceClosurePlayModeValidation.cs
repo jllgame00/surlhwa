@@ -79,6 +79,10 @@ public static class SURLHWAJ5PrinceClosurePlayModeValidation
 internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
 {
     private int previousFrameRate, previousVSync;
+    private SurlhwaSoundscape sounds;
+    private AudioClip originalDiscovery, longDiscovery;
+    private SurlhwaAudioLibrary audioLibrary;
+    private int discoverySounds;
     private int scenarioNumber, visitNumber, popupOpens, popupCompletions, toastCompletions, farewellEntries, discoveries, serviceCalls, departures;
     private bool observedPopup, observedFarewell, overlap;
     private bool capturePopup;
@@ -201,6 +205,13 @@ internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
         interaction = FindFirstObjectByType<InteractionUIController>();
         orders = FindFirstObjectByType<OrderManager>();
         knowledge = FindFirstObjectByType<RecipeUnlockManager>();
+        sounds = FindFirstObjectByType<DemoAudioController>().Sounds;
+        sounds.SetMix(.7f, .35f, .6f, false); sounds.Trace = true;
+        audioLibrary = sounds.Library;
+        originalDiscovery = audioLibrary.Get(BarSound.Discovery).clip;
+        longDiscovery = AudioClip.Create("J5 long audio duration fixture", 44100 * 30, 1, 44100, false);
+        sounds.Library.Get(BarSound.Discovery).clip = longDiscovery;
+        sounds.CueChanged += CountDiscoveryAudio;
         popup = FindFirstObjectByType<RecipeUnlockPopupController>();
         toast = FindFirstObjectByType<ResultToastController>();
         popupRoot = (RectTransform)Get(popup, "popupRoot");
@@ -235,7 +246,7 @@ internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
             for (int visit = 1; visit <= 3; visit++)
             {
                 visitNumber = visit;
-                popupOpens = popupCompletions = toastCompletions = farewellEntries = discoveries = serviceCalls = departures = 0;
+                popupOpens = popupCompletions = toastCompletions = farewellEntries = discoveries = serviceCalls = departures = discoverySounds = 0;
                 overlap = false;
                 Set(day, "currentDay", visit + 1);
                 Set(day, "servedCustomerCount", visit == 3 ? 3 : 0);
@@ -316,6 +327,10 @@ internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
                     Require(!overlap && farewellEntries == 1, "Farewell must enter once without popup overlap.");
                     Require(serviceCalls == 1 && discoveries == (knowledge.IsKnown(recipe) && !wasKnown ? 1 : 0), "Service/discovery must resolve exactly once.");
                     Require(popupOpens == discoveries && popupCompletions == discoveries, "Each discovery must open and complete once.");
+                    Require(discoverySounds == discoveries, "Discovery audio did not start once per popup.");
+                    yield return new WaitForSecondsRealtime(.12f);
+                    Require(!sounds.DiscoverySource.isPlaying, "Long discovery audio survived visual completion.");
+                    Record("audio starts=" + discoverySounds + "; 30-second audio does not delay farewell; stopped after visual completion");
                     Require(toastCompletions == 1, "Farewell must follow exactly one diagnostic completion.");
                     Require(RecipeProgressPersistence.LoadRecipeKnowledgeRaw() == savedKnowledge, "Presentation must not rewrite recipe persistence.");
                     foreach (var graphic in popupRoot.GetComponentsInChildren<Graphic>(true))
@@ -431,6 +446,20 @@ internal sealed class SURLHWAJ5PrinceClosureRunner : MonoBehaviour
         return new MiniGameResult { success = true, grade = "Good", expectedRecipe = recipe,
             brewedComposition = new BrewComposition { method = recipe.method, ingredients = ingredients.ToArray() },
             preparationTrace = trace, preparationEvaluation = RecipePreparationEvaluator.Evaluate(recipe, trace) };
+    }
+    private void CountDiscoveryAudio(BarSound cue, bool start, string channel)
+    {
+        if (cue == BarSound.Discovery && start) discoverySounds++;
+    }
+    private void OnDestroy()
+    {
+        if (sounds != null)
+        {
+            sounds.CueChanged -= CountDiscoveryAudio;
+
+        }
+        if (audioLibrary != null) audioLibrary.Get(BarSound.Discovery).clip = originalDiscovery;
+        if (longDiscovery != null) Destroy(longDiscovery);
     }
     private void Finish(bool success)
     {
