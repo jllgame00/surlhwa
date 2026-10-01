@@ -2538,3 +2538,32 @@ the hidden-window capture was black and proves no visual/font result. Docs/26 an
 RELEASE_REVIEW separate this debt from the passed Editor/audio/campaign evidence.
 Actual Unity output and default-gain previews are in Logs/Review/PhaseOAudio.
 Human listening and visible standalone review remain pending.
+
+### First human RC playthrough blocker — I / AddIce (2026-10-02)
+
+Original baseline `49524de`, branch `refactor/project-rebuild`. The human reached
+차가운 한 잔 / Stir / MixingGlass and reported that focused I failed after M
+measurement. Current-source audit finds that the shared measurement handler
+returned before the route's I check even after T emptied the Jigger. The
+introducing measurement change is `be9fe67`, predating N/J5/O. This record does
+not rewrite those phases' historical fixture results or reopen pointer analysis.
+
+One shared-boundary fix preserves I and dispatches it to the existing route
+handler; actual container state, physical placement, preparation trace and
+presentation-only ice audio remain authoritative in their existing domains.
+Editor diagnostics distinguish raw I, focus, shared gates, handler rejection
+and applied ice/action count. No serialized assets or IDs were changed.
+
+Original compilation and source checks pass; secondary direct-command fixtures
+cover Stir/Shake/Build ice, rejection/duplicates, re-entry and one normal Dry
+Martini service. Existing four-method Phase K physical regression passes.
+The original Phase O focused fixture also passes one ice cue, volume/mute,
+reading pause, unload and synthetic cancellation/disabled-owner cleanup; its
+delayed runner required documented recovery in the relocated validation copy.
+Focused diff-check passes; whole-worktree whitespace in protected owner art/font
+changes remains untouched. All 65 original dirty/recovery hashes are preserved.
+Manwol Float has no authored AddIce. Native SendInput failed Unity keyboard
+delivery at M preflight despite checked Game View focus; native I remains
+VALIDATION_DEBT. Detailed evidence, audio result and one focused owner rerun
+are recorded in `RELEASE_REVIEW.md`. Status: FIXED_OWNER_RERUN_REQUIRED; do not
+declare the human blocker closed or resume broad RC sign-off from fixture PASS.

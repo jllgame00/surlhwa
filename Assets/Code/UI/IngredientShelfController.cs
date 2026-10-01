@@ -361,6 +361,14 @@ public class IngredientShelfController : MonoBehaviour
     /// <summary>Shared live measurement controls, called only in preparation states.</summary>
     public bool HandlePhysicalTools(float fillRateMlPerSecond)
     {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.I))
+            Debug.Log($"[Ice Input] observed route={currentMethod} target={targetContainer?.ContainerType} " +
+                $"focused={Application.isFocused} window={UnityEditor.EditorWindow.focusedWindow?.GetType().Name} " +
+                $"allowed={SurlhwaModalSurface.KeyAllowed(KeyCode.I)} measuring={Measuring} " +
+                $"pending={HasPendingMeasurement} transfer={PhysicalTransferActive} ready={ToolsReady} " +
+                $"ice={targetContainer?.HasIce} actions={preparationTrace?.Actions.Count}");
+#endif
         physicalPresentation?.ShowMeasurement(Measuring);
         if (PhysicalTransferActive || GarnishPlacementActive) return true;
         if (SurlhwaModalSurface.GetKeyDown(KeyCode.M) && !HasPendingMeasurement)
@@ -369,6 +377,9 @@ public class IngredientShelfController : MonoBehaviour
             Measuring = !Measuring;
         }
         if (!Measuring) return false;
+        // Measurement owns Space/T, but must not swallow the route's ice key
+        // after an emptied Jigger. The existing AddIce handler keeps its gates.
+        if (SurlhwaModalSurface.GetKeyDown(KeyCode.I)) return false;
         if (SurlhwaModalSurface.GetKeyDown(KeyCode.T))
         {
             BeginMeasuredTransfer();
@@ -565,9 +576,23 @@ public class IngredientShelfController : MonoBehaviour
 
     public bool TryAddIceToActiveTarget()
     {
+#if UNITY_EDITOR
+        Debug.Log($"[Ice Input] handler route={currentMethod} target={targetContainer?.ContainerType} " +
+            $"ready={ToolsReady} pending={HasPendingMeasurement} transfer={PhysicalTransferActive} " +
+            $"resting={physicalPresentation == null || physicalPresentation.IsResting} ice={targetContainer?.HasIce}");
+#endif
         if (physicalPresentation != null)
         {
-            if (!ToolsReady || targetContainer == null || targetContainer.HasIce) return false;
+            if (!ToolsReady || targetContainer == null || targetContainer.HasIce)
+            {
+#if UNITY_EDITOR
+                string reason = targetContainer == null ? "no target" :
+                    targetContainer.HasIce ? "already iced" : HasPendingMeasurement ? "pending measurement" :
+                    PhysicalTransferActive ? "physical transfer" : GarnishPlacementActive ? "garnish placement" : "tool returning";
+                Debug.Log("[Ice Input] rejected reason=" + reason);
+#endif
+                return false;
+            }
             EndSelectedPour();
             PhysicalTransferActive = true;
             physicalPresentation.StartCoroutine(PlacePhysicalIce());
@@ -597,6 +622,10 @@ public class IngredientShelfController : MonoBehaviour
             targetContainer.ContainerType);
         RefreshContents();
         Debug.Log($"[Container] AddIce target={targetContainer.ContainerType}");
+#if UNITY_EDITOR
+        Debug.Log($"[Ice Input] applied target={targetContainer.ContainerType} ice={targetContainer.HasIce} " +
+            $"actions={preparationTrace?.Actions.Count}");
+#endif
         return true;
     }
 

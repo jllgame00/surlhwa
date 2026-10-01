@@ -1,5 +1,95 @@
 # Windows first-pass campaign review
 
+## First human RC blocker: I / AddIce after measurement (2026-10-02)
+
+Status: **FIXED_OWNER_RERUN_REQUIRED**. Resume the human playthrough only after
+the focused rerun below. Older automated fixture passes did not certify physical
+keyboard delivery, and the existing Phase O package predates this fix.
+
+Baseline: original repository `refactor/project-rebuild`, HEAD `49524de`, Phase O
+runtime `f5bb936`. The preserved human Editor log identifies the production
+`BartendingScene` route as **차가운 한 잔 / Stir / MixingGlass / Preparing**.
+The exact attempted recipe and ingredient quantities cannot be recovered.
+The owner explicitly confirmed that Game View was focused and M measurement
+had been used. Historical logging did not observe I down, the command, or its
+before/after state; those facts are not retroactively claimed.
+
+The source-level cause is `IngredientShelfController.HandlePhysicalTools`:
+measurement remains enabled after T empties the Jigger, and its idle branch
+returned before the method-specific I check. Thus I never issued AddIce in this
+state. This shared input gate originated in **`be9fe67` (Phase K measurement)**,
+before Phase N, J5 and Phase O. Current UI and physical-control documentation
+still specify I for ice. Both input backends are configured; no evidence links
+this failure to Phase O audio or the historical shared-pointer incident.
+
+The narrow fix lets I leave the measurement handler and reach the existing
+method handler. Full Jiggers, transfer, garnish placement, returning tools,
+duplicate ice and method state retain their existing guards. There is no new
+ice state, binding, input framework, recipe or persistence authority.
+
+The production chain remains legacy I polling → reading/modal gate → method
+preparation handler → shelf ToolsReady → physical placement coroutine → actual
+container HasIce and one preparation-trace AddIce → state-driven attached ice
+visual → Phase O trace observer/cue. Preparation is evaluated from accepted
+actions; there is no forced recipe-step index advance. Audio owns no completion.
+Editor-only `[Ice Input]` observations now identify raw I down, application and
+focused-window state, method/target, modal permission, measurement/pending/transfer
+and tool readiness, handler entry, rejection reason and applied ice/action count.
+
+Validation evidence is retained locally under `Logs/Review/IceInput`:
+
+- `static-and-preservation.json`: before/after routing checks and all 65 existing
+  dirty/recovery file hashes unchanged, including four Recovery files. The
+  original scene, settings, art metadata, font and owner saves were not edited.
+- `compile-final.log`: original Editor project build, zero errors, eight existing
+  warnings. No scene/prefab/serialized data changes are part of the fix.
+- Focused `git diff --check` passes. Whole-worktree check reports 291 existing
+  trailing-whitespace entries in protected art metadata/font changes; these
+  were preserved, not included in the fix (`diff-check-worktree.log`).
+- `native-before.log` and `native-before-vk-corrected.log`: OS SendInput attempts
+  with a checked focused Game View. Injection was accepted by Windows but M
+  never reached Unity legacy polling; I testing could not proceed. These are
+  **VALIDATION_BLOCKED_BY_ENVIRONMENT**, not native input PASS or focus-only proof.
+  The intermediate compile-blocked probe log is also retained.
+- `logic-after.log`: explicitly secondary direct-command fixtures on production
+  scene/prefabs, Dry Martini, Gin Fizz, Negroni and Seolya (`recipe_test_stir`).
+  Ice state, attached visual, one action/cue, full-Jigger rejection, repeated
+  rejection, next technique, wrong-state safety and route replacement/re-entry
+  pass. Dry Martini reaches normal service, satisfied preparation and recipe
+  recognition using measured transfer and technique-angle seams. These do not
+  prove I delivery. A fixture-only deferred-destruction lookup failure is retained
+  in `logic-fixture-binding-failure.log`; corrected lookup passed.
+- `phase-k-after.log`: existing four-method graphical physical integration PASS,
+  including container conservation, measurement, attached ice, transfer,
+  Stir/Shake and Float layers/garnish. Manwol authors no AddIce; no ice was forced
+  into that Float recipe.
+- `phase-o-after.log`: original focused audio fixture PASS for one ice cue,
+  volume/mute controls, Guide/Settings pause, physical Shake/Strain, additive
+  unload, synthetic audio cancellation and disabled-owner silence. The prepared
+  probe initially had no delayed runner after the relocated SearchDatabase
+  startup exception. Read-only status confirmed this; the original runner was
+  attached once through the isolated Editor bridge, with every assertion
+  unchanged (`audio-runner-recovery.json`). This is direct-fixture audio proof,
+  not native input proof. Physical cancellation followed by native I re-entry
+  remains part of the owner rerun.
+- No full 18-night / 47-encounter campaign was run for this input-only fix.
+
+The disposable current-source validation copy excludes `_Recovery` and uses a
+separate company/product preference namespace. Its relocated SearchDatabase
+startup exception is retained as tooling evidence; it did not abort the passing
+fixtures. Native and logic probe code stays with ignored local evidence and is
+not shipped as production input.
+
+**One owner rerun:** open the production BarScene, enter the same Stir request,
+click inside Game View, use M and T to measure/empty the Jigger, release the
+tools, then press I once while M remains enabled. Confirm visible ice, one
+`[Ice Input] applied` record, one ice cue at audible settings and available
+젓기 시작; finish and serve. Also try I with a nonempty Jigger and again after
+placement (no added ice/action), then stop/re-enter Play Mode and repeat the
+focused M → T → I sequence. If it fails, retain the `[Ice Input]` lines and the
+active method component's state/Guide/Settings state. This rerun owns native
+one-press/one-action and cancellation/re-entry sign-off; fixtures cannot close it.
+
 This package is for owner playtesting, not final public-release approval. Keep the whole Windows folder together. Start SURLHWA.exe and use the Korean New Game / Continue controls. README.md contains controls; CREDITS.md records provenance and remaining ownership checks. For Phase M use the versioned `Windows-PhaseM-*` package and check its `BUILD_INFO.txt`; the old `Builds/Windows` executable is not Phase M evidence.
 
 ## Human playtest
