@@ -16,7 +16,9 @@ public sealed class DemoAudioController : MonoBehaviour
     public const string MuteKey = "SURLHWA_AUDIO_MUTED";
     [SerializeField] private AudioClip musicClip, ambienceClip, pourClip, iceClip, glassClip, doorClip, pageClip;
     [SerializeField] private Button settingsButton;
-    private AudioSource music, ambience, effects, pour;
+    public static DemoAudioController Current { get; private set; }
+    public SurlhwaSoundscape Sounds { get; private set; }
+    private InteractionUIController readingUI;
     private IngredientShelfController shelf;
     private int observedActions;
     private BartendingContainerState observedContainer;
@@ -31,13 +33,10 @@ public sealed class DemoAudioController : MonoBehaviour
 
     private void Awake()
     {
-        music = Source(musicClip, true);
-        ambience = Source(ambienceClip, true);
-        pour = Source(pourClip, true);
-        effects = Source(null, false);
+        Current = this;
+        Sounds = gameObject.AddComponent<SurlhwaSoundscape>();
+        readingUI = FindFirstObjectByType<InteractionUIController>();
         ApplyVolumes();
-        if (music.clip != null) music.Play();
-        if (ambience.clip != null) ambience.Play();
         if (settingsButton != null) settingsButton.onClick.AddListener(ToggleSettings);
     }
     private void Start()
@@ -48,15 +47,6 @@ public sealed class DemoAudioController : MonoBehaviour
         foreach (GameObject root in gameObject.scene.GetRootGameObjects())
             foreach (Button button in root.GetComponentsInChildren<Button>(true))
                 if (button.name == "CodexButton") SurlhwaUITheme.CornerButton(button, false, () => codex != null && codex.IsOpen);
-    }
-    private AudioSource Source(AudioClip clip, bool loop)
-    {
-        AudioSource source = gameObject.AddComponent<AudioSource>();
-        source.playOnAwake = false;
-        source.spatialBlend = 0f;
-        source.loop = loop;
-        source.clip = clip;
-        return source;
     }
     public void ObserveBartending(MiniGameManager runner)
     {
@@ -82,11 +72,12 @@ public sealed class DemoAudioController : MonoBehaviour
         }
     }
     private void OnLiquid(IngredientData _) => lastLiquidTime = Time.unscaledTime;
-    public void PlayPage() { if (!Muted && pageClip != null) effects.PlayOneShot(pageClip, .35f); }
-    public void PlayDoor() { if (!Muted && doorClip != null) effects.PlayOneShot(doorClip, .45f); }
+    public void PlayPage() => Sounds?.Play(BarSound.Select);
+    public void PlayDoor() => Sounds?.Play(BarSound.EntranceAir);
 
     private void Update()
     {
+        Sounds.Reading = readingUI != null && readingUI.IsReadingDialogue;
         if (Input.GetKeyDown(KeyCode.Escape) && !SurlhwaModalSurface.Back()) ToggleSettings();
         if (shelf != null && shelf.TargetContainer != null)
         {
@@ -98,17 +89,15 @@ public sealed class DemoAudioController : MonoBehaviour
         }
         bool reading = IsSettingsOpen || RecipeGuidePanelController.IsTechniqueReadStateActive;
         bool pouring = !reading && shelf != null && Time.unscaledTime - lastLiquidTime < .12f;
-        if (pouring && !pour.isPlaying && !Muted) pour.Play();
-        if ((!pouring || Muted) && pour.isPlaying) pour.Stop();
+        Sounds.SetPour(pouring ? BarSound.Pour : null);
         if (shelf == null || shelf.PreparationTrace == null) return;
         var actions = shelf.PreparationTrace.Actions;
         if (observedActions > actions.Count) observedActions = actions.Count;
         while (observedActions < actions.Count)
         {
             var action = actions[observedActions++].Action;
-            AudioClip clip = action == RecipePreparationAction.AddIce ? iceClip : glassClip;
-            if (!Muted && !reading && clip != null && action != RecipePreparationAction.Pour)
-                effects.PlayOneShot(clip, .5f);
+            if (!reading && action != RecipePreparationAction.Pour)
+                Sounds.Play(action == RecipePreparationAction.AddIce ? BarSound.Ice : BarSound.GlassSet);
         }
     }
     public void SetVolume(string key, float value)
@@ -129,12 +118,7 @@ public sealed class DemoAudioController : MonoBehaviour
         Mathf.Clamp(SurlhwaPlayerPrefsStore.GetInt(key, fallback), 0, 100) / 100f;
     private void ApplyVolumes()
     {
-        float master = Muted ? 0f : Volume(MasterKey, 70);
-        music.volume = master * Volume(MusicKey, 35);
-        ambience.volume = master * Volume(EffectsKey, 60) * .5f;
-        effects.volume = master * Volume(EffectsKey, 60);
-        pour.volume = master * Volume(EffectsKey, 60) * .45f;
-        if (Muted) { effects.Stop(); pour.Stop(); }
+        Sounds?.SetMix(Volume(MasterKey, 70), Volume(MusicKey, 35), Volume(EffectsKey, 60), Muted);
     }
     public void ToggleSettings()
     {
@@ -158,6 +142,7 @@ public sealed class DemoAudioController : MonoBehaviour
     private void OnDestroy()
     {
         CloseSettings();
+        if (Current == this) Current = null;
         if (shelf != null) shelf.IngredientUsed -= OnLiquid;
         if (settingsButton != null) settingsButton.onClick.RemoveListener(ToggleSettings);
     }

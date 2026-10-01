@@ -113,11 +113,12 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
         Require(audio != null, "Missing serialized Bar audio controller.");
         Require(ActiveListeners() == 1, "Bar requires exactly one active audio listener.");
         var sources = audio.GetComponents<AudioSource>();
-        Require(sources.Length == 4, "Unexpected audio ownership/duplicate sources.");
-        foreach (var field in new[] { "musicClip", "ambienceClip", "pourClip", "iceClip", "glassClip", "doorClip", "pageClip" })
+        Require(sources.Length == SurlhwaSoundscape.SourceCount, "Unexpected audio ownership/duplicate sources.");
+        Require(audio.Sounds.Library != null && audio.Sounds.Library.cues.Length == 22, "Missing Phase O cue library.");
+        foreach (var cue in audio.Sounds.Library.cues)
         {
-            var clip = (AudioClip)Get(audio, field);
-            Require(clip != null && clip.samples > 0 && clip.length > 0, "Missing audio asset " + field);
+            var clip = cue.clip;
+            Require(clip != null && clip.samples > 0 && clip.length > 0, "Missing audio asset " + cue.id);
         }
         var entry = (GameObject)Get(FindFirstObjectByType<GameManager>(), "entryPanel");
         var settings = entry.transform.Find("DemoEntryContent/SoundSettingsButton")?.GetComponent<Button>();
@@ -176,9 +177,9 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
             yield return null;
         }
         shelf.EndSelectedPour();
-        Require(((AudioSource)Get(audio, "pour")).isPlaying, "Accepted continuous pour has no running sound.");
+        Require(audio.Sounds.PourSource.isPlaying, "Accepted continuous pour has no running sound.");
         yield return new WaitForSecondsRealtime(.25f);
-        Require(!((AudioSource)Get(audio, "pour")).isPlaying, "Pour sound did not stop after transfer ended.");
+        Require(!audio.Sounds.PourSource.isPlaying, "Pour sound did not stop after transfer ended.");
         SURLHWAReviewCapture.Save("shake-preparation", 1280, 720);
         Require(shake.AddIceToShaker(), "Ice preparation failed.");
         while (shelf.PhysicalTransferActive) yield return null;
@@ -232,7 +233,7 @@ internal sealed class SURLHWAAudioRunner : MonoBehaviour
             yield return null;
         }
         Require(ActiveListeners() == 1, "Bar audio listener was not restored after unload.");
-        Require(!coordinator.IsBartendingActive && !((AudioSource)Get(audio, "pour")).isPlaying,
+        Require(!coordinator.IsBartendingActive && !audio.Sounds.PourSource.isPlaying,
             "Bartending audio/lifecycle did not stop after unload.");
         Debug.Log("[Audio PlayMode] PASS: imported clips, scene-owned playback, one active listener before/during/after bartending, actual volume/mute controls, " +
             "preference reset isolation, explicit additive handoff, accepted pour start/stop, " +

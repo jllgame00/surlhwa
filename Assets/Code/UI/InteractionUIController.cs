@@ -88,6 +88,8 @@ public class InteractionUIController : MonoBehaviour
     private bool isLittlePrinceChoiceActive;
     private bool isLittlePrinceChoiceResponseActive;
     private LittlePrinceNarrativeData activeLittlePrinceNarrative;
+    public bool IsReadingDialogue => dialoguePanel != null && dialoguePanel.activeInHierarchy;
+
     private Action farewellCompleted;
     private string[] farewellLines;
     private int farewellLineIndex;
