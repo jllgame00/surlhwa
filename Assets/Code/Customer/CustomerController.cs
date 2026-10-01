@@ -127,7 +127,7 @@ public class CustomerController : MonoBehaviour
     private bool isLittlePrinceFirstVisitNarrative;
     private bool isLittlePrinceFollowupNarrative;
     private bool isLittlePrinceClosingNarrative;
-    private float serviceFeedbackDuration;
+    private System.Func<bool> serviceFeedbackCompleted;
     private CampaignEncounterData campaignEncounter;
     private bool campaignServiceSucceeded;
     public CampaignEncounterData CampaignEncounter => campaignEncounter;
@@ -622,12 +622,12 @@ public class CustomerController : MonoBehaviour
     }
 
     // New path: calculate reaction from the actually served CocktailData.
-    public void OnServedWithReaction(GuestServiceResult serviceResult, float feedbackDuration = 4.2f)
+    public void OnServedWithReaction(GuestServiceResult serviceResult, System.Func<bool> feedbackCompleted = null)
     {
         GetComponent<CustomerMotionPresentation>()?.React();
         GetComponent<CampaignGuestPresentation>()?.ReactToService();
         bartenderPresentation?.Acknowledge(this);
-        serviceFeedbackDuration = feedbackDuration;
+        serviceFeedbackCompleted = feedbackCompleted;
         campaignServiceSucceeded = LittlePrinceVisitPersistence.IsSuccessfulService(serviceResult);
         if (LittlePrinceVisitNumber > 0)
             LittlePrinceVisitPersistence.RecordServiceOutcome(LittlePrinceVisitNumber,
@@ -790,10 +790,16 @@ public class CustomerController : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
+        // Await the existing UI presenters' actual completion, not a sum of
+        // clip durations. Frame-rounded coroutines can exceed that estimate.
+        if ((isLittlePrinceClosingNarrative || (campaignEncounter != null && campaignEncounter.afterService != null)) &&
+            serviceFeedbackCompleted != null)
+            yield return new WaitUntil(serviceFeedbackCompleted);
+        serviceFeedbackCompleted = null;
+
         if (isLittlePrinceClosingNarrative)
         {
             // Diagnostic/discovery feedback finishes before the player reads the farewell.
-            yield return new WaitForSeconds(Mathf.Max(0f, serviceFeedbackDuration - 4.2f));
             string[] lines = littlePrinceNarrative.GetFarewellLines(
                 LittlePrinceNarrativePersistence.LoadChoice(), LittlePrinceVisitPersistence.HasOpenFarewell());
             if (interactionUI != null && lines.Length > 0)
@@ -812,7 +818,6 @@ public class CustomerController : MonoBehaviour
         if (campaignEncounter != null && campaignEncounter.afterService != null)
         {
             GetComponent<CampaignGuestPresentation>()?.ShowServedGlass();
-            yield return new WaitForSeconds(Mathf.Max(0f, serviceFeedbackDuration - 4.2f));
             string[] lines = campaignEncounter.GetDepartureLines(campaignServiceSucceeded);
             if (interactionUI == null || lines.Length == 0)
             {

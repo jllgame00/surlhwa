@@ -21,6 +21,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
     public float DisplayCycleDuration => Mathf.Max(0f, showDuration) + Mathf.Max(0f, slideDuration) * 2f;
 
     private Coroutine popupRoutine;
+    private System.Action<bool> presentationCompleted;
 
     private void Awake()
     {
@@ -49,13 +50,7 @@ public class RecipeUnlockPopupController : MonoBehaviour
 
     public void Show(CocktailRecipeData recipe, string titleOverride, string messageOverride)
     {
-        if (recipe == null || popupRoot == null)
-            return;
-
-        if (popupRoutine != null)
-            StopCoroutine(popupRoutine);
-
-        popupRoutine = StartCoroutine(ShowRoutine(recipe, titleOverride, messageOverride));
+        ShowDelayed(recipe, 0f, titleOverride, messageOverride);
     }
 
     /// <summary>
@@ -66,14 +61,16 @@ public class RecipeUnlockPopupController : MonoBehaviour
         CocktailRecipeData recipe,
         float delay,
         string titleOverride = null,
-        string messageOverride = null)
+        string messageOverride = null,
+        System.Action<bool> completed = null)
     {
-        if (recipe == null || popupRoot == null)
+        CancelPresentation();
+        if (recipe == null || popupRoot == null || !isActiveAndEnabled)
+        {
+            completed?.Invoke(false);
             return;
-
-        if (popupRoutine != null)
-            StopCoroutine(popupRoutine);
-
+        }
+        presentationCompleted = completed;
         popupRoutine = StartCoroutine(ShowDelayedRoutine(
             recipe,
             Mathf.Max(0f, delay),
@@ -108,6 +105,26 @@ public class RecipeUnlockPopupController : MonoBehaviour
 
         popupRoot.gameObject.SetActive(false);
         popupRoutine = null;
+        CompletePresentation(true);
+    }
+
+    private void OnDisable() => CancelPresentation();
+
+    private void CancelPresentation()
+    {
+        if (popupRoutine != null) StopCoroutine(popupRoutine);
+        popupRoutine = null;
+        if (popupRoot != null) popupRoot.gameObject.SetActive(false);
+        CompletePresentation(false);
+    }
+
+    // Clear before invoking: natural dismissal, replacement and disable each
+    // release the same request at most once, after its UI is hidden.
+    private void CompletePresentation(bool completed)
+    {
+        var callback = presentationCompleted;
+        presentationCompleted = null;
+        callback?.Invoke(completed);
     }
 
     private void SetupContent(CocktailRecipeData recipe, string titleOverride, string messageOverride)

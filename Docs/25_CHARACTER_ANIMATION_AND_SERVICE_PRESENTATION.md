@@ -276,3 +276,79 @@ Bartender coverage is centered idle, orientation and acknowledgment only;
 locomotion/seating is intentionally absent. No bespoke rear-facing redraw,
 full skeletal rig or physics cloth is claimed. HUMAN_VISUAL_APPROVAL_PENDING.
 No subjective animation approval is claimed. DEFERRED_AUDIO remains unchanged.
+
+
+## Retained J5 failure: bounded sequencing correction (2026-10-01)
+
+The failed Phase N J5 run above remains historical evidence. A follow-up from
+`97b71a1` reproduced the same assertion using baseline production code and a
+30 to 10 FPS popup cadence fixture. Fixed-rate baseline runs passed; the changing
+cadence exposed farewell entry before the popup's final coroutine frame. The
+confirmed cause is reliance on a nominal feedback-duration sum. Phase N
+causation remains unproven. Docs/23 records the causal and ownership details.
+
+The existing toast and popup now report actual completion after hiding;
+OrderManager chains presentation and the customer awaits its completion before
+farewell. This is presentation coordination, with no change to matching, FIT,
+Known/discovery persistence, visit completion or seat ownership. Existing Phase N
+art, stand/walk behavior, companion cleanup and service cues are retained.
+No new save key, modal framework, animation authority or input policy is added.
+
+### Focused evidence
+
+`Logs/Review/J5FarewellDiscovery/` retains three baseline logs (including the
+reproduced failure), the baseline overlap image, the first fixed run, the final
+focused log, `after-timeline.txt`, six final 720p/1080p captures, compile output
+and tested-source hashes. The final fixture starts each closing guest already
+seated, then uses normal Update/sorting and natural departure. Earlier visits
+retain the original service/explicit-departure setup. This is a production-scene
+fixture with direct service/Next callbacks, not OS input or human playtesting.
+
+- Final compile: zero errors, eight existing warnings. Existing integrated
+  campaign Editor and service-feedback semantic checks passed.
+- Six final J5 scenarios passed: successful discovery and farewell; already
+  Known/no popup; failed technique on each visit; missing preparation; poor FIT;
+  all authored farewell lines and Brew/Back rejection; demo completion/reset.
+- Each closing service resolved once; each newly Known recipe produced one
+  popup opening and one completion; toast completion and farewell entry each
+  occurred once. Known services produced zero popup events. Saved knowledge
+  remained identical before/after presentation.
+- Each closing guest entered Standing and Leaving, walked out naturally,
+  released its reserved seat, completed one departure/visit and left no customer
+  presentation object. Cancellation/replacement/disabled/missing presentation
+  checks signaled once and did not change knowledge.
+- Actual EventSystem raycast query excluded popup decoration; all popup graphics
+  remained non-raycasting and farewell had no remaining modal owner. Discovery
+  is automatically dismissed: pointer/keyboard acknowledgment and modal release
+  are not separate popup actions. Native pointer/keyboard delivery was not run;
+  the existing reading input boundary and callbacks are unchanged.
+- Final 720p popup and 1080p farewell renders were inspected: discovery is gone
+  before the authored farewell appears. No human aesthetic approval is claimed.
+
+The retained Settings/Brew incidents remain separate. Phase O audio was not
+started. The old Windows review executable is unchanged and does not include
+this fix; no new build or standalone validation is claimed here.
+
+### Final shared-service and campaign regression
+
+The existing I14 production-UI Play Mode regression passed both ordinary-service
+cases: good FIT with one discovery, and poor FIT with no new discovery. The
+existing full campaign regression then ran once on the final runtime source:
+18 nights, 47 natural departures, 16 extended special visits, discovery failure
+and retry, alternatives, weak-service ACT continuation, checkpoint/mid-dialogue/
+ending Continue, seven memories, ending/coda, reset and legacy handoff all passed.
+No animation, recipe, campaign or save authority was added by the sequencing fix.
+Logs: `service-feedback.log` and `campaign.log` in the same J5 evidence directory.
+These are automated input seams; native physical input and subjective human
+review are not inferred from them. No standalone build was requested or run.
+
+After all runs, progress/knowledge/audio exactly matched the private task-start
+snapshot. All four protected worktree files retained their starting hashes; no
+scene, prefab, animation asset or unrelated file was changed. The idle isolated
+Editor had no dirty scene and exited normally after writing its verification
+receipt. Its command connection closed with the process before returning a
+response; the saved receipt and shutdown log establish that verification ran.
+Task-owned diff whitespace checks passed. Evidence index: `index.html` in the
+J5 review directory. This closes the reproduced sequencing defect within the
+executed automated scope, without claiming native input, standalone or human
+visual approval. Historical Settings/Brew incidents remain separate.

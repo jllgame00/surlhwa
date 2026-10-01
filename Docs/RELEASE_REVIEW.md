@@ -94,7 +94,11 @@ check; preferences were restored. This is not a standalone playthrough.
 
 Docs/25 separates the passed motion/physical/UI/campaign checks from a failed
 older focused J5 assertion: a discovery popup was still active at farewell
-entry. That failure remains validation debt; Phase N causation is unproven.
-Human review should observe that transition without treating programmatic
-animation playback as human testing. Historical Settings/Brew incidents are
+entry. The bounded J5 follow-up reproduced the duration-estimate race and now
+chains actual feedback completion before farewell. Six focused scenarios,
+exactly-once presentation counts and natural closing departure passed; see the
+appended Docs/25 record for source-qualified regression evidence. Phase N
+causation remains unproven. The packaged executable above predates this fix.
+Human review should still observe the transition; programmatic animation
+playback is not human testing. Historical Settings/Brew incidents are
 not declared resolved. See `Logs/Review/PhaseN/review.html` for motion evidence.

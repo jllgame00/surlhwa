@@ -213,24 +213,8 @@ public class OrderManager : MonoBehaviour
 
                         Debug.Log($"[OrderManager] RECIPE BECAME KNOWN -> {GetCocktailDisplayName(matchedRecipe)}");
 
-                        // The resolved discovery popup follows the guest
-                        // reaction and diagnostic summary below. Keep an
-                        // immediate fallback only for scenes with no toast.
-                        if (unlockPopup != null && resultToast == null)
-                        {
-                            if (secondCustomerRoute)
-                            {
-                                unlockPopup.Show(
-                                    matchedRecipe,
-                                    "새 레시피가 피어났습니다",
-                                    "선명한 끝맛이 레시피북에 남았습니다."
-                                );
-                            }
-                            else
-                            {
-                                unlockPopup.Show(matchedRecipe);
-                            }
-                        }
+                        // Presentation is scheduled once below, including
+                        // scenes without a diagnostic toast.
                     }
                 }
             }
@@ -287,7 +271,7 @@ public class OrderManager : MonoBehaviour
             newlyKnownRecipe);
 
         // �� ���� �ý��� ȣ��
-        float feedbackDuration = PresentServiceFeedback(
+        Func<bool> feedbackCompleted = PresentServiceFeedback(
             guestServiceResult,
             matchedRecipe,
             newlyKnownRecipe,
@@ -295,7 +279,7 @@ public class OrderManager : MonoBehaviour
             currentCustomer != null);
 
         if (currentCustomer != null)
-            currentCustomer.OnServedWithReaction(guestServiceResult, feedbackDuration);
+            currentCustomer.OnServedWithReaction(guestServiceResult, feedbackCompleted);
 
         // ���� �ʱ�ȭ
         currentCustomer = null;
@@ -408,7 +392,7 @@ public class OrderManager : MonoBehaviour
     /// primary, then this diagnostic toast, then the sole discovery popup.
     /// No gameplay axis is recalculated here.
     /// </summary>
-    private float PresentServiceFeedback(
+    private Func<bool> PresentServiceFeedback(
         GuestServiceResult serviceResult,
         CocktailRecipeData newlyKnownRecipe,
         bool recipeBecameKnown,
@@ -419,36 +403,38 @@ public class OrderManager : MonoBehaviour
             resultToast = FindFirstObjectByType<ResultToastController>();
 
         float reactionDelay = hasCustomerReaction ? GuestReactionSequenceDuration : 0f;
-        float toastCycle = 0f;
-        if (resultToast != null)
-        {
-            resultToast.ShowServiceResult(serviceResult, reactionDelay);
-            toastCycle = resultToast.DisplayCycleDuration;
-        }
-
-        if (!recipeBecameKnown || newlyKnownRecipe == null)
-            return reactionDelay + toastCycle;
-
         if (unlockPopup == null)
             unlockPopup = FindFirstObjectByType<RecipeUnlockPopupController>();
 
-        if (unlockPopup == null)
-            return reactionDelay + toastCycle;
-
-        float discoveryDelay = reactionDelay + toastCycle + DiscoveryFeedbackGap;
-        if (secondCustomerRoute)
+        // This request-local completion is presentation only. Recipe knowledge
+        // was persisted above; the customer still owns farewell and departure.
+        bool completed = false;
+        void ShowDiscovery(float delay)
         {
+            if (this == null || !isActiveAndEnabled || !recipeBecameKnown ||
+                newlyKnownRecipe == null || unlockPopup == null)
+            {
+                completed = true;
+                return;
+            }
             unlockPopup.ShowDelayed(
-                newlyKnownRecipe,
-                discoveryDelay,
-                "New Recipe Discovered",
-                "The recipe has been added to your Guide.");
+                newlyKnownRecipe, delay,
+                secondCustomerRoute ? "New Recipe Discovered" : null,
+                secondCustomerRoute ? "The recipe has been added to your Guide." : null,
+                _ => completed = true);
         }
+
+        if (resultToast != null)
+            resultToast.ShowServiceResult(serviceResult, reactionDelay, shown =>
+            {
+                // Replacement/disable cancels this presentation chain without
+                // opening a late popup or holding a customer indefinitely.
+                if (shown) ShowDiscovery(DiscoveryFeedbackGap);
+                else completed = true;
+            });
         else
-        {
-            unlockPopup.ShowDelayed(newlyKnownRecipe, discoveryDelay);
-        }
-        return discoveryDelay + unlockPopup.DisplayCycleDuration;
+            ShowDiscovery(reactionDelay);
+        return () => completed;
     }
 
     // Legacy direct-toast routing is retained for serialized scene/debug

@@ -16,6 +16,7 @@ public class ResultToastController : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.25f;
 
     private Coroutine showRoutine;
+    private System.Action<bool> presentationCompleted;
     private RectTransform servedDrink;
 
     public float DisplayCycleDuration => Mathf.Max(0f, displayTime) +
@@ -46,32 +47,27 @@ public class ResultToastController : MonoBehaviour
 
     public void Show(string title, string message)
     {
-        ClearDrink();
-        if (canvasGroup == null)
+        CancelPresentation();
+        if (canvasGroup == null || !isActiveAndEnabled)
         {
-            Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
+            if (canvasGroup == null) Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
             return;
         }
-
-        if (showRoutine != null)
-            StopCoroutine(showRoutine);
 
         SetContent(title, message);
         showRoutine = StartCoroutine(ShowRoutine());
     }
 
-    public void ShowDelayed(string title, string message, float delay)
+    public void ShowDelayed(string title, string message, float delay, System.Action<bool> completed = null)
     {
-        ClearDrink();
-        if (canvasGroup == null)
+        CancelPresentation();
+        if (canvasGroup == null || !isActiveAndEnabled)
         {
-            Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
+            if (canvasGroup == null) Debug.LogWarning("[ResultToast] CanvasGroup is missing.");
+            completed?.Invoke(false);
             return;
         }
-
-        if (showRoutine != null)
-            StopCoroutine(showRoutine);
-
+        presentationCompleted = completed;
         showRoutine = StartCoroutine(ShowDelayedRoutine(title, message, delay));
     }
 
@@ -80,10 +76,10 @@ public class ResultToastController : MonoBehaviour
     /// input is already resolved by OrderManager; this controller does not
     /// calculate any gameplay result.
     /// </summary>
-    public void ShowServiceResult(GuestServiceResult result, float delay)
+    public void ShowServiceResult(GuestServiceResult result, float delay, System.Action<bool> completed = null)
     {
         ServiceFeedbackPresentation presentation = GuestServiceFeedbackFormatter.Build(result);
-        ShowDelayed(presentation.Title, presentation.Message, delay);
+        ShowDelayed(presentation.Title, presentation.Message, delay, completed);
         if (result.BartendingResult.appearance != null)
         {
             servedDrink = result.BartendingResult.appearance.Draw(transform,
@@ -200,6 +196,25 @@ public class ResultToastController : MonoBehaviour
         yield return FadeTo(0f);
 
         showRoutine = null;
+        CompletePresentation(true);
+    }
+
+    private void OnDisable() => CancelPresentation();
+
+    private void CancelPresentation()
+    {
+        if (showRoutine != null) StopCoroutine(showRoutine);
+        showRoutine = null;
+        HideImmediate();
+        ClearDrink();
+        CompletePresentation(false);
+    }
+
+    private void CompletePresentation(bool completed)
+    {
+        var callback = presentationCompleted;
+        presentationCompleted = null;
+        callback?.Invoke(completed);
     }
 
     private void SetContent(string title, string message)

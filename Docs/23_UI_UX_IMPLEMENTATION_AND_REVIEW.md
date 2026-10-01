@@ -1605,3 +1605,49 @@ Status: **IMPLEMENTED_WITH_VALIDATION_DEBT**. HUMAN_VISUAL_APPROVAL_PENDING.
 CHARACTER_ANIMATION_DEFERRED. DEFERRED_AUDIO. No full campaign, standalone build,
 historical-incident resolution, human aesthetic approval or final game closure
 is claimed.
+
+
+## J5 feedback/farewell sequencing follow-up (2026-10-01)
+
+Starting source `97b71a1`. The retained Phase N J5 failure is reproducible with
+unchanged production code: the focused fixture changes cadence from 30 to 10
+FPS while discovery is visible. At t=16.358 discovery opens; at t=19.525 the
+farewell is entered while discovery is still active. Uncapped and fixed-30-FPS
+baseline runs passed, confirming that this is timing-sensitive. The captured
+popup had reached its offscreen position but remained active until the final
+coroutine completion; the image alone does not prove visible panel obstruction
+or a modal lock. No Phase N causation is established. Original and new
+baseline logs remain archived.
+
+`OrderManager` previously scheduled both feedback coroutines independently and
+returned their summed nominal durations. `CustomerController` waited for the
+remaining estimated time before entering farewell. Nested coroutine yields,
+slide/fade frames and timed holds do not complete at that exact sum. Neither
+presenter signaled actual completion; this was an estimate race, not a missed
+popup acknowledgment, duplicate unlock or modal-lock failure.
+
+The current UI contract remains a nonblocking, automatically dismissed toast
+and discovery notification (no acknowledge button or modal shield). The order
+is service resolution/knowledge persistence -> diagnostic toast completion ?
+discovery notification completion when newly Known -> authored farewell ?
+player reads every line -> existing stand/walk/departure and visit completion.
+The established initial reaction delay and small inter-feedback gap remain.
+
+Both existing presenters now signal completion after hiding. Their callbacks
+are cleared before invocation, and replacement/disable/missing presentation
+releases the pending request once as cancellation. A canceled toast does not
+open a late discovery notification. `OrderManager.PresentServiceFeedback`
+chains these callbacks and returns a request-local completion predicate.
+The customer awaits that signal at the existing farewell seam. There is no
+GameObject visibility polling, new modal coordinator or progression authority.
+The old immediate popup fallback without a toast was removed because the same
+service also reached the normal discovery scheduling path; that path now owns
+presentation once even when the toast is missing.
+
+The existing J5 fixture now records actual completion order and counts,
+checks Known persistence remains unchanged throughout presentation, exercises
+known/no-popup services and cancellation, and uses real closing departure and
+seat release. The first two visits retain the older direct-departure fixture;
+closing guests start already seated as an explicit setup shortcut. Farewell
+Next/Brew/Back checks use callbacks, not OS pointer delivery. Evidence and final
+executed results are recorded in Docs/25 and `Logs/Review/J5FarewellDiscovery/`.
