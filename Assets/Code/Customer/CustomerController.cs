@@ -50,8 +50,16 @@ public class CustomerController : MonoBehaviour
     public float moveSpeed = 2.0f;
     public Vector2 arriveThreshold = new Vector2(0.05f, 0.05f);
 
-    private enum State { Spawning, MovingToSeat, Sitting, Ordering, Waiting, Leaving }
+    public enum State { Spawning, MovingToSeat, Sitting, Ordering, Waiting, Leaving, Turning, Standing }
     private State state = State.Spawning;
+    public State CurrentState => state;
+    public bool FacingLeft { get; private set; } = true;
+    public float StateElapsed => Time.time - stateBegan;
+    [Header("Presentation timing (never waits for an animation)")]
+    [Range(0, 1)] public float turnDuration = .18f;
+    [Range(0, 1)] public float sitDuration = .32f;
+    [Range(0, 1)] public float standDuration = .32f;
+    private float stateBegan;
 
     private SeatPoint targetSeat;
     private SpriteRenderer sr;
@@ -151,6 +159,9 @@ public class CustomerController : MonoBehaviour
 
         if (standSprite != null)
             sr.sprite = standSprite;
+
+        if (GetComponent<CustomerMotionPresentation>() == null)
+            gameObject.AddComponent<CustomerMotionPresentation>();
 
         seatManager = FindFirstObjectByType<SeatManager>();
         interactionUI = FindFirstObjectByType<InteractionUIController>();
@@ -383,7 +394,19 @@ public class CustomerController : MonoBehaviour
                 }
 
             case State.Sitting:
-                state = State.Ordering;
+                if (StateElapsed >= Mathf.Clamp(sitDuration, 0, 1)) state = State.Ordering;
+                break;
+
+            case State.Turning:
+                if (StateElapsed >= Mathf.Clamp(turnDuration, 0, 1))
+                {
+                    stateBegan = Time.time;
+                    state = State.Sitting;
+                }
+                break;
+
+            case State.Standing:
+                if (StateElapsed >= Mathf.Clamp(standDuration, 0, 1)) state = State.Leaving;
                 break;
 
             case State.Ordering:
@@ -440,13 +463,13 @@ public class CustomerController : MonoBehaviour
 
         transform.position += dir.normalized * step;
 
-        if (dir.x != 0)
-            transform.localScale = new Vector3(dir.x > 0 ? 1 : -1, 1, 1);
+        if (Mathf.Abs(dir.x) > .001f) FacingLeft = dir.x < 0;
     }
 
     void SitDown()
     {
-        state = State.Sitting;
+        stateBegan = Time.time;
+        state = State.Turning;
 
         if (targetSeat != null && targetSeat.sitMarker != null)
             transform.position = targetSeat.sitMarker.position;
@@ -564,7 +587,7 @@ public class CustomerController : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         ClearDialogueBubble();
-        state = State.Leaving;
+        BeginDeparture();
     }
 
     private string GetRandomTimeoutLine()
@@ -597,6 +620,7 @@ public class CustomerController : MonoBehaviour
     // New path: calculate reaction from the actually served CocktailData.
     public void OnServedWithReaction(GuestServiceResult serviceResult, float feedbackDuration = 4.2f)
     {
+        GetComponent<CustomerMotionPresentation>()?.React();
         serviceFeedbackDuration = feedbackDuration;
         campaignServiceSucceeded = LittlePrinceVisitPersistence.IsSuccessfulService(serviceResult);
         if (LittlePrinceVisitNumber > 0)
@@ -794,7 +818,13 @@ public class CustomerController : MonoBehaviour
             yield return new WaitUntil(() => read);
         }
 
-        state = State.Leaving;
+        BeginDeparture();
+    }
+
+    private void BeginDeparture()
+    {
+        stateBegan = Time.time;
+        state = State.Standing;
     }
 
     private void ShowReactionBubble(string line)

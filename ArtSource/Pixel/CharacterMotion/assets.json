@@ -1,0 +1,138 @@
+[
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Walk0",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk0.png",
+    "sha256": "9262b141e6f4c3ed32aa5034088341ae6525561e3ee95ce8dc68989856d8c802",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Walk1",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk1.png",
+    "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Walk2",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk2.png",
+    "sha256": "9bb844329edbb2cc538077119e64c2fea6aa020db18d604a53cebb7666f16bc6",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Walk3",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk3.png",
+    "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Turn",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Turn.png",
+    "sha256": "3d6891576b772c34e48762ae3533a8348a7070529ec97a6ae4f5a1533ea9fc2b",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Seated",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Seated.png",
+    "sha256": "5eb685f54168394a66abc43d4ddba7126e19130f07254e81ce8310ab0e559b07",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Listening",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Listening.png",
+    "sha256": "f23c8f43c7be61d089ed47fc916f474c2890ff5bde39166eef83a8c5a21a6589",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  },
+  {
+    "character": "OrdinaryCoat",
+    "pose": "Reaction",
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+    "source_sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+    "runtime": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Reaction.png",
+    "sha256": "adfc1c2be2d15790eddb5c233d18b97df8374d2beb97b9f4ffe057cc6d344317",
+    "dimensions": [
+      96,
+      100
+    ],
+    "ppu": 32,
+    "pivot": [
+      0.5,
+      0
+    ]
+  }
+]

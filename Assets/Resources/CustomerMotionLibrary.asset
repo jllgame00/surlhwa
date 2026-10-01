@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0cbab5b7fa75e52b5945300ae7c487e, type: 3}
+  m_Name: CustomerMotionLibrary
+  m_EditorClassIdentifier:
+  characters:
+  - character: OrdinaryCoat
+    walk:
+    - {fileID: 21300000, guid: 8fad4176a1b05af18bc5ad4a2a6ca491, type: 3}
+    - {fileID: 21300000, guid: 8f8f6a08cea255b581b4d119e4366c2f, type: 3}
+    - {fileID: 21300000, guid: 442892560b215d929b14c90a00904636, type: 3}
+    - {fileID: 21300000, guid: eeb935de172c58ffa2b08efdfa03dea6, type: 3}
+    turn: {fileID: 21300000, guid: d49ad725832a577fb6a1a52e4b8b8534, type: 3}
+    seated: {fileID: 21300000, guid: 5ded16221a46544b83f542506264240c, type: 3}
+    listening: {fileID: 21300000, guid: 1e585a14fe745dacb5a21b95b610944e, type: 3}
+    reaction: {fileID: 21300000, guid: ac13b63f4f9a5d7e940e39ae9f35ad20, type: 3}
