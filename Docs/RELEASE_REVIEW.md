@@ -82,3 +82,19 @@ actual build execution and evidence separately from this review checklist.
 
 Human physical-input playtesting and aesthetic approval remain pending.
 DEFERRED_AUDIO is unchanged; future special revisits remain FUTURE_EXPANSION.
+
+### Phase N package identity and test limits
+
+`Builds/Windows-PhaseN-763df2c/SURLHWA.exe` contains Phase M UI, the refined
+countertop selector and Phase N motion. Runtime source is
+`763df2ce99fc374ef14136ab589a6b41d78e9335`, Unity 6000.3.7f1, built
+2026-10-01 13:03:49 UTC. Build succeeded with one existing tooling warning.
+Graphics-enabled startup loaded BarScene and remained alive at the 51-second
+check; preferences were restored. This is not a standalone playthrough.
+
+Docs/25 separates the passed motion/physical/UI/campaign checks from a failed
+older focused J5 assertion: a discovery popup was still active at farewell
+entry. That failure remains validation debt; Phase N causation is unproven.
+Human review should observe that transition without treating programmatic
+animation playback as human testing. Historical Settings/Brew incidents are
+not declared resolved. See `Logs/Review/PhaseN/review.html` for motion evidence.

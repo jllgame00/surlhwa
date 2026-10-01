@@ -2500,3 +2500,13 @@ HUMAN_ANIMATION_TUNING_LATER. Foreground pointer and human play remain debt;
 DEFERRED_AUDIO, FUTURE_EXPANSION and existing product scope boundaries remain.
 Standalone build results are recorded in Docs/25 after execution. No finished-game
 or human aesthetic approval is claimed.
+
+Phase N review build: runtime source `763df2ce99fc374ef14136ab589a6b41d78e9335`,
+Unity 6000.3.7f1, Windows x64, successful at 2026-10-01 13:03:49 UTC in 44.232 s
+with one existing Pipeline tooling warning. Package
+`Builds/Windows-PhaseN-763df2c` was hash-verified after copying from the isolated
+build project. Graphics startup loaded BarScene and survived the 51-second
+check; normal task-player closure and preference restoration were verified.
+This does not certify standalone gameplay or human input. Docs/25 retains the
+bridge timeout, packaging preparation, source-qualified campaign result and
+separate failed J5 popup assertion. All four original dirty-file hashes remain.

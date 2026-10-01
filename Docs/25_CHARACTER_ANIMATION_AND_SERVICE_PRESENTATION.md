@@ -228,4 +228,51 @@ isolated source; protected-file hashes remain unchanged. Final scene diff is
 exactly four marker x coordinates; the prefab diff is one bartender component.
 Task/staged diff whitespace checks are clean. Protected config contents are not
 read into reports or included in diffs/staging.
+
+## Windows review package and final handoff
+
+- Source: `763df2ce99fc374ef14136ab589a6b41d78e9335`; Unity `6000.3.7f1`;
+  StandaloneWindows64. Existing build pipeline completed at
+  `2026-10-01T13:03:49.2558554Z`, duration 44.232 s, 0 build errors, 1 warning.
+  The warning is the existing Pipeline tooling being disabled in Player builds
+  because no runtime config asset is present. No older executable was substituted.
+- Output: `Builds/Windows-PhaseN-763df2c/SURLHWA.exe`. Built in the isolated
+  project's same relative directory, then all 388 packaged files were copied
+  and SHA-256 verified. `BUILD_INFO.txt` retains the original output path and
+  exact source identity. The isolated build used committed PlayerSettings;
+  the original owner's unresolved batching change was neither built nor altered.
+- The command bridge returned a five-second main-thread timeout while Unity
+  continued building. No duplicate build was launched. The source-only isolated
+  project initially lacked packaging docs; the missing directory and required
+  owned documents were supplied before packaging completed. Unity's completed
+  report and package identity, not the bridge timeout, establish build success.
+- Graphics-enabled hidden startup loaded BarScene (three seats) and was alive
+  at the 51-second check. Normal WM_CLOSE was sent only to the verified task
+  player's windows; it exited. Player preferences were restored and verified.
+  This is startup evidence, not a standalone gameplay/input pass.
+- Editor progress/knowledge/audio matched the private snapshot after final UI
+  tests and build. Final check found no Play Mode, compilation, dirty scene or
+  pending UI/motion fixture; only the task-owned isolated Editor exited normally.
+  The original project was never launched. Four starting dirty files retain
+  their exact hashes. Existing captures and input-audit archives are unchanged.
+
+Evidence files under `Logs/Review/PhaseN`: `build-sha256.json`, `startup-result.json`,
+`player.log`, `release.log`, `compile-final.log`, `editor-cleanup.json`,
+`protected-preservation.json`, source hashes, full motion captures and both
+retained test logs. The review index links native crops and individual images.
+
+| Classification | Final scope |
+|---|---|
+| PASS | Implemented motion/ownership/fallback contracts; executed compile, Editor, local Play Mode, Phase K, callback/UI and source-qualified campaign checks; Windows build and startup |
+| VALIDATION_DEBT | Failed focused J5 discovery-popup/farewell assertion and remaining scenarios; foreground pointer/native input; full standalone playthrough; no second full campaign after coordinate-only fixes |
+| HUMAN_ANIMATION_TUNING_LATER | Limited three-quarter turns, pixel-art articulation, stride/cadence, seated anatomy, cloth/hand accents, temporary companion stool and emotional timing |
+| DEFERRED_AUDIO | No new character Foley or audio mix change |
+| FUTURE_EXPANSION | Companion/secret revisits and future cast remain unauthored |
+| OUT_OF_SCOPE | Replacement customer/order lifecycle, animation-owned progression, save migration, new render pipeline or gameplay/content redesign |
+
+All eight current specials and both ordinary variants have walk, turn, sit,
+idle, reaction, stand and leave presentation. Hamlet keeps a still seated idle.
+Bartender coverage is centered idle, orientation and acknowledgment only;
+locomotion/seating is intentionally absent. No bespoke rear-facing redraw,
+full skeletal rig or physics cloth is claimed. HUMAN_VISUAL_APPROVAL_PENDING.
 No subjective animation approval is claimed. DEFERRED_AUDIO remains unchanged.
