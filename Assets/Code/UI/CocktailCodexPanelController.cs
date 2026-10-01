@@ -37,6 +37,7 @@ public class CocktailCodexPanelController : MonoBehaviour
 
     private readonly List<GameObject> spawnedCards = new();
     private CocktailRecipeData selectedRecipe;
+    public bool IsOpen => panelRoot != null && panelRoot.activeInHierarchy;
 
     private void Awake()
     {

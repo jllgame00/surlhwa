@@ -155,6 +155,37 @@ English ingredient names remain authored IngredientData presentation; establishe
 Stir/Shake/Build/Float labels accompany Korean technique controls. Service grade
 copy is Korean, while original grade values and every evaluation remain unchanged.
 
+### Current visual finish (2026-10-01)
+
+The owner's latest request explicitly permits replacing the **Settings and
+Codex open-button icons** and their small chrome. This supersedes the earlier
+utility-icon preservation instruction. Shaker art, Codex **content** art/glasses,
+liquid colors, characters and environment remain preserved.
+
+This subsection supersedes the countertop-light/outline values above. Existing
+arrangements, contact shadows, 128×132 hit areas, 16-unit labels, request note and
+Start/Back remain. There is no countertop light oval or tool halo. A local uGUI
+material samples actual sprite alpha edges; low-alpha glass interiors do not
+become an opaque mask. One display-pixel edge and existing bright material planes
+receive restrained warm ivory. Idle uses original source color; hover/keyboard
+focus use .55 emphasis and selection uses 1, with the existing .14 s unscaled
+fade. The check remains secondary. Modal/disabled input clears hover/focus and
+fades emphasis to zero without changing the controller's selected method.
+
+Corner controls retain 64×64 hit areas and their positions. Their visible charcoal
+backing is 48×48, the ivory book/gear is 28×28, and short 14-unit captions appear
+only on hover/focus. Hover lightens the backing, press darkens it, keyboard focus
+adds an ivory edge, and disabled icons dim. The actual Settings owner and Codex
+panel visibility supply open state: a thin warm edge and small inset mark. No
+click listeners or modal state are owned by the visual helper. Existing close,
+Back and workspace Settings controls already use the shared quiet palette and
+remain unchanged.
+
+Glyphs are original deterministic uGUI geometry, not imagegen output or reused
+Codex illustrations. The shader is local to projected setup Images, with no
+global rendering/import changes. Source and reproduction are recorded in
+`ArtSource/Pixel/UIVisualFinish/README.md`; current evidence/debt is in Docs/23.
+
 ## Deferred implementation status
 
 CHARACTER_ANIMATION_DEFERRED: walking animation, turning, seated poses and

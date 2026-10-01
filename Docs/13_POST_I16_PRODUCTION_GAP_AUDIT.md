@@ -2439,3 +2439,16 @@ reproduction attempts and legal repeated navigation through four actual service
 returns at both resolutions. Only Editor validation code changes; no production
 lock reset, pause workaround or staging redesign is introduced. New fixture
 development failures are recorded separately from the original failure.
+
+### Bounded UI visual finish, 2026-10-01
+
+Starting at `eb8e198`, replaced broad countertop illumination with sprite
+material-edge emphasis and refined only Settings/Codex utility pictograms and
+small chrome. Existing tools, Shaker, Codex content art, layout, callbacks and
+gameplay authorities are preserved. Docs/22 records current presentation values;
+Docs/23 links matched 720p/1080p renders, native crops and exact validation.
+Compile, shader checks and direct-event/callback four-route/modal fixtures pass.
+Foreground pointer regression remains VALIDATION_DEBT; completed A/B/C were not
+rerun and historical Settings/Brew incidents remain unresolved. All 63 baseline
+dirty-file hashes are preserved. HUMAN_VISUAL_APPROVAL_PENDING,
+CHARACTER_ANIMATION_DEFERRED and DEFERRED_AUDIO remain.

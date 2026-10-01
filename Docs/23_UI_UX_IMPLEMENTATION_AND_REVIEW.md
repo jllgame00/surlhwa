@@ -1525,3 +1525,83 @@ Remaining execution needs an uninterrupted foreground **Game tab in the
 ValidationProject Editor**, without switching windows during the bounded run.
 No automatic refocus/retry will conceal interruption. Full traces/manifests are
 under ignored `Logs/Review/phase-m-preflight/`; private save snapshots are separate.
+
+## UI visual finish — object surfaces and utility controls (2026-10-01)
+
+Starting HEAD `eb8e198`, branch `refactor/project-rebuild`; 63 pre-existing dirty
+files inventoried and hash-protected, including `.codex/config.toml`. No owner
+Editor was closed or modified. No connected Editor was found at task start;
+one hidden batch Editor used the existing isolated ValidationProject. The
+completed A/B/C harness investigation was not repeated. Docs/24's final harness
+validation remains authoritative; historical Settings/Brew incidents remain
+unresolved and are not attributed to or resolved by this visual work.
+
+### Visible scope
+
+- Retained all tool groupings, counter anchors, footprints/contact shadows,
+  compact labels, request information and small Start/Back controls. Removed
+  the counter-light oval and broad tool halo. A local uGUI shader follows the
+  sprites' material alpha edges and existing bright planes. Idle uses original
+  material colors; hover/focus .55 and stable selection 1 use the existing fade.
+  Glass interiors keep their alpha. Blocking/disabling clears transient visual
+  focus/hover without changing selected method or calling a route callback.
+- Replaced the **open-button** book/settings illustrations with original ivory
+  book/gear geometry, 48-unit charcoal backing and 28-unit glyphs inside the
+  unchanged 64-unit hit targets. Hover, press, focus, open and disabled states
+  use the existing palette; open state reads the real Settings/Codex owners.
+  Existing simple close/back/workspace controls already share that palette and
+  were retained. No additional listeners or modal state were introduced.
+- The owner's latest permission explicitly supersedes older utility-icon
+  preservation language. Shaker pixels/concept, Codex content art/glasses and
+  liquid colors remain unchanged, as do environment, characters, mechanics,
+  requests, knowledge and saves. Provenance: deterministic uGUI mesh and shader,
+  not imagegen. See `ArtSource/Pixel/UIVisualFinish/README.md`.
+
+### Evidence and rendered review
+
+- [Before/after native-crop board](../Logs/Review/UIVisualFinish/before-after-board.png).
+- [Full-resolution comparison and native crops](../Logs/Review/UIVisualFinish/before-after.html).
+- Individual files: `Logs/Review/UIVisualFinish/phase-m-visual-{before,after}-`
+  `{counter-idle,Stir-hover,Shake-hover,Float-selected,Float-selected-Stir-hover,`
+  `idle-bar,settings-open,codex-open,codex-content}-{1280x720,1920x1080}.png`.
+  Utility hover/pressed/focus/disabled captures are retained separately too.
+  `native-crops/` contains unscaled object/button crops at both resolutions;
+  `capture-sha256.json` and `validated-source-sha256.json` identify exact evidence.
+- These are actual Unity production-scene renders with seeded Night-5 setup
+  and direct UI events/callbacks. They are not human play or pointer-delivery
+  evidence. Guest walking position can differ in utility screens; counter,
+  camera and control framing match. No new recording infrastructure was added.
+- Initial batch captures exposed a **capture-only** mismatch: projected tools
+  retained 640×480 Game View coordinates during 16:9 offscreen rendering. The
+  existing capture helper now refreshes counter projection after changing and
+  restoring camera/Canvas dimensions. Initial files remain in `initial-projection/`.
+  Final BEFORE/AFTER both use the same corrected helper; the four original
+  visual source files were rendered only in the isolated copy, then final
+  source restored. Main repository HEAD/source was never rolled back.
+
+Rendered inspection: **the objects receive the emphasis**, following glass rims,
+bases, spoon/Jigger edges and Shaker material planes. Transparent interiors stay
+readable; no texture-bound rectangle or light disc carries selection. Existing
+footprints keep the tools on the counter. Labels remain secondary. Native-size
+book and gear silhouettes are recognizable and share padding/palette. The
+Shaker remains recognizable; the sampled Codex illustration region is exactly
+pixel-identical before/after. These observations do not constitute owner approval.
+
+### Executed validation and limits
+
+| Check | Result / boundary |
+|---|---|
+| Final compile | `dotnet build Assembly-CSharp-Editor.csproj --no-restore`: 0 errors, 8 existing warnings. `Temp/UIVisualFinish/compile-final.log`. |
+| Shader/reference | Resource resolves, supported shader, zero ShaderUtil messages; eight tested source/asset files match main and isolated copy byte-for-byte. No scene/prefab/import changes. |
+| Final AFTER fixture | PASS at 11:11:45 UTC: four selection-to-confirmed-route mappings, Back/re-entry, Settings/Codex open/close/detail/back, modal raycast blocking, nested pause restoration, stale hover clearing, non-raycasting decoration, 64×64 utility targets and rendered utility states. Direct UI events/callbacks only. |
+| Matched BEFORE fixture | PASS at 11:14:05 UTC with starting visual source and the same capture helper. |
+| Retained development result | First BEFORE run at 11:02:26 captured all requested views, then failed when its newly written callback fixture queried Brew in the same frame as Back. Added one explicit .26 s layout/reading-boundary yield before the first query. No failed click was silently retried and no pointer harness/input policy changed. Result retained in `before-fixture-result.txt`. |
+| Save/audio and cleanup | Every exit used existing snapshot restoration; logs confirm progress/sound restored and verified. Final query: not playing/compiling, no pending fixture, observers or dirty scene. |
+| Protected baseline | All 63 starting dirty-file hashes match. Historical archives and Docs/24 unchanged; no config contents exposed. |
+| Diff | Task-owned diff/serialized changes reviewed; task `git diff --check` clean. Full non-config check reports existing whitespace in 57 protected baseline files only; those files were preserved. No scene or prefab was edited. |
+| Pointer debt | Corrected queued-mouse regression **not run**: only a hidden batch Editor was available, without uninterrupted foreground Game View. Existing relevant entries are `RunStagingAfter`, `RunDiegetic`, and `RunInputModule` in `SURLHWAPhaseMUIValidation`; A/B/C need no rerun. Render dimensions do not establish input coverage at 720p/1080p. |
+
+Status: **IMPLEMENTED_WITH_VALIDATION_DEBT**. HUMAN_VISUAL_APPROVAL_PENDING.
+CHARACTER_ANIMATION_DEFERRED. DEFERRED_AUDIO. No full campaign, standalone build,
+historical-incident resolution, human aesthetic approval or final game closure
+is claimed.

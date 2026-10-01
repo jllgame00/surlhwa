@@ -43,10 +43,11 @@ public sealed class DemoAudioController : MonoBehaviour
     private void Start()
     {
         foreach (GameObject root in gameObject.scene.GetRootGameObjects()) BindButtons(root);
-        SurlhwaUITheme.CornerButton(settingsButton, true);
+        SurlhwaUITheme.CornerButton(settingsButton, true, () => IsSettingsOpen);
+        var codex = FindFirstObjectByType<CocktailCodexPanelController>();
         foreach (GameObject root in gameObject.scene.GetRootGameObjects())
             foreach (Button button in root.GetComponentsInChildren<Button>(true))
-                if (button.name == "CodexButton") SurlhwaUITheme.CornerButton(button, false);
+                if (button.name == "CodexButton") SurlhwaUITheme.CornerButton(button, false, () => codex != null && codex.IsOpen);
     }
     private AudioSource Source(AudioClip clip, bool loop)
     {

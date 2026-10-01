@@ -145,29 +145,27 @@ internal sealed class SurlhwaMethodSetupTarget : MonoBehaviour, IPointerEnterHan
     SurlhwaMethodSetupView owner;
     Button button;
     TMP_Text label;
-    SurlhwaSetupSoftOval counterLight, rimLight, labelShade;
+    SurlhwaSetupSoftOval labelShade;
     Image[] props;
-    Outline[] outlines;
+    Material edgeMaterial;
     float emphasis;
     public void Configure(SurlhwaMethodSetupView view, MiniGameType method)
     {
         owner = view; Method = method; button = GetComponent<Button>();
         Stage = SurlhwaUITheme.Rect("CountertopArrangement", transform, new Vector2(128, 132), Vector2.zero);
-        counterLight = SurlhwaSetupSoftOval.Create("CounterLight", Stage, new Vector2(100, 28), new Vector2(0, -32), Color.clear);
-        rimLight = SurlhwaSetupSoftOval.Create("WarmToolLight", Stage, new Vector2(82, 96), new Vector2(-2, 3), Color.clear);
         SurlhwaSetupSoftOval.Create("ContactShadow", Stage, new Vector2(82, 18), new Vector2(0, -33), new Color(.065f, .035f, .015f, .48f));
     }
     public void FinishVisuals()
     {
         props = Stage.GetComponentsInChildren<Image>();
-        var edges = new System.Collections.Generic.List<Outline>();
-        foreach (var image in props)
-            {
-                var edge = image.gameObject.AddComponent<Outline>();
-                edge.effectDistance = new Vector2(1, -1);
-                edges.Add(edge);
-            }
-        outlines = edges.ToArray();
+        // One local material per setup observes the existing selection state.
+        // Alpha edges, not the texture rectangle or a light disc, carry emphasis.
+        var shader = Resources.Load<Shader>("CountertopEdge");
+        if (shader != null)
+        {
+            edgeMaterial = new Material(shader) { name = "Countertop " + Method, hideFlags = HideFlags.HideAndDontSave };
+            foreach (var image in props) image.material = edgeMaterial;
+        }
         labelShade = SurlhwaSetupSoftOval.Create("LabelShade", transform, new Vector2(100, 24), new Vector2(0, -53), Color.clear);
         label = SurlhwaUITheme.Label("SetupLabel", transform, "", 16, new Vector2(116, 24), new Vector2(0, -52));
         label.alignment = TextAlignmentOptions.Center;
@@ -190,30 +188,27 @@ internal sealed class SurlhwaMethodSetupTarget : MonoBehaviour, IPointerEnterHan
     }
     void Update()
     {
-        float target = Chosen ? 1 : Hovered ? .65f : Focused ? .3f : 0;
+        bool available = button.IsInteractable() && SurlhwaModalSurface.Allows(transform);
+        if (!available && (Hovered || Focused)) { Hovered = Focused = false; Refresh(); }
+        float target = !available ? 0 : Chosen ? 1 : Hovered || Focused ? .55f : 0;
         if (Mathf.Approximately(emphasis, target) || label == null) return;
         emphasis = Mathf.MoveTowards(emphasis, target, Time.unscaledDeltaTime / .14f);
         ApplyEmphasis();
     }
     void ApplyEmphasis()
     {
-        // Quiet light on the wood and tool edges; no scale pulse, bounce or gameplay timing.
-        counterLight.color = new Color(.98f, .73f, .35f, emphasis * .30f);
-        rimLight.color = new Color(1, .82f, .48f, emphasis * .13f);
-        labelShade.color = new Color(.06f, .035f, .018f, .26f + emphasis * .10f);
+        // Preserve source materials/palette at idle, including transparent glass.
+        labelShade.color = new Color(.06f, .035f, .018f, .26f);
         label.color = Color.Lerp(SurlhwaUITheme.Muted, SurlhwaUITheme.Ink, emphasis);
-        foreach (var prop in props) prop.color = Color.Lerp(new Color(.87f, .85f, .81f), Color.white, emphasis);
-        foreach (var edge in outlines)
-        {
-            edge.enabled = emphasis > .01f;
-            edge.effectColor = new Color(1, .84f, .53f, emphasis * .62f);
-        }
+        foreach (var prop in props) prop.color = Color.white;
+        if (edgeMaterial != null) edgeMaterial.SetFloat("_Emphasis", emphasis);
     }
-    public void OnPointerEnter(PointerEventData data) { Hovered = button.IsInteractable(); Refresh(); }
+    public void OnPointerEnter(PointerEventData data) { Hovered = button.IsInteractable() && SurlhwaModalSurface.Allows(transform); Refresh(); }
     public void OnPointerExit(PointerEventData data) { Hovered = false; Refresh(); }
-    public void OnSelect(BaseEventData data) { Focused = true; Refresh(); }
+    public void OnSelect(BaseEventData data) { Focused = button.IsInteractable() && SurlhwaModalSurface.Allows(transform); Refresh(); }
     public void OnDeselect(BaseEventData data) { Focused = false; Refresh(); }
     void OnDisable() { Hovered = Focused = false; emphasis = 0; if (label != null) ApplyEmphasis(); }
+    void OnDestroy() { if (edgeMaterial != null) Destroy(edgeMaterial); }
 }
 
 /// <summary>Small deterministic uGUI helper. Four alpha bands form a soft oval;

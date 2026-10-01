@@ -43,6 +43,8 @@ public static class SURLHWAPhaseMUIValidation
     public static void RunDiegetic() => Start("diegetic");
     public static void RunStagingBefore() => Start("staging-before");
     public static void RunStagingAfter() => Start("staging-after");
+    public static void RunVisualBefore() => Start("visual-before");
+    public static void RunVisualAfter() => Start("visual-after");
     public static void RunNotificationLayout() => Start("notification-layout");
     static void Start(string mode)
     {
@@ -413,6 +415,7 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (SURLHWAPhaseMUIValidation.Mode == "pointer-handoff") { yield return PointerHandoffDiagnostic(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "notification-layout") { yield return NotificationLayout(); yield break; }
         if (SURLHWAPhaseMUIValidation.Mode == "navigation") { yield return Navigation(); yield break; }
+        if (SURLHWAPhaseMUIValidation.Mode.StartsWith("visual-")) { yield return VisualFinish(); yield break; }
         yield return Capture("entry");
         if (Named("ContinueButton").IsInteractable()) throw new InvalidOperationException("Fresh entry allowed Continue");
         Find<DemoAudioController>().ToggleSettings();
@@ -1035,6 +1038,86 @@ internal sealed class SURLHWAPhaseMUIRunner : MonoBehaviour
         if (guide.IsReading || Time.timeScale != 1) throw new InvalidOperationException("Module click did not resume workspace");
         yield return SettingsCycle(Named("BartendingSettings"));
         Debug.Log("[Phase M Input Module] PASS: entry/settings/New Game/Codex masked cards/wheel/detail/back focus/guest/dialogue/bartending/Guide/settings through queued virtual mouse states. PROGRAMMATIC INPUT, not OS or human mouse.");
+    }
+    // Render/state fixtures only. Never substitute these direct events/callbacks
+    // for ModuleClick's readiness, held-left and actual PointerUp evidence.
+    IEnumerator VisualFinish()
+    {
+        UnityEngine.Random.InitState(42);
+        yield return SeedNight(5);
+        yield return Capture("idle-bar");
+        var audio = Find<DemoAudioController>();
+        var settings = ButtonField(audio, "settingsButton");
+        var codex = Find<CocktailCodexPanelController>();
+        var book = Named("CodexButton");
+        foreach (var control in new[] { settings, book })
+        {
+            if (!CanPointAt(control)) throw new InvalidOperationException("Utility center blocked");
+            var rect = (RectTransform)control.transform;
+            if (rect.rect.size != new Vector2(64, 64)) throw new InvalidOperationException("Utility hit size changed");
+            ExecuteEvents.Execute(control.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerEnterHandler);
+            yield return Capture(control.name + "-hover");
+            ExecuteEvents.Execute(control.gameObject, new PointerEventData(EventSystem.current) { button = PointerEventData.InputButton.Left }, ExecuteEvents.pointerDownHandler);
+            yield return Capture(control.name + "-pressed");
+            ExecuteEvents.Execute(control.gameObject, new PointerEventData(EventSystem.current) { button = PointerEventData.InputButton.Left }, ExecuteEvents.pointerUpHandler);
+            ExecuteEvents.Execute(control.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerExitHandler);
+            control.interactable = false; yield return Capture(control.name + "-disabled"); control.interactable = true;
+            EventSystem.current.SetSelectedGameObject(control.gameObject); yield return Capture(control.name + "-focus");
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        Click(settings); yield return Capture("settings-open");
+        if (!DemoAudioController.IsSettingsOpen || CanPointAt(book)) throw new InvalidOperationException("Settings modal state");
+        Click(Named("CloseSoundSettings")); yield return null;
+        Click(book); yield return Capture("codex-open");
+        if (CanPointAt(settings)) throw new InvalidOperationException("Codex modal state");
+        // Preserve an actual content-art reference alongside the grid capture.
+        var knowledge = Find<RecipeUnlockManager>();
+        var known = knowledge.GetAllRecipes().FirstOrDefault(knowledge.IsKnown);
+        if (known != null) { codex.SelectRecipe(known); yield return Capture("codex-content"); codex.BackToGrid(); }
+        Click(ButtonField(codex, "closeButton")); yield return null;
+        yield return Guest(); yield return ReadToRequest();
+        var ui = Find<InteractionUIController>();
+        Click(ButtonField(ui, "brewButton")); yield return null;
+        // Keep focus on a real navigation control; the modal otherwise focuses
+        // Stir automatically, which would falsely label a focus render as idle.
+        EventSystem.current.SetSelectedGameObject(ButtonField(ui, "cancelButton").gameObject);
+        yield return Capture("counter-idle");
+        foreach (var method in new[] { MiniGameType.Stir, MiniGameType.Shake })
+        {
+            var target = ButtonField(ui, method.ToString().ToLowerInvariant() + "Button");
+            ExecuteEvents.Execute(target.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerEnterHandler);
+            yield return Capture(method + "-hover");
+            ExecuteEvents.Execute(target.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerExitHandler);
+        }
+        var floating = ButtonField(ui, "floatButton");
+        Click(floating); EventSystem.current.SetSelectedGameObject(ButtonField(ui, "cancelButton").gameObject);
+        yield return Capture("Float-selected");
+        var stir = ButtonField(ui, "stirButton");
+        ExecuteEvents.Execute(stir.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerEnterHandler);
+        yield return Capture("Float-selected-Stir-hover");
+        audio.ToggleSettings(); yield return null;
+        if (CanPointAt(stir) || Time.timeScale != 0) throw new InvalidOperationException("Nested Settings leaked");
+        if (SURLHWAPhaseMUIValidation.Mode == "visual-after" && (bool)stir.GetComponent("SurlhwaMethodSetupTarget").GetType().GetProperty("Hovered").GetValue(stir.GetComponent("SurlhwaMethodSetupTarget")))
+            throw new InvalidOperationException("Stale hover below modal");
+        Click(Named("CloseSoundSettings")); yield return null;
+        if ((MiniGameType)Get(ui, "selectedMethod") != MiniGameType.Float) throw new InvalidOperationException("Modal changed selection");
+        Click(ButtonField(ui, "cancelButton"));
+        yield return new WaitForSecondsRealtime(.26f); // Reopened dialogue follows its guest in LateUpdate.
+        foreach (var method in new[] { MiniGameType.Stir, MiniGameType.Shake, MiniGameType.Build, MiniGameType.Float })
+        {
+            if (method != MiniGameType.Stir) { yield return SeedNight(5); yield return Guest(); yield return ReadToRequest(); ui = Find<InteractionUIController>(); }
+            Click(ButtonField(ui, "brewButton")); yield return null;
+            if ((bool)Get(ui, "hasMethodSelected")) throw new InvalidOperationException("Stale selection on entry");
+            var target = ButtonField(ui, method.ToString().ToLowerInvariant() + "Button");
+            if (!CanPointAt(target)) throw new InvalidOperationException("Setup center blocked");
+            foreach (var graphic in target.GetComponentsInChildren<Graphic>())
+                if (graphic.transform != target.transform && graphic.raycastTarget) throw new InvalidOperationException("Decoration intercepts input");
+            Click(target);
+            if ((MiniGameType)Get(ui, "selectedMethod") != method) throw new InvalidOperationException("Wrong selection mapping");
+            Click(ButtonField(ui, "confirmButton")); yield return Wait(() => Find<IngredientShelfController>() != null);
+            if (((OrderData)Get(Find<OrderManager>(), "currentOrder")).miniGameType != method) throw new InvalidOperationException("Wrong confirmed route");
+        }
+        Debug.Log("[Visual Finish] PASS: four callback route mappings, Back/re-entry, modal raycasts, visual fixtures. NOT pointer-delivery evidence.");
     }
     IEnumerator StagingFlow()
     {

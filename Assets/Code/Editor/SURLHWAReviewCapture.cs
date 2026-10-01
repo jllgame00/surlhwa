@@ -51,6 +51,7 @@ internal static class SURLHWAReviewCapture
                 canvas.planeDistance = camera.nearClipPlane + 1f;
             }
             Canvas.ForceUpdateCanvases();
+            RefreshCounterProjections();
             foreach (var text in UnityEngine.Object.FindObjectsByType<TMPro.TMP_Text>(FindObjectsSortMode.None)) text.ForceMeshUpdate();
             Canvas.ForceUpdateCanvases();
             foreach (var mask in UnityEngine.Object.FindObjectsByType<UnityEngine.UI.RectMask2D>(FindObjectsSortMode.None)) mask.PerformClipping();
@@ -78,8 +79,19 @@ internal static class SURLHWAReviewCapture
             RenderTexture.ReleaseTemporary(target);
             if (image != null) UnityEngine.Object.DestroyImmediate(image);
             Canvas.ForceUpdateCanvases();
+            RefreshCounterProjections();
             if (temporaryCamera) UnityEngine.Object.DestroyImmediate(camera.gameObject);
         }
+    }
+
+    static void RefreshCounterProjections()
+    {
+        // Camera aspect and Canvas dimensions changed above. The next ordinary
+        // LateUpdate is too late for this offscreen frame (especially from a
+        // batch Editor's 4:3 Game View). Reproject without changing selection.
+        foreach (var setup in UnityEngine.Object.FindObjectsByType<SurlhwaMethodSetupView>(FindObjectsSortMode.None))
+            setup.SendMessage("LateUpdate", SendMessageOptions.RequireReceiver);
+        Canvas.ForceUpdateCanvases();
     }
 }
 #endif
