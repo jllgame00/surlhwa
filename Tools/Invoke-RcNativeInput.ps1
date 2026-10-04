@@ -5,6 +5,7 @@ param(
     [int]$ViewportWidth = 1280, [int]$ViewportHeight = 720,
     [int]$VirtualKey = 0x4D,
     [int]$WheelDelta = -120,
+    [switch]$Topmost,
     [int]$HoldMilliseconds = 160
 )
 $ErrorActionPreference = 'Stop'
@@ -36,6 +37,8 @@ public static class RcWindowsInput {
     [DllImport("user32.dll")] public static extern bool GetClientRect(IntPtr window,out RECT rect);
     [DllImport("user32.dll")] public static extern bool ClientToScreen(IntPtr window,ref POINT point);
     [DllImport("user32.dll")] public static extern bool SetCursorPos(int x,int y);
+    [DllImport("user32.dll")] public static extern IntPtr WindowFromPoint(POINT point);
+    [DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr window,IntPtr after,int x,int y,int width,int height,uint flags);
     [DllImport("user32.dll")] static extern uint MapVirtualKey(uint code,uint kind);
     [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint count,INPUT[] inputs,int size);
     public static uint Mouse(bool down) {
@@ -68,6 +71,7 @@ public static class RcWindowsInput {
 [RcWindowsInput]::SetProcessDPIAware() | Out-Null
 $window = $process.MainWindowHandle
 if ($window -eq 0) { throw 'RC player has no visible main window.' }
+if ($Topmost) { [RcWindowsInput]::SetWindowPos($window, [IntPtr](-1), 32, 32, 0, 0, 0x41) | Out-Null }
 [RcWindowsInput]::ShowWindow($window, 9) | Out-Null
 [RcWindowsInput]::SetForegroundWindow($window) | Out-Null
 Start-Sleep -Milliseconds 150
@@ -85,6 +89,9 @@ if ($Action -eq 'Click' -or $Action -eq 'Move' -or $Action -eq 'Wheel') {
     $point.x = [int]($X * ($rect.right-$rect.left) / $ViewportWidth)
     $point.y = [int](($ViewportHeight-$Y) * ($rect.bottom-$rect.top) / $ViewportHeight)
     [RcWindowsInput]::ClientToScreen($window, [ref]$point) | Out-Null
+    $pointerProcess = [uint32]0
+    [RcWindowsInput]::GetWindowThreadProcessId([RcWindowsInput]::WindowFromPoint($point), [ref]$pointerProcess) | Out-Null
+    if ($pointerProcess -ne $ProcessId) { throw "Pointer region belongs to process $pointerProcess; no pointer input sent." }
     [RcWindowsInput]::SetCursorPos($point.x-3, $point.y) | Out-Null
     Start-Sleep -Milliseconds 80
     [RcWindowsInput]::SetCursorPos($point.x, $point.y) | Out-Null

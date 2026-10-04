@@ -35,6 +35,7 @@ public static class SURLHWARCBuild
         if (Directory.Exists(output)) throw new InvalidOperationException("Preserve the existing build; use a fresh source revision.");
         Directory.CreateDirectory(output);
         File.Copy(provenance, Path.Combine(output, "source-inputs.json"));
+        File.Copy("Logs/Review/RCAutomatedQA/korean-required.txt", Path.Combine(output, "korean-required.txt"));
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions {
             scenes = scenes, target = BuildTarget.StandaloneWindows64,
             locationPathName = Path.Combine(output, "SURLHWA.exe"),

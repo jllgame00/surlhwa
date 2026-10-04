@@ -116,6 +116,7 @@ public static class SURLHWARCDataAudit
         var font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/_SURLHWA/Art/Fonts/KoreanFallback.asset");
         Require(font != null && font.sourceFontFile != null, "Korean fallback/source font missing.");
         var missing = chars.Where(c => !font.HasCharacter(c, true, true)).ToArray();
+        File.WriteAllText("Logs/Review/RCAutomatedQA/korean-required.txt", new string(chars.OrderBy(c => c).ToArray()));
         File.WriteAllText("Logs/Review/RCAutomatedQA/korean-glyphs.txt", "font=" + font.name +
             "\nmode=" + font.atlasPopulationMode + "\ncharacters=" + chars.Count + "\nmissing=" + new string(missing));
         Require(missing.Length == 0, "Missing authored Korean glyphs: " + new string(missing));

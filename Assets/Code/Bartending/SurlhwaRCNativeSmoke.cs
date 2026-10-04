@@ -43,7 +43,11 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
             throw new InvalidOperationException("RC flags require isolated build preferences.");
         if (args.Contains("--surlhwa-rc-focused") || args.Contains("--surlhwa-rc-stress"))
             new GameObject("RC input suite").AddComponent<SurlhwaRCGameplayQA>();
-        else new GameObject("RC native observation").AddComponent<SurlhwaRCNativeSmoke>();
+        else
+        {
+            var observer = new GameObject("RC native observation").AddComponent<SurlhwaRCNativeSmoke>();
+            if (args.Contains("--surlhwa-rc-ui-device")) observer.gameObject.AddComponent<SurlhwaRCUIDevice>();
+        }
     }
     void Awake()
     {
@@ -55,6 +59,17 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
     IEnumerator Start()
     {
         for (int n = 0; n < 30; n++) yield return null;
+        string corpusPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), "korean-required.txt");
+        if (File.Exists(corpusPath))
+        {
+            var font = Resources.FindObjectsOfTypeAll<TMP_FontAsset>().FirstOrDefault(f => f.name == "KoreanFallback");
+            string corpus = File.ReadAllText(corpusPath);
+            string missing = font == null ? corpus : new string(corpus.Where(c => !font.HasCharacter(c, true, true)).ToArray());
+            string result = "[RC player font] " + (missing.Length == 0 ? "PASS" : "FAIL") +
+                " characters=" + corpus.Length + " missing=" + missing + " source=" + font?.sourceFontFile?.name;
+            File.WriteAllText(Folder + "/korean-glyphs.txt", result);
+            if (missing.Length == 0) Debug.Log(result); else Debug.LogError(result);
+        }
         yield return new WaitForEndOfFrame();
         ScreenCapture.CaptureScreenshot(Path.GetFullPath(Folder + "/startup.png"));
     }
