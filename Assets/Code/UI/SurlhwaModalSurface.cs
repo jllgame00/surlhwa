@@ -136,6 +136,9 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
     {
         boundaryFrame = Time.frameCount;
         InputBoundaryVersion++;
+        // Routes do not poll while reading. A key released inside the modal
+        // must not suppress the first new press when the modal closes.
+        heldKeys.RemoveWhere(key => !Input.GetKey(key));
         foreach (var key in actionKeys) if (Input.GetKey(key)) heldKeys.Add(key);
     }
     public static bool KeyAllowed(KeyCode key)

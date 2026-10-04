@@ -121,6 +121,7 @@ public sealed class DemoAudioController : MonoBehaviour
         if (settingsOwner == this) settingsOwner = null;
         SurlhwaModalSurface.Trace("settings.close.complete active=" + (settingsRoot != null && settingsRoot.activeInHierarchy));
     }
+    private void OnDisable() => CloseSettings();
     private void OnDestroy()
     {
         CloseSettings();

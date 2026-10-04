@@ -388,7 +388,9 @@ public class IngredientShelfController : MonoBehaviour
         if (!SurlhwaModalSurface.GetKey(KeyCode.Space))
         {
             physicalPresentation?.EndBottle();
-            return true;
+            // Idle measurement owns no input. The method's existing ToolsReady
+            // guards still reject Dash/Splash/GentleStir with a pending measure.
+            return false;
         }
         if (selectedIngredient != null && (physicalPresentation == null ||
             physicalPresentation.PrepareBottle(selectedIngredient, Jigger)))
