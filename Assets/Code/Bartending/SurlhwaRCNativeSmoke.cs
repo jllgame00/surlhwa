@@ -29,9 +29,9 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
     [Serializable] sealed class State
     {
         public int frame, day, departures, width, height, iceActions;
-        public bool focused, settings, measuring, transferring, ice;
+        public bool focused, settings, measuring, transferring, ice, containerObserved;
         public string scene, route, customer, modal, keyboardSource, topRaycast, selectedIngredient;
-        public float ml, jiggerMl, legacyMouseX, legacyMouseY, uiMouseX, uiMouseY;
+        public float ml, jiggerMl, stirDegrees, legacyMouseX, legacyMouseY, uiMouseX, uiMouseY;
         public List<Control> controls = new();
     }
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -94,7 +94,10 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
         if (Time.realtimeSinceStartup < nextSnapshot) return;
         nextSnapshot = Time.realtimeSinceStartup + .15f;
         var method = SurlhwaRCGameplayQA.Method();
-        var shelf = SurlhwaRCGameplayQA.Find<IngredientShelfController>();
+        // Technique presentation hides the shelf GameObject. Observe the route's
+        // authoritative reference instead of reporting default empty containers.
+        var shelf = SurlhwaRCGameplayQA.Get(method, "ingredientShelf") as IngredientShelfController;
+        if (shelf == null) shelf = SurlhwaRCGameplayQA.Find<IngredientShelfController>();
         var day = SurlhwaRCGameplayQA.Find<BusinessDayManager>();
         var guest = SurlhwaRCGameplayQA.Find<CustomerController>();
         var pointer = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
@@ -108,6 +111,7 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
             customer = guest != null ? guest.name + "/" + guest.CurrentState : "none",
             modal = SurlhwaModalSurface.Top != null ? SurlhwaModalSurface.Top.name : "none",
             settings = DemoAudioController.IsSettingsOpen, keyboardSource = SurlhwaGameplayInput.SourceName,
+            containerObserved = shelf != null, stirDegrees = method is StirMiniGame stir ? stir.TotalStirRotationDegrees : 0,
             measuring = shelf != null && shelf.Measuring, transferring = shelf != null && shelf.PhysicalTransferActive,
             ml = shelf?.TargetContainer?.CurrentLiquidVolumeMl ?? 0, jiggerMl = shelf?.Jigger?.CurrentLiquidVolumeMl ?? 0,
             ice = shelf?.TargetContainer?.HasIce ?? false, legacyMouseX = Input.mousePosition.x, legacyMouseY = Input.mousePosition.y,
