@@ -1,7 +1,8 @@
 # SURLHWA RC review handoff
 
-2026-10-04: **RC_AUTOMATED_QA_PASS_WITH_NATIVE_DEBT**.
-No known P0/P1 remains in the completed bounded audit. Human approval is pending.
+2026-10-04 RC1 seal: **SURLHWA_RC1_AUTOMATED_READY** /
+**HUMAN_ACCEPTANCE_PENDING**. See the concise [RC1 manifest](RC1_MANIFEST.md).
+No known P0/P1 remains; the underlying QA result retains its native-pointer debt.
 The detailed executable coverage, defects and evidence boundaries are in
 [Docs/27](27_RC_AUTOMATED_GAMEPLAY_QA.md); historical milestones remain in
 [Docs/13](13_POST_I16_PRODUCTION_GAP_AUDIT.md).
@@ -15,7 +16,10 @@ The detailed executable coverage, defects and evidence boundaries are in
 - Development QA build; instrumentation is opt-in, saves use a separate namespace.
 - Keep the complete package together. `BUILD_INFO.txt` and `source-inputs.json`
   identify the code, preserved owner art/font overlay, and isolated build inputs.
-- Later handoff/Editor-runner changes do not alter the packaged gameplay code.
+- Exact diff `5bdc0b1..da480e5`: three TEST_ONLY files and three
+  DOCUMENTATION_ONLY files; no production runtime/asset change. This tested
+  package is **runtime-equivalent to canonical source HEAD `da480e5`** and is
+  preserved without rebuilding. The RC1 seal commit is documentation only.
 - Start without QA flags for ordinary review. This package is for review, not
   final public distribution approval.
 
@@ -69,11 +73,11 @@ final compiled input suites.
 - **HUMAN_VISUAL:** art taste, animation naturalness, stool/contact composition,
   readability preference, tool silhouettes and memory presentation.
 - **HUMAN_AUDIO:** comfortable loudness, satisfying tool sounds, ambience taste
-  and repetition on the intended speakers/headphones.
+  and repetition, including listening on the intended physical output device.
 - **HUMAN_WRITING:** dialogue tone, emotional meaning and reading pace.
 - **HUMAN_PLAY_FEEL:** bartending satisfaction and whether the overall pacing
   becomes tiring. This is taste review, not a request to find ordinary blockers.
-- **NATIVE_HARDWARE_ONLY:** real-device pointer/output behavior not proven under
+- **NATIVE_POINTER_HARDWARE_DEBT:** native pointer-button behavior not proven under
   the current desktop interception; no broad manual regression is requested.
 
 Existing final memory/glass/garnish art, animation tuning and music composition
@@ -84,4 +88,5 @@ Public distribution/credit approvals remain owner decisions.
 Local evidence: `Logs/Review/RCAutomatedQA/`, including scenario/state matrices,
 reproductions, traces, campaign/pointer/standalone summaries, screenshot index,
 warning harvest and protected-file verification. Original protected state is
-67 unique files (71 baseline entries); all remain byte-for-byte unchanged.
+67 unique files (71 historical baseline entries). The RC1 seal takes a fresh
+67-file baseline of current owner state and preserves it byte-for-byte.

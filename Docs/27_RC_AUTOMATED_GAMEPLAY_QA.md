@@ -7,6 +7,15 @@ evidence, not a guarantee of no undiscovered defects or human approval.
 This record supplements the historical production audits;
 it does not reinterpret old fixture passes as keyboard delivery or human approval.
 
+RC1 seal: **SURLHWA_RC1_AUTOMATED_READY / HUMAN_ACCEPTANCE_PENDING**.
+The inspected `5bdc0b1..da480e5` diff contains three TEST_ONLY files and three
+DOCUMENTATION_ONLY files, with no production runtime/asset change. Therefore
+`Builds/Windows-RC-5bdc0b1` is **runtime-equivalent to canonical source HEAD
+`da480e5`**. The tested package is preserved without rebuilding. The seal itself
+only updates documentation; the exact classification and concise final status
+are in [RC1_MANIFEST.md](RC1_MANIFEST.md). Existing automated evidence and native
+pointer limitations remain unchanged; no new gameplay audit is claimed.
+
 ## Architecture and reproduction
 
 `SurlhwaGameplayInput` forwards raw keys and cursor position to legacy Unity
@@ -262,7 +271,7 @@ progression stall or known objective P0/P1/P2 defect remains from this audit.
 | --- | --- |
 | PASS | Automated gameplay/discovery/recommendation, nine recipes/four methods, lifecycle, supported Back/re-entry, saves/ending, objective UI, audio/motion cleanup, stated standalone boundaries |
 | VALIDATION_DEBT | OS pointer delivery under the observed external PickerHost interception; full physical-device/platform certification is not inferred from simulated delivery |
-| HUMAN_SIGNOFF_REQUIRED | HUMAN_VISUAL: art/animation/layout taste; HUMAN_AUDIO: mix and sound satisfaction; HUMAN_WRITING: tone/emotional pacing; HUMAN_PLAY_FEEL: satisfaction/fatigue; NATIVE_HARDWARE_ONLY: unavailable real mouse/output-device checks |
+| HUMAN_SIGNOFF_REQUIRED | HUMAN_VISUAL: art/animation/layout taste; HUMAN_AUDIO: mix, sound satisfaction and physical output-device listening; HUMAN_WRITING: tone/emotional pacing; HUMAN_PLAY_FEEL: satisfaction/fatigue; NATIVE_POINTER_HARDWARE_DEBT: unavailable native pointer-button checks |
 | DEFERRED_PRESENTATION | Existing final memory/glass/garnish art, animation tuning and music composition backlog |
 | OUT_OF_SCOPE | Two reserve recipes with incomplete preparation, future revisits/catalog expansion, other platforms/aspect ratios, public distribution approvals |
 
