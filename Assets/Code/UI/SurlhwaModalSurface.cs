@@ -138,19 +138,19 @@ public sealed class SurlhwaModalSurface : MonoBehaviour
         InputBoundaryVersion++;
         // Routes do not poll while reading. A key released inside the modal
         // must not suppress the first new press when the modal closes.
-        heldKeys.RemoveWhere(key => !Input.GetKey(key));
-        foreach (var key in actionKeys) if (Input.GetKey(key)) heldKeys.Add(key);
+        heldKeys.RemoveWhere(key => !SurlhwaGameplayInput.GetKey(key));
+        foreach (var key in actionKeys) if (SurlhwaGameplayInput.GetKey(key)) heldKeys.Add(key);
     }
     public static bool KeyAllowed(KeyCode key)
     {
         if (IsPaused || Time.frameCount == boundaryFrame) return false;
         if (!heldKeys.Contains(key)) return true;
-        if (!Input.GetKey(key)) heldKeys.Remove(key);
+        if (!SurlhwaGameplayInput.GetKey(key)) heldKeys.Remove(key);
         return false;
     }
-    public static bool GetKey(KeyCode key) => KeyAllowed(key) && Input.GetKey(key);
-    public static bool GetKeyDown(KeyCode key) => KeyAllowed(key) && Input.GetKeyDown(key);
-    public static bool GetKeyUp(KeyCode key) => KeyAllowed(key) && Input.GetKeyUp(key);
+    public static bool GetKey(KeyCode key) => KeyAllowed(key) && SurlhwaGameplayInput.GetKey(key);
+    public static bool GetKeyDown(KeyCode key) => KeyAllowed(key) && SurlhwaGameplayInput.GetKeyDown(key);
+    public static bool GetKeyUp(KeyCode key) => KeyAllowed(key) && SurlhwaGameplayInput.GetKeyUp(key);
     void OnDisable() => Release();
     void OnDestroy() => Release();
     void Release()

@@ -59,7 +59,7 @@ public static class SURLHWACampaignPlayModeValidation
     private static void Changed(PlayModeStateChange state)
     {
         if (state == PlayModeStateChange.EnteredPlayMode && SessionState.GetBool(Prefix + "Pending", false))
-            EditorApplication.delayCall += () => new GameObject("Campaign Runtime Validation").AddComponent<SURLHWACampaignRunner>();
+            new GameObject("Campaign Runtime Validation").AddComponent<SURLHWACampaignRunner>();
         if (state != PlayModeStateChange.EnteredEditMode ||
             (!SessionState.GetBool(Prefix + "Complete", false) && !SessionState.GetBool(Prefix + "Pending", false))) return;
         foreach (string key in AllKeys())

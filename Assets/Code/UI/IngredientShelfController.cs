@@ -362,7 +362,7 @@ public class IngredientShelfController : MonoBehaviour
     public bool HandlePhysicalTools(float fillRateMlPerSecond)
     {
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.I))
+        if (SurlhwaGameplayInput.GetKeyDown(KeyCode.I))
             Debug.Log($"[Ice Input] observed route={currentMethod} target={targetContainer?.ContainerType} " +
                 $"focused={Application.isFocused} window={UnityEditor.EditorWindow.focusedWindow?.GetType().Name} " +
                 $"allowed={SurlhwaModalSurface.KeyAllowed(KeyCode.I)} measuring={Measuring} " +

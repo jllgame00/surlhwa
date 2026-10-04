@@ -83,7 +83,7 @@ public sealed class ServingGlassGentleStirInteraction
 
         Camera uiCamera = ResolveUiCamera(center);
         Vector2 centerScreen = RectTransformUtility.WorldToScreenPoint(uiCamera, center.position);
-        Vector2 offset = (Vector2)Input.mousePosition - centerScreen;
+        Vector2 offset = (Vector2)SurlhwaGameplayInput.MousePosition - centerScreen;
         if (offset.sqrMagnitude < minimumMouseRadiusPixels * minimumMouseRadiusPixels)
         {
             tracker.RecordIdle(Time.deltaTime);

@@ -47,7 +47,7 @@ public static class SURLHWAJ5PrinceClosurePlayModeValidation
     private static void Changed(PlayModeStateChange state)
     {
         if (state == PlayModeStateChange.EnteredPlayMode && SessionState.GetBool(Prefix + "Pending", false))
-            EditorApplication.delayCall += () => new GameObject("J5 Runtime Validation").AddComponent<SURLHWAJ5PrinceClosureRunner>();
+            new GameObject("J5 Runtime Validation").AddComponent<SURLHWAJ5PrinceClosureRunner>();
         if (state != PlayModeStateChange.EnteredEditMode || !SessionState.GetBool(Prefix + "Complete", false)) return;
         foreach (string key in AllKeys())
         {
@@ -65,7 +65,7 @@ public static class SURLHWAJ5PrinceClosurePlayModeValidation
         foreach (string key in new[] { "HadKnowledge", "HadLegacy", "Pending", "Complete", "Success" }) SessionState.EraseBool(Prefix + key);
         SessionState.EraseString(Prefix + "Knowledge");
         SessionState.EraseString(Prefix + "Legacy");
-        EditorApplication.Exit(code);
+        if (Application.isBatchMode) EditorApplication.Exit(code);
     }
     internal static void Complete(bool success)
     {

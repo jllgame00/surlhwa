@@ -75,7 +75,7 @@ public static class SURLHWAPhaseMUIValidation
     {
         if (!SessionState.GetBool(Pending, false)) return;
         if (state == PlayModeStateChange.EnteredPlayMode)
-            EditorApplication.delayCall += () => new GameObject("Phase M UI probe").AddComponent<SURLHWAPhaseMUIRunner>();
+            new GameObject("Phase M UI probe").AddComponent<SURLHWAPhaseMUIRunner>();
         if (state != PlayModeStateChange.EnteredEditMode) return;
         var save = JsonUtility.FromJson<Snapshot>(File.ReadAllText(SnapshotPath));
         foreach (var entry in save.integers)

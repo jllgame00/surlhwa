@@ -78,7 +78,7 @@ public sealed class DemoAudioController : MonoBehaviour
     private void Update()
     {
         Sounds.Reading = readingUI != null && readingUI.IsReadingDialogue;
-        if (Input.GetKeyDown(KeyCode.Escape) && !SurlhwaModalSurface.Back()) ToggleSettings();
+        if (SurlhwaGameplayInput.GetKeyDown(KeyCode.Escape) && !SurlhwaModalSurface.Back()) ToggleSettings();
     }
     public void SetVolume(string key, float value)
     {

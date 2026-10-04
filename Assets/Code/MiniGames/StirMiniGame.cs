@@ -460,7 +460,7 @@ public class StirMiniGame : MonoBehaviour, IMiniGame, IRecipePreparationExpectat
 
         Camera uiCamera = ResolveUiCamera(center);
         Vector2 centerScreen = RectTransformUtility.WorldToScreenPoint(uiCamera, center.position);
-        Vector2 cursorOffset = (Vector2)Input.mousePosition - centerScreen;
+        Vector2 cursorOffset = (Vector2)SurlhwaGameplayInput.MousePosition - centerScreen;
 
         if (cursorOffset.sqrMagnitude < minimumMouseRadiusPixels * minimumMouseRadiusPixels)
         {
