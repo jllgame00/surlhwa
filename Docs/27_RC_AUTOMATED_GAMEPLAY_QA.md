@@ -1,7 +1,10 @@
 # RC automated gameplay QA
 
 Baseline: `92ff5d4`, `refactor/project-rebuild`, Unity `6000.3.7f1`.
-Started 2026-10-04. This record supplements the historical production audits;
+Completed 2026-10-04: **RC_AUTOMATED_QA_PASS_WITH_NATIVE_DEBT**.
+No known P0/P1 remains after the executed audit. This is bounded automated
+evidence, not a guarantee of no undiscovered defects or human approval.
+This record supplements the historical production audits;
 it does not reinterpret old fixture passes as keyboard delivery or human approval.
 
 ## Architecture and reproduction
@@ -38,7 +41,7 @@ Tools/Invoke-RcUnity.ps1 -Action Run -Suite static
 Tools/Invoke-RcUnity.ps1 -Action Run -Suite focused
 Tools/Invoke-RcUnity.ps1 -Action Run -Suite stress
 Tools/Invoke-RcUnity.ps1 -Action Run -Suite campaign
-# Also: physical, audio, motion, motion-safety, ui, modal, navigation, j5
+# Also: physical, audio, motion, motion-safety, ui, ui-review, modal, navigation, j5
 Tools/Invoke-RcUnity.ps1 -Action Status
 # Sequential non-pointer batch; stops on the first failed suite:
 Tools/Invoke-RcRegression.ps1
@@ -61,11 +64,19 @@ unrelated relocated Search index exception can discard delayCall callbacks.
 | ordinary corpus | Seeds 92, 49524, 20261004; 128 requests each; valid distinct tags and no repeated previous primary | PASS: 384 requests, all 10 primary emotions and 30 pairs |
 | campaign | 18 nights, 47 natural departures, all ACTs, discovery retry, memories, ending, Continue | PASS; 47 natural departures; zero gameplay errors/warnings |
 | physical / audio / motion / motion-safety | Existing production integration, disabled-owner, fallback and cleanup assertions | PASS |
-| UI / modal / J5 | Existing production integration and delivery assertions | Current-source broad run pending |
-| Windows RC QA | Known committed code, explicit input/asset provenance, separate saves | Build and native smoke pending |
+| UI / ui-review | All requested screen groups at 720p/1080p; method Back/re-entry; summary/Codex return; ending/reset navigation | PASS; layout/raycast/callback fixtures, not native delivery |
+| modal | Four consecutive services, 12 combined overlay/Back cycles, live module raycast/press/release | PASS; 204 virtual pointer cycles, every callback exactly once |
+| J5 | Six service/quality/FIT cases, all Prince failure positions, popup/farewell, low cadence/long audio | PASS; natural departure and exactly-once feedback |
+| Windows focused / stress | Same enabled production-input suites in compiled Player | 27/27 + 4/4 PASS; 774 key pulses and 141 Submits per environment; stress process exit 0 |
+| Windows native / mixed UI | Real keyboard and Stir cursor; simulated UI pointer; New Game, service, Settings, Codex, Continue | PASS for the stated boundaries; OS pointer delivery remains environment debt |
 
 Never add counts from historical runs to current-source totals. Reproduction
 runs and harness failures remain in evidence, separate from final green runs.
+The 31 distinct new scenario definitions ran in both Editor and Windows Player;
+774 is the number of discrete key pulses, not 774 distinct named states.
+The focused/stress pair opens 39 routes, including eight interrupted measurement
+reloads and four subsequent completed re-entries. Existing suite counts above
+are separate and are not added to manufacture one inflated scenario total.
 
 ## State and input matrix
 
@@ -131,6 +142,10 @@ Production fixes: `4e2ddff`. Original failing logs/snapshots are retained under
 Fixture corrections (reserve classification, physical center lookup, float
 tolerance and screenshot directory) are retained separately; they are not
 reported as production bugs or retried without diagnosis.
+Standalone capture/focus helpers and the comprehensive UI dispatcher's terminal
+marker were also corrected as QA issues. The latter now recognizes the existing
+fixture's `COMPLETE` marker, emitted only after its runtime-error check; no
+gameplay assertion was weakened. Original wrapper failure logs are retained.
 
 ## Evidence and limitations
 
@@ -143,13 +158,18 @@ raycast, seats, enabled method, containers/Jigger, pending completion delegate,
 last input, last transition and trace tail. Diagnostic waits are attached to
 explicit expected transitions; authored reading waits are driven separately.
 
-Protected owner state: 71 hashed files, including configuration, settings,
+Protected owner state: 67 unique files in 71 baseline entries (four Recovery
+paths were recorded using both slash styles), including configuration, settings,
 layout, art metadata, font and all discovered Recovery artifacts. No such file
 is staged. Original byte backups and hashes are local evidence only.
 
 The Korean audit found **570 distinct Hangul characters**, all available from
-the actual KoreanFallback/source font chain. This establishes glyph availability,
-not a claim of beautiful typography or visible standalone rendering.
+the actual KoreanFallback/source font chain in both Editor and the packaged
+Player. Visible-window Player framebuffer captures at 1280x720 and 1920x1080
+show populated Korean text and a rendered scene. No missing-glyph warning was
+observed. The NativeFormatImporter cache inconsistency still appears during
+build; packaged glyph/render proof establishes its current lack of player impact.
+The protected owner font was not rewritten. Typography taste is human-owned.
 
 `Missing RuntimePipelineConfig` comes from the optional `com.unity.pipeline`
 player command/hot-reload server build processor. Missing configuration disables
@@ -164,5 +184,89 @@ callback before Play Mode. Editor preferences and gameplay callbacks are not
 changed. This prevents an Editor tooling failure from contaminating legacy
 validators' runtime exception observers.
 
-Final classification and human-only handoff will be updated after broad runtime
-regression and fresh standalone verification; no RC PASS is asserted yet.
+## Windows package and input proof
+
+Final QA package: `Builds/Windows-RC-5bdc0b1/SURLHWA.exe`, source
+`5bdc0b10034fc44b53b502799cb6d5f58ea5dda0`, Unity 6000.3.7f1, Windows x64,
+2026-10-04 12:09:12 UTC. Build succeeded in 10.183 seconds with two explained
+warnings (font importer and optional Pipeline server). It is a Development
+QA build with opt-in instrumentation, separate preferences, and no remote server.
+Later changes only expose the existing comprehensive Editor UI fixture, guard
+against stale runner PASS, and update this handoff; gameplay/Player code matches.
+
+The package's `source-inputs.json` records 1,504 input hashes: committed code,
+preserved owner art/font overlay, isolated company/product, and Unity-generated
+URP prefilter/runtime resource tables in the copy. Those two generated assets
+were inspected separately and were not applied to the original repository.
+This is a known code revision with explicit local asset provenance, not a claim
+that the owner's intentionally dirty asset/settings worktree was pristine.
+
+| Boundary | Actual evidence |
+| --- | --- |
+| OS keyboard | `KEYBOARD_DELIVERY_PASS`: focused Player, Windows SendInput, legacy and Input System key-down observations; native Return/New Game, Escape Settings, M/held Space/T/I/I |
+| Native gameplay cursor | OS cursor orbit reached legacy `Input.mousePosition` and the enabled Stir Update; final 1080p run recorded 1297.75 degrees |
+| OS pointer buttons | `VALIDATION_DEBT`: another process, PickerHost PID 44688, owned the target hit region despite foreground recovery and moving only the QA window; guard prevented input being sent to that process |
+| Simulated UI device | `POINTER_DELIVERY_PASS (SIMULATED_DEVICE)`: real InputSystemUIInputModule, live pointer/raycast/down/up/click/callback; explicit `--surlhwa-rc-ui-device` only |
+| Simulated gameplay input | 31 cases in Editor and compiled Player through enabled production Update/input gates; this is not a native-keyboard claim for every recipe |
+| Logic fixtures | Campaign, audio, motion, J5 and physical technique seams retain `LOGIC_ONLY_PASS` where commands are called directly |
+
+Native service was completed at 720p on `9186ad3`, then repeated after Continue
+at 1080p on final `5bdc0b1`. Both used an intentionally incomplete Whiskey drink:
+unknown/mismatch response, natural departure, seat reuse and next interaction
+all worked. Both retained M after transfer, accepted I once, and rejected repeat
+I without another action. Nine exact recipes completed separately in the final
+compiled input suite. The full 47-encounter campaign was Editor automation;
+there is no claim of a full native standalone campaign.
+
+Reproduce compiled suites from the repository working directory:
+
+```powershell
+Builds/Windows-RC-5bdc0b1/SURLHWA.exe --surlhwa-rc-focused
+Builds/Windows-RC-5bdc0b1/SURLHWA.exe --surlhwa-rc-stress
+Builds/Windows-RC-5bdc0b1/SURLHWA.exe --surlhwa-rc-native --surlhwa-rc-ui-device
+```
+
+Run one Player at a time. The last command observes real legacy keys and adds
+an explicitly simulated UI Mouse. `Tools/Invoke-RcNativeInput.ps1` validates the
+target executable/foreground; `Tools/Send-RcUiDevice.ps1` sends the existing
+released-move/press/release sequence. Neither drives gameplay commands.
+Native observer snapshots follow the method's authoritative shelf reference
+even when technique presentation hides its GameObject.
+
+## Saves, cleanup and final dispositions
+
+The campaign exercised eight Continue entry points: night 3 start; nights
+6/10/15 after slot 1; interrupted night 8 slot 2; interrupted and completed
+night 18 ending; legacy four-night completion into night 5. It also tested
+New Game/reset, all 47 departures and applicable visit flags, earned knowledge,
+seven memories, and no night 19. First four nights intentionally resume at the
+night boundary; later nights preserve departure slots. Mid-drink/animation
+restoration is not a current persistence contract. Standalone day-1 Continue
+and a subsequent complete service also passed.
+
+Audio fixtures verified one listener, bounded ambience/tool sources, locomotion
+footsteps with none while seated, settings/mute persistence, reading pause,
+route unload/cancellation and disabled-owner silence. Motion fixtures covered
+10 identities (two ordinary and all eight special guests), lovers at all three
+seats, missing frames/presenter, service reaction and natural exit cleanup.
+No audio/animation event became progression authority.
+
+Warning harvest distinguishes expected negative-service warnings (missing
+ingredient recognition/unknown service), deliberately exercised guard warnings,
+the relocated Search exception, and the two build warnings. Final compiled
+focused/stress runs have no observed exception/error/missing-glyph warning.
+Compilation has zero errors and eight pre-existing warnings. No unexplained
+progression stall or known objective P0/P1/P2 defect remains from this audit.
+
+| Disposition | Remaining scope |
+| --- | --- |
+| PASS | Automated gameplay/discovery/recommendation, nine recipes/four methods, lifecycle, supported Back/re-entry, saves/ending, objective UI, audio/motion cleanup, stated standalone boundaries |
+| VALIDATION_DEBT | OS pointer delivery under the observed external PickerHost interception; full physical-device/platform certification is not inferred from simulated delivery |
+| HUMAN_SIGNOFF_REQUIRED | HUMAN_VISUAL: art/animation/layout taste; HUMAN_AUDIO: mix and sound satisfaction; HUMAN_WRITING: tone/emotional pacing; HUMAN_PLAY_FEEL: satisfaction/fatigue; NATIVE_HARDWARE_ONLY: unavailable real mouse/output-device checks |
+| DEFERRED_PRESENTATION | Existing final memory/glass/garnish art, animation tuning and music composition backlog |
+| OUT_OF_SCOPE | Two reserve recipes with incomplete preparation, future revisits/catalog expansion, other platforms/aspect ratios, public distribution approvals |
+
+Routine mechanics and the 18-night bug hunt are no longer assigned to the
+owner. The older IceInput owner-rerun request is superseded by current native
+M/Space/T/I proof. Historical records remain historical. Final human approval
+of SURLHWA as a finished game remains with the owner.

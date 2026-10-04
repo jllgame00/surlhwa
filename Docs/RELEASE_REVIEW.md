@@ -1,241 +1,87 @@
-# Windows first-pass campaign review
+# SURLHWA RC review handoff
 
-## First human RC blocker: I / AddIce after measurement (2026-10-02)
+2026-10-04: **RC_AUTOMATED_QA_PASS_WITH_NATIVE_DEBT**.
+No known P0/P1 remains in the completed bounded audit. Human approval is pending.
+The detailed executable coverage, defects and evidence boundaries are in
+[Docs/27](27_RC_AUTOMATED_GAMEPLAY_QA.md); historical milestones remain in
+[Docs/13](13_POST_I16_PRODUCTION_GAP_AUDIT.md).
 
-Status: **FIXED_OWNER_RERUN_REQUIRED**. Resume the human playthrough only after
-the focused rerun below. Older automated fixture passes did not certify physical
-keyboard delivery, and the existing Phase O package predates this fix.
+## Current package
 
-Baseline: original repository `refactor/project-rebuild`, HEAD `49524de`, Phase O
-runtime `f5bb936`. The preserved human Editor log identifies the production
-`BartendingScene` route as **차가운 한 잔 / Stir / MixingGlass / Preparing**.
-The exact attempted recipe and ingredient quantities cannot be recovered.
-The owner explicitly confirmed that Game View was focused and M measurement
-had been used. Historical logging did not observe I down, the command, or its
-before/after state; those facts are not retroactively claimed.
+`Builds/Windows-RC-5bdc0b1/SURLHWA.exe`
 
-The source-level cause is `IngredientShelfController.HandlePhysicalTools`:
-measurement remains enabled after T empties the Jigger, and its idle branch
-returned before the method-specific I check. Thus I never issued AddIce in this
-state. This shared input gate originated in **`be9fe67` (Phase K measurement)**,
-before Phase N, J5 and Phase O. Current UI and physical-control documentation
-still specify I for ice. Both input backends are configured; no evidence links
-this failure to Phase O audio or the historical shared-pointer incident.
+- Source: `5bdc0b10034fc44b53b502799cb6d5f58ea5dda0`.
+- Unity 6000.3.7f1, Windows x64; successful build at 2026-10-04 12:09:12 UTC.
+- Development QA build; instrumentation is opt-in, saves use a separate namespace.
+- Keep the complete package together. `BUILD_INFO.txt` and `source-inputs.json`
+  identify the code, preserved owner art/font overlay, and isolated build inputs.
+- Later handoff/Editor-runner changes do not alter the packaged gameplay code.
+- Start without QA flags for ordinary review. This package is for review, not
+  final public distribution approval.
 
-The narrow fix lets I leave the measurement handler and reach the existing
-method handler. Full Jiggers, transfer, garnish placement, returning tools,
-duplicate ice and method state retain their existing guards. There is no new
-ice state, binding, input framework, recipe or persistence authority.
+## What automation has already checked
 
-The production chain remains legacy I polling → reading/modal gate → method
-preparation handler → shelf ToolsReady → physical placement coroutine → actual
-container HasIce and one preparation-trace AddIce → state-driven attached ice
-visual → Phase O trace observer/cue. Preparation is evaluated from accepted
-actions; there is no forced recipe-step index advance. Audio owns no completion.
-Editor-only `[Ice Input]` observations now identify raw I down, application and
-focused-window state, method/target, modal permission, measurement/pending/transfer
-and tool readiness, handler entry, rejection reason and applied ice/action count.
+| Area | Result |
+| --- | --- |
+| New input regressions | 31 distinct scenarios in both Editor and compiled Player; 774 key pulses and 141 Submit operations per environment |
+| Bartending | All four methods, all nine campaign recipes, Jigger/ice/transfer, invalid keys, held/repeated input, reload/re-entry |
+| UI delivery | 204 virtual Input System pointer cycles, each with one callback; 12 combined overlay/Back cycles across four natural services |
+| Customer/campaign | 18 nights, 47 natural departures, all eight special identities, shared lovers service, seven memories, ending |
+| Save/Continue | Eight representative campaign Continue entry points, New Game/reset, knowledge/visit/memory persistence; standalone Continue plus service |
+| Discovery/farewell | Six J5 scenarios including failure positions, preparation/FIT negatives, popup completion, slow frames and long audio |
+| Audio/motion | One listener, bounded sources, pause/mute/exit/disabled-owner cleanup, locomotion/seat/service/departure mapping and fallback |
+| Screens/fonts | Key screens captured at 720p and 1080p; actual Player frames at both sizes; all 570 required Hangul characters available in the packaged font |
 
-Validation evidence is retained locally under `Logs/Review/IceInput`:
+The former request for an owner rerun of **M -> measure -> T -> I** is superseded.
+Windows SendInput reached legacy polling, transferred the liquid, placed ice
+once while M remained on, and rejected repeat I. Native cursor motion also
+reached Stir. Standalone incomplete-drink service naturally departed and spawned
+the next guest at both review resolutions. The exact nine recipes passed through
+enabled production input handlers separately.
 
-- `static-and-preservation.json`: before/after routing checks and all 65 existing
-  dirty/recovery file hashes unchanged, including four Recovery files. The
-  original scene, settings, art metadata, font and owner saves were not edited.
-- `compile-final.log`: original Editor project build, zero errors, eight existing
-  warnings. No scene/prefab/serialized data changes are part of the fix.
-- Focused `git diff --check` passes. Whole-worktree check reports 291 existing
-  trailing-whitespace entries in protected art metadata/font changes; these
-  were preserved, not included in the fix (`diff-check-worktree.log`).
-- `native-before.log` and `native-before-vk-corrected.log`: OS SendInput attempts
-  with a checked focused Game View. Injection was accepted by Windows but M
-  never reached Unity legacy polling; I testing could not proceed. These are
-  **VALIDATION_BLOCKED_BY_ENVIRONMENT**, not native input PASS or focus-only proof.
-  The intermediate compile-blocked probe log is also retained.
-- `logic-after.log`: explicitly secondary direct-command fixtures on production
-  scene/prefabs, Dry Martini, Gin Fizz, Negroni and Seolya (`recipe_test_stir`).
-  Ice state, attached visual, one action/cue, full-Jigger rejection, repeated
-  rejection, next technique, wrong-state safety and route replacement/re-entry
-  pass. Dry Martini reaches normal service, satisfied preparation and recipe
-  recognition using measured transfer and technique-angle seams. These do not
-  prove I delivery. A fixture-only deferred-destruction lookup failure is retained
-  in `logic-fixture-binding-failure.log`; corrected lookup passed.
-- `phase-k-after.log`: existing four-method graphical physical integration PASS,
-  including container conservation, measurement, attached ice, transfer,
-  Stir/Shake and Float layers/garnish. Manwol authors no AddIce; no ice was forced
-  into that Float recipe.
-- `phase-o-after.log`: original focused audio fixture PASS for one ice cue,
-  volume/mute controls, Guide/Settings pause, physical Shake/Strain, additive
-  unload, synthetic audio cancellation and disabled-owner silence. The prepared
-  probe initially had no delayed runner after the relocated SearchDatabase
-  startup exception. Read-only status confirmed this; the original runner was
-  attached once through the isolated Editor bridge, with every assertion
-  unchanged (`audio-runner-recovery.json`). This is direct-fixture audio proof,
-  not native input proof. Physical cancellation followed by native I re-entry
-  remains part of the owner rerun.
-- No full 18-night / 47-encounter campaign was run for this input-only fix.
+Supported method-selection Back, guide/settings/Codex re-entry and active-route
+reload have automated coverage. There is no authored in-drink Cancel command;
+automation does not invent one or mislabel scene restart as keyboard Cancel.
 
-The disposable current-source validation copy excludes `_Recovery` and uses a
-separate company/product preference namespace. Its relocated SearchDatabase
-startup exception is retained as tooling evidence; it did not abort the passing
-fixtures. Native and logic probe code stays with ignored local evidence and is
-not shipped as production input.
+The full 47-encounter run used Editor production/technique seams. The Player ran
+31 focused/stress cases plus menu/settings/Codex, ordinary service and Continue.
+This is not a claim of a full native standalone campaign.
 
-**One owner rerun:** open the production BarScene, enter the same Stir request,
-click inside Game View, use M and T to measure/empty the Jigger, release the
-tools, then press I once while M remains enabled. Confirm visible ice, one
-`[Ice Input] applied` record, one ice cue at audible settings and available
-젓기 시작; finish and serve. Also try I with a nonempty Jigger and again after
-placement (no added ice/action), then stop/re-enter Play Mode and repeat the
-focused M → T → I sequence. If it fails, retain the `[Ice Input]` lines and the
-active method component's state/Guide/Settings state. This rerun owns native
-one-press/one-action and cancellation/re-entry sign-off; fixtures cannot close it.
+## Remaining input limitation
 
-This package is for owner playtesting, not final public-release approval. Keep the whole Windows folder together. Start SURLHWA.exe and use the Korean New Game / Continue controls. README.md contains controls; CREDITS.md records provenance and remaining ownership checks. For Phase M use the versioned `Windows-PhaseM-*` package and check its `BUILD_INFO.txt`; the old `Builds/Windows` executable is not Phase M evidence.
+Native OS mouse-button injection was obstructed by another process, PickerHost,
+which owned the target hit region despite focusing/moving only the QA Player.
+The safety guard stopped input to that unrelated process. Existing virtual Mouse
+press/release/raycast tests passed through the real UI input module in Editor
+and Player. OS pointer delivery remains **VALIDATION_DEBT**; keyboard delivery
+does not inherit that limitation. A future unobstructed desktop can rerun the
+native tools; no routine mechanics checklist or full campaign bug hunt is assigned
+to the owner.
 
-## Human playtest
+The two build warnings have dispositions: the optional Pipeline remote-command
+server is intentionally absent, and the KoreanFallback importer cache warning
+has no observed packaged glyph/render failure. The original owner font/settings
+were preserved. No fatal exception or missing-glyph warning occurred in the
+final compiled input suites.
 
-1. Play New Game through all 18 nights and the authored ending with physical mouse and keyboard. The first four nights retain 5 / 4 / 4 / 4 encounters; the extension adds 30. Read clues before attempting each required recipe, including Hanky Panky / French 75 / Last Word on nights 6 / 10 / 15.
-2. Read the Guide while stirring/shaking, then resume. Open Esc sound settings, adjust every slider and mute; confirm comfortable levels and pause/resume.
-3. Fail a required discovery once and retry. In a second run, fail one Prince service; confirm quiet farewell. All three successful services should lead to open farewell. Wrong technique must not count as success even with a fitting cocktail.
-4. In later recommendations try different learned/supplied cocktails and methods. Confirm the request feels open to interpretation, with no hidden single emotional answer.
-5. Continue after nights and after extended-night departures, then interrupt an extended dialogue/drink: that encounter should restart. Interrupt the ending: it should replay. After completing it, Continue must return to the final coda without night 19. New Game resets story/knowledge/memories but preserves sound settings.
-6. Review Korean text, scrolling, dialogue choices, recipe quantities, card art and click targets at 1280×720 and 1920×1080.
-7. Judge all seven themes, ordinary-guest pacing, dialogue cadence, character scale/poses, winter room mood, music repetition/mix and the final closing. Hamlet's quiet should feel deliberate while controls remain responsive. The lovers share one glass. Check whether the seven small spatial traces suggest people who were here without feeling like trophies.
+## Human-only review
 
-## Current limits
+- **HUMAN_VISUAL:** art taste, animation naturalness, stool/contact composition,
+  readability preference, tool silhouettes and memory presentation.
+- **HUMAN_AUDIO:** comfortable loudness, satisfying tool sounds, ambience taste
+  and repetition on the intended speakers/headphones.
+- **HUMAN_WRITING:** dialogue tone, emotional meaning and reading pace.
+- **HUMAN_PLAY_FEEL:** bartending satisfaction and whether the overall pacing
+  becomes tiring. This is taste review, not a request to find ordinary blockers.
+- **NATIVE_HARDWARE_ONLY:** real-device pointer/output behavior not proven under
+  the current desktop interception; no broad manual regression is requested.
 
-- Input-seam automation proves production state transitions. Phase M additionally tests actual EventSystem raycasts and the existing InputSystemUIInputModule with programmatic virtual mouse events. This is not a human or OS mouse test.
-- Save resumes night/knowledge/story state and, after night 4, the last departure checkpoint; no in-progress liquid or exact dialogue cursor save.
-- The owner accepted the Phase L modular bar and character style as the first-pass baseline. Phase N now adds first-pass walking, turning, seated poses, service response and departure over the same customer lifecycle. Pose quality and timing remain HUMAN_ANIMATION_TUNING_LATER. Glass/garnish refinement and final memory art remain later presentation work.
-- Prince leaves an empty chair after his closing visit; the small star respects his existing open-farewell eligibility. Chibi special guests and charcoal ordinary guests retain the accepted style. Shared-glass staging and spatial memory contours preserve current behavior. Hamlet's stillness is local; stronger animation/audio treatment is deferred.
-- Companion/rose/secret revisits, memory upgrade trees and additional IBA expansion are FUTURE_EXPANSION. Other aspect ratios/platforms and broad quest/economy systems are OUT_OF_SCOPE.
-- Public distribution requires owner review of the pre-existing artwork's source/permission and final credits.
+Existing final memory/glass/garnish art, animation tuning and music composition
+remain presentation backlog. Two reserve recipes, future revisits, further IBA
+expansion and other platforms/aspect ratios remain outside this RC scope.
+Public distribution/credit approvals remain owner decisions.
 
-The authoritative technical results and remaining classifications are in 13_POST_I16_PRODUCTION_GAP_AUDIT.md. Build and standalone smoke evidence are appended there after execution; do not infer them from this checklist.
-
-## Phase M focused human review
-
-1. At both 1280×720 and 1920×1080, click the visible guest prompt and read long Korean lines/choices. In a Recommendation, choose the countertop mixing glass/spoon, Shaker, glass/bottle and glass/horizontal-spoon setups; check hover help, selected mark, change, Back and reopen before starting. Float should clearly communicate layering. Exact authored requests retain direct entry. Check that a fast second click does not skip a reading beat.
-2. Hold Space while pouring, open Guide or Settings, release while reading, close, and press again. Repeat while stirring and during Shake notes. Confirm no queued pour, motion, note or serve; liquids and pending transfers must retain their actual state.
-3. Open Guide → Esc Settings → close Settings → close Guide. Check the appropriate top surface closes and reading does not consume Shake time. Repeat opening/closing and returning between scenes.
-4. Scroll ingredient/recipe lists, including bottom entries. Check visible targets, masks, disabled Continue and click/drag release near other controls. Keyboard focus should stay inside the active modal and return to its opener.
-5. Check Unknown/Partial/Known Codex entries without inferring unavailable recipe facts. Summary → Codex → close must return to the same summary. Read service quality, preparation and suitability as separate feedback.
-6. On a disposable run, cancel New Game reset and verify progress survives; confirm once and verify a fresh first night. Continue must not promise mid-drink restoration. Check ending interruption, completed coda and return to entry.
-
-Docs/22 contains tuning locations. Docs/23 contains screen ownership, exact
-evidence levels, fixture labels, source revision, captures and build/smoke limits.
-Human UI preference, auditory mix, narrative pacing and full physical-input
-playthrough are not certified by the automated checks.
-
-## Phase M package identity
-
-The countertop staging polish adds contact shadows, grouped supporting tools,
-warm hover/selected light and smaller labels without opaque menu bars. At both
-review resolutions, inspect all four hover and selected states, especially the
-spoon/Jigger/glass layering arrangement. Judge whether the tools feel grounded
-and the light stays quiet. Human aesthetic approval remains pending. The local
-before/after index is `Logs/Review/phase-m-staging-review.html`; Docs/23 records
-source hashes, executed tests and remaining native-input/standalone coverage.
-
-The countertop method-selection patch is documented in Docs/23 and implemented
-in `72ff492`. The package below predates that patch; do not use it as evidence
-of the new tool-selection UX. Patch validation used an isolated Editor copy.
-
-`Builds/Windows-PhaseM-ba4346f/SURLHWA.exe` was built from runtime source
-`ba4346f14a1aa9dfd73f5083399ca1230f0bd1fe` with Unity 6000.3.7f1 for Windows x64
-on 2026-09-29. The build succeeded; graphics-enabled startup loaded BarScene and
-remained alive for 15 seconds with saved preferences restored afterward.
-This is startup evidence only. Standalone UI navigation and a full physical-input
-playthrough remain to be done. See Docs/23 for exact timestamps, hashes, warning,
-Editor test coverage and build-generated worktree exclusions.
-
-## Phase N focused human review
-
-Use the versioned `Windows-PhaseN-*` package and its BUILD_INFO.txt when available;
-older Phase M executables do not contain the character work. Docs/25 records
-actual build execution and evidence separately from this review checklist.
-
-1. Watch an ordinary guest enter, walk, turn inward, sit, receive a drink,
-   stand and leave. Judge foot sliding, stool contact, cadence and stillness.
-2. Compare both ordinary silhouettes and all eight current special identities.
-   Faces/clothes should remain familiar. The first pass uses limited pixel
-   articulation and inward three-quarter views, not bespoke full directional art.
-3. Watch the lovers' arrival, separate stools, shared glass and departure. There
-   should still be one request/service and no companion remaining afterward.
-4. Read Hamlet slowly. His quiet idle is deliberate. The bartender should listen
-   without a busy loop and acknowledge service briefly from the central position.
-5. At 720p/1080p check silhouettes, bent knees, reaction/interaction indicators,
-   counter depth, earned memories and Korean text. The restored committed font
-   and rendering settings should receive this ordinary visual review too.
-6. Repeat service and Continue after an interrupted visit. Animation should
-   restart with the customer; exact mid-animation persistence is not promised.
-
-Human physical-input playtesting and aesthetic approval remain pending.
-DEFERRED_AUDIO is unchanged; future special revisits remain FUTURE_EXPANSION.
-
-### Phase N package identity and test limits
-
-`Builds/Windows-PhaseN-763df2c/SURLHWA.exe` contains Phase M UI, the refined
-countertop selector and Phase N motion. Runtime source is
-`763df2ce99fc374ef14136ab589a6b41d78e9335`, Unity 6000.3.7f1, built
-2026-10-01 13:03:49 UTC. Build succeeded with one existing tooling warning.
-Graphics-enabled startup loaded BarScene and remained alive at the 51-second
-check; preferences were restored. This is not a standalone playthrough.
-
-Docs/25 separates the passed motion/physical/UI/campaign checks from a failed
-older focused J5 assertion: a discovery popup was still active at farewell
-entry. The bounded J5 follow-up reproduced the duration-estimate race and now
-chains actual feedback completion before farewell. Six focused scenarios,
-exactly-once presentation counts and natural closing departure passed; see the
-appended Docs/25 record for source-qualified regression evidence. Phase N
-causation remains unproven. The packaged executable above predates this fix.
-Human review should still observe the transition; programmatic animation
-playback is not human testing. Historical Settings/Brew incidents are
-not declared resolved. See `Logs/Review/PhaseN/review.html` for motion evidence.
-
-
-## Phase O audio review
-
-Runtime audio source: `f5bb936` (foundation `4c4f0d5`, connections `2ebd24b`), built on the J5 sequencing
-fix `5b8ea90`. Phase M visuals, Phase N motion and accepted Shaker/Codex art are
-unchanged. The four protected local files remain outside these commits.
-
-Open `Logs/Review/PhaseOAudio/index.html` for 22 default-gain cue previews,
-combined room/winter ambience and actual Unity output. The latter is a
-68.992-second stereo cue fixture, not a normal-play recording. Its measured
-peak is .06509 full scale with zero clipped samples; comfort/beauty is not
-inferred from that measurement. Per-family trigger/import/provenance details
-are in Docs/26 and ArtSource/Audio.
-
-Listen at an ordinary volume. Check wind strength, loop repetition, footstep
-weight, stool/contact annoyance, pour/Strain texture, Stir and Shake, quiet
-Settings/Codex navigation, discovery restraint and space around dialogue.
-Idle guests and recurring bartender idles intentionally remain silent. No
-speech, character grunts, reward fanfares or new soundtrack were added.
-
-Passed targeted automated checks: C# compilation, owned asset references and
-imports, four-method physical motion/audio, reading pause and mute, Hamlet and
-paired foley/cleanup, six J5 scenarios with a deliberately long sound, and the
-existing Phase M callback/raycast fixture. Master-zero, Effects-zero and Mute
-were also checked in a live scene without changing preferences. The independent
-private snapshot check confirms progress, knowledge and audio preference
-restoration. No foreground pointer delivery or human listening is claimed.
-
-HUMAN_AUDIO_TUNING_LATER / HUMAN_AUDIO_APPROVAL_PENDING.
-MUSIC_COMPOSITION_DEFERRED. Historical Settings/Brew incidents remain separate.
-The single full campaign passed on `2ebd24b`; the later audio-only cleanup/sample
-offset changes passed focused audio regression. Fresh package:
-`Builds/Windows-PhaseO-f5bb936/SURLHWA.exe`, Unity 6000.3.7f1, source
-`f5bb936499da73ed6251d686c87c9a47d8081327`, built 2026-10-01 16:24:02 UTC.
-Build succeeded in 30.5 seconds with two warnings: KoreanFallback's existing
-NativeFormatImporter produced an inconsistent result, and the existing Pipeline
-runtime config is absent. No build error. The isolated project used committed
-PlayerSettings; the owner's unresolved local batching choice was untouched.
-
-The packaged player initialized the engine and remained alive/responsive at
-93 seconds without logged exceptions/audio errors. It closed through normal
-WM_CLOSE; standalone preferences were restored and verified. PrintWindow of the
-hidden window returned black, so it supplies no bar-render, Korean-text or
-standalone listening proof. Do the ordinary visible Korean-text/rendering check
-when reviewing this package. Full standalone play and foreground input remain
-VALIDATION_DEBT. Startup is not gameplay or human audio approval.
+Local evidence: `Logs/Review/RCAutomatedQA/`, including scenario/state matrices,
+reproductions, traces, campaign/pointer/standalone summaries, screenshot index,
+warning harvest and protected-file verification. Original protected state is
+67 unique files (71 baseline entries); all remain byte-for-byte unchanged.

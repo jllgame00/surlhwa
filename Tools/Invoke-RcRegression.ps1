@@ -1,5 +1,5 @@
 param(
-    [string[]]$Suites = @('static','focused','stress','campaign','physical','audio','motion','motion-safety','ui','j5'),
+    [string[]]$Suites = @('static','focused','stress','campaign','physical','audio','motion','motion-safety','ui','ui-review','j5'),
     [string]$AfterSuite,
     [string]$Project = (Join-Path $PSScriptRoot '../Logs/Review/RCAutomatedQA/ValidationProject')
 )

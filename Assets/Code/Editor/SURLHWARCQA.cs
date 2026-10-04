@@ -88,6 +88,7 @@ public static class SURLHWARCQA
                 case "motion-safety": SURLHWACharacterMotionValidation.RunSafety(); break;
                 case "physical": SURLHWAPhysicalBartendingPlayMode.Run(); break;
                 case "ui": SURLHWAPhaseMUIValidation.RunVisualAfter(); break;
+                case "ui-review": SURLHWAPhaseMUIValidation.Run(); break;
                 case "modal": SURLHWAPhaseMUIValidation.RunModalSequence(); break;
                 case "navigation": SURLHWAPhaseMUIValidation.RunNavigation(); break;
                 case "j5": SURLHWAJ5PrinceClosurePlayModeValidation.Run(); break;
@@ -145,7 +146,8 @@ public static class SURLHWARCQA
             "physical" => "[Phase K Play Mode] PASS:",
             "ui" => "[Visual Finish] PASS:",
             "modal" => "[Modal sequence] PASS four consecutive services",
-            "navigation" => "probe.classification=PASS",
+            "navigation" => "[Phase M UI] navigation COMPLETE:",
+            "ui-review" => "[Phase M UI] review COMPLETE:",
             "j5" => "[J5 PlayMode] PASS: production service handoff",
             _ => "__UNRECOGNIZED_SUITE__"
         };

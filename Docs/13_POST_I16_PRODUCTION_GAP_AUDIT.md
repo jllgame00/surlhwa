@@ -2567,3 +2567,73 @@ delivery at M preflight despite checked Game View focus; native I remains
 VALIDATION_DEBT. Detailed evidence, audio result and one focused owner rerun
 are recorded in `RELEASE_REVIEW.md`. Status: FIXED_OWNER_RERUN_REQUIRED; do not
 declare the human blocker closed or resume broad RC sign-off from fixture PASS.
+
+### RC automated gameplay hardening — 2026-10-04
+
+This record supersedes the preceding owner-rerun dependency with new evidence;
+the earlier finding and its original validation limits remain historical.
+Baseline `92ff5d4`, branch `refactor/project-rebuild`. Scope follows the current
+18-night/47-encounter campaign and nine active recipes, not the older bounded
+six-cocktail demo. Full architecture, scenario inventory and dispositions:
+`Docs/27_RC_AUTOMATED_GAMEPLAY_QA.md`; current human handoff: `RELEASE_REVIEW.md`.
+
+Production fixes in `4e2ddff`:
+
+- RC001/P1: idle M measurement also swallowed Manhattan Dash and Negroni
+  GentleStir after transfer. Release unowned input through the existing gate;
+  retain real pending measurement/tool safety guards.
+- RC002/P2: disabling an open Settings owner retained its global input gate.
+  OnDisable now closes/relinquishes its modal ownership.
+- RC003/P1: releasing Space inside a reading modal and pressing freshly on the
+  first resumed frame could retain the stale held-key suppression. Modal
+  boundaries now prune released keys before retaining currently held keys.
+
+All have retained failing reproductions and permanent passing regressions.
+The small input adapter defaults to legacy Input, owns no gameplay state, and
+allows injection only in Editor or an explicit RC QA build. Recognition,
+preparation, knowledge/supply, customer/seat/campaign authority and stable save
+identities are unchanged. No scene/prefab serialization was part of these fixes.
+
+Executed evidence: 27 focused plus four stress scenarios in both Editor and
+compiled Windows Player (774 discrete key pulses, 141 Submit operations per
+environment); nine exact recipes and four methods; three fixed fuzz seeds;
+eight interrupted measurement reloads followed by four completed re-entries.
+The production campaign passed all 47 natural departures, eight Continue entry
+points, discovery/retry, learned/supplied alternatives, all special visits,
+shared pair, seven memories, ending and reset. Separate UI/module regression
+passed 204 pointer cycles with one callback each, 12 combined modal cycles,
+four natural services, full screen fixtures and both review resolutions.
+Six J5 cases, Phase K physical, Phase N motion/fallback and Phase O audio cleanup
+also passed. Direct-command/technique fixtures remain explicitly logic-level.
+
+Final Windows QA package `Builds/Windows-RC-5bdc0b1` comes from code revision
+`5bdc0b10034fc44b53b502799cb6d5f58ea5dda0`, Unity 6000.3.7f1. Build succeeded in
+10.183 seconds at 12:09:12 UTC with two explained tooling/import warnings.
+Its manifest preserves exact local owner art/font inputs and copy-only build
+settings/generated URP tables. Later Editor-runner/handoff changes do not alter
+Player gameplay. All 67 unique protected files (71 baseline path entries) remain
+unchanged; no owner config, settings, Recovery, logs or builds were committed.
+
+Native Windows keyboard reached legacy polling for M/held Space/T/I/repeated I;
+actual liquid, ice, one AddIce trace and native cursor Stir were observed.
+An incomplete ordinary drink still naturally departed and allowed the next
+guest. Visible Player captures at 720p/1080p are nonblack, Korean is populated,
+and all 570 required Hangul characters exist in the packaged font chain.
+Standalone focused/stress suites and Continue/service passed; the full campaign
+claim remains Editor automation, not a native standalone playthrough.
+
+Final classification: **RC_AUTOMATED_QA_PASS_WITH_NATIVE_DEBT**. No known P0/P1
+or unexplained gameplay soft lock remains from the executed audit. OS mouse
+delivery remains VALIDATION_DEBT because an unrelated PickerHost window owned
+the hit region; no input was sent through that obstruction. Real UI-module
+virtual-pointer delivery passed independently. The optional RuntimePipelineConfig
+warning disables a remote-command server, not rendering. The font importer cache
+warning has no observed packaged glyph/render impact. Relocated Editor Search
+index failures retain their exact environment classification.
+
+Routine mechanics are now automated responsibilities. HUMAN_SIGNOFF_REQUIRED
+is limited to visual/animation taste, perceived audio, writing/emotional pacing,
+play satisfaction and unavailable physical-device behavior. Existing final art,
+animation tuning and music are DEFERRED_PRESENTATION. The two reserve recipes,
+future content/platforms and distribution approvals are OUT_OF_SCOPE. The human
+owner still decides whether the game is ready to present as finished.

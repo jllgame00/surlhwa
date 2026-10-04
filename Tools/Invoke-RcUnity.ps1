@@ -17,9 +17,11 @@ if ($Action -eq 'Status') {
     return
 }
 if ($Action -eq 'Run') {
-    if ($Suite -notin @('static','focused','measurement','stress','campaign','quiet','audio','motion','motion-safety','physical','ui','modal','navigation','j5','build','exit')) { throw 'Unknown suite.' }
+    if ($Suite -notin @('static','focused','measurement','stress','campaign','quiet','audio','motion','motion-safety','physical','ui','ui-review','modal','navigation','j5','build','exit')) { throw 'Unknown suite.' }
     $requestPath = Join-Path $projectPath 'Logs/Review/RCAutomatedQA/request.txt'
     if (Test-Path -LiteralPath $requestPath) { throw 'An RC request is already pending.' }
+    # A previous PASS with the same suite name must not satisfy a fresh run.
+    Set-Content -Encoding UTF8 -LiteralPath (Join-Path $projectPath 'Logs/Review/RCAutomatedQA/status.txt') -Value "QUEUED $Suite"
     Set-Content -Encoding UTF8 -LiteralPath $requestPath -Value $Suite
     return
 }
