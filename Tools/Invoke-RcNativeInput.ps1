@@ -28,6 +28,11 @@ public static class RcWindowsInput {
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr window,int command);
     [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr window);
     [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr window,out uint process);
+    [DllImport("kernel32.dll")] static extern uint GetCurrentThreadId();
+    [DllImport("user32.dll")] static extern bool AttachThreadInput(uint from,uint to,bool attach);
+    [DllImport("user32.dll")] static extern bool BringWindowToTop(IntPtr window);
+    [DllImport("user32.dll")] static extern IntPtr SetFocus(IntPtr window);
     [DllImport("user32.dll")] public static extern bool GetClientRect(IntPtr window,out RECT rect);
     [DllImport("user32.dll")] public static extern bool ClientToScreen(IntPtr window,ref POINT point);
     [DllImport("user32.dll")] public static extern bool SetCursorPos(int x,int y);
@@ -47,6 +52,16 @@ public static class RcWindowsInput {
         var input = new INPUT { type=0, value=new UNION { mouse=new MOUSEINPUT { data=unchecked((uint)delta),flags=0x800u } } };
         return SendInput(1,new[]{input},Marshal.SizeOf(typeof(INPUT)));
     }
+    public static bool FocusPlayer(IntPtr window) {
+        uint ignored; uint current=GetCurrentThreadId();
+        uint target=GetWindowThreadProcessId(window,out ignored);
+        uint foreground=GetWindowThreadProcessId(GetForegroundWindow(),out ignored);
+        bool a=foreground!=0 && foreground!=current && AttachThreadInput(current,foreground,true);
+        bool b=target!=current && target!=foreground && AttachThreadInput(current,target,true);
+        try { ShowWindow(window,9); BringWindowToTop(window); SetForegroundWindow(window); SetFocus(window); }
+        finally { if(b) AttachThreadInput(current,target,false); if(a) AttachThreadInput(current,foreground,false); }
+        return GetForegroundWindow()==window;
+    }
 }
 '@
 }
@@ -56,6 +71,10 @@ if ($window -eq 0) { throw 'RC player has no visible main window.' }
 [RcWindowsInput]::ShowWindow($window, 9) | Out-Null
 [RcWindowsInput]::SetForegroundWindow($window) | Out-Null
 Start-Sleep -Milliseconds 150
+if ([RcWindowsInput]::GetForegroundWindow() -ne $window) {
+    [RcWindowsInput]::FocusPlayer($window) | Out-Null
+    Start-Sleep -Milliseconds 150
+}
 if ([RcWindowsInput]::GetForegroundWindow() -ne $window) { throw 'RC window could not acquire foreground; no input sent.' }
 if ($Action -eq 'Close') { $process.CloseMainWindow() | Out-Null; return }
 if ($Action -eq 'Click' -or $Action -eq 'Move' -or $Action -eq 'Wheel') {
@@ -79,8 +98,8 @@ if ($Action -eq 'Click' -or $Action -eq 'Move' -or $Action -eq 'Wheel') {
         [pscustomobject]@{Action=$Action; ProcessId=$ProcessId; Accepted=[RcWindowsInput]::Wheel($WheelDelta)}
     }
 } elseif ($Action -eq 'Key') {
-    $press = [RcWindowsInput]::Key([ushort]$VirtualKey, $true)
+    $press = [RcWindowsInput]::Key([uint16]$VirtualKey, $true)
     Start-Sleep -Milliseconds $HoldMilliseconds
-    $release = [RcWindowsInput]::Key([ushort]$VirtualKey, $false)
+    $release = [RcWindowsInput]::Key([uint16]$VirtualKey, $false)
     [pscustomobject]@{Action=$Action; ProcessId=$ProcessId; VirtualKey=$VirtualKey; PressAccepted=$press; ReleaseAccepted=$release}
 } else { [pscustomobject]@{Action=$Action; ProcessId=$ProcessId; Foreground=$true} }

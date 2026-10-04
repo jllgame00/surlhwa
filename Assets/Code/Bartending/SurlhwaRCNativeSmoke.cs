@@ -56,7 +56,7 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
     {
         for (int n = 0; n < 30; n++) yield return null;
         yield return new WaitForEndOfFrame();
-        ScreenCapture.CaptureScreenshot(Folder + "/startup.png");
+        ScreenCapture.CaptureScreenshot(Path.GetFullPath(Folder + "/startup.png"));
     }
     void Harvest(string message, string stack, LogType kind)
     {
@@ -120,7 +120,7 @@ public sealed class SurlhwaRCNativeSmoke : MonoBehaviour
         if (File.Exists(capture))
         {
             string label = File.ReadAllText(capture).Trim(); File.Delete(capture);
-            if (label.All(c => char.IsLetterOrDigit(c) || c == '-')) ScreenCapture.CaptureScreenshot(Folder + "/" + label + ".png");
+            if (label.All(c => char.IsLetterOrDigit(c) || c == '-')) ScreenCapture.CaptureScreenshot(Path.GetFullPath(Folder + "/" + label + ".png"));
         }
     }
     void OnDestroy() => Application.logMessageReceived -= Harvest;
