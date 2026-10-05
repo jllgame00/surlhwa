@@ -1,92 +1,73 @@
 # SURLHWA RC review handoff
 
-2026-10-04 RC1 seal: **SURLHWA_RC1_AUTOMATED_READY** /
-**HUMAN_ACCEPTANCE_PENDING**. See the concise [RC1 manifest](RC1_MANIFEST.md).
-No known P0/P1 remains; the underlying QA result retains its native-pointer debt.
-The detailed executable coverage, defects and evidence boundaries are in
-[Docs/27](27_RC_AUTOMATED_GAMEPLAY_QA.md); historical milestones remain in
-[Docs/13](13_POST_I16_PRODUCTION_GAP_AUDIT.md).
+2026-10-05: **SURLHWA_RC1_REPRODUCIBLE_RELEASE_CANDIDATE** /
+**HUMAN_ACCEPTANCE_PENDING**. Known P0/P1: **0/0**.
+Committed content alone reproduced the Windows RC. No owner-dirty input was needed.
 
 ## Current package
 
-`Builds/Windows-RC-5bdc0b1/SURLHWA.exe`
+`D:/univ/surlhwa/Releases/SURLHWA_RC1_c443ed4_Windows.zip`
 
-- Source: `5bdc0b10034fc44b53b502799cb6d5f58ea5dda0`.
-- Unity 6000.3.7f1, Windows x64; successful build at 2026-10-04 12:09:12 UTC.
-- Development QA build; instrumentation is opt-in, saves use a separate namespace.
-- Keep the complete package together. `BUILD_INFO.txt` and `source-inputs.json`
-  identify the code, preserved owner art/font overlay, and isolated build inputs.
-- Exact diff `5bdc0b1..da480e5`: three TEST_ONLY files and three
-  DOCUMENTATION_ONLY files; no production runtime/asset change. This tested
-  package is **runtime-equivalent to canonical source HEAD `da480e5`** and is
-  preserved without rebuilding. The RC1 seal commit is documentation only.
-- Start without QA flags for ordinary review. This package is for review, not
-  final public distribution approval.
+- Exact source: `c443ed4e6a24b7b6169ab9f8608997cbbf97e675`; Unity 6000.3.7f1, Windows x86_64.
+- ZIP: 94,978,108 bytes; SHA-256 `2c900ca020229d6b688d8bf17dc7e8bfb7ccabe24f9b78e342aef6c826fb25f7`.
+- Extract the entire archive, then launch `SURLHWA.exe`. Keep all runtime files.
+- Development RC with opt-in QA instrumentation and a separate save namespace.
+  Ordinary launch needs no flags, source project or internal QA inputs.
+- CRC/file checksums passed before and after a separate extraction/launch test.
+  The extracted package completed New Game, four ordinary services/departures,
+  native method selection and the recipe guide. Human acceptance remains pending.
 
-## What automation has already checked
+The documentation seal does not change the executable's source SHA. The previous
+`Builds/Windows-RC-5bdc0b1` is preserved; no old package file was overwritten.
+
+## Automated evidence
 
 | Area | Result |
 | --- | --- |
-| New input regressions | 31 distinct scenarios in both Editor and compiled Player; 774 key pulses and 141 Submit operations per environment |
-| Bartending | All four methods, all nine campaign recipes, Jigger/ice/transfer, invalid keys, held/repeated input, reload/re-entry |
-| UI delivery | 204 virtual Input System pointer cycles, each with one callback; 12 combined overlay/Back cycles across four natural services |
-| Customer/campaign | 18 nights, 47 natural departures, all eight special identities, shared lovers service, seven memories, ending |
-| Save/Continue | Eight representative campaign Continue entry points, New Game/reset, knowledge/visit/memory persistence; standalone Continue plus service |
-| Discovery/farewell | Six J5 scenarios including failure positions, preparation/FIT negatives, popup completion, slow frames and long audio |
-| Audio/motion | One listener, bounded sources, pause/mute/exit/disabled-owner cleanup, locomotion/seat/service/departure mapping and fallback |
-| Screens/fonts | Key screens captured at 720p and 1080p; actual Player frames at both sizes; all 570 required Hangul characters available in the packaged font |
+| Source and toolchain | Two fresh Git-object checkouts; no copied Library/Temp/private state; 69 locked packages resolved; Unity and dotnet compilation passed with 0 errors |
+| Production data | Stable IDs, scenes/scripts, 9/9 campaign recipes, preparation/supply/knowledge, dialogue, guests, memories, ending and render assets passed |
+| Input/bartending | 31 distinct scenarios in both Editor and compiled Player; 774 key pulses / 141 Submits per environment; all four methods, M/measure/T/I and D/J, invalid/held/re-entry cases |
+| UI | Existing 204 simulated pointer cycles, modal collision/cleanup, guide/discovery/farewell, 12 combined Back/overlay cycles and four service routes |
+| Campaign/save | 18 nights / 47 natural departures; special guests/shared lovers; eight early/mid/late/ending Continue checkpoints; discovery/retry, seven memories, ending/reset |
+| Audio/animation | One listener, bounded/cleaned sources and loops, disabled-owner cleanup, Phase N fallback and motion; 22 original Phase O audio hashes match |
+| Font/render | All 570 required Korean characters from packaged Noto Sans KR; actual visible Player screens at 720p/1080p, including selector from the ZIP; no missing-glyph warning or obvious broken material/sprite |
+| Standalone | Native Continue, Settings/Codex, dialogue/Brew, measurement/transfer/ice, cursor Stir, strain/service and natural departure; four native ordinary services, plus the independent ZIP path |
 
-The former request for an owner rerun of **M -> measure -> T -> I** is superseded.
-Windows SendInput reached legacy polling, transferred the liquid, placed ice
-once while M remained on, and rejected repeat I. Native cursor motion also
-reached Stir. Standalone incomplete-drink service naturally departed and spawned
-the next guest at both review resolutions. The exact nine recipes passed through
-enabled production input handlers separately.
+Native Windows pointer down/up/click delivery is now proven on this desktop;
+**NATIVE_POINTER_HARDWARE_DEBT is cleared for this tested path**. Interrupted
+concurrent-desktop attempts and the earlier simulated-pointer fallback retain
+separate evidence. They are not counted as native successes. Native preparation
+respects physical pickup/return timing; early actions were retried after the
+existing guards cleared, with no change to gameplay or the repository QA harness.
 
-Supported method-selection Back, guide/settings/Codex re-entry and active-route
-reload have automated coverage. There is no authored in-drink Cancel command;
-automation does not invent one or mislabel scene restart as keyboard Cancel.
+The full campaign remains Editor production/technique automation. Compiled
+focused/stress scenarios use simulated production input. The native service
+smoke intentionally uses incomplete drinks to verify result/departure safety;
+exact recipe success is covered separately. No full native standalone campaign,
+physical listening or subjective play-feel approval is claimed.
 
-The full 47-encounter run used Editor production/technique seams. The Player ran
-31 focused/stress cases plus menu/settings/Codex, ordinary service and Continue.
-This is not a claim of a full native standalone campaign.
-
-## Remaining input limitation
-
-Native OS mouse-button injection was obstructed by another process, PickerHost,
-which owned the target hit region despite focusing/moving only the QA Player.
-The safety guard stopped input to that unrelated process. Existing virtual Mouse
-press/release/raycast tests passed through the real UI input module in Editor
-and Player. OS pointer delivery remains **VALIDATION_DEBT**; keyboard delivery
-does not inherit that limitation. A future unobstructed desktop can rerun the
-native tools; no routine mechanics checklist or full campaign bug hunt is assigned
-to the owner.
-
-The two build warnings have dispositions: the optional Pipeline remote-command
-server is intentionally absent, and the KoreanFallback importer cache warning
-has no observed packaged glyph/render failure. The original owner font/settings
-were preserved. No fatal exception or missing-glyph warning occurred in the
-final compiled input suites.
+Build warning count is **one**: the optional Pipeline remote-command server is
+unconfigured; URP renders correctly. The previous KoreanFallback importer warning
+did not recur in either clean build, and packaged font proof passed. Exact
+compile/tooling warnings and generated Unity diffs are classified in [Docs/28](28_CLEAN_CHECKOUT_AND_RELEASE_REPRODUCIBILITY.md).
 
 ## Human-only review
 
-- **HUMAN_VISUAL:** art taste, animation naturalness, stool/contact composition,
-  readability preference, tool silhouettes and memory presentation.
-- **HUMAN_AUDIO:** comfortable loudness, satisfying tool sounds, ambience taste
-  and repetition, including listening on the intended physical output device.
+- **HUMAN_VISUAL:** art, composition, animation naturalness, readability preference
+  and memory presentation.
+- **HUMAN_AUDIO:** listening on the intended device, loudness, sound character,
+  ambience and repetition.
 - **HUMAN_WRITING:** dialogue tone, emotional meaning and reading pace.
-- **HUMAN_PLAY_FEEL:** bartending satisfaction and whether the overall pacing
-  becomes tiring. This is taste review, not a request to find ordinary blockers.
-- **NATIVE_POINTER_HARDWARE_DEBT:** native pointer-button behavior not proven under
-  the current desktop interception; no broad manual regression is requested.
+- **HUMAN_PLAY_FEEL:** bartending satisfaction and overall pacing.
 
-Existing final memory/glass/garnish art, animation tuning and music composition
-remain presentation backlog. Two reserve recipes, future revisits, further IBA
-expansion and other platforms/aspect ratios remain outside this RC scope.
-Public distribution/credit approvals remain owner decisions.
+Final art, animation tuning and music composition remain presentation backlog.
+Reserve recipes, future revisits/IBA expansion, other platforms/aspect ratios and
+performance optimization are outside this release-engineering task. No routine
+mechanics checklist or campaign bug hunt is assigned to the owner.
 
-Local evidence: `Logs/Review/RCAutomatedQA/`, including scenario/state matrices,
-reproductions, traces, campaign/pointer/standalone summaries, screenshot index,
-warning harvest and protected-file verification. Original protected state is
-67 unique files (71 historical baseline entries). The RC1 seal takes a fresh
-67-file baseline of current owner state and preserves it byte-for-byte.
+All 76 protected owner files and the original dirty-status record are unchanged;
+all 322 previous RC files are unchanged. Current artifact/provenance summary:
+[RC1 manifest](RC1_MANIFEST.md). Full reproduction and local evidence locations:
+[clean checkout proof](28_CLEAN_CHECKOUT_AND_RELEASE_REPRODUCIBILITY.md). Earlier
+QA history and production findings remain in [Docs/27](27_RC_AUTOMATED_GAMEPLAY_QA.md)
+and [Docs/13](13_POST_I16_PRODUCTION_GAP_AUDIT.md).

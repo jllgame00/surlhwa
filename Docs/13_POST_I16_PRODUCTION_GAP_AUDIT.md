@@ -2637,3 +2637,43 @@ play satisfaction and unavailable physical-device behavior. Existing final art,
 animation tuning and music are DEFERRED_PRESENTATION. The two reserve recipes,
 future content/platforms and distribution approvals are OUT_OF_SCOPE. The human
 owner still decides whether the game is ready to present as finished.
+
+
+### Clean checkout and RC1 package reproduction (2026-10-05)
+
+Starting HEAD `54650ed`, expected branch confirmed. Two independent local Git-
+object clones with no owner overlay or pre-seeded caches passed fresh Unity
+6000.3.7f1 imports. Tested/build source `c443ed4` adds only a small provenance
+helper and reproduction instructions; no production code/asset/setting fix was
+required. The result-seal commit is documentation only. Full reproducible commands,
+warning/generated-diff dispositions and artifact hashes: `Docs/28_CLEAN_CHECKOUT_AND_RELEASE_REPRODUCIBILITY.md`.
+
+Compile: zero errors. All 13 existing Editor suites and 31 compiled Player
+scenarios passed; 18 nights/47 departures, nine campaign recipes, discovery/retry,
+eight Continue checkpoints, seven memories/ending, audio/motion/UI cleanup and
+570 required Korean glyphs passed. The new Windows build succeeded in 112.288 s
+with one optional Pipeline server warning. The old KoreanFallback importer
+warning did not recur in either clean build. Normal Unity-generated sprite/font
+whitespace, URP tables, QA namespace/background execution, batching defaults and
+UserSettings were classified and excluded from commits; no scene/prefab changed.
+
+The distributable ZIP was hashed, CRC-tested, extracted independently and launched
+without QA flags. Native New Game, four ordinary services/natural departures,
+method selection at 720p/1080p and the recipe guide passed from that extraction.
+Source-build native keyboard/cursor/pointer-button paths and Continue also passed;
+the earlier native pointer limitation is superseded by this evidence. Native
+smoke uses incomplete drinks for lifecycle safety; exact recipes and the full
+campaign retain their documented automated-input/seam boundaries.
+
+OWNER_DIRTY_STATE_REQUIRED: NO. All 76 currently protected owner/recovery files,
+original dirty status and 322 previous build files remain unchanged. No owner
+config/settings/Recovery, cache, build binary or ZIP was committed. The new
+package preserves the prior RC's meaningful runtime/data properties; 306 files
+also have identical hashes. No deterministic Unity binary claim is made.
+
+Verdict: CLEAN_CHECKOUT_REPRODUCIBLE. Artifact:
+SURLHWA_RC1_REPRODUCIBLE_RELEASE_CANDIDATE / HUMAN_ACCEPTANCE_PENDING; known P0/P1
+0/0. Objective in-scope gates PASS; no unresolved objective validation debt.
+Human sign-off remains visual, audio, writing and play feel. Final presentation
+work is deferred; future/reserve content, other platforms and performance work
+remain out of scope. Historical findings above are unchanged.

@@ -1,5 +1,10 @@
 # RC automated gameplay QA
 
+Current 2026-10-05 release: see [clean checkout proof](28_CLEAN_CHECKOUT_AND_RELEASE_REPRODUCIBILITY.md)
+and [RC1 manifest](RC1_MANIFEST.md). The new clean build and ZIP extraction pass;
+native pointer delivery is now verified. The dated 2026-10-04 evidence below
+retains its original source and limitations.
+
 Baseline: `92ff5d4`, `refactor/project-rebuild`, Unity `6000.3.7f1`.
 Completed 2026-10-04: **RC_AUTOMATED_QA_PASS_WITH_NATIVE_DEBT**.
 No known P0/P1 remains after the executed audit. This is bounded automated
