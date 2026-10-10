@@ -34,20 +34,20 @@
 **Files:** Production/.gitignore, README.md, Unity/Packages/{manifest,packages-lock}.json, Unity/ProjectSettings/, Validation/Manifests/preservation-baseline.json, Tools/verify_preservation.py.
 **Interfaces:** Produces the independent Unity project root and exact read-only source manifest.
 
-- [ ] Record production Git identity, external corpus hashes, frozen RC1 status/index/65 dirty-file hashes before modification.
-- [ ] Create new project using installed 6000.3.7f1. Resolve only packages needed for this proof; document each direct dependency.
-- [ ] Verify project import/compile and that caches are ignored. Verify preservation baseline without modifying sources.
-- [ ] Inspect intentional changes and commit the foundation when validated.
+- [x] Record production Git identity, external corpus hashes, frozen RC1 status/index/65 dirty-file hashes before modification.
+- [x] Create new project using installed 6000.3.7f1. Resolve only packages needed for this proof; document each direct dependency.
+- [x] Verify project import/compile and that caches are ignored. Verify preservation baseline without modifying sources.
+- [x] Inspect intentional changes and commit the foundation when validated.
 
 ## Task 2: Minimal immutable content/domain/application boundary
 
 **Files:** Unity/Assets/Surlhwa/{Domain,Application,ContentIO,Tests/EditMode}/, Content/spatial-proof.json, Content/spatial-proof.schema.json.
 **Interfaces:** StableId value types; immutable GuestDefinition and SpatialProofContent; SpatialProofLoader.Load(string); ReviewSession selects a fixture/camera without creating campaign facts.
 
-- [ ] Write failing behavior tests: typed Korean load/round trip; invalid version/ID; duplicate JSON key/ID; missing reference; unknown field; immutable collection isolation.
-- [ ] Run the tests against unimplemented loader contract and record RED evidence.
-- [ ] Implement only the loader, immutable values, and review selection needed by this pass. Generate runtime content from the one authored source.
-- [ ] Run the EditMode suite, read results, and commit the content foundation.
+- [x] Write failing behavior tests: typed Korean load/round trip; invalid version/ID; duplicate JSON key/ID; missing reference; unknown field; immutable collection isolation.
+- [x] Run the tests against unimplemented loader contract and record RED evidence.
+- [x] Implement only the loader, immutable values, and review selection needed by this pass. Generate runtime content from the one authored source.
+- [x] Run the EditMode suite, read results, and commit the content foundation.
 
 ## Task 3: Shared hybrid room and character bindings
 

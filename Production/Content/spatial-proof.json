@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "contentRevision": "spatial_proof_v1",
+  "mode": "spatial_proof",
+  "visualBindings": [
+    {
+      "id": "visual_bartender"
+    },
+    {
+      "id": "visual_ordinary"
+    },
+    {
+      "id": "visual_quixote"
+    }
+  ],
+  "texts": [
+    {
+      "id": "text_bartender",
+      "value": "바텐더"
+    },
+    {
+      "id": "text_postman",
+      "value": "우편 배달부"
+    },
+    {
+      "id": "text_quixote",
+      "value": "돈키호테"
+    }
+  ],
+  "guests": [
+    {
+      "id": "guest_bartender",
+      "kind": "bartender",
+      "displayTextId": "text_bartender",
+      "visualBindingId": "visual_bartender"
+    },
+    {
+      "id": "guest_ordinary_postman",
+      "kind": "ordinary",
+      "displayTextId": "text_postman",
+      "visualBindingId": "visual_ordinary"
+    },
+    {
+      "id": "guest_quixote",
+      "kind": "special",
+      "displayTextId": "text_quixote",
+      "visualBindingId": "visual_quixote"
+    }
+  ]
+}
+

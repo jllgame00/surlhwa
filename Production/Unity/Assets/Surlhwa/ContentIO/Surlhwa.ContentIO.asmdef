@@ -1,0 +1,13 @@
+{
+  "name": "Surlhwa.ContentIO",
+  "rootNamespace": "Surlhwa.ContentIO",
+  "references": [
+    "Surlhwa.Domain"
+  ],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Newtonsoft.Json.dll"
+  ],
+  "noEngineReferences": true
+}
+

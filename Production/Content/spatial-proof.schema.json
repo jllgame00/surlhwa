@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:surlhwa:spatial-proof:1",
+  "title": "Surlhwa spatial proof authored content v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "contentRevision", "mode", "visualBindings", "texts", "guests"],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "contentRevision": { "type": "string", "minLength": 1 },
+    "mode": { "const": "spatial_proof" },
+    "visualBindings": { "type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["id"],
+      "properties": { "id": { "$ref": "#/$defs/id" } }
+    } },
+    "texts": { "type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["id", "value"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "value": { "type": "string" } }
+    } },
+    "guests": { "type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "displayTextId", "visualBindingId"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "kind": { "enum": ["bartender", "ordinary", "special"] },
+        "displayTextId": { "$ref": "#/$defs/id" }, "visualBindingId": { "$ref": "#/$defs/id" }
+      }
+    } }
+  },
+  "$defs": { "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" } },
+  "$comment": "Runtime loader additionally rejects duplicate JSON keys/IDs and missing references. Content is UTF-8; no Unicode normalization."
+}

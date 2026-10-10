@@ -1,0 +1,9 @@
+{
+  "name": "Surlhwa.Application",
+  "rootNamespace": "Surlhwa.Application",
+  "references": [
+    "Surlhwa.Domain"
+  ],
+  "noEngineReferences": true
+}
+

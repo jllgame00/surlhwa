@@ -1,0 +1,16 @@
+{
+  "name": "Surlhwa.Foundation.Tests",
+  "references": [
+    "Surlhwa.Domain",
+    "Surlhwa.Application",
+    "Surlhwa.ContentIO"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "noEngineReferences": true
+}
+
