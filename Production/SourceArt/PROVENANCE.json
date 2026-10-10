@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "d5b8f5d0440f28340bc0933e7a4d7d1ab11870b2ee022f0cd37dc337768588af",
+      "bytes": 4443,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/Bartender.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+      "bytes": 1237,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/OrdinaryStanding.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+      "bytes": 7020,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/QuixoteStanding.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Seated.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "5eb685f54168394a66abc43d4ddba7126e19130f07254e81ce8310ab0e559b07",
+      "bytes": 1411,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/OrdinarySeated.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Seated.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "350bf887813acd3ffaeda87c9aea67eca87cefd40a4cb6a4cedf0679f6aa31e9",
+      "bytes": 6184,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/QuixoteSeated.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk0.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "9262b141e6f4c3ed32aa5034088341ae6525561e3ee95ce8dc68989856d8c802",
+      "bytes": 1470,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/OrdinaryWalk0.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk1.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4",
+      "bytes": 1453,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/OrdinaryWalk1.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk2.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "9bb844329edbb2cc538077119e64c2fea6aa020db18d604a53cebb7666f16bc6",
+      "bytes": 1440,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/OrdinaryWalk2.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    },
+    {
+      "source": "Assets/_SURLHWA/Art/Characters/Motion/OrdinaryCoat-Walk3.png",
+      "sourceRevision": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+      "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4",
+      "bytes": 1453,
+      "destination": "Production/Unity/Assets/Surlhwa/Art/OrdinaryWalk3.png",
+      "classification": "MIGRATE_AS_REFERENCE_ASSET",
+      "transform": "Unchanged PNG bytes; new Unity metadata",
+      "approval": "HG02/HG03 OWNER_REVIEW_PENDING; FIRST_PASS / HUMAN_ART_TUNING_LATER",
+      "provenance": "RC1 Phase L internal imagegen reference; seated Phase N deterministic pose derivation",
+      "license": "Internal owner review reference; final release adoption/rights review pending"
+    }
+  ],
+  "sourceNotes": [
+    "ArtSource/Pixel/BarRestart/README.md",
+    "ArtSource/Pixel/CharacterMotion/README.md",
+    "Docs/CREDITS.md"
+  ],
+  "modelSource": "Production/Unity/Assets/Surlhwa/Editor/SpatialProofBuilder.cs; deterministic primitives/meshes, newly authored"
+}

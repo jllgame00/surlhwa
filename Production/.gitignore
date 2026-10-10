@@ -8,7 +8,8 @@ Unity/.vs/
 Unity/.idea/
 Unity/*.csproj
 Unity/*.sln
-Unity/Assets/GeneratedContent/
+Unity/Assets/GeneratedContent/*
+!Unity/Assets/GeneratedContent/*.meta
 Validation/Evidence/
 Validation/Builds/
 Tools/__pycache__/

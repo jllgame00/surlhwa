@@ -4,6 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Surlhwa/Scenes/Bootstrap.unity
+    guid: 10b42d7dc9b5c8943981bc5f10794ae1
+  - enabled: 1
+    path: Assets/Surlhwa/Scenes/Bar.unity
+    guid: f4054d3bd65a8f04fb5dde88598b13ad
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

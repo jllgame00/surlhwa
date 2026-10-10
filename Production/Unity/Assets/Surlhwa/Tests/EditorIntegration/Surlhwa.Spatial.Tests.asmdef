@@ -1,0 +1,1 @@
+{"name":"Surlhwa.Spatial.Tests","references":["Surlhwa.Editor","Surlhwa.Presentation","Surlhwa.Application","Unity.RenderPipelines.Universal.Runtime"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"]}

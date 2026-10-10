@@ -54,11 +54,11 @@
 **Files:** Unity/Assets/Surlhwa/{Editor,Presentation,Art,Scenes}/, SourceArt/PROVENANCE.json.
 **Interfaces:** Deterministic SpatialProofBuilder creates Bootstrap/Bar and explicit actor/floor/seat/hand/dialogue/path/workbench/memory anchors. ReviewStage references the room and authored camera presets.
 
-- [ ] Define integration assertions for required room forms, three distinct actors, references, feet/seat contact, no missing scripts, fixed cameras and actual depth occlusion before implementing the builder.
-- [ ] Build clean low-detail floor/wall/U-counter/stools/shelves/window/door/lamps with restrained warm interior and cool exterior. Reserve an empty memory anchor and future resident workbench.
-- [ ] Selectively copy unchanged bartender, ordinary charcoal and Don Quixote PNGs with source/hash/status ledger; add fixed cutout planes, standing/seated pivots and restrained contact patches.
-- [ ] Verify anchor/reference contracts and real rendered occlusion. Inspect renders; correct objective contact defects before expanding anything.
-- [ ] Commit intentional blockout and character presentation after compile/integration validation.
+- [x] Define integration assertions for required room forms, three distinct actors, references, feet/seat contact, no missing scripts, fixed cameras and actual depth occlusion before implementing the builder.
+- [x] Build clean low-detail floor/wall/U-counter/stools/shelves/window/door/lamps with restrained warm interior and cool exterior. Reserve an empty memory anchor and future resident workbench.
+- [x] Selectively copy unchanged bartender, ordinary charcoal and Don Quixote PNGs with source/hash/status ledger; add fixed cutout planes, standing/seated pivots and restrained contact patches.
+- [x] Verify anchor/reference contracts and real rendered occlusion. Inspect renders; correct objective contact defects before expanding anything.
+- [x] Commit intentional blockout and character presentation after compile/integration validation.
 
 ## Task 4: Camera A/B, rendered validation and owner package
 
