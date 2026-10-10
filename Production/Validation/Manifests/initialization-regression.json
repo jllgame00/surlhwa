@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "regression": "Valid JSON with a declared but wrong bartender visual binding",
+  "originalAuthoredSha256": "93f2f3d97720d18047582aef4c6ad09b97724704939cfdd49a524b7ba7810081",
+  "playerExitCode": 1,
+  "initialized": false,
+  "captureCount": 0,
+  "collectedErrors": [
+    "InvalidOperationException: Authored guest/visual binding mismatch: guest_bartender\nSurlhwa.Presentation.ReviewStage.Awake () (at D:/univ/surlhwa/SURLHWA_PRODUCTION/Production/Unity/Assets/Surlhwa/Presentation/ReviewStage.cs:38)\n",
+    "SPATIAL_CAPTURE_ABORTED: review run identity and successful stage initialization are required.\nUnityEngine.Debug:LogError (object)\nSurlhwa.Presentation.ReviewRun/<Start>d__2:MoveNext () (at D:/univ/surlhwa/SURLHWA_PRODUCTION/Production/Unity/Assets/Surlhwa/Presentation/ReviewRun.cs:36)\nUnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at C:/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)\n"
+  ],
+  "inspectorResult": "FAIL",
+  "inspectorFailures": [
+    "Player process did not exit successfully",
+    "Stage initialization did not succeed",
+    "Player reported errors",
+    "Complete capture marker missing from Player log",
+    "Complete Player log contains an error, exception, assertion or crash"
+  ],
+  "evidencePath": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\initialization-mismatch"
+}

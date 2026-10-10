@@ -2,6 +2,7 @@ using System.Linq;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Surlhwa.Editor;
@@ -114,6 +115,49 @@ namespace Surlhwa.Spatial.Tests
             } finally {
                 if (!System.IO.File.Exists(generated)) System.IO.File.WriteAllText(generated, previous);
                 AssetDatabase.Refresh();
+            }
+        }
+        [Test] public void FailedBindingInitializationCannotLeaveStageReadyForCapture()
+        {
+            EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/Bar.unity");
+            var stage = Object.FindFirstObjectByType<ReviewStage>();
+            var awake = typeof(ReviewStage).GetMethod("Awake", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            awake.Invoke(stage, null);
+            var ready = typeof(ReviewStage).GetProperty("IsInitialized");
+            Assert.That(ready, Is.Not.Null, "Capture must have an explicit successful initialization gate");
+            Assert.That(ready.GetValue(stage), Is.True);
+            stage.Bartender.VisualBindingId = "visual_ordinary";
+            var error = Assert.Throws<System.Reflection.TargetInvocationException>(() => awake.Invoke(stage, null));
+            Assert.That(error.InnerException, Is.TypeOf<System.InvalidOperationException>());
+            Assert.That(ready.GetValue(stage), Is.False, "A failed initialization must close the capture gate");
+        }
+        [TestCase(false)] [TestCase(true)]
+        public void NativeBuildCallbackUsesCurrentAuthoredJsonAndRejectsInvalidChanges(bool invalid)
+        {
+            const string authored = "../Content/spatial-proof.json", generated = "Assets/GeneratedContent/spatial-proof.json";
+            byte[] original = System.IO.File.ReadAllBytes(authored);
+            string guid = AssetDatabase.AssetPathToGUID(generated);
+            var callbacks = TypeCache.GetTypesDerivedFrom<IPreprocessBuildWithReport>()
+                .Where(t => t.Namespace == "Surlhwa.Editor" && !t.IsAbstract)
+                .Select(t => (IPreprocessBuildWithReport)System.Activator.CreateInstance(t)).ToArray();
+            Assert.That(callbacks, Is.Not.Empty, "Normal Unity builds must validate the authored source");
+            try {
+                string changed = System.Text.Encoding.UTF8.GetString(original)
+                    .Replace("spatial_proof_v1", "native_build_한글_probe");
+                if (invalid) changed = changed.Replace("\"schemaVersion\": 1", "\"schemaVersion\": 2");
+                System.IO.File.WriteAllText(authored, changed, new System.Text.UTF8Encoding(false));
+                if (invalid) {
+                    string previous = System.IO.File.ReadAllText(generated);
+                    Assert.Throws<BuildFailedException>(() => callbacks.Single().OnPreprocessBuild(null));
+                    Assert.That(System.IO.File.ReadAllText(generated), Is.EqualTo(previous));
+                } else {
+                    foreach (var callback in callbacks) callback.OnPreprocessBuild(null);
+                    Assert.That(AssetDatabase.LoadAssetAtPath<TextAsset>(generated).text, Is.EqualTo(changed));
+                }
+                Assert.That(AssetDatabase.AssetPathToGUID(generated), Is.EqualTo(guid));
+            } finally {
+                System.IO.File.WriteAllBytes(authored, original);
+                ContentBundleGenerator.Sync();
             }
         }
     }

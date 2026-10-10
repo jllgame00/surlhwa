@@ -1,21 +1,39 @@
 """Inspect real native Player captures. No image is generated or repaired here."""
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from PIL import Image, ImageChops, ImageStat
 
 PRODUCTION = Path(__file__).resolve().parents[1]
 
+def review_outcome_failures(run, expected, process, log):
+    failures = []
+    if not expected.get('runId') or any(x.get('runId') != expected['runId'] for x in (run, process)):
+        failures.append('Capture/process identity does not match this requested run')
+    if process.get('exitCode') != 0: failures.append('Player process did not exit successfully')
+    if run.get('initialized') is not True: failures.append('Stage initialization did not succeed')
+    if run.get('errors'): failures.append('Player reported errors')
+    if 'SPATIAL_CAPTURE_FINISHED 24 files; errors 0' not in log: failures.append('Complete capture marker missing from Player log')
+    if re.search(r'(?im)(?:^[\w.]*Exception:|^Error:|^Assertion failed|^Fatal error|^Crash!!!|^Shader error |UnityEngine\.Debug:LogError|UnityEngine\.Debug:LogAssertion|UnityEngine\.DebugLogHandler:LogException)', log):
+        failures.append('Complete Player log contains an error, exception, assertion or crash')
+    return failures
+
 def inspect(folder):
     folder = folder.resolve()
     run = json.loads((folder / 'player-run.json').read_text(encoding='utf-8-sig'))
-    failures, images, diagnostics = [], [], []
+    expected_run = json.loads((folder / 'expected-run.json').read_text(encoding='utf-8-sig'))
+    process = json.loads((folder / 'os-memory.json').read_text(encoding='utf-8-sig'))
+    log = Path(expected_run['logPath']).read_text(encoding='utf-8-sig')
+    failures = review_outcome_failures(run, expected_run, process, log)
+    if failures:
+        return {'schemaVersion': 1, 'result': 'FAIL', 'failures': failures, 'images': [], 'evidencePath': str(folder), 'player': run}
+    images, diagnostics = [], []
     expected = {(c, f, w, w * 9 // 16) for c in ('OrthographicA', 'PerspectiveB')
                 for f in ('Empty', 'OrdinarySeated', 'QuixoteSeated', 'Composition', 'GroundingInspection', 'Standing') for w in (1280, 1920)}
     actual = {(c['camera'], c['fixture'], c['width'], c['height']) for c in run['captures']}
     if expected != actual: failures.append('Capture matrix mismatch')
-    if run['errors']: failures.append('Player reported errors')
     if run['staticRootAndFeetDrift']: failures.append('Static actor drift')
     clips = json.loads((folder / 'motion-clips.json').read_text(encoding='utf-8-sig'))
     if len(clips) != 4: failures.append('Four native motion clips required')
@@ -68,6 +86,9 @@ def inspect(folder):
     result = {'schemaVersion': 1, 'result': 'PASS' if not failures else 'FAIL', 'failures': failures,
               'evidenceTier': run['tier'], 'evidencePath': str(folder), 'sourceContentAndAssetFingerprint': fingerprint,
               'images': images, 'motionClips': clips, 'counterDiagnostics': diagnostics, 'player': run,
+              'processOutcome': {'runId': expected_run['runId'], 'exitCode': process['exitCode'],
+                                 'playerLogSha256': hashlib.sha256(Path(expected_run['logPath']).read_bytes()).hexdigest(),
+                                 'nativeAllocationWarnings': log.count('deleting an allocation that is older than its permitted lifetime')},
               'humanGateStatus': {'HG01': 'OWNER_REVIEW_PENDING', 'HG02': 'OWNER_REVIEW_PENDING', 'HG03': 'OWNER_REVIEW_PENDING'},
               'limits': ['Automated replay is not native gameplay input.', 'Pose swaps are reference animation, not final seated motion.',
                          'No GPU frame-time/VRAM telemetry; Development/offscreen timing does not establish minimum specs.',

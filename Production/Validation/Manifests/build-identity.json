@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "utc": "2026-10-10T22:00:30.026925+00:00",
+  "utc": "2026-10-10T22:15:58.138651+00:00",
   "branch": "production-rebuild",
-  "implementationCommit": "b6765e12c8f8b6c24776c296ace54deefbda1bb1",
-  "sourceStatusAtBuild": "M Production/Unity/Assets/Surlhwa/Materials/Sprite_Bartender.mat\n M Production/Unity/Assets/Surlhwa/Materials/Sprite_OrdinarySeated.mat\n M Production/Unity/Assets/Surlhwa/Materials/Sprite_QuixoteSeated.mat\n M Production/Unity/Assets/Surlhwa/Scenes/Bar.unity\n M Production/Unity/Assets/Surlhwa/Scenes/Bootstrap.unity\n M Production/Unity/Assets/Surlhwa/Settings/SpatialProofURP.asset",
-  "sourceFingerprint": "d2f7c4dee2a8b50ec2de1051746280dd9d98edbaff11696214f42052a68baddc",
-  "payloadFingerprint": "983866867414d8daf8341c7a8b6b9d05f20a0f1000d17b10fa8f438865a562f1",
+  "implementationCommit": "6878975108941dd2ff2b1c0ef7f50747e613c4e8",
+  "sourceStatusAtBuild": "M Production/Unity/Assets/Surlhwa/Editor/ContentBundleGenerator.cs\n M Production/Unity/Assets/Surlhwa/Presentation/ReviewRun.cs\n M Production/Unity/Assets/Surlhwa/Presentation/ReviewStage.cs\n M Production/Unity/Assets/Surlhwa/Scenes/Bar.unity\n M Production/Unity/Assets/Surlhwa/Scenes/Bootstrap.unity\n M Production/Unity/Assets/Surlhwa/Tests/EditorIntegration/SpatialSceneTests.cs",
+  "sourceFingerprint": "309fb9d32f98ad0718e631dc90695b93b6d94bff156eccb588cdd069e8f76930",
+  "payloadFingerprint": "b58490a9cde4219a211138d49da54abedb4154f3f718bfe208404eb03843067a",
   "sourceFiles": [
     {
       "path": "Content/spatial-proof.json",
@@ -219,8 +219,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Editor/ContentBundleGenerator.cs",
-      "bytes": 992,
-      "sha256": "2e88fa778306b1aa042eec645dbe46e9a186b5908e7da43907ef6274e68a3af1"
+      "bytes": 1483,
+      "sha256": "76de9ea6cdb806e66765f43289dac60a111e33008f933a5dea42c8e5b2b40687"
     },
     {
       "path": "Unity/Assets/Surlhwa/Editor/ContentBundleGenerator.cs.meta",
@@ -594,8 +594,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Presentation/ReviewRun.cs",
-      "bytes": 12883,
-      "sha256": "c578bc19563bab0e93c24986a0ac6e667dcf8c0bcd558fcfd61182308afad8af"
+      "bytes": 14089,
+      "sha256": "cbbe5b18aac0238da7c1a62567e453c962a42e9dd712b07abeb48cdbb3d576ef"
     },
     {
       "path": "Unity/Assets/Surlhwa/Presentation/ReviewRun.cs.meta",
@@ -604,8 +604,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Presentation/ReviewStage.cs",
-      "bytes": 3450,
-      "sha256": "94f9e8def3641414e9b24b368bdcafc2d3797883dfaf2fbcd8f64383e0f0d942"
+      "bytes": 3593,
+      "sha256": "eeee8b6e996ca2edbcff7a258630cc65db819c61df1a9e1729fe9fbcb7cccb05"
     },
     {
       "path": "Unity/Assets/Surlhwa/Presentation/ReviewStage.cs.meta",
@@ -629,8 +629,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Scenes/Bar.unity",
-      "bytes": 302810,
-      "sha256": "55bec424a4dc3be550aacfee8254cb7b648a8c14e175cc987b2681bee0ff15d5"
+      "bytes": 302865,
+      "sha256": "03b4cb63e4c97f4a09d41ebda83987c1ff726086bde6c7f832cc1a868b9c218b"
     },
     {
       "path": "Unity/Assets/Surlhwa/Scenes/Bar.unity.meta",
@@ -639,8 +639,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Scenes/Bootstrap.unity",
-      "bytes": 4847,
-      "sha256": "a916e4b929cc9f66ab2674d672f8561e8ac17521ea6f0f432888ddbca2e36078"
+      "bytes": 4839,
+      "sha256": "6ddfccb9121ea4c7ee27a8cb7fea7c6f0756a11053cf5850f8326eef061b8c80"
     },
     {
       "path": "Unity/Assets/Surlhwa/Scenes/Bootstrap.unity.meta",
@@ -714,8 +714,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/SpatialSceneTests.cs",
-      "bytes": 7595,
-      "sha256": "f75666a0a61651d51c99a8e2f604e86964c9fc9db01a33d32cce82c58557a82c"
+      "bytes": 10670,
+      "sha256": "c6e99a4210fffcb9b04b78cb0c4d2030f2a1be63d769047a07a06cacbed9a6d4"
     },
     {
       "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/SpatialSceneTests.cs.meta",
@@ -1007,7 +1007,7 @@
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/boot.config",
       "bytes": 368,
-      "sha256": "cb1f07b2f180093d438a029fc3206e990b0fc016c105b6bc22af875cd157caad"
+      "sha256": "7ff276d3fc1dec351977634f4e9c545110e7aa0a11f724c596628d97caf9b859"
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/globalgamemanagers",
@@ -1032,7 +1032,7 @@
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/level1",
       "bytes": 57264,
-      "sha256": "91360853cda8d8b2191fcf174b32537a2c5ae436f151202a52588fe8da7886f2"
+      "sha256": "534c784a06a6207c2ee175f9c39a55fa97cb01d66ae2401b344efdb752318f1e"
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/Managed/Mono.Security.dll",
@@ -1091,13 +1091,13 @@
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/Managed/Surlhwa.Presentation.dll",
-      "bytes": 24576,
-      "sha256": "6bd123a1dc81f4f8b3a9fbf162a103364f62cd7df50f46abacc8f75cfb08df90"
+      "bytes": 25600,
+      "sha256": "eb4597cfa87c7ef7704c7679853b520f2a036e57bc0aeb1e7a5820e280261bac"
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/Managed/Surlhwa.Presentation.pdb",
-      "bytes": 19672,
-      "sha256": "50ea315c9f4ad3e738bc960c929a904c66cbecc1404e61ac2017ccfd6c96695f"
+      "bytes": 19888,
+      "sha256": "aed9180297015cb7028c878dcb0c3fd3d560b1e647c76d6a539846b05d6b9547"
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/Managed/System.ComponentModel.Composition.dll",
@@ -2261,8 +2261,8 @@
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/RuntimeInitializeOnLoads.json",
-      "bytes": 2330,
-      "sha256": "22f145f202aed3a6b554a7afab83620b7a85cdf8c0dd5721c4bd61558e05d88d"
+      "bytes": 2500,
+      "sha256": "35bf29c7a624e4409665b79d193610f1ca00e7536168dcb6ad32a2a3e3f64938"
     },
     {
       "path": "Validation/Builds/Windows/SurlhwaSpatialProof_Data/ScriptingAssemblies.json",
@@ -2305,7 +2305,7 @@
       "sha256": "81adcfd8253c3489be720da7e30f16004dc9a1f02a8b418c6c3aef4993032e6d"
     }
   ],
-  "totalPayloadBytesIncludingDevelopmentSymbols": 162616260,
+  "totalPayloadBytesIncludingDevelopmentSymbols": 162617670,
   "hardwareSupplement": {
     "gpuNameDriverVRAMPowerLimit": "NVIDIA GeForce RTX 3070, 591.86, 8192 MiB, 240.00 W",
     "powerPlan": "�쟾�썝 援ъ꽦�몴 GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (怨좎꽦�뒫)",

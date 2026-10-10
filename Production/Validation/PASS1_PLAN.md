@@ -69,7 +69,7 @@
 - [x] Capture A/B at 720p/1080p with one shared scene; include original full-resolution grounding inspection frames and bounded path motion evidence.
 - [x] Build and run a Windows Player; collect honest idle baseline and objective shader/occlusion/reference/resolution results. Separate Editor evidence from Player evidence.
 - [x] Inspect original captures for magenta, clipping, counter penetration and feet contact. Produce review index with HG01/HG02/HG03 OWNER_REVIEW_PENDING, exact provisional camera/material/anchor values, facts, limits and tradeoffs.
-- [ ] Run final suite, preservation and diff checks; request one fresh whole-branch reviewer under executing-plans, address important findings, commit bounded result, stop before HG04.
+- [x] Run final suite, preservation and diff checks; request one fresh whole-branch reviewer under executing-plans, address important findings, commit bounded result, stop before HG04.
 
 ## Plan self-review
 

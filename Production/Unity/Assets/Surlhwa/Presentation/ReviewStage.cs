@@ -21,8 +21,10 @@ namespace Surlhwa.Presentation
         public Camera ActiveCamera => session.Camera == CameraVariant.OrthographicA ? Orthographic : Perspective;
         public ReviewFixture Fixture => session.Fixture;
         public CameraVariant Variant => session.Camera;
+        public bool IsInitialized { get; private set; }
         private void Awake()
         {
+            IsInitialized = false;
             automaticReview = Environment.GetCommandLineArgs().Contains("-reviewCapture");
             var content = SpatialProofLoader.Load(ContentBundle.text);
             foreach (var actor in new[] { Bartender, Ordinary, Quixote })
@@ -32,6 +34,7 @@ namespace Surlhwa.Presentation
                     throw new InvalidOperationException("Authored guest/visual binding mismatch: " + actor.GuestId);
             }
             Select(CameraVariant.OrthographicA, ReviewFixture.Composition);
+            IsInitialized = true;
         }
         public void Select(CameraVariant camera, ReviewFixture fixture)
         {
@@ -51,7 +54,7 @@ namespace Surlhwa.Presentation
         }
         private void OnGUI()
         {
-            if (automaticReview) return;
+            if (automaticReview || !IsInitialized) return;
             GUILayout.BeginArea(new Rect(12, 12, 235, 260), GUI.skin.box);
             GUILayout.Label("SURLHWA / HG01–HG03 review");
             if (GUILayout.Button("A · Orthographic")) Select(CameraVariant.OrthographicA, session.Fixture);

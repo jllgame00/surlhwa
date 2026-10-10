@@ -14,16 +14,32 @@ namespace Surlhwa.Presentation
     // Automated review harness, separate from gameplay. Captures always come from the built Player.
     public sealed class ReviewRun : MonoBehaviour
     {
-        private readonly List<string> errors = new List<string>();
+        private static readonly List<string> errors = new List<string>();
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void CollectStartupErrors()
+        {
+            UnityEngine.Application.logMessageReceived -= OnLog;
+            errors.Clear();
+            if (Environment.GetCommandLineArgs().Contains("-reviewCapture"))
+                UnityEngine.Application.logMessageReceived += OnLog;
+        }
         private IEnumerator Start()
         {
             string[] args = Environment.GetCommandLineArgs();
             if (!args.Contains("-reviewCapture")) yield break;
-            UnityEngine.Application.logMessageReceived += OnLog;
             string output = args.SkipWhile(x => x != "-reviewOutput").Skip(1).FirstOrDefault();
             if (string.IsNullOrWhiteSpace(output)) { Debug.LogError("-reviewOutput is required."); UnityEngine.Application.Quit(1); yield break; }
             Directory.CreateDirectory(output);
+            string runId = args.SkipWhile(x => x != "-reviewRunId").Skip(1).FirstOrDefault();
             var stage = GetComponent<ReviewStage>();
+            if (string.IsNullOrWhiteSpace(runId) || stage == null || !stage.IsInitialized || errors.Count != 0) {
+                Debug.LogError("SPATIAL_CAPTURE_ABORTED: review run identity and successful stage initialization are required.");
+                File.WriteAllText(Path.Combine(output, "player-run.json"), JsonUtility.ToJson(new RunEvidence {
+                    runId = runId, initialized = false, utc = DateTime.UtcNow.ToString("O"),
+                    captures = Array.Empty<Capture>(), measurements = Array.Empty<Measurement>(), errors = errors.ToArray()
+                }, true));
+                UnityEngine.Application.Quit(1); yield break;
+            }
             UnityEngine.Application.targetFrameRate = -1; QualitySettings.vSyncCount = 0;
             var actors = new[] { stage.Bartender, stage.Ordinary, stage.Quixote };
             var roots = actors.Select(x => x.transform.position).ToArray();
@@ -110,7 +126,7 @@ namespace Surlhwa.Presentation
                 }
             }
             RenderTexture.ReleaseTemporary(performanceTarget);
-            var evidence = new RunEvidence { utc = DateTime.UtcNow.ToString("O"), unity = UnityEngine.Application.unityVersion,
+            var evidence = new RunEvidence { runId = runId, initialized = stage.IsInitialized, utc = DateTime.UtcNow.ToString("O"), unity = UnityEngine.Application.unityVersion,
                 tier = "Windows Development Player / native URP render requests; offscreen 1080p render each frame, uncapped 60s per camera; batchmode", gpu = SystemInfo.graphicsDeviceName,
                 graphicsAPI = SystemInfo.graphicsDeviceType.ToString(), cpu = SystemInfo.processorType,
                 os = SystemInfo.operatingSystem, memoryMB = SystemInfo.systemMemorySize, screenWidth = Screen.width, screenHeight = Screen.height,
@@ -121,7 +137,7 @@ namespace Surlhwa.Presentation
             Debug.Log("SPATIAL_CAPTURE_FINISHED " + captures.Count + " files; errors " + errors.Count);
             UnityEngine.Application.Quit(errors.Count == 0 ? 0 : 1);
         }
-        private void OnLog(string condition, string trace, LogType type)
+        private static void OnLog(string condition, string trace, LogType type)
         { if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert) errors.Add(condition + "\n" + trace); }
         private static void CaptureFrame(Camera camera, string path, int width, int height)
         {
@@ -143,7 +159,8 @@ namespace Surlhwa.Presentation
             public bool gcRecorder, batchRecorder, drawRecorder, mainRecorder;
         }
         [Serializable] private sealed class RunEvidence {
-            public string utc, unity, tier, gpu, graphicsAPI, cpu, os, quality, source;
+            public string runId, utc, unity, tier, gpu, graphicsAPI, cpu, os, quality, source;
+            public bool initialized;
             public int memoryMB, screenWidth, screenHeight; public bool staticRootAndFeetDrift;
             public Capture[] captures; public Measurement[] measurements; public string[] errors;
         }

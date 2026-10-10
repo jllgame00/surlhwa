@@ -1,11 +1,11 @@
 {
   "evidenceTier": "Native Unity 6000.3.7f1 EditMode",
   "result": "Passed",
-  "total": 34,
-  "passed": 34,
+  "total": 37,
+  "passed": 37,
   "failed": 0,
-  "durationSeconds": 1.9244799,
-  "testRunSha256": "8e3f7d597acf7f238e5487e0c1b4a2305cec92715c6c51352185d3aec7167e7b",
+  "durationSeconds": 2.3709013,
+  "testRunSha256": "74414c1dffefee6705509f45866a30e292b91926459b1a163611ce92ede98b32",
   "tests": [
     {
       "name": "Surlhwa.Tests.ContentFoundationTests.DuplicateIdFailsBeforeRegistryPublication",
@@ -116,6 +116,10 @@
       "result": "Passed"
     },
     {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.FailedBindingInitializationCannotLeaveStageReadyForCapture",
+      "result": "Passed"
+    },
+    {
       "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.FeetAndSeatAnchorsMeetActualSupportingGeometry",
       "result": "Passed"
     },
@@ -125,6 +129,14 @@
     },
     {
       "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.GeneratedBundleCanBeRecreatedWithoutChangingItsReferenceGuid",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.NativeBuildCallbackUsesCurrentAuthoredJsonAndRejectsInvalidChanges(False)",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.NativeBuildCallbackUsesCurrentAuthoredJsonAndRejectsInvalidChanges(True)",
       "result": "Passed"
     },
     {
@@ -150,7 +162,9 @@
     "spatial-red.xml: 0/4",
     "contact-red.xml: 0/1",
     "stool-torso-red.xml: 0/1",
-    "bundle-regeneration-red.xml: 0/1"
+    "bundle-regeneration-red.xml: 0/1",
+    "review-regressions-red.xml: 0/3; review-regressions-green.xml: 3/3",
+    "capture-outcome-red.log: 2/7; seven process trust regressions now pass"
   ],
-  "scope": "Content/schema/IDs/Unicode/immutability, review selection, scene references/anchors/cameras/materials/counter/stool/bundle regeneration. Artistic approval is excluded."
+  "scope": "Content/schema/IDs/Unicode/immutability, review selection, scene references/anchors/cameras/materials/counter/stool/bundle regeneration, failed initialization readiness and native build preprocessing for changed/invalid JSON. Artistic approval is excluded."
 }
