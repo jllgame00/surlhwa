@@ -1,0 +1,47 @@
+{
+  "result": "DERIVED_FROM_VERIFIED_NATIVE_CAPTURES",
+  "file": "HG01_HG03_COMPARISON.png",
+  "sha256": "71bd08eb7b8f99d486c90d6cca7374b81ecb4d9c35008c4cd6c9ac5376c6070e",
+  "width": 1328,
+  "height": 1440,
+  "runId": "21bba207fef24d97b91d7257961bf714",
+  "sources": [
+    {
+      "file": "OrthographicA_Composition_1920x1080.png",
+      "sha256": "fc159adef266b2710ca4a67683bf31dcefbaa963304a1cb377d5759c7ca388bc",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "PerspectiveB_Composition_1920x1080.png",
+      "sha256": "7e4e11fb30f36e66c7ab027d9dad9ab44fe8d7d925120f7fe4bd02b5877437bb",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "OrthographicA_OrdinarySeated_1920x1080.png",
+      "sha256": "238c9af1aa8c8df2e91354ea2f698ed7b69192a5d78d7d7f0ca685a8af9f6d81",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "PerspectiveB_OrdinarySeated_1920x1080.png",
+      "sha256": "06a7ca057cc104df3bacf0fa4fdbd2a256c4adadf96ae1448f311e842987cac0",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "OrthographicA_GroundingInspection_1920x1080.png",
+      "sha256": "58dfd4afd4c65f354af87f38f7f83bef5cc9f209f1da0096316fd6db4f2623b7",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "PerspectiveB_GroundingInspection_1920x1080.png",
+      "sha256": "7106075d34e0ee59266ac964a07272ef2d3d0651cbcbf54f14c7e2d8eb25e35b",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "limits": "Uniformly scaled overview. Originals retained. No retouching, crop, relighting or artistic approval."
+}

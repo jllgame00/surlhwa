@@ -2,7 +2,9 @@
 
 Verdict: **HYBRID_SPATIAL_PROOF_READY_FOR_OWNER_REVIEW**. HG01/HG02/HG03 are each **READY_FOR_OWNER_REVIEW**, with artistic acceptance **OWNER_REVIEW_PENDING**. No camera winner is selected. This is a spatial fixture, with no service success, visit completion or memory awarded.
 
-Open [the comparison index](review.html). Open the individual original PNG links at native size when judging pixel readability; scaled previews and clips do not replace them. Raw outputs are local ignored evidence: preserve this folder if sharing or moving the checkout.
+Start with the [six-frame overview board](HG01_HG03_COMPARISON.png), then use [the comparison index](review.html) to compare each fixture at native 720p and 1080p. Inspect OrdinarySeated and QuixoteSeated, then GroundingInspection and the movement clips. Scaled previews and clips do not replace native originals. Raw outputs are local ignored evidence: preserve this folder if sharing or moving the checkout.
+
+**Don Quixote is VISUAL_FIXTURE_ONLY.** His use here does not alter Canon ACT order or imply that he is the first canonical special guest. This pass authors no campaign sequencing.
 
 ## What to judge
 

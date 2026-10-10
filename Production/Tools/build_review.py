@@ -2,6 +2,7 @@
 import html
 import json
 from pathlib import Path
+from build_comparison_board import build_board
 
 PRODUCTION = Path(__file__).resolve().parents[1]
 VALIDATION = PRODUCTION / 'Validation'
@@ -11,6 +12,7 @@ if manifest['result'] != 'PASS':
 folder = Path(manifest['evidencePath']).resolve()
 relative = folder.relative_to(VALIDATION).as_posix()
 run = manifest['player']
+board = build_board(manifest, VALIDATION)
 fixtures = ['Empty', 'OrdinarySeated', 'QuixoteSeated', 'Composition', 'GroundingInspection', 'Standing']
 rows = []
 for fixture in fixtures:
@@ -33,7 +35,9 @@ report = f'''# HG01–HG03 owner review
 
 Verdict: **HYBRID_SPATIAL_PROOF_READY_FOR_OWNER_REVIEW**. HG01/HG02/HG03 are each **READY_FOR_OWNER_REVIEW**, with artistic acceptance **OWNER_REVIEW_PENDING**. No camera winner is selected. This is a spatial fixture, with no service success, visit completion or memory awarded.
 
-Open [the comparison index](review.html). Open the individual original PNG links at native size when judging pixel readability; scaled previews and clips do not replace them. Raw outputs are local ignored evidence: preserve this folder if sharing or moving the checkout.
+Start with the [six-frame overview board](HG01_HG03_COMPARISON.png), then use [the comparison index](review.html) to compare each fixture at native 720p and 1080p. Inspect OrdinarySeated and QuixoteSeated, then GroundingInspection and the movement clips. Scaled previews and clips do not replace native originals. Raw outputs are local ignored evidence: preserve this folder if sharing or moving the checkout.
+
+**Don Quixote is VISUAL_FIXTURE_ONLY.** His use here does not alter Canon ACT order or imply that he is the first canonical special guest. This pass authors no campaign sequencing.
 
 ## What to judge
 
@@ -89,6 +93,8 @@ page = f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="view
 <title>SURLHWA · HG01–HG03 owner review</title><style>
 body{{margin:0;background:#141619;color:#eee3d4;font:16px/1.55 system-ui,sans-serif}}main{{max-width:1600px;margin:auto;padding:30px}}h1{{font-size:30px;margin-bottom:0}}.sub{{color:#baa992}}.controls{{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin:24px 0}}select,a{{color:#eac79b}}select{{background:#24282e;padding:9px;border:1px solid #655445;border-radius:5px}}.pair{{display:grid;grid-template-columns:1fr 1fr;gap:18px}}figure{{margin:0;background:#202328;padding:12px;border-radius:8px}}img,video{{width:100%;height:auto;display:block;margin:10px 0}}.gates{{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:28px 0}}article{{background:#202328;padding:18px;border-top:2px solid #a47749}}code{{color:#eac79b}}@media(max-width:850px){{.pair,.gates{{grid-template-columns:1fr}}}}
 </style><main><p class="sub">PRODUCTION / PASS 1 / ARCH_SLICE_PROVISIONAL</p><h1>A winter bar, two projections</h1><p>HG01–HG03 · READY_FOR_OWNER_REVIEW · Artistic acceptance pending. No camera winner selected.</p>
+<p class="sub">Don Quixote: VISUAL_FIXTURE_ONLY. Canon ACT order unchanged; this fixture does not imply the first canonical special guest.</p>
+<p>Start with the <a href="HG01_HG03_COMPARISON.png" target="_blank">six-frame overview board</a>, then compare OrdinarySeated / QuixoteSeated, GroundingInspection and the movement clips below. Use native originals to judge pixels.</p>
 <div class="controls"><label>Fixture <select id="fixture">{options}</select></label><label>Native resolution <select id="resolution"><option value="1280">1280 × 720</option><option value="1920">1920 × 1080</option></select></label><a href="REVIEW_HG01_HG03.md">Review notes / exact values / limits</a></div>
 <div class="pair"><figure><b>A · Orthographic</b><img id="a" alt="Real native Orthographic A Player capture"><a id="alink" target="_blank">Open original at native size</a></figure><figure><b>B · Restrained perspective</b><img id="b" alt="Real native Perspective B Player capture"><a id="blink" target="_blank">Open original at native size</a></figure></div>
 <p class="sub">Previews fit this page. Use original links to judge pixels. Same room, art, lighting, staging and camera angle. The inspection fixture uses a separately recorded closer lens.</p>

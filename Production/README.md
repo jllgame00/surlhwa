@@ -8,6 +8,8 @@ Execution and validation: `Validation/PASS1_PLAN.md`, `Validation/PASS1_PROGRESS
 
 Owner review: [HG01–HG03 notes](Validation/REVIEW_HG01_HG03.md) and [A/B comparison index](Validation/review.html). Native originals and four movement clips are linked there. Readiness for review is separate from artistic acceptance.
 
+Start with the [six-frame comparison board](Validation/HG01_HG03_COMPARISON.png), then inspect the native images through the index. Don Quixote is **VISUAL_FIXTURE_ONLY**; his inclusion does not change Canon ACT order or identify the first canonical special guest.
+
 To reproduce from the repository root (local Editor license required):
 
 ```powershell
