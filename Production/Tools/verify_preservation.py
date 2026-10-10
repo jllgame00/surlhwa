@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+from datetime import datetime, timezone
 
 PRODUCTION = Path(__file__).resolve().parents[1]
 RC1 = Path(r"D:\univ\surlhwa\Surlhwa")
@@ -54,6 +55,7 @@ def snapshot():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--record", action="store_true")
+    parser.add_argument("--result", action="store_true", help="Write a small result manifest under Production/Validation only")
     args = parser.parse_args()
     current = snapshot()
     if args.record:
@@ -71,6 +73,12 @@ def main():
                 changed.append(group)
         raise SystemExit("PRESERVATION FAILED: " + ", ".join(changed))
     print(f"PRESERVATION PASS: {len(current['specifications'])} specification hashes; RC1 branch/HEAD/status/index and {len(current['rc1']['dirty_files'])} dirty paths unchanged")
+    if args.result:
+        result = {"result": "PASS", "utc": datetime.now(timezone.utc).isoformat(), "specificationFiles": len(current['specifications']),
+                  "rc1DirtyPaths": len(current['rc1']['dirty_files']), "rc1Branch": current['rc1']['branch'], "rc1Head": current['rc1']['head'],
+                  "rc1StagedEmpty": current['rc1']['staged'] == "", "rc1IndexUnchanged": True, "dirtyFileBytesMetadataUnchanged": True,
+                  "baselineSha256": digest(BASELINE), "specificationRoots": [str(MIRROR / corpus) for corpus in ('SURLHWA_CANON', 'SURLHWA_ARCHITECTURE')]}
+        (BASELINE.parent / "preservation-result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

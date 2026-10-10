@@ -1,0 +1,156 @@
+{
+  "evidenceTier": "Native Unity 6000.3.7f1 EditMode",
+  "result": "Passed",
+  "total": 34,
+  "passed": 34,
+  "failed": 0,
+  "durationSeconds": 1.9244799,
+  "testRunSha256": "8e3f7d597acf7f238e5487e0c1b4a2305cec92715c6c51352185d3aec7167e7b",
+  "tests": [
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.DuplicateIdFailsBeforeRegistryPublication",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"schemaVersion\\\":1\",\"\\\"schemaVersion\\\":2\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"schemaVersion\\\":1\",\"\\\"schemaVersion\\\":1.5\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"schemaVersion\\\":1\",\"\\\"schemaVersion\\\":\\\"1\\\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"schemaVersion\\\":1,\",\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"schemaVersion\\\":1\",\"\\\"schemaVersion\\\":1,\\\"typo\\\":true\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"mode\\\":\\\"spatial_proof\\\"\",\"\\\"mode\\\":\\\"campaign\\\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"kind\\\":\\\"ordinary\\\"\",\"\\\"kind\\\":\\\"unknown\\\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"visualBindingId\\\":\\\"visual_ordinary\\\"\",\"\\\"visualBindingId\\\":\\\"visual_missing\\\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"displayTextId\\\":\\\"text_postman\\\"\",\"\\\"displayTextId\\\":\\\"text_missing\\\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"id\\\":\\\"guest_ordinary_postman\\\"\",\"\\\"id\\\":\\\"Guest_Postman\\\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"id\\\":\\\"visual_ordinary\\\"}\",\"\\\"id\\\":\\\"visual_ordinary\\\",\\\"extra\\\":0}\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"schemaVersion\\\":1\",\"\\\"schemaVersion\\\":1,\\\"schemaVersion\\\":1\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.InvalidContentFailsAtLoad(\"\\\"value\\\":\\\"우편 배달부 · 눈이 오는 밤\\\"\",\"\\\"value\\\":null\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.PublishedCollectionsCannotBeMutated",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.RoundTripPreservesUnicodeAndStableReferences",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.StableIdRejectsInvalidSpelling(\"Guest_quixote\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.StableIdRejectsInvalidSpelling(\"guest-quixote\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.StableIdRejectsInvalidSpelling(\"\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.StableIdRejectsInvalidSpelling(\"손님\")",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.StableIdsUseValueEquality",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.TrailingJsonIsRejected",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ContentFoundationTests.TypedLoadingPreservesKoreanAndKind",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ReviewSessionTests.InvalidSelectionFailsWithoutPartiallyChangingReviewState",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Tests.ReviewSessionTests.SelectionKeepsCameraAndFixtureIndependent",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.BothCamerasHaveFixedMatchingOrientationAndNoPostEffects",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.CharacterMaterialUsesDepthWritingCutoutWithoutLongShadows",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.FeetAndSeatAnchorsMeetActualSupportingGeometry",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.FixtureAndCameraSwitchingDoNotMoveCharacterRootsOrFeet",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.GeneratedBundleCanBeRecreatedWithoutChangingItsReferenceGuid",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.NoMissingScriptsMaterialsOrTextures",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.PhysicalCounterBlocksBartenderLowerBodyRayForBothCameras",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.RequiredRoomAndAnchorsExist",
+      "result": "Passed"
+    },
+    {
+      "name": "Surlhwa.Spatial.Tests.SpatialSceneTests.StoolDoesNotOccludeSeatedTorsoForEitherCamera",
+      "result": "Passed"
+    }
+  ],
+  "redEvidence": [
+    "foundation-red.log: 0/23",
+    "application-red.log: 23/25",
+    "spatial-red.xml: 0/4",
+    "contact-red.xml: 0/1",
+    "stool-torso-red.xml: 0/1",
+    "bundle-regeneration-red.xml: 0/1"
+  ],
+  "scope": "Content/schema/IDs/Unicode/immutability, review selection, scene references/anchors/cameras/materials/counter/stool/bundle regeneration. Artistic approval is excluded."
+}

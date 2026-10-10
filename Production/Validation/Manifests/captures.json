@@ -1,0 +1,1391 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS",
+  "failures": [],
+  "evidenceTier": "Windows Development Player / native URP render requests; offscreen 1080p render each frame, uncapped 60s per camera; batchmode",
+  "evidencePath": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-final",
+  "sourceContentAndAssetFingerprint": "9f8def75e64ba180c49f680fd47b97ba104d099a8827fb5bdfb59397d4066334",
+  "images": [
+    {
+      "file": "OrthographicA_Empty_1280x720.png",
+      "sha256": "63a364e3e301717885d74cc9a64afd07b12200f2c7a4212e86787209fb002a0b",
+      "width": 1280,
+      "height": 720,
+      "colors": 3550,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_Empty_1920x1080.png",
+      "sha256": "284275db8395d25f87166a74fa449951d1f8bc13fa691421cf3723fafd9d3eb9",
+      "width": 1920,
+      "height": 1080,
+      "colors": 3803,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_OrdinarySeated_1280x720.png",
+      "sha256": "3c78b178a6f762760a5c704e6bc8e4b58998b69e6936ae296c01bb7080505707",
+      "width": 1280,
+      "height": 720,
+      "colors": 3554,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_OrdinarySeated_1920x1080.png",
+      "sha256": "238c9af1aa8c8df2e91354ea2f698ed7b69192a5d78d7d7f0ca685a8af9f6d81",
+      "width": 1920,
+      "height": 1080,
+      "colors": 3808,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_QuixoteSeated_1280x720.png",
+      "sha256": "7125d4499d1cea4143a68df50ad4f88acff0983627a5ff9175b97de69702ffbd",
+      "width": 1280,
+      "height": 720,
+      "colors": 3579,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_QuixoteSeated_1920x1080.png",
+      "sha256": "82bd368047883b789bebdaec732972063171e7d732456d2f92c2657713486101",
+      "width": 1920,
+      "height": 1080,
+      "colors": 3836,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_Composition_1280x720.png",
+      "sha256": "47919e38f0c18a2ef89d2b62098306d41415c8a65e91149162458b7636f6f12d",
+      "width": 1280,
+      "height": 720,
+      "colors": 3607,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_Composition_1920x1080.png",
+      "sha256": "fc159adef266b2710ca4a67683bf31dcefbaa963304a1cb377d5759c7ca388bc",
+      "width": 1920,
+      "height": 1080,
+      "colors": 3864,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_GroundingInspection_1280x720.png",
+      "sha256": "307fd6af62b7e91848004419468933f64fedda05a78d76ab13c508acf03b4421",
+      "width": 1280,
+      "height": 720,
+      "colors": 2181,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_GroundingInspection_1920x1080.png",
+      "sha256": "a6dc96b73d34327b1dae2f0eb272ec22eeb76d1b52b91f1123127fce0da3a267",
+      "width": 1920,
+      "height": 1080,
+      "colors": 2232,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_Standing_1280x720.png",
+      "sha256": "9bccaf9da674ca40c9d7cbd99bf67128c39ef6fb08993a69578db600fbf9a1e8",
+      "width": 1280,
+      "height": 720,
+      "colors": 3585,
+      "magentaPixels": 0
+    },
+    {
+      "file": "OrthographicA_Standing_1920x1080.png",
+      "sha256": "1f34ef5042b67a4bf07536084320774fa6af4e621d2f7bfac29a9a1b321c53d2",
+      "width": 1920,
+      "height": 1080,
+      "colors": 3838,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_Empty_1280x720.png",
+      "sha256": "07d88e835f2eb64097f98916b6788944d2d02c7b616d8c42a56ba9504cdf220d",
+      "width": 1280,
+      "height": 720,
+      "colors": 3929,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_Empty_1920x1080.png",
+      "sha256": "c5d0c5a0384dbab53a0226f8c42fbf2dd46a41a1207d1cdd6a7b1831eb7ae0ab",
+      "width": 1920,
+      "height": 1080,
+      "colors": 4295,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_OrdinarySeated_1280x720.png",
+      "sha256": "392b618be9706b18209c357cd9b348bb5c040f2d1c2f8a3dcef8a7c401042236",
+      "width": 1280,
+      "height": 720,
+      "colors": 3933,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_OrdinarySeated_1920x1080.png",
+      "sha256": "06a7ca057cc104df3bacf0fa4fdbd2a256c4adadf96ae1448f311e842987cac0",
+      "width": 1920,
+      "height": 1080,
+      "colors": 4298,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_QuixoteSeated_1280x720.png",
+      "sha256": "60b38b2f05546f8d9e55a760dccfb0f4292270d32470ef15cdce9d77c0641233",
+      "width": 1280,
+      "height": 720,
+      "colors": 3951,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_QuixoteSeated_1920x1080.png",
+      "sha256": "2c5ec2beac139e7b8a80134a32aac432d24183fcacdb3ddbeb5f0744205f9476",
+      "width": 1920,
+      "height": 1080,
+      "colors": 4317,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_Composition_1280x720.png",
+      "sha256": "be26d2d14fbd7d9c1fe57f6ae42603c67bd2549124654c1341b2ba3dcd914db5",
+      "width": 1280,
+      "height": 720,
+      "colors": 3978,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_Composition_1920x1080.png",
+      "sha256": "7e4e11fb30f36e66c7ab027d9dad9ab44fe8d7d925120f7fe4bd02b5877437bb",
+      "width": 1920,
+      "height": 1080,
+      "colors": 4344,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_GroundingInspection_1280x720.png",
+      "sha256": "163cfc5d4711c740894e877d660c3e9be80d3e36519a9b463c9bd2b80a3c26e3",
+      "width": 1280,
+      "height": 720,
+      "colors": 3234,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_GroundingInspection_1920x1080.png",
+      "sha256": "7106075d34e0ee59266ac964a07272ef2d3d0651cbcbf54f14c7e2d8eb25e35b",
+      "width": 1920,
+      "height": 1080,
+      "colors": 3382,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_Standing_1280x720.png",
+      "sha256": "330185425ac033a6958d4abf9bfe6c1b7ade914599959759977126458a2df553",
+      "width": 1280,
+      "height": 720,
+      "colors": 3963,
+      "magentaPixels": 0
+    },
+    {
+      "file": "PerspectiveB_Standing_1920x1080.png",
+      "sha256": "769f9b5fdb7c3fbabc33a9144b1ec7a0ed2904ecc40d46eee9d7c3cc68654e9b",
+      "width": 1920,
+      "height": 1080,
+      "colors": 4331,
+      "magentaPixels": 0
+    }
+  ],
+  "motionClips": [
+    {
+      "file": "OrthographicA_motion_1280.mp4",
+      "sha256": "cd0ba90b7bf67fe94a45a76ba0406b947916a73bcba5e68da299efecdf59a374",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "12/1",
+        "duration": "10.083333",
+        "nb_frames": "121"
+      }
+    },
+    {
+      "file": "OrthographicA_motion_1920.mp4",
+      "sha256": "a46744469354e2ceb73a0f3bda2885cbe9d4b2018a0a6f3f9d0f513b147cdfe1",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "12/1",
+        "duration": "10.083333",
+        "nb_frames": "121"
+      }
+    },
+    {
+      "file": "PerspectiveB_motion_1280.mp4",
+      "sha256": "95225d9ebed54adbde5b42d025a1c0bd4819ec3ea6712870a5f84dc0d592dd5a",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "r_frame_rate": "12/1",
+        "duration": "10.083333",
+        "nb_frames": "121"
+      }
+    },
+    {
+      "file": "PerspectiveB_motion_1920.mp4",
+      "sha256": "2322cdc55d00499c6b3c7805ded0d8b66aa45d8ab466f2c7ee4e23bee5e7f404",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "12/1",
+        "duration": "10.083333",
+        "nb_frames": "121"
+      }
+    }
+  ],
+  "counterDiagnostics": [
+    {
+      "variant": "OrthographicA",
+      "bartenderRectanglePixels": [
+        946,
+        384,
+        1072,
+        696
+      ],
+      "opaqueLowerBodyChangedPixels": 12049,
+      "method": "Same Player camera and actors. Only counter renderers disabled for diagnostic; real depth relationship, not artistic quality."
+    },
+    {
+      "variant": "PerspectiveB",
+      "bartenderRectanglePixels": [
+        947,
+        392,
+        1066,
+        688
+      ],
+      "opaqueLowerBodyChangedPixels": 10794,
+      "method": "Same Player camera and actors. Only counter renderers disabled for diagnostic; real depth relationship, not artistic quality."
+    }
+  ],
+  "player": {
+    "utc": "2026-10-10T21:58:50.8248594Z",
+    "unity": "6000.3.7f1",
+    "tier": "Windows Development Player / native URP render requests; offscreen 1080p render each frame, uncapped 60s per camera; batchmode",
+    "gpu": "NVIDIA GeForce RTX 3070",
+    "graphicsAPI": "Direct3D11",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+    "os": "Windows 11  (10.0.26200)",
+    "quality": "Ultra",
+    "source": "Shared Bar.unity, generated from SpatialProofBuilder.cs; ARCH_SLICE_PROVISIONAL",
+    "memoryMB": 32581,
+    "screenWidth": 1920,
+    "screenHeight": 1080,
+    "staticRootAndFeetDrift": false,
+    "captures": [
+      {
+        "file": "OrthographicA_Empty_1280x720.png",
+        "camera": "OrthographicA",
+        "fixture": "Empty",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_Empty_1920x1080.png",
+        "camera": "OrthographicA",
+        "fixture": "Empty",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_OrdinarySeated_1280x720.png",
+        "camera": "OrthographicA",
+        "fixture": "OrdinarySeated",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_OrdinarySeated_1920x1080.png",
+        "camera": "OrthographicA",
+        "fixture": "OrdinarySeated",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_QuixoteSeated_1280x720.png",
+        "camera": "OrthographicA",
+        "fixture": "QuixoteSeated",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_QuixoteSeated_1920x1080.png",
+        "camera": "OrthographicA",
+        "fixture": "QuixoteSeated",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_Composition_1280x720.png",
+        "camera": "OrthographicA",
+        "fixture": "Composition",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_Composition_1920x1080.png",
+        "camera": "OrthographicA",
+        "fixture": "Composition",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_GroundingInspection_1280x720.png",
+        "camera": "OrthographicA",
+        "fixture": "GroundingInspection",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": -0.4000000059604645,
+          "y": 6.20328950881958,
+          "z": -16.067960739135742
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.5476812124252319,
+            "y": 0.356031596660614,
+            "z": 18.434833526611328
+          },
+          {
+            "x": 0.5476812124252319,
+            "y": 0.8720020651817322,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6651566028594971,
+            "y": 0.8720020651817322,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6651566028594971,
+            "y": 0.356031596660614,
+            "z": 18.434833526611328
+          }
+        ],
+        "orthographicSize": 1.850000023841858,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_GroundingInspection_1920x1080.png",
+        "camera": "OrthographicA",
+        "fixture": "GroundingInspection",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": -0.4000000059604645,
+          "y": 6.20328950881958,
+          "z": -16.067960739135742
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.5476812124252319,
+            "y": 0.356031596660614,
+            "z": 18.434833526611328
+          },
+          {
+            "x": 0.5476812124252319,
+            "y": 0.8720020651817322,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6651566028594971,
+            "y": 0.8720020651817322,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6651566028594971,
+            "y": 0.356031596660614,
+            "z": 18.434833526611328
+          }
+        ],
+        "orthographicSize": 1.850000023841858,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_Standing_1280x720.png",
+        "camera": "OrthographicA",
+        "fixture": "Standing",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "OrthographicA_Standing_1920x1080.png",
+        "camera": "OrthographicA",
+        "fixture": "Standing",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.4926394522190094,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.4926394522190094,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.6444292664527893,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.55849689245224,
+            "y": 0.3551730811595917,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_Empty_1280x720.png",
+        "camera": "PerspectiveB",
+        "fixture": "Empty",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_Empty_1920x1080.png",
+        "camera": "PerspectiveB",
+        "fixture": "Empty",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_OrdinarySeated_1280x720.png",
+        "camera": "PerspectiveB",
+        "fixture": "OrdinarySeated",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_OrdinarySeated_1920x1080.png",
+        "camera": "PerspectiveB",
+        "fixture": "OrdinarySeated",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_QuixoteSeated_1280x720.png",
+        "camera": "PerspectiveB",
+        "fixture": "QuixoteSeated",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_QuixoteSeated_1920x1080.png",
+        "camera": "PerspectiveB",
+        "fixture": "QuixoteSeated",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_Composition_1280x720.png",
+        "camera": "PerspectiveB",
+        "fixture": "Composition",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_Composition_1920x1080.png",
+        "camera": "PerspectiveB",
+        "fixture": "Composition",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_GroundingInspection_1280x720.png",
+        "camera": "PerspectiveB",
+        "fixture": "GroundingInspection",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": -0.4000000059604645,
+          "y": 6.20328950881958,
+          "z": -16.067960739135742
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.5439700484275818,
+            "y": 0.36723703145980835,
+            "z": 18.434833526611328
+          },
+          {
+            "x": 0.5439700484275818,
+            "y": 0.8430480360984802,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6523020267486572,
+            "y": 0.8430480360984802,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6523020267486572,
+            "y": 0.36723703145980835,
+            "z": 18.434833526611328
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 12.421379089355469,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_GroundingInspection_1920x1080.png",
+        "camera": "PerspectiveB",
+        "fixture": "GroundingInspection",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": -0.4000000059604645,
+          "y": 6.20328950881958,
+          "z": -16.067960739135742
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.5439700484275818,
+            "y": 0.36723703145980835,
+            "z": 18.434833526611328
+          },
+          {
+            "x": 0.5439700484275818,
+            "y": 0.8430480360984802,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6523020267486572,
+            "y": 0.8430480360984802,
+            "z": 18.43483543395996
+          },
+          {
+            "x": 0.6523020267486572,
+            "y": 0.36723703145980835,
+            "z": 18.434833526611328
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 12.421379089355469,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_Standing_1280x720.png",
+        "camera": "PerspectiveB",
+        "fixture": "Standing",
+        "width": 1280,
+        "height": 720,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      },
+      {
+        "file": "PerspectiveB_Standing_1920x1080.png",
+        "camera": "PerspectiveB",
+        "fixture": "Standing",
+        "width": 1920,
+        "height": 1080,
+        "position": {
+          "x": 0.0,
+          "y": 6.453289985656738,
+          "z": -15.467961311340332
+        },
+        "rotationEuler": {
+          "x": 18.000001907348633,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "bartenderViewportQuad": [
+          {
+            "x": 0.49302569031715393,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.49302569031715393,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.6368504762649536,
+            "z": 17.941455841064453
+          },
+          {
+            "x": 0.5554273724555969,
+            "y": 0.36277270317077637,
+            "z": 17.941455841064453
+          }
+        ],
+        "orthographicSize": 3.299999952316284,
+        "fieldOfView": 21.97099494934082,
+        "nearClip": 0.10000000149011612,
+        "farClip": 60.0
+      }
+    ],
+    "measurements": [
+      {
+        "variant": "OrthographicA",
+        "samples": 140171,
+        "objects": 121,
+        "renderers": 96,
+        "enabledRenderers": 94,
+        "materials": 11,
+        "durationSeconds": 60.00038146972656,
+        "frameMeanMs": 0.4280537950304903,
+        "frameP50Ms": 0.42609835509210825,
+        "frameP95Ms": 0.5031037144362926,
+        "frameP99Ms": 0.5785005632787943,
+        "frameMaxMs": 2.4584042839705944,
+        "mainThreadMeanMs": 0.42600324104129955,
+        "idleGCMeanBytes": 0.0,
+        "batchesMean": 131.0,
+        "drawsMean": 131.0,
+        "idleGCMaxBytes": 0,
+        "allocatedBytes": 45347379,
+        "reservedBytes": 191963136,
+        "monoUsedBytes": 4825088,
+        "processWorkingSetBytes": 0,
+        "textureBytes": 89568,
+        "gcRecorder": true,
+        "batchRecorder": true,
+        "drawRecorder": true,
+        "mainRecorder": true
+      },
+      {
+        "variant": "PerspectiveB",
+        "samples": 140265,
+        "objects": 121,
+        "renderers": 96,
+        "enabledRenderers": 94,
+        "materials": 11,
+        "durationSeconds": 60.000244140625,
+        "frameMeanMs": 0.42776349267467156,
+        "frameP50Ms": 0.42619757005013525,
+        "frameP95Ms": 0.5000000237487257,
+        "frameP99Ms": 0.5687003722414374,
+        "frameMaxMs": 12.576799839735031,
+        "mainThreadMeanMs": 0.4257151834028446,
+        "idleGCMeanBytes": 0.0,
+        "batchesMean": 131.0,
+        "drawsMean": 131.0,
+        "idleGCMaxBytes": 0,
+        "allocatedBytes": 45518693,
+        "reservedBytes": 208740352,
+        "monoUsedBytes": 6664192,
+        "processWorkingSetBytes": 0,
+        "textureBytes": 89568,
+        "gcRecorder": true,
+        "batchRecorder": true,
+        "drawRecorder": true,
+        "mainRecorder": true
+      }
+    ],
+    "errors": []
+  },
+  "humanGateStatus": {
+    "HG01": "OWNER_REVIEW_PENDING",
+    "HG02": "OWNER_REVIEW_PENDING",
+    "HG03": "OWNER_REVIEW_PENDING"
+  },
+  "limits": [
+    "Automated replay is not native gameplay input.",
+    "Pose swaps are reference animation, not final seated motion.",
+    "No GPU frame-time/VRAM telemetry; Development/offscreen timing does not establish minimum specs.",
+    "Raw Player Mono working-set value 0 is unavailable; use external os-memory.json."
+  ]
+}
