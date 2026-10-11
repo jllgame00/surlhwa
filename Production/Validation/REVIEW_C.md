@@ -1,7 +1,7 @@
 # C — Pixel Cutaway Hybrid / HG01–HG03
 
-HG01 — READY_FOR_OWNER_REVIEW  
-HG02 — READY_FOR_OWNER_REVIEW  
+HG01 — READY_FOR_OWNER_REVIEW<br>
+HG02 — READY_FOR_OWNER_REVIEW<br>
 HG03 — READY_FOR_OWNER_REVIEW
 
 Owner judgment remains pending. C is not selected as final. HG04 / Stir / bartending A/B / narrative production UI / audio / campaign / full Slice remain unimplemented.
