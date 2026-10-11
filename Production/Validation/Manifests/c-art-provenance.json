@@ -1,0 +1,16 @@
+{
+  "variant": "C — Pixel Cutaway Hybrid",
+  "scope": "HG01-HG03 / ARCH_SLICE_PROVISIONAL",
+  "layoutAnchor": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\ArtSource\\Reference\\VisualDirection\\barscene_2_5d_layout_anchor.png",
+  "layoutAnchorSha256": "019f37d3d2957d8aec3f731c8f3a286496f2cdc02c5190b99d9cbd5caa368728",
+  "anchorUse": "Read-only composition reference; no annotation/UI reproduction",
+  "environmentAssets": "Deterministic palette-limited source textures and selected depth geometry authored in PixelCutawayBuilder.cs; no AI generation, PBR or final-screen filter",
+  "characters": "Unmodified inherited reference PNGs; see SourceArt/PROVENANCE.json. New C meshes/materials/PPU and anchors only. Final adoption pending.",
+  "pixelsPerUnit": {
+    "bartender": 56,
+    "ordinaryFamily": 64,
+    "specialFamily": 64
+  },
+  "snow": "World ground/accumulation and static sparse world-space snowfall marks; no production weather simulation",
+  "canonicalClaims": "Don Quixote VISUAL_FIXTURE_ONLY; no ACT order or first-special-guest assertion; empty memory shelf reserves space only"
+}

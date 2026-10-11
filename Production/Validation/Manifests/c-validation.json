@@ -1,0 +1,24 @@
+{
+  "nativeTests": {
+    "total": 44,
+    "passed": 44,
+    "failed": 0,
+    "path": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c-native-seat-green.xml",
+    "sha256": "3ec9e6360de26d3450aa5d73055bbf2296398dd4498b6a4037cbefa1690ab26b"
+  },
+  "pythonOutcomeTests": {
+    "passed": 14,
+    "failed": 0,
+    "command": "python -m unittest discover -s Production/Tools -p 'test_*.py'"
+  },
+  "standaloneFoundation": {
+    "passed": 25,
+    "failed": 0,
+    "tier": "standalone .NET; not native runtime"
+  },
+  "historyFiles": 892,
+  "specificationFiles": 74,
+  "rc1DirtyPaths": 65,
+  "rc1IndexEmpty": true,
+  "gate": "OWNER_JUDGMENT_PENDING"
+}

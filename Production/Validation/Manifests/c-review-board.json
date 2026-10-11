@@ -1,0 +1,144 @@
+{
+  "board": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\ABC_COMPARISON.png",
+  "sha256": "1486669a4a0c33dec77ab146f7efb7610af813d1a4071c080f32de16fcba38fa",
+  "sources": [
+    {
+      "variant": "OrthographicA",
+      "fixture": "Empty",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-reviewed\\OrthographicA_Empty_1280x720.png",
+      "sourceSha256": "63a364e3e301717885d74cc9a64afd07b12200f2c7a4212e86787209fb002a0b",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "OrthographicA",
+      "fixture": "Composition",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-reviewed\\OrthographicA_Composition_1280x720.png",
+      "sourceSha256": "47919e38f0c18a2ef89d2b62098306d41415c8a65e91149162458b7636f6f12d",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "OrthographicA",
+      "fixture": "GroundingInspection",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-reviewed\\OrthographicA_GroundingInspection_1280x720.png",
+      "sourceSha256": "307fd6af62b7e91848004419468933f64fedda05a78d76ab13c508acf03b4421",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "PerspectiveB",
+      "fixture": "Empty",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-reviewed\\PerspectiveB_Empty_1280x720.png",
+      "sourceSha256": "07d88e835f2eb64097f98916b6788944d2d02c7b616d8c42a56ba9504cdf220d",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "PerspectiveB",
+      "fixture": "Composition",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-reviewed\\PerspectiveB_Composition_1280x720.png",
+      "sourceSha256": "be26d2d14fbd7d9c1fe57f6ae42603c67bd2549124654c1341b2ba3dcd914db5",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "PerspectiveB",
+      "fixture": "GroundingInspection",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\captures-reviewed\\PerspectiveB_GroundingInspection_1280x720.png",
+      "sourceSha256": "163cfc5d4711c740894e877d660c3e9be80d3e36519a9b463c9bd2b80a3c26e3",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "C",
+      "fixture": "Empty",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c-reviewed\\C_Empty_1280x720.png",
+      "sourceSha256": "a73db60c0af8efab3fb1fb5befb8b51e42f44cf60ee39f8a78838c88eb6cd0d6",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "C",
+      "fixture": "Composition",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c-reviewed\\C_Composition_1280x720.png",
+      "sourceSha256": "88e5325f11d8b50de3a4e147c6194e8f5d9612bb0fdf25a3ad15b808ce371c45",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    },
+    {
+      "variant": "C",
+      "fixture": "GroundingInspection",
+      "source": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c-reviewed\\C_GroundingInspection_1280x720.png",
+      "sourceSha256": "5809461aae2acf558cf074e1c2d7c0932439a73877bfcc3cfac7017ffa9f5536",
+      "sourceSize": [
+        1280,
+        720
+      ],
+      "boardSize": [
+        640,
+        360
+      ],
+      "processing": "50% nearest-neighbour thumbnail only; native original remains separate"
+    }
+  ],
+  "layoutAnchor": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\ArtSource\\Reference\\VisualDirection\\barscene_2_5d_layout_anchor.png",
+  "layoutAnchorSha256": "019f37d3d2957d8aec3f731c8f3a286496f2cdc02c5190b99d9cbd5caa368728",
+  "annotationUIReproduced": false
+}

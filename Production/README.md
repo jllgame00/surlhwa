@@ -6,7 +6,9 @@ This pass implements a hybrid winter-bar spatial proof for HG01 camera/depth, HG
 
 Execution and validation: `Validation/PASS1_PLAN.md`, `Validation/PASS1_PROGRESS.md`. Raw logs, renders and builds remain local under ignored `Validation/Evidence/` and `Validation/Builds/`; small result and provenance manifests are tracked.
 
-Owner review: [HG01–HG03 notes](Validation/REVIEW_HG01_HG03.md) and [A/B comparison index](Validation/review.html). Native originals and four movement clips are linked there. Readiness for review is separate from artistic acceptance.
+Current owner review: [C — Pixel Cutaway Hybrid](Validation/REVIEW_C.md), [native C index](Validation/review-c.html) and [A/B/C overview](Validation/ABC_COMPARISON.png). HG01/HG02/HG03 are ready for owner review; judgment is pending and HG04 has not started. C is a separate revision with visible snowy world ground and selective depth. No final art/camera winner is selected.
+
+Historical review: [A/B HG01–HG03 notes](Validation/REVIEW_HG01_HG03.md) and [A/B comparison index](Validation/review.html). Native originals and four movement clips remain linked there. Readiness for review is separate from artistic acceptance.
 
 Start with the [six-frame comparison board](Validation/HG01_HG03_COMPARISON.png), then inspect the native images through the index. Don Quixote is **VISUAL_FIXTURE_ONLY**; his inclusion does not change Canon ACT order or identify the first canonical special guest.
 
