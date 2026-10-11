@@ -64,7 +64,7 @@ namespace Surlhwa.Editor
             var ordinary = Actor("C_Ordinary", "guest_ordinary_postman", "visual_ordinary", new Vector3(-.55f - 12f / 64, 0, -1.42f - Mathf.Sin(28 * Mathf.Deg2Rad) * 26 / 64), "OrdinaryStanding", "OrdinarySeated", new Vector2(17.5f, 0), new Vector2(38, 15), 64, new Vector3(12f / 64, 26f / 64, 0));
             var special = Actor("C_Quixote", "guest_quixote", "visual_quixote", new Vector3(-.55f - 18f / 64, 0, -1.42f - Mathf.Sin(28 * Mathf.Deg2Rad) * 26 / 64), "QuixoteStanding", "QuixoteSeated", new Vector2(20, 0), new Vector2(28, 15), 64, new Vector3(18f / 64, 26f / 64, 0));
             ordinary.WalkMeshes = new Mesh[4]; ordinary.WalkMaterials = new Material[4];
-            for (int i = 0; i < 4; i++) { ordinary.WalkMeshes[i] = Plane("OrdinaryWalk" + i, new Vector2(18, 0), 64); ordinary.WalkMaterials[i] = Sprite("OrdinaryWalk" + i); }
+            for (int i = 0; i < 4; i++) { ordinary.WalkMeshes[i] = Plane("OrdinaryWalk" + i, new Vector2(48, i == 0 ? 1 : 0), 64); ordinary.WalkMaterials[i] = Sprite("OrdinaryWalk" + i); }
             var camera = new GameObject("Camera_C_PixelCutaway").AddComponent<Camera>(); camera.transform.rotation = View;
             camera.orthographic = true; camera.aspect = 16f / 9; camera.nearClipPlane = .1f; camera.farClipPlane = 60;
             camera.backgroundColor = Hex("101e30"); camera.clearFlags = CameraClearFlags.SolidColor; camera.allowMSAA = false; camera.allowHDR = false;
@@ -143,7 +143,7 @@ namespace Surlhwa.Editor
         }
         private static void Stool(Vector3 at, float topY, bool main)
         {
-            Box(main ? "C_Stool" : "C_ExtraStool", at + new Vector3(0, topY - .05f, .22f), new Vector3(.50f, .1f, .46f), top, wood, darkWood);
+            Box(main ? "C_Stool" : "C_ExtraStool", at + new Vector3(0, topY - .05f, .232f), new Vector3(.50f, .1f, .46f), top, wood, darkWood);
             foreach (float x in new[] { -.18f, .18f }) foreach (float z in new[] { -.14f, .14f })
                 Box("C_StoolLeg", at + new Vector3(x, (topY - .1f) / 2, z + .22f), new Vector3(.06f, topY - .1f, .06f), wood, darkWood, darkWood);
             Box("C_StoolBrace", at + new Vector3(0, .12f, .07f), new Vector3(.4f, .04f, .035f), wood, wood, darkWood);
@@ -216,11 +216,22 @@ namespace Surlhwa.Editor
                 }
                 pixels[y * width + x] = pixel;
             }
-            tex.SetPixels(pixels); tex.Apply(); string path = Root + "/" + name + ".png"; File.WriteAllBytes(path, tex.EncodeToPNG()); Object.DestroyImmediate(tex);
+            tex.SetPixels(pixels); tex.Apply(); string path = Root + "/" + name + ".png";
+            WritePixelSourceIfChanged(path, tex.EncodeToPNG()); Object.DestroyImmediate(tex);
             AssetDatabase.ImportAsset(path); var importer = (TextureImporter)AssetImporter.GetAtPath(path);
             importer.mipmapEnabled = false; importer.filterMode = FilterMode.Point; importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.npotScale = TextureImporterNPOTScale.None; importer.wrapMode = TextureWrapMode.Clamp; importer.SaveAndReimport();
             var mat = Mat(name, "ffffff"); mat.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture2D>(path)); return mat;
+        }
+        private static void WritePixelSourceIfChanged(string path, byte[] bytes)
+        {
+            if (File.Exists(path) && System.Linq.Enumerable.SequenceEqual(File.ReadAllBytes(path), bytes)) return;
+            // Imported textures may be memory-mapped. Never truncate the existing source in place.
+            string temporary = path + ".writing-" + Guid.NewGuid().ToString("N");
+            try {
+                File.WriteAllBytes(temporary, bytes);
+                if (File.Exists(path)) File.Replace(temporary, path, null); else File.Move(temporary, path);
+            } finally { if (File.Exists(temporary)) File.Delete(temporary); }
         }
         private static GameObject Box(string name, Vector3 at, Vector3 scale, Material topMat, Material front, Material sides, bool collider = true)
         {

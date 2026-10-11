@@ -112,5 +112,60 @@ namespace Surlhwa.Spatial.Tests
             Assert.That(error.InnerException, Is.TypeOf<InvalidOperationException>());
             Assert.That(stage.GetType().GetProperty("IsInitialized").GetValue(stage), Is.False);
         }
+        [TestCase("C_Quixote", "QuixoteSeated", 28)]
+        [TestCase("C_Ordinary", "OrdinarySeated", 38)]
+        public void ActualOpaqueHipPixelsRemainInFrontOfSeat(string actorName, string image, int pivotX)
+        {
+            Physics.SyncTransforms();
+            var actor = GameObject.Find(actorName).GetComponent<CharacterView>();
+            var camera = GameObject.Find("Camera_C_PixelCutaway").GetComponent<Camera>();
+            var texture = new Texture2D(2, 2);
+            try {
+                texture.LoadImage(System.IO.File.ReadAllBytes("Assets/Surlhwa/Art/" + image + ".png"));
+                int checkedPixels = 0;
+                // Inspect actual opaque source samples immediately around the authored hip, not one lower knee point.
+                for (int sourceRow = 57; sourceRow <= 62; sourceRow++) for (int x = 0; x < texture.width; x++) {
+                    int y = texture.height - sourceRow - 1; if (texture.GetPixel(x, y).a < .4f) continue;
+                    Vector3 point = actor.Plane.transform.TransformPoint(new Vector3((x + .5f - pivotX) / 64, (y + .5f - 15) / 64, 0));
+                    var ray = camera.ViewportPointToRay(camera.WorldToViewportPoint(point));
+                    bool blocked = Physics.Raycast(ray, out var hit, Vector3.Distance(ray.origin, point) - .0005f);
+                    Assert.That(blocked && hit.collider.name.StartsWith("C_Stool"), Is.False, actorName + " opaque hip pixel " + x + "," + sourceRow);
+                    checkedPixels++;
+                }
+                Assert.That(checkedPixels, Is.GreaterThan(10));
+                var seat = GameObject.Find("C_Stool").GetComponent<Collider>().bounds;
+                Assert.That(Vector3.Distance(actor.SeatAnchor.position, seat.ClosestPoint(actor.SeatAnchor.position)), Is.LessThan(.003f), "Hip must still meet supporting seat edge");
+            } finally { Object.DestroyImmediate(texture); }
+        }
+        [Test] public void WalkingOpaqueFeetStayAtTheRootAcrossPoseChanges()
+        {
+            var actor = GameObject.Find("C_Ordinary").GetComponent<CharacterView>();
+            var texture = new Texture2D(2, 2);
+            try {
+                for (int frame = 0; frame < 4; frame++) {
+                    texture.LoadImage(System.IO.File.ReadAllBytes("Assets/Surlhwa/Art/OrdinaryWalk" + frame + ".png"));
+                    int bottom = 0; while (Enumerable.Range(0, texture.width).All(x => texture.GetPixel(x, bottom).a < .4f)) bottom++;
+                    var xs = Enumerable.Range(bottom, 3).SelectMany(y => Enumerable.Range(0, texture.width).Where(x => texture.GetPixel(x, y).a >= .4f)).ToArray();
+                    var bounds = actor.WalkMeshes[frame].bounds;
+                    float footX = bounds.min.x + (float)xs.Average(x => x + .5f) / texture.width * bounds.size.x;
+                    float footY = bounds.min.y + bottom / (float)texture.height * bounds.size.y;
+                    Assert.That(Mathf.Abs(footX), Is.LessThan(.15f), "Padded walk " + frame + " must not shift visible feet away from actor/contact root");
+                    Assert.That(Mathf.Abs(footY), Is.LessThan(.002f), "Walk frame padding must not lift feet");
+                }
+                Assert.That(actor.transform.position, Is.EqualTo(actor.FeetAnchor.position));
+            } finally { Object.DestroyImmediate(texture); }
+        }
+        [Test] public void RegenerationDoesNotTruncateImportedPixelSources()
+        {
+            const string path = "Assets/Surlhwa/VariantC/CounterPanel.png";
+            byte[] before = System.IO.File.ReadAllBytes(path);
+            using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite | System.IO.FileShare.Delete))
+            using (var mapping = System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile(stream, null, 0, System.IO.MemoryMappedFiles.MemoryMappedFileAccess.Read, System.IO.HandleInheritability.None, true))
+            using (var view = mapping.CreateViewAccessor(0, 0, System.IO.MemoryMappedFiles.MemoryMappedFileAccess.Read)) {
+                var builder = typeof(SpatialProofBuilder).Assembly.GetType("Surlhwa.Editor.PixelCutawayBuilder");
+                Assert.DoesNotThrow(() => builder.GetMethod("Build").Invoke(null, null), "A loaded pixel source must be safe to regenerate");
+                Assert.That(System.IO.File.ReadAllBytes(path), Is.EqualTo(before));
+            }
+        }
     }
 }
