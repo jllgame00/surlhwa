@@ -12,5 +12,15 @@
     "specialFamily": 64
   },
   "snow": "World ground/accumulation and static sparse world-space snowfall marks; no production weather simulation",
-  "canonicalClaims": "Don Quixote VISUAL_FIXTURE_ONLY; no ACT order or first-special-guest assertion; empty memory shelf reserves space only"
+  "canonicalClaims": "Don Quixote VISUAL_FIXTURE_ONLY; no ACT order or first-special-guest assertion; empty memory shelf reserves space only",
+  "ordinaryWalkingPivotPixels": {
+    "x": 48,
+    "bottomPaddingByFrame": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "purpose": "Padded source frames remain aligned with actor/contact root through pose transitions"
+  }
 }

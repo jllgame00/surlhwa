@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "result": "PASS",
   "failures": [],
-  "evidencePath": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c-reviewed",
+  "evidencePath": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c-reviewed-fixed",
   "images": [
     {
       "file": "C_Empty_1280x720.png",
@@ -44,7 +44,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "a73db60c0af8efab3fb1fb5befb8b51e42f44cf60ee39f8a78838c88eb6cd0d6",
+      "sha256": "708ec817abceb11ca90e78ae9d2ff72e628093b169ca90d2fe1f93aeacd80e99",
       "colors": 46,
       "magentaPixels": 0
     },
@@ -88,7 +88,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "8257427282f77681b3df1fd46ec8576ffce6192eed967b326664210c2d440346",
+      "sha256": "d889f71df099e5a54d423f182a4244c75e86a41393aa9ec423803d3a8eca550f",
       "colors": 46,
       "magentaPixels": 0
     },
@@ -132,7 +132,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "3a28a4ca90497d57a9f76f8f36c78ad370e7905eab63ae498b984a8ce407e8ed",
+      "sha256": "dc0e61f20d49ae00895f2208e048a022358437f2cc57ef2b80183d987e96d96c",
       "colors": 50,
       "magentaPixels": 0
     },
@@ -176,7 +176,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "09b3becde2b95116618b7003ad2587c46c9e9401e6443a1e36fff79036e3839e",
+      "sha256": "9d4717a9eec4202fa4d8fa88301a416de461ff12ab9b2d4b2aac8f36246c58a5",
       "colors": 50,
       "magentaPixels": 0
     },
@@ -220,7 +220,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "1b056b1dd873f0d137530e6c2b3f15ed7e40a1148c24f6f274c1f541d977971f",
+      "sha256": "78bd21463302fc9330f6605677ed723227494dc6fdfeda27fa93384064f4a08a",
       "colors": 78,
       "magentaPixels": 0
     },
@@ -264,7 +264,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "cd8beb58ce601240342a4f9587f1cdd127c276b65e3505a347b711615531d87d",
+      "sha256": "82f8be0d0f98ec0a8e19260bb83ab730c3d4d25e8a575a2e534bbdbbdaee1bc7",
       "colors": 78,
       "magentaPixels": 0
     },
@@ -308,7 +308,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "88e5325f11d8b50de3a4e147c6194e8f5d9612bb0fdf25a3ad15b808ce371c45",
+      "sha256": "855f1281a91b88518c5ab81dc7ee1a8797e48709f4dde615ea1cb1249af9e05b",
       "colors": 108,
       "magentaPixels": 0
     },
@@ -352,7 +352,7 @@
       "orthographicSize": 4.099999904632568,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "fee91b74c91bf23e2df5a556b30827168568d4edf10de9575ddfa0411468fe79",
+      "sha256": "4dbfbb5f1d9932e4d075c8852a12b7b802e11c0d8e9499a83603f550b4d8a1be",
       "colors": 108,
       "magentaPixels": 0
     },
@@ -396,7 +396,7 @@
       "orthographicSize": 1.649999976158142,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "5809461aae2acf558cf074e1c2d7c0932439a73877bfcc3cfac7017ffa9f5536",
+      "sha256": "cad9717179fb235ed5264cd83c55b3cfb03ffa07cc0b832722294a775cfc8592",
       "colors": 86,
       "magentaPixels": 0
     },
@@ -440,7 +440,7 @@
       "orthographicSize": 1.649999976158142,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "271a0e48d17ec00878f15ec883e535fede456162a3cdc6cd724f4b4c369fd6ed",
+      "sha256": "133b9c5d03a090bbc1e6613cd69ec6f9532b2466d5d79b1cf56e6098c21c5c1d",
       "colors": 86,
       "magentaPixels": 0
     },
@@ -484,7 +484,7 @@
       "orthographicSize": 4.900000095367432,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "5288e4d38a650e61b9c18206de5ca9b6793afea2bf389d848b642bb40bf11929",
+      "sha256": "a808ba785b29cef1cc64b121ed184fa041c54d887f085de61b13f3dd9c8b0edc",
       "colors": 108,
       "magentaPixels": 0
     },
@@ -528,7 +528,7 @@
       "orthographicSize": 4.900000095367432,
       "nearClip": 0.10000000149011612,
       "farClip": 60.0,
-      "sha256": "53752d870632d60a39b8018e2b9cbe7d0513fd5585d83bd9fd689f0e46175354",
+      "sha256": "ab3aa32ad5ac51b910361c0d0a80e1228c228ebe4fd6dd2568bb3c54af69eb1c",
       "colors": 108,
       "magentaPixels": 0
     }
@@ -536,7 +536,7 @@
   "motionClips": [
     {
       "file": "C_motion_1280.mp4",
-      "sha256": "915ade05fedc57806e450039bfbbec2b5a915707f1080a1af7c4cb6390469ecb",
+      "sha256": "aebce1a8cba01cda6e741158594d5d6f8a3cec0fca0a416ef298ad10ec77f889",
       "stream": {
         "width": 1280,
         "height": 720,
@@ -547,7 +547,7 @@
     },
     {
       "file": "C_motion_1920.mp4",
-      "sha256": "597974db8d55c858edefffef3a13f6fbf88d146b986be869a834168d2a941f21",
+      "sha256": "ef22fd31621a9e5ea4fced6ab38b07400abbb1e871acfbfac65a61a95d9354b1",
       "stream": {
         "width": 1920,
         "height": 1080,
@@ -560,7 +560,7 @@
   "counterDiagnostics": [
     {
       "file": "C_CounterRemovedDiagnostic_1920x1080.png",
-      "sha256": "c3475df34c7f474cd3100af4b55379b5ce50437181bacb0d0ba7aecaf565c709",
+      "sha256": "a3ff5d743321d162f28f1f7a02318b30ef2a30c5fa8ca1ea3d37b6d624429e88",
       "opaqueLowerBodyChangedPixels": 3408,
       "bartenderRectanglePixels": [
         946,
@@ -571,8 +571,8 @@
     }
   ],
   "player": {
-    "runId": "141272c39eb94228ae92d16fc17e0d0d",
-    "utc": "2026-10-11T02:24:49.8338891Z",
+    "runId": "4875b825a05e4db481f695901ffa731e",
+    "utc": "2026-10-11T02:42:04.7825795Z",
     "unity": "6000.3.7f1",
     "gpu": "NVIDIA GeForce RTX 3070",
     "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
@@ -1077,19 +1077,19 @@
       }
     ],
     "measurement": {
-      "samples": 82931,
-      "durationSeconds": 60.01310947537422,
-      "frameMeanMs": 0.7235100842315438,
-      "frameP50Ms": 0.7047973340377212,
-      "frameP95Ms": 0.859204912558198,
-      "frameP99Ms": 1.019798801280558,
+      "samples": 84335,
+      "durationSeconds": 60.012966960668564,
+      "frameMeanMs": 0.7114643539814066,
+      "frameP50Ms": 0.6997023592703044,
+      "frameP95Ms": 0.820804969407618,
+      "frameP99Ms": 0.9149943361990154,
       "idleGCMeanBytes": 0.0,
       "drawsMean": 1624.0,
       "batchesMean": 1624.0,
       "idleGCMaxBytes": 0,
-      "allocatedBytes": 45651496,
+      "allocatedBytes": 45652830,
       "reservedBytes": 191963136,
-      "monoUsedBytes": 4845568,
+      "monoUsedBytes": 4841472,
       "processWorkingSetBytes": 0,
       "gcRecorder": true,
       "drawRecorder": true,
@@ -1098,9 +1098,9 @@
     "errors": []
   },
   "processOutcome": {
-    "runId": "141272c39eb94228ae92d16fc17e0d0d",
+    "runId": "4875b825a05e4db481f695901ffa731e",
     "exitCode": 0,
-    "logSha256": "a3beca24f380989b7abdbe3408e4eb2400f2faca5d9517f913975fb00d1bb561",
+    "logSha256": "ac3df97f6d62183a6b01fbdd9804ef4fd003f845d568530b0b838ddcb9434935",
     "executableSha256": "87f775393ac5ef273e9e6d20c8b768f5d4c41b2fbf10d536b32dbfe961cac490",
     "nativeAllocationWarnings": 0
   },

@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "utc": "2026-10-11T02:28:03.669544+00:00",
+  "utc": "2026-10-11T02:42:02.857748+00:00",
   "branch": "production-rebuild",
-  "implementationCommit": "c0e366c071fd2cdf00d7c163e504042ed05718c1",
+  "implementationCommit": "d0e1a1edb1a634382e7d72d98817e5b649a28cfe",
   "sourceStatusAtBuild": "",
-  "sourceFingerprint": "2528c7931a7b87bbb45348701db08bf6e7c8d2c6af8df3a118fcc822fa7a6b13",
-  "payloadFingerprint": "c55a5544d507e813a461825cdf2f830f42d75ffd9e376e2bac30ffe18943b4f6",
+  "sourceFingerprint": "f8d5fd8831285f43faa7adb05b4149448222ac7abc00ac7bf2c9d2f5332d43f3",
+  "payloadFingerprint": "e8326fdd12c0c3080d9a07dc0c2a9e58e2cd7392625cdaf292cec3a98ef83aa3",
   "sourceFiles": [
     {
       "path": "Content/spatial-proof.json",
@@ -229,8 +229,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Editor/PixelCutawayBuilder.cs",
-      "bytes": 23429,
-      "sha256": "45329435028553739851801c57f685af28155547f5f45ae1cb74b757d7d3458c"
+      "bytes": 24130,
+      "sha256": "d1b8e328efde30770fa25217e7694d9b87cbf0b6b3cb720c4f21e73da47f8a37"
     },
     {
       "path": "Unity/Assets/Surlhwa/Editor/PixelCutawayBuilder.cs.meta",
@@ -669,8 +669,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Scenes/Bar_C.unity",
-      "bytes": 1035832,
-      "sha256": "fca45d65139c3c4bb31ef45ab8f884ec01c3b32296b3f4b499637b786d1269ca"
+      "bytes": 1035722,
+      "sha256": "8a7b55868e94893a41db34b07a57efb55b9ef376a3365cf198b1636aa39f9eb0"
     },
     {
       "path": "Unity/Assets/Surlhwa/Scenes/Bar_C.unity.meta",
@@ -754,8 +754,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/PixelCutawayTests.cs",
-      "bytes": 8022,
-      "sha256": "aaa7b8928ff7a9e6776b671db9396c59298f83f5eb4f12223c4f84800cd9eaae"
+      "bytes": 12552,
+      "sha256": "8cb195e78e0e0d463e188e735d3a7107a37d5f30a67783baf411858364e5571d"
     },
     {
       "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/PixelCutawayTests.cs.meta",
@@ -994,8 +994,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk0Mesh.asset",
-      "bytes": 3724,
-      "sha256": "3ed0f33cad5124a93657e5162ce2b650c0bb35e4244194e916d50facf73a6c5f"
+      "bytes": 3714,
+      "sha256": "41e7482b8d3f8a50b8631968fe1b83d62f7f767cd3e31fa2536f1696b275a6d9"
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk0Mesh.asset.meta",
@@ -1004,8 +1004,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk1Mesh.asset",
-      "bytes": 3724,
-      "sha256": "608cac7ed89f59e0421516dcb5b9fdc2e9a68c9f2718823cd9a84eb3aa31a444"
+      "bytes": 3712,
+      "sha256": "bd23acf299057d6b94320249857cc3f9cec499a91898e8320cd6d0b8a1f5d320"
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk1Mesh.asset.meta",
@@ -1014,8 +1014,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk2Mesh.asset",
-      "bytes": 3724,
-      "sha256": "ea3d8c54f3f8e5104299368447505dafde32c351cab41b9635e0a03770bcedfe"
+      "bytes": 3712,
+      "sha256": "c3b736af8cc7bade4ac7990a82a150fe88177cc2a23ce6a998a08c137d31ba09"
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk2Mesh.asset.meta",
@@ -1024,8 +1024,8 @@
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk3Mesh.asset",
-      "bytes": 3724,
-      "sha256": "ff77a65caefbd9b60a82b879d31e7f528fece9636596d9d37a64f59fba39d86c"
+      "bytes": 3712,
+      "sha256": "7c14bfc2c6fa84de5277b83dac8603d18daa3fc902ac770bcd089efdfbc23e3a"
     },
     {
       "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk3Mesh.asset.meta",
@@ -1532,7 +1532,7 @@
     {
       "path": "Validation/Builds/VariantC/SurlhwaPixelCutaway_Data/boot.config",
       "bytes": 368,
-      "sha256": "38bf9914986c853d71e024098aa05e5aa204bfc5ca24fd436027e06781d58317"
+      "sha256": "c4ce2347b566201543be6d60e239c76db89495552cea367424e51ceb95f831b5"
     },
     {
       "path": "Validation/Builds/VariantC/SurlhwaPixelCutaway_Data/globalgamemanagers",
@@ -1551,8 +1551,8 @@
     },
     {
       "path": "Validation/Builds/VariantC/SurlhwaPixelCutaway_Data/level0",
-      "bytes": 190836,
-      "sha256": "42a3f46ca49e494b43b3aa56d0a3d78975a01dde4c88a4bf85d1eff9336ac83d"
+      "bytes": 190844,
+      "sha256": "7e14acfc375d9fa491cc530edd89de11bd1f018a03e0f90f0c2891c4cb2df7ed"
     },
     {
       "path": "Validation/Builds/VariantC/SurlhwaPixelCutaway_Data/Managed/Mono.Security.dll",
@@ -2792,7 +2792,7 @@
     {
       "path": "Validation/Builds/VariantC/SurlhwaPixelCutaway_Data/sharedassets0.assets",
       "bytes": 55744,
-      "sha256": "fffcb602a2168f469f2e708e3cd227b5fc32d206f07c86858711c0c5033dc327"
+      "sha256": "482c5e9fb7f6bb096cf36d4c0587e3730779cd8f3ed0152c0a992e5131df608f"
     },
     {
       "path": "Validation/Builds/VariantC/SurlhwaPixelCutaway_Data/sharedassets0.assets.resS",
@@ -2815,7 +2815,7 @@
       "sha256": "81adcfd8253c3489be720da7e30f16004dc9a1f02a8b418c6c3aef4993032e6d"
     }
   ],
-  "totalPayloadBytesIncludingDevelopmentSymbols": 163739591,
+  "totalPayloadBytesIncludingDevelopmentSymbols": 163739599,
   "hardwareSupplement": {
     "gpuNameDriverVRAMPowerLimit": "NVIDIA GeForce RTX 3070, 591.86, 8192 MiB, 240.00 W",
     "powerPlan": "�쟾�썝 援ъ꽦�몴 GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (怨좎꽦�뒫)",

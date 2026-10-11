@@ -12,11 +12,20 @@ C follows the actual owner anchor: exposed snowy world ground around an open U-c
 
 Camera: fixed orthographic, pitch 28°, yaw/roll 0°. Half-height 4.1 m normally, 1.65 m inspection, 4.9 m wide; aspect 16:9, near/far 0.1/60 m. No post effects, HDR, MSAA or camera-facing sprite scripts. Native output is 1280×720 and 1920×1080.
 
-Character scale was rebuilt: bartender 56 PPU, ordinary/special 64 PPU, shared within each family including poses; root scale 1. Seat anchors use the rotated source hip, feet meet the real floor, the seat lip clears the visible knee, the real counter blocks the bartender's lower body. Don Quixote remains **VISUAL_FIXTURE_ONLY** and does not establish the first canonical special guest or alter ACT order. All supplied sprites remain provenance-pending reference assets.
+Character scale was rebuilt: bartender 56 PPU, ordinary/special 64 PPU, shared within each family including poses; root scale 1. Seat anchors use the rotated source hip, feet meet the real floor, the seat front clears actual opaque hip/thigh pixels while maintaining support within 3 mm, and the real counter blocks the bartender's lower body. Padded walking frames use a 48 px horizontal pivot and the first frame's 1 px bottom padding. Don Quixote remains **VISUAL_FIXTURE_ONLY** and does not establish the first canonical special guest or alter ACT order. All supplied sprites remain provenance-pending reference assets.
 
-Native suite 44/44; Python evidence contracts 14/14; standalone .NET foundation 25/25. C build has zero errors/warnings. Native stills 12, plus counter removal diagnostic and two 121-frame / 12fps motion clips. Source/Player/capture/run hashes are recorded in C-specific manifests. Frozen RC1 dirty state and all 74 specification hashes are unchanged; A/B preservation is checked against 892 original files.
+Native suite 48/48; Python evidence contracts 14/14; standalone .NET foundation 25/25. C build has zero errors/warnings. Native stills 12, plus counter removal diagnostic and two 121-frame / 12fps motion clips. Source/Player/capture/run hashes are recorded in C-specific manifests. Frozen RC1 dirty state and all 74 specification hashes are unchanged; A/B preservation is checked against 892 original files.
 
-Measured on 12th Gen Intel(R) Core(TM) i7-12700KF / NVIDIA GeForce RTX 3070, Unity 6000.3.7f1: 60s native offscreen 1080p sample, mean 0.72 ms / P95 0.86 ms; draws 1624; idle GC mean 0 bytes/frame. GPU time, display latency, VRAM pressure and minimum-spec support were not measured. Pose replay is deterministic fixture evidence, not final animation or gameplay navigation.
+Measured on 12th Gen Intel(R) Core(TM) i7-12700KF / NVIDIA GeForce RTX 3070, Unity 6000.3.7f1: 60s native offscreen 1080p sample, mean 0.71 ms / P95 0.82 ms; draws 1624; idle GC mean 0 bytes/frame. GPU time, display latency, VRAM pressure and minimum-spec support were not measured. Pose replay is deterministic fixture evidence, not final animation or gameplay navigation.
+
+## Technical review and deferred findings
+
+One fresh technical review found two Important contact defects; both were reproduced RED, fixed, and verified GREEN in the 48-test native suite. The final capture folder is `Evidence/c-reviewed-fixed`, including the corrected stills and motion clips. [Full review result](C_FINAL_REVIEW_RESULT.md) and [decision/verification ledger](C_REVISION_PROGRESS.md) record the findings and rulings. Owner visual acceptance is still pending.
+
+Two minor validator improvements are deferred:
+
+- Automated freshness checks compare only executable identity. The full 279-source / 282-payload inventory was verified separately for this handoff; future automated validation should consume it.
+- Failed manifests still emit ready owner-gate fields. FAIL/nonzero exit and the board gate block failed package generation; future readiness fields should derive from the result.
 
 ## Reproduce C without replacing A/B evidence
 
