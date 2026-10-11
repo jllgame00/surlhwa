@@ -1,4 +1,4 @@
-param([string]$EvidenceName='captures-reviewed')
+param([string]$EvidenceName='captures-reviewed', [string]$Executable='Validation/Builds/Windows/SurlhwaSpatialProof.exe', [switch]$CPreview)
 $ErrorActionPreference='Stop'
 $productionPath=Split-Path $PSScriptRoot -Parent
 $outputPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName"
@@ -6,11 +6,13 @@ $logPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName-player.log
 if((Test-Path -LiteralPath $outputPath) -or (Test-Path -LiteralPath $logPath)){throw "Refusing to overwrite existing review evidence: $outputPath / $logPath. Choose a new EvidenceName."}
 New-Item -ItemType Directory -Path $outputPath -Force | Out-Null
 $runId=[Guid]::NewGuid().ToString('N')
-$executablePath=Join-Path $productionPath 'Validation/Builds/Windows/SurlhwaSpatialProof.exe'
+$executablePath=Join-Path $productionPath $Executable
 [pscustomobject]@{runId=$runId;startedUtc=[DateTime]::UtcNow.ToString('O');executable=$executablePath;executableSha256=(Get-FileHash -LiteralPath $executablePath -Algorithm SHA256).Hash.ToLowerInvariant();logPath=$logPath} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $outputPath 'expected-run.json') -Encoding utf8
-$playerProcess=Start-Process -FilePath $executablePath -ArgumentList @(
+$captureArguments=@(
  '-batchmode','-force-d3d11','-screen-width','1920','-screen-height','1080','-reviewCapture','-reviewOutput',$outputPath,'-reviewRunId',$runId,'-logFile',$logPath
-) -WindowStyle Hidden -PassThru
+)
+if($CPreview){$captureArguments+='-cPreview'}
+$playerProcess=Start-Process -FilePath $executablePath -ArgumentList $captureArguments -WindowStyle Hidden -PassThru
 Write-Output "Production review Player PID $($playerProcess.Id)"
 $samples=[System.Collections.Generic.List[object]]::new()
 while(-not $playerProcess.WaitForExit(1000)){

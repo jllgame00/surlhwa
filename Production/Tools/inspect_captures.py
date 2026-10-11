@@ -8,14 +8,14 @@ from PIL import Image, ImageChops, ImageStat
 
 PRODUCTION = Path(__file__).resolve().parents[1]
 
-def review_outcome_failures(run, expected, process, log):
+def review_outcome_failures(run, expected, process, log, completion_marker='SPATIAL_CAPTURE_FINISHED 24 files; errors 0'):
     failures = []
     if not expected.get('runId') or any(x.get('runId') != expected['runId'] for x in (run, process)):
         failures.append('Capture/process identity does not match this requested run')
     if process.get('exitCode') != 0: failures.append('Player process did not exit successfully')
     if run.get('initialized') is not True: failures.append('Stage initialization did not succeed')
     if run.get('errors'): failures.append('Player reported errors')
-    if 'SPATIAL_CAPTURE_FINISHED 24 files; errors 0' not in log: failures.append('Complete capture marker missing from Player log')
+    if completion_marker not in log: failures.append('Complete capture marker missing from Player log')
     if re.search(r'(?im)(?:^[\w.]*Exception:|^Error:|^Assertion failed|^Fatal error|^Crash!!!|^Shader error |UnityEngine\.Debug:LogError|UnityEngine\.Debug:LogAssertion|UnityEngine\.DebugLogHandler:LogException)', log):
         failures.append('Complete Player log contains an error, exception, assertion or crash')
     return failures

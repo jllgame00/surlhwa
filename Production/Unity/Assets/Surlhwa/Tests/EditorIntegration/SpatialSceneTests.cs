@@ -12,7 +12,7 @@ namespace Surlhwa.Spatial.Tests
 {
     public sealed class SpatialSceneTests
     {
-        [OneTimeSetUp] public void BuildScene() => SpatialProofBuilder.Build();
+        [OneTimeSetUp] public void HistoricalSceneMustExist() => Assert.That(System.IO.File.Exists("Assets/Surlhwa/Scenes/Bar.unity"), Is.True);
         [Test] public void RequiredRoomAndAnchorsExist()
         {
             EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/Bar.unity");
@@ -145,7 +145,7 @@ namespace Surlhwa.Spatial.Tests
                 string changed = System.Text.Encoding.UTF8.GetString(original)
                     .Replace("spatial_proof_v1", "native_build_한글_probe");
                 if (invalid) changed = changed.Replace("\"schemaVersion\": 1", "\"schemaVersion\": 2");
-                System.IO.File.WriteAllText(authored, changed, new System.Text.UTF8Encoding(false));
+                ReplaceAuthoredBytes(authored, new System.Text.UTF8Encoding(false).GetBytes(changed));
                 if (invalid) {
                     string previous = System.IO.File.ReadAllText(generated);
                     Assert.Throws<BuildFailedException>(() => callbacks.Single().OnPreprocessBuild(null));
@@ -156,9 +156,16 @@ namespace Surlhwa.Spatial.Tests
                 }
                 Assert.That(AssetDatabase.AssetPathToGUID(generated), Is.EqualTo(guid));
             } finally {
-                System.IO.File.WriteAllBytes(authored, original);
+                ReplaceAuthoredBytes(authored, original);
                 ContentBundleGenerator.Sync();
             }
+        }
+        private static void ReplaceAuthoredBytes(string path, byte[] data)
+        {
+            // Atomic replacement avoids truncating a JSON file mapped by an external project watcher on Windows.
+            string temporary = path + ".native-test-" + System.Guid.NewGuid().ToString("N");
+            try { System.IO.File.WriteAllBytes(temporary, data); System.IO.File.Replace(temporary, path, null); }
+            finally { if (System.IO.File.Exists(temporary)) System.IO.File.Delete(temporary); }
         }
     }
 }

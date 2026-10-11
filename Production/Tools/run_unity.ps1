@@ -1,7 +1,8 @@
 param(
  [ValidateSet('Import','Tests','Build')][string]$Operation='Tests',
  [string]$EvidenceName='unity-tests',
- [string]$TestFilter=''
+ [string]$TestFilter='',
+ [string]$BuildMethod='Surlhwa.Editor.SpatialProofAutomation.BuildPlayer'
 )
 $ErrorActionPreference='Stop'
 $productionPath=Split-Path $PSScriptRoot -Parent
@@ -12,7 +13,7 @@ $unityArguments=@('-batchmode','-nographics','-projectPath',$unityPath,'-logFile
 if($Operation -eq 'Tests'){
  $unityArguments+=@('-runTests','-testPlatform','EditMode','-testResults',(Join-Path $evidencePath "$EvidenceName.xml"))
  if($TestFilter){$unityArguments+=@('-testFilter',$TestFilter)}
-}elseif($Operation -eq 'Build'){$unityArguments+=@('-quit','-executeMethod','Surlhwa.Editor.SpatialProofAutomation.BuildPlayer')}
+}elseif($Operation -eq 'Build'){$unityArguments+=@('-quit','-executeMethod',$BuildMethod)}
 else{$unityArguments+='-quit'}
 $unityProcess=Start-Process -FilePath 'C:/Program Files/Unity/Hub/Editor/6000.3.7f1/Editor/Unity.exe' -ArgumentList $unityArguments -WindowStyle Hidden -PassThru
 Write-Output "Production Unity $Operation PID $($unityProcess.Id)"
