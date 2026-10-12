@@ -12,18 +12,22 @@ using Surlhwa.Presentation;
 using Object = UnityEngine.Object;
 namespace Surlhwa.Spatial.Tests
 {
+    [TestFixture(false), TestFixture(true)]
     public sealed class PixelCutawayTests
     {
+        private readonly bool polish;
+        private float GuestPPU => polish ? 70 : 64;
+        public PixelCutawayTests(bool polish) { this.polish = polish; }
         [OneTimeSetUp] public void BuildC()
         {
             var builder = typeof(SpatialProofBuilder).Assembly.GetType("Surlhwa.Editor.PixelCutawayBuilder");
             Assert.That(builder, Is.Not.Null, "Owner revision C has no builder yet");
-            builder.GetMethod("Build").Invoke(null, null);
+            builder.GetMethod(polish ? "BuildC1" : "Build").Invoke(null, null);
         }
         [SetUp] public void Open()
         {
-            EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/Bar_C.unity");
-            var stage = GameObject.Find("C_Review").GetComponents<MonoBehaviour>().Single(x => x.GetType().Name == "PixelCutawayStage");
+            EditorSceneManager.OpenScene(polish ? "Assets/Surlhwa/Scenes/Bar_C1.unity" : "Assets/Surlhwa/Scenes/Bar_C.unity");
+            var stage = GameObject.Find(polish ? "C1_Review" : "C_Review").GetComponents<MonoBehaviour>().Single(x => x.GetType().Name == "PixelCutawayStage");
             stage.GetType().GetMethod("Select").Invoke(stage, new object[] { 3 });
         }
         [Test] public void SnowIsVisibleWorldGroundBeyondEveryInteriorEdge()
@@ -75,14 +79,14 @@ namespace Surlhwa.Spatial.Tests
             var ray = camera.ViewportPointToRay(camera.WorldToViewportPoint(bartender.position + Vector3.up * .25f));
             Assert.That(Physics.Raycast(ray, out var hit, 60), Is.True); Assert.That(hit.collider.name, Does.StartWith("C_Counter"));
             var guest = GameObject.Find("C_Quixote").GetComponent<CharacterView>();
-            var torso = guest.Plane.transform.TransformPoint(new Vector3(18f / 64, .72f, 0));
+            var torso = guest.Plane.transform.TransformPoint(new Vector3(18f / GuestPPU, .72f, 0));
             ray = camera.ViewportPointToRay(camera.WorldToViewportPoint(torso));
             bool blocked = Physics.Raycast(ray, out hit, Vector3.Distance(ray.origin, torso) - .005f);
             Assert.That(blocked && hit.collider.name.StartsWith("C_Stool"), Is.False);
         }
         [Test] public void SixFixturesKeepActorRootsAndAnchorsStable()
         {
-            var stage = GameObject.Find("C_Review").GetComponents<MonoBehaviour>().Single(x => x.GetType().Name == "PixelCutawayStage");
+            var stage = GameObject.Find(polish ? "C1_Review" : "C_Review").GetComponents<MonoBehaviour>().Single(x => x.GetType().Name == "PixelCutawayStage");
             var actors = Object.FindObjectsByType<CharacterView>(FindObjectsSortMode.None);
             var roots = actors.Select(a => a.transform.position).ToArray();
             var feet = actors.Select(a => a.FeetAnchor.position).ToArray();
@@ -97,14 +101,14 @@ namespace Surlhwa.Spatial.Tests
             Physics.SyncTransforms();
             var guest = GameObject.Find("C_Quixote").GetComponent<CharacterView>();
             var camera = GameObject.Find("Camera_C_PixelCutaway").GetComponent<Camera>();
-            var knee = guest.Plane.transform.TransformPoint(new Vector3(18f / 64, 20f / 64, 0));
+            var knee = guest.Plane.transform.TransformPoint(new Vector3(18f / GuestPPU, 20f / GuestPPU, 0));
             var ray = camera.ViewportPointToRay(camera.WorldToViewportPoint(knee));
             bool blocked = Physics.Raycast(ray, out var hit, Vector3.Distance(ray.origin, knee) - .005f);
             Assert.That(blocked && hit.collider.name.StartsWith("C_Stool"), Is.False, "Seat front lip intrudes into visible knee instead of supporting hip");
         }
         [Test] public void InitializationFailureClosesCaptureReadiness()
         {
-            var stage = GameObject.Find("C_Review").GetComponents<MonoBehaviour>().Single(x => x.GetType().Name == "PixelCutawayStage");
+            var stage = GameObject.Find(polish ? "C1_Review" : "C_Review").GetComponents<MonoBehaviour>().Single(x => x.GetType().Name == "PixelCutawayStage");
             var awake = stage.GetType().GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance);
             awake.Invoke(stage, null); Assert.That(stage.GetType().GetProperty("IsInitialized").GetValue(stage), Is.True);
             GameObject.Find("C_Bartender").GetComponent<CharacterView>().VisualBindingId = "visual_ordinary";
@@ -126,7 +130,7 @@ namespace Surlhwa.Spatial.Tests
                 // Inspect actual opaque source samples immediately around the authored hip, not one lower knee point.
                 for (int sourceRow = 57; sourceRow <= 62; sourceRow++) for (int x = 0; x < texture.width; x++) {
                     int y = texture.height - sourceRow - 1; if (texture.GetPixel(x, y).a < .4f) continue;
-                    Vector3 point = actor.Plane.transform.TransformPoint(new Vector3((x + .5f - pivotX) / 64, (y + .5f - 15) / 64, 0));
+                    Vector3 point = actor.Plane.transform.TransformPoint(new Vector3((x + .5f - pivotX) / GuestPPU, (y + .5f - 15) / GuestPPU, 0));
                     var ray = camera.ViewportPointToRay(camera.WorldToViewportPoint(point));
                     bool blocked = Physics.Raycast(ray, out var hit, Vector3.Distance(ray.origin, point) - .0005f);
                     Assert.That(blocked && hit.collider.name.StartsWith("C_Stool"), Is.False, actorName + " opaque hip pixel " + x + "," + sourceRow);
@@ -157,13 +161,13 @@ namespace Surlhwa.Spatial.Tests
         }
         [Test] public void RegenerationDoesNotTruncateImportedPixelSources()
         {
-            const string path = "Assets/Surlhwa/VariantC/CounterPanel.png";
+            string path = polish ? "Assets/Surlhwa/VariantC1/CounterPanel.png" : "Assets/Surlhwa/VariantC/CounterPanel.png";
             byte[] before = System.IO.File.ReadAllBytes(path);
             using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite | System.IO.FileShare.Delete))
             using (var mapping = System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile(stream, null, 0, System.IO.MemoryMappedFiles.MemoryMappedFileAccess.Read, System.IO.HandleInheritability.None, true))
             using (var view = mapping.CreateViewAccessor(0, 0, System.IO.MemoryMappedFiles.MemoryMappedFileAccess.Read)) {
                 var builder = typeof(SpatialProofBuilder).Assembly.GetType("Surlhwa.Editor.PixelCutawayBuilder");
-                Assert.DoesNotThrow(() => builder.GetMethod("Build").Invoke(null, null), "A loaded pixel source must be safe to regenerate");
+                Assert.DoesNotThrow(() => builder.GetMethod(polish ? "BuildC1" : "Build").Invoke(null, null), "A loaded pixel source must be safe to regenerate");
                 Assert.That(System.IO.File.ReadAllBytes(path), Is.EqualTo(before));
             }
         }

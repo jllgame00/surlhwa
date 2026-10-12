@@ -12,15 +12,20 @@ namespace Surlhwa.Editor
 {
     public static class PixelCutawayBuilder
     {
-        private const string Root = "Assets/Surlhwa/VariantC";
+        private static bool polish;
+        private static string Root => polish ? "Assets/Surlhwa/VariantC1" : "Assets/Surlhwa/VariantC";
         private static readonly Quaternion View = Quaternion.Euler(28, 0, 0);
         private static Transform world;
         private static Mesh boxMesh;
         private static Material darkWood, wood, panel, top, floor, rear, snow, stone, snowCap, metal, brass, amber, contact;
         private static Color Hex(string value) { ColorUtility.TryParseHtmlString("#" + value, out var c); return c; }
         [MenuItem("Surlhwa/Build C pixel cutaway only")]
-        public static void Build()
+        public static void Build() => BuildScene(false);
+        [MenuItem("Surlhwa/Build C1 bounded polish only")]
+        public static void BuildC1() => BuildScene(true);
+        private static void BuildScene(bool c1)
         {
+            polish = c1;
             Directory.CreateDirectory(Root); AssetDatabase.Refresh(); ContentBundleGenerator.Sync();
             darkWood = Mat("DarkWood", "32231e"); wood = Mat("WoodEdge", "775032");
             panel = PixelMat("CounterPanel", 192, 40, "35231d", "493025", "67452e", 0);
@@ -29,12 +34,13 @@ namespace Surlhwa.Editor
             rear = PixelMat("RearPanels", 384, 100, "392a25", "493126", "684730", 3);
             snow = PixelMat("SnowField", 512, 384, "182e47", "203a52", "2d4a60", 4);
             stone = PixelMat("StoneFooting", 96, 24, "28323d", "37404b", "485363", 5);
-            snowCap = PixelMat("SnowCap", 128, 32, "627c8f", "8198a5", "a5b6bb", 6);
+            snowCap = polish ? PixelMat("SnowCap", 128, 32, "7e909d", "a8b5bb", "cad1d1", 6)
+                : PixelMat("SnowCap", 128, 32, "627c8f", "8198a5", "a5b6bb", 6);
             metal = Mat("Iron", "252b32"); brass = Mat("Brass", "b28145"); amber = Mat("Lamplight", "ffd997");
             contact = Mat("Contact", "2c2325");
             boxMesh = MakeBoxMesh();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            world = new GameObject("C_PixelCutawayWorld").transform;
+            world = new GameObject(polish ? "C1_PixelCutawayWorld" : "C_PixelCutawayWorld").transform;
             RenderSettings.ambientMode = AmbientMode.Flat; RenderSettings.ambientLight = Color.white; RenderSettings.fog = false;
             Box("C_SnowGround", new Vector3(0, -.22f, .8f), new Vector3(24, .2f, 24), snow, snow, snow);
             Box("C_Floor", new Vector3(0, -.09f, .4f), new Vector3(9.6f, .18f, 6.1f), floor, darkWood, darkWood);
@@ -58,13 +64,14 @@ namespace Surlhwa.Editor
                 Box("C_SnowAccumulation", new Vector3(x, -.06f, z), new Vector3(size, .08f, size), snowCap, stone, stone, false);
             }
             Counter(); BackDress();
-            float seatY = 26f / 64 * Mathf.Cos(28 * Mathf.Deg2Rad);
-            foreach (float x in new[] { -2.2f, -.55f, 1.15f, 2.4f }) Stool(new Vector3(x, 0, -1.42f), seatY, x == -.55f);
-            var bartender = Actor("C_Bartender", "guest_bartender", "visual_bartender", new Vector3(.2f, 0, .78f), "Bartender", "Bartender", new Vector2(17, 0), new Vector2(17, 0), 56, Vector3.zero);
-            var ordinary = Actor("C_Ordinary", "guest_ordinary_postman", "visual_ordinary", new Vector3(-.55f - 12f / 64, 0, -1.42f - Mathf.Sin(28 * Mathf.Deg2Rad) * 26 / 64), "OrdinaryStanding", "OrdinarySeated", new Vector2(17.5f, 0), new Vector2(38, 15), 64, new Vector3(12f / 64, 26f / 64, 0));
-            var special = Actor("C_Quixote", "guest_quixote", "visual_quixote", new Vector3(-.55f - 18f / 64, 0, -1.42f - Mathf.Sin(28 * Mathf.Deg2Rad) * 26 / 64), "QuixoteStanding", "QuixoteSeated", new Vector2(20, 0), new Vector2(28, 15), 64, new Vector3(18f / 64, 26f / 64, 0));
+            float guestPPU = polish ? 70 : 64, seatZ = polish ? -1.83f : -1.42f;
+            float seatY = 26f / guestPPU * Mathf.Cos(28 * Mathf.Deg2Rad);
+            foreach (float x in new[] { -2.2f, -.55f, 1.15f, 2.4f }) Stool(new Vector3(x, 0, seatZ), seatY, x == -.55f);
+            var bartender = Actor("C_Bartender", "guest_bartender", "visual_bartender", new Vector3(.2f, 0, polish ? .55f : .78f), "Bartender", "Bartender", new Vector2(17, 0), new Vector2(17, 0), polish ? 52 : 56, Vector3.zero);
+            var ordinary = Actor("C_Ordinary", "guest_ordinary_postman", "visual_ordinary", new Vector3(-.55f - 12f / guestPPU, 0, seatZ - Mathf.Sin(28 * Mathf.Deg2Rad) * 26 / guestPPU), "OrdinaryStanding", "OrdinarySeated", new Vector2(17.5f, 0), new Vector2(38, 15), guestPPU, new Vector3(12f / guestPPU, 26f / guestPPU, 0));
+            var special = Actor("C_Quixote", "guest_quixote", "visual_quixote", new Vector3(-.55f - 18f / guestPPU, 0, seatZ - Mathf.Sin(28 * Mathf.Deg2Rad) * 26 / guestPPU), "QuixoteStanding", "QuixoteSeated", new Vector2(20, 0), new Vector2(28, 15), guestPPU, new Vector3(18f / guestPPU, 26f / guestPPU, 0));
             ordinary.WalkMeshes = new Mesh[4]; ordinary.WalkMaterials = new Material[4];
-            for (int i = 0; i < 4; i++) { ordinary.WalkMeshes[i] = Plane("OrdinaryWalk" + i, new Vector2(48, i == 0 ? 1 : 0), 64); ordinary.WalkMaterials[i] = Sprite("OrdinaryWalk" + i); }
+            for (int i = 0; i < 4; i++) { ordinary.WalkMeshes[i] = Plane("OrdinaryWalk" + i, new Vector2(48, i == 0 ? 1 : 0), guestPPU); ordinary.WalkMaterials[i] = Sprite("OrdinaryWalk" + i); }
             var camera = new GameObject("Camera_C_PixelCutaway").AddComponent<Camera>(); camera.transform.rotation = View;
             camera.orthographic = true; camera.aspect = 16f / 9; camera.nearClipPlane = .1f; camera.farClipPlane = 60;
             camera.backgroundColor = Hex("101e30"); camera.clearFlags = CameraClearFlags.SolidColor; camera.allowMSAA = false; camera.allowHDR = false;
@@ -79,31 +86,32 @@ namespace Surlhwa.Editor
                 mark.transform.localScale = Vector3.one * (i % 3 == 0 ? .045f : .025f); mark.GetComponent<Renderer>().sharedMaterial = flake;
                 Object.DestroyImmediate(mark.GetComponent<Collider>());
             }
-            Anchor("C_WorkbenchAnchor", new Vector3(.85f, 1.015f, -.3f));
+            Anchor("C_WorkbenchAnchor", new Vector3(.85f, 1.015f, polish ? -.6f : -.3f));
             Anchor("C_MemoryDisplayAnchor", new Vector3(0, 1.55f, 3.35f));
             Anchor("C_EntryAnchor", new Vector3(-4.2f, 0, -2.25f)); Anchor("C_ExitAnchor", new Vector3(-5.6f, 0, -3));
-            var stage = new GameObject("C_Review").AddComponent<PixelCutawayStage>(); stage.Camera = camera;
+            var stage = new GameObject(polish ? "C1_Review" : "C_Review").AddComponent<PixelCutawayStage>(); stage.Camera = camera;
             stage.Bartender = bartender; stage.Ordinary = ordinary; stage.Quixote = special;
             stage.ContentBundle = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/GeneratedContent/spatial-proof.json");
             stage.gameObject.AddComponent<PixelCutawayRun>(); stage.Select(3);
-            EditorSceneManager.SaveScene(scene, "Assets/Surlhwa/Scenes/Bar_C.unity");
+            EditorSceneManager.SaveScene(scene, polish ? "Assets/Surlhwa/Scenes/Bar_C1.unity" : "Assets/Surlhwa/Scenes/Bar_C.unity");
             foreach (string guid in AssetDatabase.FindAssets("", new[] { Root })) AssetDatabase.SaveAssetIfDirty(new GUID(guid));
-            Debug.Log("PIXEL_CUTAWAY_C_BUILT: historical A/B scenes and assets untouched");
+            Debug.Log("PIXEL_CUTAWAY_" + (polish ? "C1" : "C") + "_BUILT: separate revision assets");
         }
         private static void Counter()
         {
-            Box("C_CounterFront", new Vector3(0, .43f, -.35f), new Vector3(6.7f, .86f, .72f), wood, panel, darkWood);
-            Box("C_CounterTop", new Vector3(0, .925f, -.35f), new Vector3(6.95f, .13f, .94f), top, wood, darkWood);
-            Box("C_CounterFootRail", new Vector3(0, .16f, -.81f), new Vector3(6.15f, .045f, .04f), brass, brass, metal, false);
-            foreach (float x in new[] { -3.2f, 3.2f }) {
-                Box("C_CounterReturn", new Vector3(x, .43f, 1.3f), new Vector3(.7f, .86f, 2.65f), wood, panel, darkWood);
-                Box("C_CounterReturnTop", new Vector3(x, .925f, 1.3f), new Vector3(.94f, .13f, 2.75f), top, wood, darkWood);
+            float frontZ = polish ? -.65f : -.35f;
+            Box("C_CounterFront", new Vector3(0, .43f, frontZ), new Vector3(polish ? 7.75f : 6.7f, .86f, polish ? .82f : .72f), wood, panel, darkWood);
+            Box("C_CounterTop", new Vector3(0, .925f, frontZ), new Vector3(polish ? 8.0f : 6.95f, .13f, polish ? 1.05f : .94f), top, wood, darkWood);
+            Box("C_CounterFootRail", new Vector3(0, .16f, frontZ - (polish ? .55f : .46f)), new Vector3(polish ? 7.2f : 6.15f, .045f, .04f), brass, brass, metal, false);
+            foreach (float x in polish ? new[] { -3.45f, 3.45f } : new[] { -3.2f, 3.2f }) {
+                Box("C_CounterReturn", new Vector3(x, .43f, polish ? 1 : 1.3f), new Vector3(polish ? .95f : .7f, .86f, polish ? 3.6f : 2.65f), wood, panel, darkWood);
+                Box("C_CounterReturnTop", new Vector3(x, .925f, polish ? 1 : 1.3f), new Vector3(polish ? 1.1f : .94f, .13f, polish ? 3.7f : 2.75f), top, wood, darkWood);
             }
             foreach (float x in new[] { -2.4f, -1.2f, 0, 1.2f, 2.4f }) {
-                Box("C_CounterPanelTrim", new Vector3(x, .42f, -.72f), new Vector3(.045f, .68f, .025f), wood, wood, darkWood, false);
+                Box("C_CounterPanelTrim", new Vector3(x, .42f, frontZ - (polish ? .42f : .37f)), new Vector3(.045f, .68f, .025f), wood, wood, darkWood, false);
             }
-            foreach (float x in new[] { -2.5f, 2.5f }) Bottle(new Vector3(x, .99f, -.31f), .25f, x < 0 ? Mat("GreenGlass", "354c3e") : Mat("BrownGlass", "785130"));
-            Box("C_ReservedWorkbenchMat", new Vector3(.85f, .998f, -.25f), new Vector3(.72f, .013f, .42f), metal, metal, metal, false);
+            foreach (float x in new[] { -2.5f, 2.5f }) Bottle(new Vector3(x, .99f, frontZ + .04f), .25f, x < 0 ? Mat("GreenGlass", "354c3e") : Mat("BrownGlass", "785130"));
+            Box("C_ReservedWorkbenchMat", new Vector3(.85f, .998f, frontZ + .1f), new Vector3(.72f, .013f, .42f), metal, metal, metal, false);
         }
         private static void BackDress()
         {
@@ -205,8 +213,17 @@ namespace Surlhwa.Editor
                     float wx = (x / (float)(width - 1) - .5f) * 24, wz = (y / (float)(height - 1) - .5f) * 24 + .8f;
                     float distance = Mathf.Max(Mathf.Abs(wx) - 4.8f, Mathf.Abs(wz - .4f) - 3.05f);
                     distance += (((x / 11 + y / 9 * 7) % 9) - 4) * .07f;
-                    pixel = distance < .75f ? Hex("60798d") : distance < 1.35f ? Hex("344d65") : distance < 2 ? Hex("243d55") : Hex("182e47");
-                    if (random.Next(180) < 2) pixel = Color.Lerp(pixel, Hex("8fa4b5"), .24f);
+                    if (polish) {
+                        // Broken snow banks on dark ground, with no nested elevation/colour rings.
+                        float patch = SnowNoise(x, y, 23) * .7f + SnowNoise(x + 71, y + 19, 9) * .3f;
+                        float bank = distance > 0 && distance < .95f ? .52f : .63f;
+                        pixel = patch > bank ? Hex("6d808d") : patch > bank - .13f ? Hex("3b4d5b") : Hex("202b35");
+                        if (patch > bank + .09f && (x + y * 7) % 29 < 2) pixel = Hex("9aaab4");
+                        else if (patch <= bank - .13f && (x / 3 + y / 2) % 17 == 0) pixel = Hex("293540");
+                    } else {
+                        pixel = distance < .75f ? Hex("60798d") : distance < 1.35f ? Hex("344d65") : distance < 2 ? Hex("243d55") : Hex("182e47");
+                        if (random.Next(180) < 2) pixel = Color.Lerp(pixel, Hex("8fa4b5"), .24f);
+                    }
                 }
                 if (name == "RearPanels") {
                     float dx = Mathf.Min(Mathf.Abs(x - width * .068f), Mathf.Abs(x - width * .932f)) / (width * .11f);
@@ -232,6 +249,15 @@ namespace Surlhwa.Editor
                 File.WriteAllBytes(temporary, bytes);
                 if (File.Exists(path)) File.Replace(temporary, path, null); else File.Move(temporary, path);
             } finally { if (File.Exists(temporary)) File.Delete(temporary); }
+        }
+        private static float SnowNoise(int x, int y, int cellSize)
+        {
+            int cx = x / cellSize, cy = y / cellSize;
+            float fx = Mathf.SmoothStep(0, 1, x % cellSize / (float)cellSize);
+            float fy = Mathf.SmoothStep(0, 1, y % cellSize / (float)cellSize);
+            float Sample(int a, int b) => (((a * 73856093) ^ (b * 19349663) ^ 83492791) & 0x7fffffff) % 1000 / 999f;
+            return Mathf.Lerp(Mathf.Lerp(Sample(cx, cy), Sample(cx + 1, cy), fx),
+                Mathf.Lerp(Sample(cx, cy + 1), Sample(cx + 1, cy + 1), fx), fy);
         }
         private static GameObject Box(string name, Vector3 at, Vector3 scale, Material topMat, Material front, Material sides, bool collider = true)
         {
@@ -264,14 +290,17 @@ namespace Surlhwa.Editor
             if (old != null) { EditorUtility.CopySerialized(value, old); Object.DestroyImmediate(value); return old; }
             AssetDatabase.CreateAsset(value, path); return value;
         }
-        public static void BuildPlayer()
+        public static void BuildPlayer() => BuildRevisionPlayer(false);
+        public static void BuildC1Player() => BuildRevisionPlayer(true);
+        private static void BuildRevisionPlayer(bool c1)
         {
-            Build(); string output = Path.GetFullPath("../Validation/Builds/VariantC/SurlhwaPixelCutaway.exe");
+            BuildScene(c1); string revision = c1 ? "C1" : "C";
+            string output = Path.GetFullPath("../Validation/Builds/Variant" + revision + "/SurlhwaPixelCutaway.exe");
             Directory.CreateDirectory(Path.GetDirectoryName(output));
             PlayerSettings.SetScriptingBackend(UnityEditor.Build.NamedBuildTarget.Standalone, ScriptingImplementation.Mono2x);
-            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions { scenes = new[] { "Assets/Surlhwa/Scenes/Bar_C.unity" },
+            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions { scenes = new[] { "Assets/Surlhwa/Scenes/Bar_" + revision + ".unity" },
                 locationPathName = output, target = BuildTarget.StandaloneWindows64, options = BuildOptions.Development });
-            File.WriteAllText("../Validation/Manifests/build-c.json", JsonUtility.ToJson(new BuildEvidence { result = report.summary.result.ToString(),
+            File.WriteAllText("../Validation/Manifests/build-" + revision.ToLowerInvariant() + ".json", JsonUtility.ToJson(new BuildEvidence { result = report.summary.result.ToString(),
                 errors = report.summary.totalErrors, warnings = report.summary.totalWarnings, bytes = report.summary.totalSize,
                 seconds = report.summary.totalTime.TotalSeconds, unity = UnityEngine.Application.unityVersion, output = output }, true));
             if (report.summary.result != BuildResult.Succeeded) throw new InvalidOperationException("C Player build failed");

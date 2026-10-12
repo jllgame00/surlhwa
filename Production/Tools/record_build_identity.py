@@ -18,7 +18,8 @@ def inventory(roots):
 
 sources = inventory(['Content', 'SourceArt', 'Unity/Assets', 'Unity/Packages', 'Unity/ProjectSettings'])
 variant_c = '--variant-c' in sys.argv
-payload = inventory(['Validation/Builds/VariantC' if variant_c else 'Validation/Builds/Windows'])
+variant_c1 = '--variant-c1' in sys.argv
+payload = inventory(['Validation/Builds/VariantC1' if variant_c1 else 'Validation/Builds/VariantC' if variant_c else 'Validation/Builds/Windows'])
 def read_command(args):
     try:
         result = subprocess.run(args, capture_output=True, text=True, errors='replace', check=False)
@@ -35,6 +36,6 @@ identity = {'schemaVersion': 1, 'utc': datetime.now(timezone.utc).isoformat(), '
     'hardwareSupplement': {'gpuNameDriverVRAMPowerLimit': read_command(['nvidia-smi', '--query-gpu=name,driver_version,memory.total,power.limit', '--format=csv,noheader']),
         'powerPlan': read_command(['powercfg', '/getactivescheme']),
         'evidence': 'Read-only nvidia-smi and powercfg at record time; storage model not measured'}}
-destination = production / ('Validation/Manifests/build-identity-c.json' if variant_c else 'Validation/Manifests/build-identity.json')
+destination = production / ('Validation/Manifests/build-identity-c1.json' if variant_c1 else 'Validation/Manifests/build-identity-c.json' if variant_c else 'Validation/Manifests/build-identity.json')
 destination.write_text(json.dumps(identity, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 print('Build identity recorded:', identity['implementationCommit'], identity['sourceFingerprint'], len(payload), 'Player files')

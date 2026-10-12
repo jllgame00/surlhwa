@@ -28,9 +28,10 @@ namespace Surlhwa.Presentation
             bool preview = args.Contains("-cPreview");
             if (string.IsNullOrWhiteSpace(output)) { Debug.LogError("C requires -reviewOutput"); UnityEngine.Application.Quit(1); yield break; }
             Directory.CreateDirectory(output); var stage = GetComponent<PixelCutawayStage>();
+            string revision = stage != null ? stage.Revision : "C";
             var evidence = new Evidence { runId = runId, utc = DateTime.UtcNow.ToString("O"), preview = preview,
                 unity = UnityEngine.Application.unityVersion, gpu = SystemInfo.graphicsDeviceName, cpu = SystemInfo.processorType,
-                graphicsAPI = SystemInfo.graphicsDeviceType.ToString(), source = "Bar_C.unity / PixelCutawayBuilder; ARCH_SLICE_PROVISIONAL; VISUAL_FIXTURE_ONLY",
+                graphicsAPI = SystemInfo.graphicsDeviceType.ToString(), source = "Bar_" + revision + ".unity / PixelCutawayBuilder; C_DIRECTION_OWNER_APPROVED; VISUAL_FIXTURE_ONLY",
                 tier = "Windows Development Player; uncapped 60s explicit offscreen native 1080p render requests; no display latency/GPU timing claim" };
             if (string.IsNullOrWhiteSpace(runId) || stage == null || !stage.IsInitialized || Errors.Count != 0) {
                 Debug.LogError("C_CAPTURE_ABORTED: run identity and initialized bindings required");
@@ -69,7 +70,7 @@ namespace Surlhwa.Presentation
             for (int fixture = 0; fixture < PixelCutawayStage.Fixtures.Length; fixture++) {
                 stage.Select(fixture); for (int warm = 0; warm < 5; warm++) yield return null;
                 foreach (int width in new[] { 1280, 1920 }) {
-                    string file = "C_" + PixelCutawayStage.Fixtures[fixture] + "_" + width + "x" + width * 9 / 16 + ".png";
+                    string file = revision + "_" + PixelCutawayStage.Fixtures[fixture] + "_" + width + "x" + width * 9 / 16 + ".png";
                     CaptureFrame(stage.Camera, Path.Combine(output, file), width);
                     captures.Add(new Capture { file = file, fixture = PixelCutawayStage.Fixtures[fixture], width = width, height = width * 9 / 16,
                         position = stage.Camera.transform.position, rotation = stage.Camera.transform.eulerAngles, orthographicSize = stage.Camera.orthographicSize,
@@ -81,12 +82,12 @@ namespace Surlhwa.Presentation
             }
             stage.Select(3); var counters = UnityEngine.Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None).Where(r => r.name.StartsWith("C_Counter")).ToArray();
             foreach (var renderer in counters) renderer.enabled = false;
-            CaptureFrame(stage.Camera, Path.Combine(output, "C_CounterRemovedDiagnostic_1920x1080.png"), 1920);
+            CaptureFrame(stage.Camera, Path.Combine(output, revision + "_CounterRemovedDiagnostic_1920x1080.png"), 1920);
             foreach (var renderer in counters) renderer.enabled = true;
             if (!preview) foreach (int width in new[] { 1280, 1920 }) {
                 stage.Select(1); stage.Bartender.Show(true, false);
                 var actor = stage.Ordinary; Vector3 seat = actor.transform.position, entry = new Vector3(-4.2f, 0, -2.25f), front = new Vector3(-2.5f, 0, seat.z);
-                string directory = Path.Combine(output, "C_motion_" + width); Directory.CreateDirectory(directory);
+                string directory = Path.Combine(output, revision + "_motion_" + width); Directory.CreateDirectory(directory);
                 for (int frame = 0; frame <= 120; frame++) {
                     if (frame < 24) actor.transform.position = Vector3.Lerp(entry, front, Mathf.SmoothStep(0, 1, frame / 24f));
                     else if (frame < 48) actor.transform.position = Vector3.Lerp(front, seat, Mathf.SmoothStep(0, 1, (frame - 24) / 24f));
@@ -100,7 +101,7 @@ namespace Surlhwa.Presentation
             }
             stage.Select(3); evidence.captures = captures.ToArray(); evidence.errors = Errors.ToArray();
             evidence.staticRootAndFeetDrift = Errors.Any(e => e.Contains("drift")); Write(output, evidence);
-            Debug.Log("C_CAPTURE_FINISHED " + captures.Count + " files; errors " + Errors.Count);
+            Debug.Log(revision + "_CAPTURE_FINISHED " + captures.Count + " files; errors " + Errors.Count);
             UnityEngine.Application.Quit(Errors.Count == 0 ? 0 : 1);
         }
         private static string Value(string[] args, string key) => args.SkipWhile(a => a != key).Skip(1).FirstOrDefault();
