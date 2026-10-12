@@ -21,9 +21,12 @@ namespace Surlhwa.Domain
         public int CompositionRevision { get; }
         public IReadOnlyDictionary<string,decimal> AcceptedByIngredient { get; }
         public long ElapsedMicroseconds { get; }
-        internal PreparationAction(int sequence,BrewAction kind,string source,ContainerRole target,decimal accepted,decimal spilled,int revision,
+        public PreparationAction(int sequence,BrewAction kind,string source,ContainerRole target,decimal accepted,decimal spilled,int revision,
             IDictionary<string,decimal> components,long elapsed)
         {
+            if(sequence<1 || !Enum.IsDefined(typeof(BrewAction),kind) || !Enum.IsDefined(typeof(ContainerRole),target) || revision<0 || elapsed<0) throw new ArgumentException("Invalid action record.");
+            LiquidMath.Validate(accepted); LiquidMath.Validate(spilled);
+            if(components!=null && (components.Values.Any(x=>x<0 || decimal.Round(x,6)!=x) || components.Values.Sum()!=accepted)) throw new ArgumentException("Invalid accepted components.");
             Sequence=sequence; Kind=kind; Source=source; Target=target; AcceptedMl=accepted; SpilledMl=spilled; CompositionRevision=revision;
             AcceptedByIngredient=LiquidMath.Copy(components ?? new Dictionary<string,decimal>()); ElapsedMicroseconds=elapsed;
         }
@@ -64,6 +67,20 @@ namespace Surlhwa.Domain
             StirDegrees=c.Stamp?.Degrees ?? 0; StableFraction=c.Stamp?.StableFraction ?? 0;
             StirIngredients=Array.AsReadOnly(c.Stamp?.Ingredients.ToArray() ?? Array.Empty<string>());
             Garnish=garnish; GarnishPosition=position; Trace=new ReadOnlyCollection<PreparationAction>(trace.ToArray());
+        }
+        // Restore immutable evidence only; Continue never reconstructs a live mid-pour container.
+        public ServiceSnapshot(string attempt,string revision,IDictionary<string,decimal> amounts,IDictionary<string,decimal> dash,
+            bool ice,bool strained,bool how,bool quality,double degrees,double stable,IEnumerable<string> stirIngredients,
+            string garnish,string position,IEnumerable<PreparationAction> trace)
+        {
+            if(!Guid.TryParseExact(attempt,"N",out _) || string.IsNullOrWhiteSpace(revision) || double.IsNaN(degrees) || double.IsInfinity(degrees) || degrees<0 || double.IsNaN(stable) || stable<0 || stable>1) throw new ArgumentException("Invalid service evidence.");
+            foreach(var a in amounts) { _=new StableId<IngredientIdentity>(a.Key); LiquidMath.Validate(a.Value); if(a.Value==0) throw new ArgumentException("Empty component."); }
+            foreach(var a in dash) if(a.Value<=0 || decimal.Round(a.Value,6)!=a.Value || !amounts.TryGetValue(a.Key,out var v) || a.Value>v) throw new ArgumentException("Invalid dash evidence.");
+            if((garnish==null)!=(position==null) || (garnish!=null && (garnish!="cherry" || position!="in_glass"))) throw new ArgumentException("Invalid garnish evidence.");
+            AttemptId=attempt; TuningRevision=revision; Amounts=LiquidMath.Copy(amounts); DashAmounts=LiquidMath.Copy(dash);
+            HasIce=ice; Strained=strained; StirHowGood=how; StirQualityGood=quality; StirDegrees=degrees; StableFraction=stable;
+            StirIngredients=Array.AsReadOnly(stirIngredients.ToArray()); Garnish=garnish; GarnishPosition=position; Trace=Array.AsReadOnly(trace.ToArray());
+            for(int i=0;i<Trace.Count;i++) if(Trace[i].Sequence!=i+1) throw new ArgumentException("Unordered action record.");
         }
     }
     public sealed class BrewingSession

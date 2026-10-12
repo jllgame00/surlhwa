@@ -2,7 +2,8 @@
   "name": "Surlhwa.ContentIO",
   "rootNamespace": "Surlhwa.ContentIO",
   "references": [
-    "Surlhwa.Domain"
+    "Surlhwa.Domain",
+    "Surlhwa.Application"
   ],
   "overrideReferences": true,
   "precompiledReferences": [

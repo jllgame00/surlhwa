@@ -57,9 +57,9 @@
 
 **Interfaces:** Consumes SliceContent/Task1. Produces ordered occurrence-scoped commands, immutable read model, logical stage clock, ServiceCommitted outcome and pending reading cursor. ISliceSaveStore publishes one schema1 checkpoint or reports failure; UI remains recoverable and cannot claim saved progress on failure.
 
-- [ ] RED: consumed line/facts; distinct reaction/result/discovery/farewell; normal failure progression; repeated submit/departure; no ACT/memory grants; modal held-input cancellation/rearm; transient Brew restart; durable outcome/cursor; current/previous corruption/future-schema/unknown-ID and each write boundary failure.
-- [ ] Implement transactional flow and two-generation local store using actual file operations in isolated tests. Preserve original failed generations; no silent future-version rollback.
-- [ ] Full contracts and native file-store checks; commit.
+- [x] RED: consumed line/facts; distinct reaction/result/discovery/farewell; normal failure progression; repeated submit/departure; no ACT/memory grants; modal held-input cancellation/rearm; transient Brew restart; durable outcome/cursor; current/previous corruption/future-schema/unknown-ID and each write boundary failure.
+- [x] Implement transactional flow and two-generation local store using actual file operations in isolated tests. Preserve original failed generations; no silent future-version rollback.
+- [x] Full contracts and native file-store checks; commit.
 
 ### Task 4: Resident workbench, input, UI, sound and Prince presentation
 

@@ -16,4 +16,8 @@ Task2: implementation complete; standalone contracts62/62 (16 content cases). hg
 
 Ruling: use the unchanged SRC-RC1-0395 sentence as the Prince excerpt's departure line, without selecting a final farewell branch — it is a suitable existing departure field and does not invent D09 — cost if wrong: owner HG07 may request different source selection/context.
 
-Task3: pending. Task4: pending. Task5: pending.
+Task2 commit: 70f771a.
+
+Task3: complete standalone contracts83/83; hg04-flow-red.log (missing APIs), hg04-flow-behavior.log76/76, hg04-flow-final.log83/83. Actual file tests cover six interrupted-write boundaries, recovery preserving corrupt bytes, stale sequence, checksum/identity/fact/memory rejection, and refusal to roll back a future schema. Async serialized publication gates commands; committed snapshot/outcome/cursor and discovery receipts survive Continue, transient brewing resets empty. Both successful and failed encounters proceed without ACT/memory grants. Native Unity file-store validation remains part of Task4.
+
+Task4: pending. Task5: pending.
