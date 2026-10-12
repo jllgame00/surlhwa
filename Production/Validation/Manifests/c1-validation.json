@@ -1,0 +1,32 @@
+{
+  "nativeTests": {
+    "total": 63,
+    "passed": 63,
+    "failed": 0,
+    "path": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\c1-native-final.xml",
+    "sha256": "b9673666bbca9cd12afb48e08bd9db45833a27b2cafc4981326b8b8cf44e054c"
+  },
+  "pythonEvidenceTests": {
+    "passed": 22,
+    "failed": 0,
+    "command": "python -m unittest discover -s Production/Tools -p 'test_*.py'"
+  },
+  "history": {
+    "ABFiles": 892,
+    "CFiles": 967,
+    "specificationFiles": 74,
+    "RC1DirtyPaths": 65,
+    "RC1IndexUnchangedAndStagedEmpty": true
+  },
+  "ownerGate": {
+    "HG01": "APPROVED",
+    "HG02": "APPROVED",
+    "HG03": "C1_OWNER_REVIEW_PENDING"
+  },
+  "referenceVariants": {
+    "A": "REFERENCE_ONLY",
+    "B": "REFERENCE_ONLY",
+    "C": "ACCEPTED_PRODUCTION_DIRECTION"
+  },
+  "HG04": "NOT_STARTED"
+}

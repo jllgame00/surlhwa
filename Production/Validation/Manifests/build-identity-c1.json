@@ -1,0 +1,3319 @@
+{
+  "schemaVersion": 1,
+  "utc": "2026-10-12T15:06:29.924554+00:00",
+  "branch": "production-rebuild",
+  "implementationCommit": "5b8003258724baf92f402ffe43c31f695a389956",
+  "sourceStatusAtBuild": "",
+  "sourceFingerprint": "36ef7784f49a8d8bc97c5f1a2bc2f3b232dbce9c111a94d2a0652d2115eda527",
+  "payloadFingerprint": "d1f966826f89f13ccb797332418d92e15b68bcd97e471ff5d8531a0180f255bc",
+  "sourceFiles": [
+    {
+      "path": "Content/spatial-proof.json",
+      "bytes": 963,
+      "sha256": "93f2f3d97720d18047582aef4c6ad09b97724704939cfdd49a524b7ba7810081"
+    },
+    {
+      "path": "Content/spatial-proof.schema.json",
+      "bytes": 1525,
+      "sha256": "0beff5c782cd0fde92f4a3b7611345e1796d789d46cb4e85acdb9d796f11b453"
+    },
+    {
+      "path": "SourceArt/PROVENANCE.json",
+      "bytes": 7203,
+      "sha256": "1f400ddd21211d071c0598229f90aea838d188340e3c3b11a2a7e02cbc3b421a"
+    },
+    {
+      "path": "Unity/Assets/DefaultVolumeProfile.asset",
+      "bytes": 497,
+      "sha256": "70e9ed4656132bf185009cb47db521fdeece0b1f4d464a73cb9d0bd04fe3bda5"
+    },
+    {
+      "path": "Unity/Assets/DefaultVolumeProfile.asset.meta",
+      "bytes": 189,
+      "sha256": "00eb16af7a6a73611bedc6c65746de91383e81a4ea8e326343b81ce574dd8469"
+    },
+    {
+      "path": "Unity/Assets/GeneratedContent/spatial-proof.json",
+      "bytes": 963,
+      "sha256": "93f2f3d97720d18047582aef4c6ad09b97724704939cfdd49a524b7ba7810081"
+    },
+    {
+      "path": "Unity/Assets/GeneratedContent/spatial-proof.json.meta",
+      "bytes": 158,
+      "sha256": "81e609e2c3ca10653b774a7d4a4430989adf860027da7c27d036fd8140632c3d"
+    },
+    {
+      "path": "Unity/Assets/GeneratedContent.meta",
+      "bytes": 172,
+      "sha256": "fa0460135437cbece8dd32009afa128d2dab93c0b3a9f22eed15478ca3f08aae"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Application/ReviewSession.cs",
+      "bytes": 867,
+      "sha256": "abb0b79e7e71023ec5d43447570b28c80bb09acebc910cbeaa36ddd9c3c7ba33"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Application/ReviewSession.cs.meta",
+      "bytes": 59,
+      "sha256": "0fa1baadbe3954368507126f85e07677eeb9ad489f66b66faac286ce2b556c16"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Application/Surlhwa.Application.asmdef",
+      "bytes": 153,
+      "sha256": "6f1b080c3d9cc1098a4c264f7ec46aa6faefd61744f88a97305409a15e9959e2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Application/Surlhwa.Application.asmdef.meta",
+      "bytes": 166,
+      "sha256": "bd2a5419e0e81463c49da6cfce1a84e23ebaaf56301b5bf43f8042af92824c9b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Application.meta",
+      "bytes": 172,
+      "sha256": "93edfdf29453e06a4ecdb36732e3b5638d78722a8c08b4ece5db8b847ac9c3a0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/Bartender.png",
+      "bytes": 4443,
+      "sha256": "d5b8f5d0440f28340bc0933e7a4d7d1ab11870b2ee022f0cd37dc337768588af"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/Bartender.png.meta",
+      "bytes": 3717,
+      "sha256": "ecfe80ce4b91c6a9340d4b5a5319e2b2e7e4b99a9a15d06e721a1e3c51b61da3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinarySeated.png",
+      "bytes": 1411,
+      "sha256": "5eb685f54168394a66abc43d4ddba7126e19130f07254e81ce8310ab0e559b07"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinarySeated.png.meta",
+      "bytes": 3717,
+      "sha256": "28f007ede3f83ad2ecc799301961cba26d7a51a2d0666a53f4937788666517aa"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryStanding.png",
+      "bytes": 1237,
+      "sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryStanding.png.meta",
+      "bytes": 3717,
+      "sha256": "965e677313b4413e36271f6d277f6b0a02a6b4ad8e7d6c95f058401b1637cb12"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk0.png",
+      "bytes": 1470,
+      "sha256": "9262b141e6f4c3ed32aa5034088341ae6525561e3ee95ce8dc68989856d8c802"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk0.png.meta",
+      "bytes": 3717,
+      "sha256": "5a7faefd3cd60521424c755bb6672c94275fa7225e07776927f52f1641239aa2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk1.png",
+      "bytes": 1453,
+      "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk1.png.meta",
+      "bytes": 3717,
+      "sha256": "c7f448f239d77c08551b145e63cb251ff592149c8686aee4dfc9467e8400e99b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk2.png",
+      "bytes": 1440,
+      "sha256": "9bb844329edbb2cc538077119e64c2fea6aa020db18d604a53cebb7666f16bc6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk2.png.meta",
+      "bytes": 3717,
+      "sha256": "b1ea128671a5c8504c98c43f251c293f762498d5db0d04e6840f96a33f280eea"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk3.png",
+      "bytes": 1453,
+      "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk3.png.meta",
+      "bytes": 3717,
+      "sha256": "8847cf69f8d453b0b68062e122a3598dca86768e374458be37a555ccb3db8f7e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/QuixoteSeated.png",
+      "bytes": 6184,
+      "sha256": "350bf887813acd3ffaeda87c9aea67eca87cefd40a4cb6a4cedf0679f6aa31e9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/QuixoteSeated.png.meta",
+      "bytes": 3717,
+      "sha256": "6c0cc596df8353363b2f42349e6a1996e83f40aa5f455995f3a994e97689f31d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/QuixoteStanding.png",
+      "bytes": 7020,
+      "sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/QuixoteStanding.png.meta",
+      "bytes": 3717,
+      "sha256": "787de9e36679b37236c582372b8fd15041ea82ce3d0d6b1d7f9a3e688ef4d2aa"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art.meta",
+      "bytes": 172,
+      "sha256": "c910e4537cd44df721c5629324388d5da8aee833756fb07bd62b24666badb823"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/ContentIO/SpatialProofLoader.cs",
+      "bytes": 6333,
+      "sha256": "c13c95816a87291d6cb1fe28051b691386f79acab790d05b9883a69967dd7281"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/ContentIO/SpatialProofLoader.cs.meta",
+      "bytes": 59,
+      "sha256": "2c9ac9dc3bb7ace6e904a63430223068e99eeb75a6c66f60570a55e39fad7eb1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/ContentIO/Surlhwa.ContentIO.asmdef",
+      "bytes": 239,
+      "sha256": "f0fb6489d8c6e964207bbd195de01dcdd2a5fc697e1d1df9e2ddcc8975dce47a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/ContentIO/Surlhwa.ContentIO.asmdef.meta",
+      "bytes": 166,
+      "sha256": "9a5e0ac61e76d02fce7cd95fa604f1ad0e0b8a4da3b5876cb744ea3d0753a363"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/ContentIO.meta",
+      "bytes": 172,
+      "sha256": "5151ca1fede881bc3b7961f75bab8721f650a71c761102bbd7ed68644ef2262c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Domain/SpatialProofContent.cs",
+      "bytes": 3211,
+      "sha256": "c3dd3876d96fcc50d5f75bf1828963950e55f652a21062ec64ee33b0f4aa6c76"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Domain/SpatialProofContent.cs.meta",
+      "bytes": 59,
+      "sha256": "02a47484919d24b137affef785768c1647ee89849c8e102cf32a48f31b913407"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Domain/Surlhwa.Domain.asmdef",
+      "bytes": 99,
+      "sha256": "d24a28cbbe84e75a08863b513de8e467de6087fda00b5bc1f8aad34e6d8657bf"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Domain/Surlhwa.Domain.asmdef.meta",
+      "bytes": 166,
+      "sha256": "ab1fed664f2267a23390d252bffb0ff48cc16b6c3a74b9081963b30e509c0324"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Domain.meta",
+      "bytes": 172,
+      "sha256": "7d76722828cee448d8e490af3bc3140072a9e692527a4f631ced8effc9990a92"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/ContentBundleGenerator.cs",
+      "bytes": 1483,
+      "sha256": "76de9ea6cdb806e66765f43289dac60a111e33008f933a5dea42c8e5b2b40687"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/ContentBundleGenerator.cs.meta",
+      "bytes": 59,
+      "sha256": "30fa501648ca989faeac5e20bb6beaaeb1e462ede20476585e5ec6ed16fba44c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/PixelCutawayBuilder.cs",
+      "bytes": 26730,
+      "sha256": "b42e6194a0120196d45b71edae9048b00d932bf597fbefbe221b0dabd5e29b8f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/PixelCutawayBuilder.cs.meta",
+      "bytes": 59,
+      "sha256": "0f89e225d707738250e2da725297dc398c1e1a511a3d6c3199889bb85636c434"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/SpatialProofAutomation.cs",
+      "bytes": 1816,
+      "sha256": "993012808862518aa702506eb3bf6cd9cdab20bfee55ece2dca77ce4521b544e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/SpatialProofAutomation.cs.meta",
+      "bytes": 59,
+      "sha256": "a47ae28aac14ac43ace0ecf4ba8d80379d2117208c9977625fc681610b1d727c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/SpatialProofBuilder.cs",
+      "bytes": 18442,
+      "sha256": "8ec5affa36b45ecc2d93b43a71b6ad648c61d9b64bc3222440f3c717da23e4b6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/SpatialProofBuilder.cs.meta",
+      "bytes": 59,
+      "sha256": "ce52dc835b29281e3278a7f941259d51af3e4ab634737571d689d020fd58edb1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/Surlhwa.Editor.asmdef",
+      "bytes": 342,
+      "sha256": "76b07d15a87082af5f7505cf6bc57a1441c6e99d8cf989567b5485bee42da442"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor/Surlhwa.Editor.asmdef.meta",
+      "bytes": 166,
+      "sha256": "d75667a5b90adb79b681c45c0117c63de80603e685d7e7d564b45ee172569691"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Editor.meta",
+      "bytes": 172,
+      "sha256": "e1388bd24e54119f31c86557d2b5d68d10d0feb2b66b8baa46c21c5c5eaa4ea6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Contact.mat",
+      "bytes": 1973,
+      "sha256": "3c5e514b9b870aa9153b1372f85d2b90c5253d5dd411900bbd4b9e7b539bf288"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Contact.mat.meta",
+      "bytes": 188,
+      "sha256": "bde4cde569650266f611b7f0006f888689adcdcdb1e24e209a2f2d8fe436dfa2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/CounterEdge.mat",
+      "bytes": 2818,
+      "sha256": "08a726ce0b917f680c680e0be6c9a50b6553cf3caf114dad70a5848852d61ad5"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/CounterEdge.mat.meta",
+      "bytes": 188,
+      "sha256": "09102920bcb1c28dd4973ec0c0bf9076f571e4de4c8b3e14bab0e7cf27cc2181"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/DarkMetal.mat",
+      "bytes": 2817,
+      "sha256": "e8c8597bfe035d7e11981f762ec0ba2e9a4443883c393ea70592cd39fba221cb"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/DarkMetal.mat.meta",
+      "bytes": 188,
+      "sha256": "ba8b3dabb7bdcca96c37d92c1ec47b66a4c46eeaee2c38e30e65359705cba69a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/LampWarm.mat",
+      "bytes": 1848,
+      "sha256": "faccf33a44be5ff3ab833202128eea92491483746d61830cd17d79924f4a27b7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/LampWarm.mat.meta",
+      "bytes": 188,
+      "sha256": "e4429d972d0ddb008f60db3c75c6174623b43890eb812ecb4f77806a9de250a0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Plaster.mat",
+      "bytes": 2815,
+      "sha256": "ef4624e19a551130246141446251a78847a0450fa217bb23a6d3b94c2e2ff926"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Plaster.mat.meta",
+      "bytes": 188,
+      "sha256": "ff02ced72351bced20019d3d2b5cf59cafc2f0088dcec14e72dbec371fe9a852"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Snow.mat",
+      "bytes": 1846,
+      "sha256": "ac74dffbd3a7e5d2b61dc8e3c572a6f2c8e8123cae93a997fd5d09844ebf011e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Snow.mat.meta",
+      "bytes": 188,
+      "sha256": "f1ffcbf810c8945960b1d06279a4dbbae14920725159c5af2325b415484848c3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_Bartender.mat",
+      "bytes": 1930,
+      "sha256": "22ad6d8932bc0c048e1c06470bca632bc955ecbda5d6ad309059658fef8cf603"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_Bartender.mat.meta",
+      "bytes": 188,
+      "sha256": "156084dbb812b5678336f548de7b021129cfa4f41b995e91d8c99a9f572fca6e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinarySeated.mat",
+      "bytes": 2033,
+      "sha256": "79524623ef2bdaec5dfb2eb8e65b0f1f3f6021dc66cc4b9d2c288f219289e5b4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinarySeated.mat.meta",
+      "bytes": 188,
+      "sha256": "24e9cf4495bb15bbc42c30316bbd4eb5b99da3f8bc5a81436bfc27351b89f6f5"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryStanding.mat",
+      "bytes": 2036,
+      "sha256": "78caf7028352383e822cc16d0cdc3d5be2e04329ec762b89e190ca9498defe94"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryStanding.mat.meta",
+      "bytes": 188,
+      "sha256": "34c03dff0f38539f58cb988d4c385d3f96335baeccf4de1103e7ad1901f795c2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk0.mat",
+      "bytes": 2032,
+      "sha256": "38ebdf9ddb3ff1a94befe82967a0f693db6457e2a901ae4389fefbe69586ec8e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk0.mat.meta",
+      "bytes": 188,
+      "sha256": "8f8ab3d8877becf246cfec59e7c616e4f2f963d8cc3104d82fb1af9184925101"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk1.mat",
+      "bytes": 2032,
+      "sha256": "5583064f466bfef62e5005415b8b4592d58cb78904e2e41051f13318d1c8831d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk1.mat.meta",
+      "bytes": 188,
+      "sha256": "01c40ee5587af34e99fc3350439f5f2c85a1da9cae9b14bce5a0fcfec060b09e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk2.mat",
+      "bytes": 2033,
+      "sha256": "051fe288637457019daf8c0c7b5b3fe21c5e0adc3f1ff6589fac3309f2064b85"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk2.mat.meta",
+      "bytes": 188,
+      "sha256": "f2a6010f3a532230f743fa8fa6a3f171f2ef30129eb589e6f69c5a1ef7e57858"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk3.mat",
+      "bytes": 2032,
+      "sha256": "9afc3736242e342b71478583b6fc749114e407d63c16cbbd8a171e9fff66b7aa"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_OrdinaryWalk3.mat.meta",
+      "bytes": 188,
+      "sha256": "f54fe180e2c1cb41b3eeb66a4cbe5e30af4c6e1bdd5c68ee22a7fd3c3877b40b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_QuixoteSeated.mat",
+      "bytes": 2032,
+      "sha256": "c29d56ea04d1e5c96d210d5cb44a7c109c512d04f637c8165be98009b059e756"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_QuixoteSeated.mat.meta",
+      "bytes": 188,
+      "sha256": "d009ffea0f69594526c59f47bcb73a5a7bf9ac928597c2bab75f494ed0693c86"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_QuixoteStanding.mat",
+      "bytes": 2035,
+      "sha256": "4e08a081a737776fa98861666dfe4cc201817dbba39c57b38420cba21bdac2d5"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Sprite_QuixoteStanding.mat.meta",
+      "bytes": 188,
+      "sha256": "b532bf354b4d54c736baa349de13931bf4799c8aa129fc02d37b64127d326125"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/WindowWinter.mat",
+      "bytes": 1855,
+      "sha256": "f5ac0f6ad6b31938a724e4124f4fe161d0a2839f5f42f8145846df61cf9b2da6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/WindowWinter.mat.meta",
+      "bytes": 188,
+      "sha256": "0e620dec370a77563d78a409b25f3697ae49999196f9d8d6eeec8343aa7287fa"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Wood.mat",
+      "bytes": 2812,
+      "sha256": "8a676c2ca5f527879f81f7a13ba728688e878fb3abacfdb4cc0477295dca125f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials/Wood.mat.meta",
+      "bytes": 188,
+      "sha256": "64dbb73883c357c2653fff738bf791255fca864774a8034874a7d7cb3af98b58"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Materials.meta",
+      "bytes": 172,
+      "sha256": "6facc811551e616525e272b37b540228ca06988aa7bed724d7cb70e68a94c369"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/Bartender.asset",
+      "bytes": 3728,
+      "sha256": "70de3163a26175defc5a62ed0f8ddb00734974a5ef19ef2a18be452123e8313e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/Bartender.asset.meta",
+      "bytes": 188,
+      "sha256": "7cc9d6074b1b9e33f1f65b66cf0e2fafd6525e0d97484655bbecf29880aff6c4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/BartenderContact.asset",
+      "bytes": 4903,
+      "sha256": "f8ea2a7c6ec13908391b89eedb0ca41ad54c531d9c54d211610c3f5c15b3b6a7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/BartenderContact.asset.meta",
+      "bytes": 188,
+      "sha256": "5d8f09b5e3b91e313c9a1e2e6ea436bec868ac63ee7742507b2c0481402747f8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryContact.asset",
+      "bytes": 4902,
+      "sha256": "e85425cc7b40999c30fdd17f145b06fb3814c0a15c7be6a5064938388c26f986"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryContact.asset.meta",
+      "bytes": 188,
+      "sha256": "303571dfa237cf4850778a9ea8ae5794f19fa70ba64b506a1ad49a72fa78c398"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinarySeated.asset",
+      "bytes": 3745,
+      "sha256": "857606cc19031b4a516864e6263504afa2d30781009f26b5f3010337e200093d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinarySeated.asset.meta",
+      "bytes": 188,
+      "sha256": "deae51ece02f2b25350d941be637ee7d7e4241ee3aab2920647723cca8c5e2ac"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryStanding.asset",
+      "bytes": 3755,
+      "sha256": "d6df3aac454a3a166cad89264aeef7b4a64d42e6e2bdd041e755b306fafde72a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryStanding.asset.meta",
+      "bytes": 188,
+      "sha256": "14975621e9a69d5fb872d20de846b3228afccf7b2e9909cea354e32995139b57"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk0.asset",
+      "bytes": 3726,
+      "sha256": "41ca46987922501ff889aa4ccb4ebfb7de93eebf452c4c3f0fb0f0f5e8a787ab"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk0.asset.meta",
+      "bytes": 188,
+      "sha256": "e93dc87f6734a0d41813dfddaf05a3d377d17d9afe9f59e2555fcb8e9080311a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk1.asset",
+      "bytes": 3726,
+      "sha256": "4531fbe43eada48fb922da1eeeed888a56d6bd887aca346bd13a1973b991100b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk1.asset.meta",
+      "bytes": 188,
+      "sha256": "f978a96a958ba83a0d8b1d8b264bc38962e94306ec8922c3a171cf53af20278a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk2.asset",
+      "bytes": 3726,
+      "sha256": "81b60f30a99a651c85823099a1b2d3e270aa05013c85c1c0af78cb45b8280c7f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk2.asset.meta",
+      "bytes": 188,
+      "sha256": "e7f48e4807a178c775971d8cf361f58a5a5a5ece4362d3e2e3ce1644ecc19382"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk3.asset",
+      "bytes": 3726,
+      "sha256": "f443c433c4fc4f67bcffab6421a2922ec3449c5f952e5ef09643eb3fcdeff2d0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/OrdinaryWalk3.asset.meta",
+      "bytes": 188,
+      "sha256": "aa49b291fe749ad7f3d67ecdff8d95717dc2467bb59425477e3f1ed5e8cb7cbc"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/QuixoteContact.asset",
+      "bytes": 4901,
+      "sha256": "203734c80e1d3a599feb9cd80e15f18cc8ed8be2c636fbd0f3a9728ff9dfd805"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/QuixoteContact.asset.meta",
+      "bytes": 188,
+      "sha256": "de845f0c44970f0a3b07e4fde7a1c0f9649ba034b3baa3bb42baa94325b5d6f8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/QuixoteSeated.asset",
+      "bytes": 3742,
+      "sha256": "84de37a7019e4901f82e6b756aaf540d13a08d790fdabebb10894cfcd5490a72"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/QuixoteSeated.asset.meta",
+      "bytes": 188,
+      "sha256": "301abc78f0fd540138ab991045f937d4d814e53128861edc0c69ab04dfbf782e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/QuixoteStanding.asset",
+      "bytes": 3714,
+      "sha256": "5cef8fcd9e0afc0d6316e16d9c4ac7177a39e767f68a0eeae66b8c7f9443c43d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes/QuixoteStanding.asset.meta",
+      "bytes": 188,
+      "sha256": "9765ed0f939d1d7390635c3239c17a7c9a17ee66d95c7e62bf2b4d46e85057b7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Meshes.meta",
+      "bytes": 172,
+      "sha256": "1cc3937c75835ca66f0ede7d21bc9d1ae041caccf35568da3c3cf338363be190"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/Bootstrap.cs",
+      "bytes": 236,
+      "sha256": "53eaece2ae06509d248a39b19a9646cc49d871a49a0c279162d9b3d1f420ecb9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/Bootstrap.cs.meta",
+      "bytes": 59,
+      "sha256": "1385f67c24350865615073bfd70946c839afdabd17720eca14255a5d41559720"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/CharacterView.cs",
+      "bytes": 1237,
+      "sha256": "2b5c2e98d7dcca3072729ed5971caf6a05ff8e03271d4183a94c5363ecb1a081"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/CharacterView.cs.meta",
+      "bytes": 59,
+      "sha256": "9183cb7ff08d74a6ed584d5ba4427f6c01eaa1c95395014f07f91a2829f0ab00"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/PixelCutawayRun.cs",
+      "bytes": 11121,
+      "sha256": "333dc10fccd67c653af199079dccff8979a6356eb67d1930c514b0cc881a78a5"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/PixelCutawayRun.cs.meta",
+      "bytes": 59,
+      "sha256": "dcd70b871d711cd792b9a9281582f321f5790cc762ddc3cb9b2909e4f36e8685"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/PixelCutawayStage.cs",
+      "bytes": 2653,
+      "sha256": "26f69d0c9da909057051aee0daa9ea1a6d5a3f0a38888793c4f8b66ed602488a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/PixelCutawayStage.cs.meta",
+      "bytes": 59,
+      "sha256": "3cc212e57c809812939fe37553dd204940e9751520711191718fb81ddeadf0c0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/PresentationBoundary.cs",
+      "bytes": 82,
+      "sha256": "3340816d54916ef23a798bb028d83832687ae6f487d1383b9a203509aa0616ff"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/PresentationBoundary.cs.meta",
+      "bytes": 59,
+      "sha256": "6494c04c1c6655b2826f33c565b227968c8dff5d9c7e365899478a9eafde273f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/ReviewRun.cs",
+      "bytes": 14089,
+      "sha256": "cbbe5b18aac0238da7c1a62567e453c962a42e9dd712b07abeb48cdbb3d576ef"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/ReviewRun.cs.meta",
+      "bytes": 59,
+      "sha256": "0819c0863577007d889e150bdce76ccc2f308de817822992ae849d717870fb74"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/ReviewStage.cs",
+      "bytes": 3593,
+      "sha256": "eeee8b6e996ca2edbcff7a258630cc65db819c61df1a9e1729fe9fbcb7cccb05"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/ReviewStage.cs.meta",
+      "bytes": 59,
+      "sha256": "617b0edf8ad19541955f795f9591604bbdfcc6f42758c3f7c2897bfe97ce8759"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/Surlhwa.Presentation.asmdef",
+      "bytes": 224,
+      "sha256": "9f92ca8b59c8e0cb5d7f323fa513a203d9876d5fab35cf8aace070c4221ba556"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation/Surlhwa.Presentation.asmdef.meta",
+      "bytes": 166,
+      "sha256": "aa2e6062555bb4d17b644b3c7141632711902d251b4544c59f02fe4650edbeb9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Presentation.meta",
+      "bytes": 172,
+      "sha256": "083d0cb0d172d3d74c71ce9663cc2b6d698a9378d7ea1110667cdf5b95f044ef"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bar.unity",
+      "bytes": 302865,
+      "sha256": "03b4cb63e4c97f4a09d41ebda83987c1ff726086bde6c7f832cc1a868b9c218b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bar.unity.meta",
+      "bytes": 155,
+      "sha256": "52c26c285a3167f69299b4a0a59a60c61504b41fdef6f8df6d6b898063f15409"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bar_C.unity",
+      "bytes": 1035722,
+      "sha256": "8a7b55868e94893a41db34b07a57efb55b9ef376a3365cf198b1636aa39f9eb0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bar_C.unity.meta",
+      "bytes": 155,
+      "sha256": "2190519e8f20d42944fc4a7cf7b99157d5759b11babf307f0654de76b4c9111d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bar_C1.unity",
+      "bytes": 1035918,
+      "sha256": "b1429e1b0290969a7cf3053cffb1d483411970c1dda8f1f8daa147563cd64dc8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bar_C1.unity.meta",
+      "bytes": 155,
+      "sha256": "9f43c62bec460ae37f89eb5b9feaa1f921374ee4106c308b95826ad29051cec9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bootstrap.unity",
+      "bytes": 4839,
+      "sha256": "6ddfccb9121ea4c7ee27a8cb7fea7c6f0756a11053cf5850f8326eef061b8c80"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes/Bootstrap.unity.meta",
+      "bytes": 155,
+      "sha256": "b7d962690fa9cc4ef03f821596576ae92bea4d759d51ba46b7916098a0457a36"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Scenes.meta",
+      "bytes": 172,
+      "sha256": "c4e91c32868c07f505788940b201e7eb5f6dc7e376688222da3ac0b0a03cbc3e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Settings/ForwardRenderer.asset",
+      "bytes": 1864,
+      "sha256": "1942eb2f2414b6f22dd92cab9447852cbc01dc7c70b31edffd2ebe29cd924b45"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Settings/ForwardRenderer.asset.meta",
+      "bytes": 189,
+      "sha256": "fcdbc3b3d76037acbb907c642edf884131d2dab46504a7b4e490670498d6a125"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Settings/SpatialProofURP.asset",
+      "bytes": 4694,
+      "sha256": "b5a7f7e2a122c8093e0b4634fb541df711311f53fc5eb85b62d09d41bc42319b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Settings/SpatialProofURP.asset.meta",
+      "bytes": 189,
+      "sha256": "ca56573e52e3959dc7d6f36298965af3296ba7fdee1cc13e249bf2b10260e8e3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Settings.meta",
+      "bytes": 172,
+      "sha256": "e2b0864f19f48e1fa82851fef10b45653db37b74722b4a580028ced59e480f2e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode/ContentFoundationTests.cs",
+      "bytes": 4338,
+      "sha256": "49a948f02215f88d8cea20b647826cc2725228c7a4b61050fd4289aa6ffde94b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode/ContentFoundationTests.cs.meta",
+      "bytes": 59,
+      "sha256": "6f5a5f7b9d10f0ef41da37126cf20230bb88ecb25b653e7ffc139586b416d536"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode/ReviewSessionTests.cs",
+      "bytes": 1226,
+      "sha256": "5bd98138168c1750f694b1793cf57d0afff3cf9e575ea127b0377b230c94ff25"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode/ReviewSessionTests.cs.meta",
+      "bytes": 59,
+      "sha256": "0875417c42f5721920f255714976ddc7f9528aa93ffdb6fd2d149e1a910795cf"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode/Surlhwa.Foundation.Tests.asmdef",
+      "bytes": 267,
+      "sha256": "d7caad1e35eb59483ab2de9fd3b5e4b5d1193d07eb075208a688a2f8c27aad76"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode/Surlhwa.Foundation.Tests.asmdef.meta",
+      "bytes": 166,
+      "sha256": "ad69a95e1a59aac8bc6de222821a2d63e75f8468698bd6ec1c08d8dd5c76dcb6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditMode.meta",
+      "bytes": 172,
+      "sha256": "950a6102dfc74b8b87661b67f7e35fcb0d4e4d09b3dd4c9da69d711b3f521f47"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/PixelCutawayPolishTests.cs",
+      "bytes": 5137,
+      "sha256": "d02b555f10d962a05559c401a2ad85d13defa76ce4ef8082414537d4af7c88e6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/PixelCutawayPolishTests.cs.meta",
+      "bytes": 59,
+      "sha256": "eebf5a32af47357dab6c3e1f891061ead83ee20e2fe4024b3a75b18201e669fc"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/PixelCutawayTests.cs",
+      "bytes": 13000,
+      "sha256": "6cb44422d1f8b0e7687561e77b2bdb23ab818f6d1850f7260fe1a54427549f0a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/PixelCutawayTests.cs.meta",
+      "bytes": 59,
+      "sha256": "c28014f9a0a79b40b30f48d4f067cb2eaf81ac441f862b4d81e7283c99ee1790"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/SpatialSceneTests.cs",
+      "bytes": 11241,
+      "sha256": "4310862fe7adc22600273ac53dbe1bc10759587f20df268403a08e634d048e5d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/SpatialSceneTests.cs.meta",
+      "bytes": 59,
+      "sha256": "40c914d4226f7e6de75e6cfe441fb99457e7d7eb83a45cf173ba7a7a06af60ce"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/Surlhwa.Spatial.Tests.asmdef",
+      "bytes": 227,
+      "sha256": "acd4bf975575bbc20571b1da6fbff891d893b5c26aeacb7cde9aa2ff7ae872b4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration/Surlhwa.Spatial.Tests.asmdef.meta",
+      "bytes": 166,
+      "sha256": "a19f6e845f1dc112a237150d4ff293cc4ddf2a70ec293dd28f64c4028127f10e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests/EditorIntegration.meta",
+      "bytes": 172,
+      "sha256": "458860028417117364dbcb425501a418968d0105c9118da11edf9570b48ced63"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Tests.meta",
+      "bytes": 172,
+      "sha256": "93b1c3e0ffb226ffb8e96b6cc984a51b5d368134cb4e1de55d6d7ee1ff360010"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BartenderMesh.asset",
+      "bytes": 3708,
+      "sha256": "c3291727658d9986994ba92ee38bbb245a4cacec9495a297266ac292d1b83bdb"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BartenderMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "844d425be96b40bd3651662345ef26218a60e3f20e7538fd5636873ef5717100"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BottleAmber.mat",
+      "bytes": 1872,
+      "sha256": "7d290dd49851093b2bbdc6d927cc9f164b10001838df6f5df19bf44bdf4e71a1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BottleAmber.mat.meta",
+      "bytes": 188,
+      "sha256": "889ec69a852924d91daa88682b972c1993b68590efb2d8d6c474b3968f1def61"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BottleBlue.mat",
+      "bytes": 1871,
+      "sha256": "e262d17c0c58624bb7076f1905c261ae6f212e6149868c9c6671d7ccf330caf1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BottleBlue.mat.meta",
+      "bytes": 188,
+      "sha256": "01d48993c86e85e263e78b1fd7ed145c180e7f1545db6dc6618b49b7d8e97dd7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BottleOlive.mat",
+      "bytes": 1871,
+      "sha256": "515b5a62f120593f1d24af003d3865d48e6d4536ad5015fc65e51fd68755cc19"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BottleOlive.mat.meta",
+      "bytes": 188,
+      "sha256": "56bba5e215bd915e8cc94ed28856134324af0bd7f5a775fc2193c66fd5e81b49"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Brass.mat",
+      "bytes": 1864,
+      "sha256": "749d0dc1cfe8e86eb38625087701a083d680af9c8901298507fc59adfb51ed08"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Brass.mat.meta",
+      "bytes": 188,
+      "sha256": "905a9ebfcb530b02239e9aa6bbb9ab1252577bf3ebfabeb8f2fdba5722e56ad3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BrownGlass.mat",
+      "bytes": 1870,
+      "sha256": "ce33865e7e9b364e1c270cace045f479eebefe35d9c05867990f0d78fa12ac59"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/BrownGlass.mat.meta",
+      "bytes": 188,
+      "sha256": "76ebafc487da6071be0bb818f411860d2ef1c39c6d130086d94800a8ad90f22a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Contact.mat",
+      "bytes": 1867,
+      "sha256": "69cb9b931a10c65014b543a90db228dea196ec078f9225f21fb4e981a3ce30a4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Contact.mat.meta",
+      "bytes": 188,
+      "sha256": "3629f6d72ddc931a04f56ae884e794048dd410edf36f12d8fe78a4b1983f045c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterGrain.mat",
+      "bytes": 1985,
+      "sha256": "fd85c99d6ab6e203aef304663804c13bcef49e9ca31bc23b9de48790618b26db"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterGrain.mat.meta",
+      "bytes": 188,
+      "sha256": "669da3313641e793708265ffcb821374c159be6a6f696e32866e78580d56b42b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterGrain.png",
+      "bytes": 1248,
+      "sha256": "1043378762e7d40893cfbbcb64c196808db2477144d1868daca7520b326e27b1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterGrain.png.meta",
+      "bytes": 3717,
+      "sha256": "b2cbc0c56120388452383e32a532911ce222c4b62479cfa1f1b0383087e4f396"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterPanel.mat",
+      "bytes": 1985,
+      "sha256": "ee076f3d9b378487e69a3bf932ce8f64959ab2f9a1d26df5e44074b252d8e54d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterPanel.mat.meta",
+      "bytes": 188,
+      "sha256": "f84dd8e5528f14b95eea2f7cd827498e9ad8f18af5c142c0333fbff55228a898"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterPanel.png",
+      "bytes": 1250,
+      "sha256": "ff078ca29fbb8f8fc0f247b1cc932abafcbdcdafdd89ea3b21ef9db39356291d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/CounterPanel.png.meta",
+      "bytes": 3717,
+      "sha256": "f3348dd3ff952dcd401454629de2cf49d72d6d6b90390b53675759366946f73b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/DarkWood.mat",
+      "bytes": 1868,
+      "sha256": "8fb294bc637b08fbb01c5f1042f6c8b56b32f37f034a2d5954f40d19f097bea4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/DarkWood.mat.meta",
+      "bytes": 188,
+      "sha256": "a4bbc01b64959d70d54cf7807a21da03d660fbf1bf0e89cd5af2772de8ed2a9a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/FaceBox.asset",
+      "bytes": 6811,
+      "sha256": "adbb9cb819625e96472523c139f54c68f0b2abd2c86b5c219cd6df5d8b2c256c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/FaceBox.asset.meta",
+      "bytes": 188,
+      "sha256": "4c5c8e2d2ad89123cf8a4a96f9b7ae75fbf5977c9e26399f4d172e804a1fed0c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/FloorPlanks.mat",
+      "bytes": 1983,
+      "sha256": "186f417fa3167381659af6531e243621effefbe93230e96867b24cad6fdef226"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/FloorPlanks.mat.meta",
+      "bytes": 188,
+      "sha256": "afedfe4f480e1d92aa7e47687695de4d47719eb28b4dbbb36d7f8582e065b824"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/FloorPlanks.png",
+      "bytes": 9519,
+      "sha256": "9633154809f52ff94815108f88ae136be446ff2cbd8416cbb502b1d53a1045c2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/FloorPlanks.png.meta",
+      "bytes": 3717,
+      "sha256": "a49a4ca1ddd09b81c91e1604b56161f2f9592069ceff42d0f3ebc7e020ff35a6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/GreenGlass.mat",
+      "bytes": 1870,
+      "sha256": "e5208c0b37ea5ed79d2877d07fe2dc9a401b8f54b8c04e263ff6c77496fafa3f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/GreenGlass.mat.meta",
+      "bytes": 188,
+      "sha256": "a325bc235560facc67a575cfd8d9f4ca4f34a815f24673fc5f9c090cf2c97d8f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Iron.mat",
+      "bytes": 1864,
+      "sha256": "d5d14b34543f3843b7cebb8425da57c2a9d4a58a4c144cea6d7e5f35b780c8f0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Iron.mat.meta",
+      "bytes": 188,
+      "sha256": "6caecc3411345759ef2ce43e1a6bf85a27cb5a4cbdcf2bc3ec2570db7cd6a4b7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Lamplight.mat",
+      "bytes": 1858,
+      "sha256": "f403d4369acb80360552122a34873e97d002d5ddd6112e0d97707fbc279284e2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Lamplight.mat.meta",
+      "bytes": 188,
+      "sha256": "a86140fcc33a99a03305e4918381f8971f6537abe1555c9a239858c6a70effc2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinarySeatedMesh.asset",
+      "bytes": 3727,
+      "sha256": "82833860ab6a5cf32a3bb125a497bee2ef491524783a4e7a0966c5a6106ad105"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinarySeatedMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "05aa3253a97b360964aadd04580a12e66dea9d77130b6a506baec7b28ba3e45c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryStandingMesh.asset",
+      "bytes": 3737,
+      "sha256": "2e863f24771d4b9293d4369199b542d716deccbe4d82645f274df5974ee7e03c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryStandingMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "c0f4987443a04b979be3b9fe12ad94d9d8f40e5b0738f06683d13e9eb8f7c37c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk0Mesh.asset",
+      "bytes": 3714,
+      "sha256": "41e7482b8d3f8a50b8631968fe1b83d62f7f767cd3e31fa2536f1696b275a6d9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk0Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "53dc5f09e8e298e01b4a0576c0e64baa5ee4ae8f334f0c3954426ca1b5a9974d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk1Mesh.asset",
+      "bytes": 3712,
+      "sha256": "bd23acf299057d6b94320249857cc3f9cec499a91898e8320cd6d0b8a1f5d320"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk1Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "ed2d38d657e1101601b6e64e76814741ec3462de91559fa5a59d0e6628da7919"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk2Mesh.asset",
+      "bytes": 3712,
+      "sha256": "c3b736af8cc7bade4ac7990a82a150fe88177cc2a23ce6a998a08c137d31ba09"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk2Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "a782cd5af7fcdbd568b969ced21973845e774670fe5982eaca51e8ce065b5794"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk3Mesh.asset",
+      "bytes": 3712,
+      "sha256": "7c14bfc2c6fa84de5277b83dac8603d18daa3fc902ac770bcd089efdfbc23e3a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/OrdinaryWalk3Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "9127fe737485840e5eb3bb68afd9f6c94fa142dff943d61bd19244aea23a7923"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/QuixoteSeatedMesh.asset",
+      "bytes": 3724,
+      "sha256": "c2c144708fa59f5d4d9caeb9f804e2d3b35321774011840af448fdad66005ce3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/QuixoteSeatedMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "b62708ae98e49ff2d71810dd3accb99fa82f56b222f9378b0378d6c26cb6f8bf"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/QuixoteStandingMesh.asset",
+      "bytes": 3728,
+      "sha256": "46e772f4a76b36ae94f7afc124a0505ed2fb77191306b2e8400ce03d47b241a2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/QuixoteStandingMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "944eb27eb46b84b535808acbac2f02ed67fe31be0f15a08e436410762824d09a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/RearPanels.mat",
+      "bytes": 1982,
+      "sha256": "19a3150b0b861327546c92cf16682d33b343af20f94f00bac23f231c14bce65e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/RearPanels.mat.meta",
+      "bytes": 188,
+      "sha256": "2a30839dd37fba41f9555b8d78f75f406f8719df52d544be0795cd908f7abc0a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/RearPanels.png",
+      "bytes": 7343,
+      "sha256": "e764f911f7536e03974f72627fd85ce0c3e725fbbff06fd9b97693a01951c070"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/RearPanels.png.meta",
+      "bytes": 3717,
+      "sha256": "e1578d93be0e53fcf31aa67ee46df8b486733c9fd7f59086133e36a2b3d6c49d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SmallColdPane.mat",
+      "bytes": 1985,
+      "sha256": "572703b1c39afd7ddf015fdf088761ebb68525232ff0725ab7addd5194669d3d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SmallColdPane.mat.meta",
+      "bytes": 188,
+      "sha256": "348cf9a233deed8b72003319c864e4c48b40259acd9bb07999edfd9b6b3e66bb"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SmallColdPane.png",
+      "bytes": 451,
+      "sha256": "1c2237212e988db05aa7079296660a987af10075b135e1979056c4f9913dcda6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SmallColdPane.png.meta",
+      "bytes": 3717,
+      "sha256": "5ed31423ac19b9d4f2a470f6429e74c91893b5a990ce7bac753b2443d4374b26"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowCap.mat",
+      "bytes": 1980,
+      "sha256": "2881bf9371ded4c3cad6f0a2dd930b879845de19fd34183518f9b442e08e9b4a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowCap.mat.meta",
+      "bytes": 188,
+      "sha256": "82328bd28452279a28108c67dca6d0027cba3ca4c9f2f2624445c35c2e27c2c8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowCap.png",
+      "bytes": 1536,
+      "sha256": "64da0fde624b72b1f6f5027e6095e70421f671dad7e70f5ff2bff40f83756856"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowCap.png.meta",
+      "bytes": 3717,
+      "sha256": "ff40bee3b6c81f95164ed256c3519619e2e412aa504ff069ca898add19bf101c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowField.mat",
+      "bytes": 1980,
+      "sha256": "ac2a3562cf8a66f348e9f4ccf9f33380be63ea037e4efe8d318c7bef0eba432e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowField.mat.meta",
+      "bytes": 188,
+      "sha256": "0ab41fc0ff5cab6a87ffd392c2531cf5e42771e9cbcba3d39cebaae18f0fd1f7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowField.png",
+      "bytes": 17271,
+      "sha256": "cd77e8a64c9289f4a9a0788c006f6cb7d7e21a698c5e149f4a80807341f11670"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowField.png.meta",
+      "bytes": 3717,
+      "sha256": "a72db78cb002369b71c59e409d046b73d03106bd39a4821563741b14c20a9243"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowFlakes.mat",
+      "bytes": 1869,
+      "sha256": "171f793204dba25ad9918b61dde248a35dc607d1e43edcc754d58c2cc9c8725a"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/SnowFlakes.mat.meta",
+      "bytes": 188,
+      "sha256": "4d755dc07508d0ced2d0dddb179b09508cb54cb4e94e52156ceb578442916871"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_Bartender.mat",
+      "bytes": 1948,
+      "sha256": "b54c71c97b173dc14d983d43d9c0b59b413fb4447a11120bd6aea70afb5d3a43"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_Bartender.mat.meta",
+      "bytes": 188,
+      "sha256": "114d5b88a4ccfea066fea1609c1daf276a807851a3c7c124a55e6f12f61c3a27"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinarySeated.mat",
+      "bytes": 2063,
+      "sha256": "345d47c760aa7c38587bfdc11b4ad34921e2896c867cbfbf77592f732bc181bd"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinarySeated.mat.meta",
+      "bytes": 188,
+      "sha256": "08df1afcc155523c6a91014ed1de4f68bb9f7a77114be2960280f2e4363a0b77"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryStanding.mat",
+      "bytes": 2064,
+      "sha256": "922ead67c8f9e216906fed8e74ad85d521a0f8108d3885999285e1f4833891a0"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryStanding.mat.meta",
+      "bytes": 188,
+      "sha256": "06f7c1fb381b0b79d7c6391b708e250c770c91c2b82205678deb978bcb01ea53"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk0.mat",
+      "bytes": 2060,
+      "sha256": "d081a11804daab01a92d18a7e721900dc68d6419c2612e190068354fcf5e4e35"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk0.mat.meta",
+      "bytes": 188,
+      "sha256": "16f64764cc0d73f44e80cf4abb01154abe84a9d7892aa2bb199826da93d6f925"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk1.mat",
+      "bytes": 2062,
+      "sha256": "15776b87f6ce59227376859896f3bd773641ae6095e56cede6d8745a6b28c437"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk1.mat.meta",
+      "bytes": 188,
+      "sha256": "8d60901bc7e6f2903dc232f64809a6129937c567d279929fc3ddb8744cc4771e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk2.mat",
+      "bytes": 2062,
+      "sha256": "f2f11eb8bdb175ae05090364a3a27447fb0d29e15d41d07aa827f0d54ba79bc4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk2.mat.meta",
+      "bytes": 188,
+      "sha256": "5d821cfed11f4df4d885238a746b0eaba6df3ca4f7cea31d3328d50f17d217f2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk3.mat",
+      "bytes": 2062,
+      "sha256": "2a36d35ea7fc8979412fde8117dd2e5b3b954c125d1b27b639877e394833a2b2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_OrdinaryWalk3.mat.meta",
+      "bytes": 188,
+      "sha256": "d88d841e5220bce99dca9066a5e63208988e66d48df72d027f8d840790fe7d39"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_QuixoteSeated.mat",
+      "bytes": 2061,
+      "sha256": "8374ca640b962edb59cf51e66ba0711a397f18d24af67a19ecb245c836a353b8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_QuixoteSeated.mat.meta",
+      "bytes": 188,
+      "sha256": "c210c072919a6cce8abfa6fc498c3ae29459fdae36a81e57b9e03da32079a4ec"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_QuixoteStanding.mat",
+      "bytes": 2063,
+      "sha256": "431272cac5ac306d0a6a7b70345fdf247bf41c21baa1263ec36cf97762e1e0af"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/Sprite_QuixoteStanding.mat.meta",
+      "bytes": 188,
+      "sha256": "60a747f383e866ffdeabcd475a77aaefdae7d6551daff9b7404db531a6d33dca"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/StoneFooting.mat",
+      "bytes": 1984,
+      "sha256": "9725b96c8753b9790eb202e5a8a92dea3a117320df25ace34d05d2c35b4965e2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/StoneFooting.mat.meta",
+      "bytes": 188,
+      "sha256": "f1e1f010a126416905ca030433c4cab1c1304ee175f71aba3f834bda5675ba2f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/StoneFooting.png",
+      "bytes": 1547,
+      "sha256": "f905caa48a12c8ca15c873d2c822511e5752fe0b14ea7ab758324dbc59185dae"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/StoneFooting.png.meta",
+      "bytes": 3717,
+      "sha256": "5e1ec5aeae6283a249ea56a2b3940b82e1abe095eb3c3c2dcec6c2f8973a2887"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/WoodEdge.mat",
+      "bytes": 1867,
+      "sha256": "b3782890ebd2a0cc82f35b6c8a8f3f7d7246510f9d0de4b082c68522547434f4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC/WoodEdge.mat.meta",
+      "bytes": 188,
+      "sha256": "d3ca91e58323e4cc07e75f3cecb7d788be9b1b31d3d34f987192d2e3ae8ca1a6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC.meta",
+      "bytes": 172,
+      "sha256": "0f7fbeb7fdf988850a991b19f889bc973836cbc3f49694bbc400ee19364239f3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BartenderMesh.asset",
+      "bytes": 3728,
+      "sha256": "51742c544d44f1d8808894900caf91dc08403ef278f7633856b2b0b8c92b4db7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BartenderMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "8015fc01e5e5b3a3d0125b99e06880b647345cd873a9991075550a1d811b8255"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleAmber.mat",
+      "bytes": 1871,
+      "sha256": "2639038e8cd8138d7cd803704f98c0c63a1f358c6f176b2f13fca2802392a303"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleAmber.mat.meta",
+      "bytes": 188,
+      "sha256": "b1bf66f49287a5db3faa2d9938e00c2ed1e4d60465d57986a2eee001cc365bdf"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleBlue.mat",
+      "bytes": 1870,
+      "sha256": "5696f1ab17103729b4aacac4ab3875a16a8daa8424efeb9d580072ddde452b61"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleBlue.mat.meta",
+      "bytes": 188,
+      "sha256": "2c3a0cb048b574f5b17d67c719d84769f565fd49121e0529218e3ac70932ea44"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleOlive.mat",
+      "bytes": 1871,
+      "sha256": "d61886d707e5e1444cfcca881b2af193d0f2e65dd5328f78a965be6f9e5d4908"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleOlive.mat.meta",
+      "bytes": 188,
+      "sha256": "03475f21781a032ce5ec44eb7e2a255b47a79bd4c7c71593e4c43b007afd53b4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Brass.mat",
+      "bytes": 1865,
+      "sha256": "1c856975f7932cc7f8f5136e951d5e447a077fd0f00c47563ab25bcd2bbbfc02"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Brass.mat.meta",
+      "bytes": 188,
+      "sha256": "8f8dd86e4a356f40c35490915324806718021e716aaa8300ce328c876312f5b6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BrownGlass.mat",
+      "bytes": 1869,
+      "sha256": "22c09e729944c985ae63e21e6f9de948826393099b00b7cb7080ac3f8a6b7412"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BrownGlass.mat.meta",
+      "bytes": 188,
+      "sha256": "5fb93906329f30619e62d9cc21e9206e286ebd5c06bef7ab709b51b1ffd50b38"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Contact.mat",
+      "bytes": 1867,
+      "sha256": "e27740b16ec34f3321dde9abcdb6cbd10c6dbeda34f85a7f71dd699a43fe8f32"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Contact.mat.meta",
+      "bytes": 188,
+      "sha256": "abfe4b58cd26edfabd36cbe5c07fe02af9b015de4c27aa340f8d4b9dbdd056e8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.mat",
+      "bytes": 1985,
+      "sha256": "bc9472bf011859b0487febfaec2b1b8eeb89e06d9b07c80a0904a874f9944eab"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.mat.meta",
+      "bytes": 188,
+      "sha256": "60624e128759a4e86a422422bcdd0a80d6ffd7f6bce91369c2f79e201b7aeeef"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.png",
+      "bytes": 1248,
+      "sha256": "1043378762e7d40893cfbbcb64c196808db2477144d1868daca7520b326e27b1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.png.meta",
+      "bytes": 3717,
+      "sha256": "bd6d8fd97ee4dbb4737e778e65443c840835189bacf37c17e661869d5c09cc42"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterPanel.mat",
+      "bytes": 1985,
+      "sha256": "cb3d52928c0197d1c73300310da6cdb9bbd5a3360b5098a79a71d25424465944"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterPanel.mat.meta",
+      "bytes": 188,
+      "sha256": "9fb605c092c4debe0937d1cd6d12eaffbe42981a4f88e8f4490876467d2f0036"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterPanel.png",
+      "bytes": 1250,
+      "sha256": "ff078ca29fbb8f8fc0f247b1cc932abafcbdcdafdd89ea3b21ef9db39356291d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterPanel.png.meta",
+      "bytes": 3717,
+      "sha256": "b40c19d87138a115a57fd7b0cca38fc853f86de4808d3cd99bf5ab90da64ae66"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/DarkWood.mat",
+      "bytes": 1868,
+      "sha256": "59a6202122abc10c372b161d450a6a77203755b13601ffb761cd30b426006861"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/DarkWood.mat.meta",
+      "bytes": 188,
+      "sha256": "fab870cecc3b8350228556feb3648fefa95270a4682f1f1aa8878ea287685cc4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FaceBox.asset",
+      "bytes": 6811,
+      "sha256": "adbb9cb819625e96472523c139f54c68f0b2abd2c86b5c219cd6df5d8b2c256c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FaceBox.asset.meta",
+      "bytes": 188,
+      "sha256": "7c7eabd5a4b0c2335b828aaf6d30ae819c219f1d5a78734cb9348ab410066254"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FloorPlanks.mat",
+      "bytes": 1984,
+      "sha256": "9ecf4eddced6f1d297b3741ec9da1351511d9f593db80160f5230b05bf600001"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FloorPlanks.mat.meta",
+      "bytes": 188,
+      "sha256": "80101cb1532cdf76b30e19a4026503239c8fa474bbf962fb5d305dfe42e6f9ad"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FloorPlanks.png",
+      "bytes": 9519,
+      "sha256": "9633154809f52ff94815108f88ae136be446ff2cbd8416cbb502b1d53a1045c2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FloorPlanks.png.meta",
+      "bytes": 3717,
+      "sha256": "cac626ecdb94cb0ed3005b879e7d0480d244adbab8be65e98d481266affef4d6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/GreenGlass.mat",
+      "bytes": 1870,
+      "sha256": "8bf5a7535cfc03ce64e257239a219cf0a6eede682c798e250b8522d9b7744c69"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/GreenGlass.mat.meta",
+      "bytes": 188,
+      "sha256": "203bc7bcfd061b2900cc785638797b075f4b072ab3f6a868bcacb0a549e300f9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Iron.mat",
+      "bytes": 1865,
+      "sha256": "f896de43a17d1ede2fa5ed9beb99909fcb41ad97378049f1119ed775443e8db9"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Iron.mat.meta",
+      "bytes": 188,
+      "sha256": "f656dd6021fe2ee0f055b67207dd7b1a9ed09f8bbdadd2941c8afd310be2fbb3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Lamplight.mat",
+      "bytes": 1859,
+      "sha256": "7f8f731fc44ed7709a5a54e1206f2ef6eaafdbb03b10229994c8eaaf4f3512be"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Lamplight.mat.meta",
+      "bytes": 188,
+      "sha256": "7907e9d6141914105055e29719e32f68a39effb261e903a8d3b36b882ed18ad7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinarySeatedMesh.asset",
+      "bytes": 3739,
+      "sha256": "c9922d7c4c358468c1a5a30744a79e097e36c0d51f99b0a4d4dc3b4e4b08dbd8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinarySeatedMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "297deb6283c04a6ee8e1ef68ec1a75e3f5fbe408325c546546cc8ae16e23da74"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryStandingMesh.asset",
+      "bytes": 3733,
+      "sha256": "9414f6dfe4b06fdbe81340ed9db75b70d9529e35bebebe7a2a29d510d1979d7b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryStandingMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "78c5c7a16e8925eabfb69b190dcd56a6800d7292c55de8fde66af619a3e52b1b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk0Mesh.asset",
+      "bytes": 3718,
+      "sha256": "ebb528e1275d28dc4eb8acb732b13bd15a4a257b281cfd143f6b14b160c24758"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk0Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "ac7dfae566f4aaf715b40d89cbe137035f812489ce6301cdfc55c993da87ef9d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk1Mesh.asset",
+      "bytes": 3734,
+      "sha256": "0d9e8399f673dc4bb05b22e992439e9406ffc2d104cf1bbca1243e4e0b5541fc"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk1Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "5662b566cd88cb8d5fca04c00d55c4227076f0097dbda45a83a83f75d0322c31"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk2Mesh.asset",
+      "bytes": 3734,
+      "sha256": "12df97a60de0da169d7892a000848419c98c94f3960636d83bea996f5ab6590d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk2Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "ddcdab46b7167c54a811e949f27f06e82722317ccee66c7967e35d61b0b29e38"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk3Mesh.asset",
+      "bytes": 3734,
+      "sha256": "a4dcc894e71df4723cedfdc0ed07246bc36ed1494c4201e6583a3c9b27748911"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk3Mesh.asset.meta",
+      "bytes": 188,
+      "sha256": "19213b41f403d0c46eb62dabad8249f4ce0f0a17e44b2cba671b17580a80ffdf"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/QuixoteSeatedMesh.asset",
+      "bytes": 3738,
+      "sha256": "f0cb805732227cf93f203c43e4186ca8c23cdcb93cd5263824d9c48a305f11b3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/QuixoteSeatedMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "34be0c9da67d634a13368cadd8f77cf2def7ab682bbcb8f307328f8cc39f80b2"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/QuixoteStandingMesh.asset",
+      "bytes": 3756,
+      "sha256": "d2a2c571084a8ee625f8fb6a5d289532c96b59c2bc49c39d2b1c4e4fb10dd495"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/QuixoteStandingMesh.asset.meta",
+      "bytes": 188,
+      "sha256": "ee377805c0e4c181c1d7cc397d2869739833cdc7c85be911222a4130fe891fa1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.mat",
+      "bytes": 1982,
+      "sha256": "7a2f4d68ca86f2f3c4dc628505940a02d6a67f12b913ed376ab107a5450a277c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.mat.meta",
+      "bytes": 188,
+      "sha256": "a608c44773e8c8c4500792d0fa412304a2af959776aabf291c0f0c37339f3455"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.png",
+      "bytes": 7343,
+      "sha256": "e764f911f7536e03974f72627fd85ce0c3e725fbbff06fd9b97693a01951c070"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.png.meta",
+      "bytes": 3717,
+      "sha256": "740ece688279d8fec2b8b71c87b79b4a4e295010032a9e2317a8021147cd3ba6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.mat",
+      "bytes": 1985,
+      "sha256": "a10c8978e12528c3081db00fff18b9e9234353b947b41edb63a47ad8c9489688"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.mat.meta",
+      "bytes": 188,
+      "sha256": "216f0ef97ffd9490437a83446a0e3112baa6c7caeacec041b72349f7cb32097e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.png",
+      "bytes": 451,
+      "sha256": "1c2237212e988db05aa7079296660a987af10075b135e1979056c4f9913dcda6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.png.meta",
+      "bytes": 3717,
+      "sha256": "7667e6a1f3aa47c8c0c91481e1ec12728ac46ecef06223142bd5eca6201d880d"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.mat",
+      "bytes": 1979,
+      "sha256": "60b8cbe25f6da70cced1400c6532ae1366e494738044d743e343d0e41ad731ee"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.mat.meta",
+      "bytes": 188,
+      "sha256": "251c92d0d26567be08f1a96203671bab7c773681c596cea4fcc04598458ab5ce"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.png",
+      "bytes": 1477,
+      "sha256": "8e3e9a7961069514fb108daacb02882855e2ad67a6e65e4110680728b3b145c4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.png.meta",
+      "bytes": 3717,
+      "sha256": "cabc3b68becea3c6739d21062f22d5c850442ed9cb21839790d4821552f779b6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowField.mat",
+      "bytes": 1982,
+      "sha256": "f0879ae03eef6ec1745552847037d4293204ad92f7d3d5d490a4803dddfd429c"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowField.mat.meta",
+      "bytes": 188,
+      "sha256": "3071aa6a201905260d5f219cf86f4ddb9a7f022c86dabfe5bd6c02df8a1bb85e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowField.png",
+      "bytes": 36012,
+      "sha256": "5dc6d8eacb9fee9f72f3517dce5b70e754a9002ae8e2c21b4709f6b007504742"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowField.png.meta",
+      "bytes": 3717,
+      "sha256": "a2039d39fef5c0ae8fdba239f27b0e63f0f9d166667971391466108e81f8ba05"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowFlakes.mat",
+      "bytes": 1870,
+      "sha256": "6371555293f262a80ead610a1ab8ef83078e10afe3ea69ab37ea654570dc75e3"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowFlakes.mat.meta",
+      "bytes": 188,
+      "sha256": "91e6e67c0c7b97db123f53f5f3e57dd5d50507894b425300a66b6ae8de21c836"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_Bartender.mat",
+      "bytes": 1947,
+      "sha256": "5d981509242ed1cc5f586c23bb0de1db226fbc93a6a50fee2f9bf9e4775392ec"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_Bartender.mat.meta",
+      "bytes": 188,
+      "sha256": "dfc46794370eb4978dfc7a75d71f5c754a8a697d1b9f8b4ac8933b8e3630c7a4"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinarySeated.mat",
+      "bytes": 2062,
+      "sha256": "c1c72d652c17637d6702f6df9cc45c84b778badad6f6c2097ce45dbfc0a1230e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinarySeated.mat.meta",
+      "bytes": 188,
+      "sha256": "01c5e9b603d2ac8c1770689fa578149549af6665a97fe8d57942fc9f0e84db5f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryStanding.mat",
+      "bytes": 2065,
+      "sha256": "c85632c6e534e379d9fac518bcad3005c1e36bb97090752c79eebb1d02ea0d93"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryStanding.mat.meta",
+      "bytes": 188,
+      "sha256": "0ef2c4ebb8ece84f86ad4103cdd35472edcebcd125b545ca2a59ad940e09620f"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk0.mat",
+      "bytes": 2062,
+      "sha256": "7e91d44327502a22d769889dce0ad4332efddcb735bc17ca9d04c95e10f4444e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk0.mat.meta",
+      "bytes": 188,
+      "sha256": "2052db06bdafe4f4172b8ba548d2a7baa92f334f89b30fd69480ab971a1a2679"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk1.mat",
+      "bytes": 2061,
+      "sha256": "acc6961783eeddf6f47679e776babb27e4b32561325f7802b6b6542c3ebe8f8b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk1.mat.meta",
+      "bytes": 188,
+      "sha256": "ac135a41a280ef2d93a60437c3a4c8f0fdf3ef5120c822e3b4083f0856048514"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk2.mat",
+      "bytes": 2062,
+      "sha256": "cc77598e434858b7f934e4f78eee912779958fc65cde5827895263b5a14cdb9e"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk2.mat.meta",
+      "bytes": 188,
+      "sha256": "ae286f2afc2f869b6b6439393e7256da9a78b021f5bf995d0bf66f785c9cefe1"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk3.mat",
+      "bytes": 2062,
+      "sha256": "9d617528aaec3946129bb0e948e9e9702e7c4e0b85175806a6726db712efe4dd"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinaryWalk3.mat.meta",
+      "bytes": 188,
+      "sha256": "a1fdc0f17d7cc7a8e3d009b9565913a79cb624dd21624a9d94390efb0b64a478"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_QuixoteSeated.mat",
+      "bytes": 2062,
+      "sha256": "e3d79d5c44ed3f27b7438701b3cd20b6975625f927b10f86975453056e0feb0b"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_QuixoteSeated.mat.meta",
+      "bytes": 188,
+      "sha256": "6db2926216ba16e719071c7175b52f672354d5bf0ce4e8581674c27994275020"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_QuixoteStanding.mat",
+      "bytes": 2063,
+      "sha256": "fc3b23451432f812d67282bd1ecf6884660ef47fdfa5cd5e360536424d65dd48"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_QuixoteStanding.mat.meta",
+      "bytes": 188,
+      "sha256": "88e7a253b60a83cdbca721e2cd4b72c1e81b0f3b1801a170d9dcc75edfd2ffe5"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.mat",
+      "bytes": 1985,
+      "sha256": "78459ce681fe8f212d39a52a66addc671b9fec489757b8ab480ae151066496b6"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.mat.meta",
+      "bytes": 188,
+      "sha256": "f5976213306fe6d2f1723199a952bde09f9206ef544c5bf0ac3ed10c6d419832"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.png",
+      "bytes": 1547,
+      "sha256": "f905caa48a12c8ca15c873d2c822511e5752fe0b14ea7ab758324dbc59185dae"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.png.meta",
+      "bytes": 3717,
+      "sha256": "462bc2abba2078c0330aeda86f043e78e8b75729fa3bdaa4c91455bb5fe1b733"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/WoodEdge.mat",
+      "bytes": 1868,
+      "sha256": "336bb11734147e6228981294592bd4dc0cbd14ef726621c35e5ffc84126cc6f8"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/WoodEdge.mat.meta",
+      "bytes": 188,
+      "sha256": "ddf442a809f3b7641e7023b65c1aeadb701f945c114a95dc593c349bf60de5a7"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1.meta",
+      "bytes": 172,
+      "sha256": "f5332da8da26b9e718906cff33d75ab08f67726e3b564f8f21b62c0bc376a177"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa.meta",
+      "bytes": 172,
+      "sha256": "c4fbec30dadae4da66874d98de20ad5617f3af52075c4f86547a7128c2d378e0"
+    },
+    {
+      "path": "Unity/Assets/UniversalRenderPipelineGlobalSettings.asset",
+      "bytes": 22657,
+      "sha256": "5d0a946700a729d6fc323e380f9ea30acf25490b3b856dd32e8bebc0ed487a9c"
+    },
+    {
+      "path": "Unity/Assets/UniversalRenderPipelineGlobalSettings.asset.meta",
+      "bytes": 189,
+      "sha256": "8e37bc0d8aa98ef5a29e137c1e1159ba1b160fd4868c34b7f38800d04c776eac"
+    },
+    {
+      "path": "Unity/Packages/manifest.json",
+      "bytes": 475,
+      "sha256": "44dee8382608c71771a367a031ce5a21ca9187fe8f3265cc396d16fe7b6ce531"
+    },
+    {
+      "path": "Unity/Packages/packages-lock.json",
+      "bytes": 5380,
+      "sha256": "b7ca857d8b4528f510be633ee90c24b34756721f49552d47d0e85d0e212c8903"
+    },
+    {
+      "path": "Unity/ProjectSettings/AudioManager.asset",
+      "bytes": 523,
+      "sha256": "9543c41dbfc7d3951217c4dd9481ed026eb8e529b85ecf4463969a0fea747729"
+    },
+    {
+      "path": "Unity/ProjectSettings/ClusterInputManager.asset",
+      "bytes": 114,
+      "sha256": "40e65dd214bf254955d2c8829ca8ce2130fd3510485560ce012e9a1ddd93e623"
+    },
+    {
+      "path": "Unity/ProjectSettings/DynamicsManager.asset",
+      "bytes": 1553,
+      "sha256": "cb2aaed73306e32df3e8200c74fa0efda690d3c6f68dff45dfeeeb5739128a1d"
+    },
+    {
+      "path": "Unity/ProjectSettings/EditorBuildSettings.asset",
+      "bytes": 393,
+      "sha256": "31eaf752490526a44660e80c78bbf7add7abce451fd58db2bbcd5f8ec68cd231"
+    },
+    {
+      "path": "Unity/ProjectSettings/EditorSettings.asset",
+      "bytes": 1603,
+      "sha256": "4a87c54b3541c7bd242aad68c3fc28661083db1117ec56149694ee592156415e"
+    },
+    {
+      "path": "Unity/ProjectSettings/GraphicsSettings.asset",
+      "bytes": 2615,
+      "sha256": "709bbef23517438da0eea14750ba4765eb726a7269ca32a31c7f907d4c8d94db"
+    },
+    {
+      "path": "Unity/ProjectSettings/InputManager.asset",
+      "bytes": 9754,
+      "sha256": "60c83ae48e29a782141f99032eb38e803d18475124ff5224fbd1fd81b233f051"
+    },
+    {
+      "path": "Unity/ProjectSettings/MemorySettings.asset",
+      "bytes": 1192,
+      "sha256": "1e8379a461b10ae09f3f696911088c16875d63e87ed5f2d95df9e1892703f9fd"
+    },
+    {
+      "path": "Unity/ProjectSettings/MultiplayerManager.asset",
+      "bytes": 232,
+      "sha256": "ce4075d7a7dd8ac7ffe55de2427692c63f90dae398208bd80cec0f27cbe09f4b"
+    },
+    {
+      "path": "Unity/ProjectSettings/NavMeshAreas.asset",
+      "bytes": 1361,
+      "sha256": "7ebbf8f53b8033104e1878b95ca07a28d0954092d81c220f14196a42f651e658"
+    },
+    {
+      "path": "Unity/ProjectSettings/Physics2DSettings.asset",
+      "bytes": 1862,
+      "sha256": "1cfc0c8fbceec604fd7cd2a06c04ff05dddee6335b75c92b0f5715ad80ba9490"
+    },
+    {
+      "path": "Unity/ProjectSettings/PresetManager.asset",
+      "bytes": 146,
+      "sha256": "29c125923fe6e29f90190d4fce1c82d660e7051546e2c9d02908d18c9cf2436c"
+    },
+    {
+      "path": "Unity/ProjectSettings/ProjectSettings.asset",
+      "bytes": 24119,
+      "sha256": "1b3ad3d5f98cc143f92bf753e917a699e4e642bc3d2bfcda8c2bd1b57b511588"
+    },
+    {
+      "path": "Unity/ProjectSettings/ProjectVersion.txt",
+      "bytes": 84,
+      "sha256": "00ffe519ee4ae39fa896ef97bb4544b506ac207135fb5646e3d4b8448d8c6f33"
+    },
+    {
+      "path": "Unity/ProjectSettings/QualitySettings.asset",
+      "bytes": 10138,
+      "sha256": "df2eba81947a380d59c368f09cf8bba0e3d0e474c898f25b72c5834864be81ac"
+    },
+    {
+      "path": "Unity/ProjectSettings/SceneTemplateSettings.json",
+      "bytes": 3535,
+      "sha256": "bb9098b3bfcde78d93e264b96f7b77b5430e64e8c57a7aad7f5a5d9c3945e16a"
+    },
+    {
+      "path": "Unity/ProjectSettings/ShaderGraphSettings.asset",
+      "bytes": 633,
+      "sha256": "6fead5a816c4eed70f224d5472340ecf1ea0b4de4f87d5926bb17fa10ffb3dc9"
+    },
+    {
+      "path": "Unity/ProjectSettings/TagManager.asset",
+      "bytes": 411,
+      "sha256": "da4b5eefc927f8b91bcf9e56a186d2b852f49d9cbe91d466638d26c79d6a83ce"
+    },
+    {
+      "path": "Unity/ProjectSettings/TimeManager.asset",
+      "bytes": 305,
+      "sha256": "3396f52fdc16d445024e01d7a2d99db6f0a37569d1d73c0302e9ffb857d90287"
+    },
+    {
+      "path": "Unity/ProjectSettings/UnityConnectSettings.asset",
+      "bytes": 1063,
+      "sha256": "11251dae0356b6f43dd2c67bb511f6b7ecda4e5de425186bba3297e6f3dc1c6f"
+    },
+    {
+      "path": "Unity/ProjectSettings/VersionControlSettings.asset",
+      "bytes": 172,
+      "sha256": "e199cdfa6a8f2bf33cfd47e549198f13e3eb2a5099e908fdb4e0f14d939ccc6b"
+    },
+    {
+      "path": "Unity/ProjectSettings/VFXManager.asset",
+      "bytes": 525,
+      "sha256": "2973a6af930e142f62cde00076beda8a3cc3a66d9bfcde7a58ba7d4be2251c26"
+    }
+  ],
+  "playerFiles": [
+    {
+      "path": "Validation/Builds/VariantC1/D3D12/D3D12Core.dll",
+      "bytes": 4725304,
+      "sha256": "625bd40005b1c3708695d5256ecf230d278e6b8edba5a88af70f3d91324f3052"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/D3D12/d3d12SDKLayers.dll",
+      "bytes": 4930104,
+      "sha256": "c0730cc70d3250d3de19c04c17845ba9e70eecaf502d684d1409195ebc5b5959"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/EmbedRuntime/mono-2.0-bdwgc.dll",
+      "bytes": 7828904,
+      "sha256": "d6933653cb94bfcd32c59f321c975f400233fde3fdf5cf793134bd6e3608aa98"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/EmbedRuntime/MonoPosixHelper.dll",
+      "bytes": 611248,
+      "sha256": "b90693bc856b6ffea395a49787d18352f8d98c1a10f9c4656e09a03792940892"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/2.0/Browsers/Compat.browser",
+      "bytes": 1605,
+      "sha256": "8a1082057ac5681dcd4e9c227ed7fb8eb42ac1618963b5de3b65739dd77e2741"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/2.0/DefaultWsdlHelpGenerator.aspx",
+      "bytes": 60575,
+      "sha256": "751861040b69ea63a3827507b7c8da9c7f549dc181c1c8af4b7ca78cc97d710a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/2.0/machine.config",
+      "bytes": 29066,
+      "sha256": "e91782a27fa39fc6c1d6ee8b08529f5d35052310d0006034b878eb04b8f2af30"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/2.0/settings.map",
+      "bytes": 2622,
+      "sha256": "49c6160f9d54af4270a3b4e997fc4a8301f79b9e2070118fa46ddbcbbc44f9a2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/2.0/web.config",
+      "bytes": 11635,
+      "sha256": "cf2b54339e069b9e42f7d6795eecbf562c50c1011f4ca8f65f578fe52d97ff92"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.0/Browsers/Compat.browser",
+      "bytes": 1605,
+      "sha256": "8a1082057ac5681dcd4e9c227ed7fb8eb42ac1618963b5de3b65739dd77e2741"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.0/DefaultWsdlHelpGenerator.aspx",
+      "bytes": 60575,
+      "sha256": "751861040b69ea63a3827507b7c8da9c7f549dc181c1c8af4b7ca78cc97d710a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.0/machine.config",
+      "bytes": 33598,
+      "sha256": "e60aec2c5115d65b3acb3c55ea21576dbd770f579166c017125571e46ae560ed"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.0/settings.map",
+      "bytes": 2622,
+      "sha256": "ce1db1ad8a9512073164e3eccdc193f7eda036e1a9733caec4635de21b2865c8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.0/web.config",
+      "bytes": 18802,
+      "sha256": "e38bb8cc68fe5b4edecdfd288d094b9e8ced7629039b2a347682aba0d8bd7492"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.5/Browsers/Compat.browser",
+      "bytes": 1605,
+      "sha256": "8a1082057ac5681dcd4e9c227ed7fb8eb42ac1618963b5de3b65739dd77e2741"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.5/DefaultWsdlHelpGenerator.aspx",
+      "bytes": 60575,
+      "sha256": "751861040b69ea63a3827507b7c8da9c7f549dc181c1c8af4b7ca78cc97d710a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.5/machine.config",
+      "bytes": 34056,
+      "sha256": "ee950004b576fb28dc85f4b0435ed04bf96612de2e8b53be84d07afe85a0de6c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.5/settings.map",
+      "bytes": 2622,
+      "sha256": "ce1db1ad8a9512073164e3eccdc193f7eda036e1a9733caec4635de21b2865c8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/4.5/web.config",
+      "bytes": 18811,
+      "sha256": "c4cbddd4fd9347b58cc5a72b36dc4ba1ad2bb699e65869d05cd3fb9865f0d824"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/browscap.ini",
+      "bytes": 311984,
+      "sha256": "4ddd50f31fb968f30bedefc253a46dc3f2890192d05cdaa9e0a64a056eee807e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/config",
+      "bytes": 3815,
+      "sha256": "5776169973a26a387b8b3e5c0f2301a7ab9a6dd7c7d3efa22a96abc47fbf8662"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/MonoBleedingEdge/etc/mono/mconfig/config.xml",
+      "bytes": 25817,
+      "sha256": "0c56e34c69124510fa8c19e7b4c2ca6c1c4ff460ae19f798dd0ca035809e396d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/Surlhwa Spatial Proof_BurstDebugInformation_DoNotShip/Data/Plugins/x86_64/lib_burst_generated.txt",
+      "bytes": 193599,
+      "sha256": "d1577848e584be2adf8e1a1c747d8a50c5de2447f45c819f6ca3cb809bf82593"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway.exe",
+      "bytes": 667648,
+      "sha256": "87f775393ac5ef273e9e6d20c8b768f5d4c41b2fbf10d536b32dbfe961cac490"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/app.info",
+      "bytes": 29,
+      "sha256": "2788d9462453538ca4ef772e3a359959dd9e693b3fdbfddb18ca219959f85510"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/boot.config",
+      "bytes": 335,
+      "sha256": "fc66c543b8a78a761d4f7491864507f5370b7a16290bf473e5d1da264b7fe791"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/globalgamemanagers",
+      "bytes": 178884,
+      "sha256": "fa1885b98641759d0cac49cce00f38321b45f43a111f1d9c77f17fc1109e8a1d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/globalgamemanagers.assets",
+      "bytes": 457544,
+      "sha256": "19395b689e31072955cf6482f1371dd5ce2f9b98ad00acd80a48633be8b64cbd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/globalgamemanagers.assets.resS",
+      "bytes": 2818784,
+      "sha256": "984b98af5c179fbbd1b772f2f0a06c5cec7a92b98d46094aac4de9cc72122a0a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/level0",
+      "bytes": 190844,
+      "sha256": "14052e87ee59d5a6b01a5317dfd60570acba7473d5126407b21f36f428b42ee4"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Mono.Security.dll",
+      "bytes": 241152,
+      "sha256": "095361bdec0d4cedeb86e32584f51e02ae9f74f0bcf105fe34347c12ee09544e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/mscorlib.dll",
+      "bytes": 4632064,
+      "sha256": "c18ce37d14ac391ad399bbe0a6c784937895b6b2a5f7187d5d275b6c04c4bf50"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/netstandard.dll",
+      "bytes": 90112,
+      "sha256": "6ae62e082dc494a2433984177f60ca4db5fae69b1f360a8b33754172b310b8c5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Newtonsoft.Json.dll",
+      "bytes": 691712,
+      "sha256": "a56146202232958f46bd6a28b5a7da166aea123ee0d646735a46e5c341dfbf1f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Newtonsoft.Json.pdb",
+      "bytes": 2174464,
+      "sha256": "17cbab4d4207187ed94173c0d59d7a39fabed7c9035b73634c1f02188dd60168"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.Application.dll",
+      "bytes": 5632,
+      "sha256": "d3161f6aea6ba5c1ec3f023eb0ad59df61dcb5a7be96477e4fd5395830386d91"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.Application.pdb",
+      "bytes": 12220,
+      "sha256": "644993739fb7e37b13a20cd399cd98109ecac540eb885fa839637063b704fe5a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.ContentIO.dll",
+      "bytes": 12288,
+      "sha256": "1e08e17b6b824ec9b977433f018026074177dbfac4588dc10b068f22eaccbaba"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.ContentIO.pdb",
+      "bytes": 13600,
+      "sha256": "1a503122e6052ab1e1057addcdd38dff9008251258e5f890ecdfe96ddf35b24a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.Domain.dll",
+      "bytes": 8192,
+      "sha256": "e96f038247d4f9fcbede7108304e7bc5a2e065ffa5080b22fe6f1579a0a8d9d7"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.Domain.pdb",
+      "bytes": 12892,
+      "sha256": "8ea3720152d9cf0fe9d7264aeaaad21687e58143186b6ee78e9bffb1ca200d1f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.Presentation.dll",
+      "bytes": 36352,
+      "sha256": "576cb491e69b2528ff9ecf0d4fb9d19d2b02e77fbc58234b132ee69b621c750b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Surlhwa.Presentation.pdb",
+      "bytes": 23184,
+      "sha256": "60d680a509f1ee6302868cb0518ed5004e2ebf9ec824a46d69de8e3c1818610b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.ComponentModel.Composition.dll",
+      "bytes": 257024,
+      "sha256": "84b56a5e6893447f11823e8d35951aa28c4b6fea9eff73460174b4b063562033"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Configuration.dll",
+      "bytes": 124928,
+      "sha256": "15ccff56f202331aeb5e28e24138ef5496b6072db48582ed5c08ce1d519f5d65"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Core.dll",
+      "bytes": 1113088,
+      "sha256": "d7acdd810b2be97861665b5ebd8d8fcc9c38b613ae0ebf9a2ca961305be97b49"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Data.DataSetExtensions.dll",
+      "bytes": 29696,
+      "sha256": "8c47bf3e74d016131d0ae8eefe2b7668e46bb4f672cb6239cc6f2f4368b74a36"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Data.dll",
+      "bytes": 2125312,
+      "sha256": "5b3eadb7e34f34648516b3df01aa05c0bc9a4b55f51367ce355e70e13cdf1ccd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.dll",
+      "bytes": 2641920,
+      "sha256": "335da294b98bc7a2b7b1bef3ad47c2023c366660e800f1fbd23e52f525a59464"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Drawing.dll",
+      "bytes": 489984,
+      "sha256": "9a20d5903cf2fbfb1673568d50fa0205150b9268addbe57e8284baa06f5137d6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.EnterpriseServices.dll",
+      "bytes": 44544,
+      "sha256": "b0e80a549ec87249dc2e637b862a81661d09e57680bbb73793da1ff74d3e4134"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.IO.Compression.dll",
+      "bytes": 114688,
+      "sha256": "86dff7ecfbec819d4ebc128b15525b8d0d818350b8a0a510abd3d7e7468475da"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.IO.Compression.FileSystem.dll",
+      "bytes": 18432,
+      "sha256": "76eeb7a027a1060e57323e4efd28a9c8597837f6f2ff6b78c7c7d78ddf076a28"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.IO.Hashing.dll",
+      "bytes": 50488,
+      "sha256": "ac7ac3e83805b0b621c48b90543dc733c9a89106835278618357d6187e3da74e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Memory.dll",
+      "bytes": 4608,
+      "sha256": "c4f030a2cba7da7cdcf493257c24560e203d355904aee490d645a935842f834a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Net.Http.dll",
+      "bytes": 122880,
+      "sha256": "fbc291e820be4628ca2ccf67d2d93809cac12135726639be39d11ff39796274d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Numerics.dll",
+      "bytes": 119296,
+      "sha256": "b890a4ca4551337fd57c917dc7ab5e08556155ed0f1ae3f86d82ead4e9990a88"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Runtime.CompilerServices.Unsafe.dll",
+      "bytes": 18024,
+      "sha256": "01748200f2400c742aa689f1f5101bd6298efdfd92c00c18f4fa473847235ba9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Runtime.dll",
+      "bytes": 12288,
+      "sha256": "e0a7334b7ba419aaab6bd3bb6992d693e689341a9178172c9bf99c2aa6a085bd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Runtime.Serialization.dll",
+      "bytes": 934400,
+      "sha256": "5ae1e07f3da222777bd1442666bdbc8188550680a5cbe1e2e66b59e7749d91f0"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Security.dll",
+      "bytes": 320000,
+      "sha256": "d2aee18d6ceebe5d65f38d6cb0e05edde11cdef2dcfe2eeda3150311e9bc2dde"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.ServiceModel.Internals.dll",
+      "bytes": 215040,
+      "sha256": "22c0ccf71190679f48aaf0898d80b5081a3bebd446cd18a10c6a517031c24d48"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Transactions.dll",
+      "bytes": 35328,
+      "sha256": "76ab09be75f53ccf0a11511e7ad9a651ae1ce9d613b9b76d2430fd9a00e0dbc9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Xml.dll",
+      "bytes": 3160064,
+      "sha256": "4337d9c85f5821c50354fb38aa8932aaa189a795235f3bf5903665fe734cd8a8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/System.Xml.Linq.dll",
+      "bytes": 136704,
+      "sha256": "366267298e4279c54a7ee29c39e4255989920ee3b09effddf972c836ef41372b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Burst.dll",
+      "bytes": 335360,
+      "sha256": "2bcc4bbc99c1830196833776c085d0a6c2c741e384256b9e4468ebf61922d4a5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Burst.pdb",
+      "bytes": 219308,
+      "sha256": "7c586b6131598b6852e66b882ca9dacf38919e0fbd6ec61a13e7f008227c776a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Burst.Unsafe.dll",
+      "bytes": 5632,
+      "sha256": "9d9c1ff52411decbee5d9f0d1cd61ebeaa222077aa77a52101ea3debafae98e2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Collections.dll",
+      "bytes": 496640,
+      "sha256": "dc53418af073632a3ddeddd50d8e1ae738994f10f16ddc51d46e24e5c7d3da4f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Collections.LowLevel.ILSupport.dll",
+      "bytes": 5120,
+      "sha256": "ff50383f807f9692e4913b97e47d86fefcb8faa33d6d48cd3e3fd6fc7ffb448d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Collections.pdb",
+      "bytes": 312100,
+      "sha256": "3c6bb9526e75c479bd89f02414e3b9d40d1787d96d3e9782906adcadd8dabc70"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.InputSystem.dll",
+      "bytes": 1262080,
+      "sha256": "bb449203cf461654ff72fe19662bac0dca3525e759bd85bda9a63b56cb8450e6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.InputSystem.ForUI.dll",
+      "bytes": 16896,
+      "sha256": "07fa8c00dd16ca1dfbb1f529f094fccab67800a2eb16b6664b3511a0fe280b6e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.InputSystem.ForUI.pdb",
+      "bytes": 19852,
+      "sha256": "e13b2a0d40e79c1266a58ce4e5de634a3164d477bf4240baae532973c3581de1"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.InputSystem.pdb",
+      "bytes": 573276,
+      "sha256": "28761f230bf3de37591a9229ac9e11fb4807c8fea86c0fff6f21aa98695bc951"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.InternalAPIEngineBridge.004.dll",
+      "bytes": 4608,
+      "sha256": "aa8bbd26879dac3faf2d209442cb1391dbb2e8ad89acdb3cdecc776ddaa2e87a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.InternalAPIEngineBridge.004.pdb",
+      "bytes": 15296,
+      "sha256": "cc3edc8eb975bf02bfda52efa964fd25ac7922fbc1c8c8b5cb7480e7631918df"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Mathematics.dll",
+      "bytes": 886784,
+      "sha256": "cf86bebd67daf1d1a5bc677a30e08fb5a557975f35b400a45a12e6c40524c5da"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.Mathematics.pdb",
+      "bytes": 514700,
+      "sha256": "9bd2c0ca7a7913bc24eda5008363eef28ca5c60aa82feaaeb0d35473ee562149"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.dll",
+      "bytes": 9216,
+      "sha256": "ed7e52a7cce6db623661c287cdf34acce73006b4a569f26af9db686ffae9e2df"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipeline.Universal.ShaderLibrary.pdb",
+      "bytes": 15708,
+      "sha256": "59f0946fd29a89e2f748e21f7b490dc3bcdf6699ca165ade717dc0748d431703"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Core.Runtime.dll",
+      "bytes": 1282048,
+      "sha256": "463ba75e36b379530f69f58a3280d9566f67bab704a8078008e7b69719b5df7f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Core.Runtime.pdb",
+      "bytes": 474828,
+      "sha256": "cd81e60f34463124deee37dac4c6a82bea581693bf69c76d25b3ef5346a9e584"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Core.Runtime.Shared.dll",
+      "bytes": 5632,
+      "sha256": "4ade58415bc0bb1bb418b5e80c154df9ae6b8a0df6974fe63628cccfc8eacacc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Core.Runtime.Shared.pdb",
+      "bytes": 15472,
+      "sha256": "288ea841f05c921827e12ea40f1d3999c830204d1ea21c018d6df38010ef09fa"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Core.ShaderLibrary.dll",
+      "bytes": 4608,
+      "sha256": "64de4cf3adaca9b03ab33a38cbbadfac15c283efc2103b9b9449cf00e50b7f77"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Core.ShaderLibrary.pdb",
+      "bytes": 15212,
+      "sha256": "01a0e5719992495393bf375e380aab3db444219ab73571c08c395744b5922962"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.GPUDriven.Runtime.dll",
+      "bytes": 258560,
+      "sha256": "6d38e1f0476ee8a39953d3bee9245fc677739c71bae79711c52a1c403da212a9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.GPUDriven.Runtime.pdb",
+      "bytes": 128388,
+      "sha256": "67b5c2f8a3d8bdd76a5af860b53a19bef55f0321875a73cbde14da2b16c81755"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll",
+      "bytes": 4608,
+      "sha256": "053ab40f4654fe55744ba882453d4f7261f7582b050824487863d5618663a876"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.pdb",
+      "bytes": 15196,
+      "sha256": "a23c73b46252a9c94af448878618039ea4413c9664122c66993897bd590d4f78"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.2D.Runtime.dll",
+      "bytes": 250368,
+      "sha256": "06b4ddfda17bdc73e6714d5c24eeb95377b2230d50545758cd05de6f8271b416"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.2D.Runtime.pdb",
+      "bytes": 150648,
+      "sha256": "a52d54a90d458dfde6167d7583707994e6d45aae7534508e669f84f22e3da6b9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.Config.Runtime.dll",
+      "bytes": 5632,
+      "sha256": "5851f815bf0951f1a97e98e845e83b8534751935c567cefe209cc822cf48c0d3"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.Config.Runtime.pdb",
+      "bytes": 15372,
+      "sha256": "6d0a970e0c9d0c8cae80c49456dc8a26a8615f9c04eedb24e48a587131c43826"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.Runtime.dll",
+      "bytes": 781824,
+      "sha256": "35bb2e6896bc8f50fba85e34e6b8e296194e63da3acb86ec1359099d0355ad6c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.Runtime.pdb",
+      "bytes": 315404,
+      "sha256": "b2ca1ba23341441a862ebc4bcab45a36e76e867f63df982b2df3c9ed6adc1f85"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.Shaders.dll",
+      "bytes": 4608,
+      "sha256": "1d340f6b2b0897979c553afeb5f4936a82603aa283d286da74740a851cad1623"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.RenderPipelines.Universal.Shaders.pdb",
+      "bytes": 15204,
+      "sha256": "8841288caa13a8ac6ef4a15284bfa0c9a1551aff15fedb1d5ffccc087456c151"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.TextMeshPro.dll",
+      "bytes": 507392,
+      "sha256": "e8350361d835d56634684601bab85fbc50d1bf1dff2fdc11b8be3202aad7b085"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.TextMeshPro.pdb",
+      "bytes": 255860,
+      "sha256": "4e604c1c2104ce0b83e45df329d29cd27be259138fe7bb6d20b7e25b0a18f76d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.UnifiedRayTracing.Runtime.dll",
+      "bytes": 108544,
+      "sha256": "b3331fa48624cf112fd247cb05750cf3e605d60159fc8df01cca602c6fbf2a7c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/Unity.UnifiedRayTracing.Runtime.pdb",
+      "bytes": 58096,
+      "sha256": "997f088cb5a3efb11e44231e1c0f66aa5d7c737a6930f34254d38e8d5c2df8b5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AccessibilityModule.dll",
+      "bytes": 50096,
+      "sha256": "974612e9497714e3e9e41a04d29b54c9e387a0c0e77c0d7c2f5617cde89d3785"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AccessibilityModule.pdb",
+      "bytes": 22684,
+      "sha256": "342100f0d4863476edc8a26731a1646600062398b07b180b109905803b2266cb"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AdaptivePerformanceModule.dll",
+      "bytes": 123304,
+      "sha256": "a636cb89fa3b696cf2bacf4f260ef3e7b717ec3ca622fa80ec2f71704bd98e50"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AdaptivePerformanceModule.pdb",
+      "bytes": 52488,
+      "sha256": "6fda742951ebb44b3a9e642cf576a2aa7d57d439b8aa21cc148121e67b11f4fc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AIModule.dll",
+      "bytes": 77224,
+      "sha256": "088e0029096ffc0c019449a95075214f91b21cba3dc33936ddcb99bd3579f417"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AIModule.pdb",
+      "bytes": 20628,
+      "sha256": "c5ce389dd6b19b5b359ae002dde11ca63fc003c4f7b6ef061229ef055ad5da46"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AMDModule.dll",
+      "bytes": 21928,
+      "sha256": "59496bb1f6cf364b3b5989ed3b2f5501bee7c623e2821aca73dbb92d63250a76"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AMDModule.pdb",
+      "bytes": 11996,
+      "sha256": "1853c57557c7f5cc592fb763278186210205606553c3bc5d39ab4fdf76eb68df"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AndroidJNIModule.dll",
+      "bytes": 121264,
+      "sha256": "eef1cd4879226dd9fe98c23dd8b9aaa20e9e2fd91745685734b4fa9ce84a85c4"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AndroidJNIModule.pdb",
+      "bytes": 50196,
+      "sha256": "c94b02676d8305a53515d0c3fb5acda980d9edc22be79374a556ba5b13ff296f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AnimationModule.dll",
+      "bytes": 225200,
+      "sha256": "c8556fd36fb18a647d61dbeb9804a9e1bd7e01d7ef699b03a0b0ac11a5c4aaf6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AnimationModule.pdb",
+      "bytes": 60740,
+      "sha256": "e4054c19f82591409367134ff02bcf5d3d490faa523cfd73afbaf6347a105d66"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ARModule.dll",
+      "bytes": 25512,
+      "sha256": "75ad765b8da5e06d795740b21346a9100c6d21edba0a56672284be211b05a41b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ARModule.pdb",
+      "bytes": 9976,
+      "sha256": "74aa11cd3de45e14e460830b4c96838e1229f26ae21cbde6f2546b12167fa226"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AssetBundleModule.dll",
+      "bytes": 41896,
+      "sha256": "cc4dc065a3f154c6b5fb328771a8df119ae287953dfc91052784ed9ab668a1a2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AssetBundleModule.pdb",
+      "bytes": 14116,
+      "sha256": "617131cbd7ba5ee7ad5c5e5b46ed2a1c7c5d08a4f9ba98b485a495a00a541f80"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AudioModule.dll",
+      "bytes": 142256,
+      "sha256": "6c2dd3ae59731c1fc2e30f702633e92abad223f7b8c855ff57ac1380754fa4f6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.AudioModule.pdb",
+      "bytes": 35052,
+      "sha256": "3e7327bf7b35146c1db8e0f72bd55fa4a102b4a07b32f55af013dd038830725c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ClothModule.dll",
+      "bytes": 36264,
+      "sha256": "f522f88070a25e6fb2783df37b223404e70e5ab3d8954db40a9de08b6b7377cb"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ClothModule.pdb",
+      "bytes": 10560,
+      "sha256": "e2172033305442f0120d8d8cc29f1d8d801573619369b0502c006f9e047125d8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ClusterInputModule.dll",
+      "bytes": 27560,
+      "sha256": "73550a945646ae2993b973f6cb2d278371d9e54796c7aa2d9b6d323168802326"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ClusterInputModule.pdb",
+      "bytes": 9360,
+      "sha256": "6c7f40e42cd72c997d57e63c228efc3385d1f822c8358e7918a01e4d3c3a8225"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ClusterRendererModule.dll",
+      "bytes": 26544,
+      "sha256": "7df049a4e68b2e8fc8b2df971be6c26d66417328794734850b61fd6af53d82b3"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ClusterRendererModule.pdb",
+      "bytes": 9968,
+      "sha256": "d1a97e80d1876440414801cb4a72462cbf74be8277d0adbedba83d242346a54f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ContentLoadModule.dll",
+      "bytes": 32176,
+      "sha256": "be3019ae6d6bf5f5324c17807a2541c2a0c597b6117e5133be5d664914896272"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ContentLoadModule.pdb",
+      "bytes": 11140,
+      "sha256": "094da113e97e54adf761e693f1005cd5e566af00620ac33cc7b5a369a86a096b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.CoreModule.dll",
+      "bytes": 1982376,
+      "sha256": "8d5790eb1ccccd272421ceccddbf31876bf2d3d3960605c271872633576d1be8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.CoreModule.pdb",
+      "bytes": 572420,
+      "sha256": "e695c55b776f39f1d9b4e148e2681b72623504554b5c618fea8572d6065fcf23"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.CrashReportingModule.dll",
+      "bytes": 26536,
+      "sha256": "ea5c9563da13d0b4a3b1b02d2bd6c9e1a8a59c445a55d4cdcea773e6d4eb8b6c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.CrashReportingModule.pdb",
+      "bytes": 9972,
+      "sha256": "96d290f2f577788a52c23ebe34fcefa110c4221b15994711dfc4c3095345dfd9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.DirectorModule.dll",
+      "bytes": 41384,
+      "sha256": "d5f1d6b2bac176aaae400f3776d63b00192970ed195512c0209bc304374a4ef7"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.DirectorModule.pdb",
+      "bytes": 13888,
+      "sha256": "a1cc5ddec0d855583649ee4e8454008148d1adffba5ceaf38cead335a086992b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.dll",
+      "bytes": 196520,
+      "sha256": "73a9db06ec6ff86ebf3b0026cbb60b0792528921157e2ed146c51e57df91ed50"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.DSPGraphModule.dll",
+      "bytes": 31656,
+      "sha256": "d9bac80631e027d5141c5fb2d7b26dd4ca8f714479e79972c1853769ecb6d01e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.DSPGraphModule.pdb",
+      "bytes": 9568,
+      "sha256": "de324320eade824673ed3578c7c5da09b6ee35f5700eeb9a7c05ab8854603df9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GameCenterModule.dll",
+      "bytes": 45480,
+      "sha256": "6e416b0441ca207098ae445798a63d7d3dab48d14b4d3d22438c628f53e76af2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GameCenterModule.pdb",
+      "bytes": 17452,
+      "sha256": "ac9b1ed84dbee56d24c0d239981dd32a2602b99e204c51b282e417e502861e55"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GIModule.dll",
+      "bytes": 24488,
+      "sha256": "7a098058f033f06f45316140b499bdd9980c0ab168178f76766d11afdcb55898"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GIModule.pdb",
+      "bytes": 9240,
+      "sha256": "0d3584a142e5fcb968651800944cf2d5d501aeae86e8b862749802db44115743"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GraphicsStateCollectionSerializerModule.dll",
+      "bytes": 14256,
+      "sha256": "f6372423c226ddb40bff8b4f46ee1c1d9f9ac276acbe456f9c2c77cc2a568f68"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GraphicsStateCollectionSerializerModule.pdb",
+      "bytes": 9268,
+      "sha256": "d81b921ed1247b09f9c2142eec94034a91a141425638f1fc876afae0cf4f4fcd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GridModule.dll",
+      "bytes": 30120,
+      "sha256": "6b7fe3cc68f4de7f4a062e3fbedbc61873aea557207e87424714ecd0a89f8e66"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.GridModule.pdb",
+      "bytes": 9996,
+      "sha256": "1c031dc5de046441fc05b86db01c69f07ee4c0cc877315c8b91575d789a70cfc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.HierarchyCoreModule.dll",
+      "bytes": 109488,
+      "sha256": "130f9ad98940b8a3aadb27b83d9f959b52bc10c8fdea6a111528984cf71e329d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.HierarchyCoreModule.pdb",
+      "bytes": 36404,
+      "sha256": "bb9302a8235b4aff02adfd1ce33b55b72fa452a62ce9c126dd78cbee43b45104"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.HierarchyModule.dll",
+      "bytes": 102312,
+      "sha256": "1e69633a7337fcfd58a5aba9581b27cf94d1f79a74accf184b5bf89c7a1e2aeb"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.HierarchyModule.pdb",
+      "bytes": 47624,
+      "sha256": "e5b1ef359ab8ce5893a7367a9b1c15e4a3f3b1adbf78fe8d784de4ddb29e4751"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.HotReloadModule.dll",
+      "bytes": 24496,
+      "sha256": "ff6bed6519901f45e4a9adf549f2405e453b1230a2e10bdda973abc3429283d6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.HotReloadModule.pdb",
+      "bytes": 9240,
+      "sha256": "9b08e738f95e3f3fa37c309cce64c033a46c4dabcaf40cb9197af4115e9a0149"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.IdentifiersModule.dll",
+      "bytes": 14760,
+      "sha256": "30cb251690c9a5a398d8ce5c08c0cd5efe4860d650ccd0056882a909026f2d86"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.IdentifiersModule.pdb",
+      "bytes": 9504,
+      "sha256": "f78aa4173807932eedd81bad07d10cf8c668c18157a25dcf00eaa0b07162c000"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ImageConversionModule.dll",
+      "bytes": 31144,
+      "sha256": "a204e97cb89264cf04d17aebd97126f6af2a516edc5afbc00efb6b0645435ba0"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ImageConversionModule.pdb",
+      "bytes": 10580,
+      "sha256": "90c27f93144a58670b3c72399280b5932e7ccde155c954db54fb513dea2e5efd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.IMGUIModule.dll",
+      "bytes": 213928,
+      "sha256": "c70ba217de9cf64f34b4c753de53c7a9425d45ea0d368a92315dcd8621e29735"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.IMGUIModule.pdb",
+      "bytes": 90088,
+      "sha256": "88c215bf6d1bea867e736967579227c5ae9d29b002e790bc76aaa930473952f5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InputForUIModule.dll",
+      "bytes": 57776,
+      "sha256": "0b756fff0bba50b0b16a0bd02688134c7b3819b2facb896faf28ef1f031fd1a1"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InputForUIModule.pdb",
+      "bytes": 26072,
+      "sha256": "f93066d16d8b49f9b2c35a3e4ca1e7598b24317967d6e7f9fb8038d8d63e65a6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InputLegacyModule.dll",
+      "bytes": 45480,
+      "sha256": "9b48969ab4ee553faaab872c261e8e1355d55c3915e14889e968724359f0cabe"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InputLegacyModule.pdb",
+      "bytes": 15348,
+      "sha256": "c638f52692257cf6e19ff24a0bc5638cc222e21398c91579baa03afb680af367"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InputModule.dll",
+      "bytes": 28072,
+      "sha256": "769efe79bb49cc5eab00a16dd01cca79832aec2425620857f122bc7a95f5edd0"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InputModule.pdb",
+      "bytes": 10612,
+      "sha256": "2c61537c4a172dc54b1e89f3b32e0e7b74a98558b8f370208c0ee79eafaf2cf1"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InsightsModule.dll",
+      "bytes": 14256,
+      "sha256": "d2f71b75b91ef07c53a9741d31a844a399050572dbedcb96eefb91c8813b6421"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.InsightsModule.pdb",
+      "bytes": 9564,
+      "sha256": "47f20546bd7b11ea06805db479b9fe04ad0cce24825a313eb324fb0de981f89d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.JSONSerializeModule.dll",
+      "bytes": 27048,
+      "sha256": "ce528af521f77ba6482d64ca70a6f387f878262e675d95efc94fe5b2e78eeadd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.JSONSerializeModule.pdb",
+      "bytes": 9864,
+      "sha256": "3b271da40e147d2e5091b7a588fe15d46384fac2ace970d61b69bdee5c16ef3a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.LocalizationModule.dll",
+      "bytes": 26536,
+      "sha256": "66a5cf3232e5c7da696e68e57c806dedf15a979284a581f06c89df8e69223ac3"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.LocalizationModule.pdb",
+      "bytes": 9660,
+      "sha256": "c9f68ada171bed95bbfa099cb8806a9be2458e2ffb586f1c03d2bff333a8860a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.MarshallingModule.dll",
+      "bytes": 83376,
+      "sha256": "a9f44e98ad82d3a4c8f3f4b38454afd10b6ba0925738d0e640ee60fe0ed9393b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.MarshallingModule.pdb",
+      "bytes": 14252,
+      "sha256": "c063ec75be64e99cda8497adb74797388f78f47a8166d62d70dd06139f4d722a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.MultiplayerModule.dll",
+      "bytes": 17832,
+      "sha256": "4573924cb0560c64eada024c004524fddc24f425b02d75cc1bf27938e0ca9b6d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.MultiplayerModule.pdb",
+      "bytes": 10332,
+      "sha256": "d1a926ee3b17bacf79f309176ce7d383dbb5d638db05652bfeec5da367cfef81"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.NVIDIAModule.dll",
+      "bytes": 40368,
+      "sha256": "201f416e3bd5d776b3c43631b4aff69195092b2a5171cd850f50e4af9d80a481"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.NVIDIAModule.pdb",
+      "bytes": 16196,
+      "sha256": "1284a0ed8522a28f6cdd1b3443642ac951a3b5fe231771bbc558da86bea14b55"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ParticleSystemModule.dll",
+      "bytes": 171432,
+      "sha256": "21c084e7ef0763c109e5e9252067d5be3145fab8edd2d493a7418d48f9ac8eb6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ParticleSystemModule.pdb",
+      "bytes": 40428,
+      "sha256": "db6c39217965a18d7222dbe2d6249aab0e20b4ac8e505c008dc823b442899b3b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.pdb",
+      "bytes": 12676,
+      "sha256": "d7f75d26116b271fdac87fb6dfb5db793d389ea6aa63b7d549490de698dabd10"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PerformanceReportingModule.dll",
+      "bytes": 25008,
+      "sha256": "01d3a2927790e3a97f0a1ca8f13020dd0aa1bc46a4d9addb0fde99028ce09e54"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PerformanceReportingModule.pdb",
+      "bytes": 9448,
+      "sha256": "3c2cd84880eac391bf54167a82a066372651ac616c0148fc7eba8b084a05150a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.Physics2DModule.dll",
+      "bytes": 573360,
+      "sha256": "f3214a3ba36500a40e5f5c12ed6340d8451b3ea0877bca7d097ec4b92c7cde60"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.Physics2DModule.pdb",
+      "bytes": 132484,
+      "sha256": "30ba05a2be43a905d19f0708370da3563d2bb76f6c0eb42659a9322dc4206e4d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PhysicsBackendPhysXModule.dll",
+      "bytes": 14256,
+      "sha256": "5b0b18b27188072ee4a1ce7b445ea83fbea4df703a77b5bae6590ed898cc85ab"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PhysicsBackendPhysXModule.pdb",
+      "bytes": 9260,
+      "sha256": "91e3b0256e944e873bc049f5861788d3407564d11998f9ee1df2e5ce1cbc51ac"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PhysicsModule.dll",
+      "bytes": 181672,
+      "sha256": "b583885e58c0a4be8fc112a8d34a587d9f5a294de048b26ead55c33c9a5adbb8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PhysicsModule.pdb",
+      "bytes": 45500,
+      "sha256": "f6d3fe77cb9d16a58c8dfb3e68b90b066343298f363b194eb2558befa142eff6"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PropertiesModule.dll",
+      "bytes": 149416,
+      "sha256": "166bd4baef5a67bfeda69617079fc336d395e550ed755f8c8d115c149c9b2d7e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.PropertiesModule.pdb",
+      "bytes": 59004,
+      "sha256": "316397202046753f9c5c7a9041058fe1ea6beca027c54714d2587fc0ee4de5cf"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.RenderAs2DModule.dll",
+      "bytes": 25520,
+      "sha256": "a7f28cfec040f08a10de4a624abb053f627b361a62573ff91e21202bf37a5fc1"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.RenderAs2DModule.pdb",
+      "bytes": 9288,
+      "sha256": "27d11d57928a9326f1a09e8ce23a3f97d6aa611fda466383a57c2468597153c9"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll",
+      "bytes": 24496,
+      "sha256": "42529decf29c1269fd9808c62c5c7ec4b8b8172c2e7f4866fce8ceb8fa07fb6e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.pdb",
+      "bytes": 9304,
+      "sha256": "82fdad3adfcbe716f0598d9d3979e2ecc9c05d35d290d22f4bbc1ef56e541514"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ScreenCaptureModule.dll",
+      "bytes": 26024,
+      "sha256": "e5a8700e28c7d1da405fd8d26327d8bb846ecdc43d5f61844aa1a41f6f1927b2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ScreenCaptureModule.pdb",
+      "bytes": 9844,
+      "sha256": "77a71e2d33477835d4e2b977ab2bac12ebb8af2390702f162b457f58f3dd24fc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ShaderRuntimeModule.dll",
+      "bytes": 25520,
+      "sha256": "9806cc995bccdeed3800b2b22d5b3782898f5568acc2b6920253e24ceb8ec761"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ShaderRuntimeModule.pdb",
+      "bytes": 9280,
+      "sha256": "06953c21881ce75e38e7f2baa938c167f2e1a03499ac6b1cf63cc6d5dcafbe12"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ShaderVariantAnalyticsModule.dll",
+      "bytes": 24496,
+      "sha256": "269e1aa873d164b7b9ab871c6512d41cd104c245f20beee2c74800a7e4a2e7c8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.ShaderVariantAnalyticsModule.pdb",
+      "bytes": 9364,
+      "sha256": "fe6cdf0785094db7202da9ed039cc66d330d809ed98bc8c6e3b6ce890af0c4cf"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SharedInternalsModule.dll",
+      "bytes": 37800,
+      "sha256": "b97415877f55226c76fd98e3f0c688401806699c099f56e29c682e9259af5808"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SharedInternalsModule.pdb",
+      "bytes": 14252,
+      "sha256": "015ef2ae3758fcb267fbca33a7ff1955406a539da57bc8ce21faea510cad5fc7"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SpriteMaskModule.dll",
+      "bytes": 28584,
+      "sha256": "f5c80216701a583c97fc9245c8361558e3609ce59a4587f9dd7a010d3dae2624"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SpriteMaskModule.pdb",
+      "bytes": 9572,
+      "sha256": "dbfa27a9705d0760954dce562a4c499e227d4e2be932b8e9193ae27045be9755"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SpriteShapeModule.dll",
+      "bytes": 31664,
+      "sha256": "dd08f4a10ec3efae12cdfb200d9637a0d2710d155d330eec8e3a1bf655424042"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SpriteShapeModule.pdb",
+      "bytes": 10800,
+      "sha256": "3b70a040a7cd5c48c212e56039194b343b10ea79382f98f4e30c58fee0fac58a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.StreamingModule.dll",
+      "bytes": 25520,
+      "sha256": "54eeed17ae5e7d4ad661039de0df3ed389fca486fd7eda23c28f4e0ddc274b0a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.StreamingModule.pdb",
+      "bytes": 9316,
+      "sha256": "780d9bdc650eb164ef674caf05b100a4217633b41e16c67c79d096f97171cdfc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SubstanceModule.dll",
+      "bytes": 29104,
+      "sha256": "7115421a6c505853531966d82e9d40f23608b81e201a2db894f106bc79c5ac9e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SubstanceModule.pdb",
+      "bytes": 11444,
+      "sha256": "81de5a5d67ce9f589d170085d3e904f62852be3100547977ce576134c6f624b2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SubsystemsModule.dll",
+      "bytes": 41904,
+      "sha256": "f42837e4048f89f52fab48a962721b2b691e21497a888da4c7e5e7284c843caf"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.SubsystemsModule.pdb",
+      "bytes": 15984,
+      "sha256": "c12d9bc0b85420aa2cf9593f24a60e12b9d1f452648504ccdabb5b81be8b9309"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TerrainModule.dll",
+      "bytes": 133040,
+      "sha256": "ea079af45b4aae49362ce699fa0590930f7754c31cfae03f2bb579d65b5a6d9f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TerrainModule.pdb",
+      "bytes": 33936,
+      "sha256": "0cf894201ec9428cb4f17a548ad8c1304b9053147890e5964d00fd46b3f0da1c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TerrainPhysicsModule.dll",
+      "bytes": 25520,
+      "sha256": "8acd2f51008904d2ce20bd4ed85035cc95dc55eaa55c348126f0d2a12e53f558"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TerrainPhysicsModule.pdb",
+      "bytes": 9704,
+      "sha256": "6598d16278847961101ef165347c88c0ee9658c0c8c77365aa7da1f79aae1f5d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TextCoreFontEngineModule.dll",
+      "bytes": 81840,
+      "sha256": "c42bd4ebeb164abfa333186517b661a95481e4a80cc7eb78cac130b2417aed45"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TextCoreFontEngineModule.pdb",
+      "bytes": 29276,
+      "sha256": "ae2c995373680888c65efedfac256b111d6b4cfd24785c0c27256e545dfa3598"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TextCoreTextEngineModule.dll",
+      "bytes": 328112,
+      "sha256": "ea5e65bf3b1ebfb89667d62405645a450d0343bb69702ebcfd355d6f901bd0a4"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TextCoreTextEngineModule.pdb",
+      "bytes": 150488,
+      "sha256": "2672228b7cc2ac566739c47731d77d3d196767a1cee1424901280d37a2f0b590"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TextRenderingModule.dll",
+      "bytes": 39336,
+      "sha256": "94538a7e952843657d715ecb4363556eba9913f64e1232e1205694caef318b52"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TextRenderingModule.pdb",
+      "bytes": 15344,
+      "sha256": "2c17b0e1366e9a31abd31952f3c5b85696a69b0d70af20ce071b5a6b1fad48e5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TilemapModule.dll",
+      "bytes": 57768,
+      "sha256": "dad1cafadd29e46163f28562cfff081b86f79d92dc44090c79713cec84218176"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TilemapModule.pdb",
+      "bytes": 18976,
+      "sha256": "64bcb8865a79458fea53e8246c27b0d627572e384942328f1ca1a25f92ffa6c7"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TLSModule.dll",
+      "bytes": 31152,
+      "sha256": "6db8ac5e0759933893fe200ab3e176dedaede6757afb2653d2e07536ac285c54"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.TLSModule.pdb",
+      "bytes": 9260,
+      "sha256": "d4efcf151908a4372ddb1907b31f75c2a70907df17bc50ce5a91959b42491b70"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UI.dll",
+      "bytes": 306176,
+      "sha256": "bf36eaa92dc1d3b48cfda06f110a0490836059cfd92089e04f8f4eebf0b95004"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UI.pdb",
+      "bytes": 185280,
+      "sha256": "a12d8c91e70414f7ec199b22e0ce890ec1486b59c89ecd09cd2cd3d6e7000bfe"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UIElementsModule.dll",
+      "bytes": 2418608,
+      "sha256": "e997b629fc4aa949bffd3a676616fd42170f328f6daa1cebb3c40c2d1ccfd329"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UIElementsModule.pdb",
+      "bytes": 1087328,
+      "sha256": "658cf9d8d6f7539d15fa7349371e442cfb9456a3647065608720181fd186d620"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UIModule.dll",
+      "bytes": 49576,
+      "sha256": "4d1ba61903e105a3351f4eb095473181ad3e4871ccfdda111f32f0feecec360f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UIModule.pdb",
+      "bytes": 13832,
+      "sha256": "f77d49f7ee86c274d6a9c59ebaea46fb3722b26c7763b50b5a8ddac2280b1d1c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UmbraModule.dll",
+      "bytes": 24488,
+      "sha256": "f636e9e926be36de4d46a5b477b41a0c18319a4ccc9c6de12351638b840542c5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UmbraModule.pdb",
+      "bytes": 9240,
+      "sha256": "8885f650d468b7445b20a9356b2153e101c7e988767fd9e23cb786d3cde70f10"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityAnalyticsCommonModule.dll",
+      "bytes": 35752,
+      "sha256": "6bb2f0817faf3b253d55196e343245f10e87553c27acf38d7dc9b6768c892803"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityAnalyticsCommonModule.pdb",
+      "bytes": 13720,
+      "sha256": "c0e2b55cd3a3838a8263a40882fd4ec1bc30ed438b1771d50f9f35aaec98ec8d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityAnalyticsModule.dll",
+      "bytes": 60840,
+      "sha256": "850b3b29c785abec788375d7d11f70c3d8f301683d2b10728e6e7048e07c56a3"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityAnalyticsModule.pdb",
+      "bytes": 17964,
+      "sha256": "5716521e9700b5f4976c9ae9d543076abc2f7b0586694e9d7e8ef7c6f36565ba"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityConnectModule.dll",
+      "bytes": 27560,
+      "sha256": "2cb83890fcdf7f3ae675e880a5120be051cdfd7329a876569c45e3fd3e799850"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityConnectModule.pdb",
+      "bytes": 9836,
+      "sha256": "0a7afcf763608b5fae6c43773321ad3a3957b35489c9aaa246e7191c7dcdbb6b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityConsentModule.dll",
+      "bytes": 16296,
+      "sha256": "332fa286dd66c4c49af86dc2e8dddca2d7cc07baa9c3f5c7f5d0aecc3fd05d0d"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityConsentModule.pdb",
+      "bytes": 9868,
+      "sha256": "b780c156d694bea3af6634b14261a1d95d3a73e775aeade7623ed66288961c26"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityCurlModule.dll",
+      "bytes": 26032,
+      "sha256": "6f8bfe37f0f43aa0d3c31994b9d73d17bb2da618923a05723060aa7ec79eea3e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityCurlModule.pdb",
+      "bytes": 9632,
+      "sha256": "36d1b330ba60f6c1fd1685379063b29ed9bc3d61b697ac56a40db944f62ed215"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestAssetBundleModule.dll",
+      "bytes": 28592,
+      "sha256": "b6f292852ed04adafcf0aa800291851556d2374910afcf8c1d600787d7d5713b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestAssetBundleModule.pdb",
+      "bytes": 10812,
+      "sha256": "2f03c12b6250678cdff25dfaa9252c15549d5b5da94e1a5d5e7dcd0c3640bd1c"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestAudioModule.dll",
+      "bytes": 28080,
+      "sha256": "2e389ad83e6c6295beec778486c6eb9a26fdfd4325a9fb1188b97fc27026afbb"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestAudioModule.pdb",
+      "bytes": 10616,
+      "sha256": "0de8c1c96e7d1c092f3cc28ff8eb5b5cfd8308f73505444091ff97541d5a238b"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestModule.dll",
+      "bytes": 69032,
+      "sha256": "8275243131e4aab7189b4f1410722f7c382990a1475002569bc3e81e969627f5"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestModule.pdb",
+      "bytes": 28308,
+      "sha256": "8ade9faf61df507e572c1a7e5a6f809471844585466c9a051b3fb2cd30e74487"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestTextureModule.dll",
+      "bytes": 27568,
+      "sha256": "ea4383ac742d0490cf185d6ce7c06ccf6290bf064884ae3a225e761fb4d0d0b2"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestTextureModule.pdb",
+      "bytes": 10780,
+      "sha256": "b1128dd7399207e43439affa50ddf2225a4358913809584f76679d1213643906"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestWWWModule.dll",
+      "bytes": 36264,
+      "sha256": "d230ebd350e09f966c1c9092622a555534af189260be7c9b3ada5e7659a708fe"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.UnityWebRequestWWWModule.pdb",
+      "bytes": 13684,
+      "sha256": "b4a5a2c84cdb35f29ca80a574c6788b754e2791d86004dbcb2d7e99398d39860"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VectorGraphicsModule.dll",
+      "bytes": 252328,
+      "sha256": "9ed89dfc794f00227e3e0f6574bab9ff557a1a564d6614d96bd78f7a9b636b0f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VectorGraphicsModule.pdb",
+      "bytes": 142692,
+      "sha256": "90484a19e5b4cb9cac9ea705c2ed7b2625e7b55ab8698771bf73bb89e7a16efa"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VehiclesModule.dll",
+      "bytes": 31152,
+      "sha256": "ac7a73fa5924d5cc5e8f87731686c447a5efc0088384d9a49a03f60c079c1596"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VehiclesModule.pdb",
+      "bytes": 10484,
+      "sha256": "d79745a0b6ea2d2a2788ab05bf01def884c6160d4116d4a49fed74f9a2031534"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VFXModule.dll",
+      "bytes": 78248,
+      "sha256": "249686603b9eb2469542a22d85c75711956b14e39cb9ad8946e0de269f27bb1f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VFXModule.pdb",
+      "bytes": 18748,
+      "sha256": "71da4ad4d3f80d63bb6ef9ab91bd1a78c62562e69c42565644e62a0d81bac5bc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VideoModule.dll",
+      "bytes": 49072,
+      "sha256": "0958cb8a63a12916bc35db987b2425c00cf86de048b367298f90c47b7bf08959"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VideoModule.pdb",
+      "bytes": 14128,
+      "sha256": "89358e59629d4a6d8ef8b9dd7678894cc78ebbb19eb324907e10d06c48d1dbf4"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VirtualTexturingModule.dll",
+      "bytes": 42920,
+      "sha256": "9095cf6f6f3652ffb5d266c75e042d181eaf04f02fe15156b65b0c90b4bb4cc7"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VirtualTexturingModule.pdb",
+      "bytes": 13488,
+      "sha256": "19193e5f5034eb5a85c5cf311ab1c59995f5c42b8977b125973facaba281b18e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VRModule.dll",
+      "bytes": 31656,
+      "sha256": "c90914f36eeb1994aa73d3f374ebf7cda9ca8de564f66ac8e942d4c16961b5cd"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.VRModule.pdb",
+      "bytes": 10368,
+      "sha256": "3db18cf32e8e73c848116d3c607fef420ea9cd7e6e0c07ebf8a9a4e5738e891a"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.WindModule.dll",
+      "bytes": 26536,
+      "sha256": "d5202ef19d09a1ae84fa34df949c609270dbb3e52fb8ceff25d8cebd63d990bc"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.WindModule.pdb",
+      "bytes": 9376,
+      "sha256": "b9f30d6d5a94568d01ca534d0158cca93451e05d6604099cbbfac623fd52f7b8"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.XRModule.dll",
+      "bytes": 87984,
+      "sha256": "4323067331be436897a18a35afc0b7814d5ffa26ab461bb71ec2b2d3e0a4b1da"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Managed/UnityEngine.XRModule.pdb",
+      "bytes": 24256,
+      "sha256": "c0820678087e4fa67fb5e7dce946367272108df4ad23e85c80b78ae432433f59"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Plugins/x86_64/lib_burst_generated.dll",
+      "bytes": 480256,
+      "sha256": "2d3223fcf0cb4d8e975ad84684b5d7aef611ea359ef5b5a77cc57243c9428064"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Plugins/x86_64/lib_burst_generated.pdb",
+      "bytes": 2949120,
+      "sha256": "ce5efa81344018718ecf89aa3be08ade3fcf9e92f950018e839e522029ef4aa7"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Resources/unity default resources",
+      "bytes": 5923140,
+      "sha256": "0f926eca5a119ba2c41320348b29b8ddf4d59242cdf43d40a4c77f3044eecf8f"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/Resources/unity_builtin_extra",
+      "bytes": 397516,
+      "sha256": "13574ea44686881b270d8f476c74ed64c04a38c3276bd99aecc50bab1fe84b55"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/resources.assets",
+      "bytes": 347752,
+      "sha256": "9a6883929cd8e9445ccaaf50b97b8a0bd5c4f026f00a2c7f789dadc22d94c480"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/resources.assets.resS",
+      "bytes": 7232,
+      "sha256": "f12f30b4c1648273e460dab9f8ec974e616980f7a3027d54ac4ca0f19ba89cd3"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/RuntimeInitializeOnLoads.json",
+      "bytes": 2669,
+      "sha256": "069494db3d8c7621e4cf621143ac15e8cf7ff4c55c1542fb952390ecaafdd27e"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/ScriptingAssemblies.json",
+      "bytes": 4208,
+      "sha256": "c9fe4ecffb9d78da3afd29069afc66a06b978d6691e3ebc4bea0019936428ce0"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/sharedassets0.assets",
+      "bytes": 55744,
+      "sha256": "b66f967286ddcb5e3ac0c9be6eb44d029df9aee8c20b319396df1c12e3d63feb"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/SurlhwaPixelCutaway_Data/sharedassets0.assets.resS",
+      "bytes": 1798496,
+      "sha256": "aabfd9716d64ac20f24274daf7165018a9c761d580a7188688dd721fdbf2c7b0"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/UnityCrashHandler64.exe",
+      "bytes": 1675688,
+      "sha256": "a8ddc87e9f03764bc9311b7e6dbfe72f9ff392a5c42c667d11cbea01fde5e232"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/UnityPlayer.dll",
+      "bytes": 83613104,
+      "sha256": "9e15f34885d37903b27cf722df9b38b6840f0f7e59ff96d137b49f833ca58f05"
+    },
+    {
+      "path": "Validation/Builds/VariantC1/WinPixEventRuntime.dll",
+      "bytes": 58368,
+      "sha256": "81adcfd8253c3489be720da7e30f16004dc9a1f02a8b418c6c3aef4993032e6d"
+    }
+  ],
+  "totalPayloadBytesIncludingDevelopmentSymbols": 163740126,
+  "hardwareSupplement": {
+    "gpuNameDriverVRAMPowerLimit": "NVIDIA GeForce RTX 3070, 591.86, 8192 MiB, 240.00 W",
+    "powerPlan": "�쟾�썝 援ъ꽦�몴 GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (怨좎꽦�뒫)",
+    "evidence": "Read-only nvidia-smi and powercfg at record time; storage model not measured"
+  }
+}

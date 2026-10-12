@@ -1,0 +1,26 @@
+{
+  "provenance": "Bounded derivative of accepted C; no source art replaced or adopted as final production art",
+  "reference": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\ArtSource\\Reference\\VisualDirection\\barscene_2_5d_layout_anchor.png",
+  "sourceArt": "Inherited source PNGs; existing provenance/adoption caveats remain",
+  "PPU": {
+    "bartender": 52,
+    "ordinary": 70,
+    "special": 70
+  },
+  "camera": {
+    "projection": "orthographic",
+    "pitchDegrees": 28,
+    "normalHalfHeight": 3.7,
+    "wideHalfHeight": 4.55,
+    "inspectionHalfHeight": 1.65,
+    "aspect": "16:9"
+  },
+  "scope": "HG03 bounded C1 polish; HG01/HG02 C direction approved; A/B REFERENCE_ONLY; HG04 not started",
+  "canonicalClaims": "Don Quixote VISUAL_FIXTURE_ONLY; no ACT order change; memory shelf empty/reserved only",
+  "snow": "Quantized point-sampled pixel ground banks and static world snowfall marks; no production weather system",
+  "ownerStatus": {
+    "HG01": "APPROVED",
+    "HG02": "APPROVED",
+    "HG03": "READY_FOR_OWNER_REVIEW"
+  }
+}

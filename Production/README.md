@@ -2,17 +2,17 @@
 
 Open **Production/Unity** with **Unity 6000.3.7f1**. The inherited repository-root Unity project is frozen reference history and is not the new project's build input.
 
-This pass implements a hybrid winter-bar spatial proof for HG01 camera/depth, HG02 3D/2D coherence and HG03 scale/grounding. All three gates require owner judgment. It contains no bartending, narrative progression, save system, production UI or audio composition.
+This pass implements a hybrid winter-bar spatial proof for HG01 camera/depth, HG02 medium coherence and HG03 scale/grounding. The owner approved C for HG01/HG02 on 2026-10-12 and requested bounded C1 polish for HG03. It contains no bartending, narrative progression, save system, production UI or audio composition.
 
 Execution and validation: `Validation/PASS1_PLAN.md`, `Validation/PASS1_PROGRESS.md`. Raw logs, renders and builds remain local under ignored `Validation/Evidence/` and `Validation/Builds/`; small result and provenance manifests are tracked.
 
-Current owner review: [C — Pixel Cutaway Hybrid](Validation/REVIEW_C.md), [native C index](Validation/review-c.html) and [A/B/C overview](Validation/ABC_COMPARISON.png). HG01/HG02/HG03 are ready for owner review; judgment is pending and HG04 has not started. C is a separate revision with visible snowy world ground and selective depth. No final art/camera winner is selected.
+Current owner review: [C1 bounded polish](Validation/REVIEW_C1.md), [native C1 index](Validation/review-c1.html) and [C versus C1 overview](Validation/C_C1_COMPARISON.png). HG01/HG02 are APPROVED: C / Pixel Cutaway Hybrid, pixel-art first and selective 2.5D second. HG03 C1 awaits owner review; HG04 has not started. [Original C notes](Validation/REVIEW_C.md), [native C index](Validation/review-c.html) and [A/B/C overview](Validation/ABC_COMPARISON.png) remain historical evidence. A/B are REFERENCE_ONLY.
 
 Historical review: [A/B HG01–HG03 notes](Validation/REVIEW_HG01_HG03.md) and [A/B comparison index](Validation/review.html). Native originals and four movement clips remain linked there. Readiness for review is separate from artistic acceptance.
 
-Start with the [six-frame comparison board](Validation/HG01_HG03_COMPARISON.png), then inspect the native images through the index. Don Quixote is **VISUAL_FIXTURE_ONLY**; his inclusion does not change Canon ACT order or identify the first canonical special guest.
+Start with the [C versus C1 comparison board](Validation/C_C1_COMPARISON.png), then inspect the native C1 images through the index. Don Quixote is **VISUAL_FIXTURE_ONLY**; his inclusion does not change Canon ACT order or identify the first canonical special guest.
 
-To reproduce from the repository root (local Editor license required):
+Historical A/B reproduction from the repository root (REFERENCE_ONLY; local Editor license required). Current C1 commands are in `Validation/REVIEW_C1.md`:
 
 ```powershell
 python Production/Tools/prepare_reference_art.py
