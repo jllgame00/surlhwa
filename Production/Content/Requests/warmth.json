@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "requests": [
+    {
+      "id": "request_ordinary13",
+      "kind": "recommendation",
+      "tag": "warmth",
+      "summaryTextId": "text_rc1_0213",
+      "discoveryPolicy": "normal_recognition"
+    },
+    {
+      "id": "request_prince_warmth",
+      "kind": "recommendation",
+      "tag": "warmth",
+      "summaryTextId": "text_rc1_0433",
+      "discoveryPolicy": "normal_recognition"
+    }
+  ]
+}

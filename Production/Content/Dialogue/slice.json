@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "texts": [
+    {
+      "id": "text_rc1_0207",
+      "value": "우편 배달부",
+      "sourceId": "SRC-RC1-0207",
+      "sourceHash": "ab078db4027fedf0129aa697eec62e5f3c76d42bca75064de6ef19a5ba6ac07e",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0208",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0208",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0209",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0209",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0210",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0210",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0211",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0211",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0212",
+      "value": "오늘은 제 앞으로 온 편지가 있었어요. 늘 남의 이름만 읽었는데.",
+      "sourceId": "SRC-RC1-0212",
+      "sourceHash": "913b87e7f52095664694fff5d0441b661dfda2235275243f30e8480de9438172",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0213",
+      "value": "뜯기 전에 여기 좀 앉아 있을게요. 긴장이 풀리는 따뜻한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0213",
+      "sourceHash": "11d9aa5f84eb89638eba23d4105342210cd109e24ca8c4ab7b9db8d539f106b6",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0320",
+      "value": "앞서 들은 재료를 함께 써 볼까요. 믹싱 글라스에 진 60 ml, 드라이 베르무트 10 ml를 차례로 담아 주세요.",
+      "sourceId": "SRC-RC1-0320",
+      "sourceHash": "9fd45b4b55b8c896795176e666c832c3e89f4631cbfde6f60c872508dae63766",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Previously learned Slice fixture facts only; not spoken by the postman or Prince."
+    },
+    {
+      "id": "text_rc1_0321",
+      "value": "얼음을 넣고 바 스푼으로 저은 뒤, 얼음은 남겨 두고 잔에 따라 주세요. 레몬 껍질이나 올리브 장식은 더해도, 생략해도 괜찮아요.",
+      "sourceId": "SRC-RC1-0321",
+      "sourceHash": "d00fd1d89c1a65b640e09eedcb11cf718bc640bf4fb348f894014c0a8536a499",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Previously learned Slice fixture facts only; not spoken by the postman or Prince."
+    },
+    {
+      "id": "text_rc1_0322",
+      "value": "이 잔의 베이스는 진이에요.",
+      "sourceId": "SRC-RC1-0322",
+      "sourceHash": "799dbb46d4fdb4497957b731a223ad38983b676a1a00af7c8903fce76f3bccc2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Previously learned Slice fixture facts only; not spoken by the postman or Prince."
+    },
+    {
+      "id": "text_rc1_0323",
+      "value": "얼음으로 차갑게 만들고, 천천히 저어 주세요.",
+      "sourceId": "SRC-RC1-0323",
+      "sourceHash": "7cb12c2d64d647c0a29e3cea9fb855f859b7f00a1e06cb96876b31dc056fbfe2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Previously learned Slice fixture facts only; not spoken by the postman or Prince."
+    },
+    {
+      "id": "text_rc1_0324",
+      "value": "드라이 베르무트가 진의 가지를 정리해 줘요.",
+      "sourceId": "SRC-RC1-0324",
+      "sourceHash": "ff51b199f1c77712d7600823353e44dc9539d774a065f215e0f12117fe4da63f",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Previously learned Slice fixture facts only; not spoken by the postman or Prince."
+    },
+    {
+      "id": "text_rc1_0326",
+      "value": "고른 방향은 좋았어요. 다만 오늘은 조금 거칠게 느껴지네요.",
+      "sourceId": "SRC-RC1-0326",
+      "sourceHash": "2268adc56bd1f1a1db4a0e189e5abef0c4a08474aad864197cb7f28357fe9911",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[1].text",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0327",
+      "value": "잘 만든 잔인 건 알겠어요. 하지만 오늘 원한 쪽은 아니었어요.",
+      "sourceId": "SRC-RC1-0327",
+      "sourceHash": "19c7bf6546884ba616b2eda206b8f1942ba667f4abaea30b8aa4879ae3c7dfb8",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[2].text",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0328",
+      "value": "오늘 제게는 맞지 않았고, 잔도 조금 아쉬웠네요.",
+      "sourceId": "SRC-RC1-0328",
+      "sourceHash": "3e394f4f1d489b504f9de078db7fce17764d2d0d90867f7e893af9caaea1d0ec",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[3].text",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0329",
+      "value": "말로 다 못한 쪽까지 들어 준 기분이에요. 천천히 마시고 싶네요.",
+      "sourceId": "SRC-RC1-0329",
+      "sourceHash": "dcc110137630dfcd14445038e2f2f6e77cca6e685678c18b7c2eee4f5b63b612",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[4].text",
+      "sourceOrder": "4",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0330",
+      "value": "지금 제 마음에는 어울려요. 조금만 더 차분하게 만들어졌다면 편히 마실 수 있었겠어요.",
+      "sourceId": "SRC-RC1-0330",
+      "sourceHash": "c0f79f298563a5a38e326a991d935f43ce221a6f43e0a3246fcb7ae79b695d86",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[5].text",
+      "sourceOrder": "5",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0331",
+      "value": "정성 들여 만든 건 느껴져요. 다만 오늘 제 마음이 머무는 곳과는 조금 다르네요.",
+      "sourceId": "SRC-RC1-0331",
+      "sourceHash": "3020a2ba79cb09738e9ffaa28a16d781f959ef172b3711efba5d83beda67b911",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[6].text",
+      "sourceOrder": "6",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0334",
+      "value": "조금 다르네요.",
+      "sourceId": "SRC-RC1-0334",
+      "sourceHash": "b33e2e8caf857fa9ec42d2fc1349145e75552733fe51a816ad267dc6b113191f",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "lines[1].text",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0389",
+      "value": "지난번의 대답은 듣지 못했지만, 오늘은 조용히 앉아 있을게요.",
+      "sourceId": "SRC-RC1-0389",
+      "sourceHash": "d1277c278758a28356a2d3c1bb35d19a8145df71a14f62e5d0d9646704f3d69c",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0390",
+      "value": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0390",
+      "sourceHash": "ae2dc724d36698549de89725896a0580af67d14c9061c62f25ac15f16f0fd98d",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_rc1_0395",
+      "value": "오늘은 이만 돌아갈게요. 이곳에서 잠시 쉬었다는 건 기억할 거예요.",
+      "sourceId": "SRC-RC1-0395",
+      "sourceHash": "c94ac722e7f29803020ae470d49b525897df66e696671e3ab17356acfcb62224",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim departure excerpt for the Warmth visit; no closing-visit/D09 branch, ACT completion or memory evaluation. HG07 wording/context review pending."
+    },
+    {
+      "id": "text_rc1_0433",
+      "value": "익숙한 불빛 곁에서 마음을 놓고 쉴 수 있는 한 잔",
+      "sourceId": "SRC-RC1-0433",
+      "sourceHash": "ae133f6a1b1bd3347ab7de16fd533115d50b49866a605a0f2d2c42c3a313dfba",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field; original order and role retained."
+    },
+    {
+      "id": "text_prince_name",
+      "value": "어린왕자",
+      "sourceId": "CANON-51-TITLE",
+      "sourceHash": "4c3d4d94fc5db2bb2ab1783031f48705fab2d6359585eba5042536ac82e0a25a",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "heading1",
+      "sourceOrder": "0",
+      "role": "display",
+      "adoption": "Canonical character title, not a spoken line."
+    }
+  ]
+}

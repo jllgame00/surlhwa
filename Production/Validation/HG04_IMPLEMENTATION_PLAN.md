@@ -47,9 +47,9 @@
 
 **Interfaces:** Consumes Task1 definitions. Produces immutable SliceContent registry, typed lines with sourceId/hash/field/role, explicit start grants and encounter sequence. Generated runtime bundle is derived from authored JSON and hashes.
 
-- [ ] Write failing strict-schema/reference/source/Unicode/knowledge-supply reachability tests; validate malformed numbers, duplicate keys/IDs, unknown fields/enums, unsupported method/constraints.
-- [ ] Adopt source fields verbatim from Canon/reference, including Ordinary13, neutral Prince follow-up and existing farewell/reaction fields; retain exact text hash/role/order. Reconfirm selected IBA facts; document game simplifications.
-- [ ] Implement loader/bundle generator; run contracts/content validation; commit.
+- [x] Write failing strict-schema/reference/source/Unicode/knowledge-supply reachability tests; validate malformed numbers, duplicate keys/IDs, unknown fields/enums, unsupported method/constraints.
+- [x] Adopt source fields verbatim from Canon/reference, including Ordinary13, neutral Prince follow-up and existing farewell/reaction fields; retain exact text hash/role/order. Reconfirm selected IBA facts; document game simplifications.
+- [x] Implement loader/bundle generator; run contracts/content validation; commit.
 
 ### Task 3: Durable Application Slice flow
 

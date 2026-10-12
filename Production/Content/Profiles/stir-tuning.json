@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "tuning": {
+    "id": "stir_slice_v1",
+    "liquidUnit": "ml",
+    "precision": 6,
+    "capacity": {
+      "jigger": 60,
+      "mixing": 300,
+      "serving": 180
+    },
+    "flow": {
+      "pour": 30,
+      "finePour": 5,
+      "transfer": 40,
+      "fineTransfer": 8,
+      "dash": 1
+    },
+    "technique": {
+      "howDegrees": 360,
+      "qualityDegrees": 1080,
+      "minSpeed": 60,
+      "maxSpeed": 300,
+      "stableFraction": 0.75
+    },
+    "recognition": {
+      "relative": 0.05,
+      "ingredientMl": 0.25,
+      "extraMl": 0.01
+    }
+  }
+}

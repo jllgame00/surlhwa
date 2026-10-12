@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "encounters": [
+    {
+      "id": "enc_ordinary13",
+      "guestId": "guest_ordinary_postman",
+      "requestId": "request_ordinary13",
+      "intro": [
+        "text_rc1_0212",
+        "text_rc1_0213"
+      ],
+      "farewell": [
+        "text_rc1_0208",
+        "text_rc1_0209"
+      ],
+      "responses": {
+        "good": "text_rc1_0210",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "memoryGrants": [],
+      "completesAct": false,
+      "disposition": "slice_excerpt"
+    },
+    {
+      "id": "enc_prince_warmth_excerpt",
+      "guestId": "guest_little_prince",
+      "requestId": "request_prince_warmth",
+      "intro": [
+        "text_rc1_0389",
+        "text_rc1_0390"
+      ],
+      "farewell": [
+        "text_rc1_0395"
+      ],
+      "responses": {
+        "good": "text_rc1_0329",
+        "weak": "text_rc1_0330",
+        "mismatch": "text_rc1_0331",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "memoryGrants": [],
+      "completesAct": false,
+      "disposition": "slice_excerpt"
+    }
+  ]
+}

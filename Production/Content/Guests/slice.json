@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "guests": [
+    {
+      "id": "guest_ordinary_postman",
+      "kind": "ordinary",
+      "displayTextId": "text_rc1_0207",
+      "visualBindingId": "visual_ordinary"
+    },
+    {
+      "id": "guest_little_prince",
+      "kind": "special",
+      "displayTextId": "text_prince_name",
+      "visualBindingId": "visual_prince"
+    }
+  ]
+}

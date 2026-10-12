@@ -10,4 +10,10 @@ Pre-flight interfaces: Task1 catalog/session/snapshot → Task2 loader definitio
 
 Task1: complete, standalone contracts 46/46 (25 inherited +21 new). RED: missing domain types (hg04-domain-red.log); regrip regression44/45 (hg04-regrip-red.log); missing actual-component trace API (hg04-trace-red.log). GREEN: hg04-domain-final.log. Accepted motion persists across regrips of the same batch; added liquid invalidates it. Mixed finite transfers conserve components/overflow, source identities remain exact, HOW/QUALITY/FIT stay independent, and Partial facts do not auto-Known. Native Unity/Player integration is still pending Task4; no runtime/feel PASS is claimed. C1 historical guard recorded once:680 files. A/B892,C967 and RC1/spec guards pass.
 
-Task2: pending. Task3: pending. Task4: pending. Task5: pending.
+Task1 commit: b9a2706.
+
+Task2: implementation complete; standalone contracts62/62 (16 content cases). hg04-content-red.log proves missing loader, hg04-content-first-green.log is GREEN. Eight authored JSON files generate one strict runtime bundle, with exact source hashes and file inventory. Source-adoption verification24/24. Native Editor bundle import remains part of Task4 integration. Official selected IBA pages reconfirmed2026-10-13; game approximations recorded in HG04_CONTENT_ADOPTION.md.
+
+Ruling: use the unchanged SRC-RC1-0395 sentence as the Prince excerpt's departure line, without selecting a final farewell branch — it is a suitable existing departure field and does not invent D09 — cost if wrong: owner HG07 may request different source selection/context.
+
+Task3: pending. Task4: pending. Task5: pending.

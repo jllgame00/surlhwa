@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "ingredients": [
+    {
+      "id": "whiskey",
+      "label": "위스키"
+    },
+    {
+      "id": "vermouth",
+      "label": "버무스"
+    },
+    {
+      "id": "water",
+      "label": "물"
+    },
+    {
+      "id": "rye_whiskey",
+      "label": "라이 위스키"
+    },
+    {
+      "id": "sweet_red_vermouth",
+      "label": "스위트 레드 버무스"
+    },
+    {
+      "id": "angostura_bitters",
+      "label": "앙고스투라 비터스"
+    },
+    {
+      "id": "gin",
+      "label": "진"
+    },
+    {
+      "id": "dry_vermouth",
+      "label": "드라이 버무스"
+    }
+  ]
+}

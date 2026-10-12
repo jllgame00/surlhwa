@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "cocktails": [
+    {
+      "id": "cocktail_seolya",
+      "name": "설야",
+      "tags": [
+        "softness",
+        "warmth"
+      ]
+    },
+    {
+      "id": "cocktail_manhattan",
+      "name": "Manhattan",
+      "tags": [
+        "warmth",
+        "bitterness"
+      ]
+    },
+    {
+      "id": "cocktail_dry_martini",
+      "name": "Dry Martini",
+      "tags": [
+        "clarity"
+      ]
+    }
+  ],
+  "recipes": [
+    {
+      "id": "recipe_test_stir",
+      "cocktailId": "cocktail_seolya",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "whiskey",
+          "ml": 59.14706
+        },
+        {
+          "ingredientId": "vermouth",
+          "ml": 29.57353
+        },
+        {
+          "ingredientId": "water",
+          "ml": 29.57353
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "glassware": "old_fashioned",
+      "optionalGarnish": false,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ]
+    },
+    {
+      "id": "recipe_manhattan",
+      "cocktailId": "cocktail_manhattan",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "rye_whiskey",
+          "ml": 50
+        },
+        {
+          "ingredientId": "sweet_red_vermouth",
+          "ml": 20
+        },
+        {
+          "ingredientId": "angostura_bitters",
+          "ml": 1
+        }
+      ],
+      "dashIngredient": "angostura_bitters",
+      "requiredGarnish": "cherry",
+      "glassware": "cocktail",
+      "optionalGarnish": false,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ]
+    },
+    {
+      "id": "recipe_dry_martini",
+      "cocktailId": "cocktail_dry_martini",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "gin",
+          "ml": 60
+        },
+        {
+          "ingredientId": "dry_vermouth",
+          "ml": 10
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "glassware": "cocktail",
+      "optionalGarnish": true,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ]
+    }
+  ]
+}

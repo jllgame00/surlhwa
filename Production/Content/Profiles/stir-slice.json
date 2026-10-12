@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "contentRevision": "slice_act1_stir_1",
+  "profile": {
+    "id": "slice_act1_stir",
+    "fixtureContext": "ACT 1 어린왕자 후속 방문의 짧은 발췌입니다. 이전 대답과 서비스 결과는 기록하지 않았습니다. ACT의 결말과 별의 기억은 이 장면에 포함되지 않습니다.",
+    "supply": [
+      "whiskey",
+      "vermouth",
+      "water",
+      "rye_whiskey",
+      "sweet_red_vermouth",
+      "angostura_bitters",
+      "gin",
+      "dry_vermouth"
+    ],
+    "known": [
+      {
+        "recipeId": "recipe_test_stir",
+        "provenance": "LEARN-SEOLYA"
+      },
+      {
+        "recipeId": "recipe_manhattan",
+        "provenance": "ARCH-SLICE-SEED / LEARN-MANHATTAN"
+      }
+    ],
+    "facts": [
+      {
+        "recipeId": "recipe_dry_martini",
+        "fact": "amount:gin",
+        "sourceIds": [
+          "SRC-RC1-0320"
+        ]
+      },
+      {
+        "recipeId": "recipe_dry_martini",
+        "fact": "amount:dry_vermouth",
+        "sourceIds": [
+          "SRC-RC1-0320"
+        ]
+      },
+      {
+        "recipeId": "recipe_dry_martini",
+        "fact": "method",
+        "sourceIds": [
+          "SRC-RC1-0323"
+        ]
+      },
+      {
+        "recipeId": "recipe_dry_martini",
+        "fact": "preparation",
+        "sourceIds": [
+          "SRC-RC1-0321"
+        ]
+      },
+      {
+        "recipeId": "recipe_dry_martini",
+        "fact": "garnish",
+        "sourceIds": [
+          "SRC-RC1-0321"
+        ]
+      }
+    ],
+    "encounters": [
+      "enc_ordinary13",
+      "enc_prince_warmth_excerpt"
+    ],
+    "completesAct": false,
+    "initialMemories": [],
+    "priorChoices": [],
+    "priorServices": []
+  }
+}
