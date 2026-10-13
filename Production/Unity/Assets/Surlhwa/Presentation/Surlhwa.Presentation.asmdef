@@ -1,1 +1,15 @@
-{"name":"Surlhwa.Presentation","rootNamespace":"Surlhwa.Presentation","references":["Surlhwa.Domain","Surlhwa.Application","Surlhwa.ContentIO","Unity.RenderPipelines.Universal.Runtime","Unity.RenderPipelines.Core.Runtime"]}
+{
+  "name": "Surlhwa.Presentation",
+  "rootNamespace": "Surlhwa.Presentation",
+  "references": [
+    "Surlhwa.Domain",
+    "Surlhwa.Application",
+    "Surlhwa.ContentIO",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.InputSystem",
+    "Unity.ugui",
+    "Unity.TextMeshPro",
+    "Unity.Collections"
+  ]
+}

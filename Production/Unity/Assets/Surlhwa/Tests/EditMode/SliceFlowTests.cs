@@ -64,6 +64,17 @@ namespace Surlhwa.Tests
             Assert.That(s.State.CompletedOccurrences.Count,Is.EqualTo(2)); Assert.That(s.State.ActComplete,Is.False);
             Assert.That(s.State.MemoryIds,Is.Empty); Assert.That(s.Knowledge.KnownReceipts.Count,Is.EqualTo(3));
         }
+        [Test] public void DiscardRestartsOnlyTransientBrew_AndCannotLeakHeldInputOrLoseFacts()
+        {
+            var s=Start(); ToBrew(s); var checkpoint=s.State; var attempt=s.Brew.Freeze().AttemptId;
+            s.ExecuteBrew(++serial,b=>b.BeginPour("gin",ContainerRole.Mixing)); s.UpdateBrew(1000000,false);
+            long id=++serial; Assert.That(s.DiscardBrew(id),Is.True);
+            Assert.That(s.State,Is.SameAs(checkpoint)); Assert.That(s.Brew.Freeze().AttemptId,Is.Not.EqualTo(attempt));
+            Assert.That(s.Brew.Container(ContainerRole.Mixing).TotalMl,Is.Zero); Assert.That(s.Brew.Freeze().Trace,Is.Empty);
+            Assert.That(s.DiscardBrew(id),Is.False); Assert.That(s.UpdateBrew(1000000,false),Is.False);
+            s.ReleaseHeldInput(); Make(s,"recipe_manhattan"); Advance(s);
+            Assert.That(s.DiscardBrew(++serial),Is.False); Assert.That(s.State.Services.Count,Is.EqualTo(1));
+        }
         [Test] public void ContinueBrewStartsEmpty_ButCommittedOutcomeAndReadingCursorSurvive()
         {
             var store=new MemoryStore(); var s=Start(store); ToBrew(s); Make(s,"recipe_manhattan");

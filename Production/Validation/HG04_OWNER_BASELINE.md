@@ -11,3 +11,5 @@ Approved next scope: HG04 Core Domain + Stir and the bounded complete Vertical S
 Narrative reconciliation, explicitly selected by owner: use Little Prince's Warmth follow-up as a disclosed ACT 1 Slice excerpt. ACT completion and MEM-01 remain unearned. No invented first-visit success, interpretation choice, farewell policy, or memory grant. Don Quixote in HG01–HG03 remains VISUAL_FIXTURE_ONLY. This owner ruling supersedes the QuixoteAlone/MEM-03 selection in Architecture 40/41/51; the authoritative corpus itself stays read-only.
 
 Implementation starts from clean production-rebuild at 32b5c64f6db36e30c29c20ae33c2b71f6dd1ec9a. Frozen RC1 and specification sources remain untouched. No new worktree/branch, push, merge, reset, stash, clean, or broad normalization.
+
+Latest owner scope limit: close and present HG04 before beginning HG05+. Completed domain/standalone validation is retained unless a real runtime change requires affected revalidation. Owner-interrupted native attempts remain separate, with no callback substitution.

@@ -1,1 +1,20 @@
-{"name":"Surlhwa.Editor","rootNamespace":"Surlhwa.Editor","references":["Surlhwa.Domain","Surlhwa.Application","Surlhwa.ContentIO","Surlhwa.Presentation","Unity.RenderPipelines.Universal.Runtime","Unity.RenderPipelines.Core.Runtime","Unity.RenderPipelines.Universal.Editor","Unity.RenderPipelines.Core.Editor"],"includePlatforms":["Editor"]}
+{
+  "name": "Surlhwa.Editor",
+  "rootNamespace": "Surlhwa.Editor",
+  "references": [
+    "Surlhwa.Domain",
+    "Surlhwa.Application",
+    "Surlhwa.ContentIO",
+    "Surlhwa.Presentation",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Editor",
+    "Unity.RenderPipelines.Core.Editor",
+    "Unity.InputSystem",
+    "Unity.ugui",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

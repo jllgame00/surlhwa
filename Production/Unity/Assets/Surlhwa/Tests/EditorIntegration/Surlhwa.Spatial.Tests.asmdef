@@ -1,1 +1,21 @@
-{"name":"Surlhwa.Spatial.Tests","references":["Surlhwa.Editor","Surlhwa.Presentation","Surlhwa.Application","Unity.RenderPipelines.Universal.Runtime"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"]}
+{
+  "name": "Surlhwa.Spatial.Tests",
+  "references": [
+    "Surlhwa.Editor",
+    "Surlhwa.Presentation",
+    "Surlhwa.Application",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Surlhwa.Domain",
+    "Surlhwa.ContentIO",
+    "Unity.InputSystem",
+    "Unity.ugui",
+    "Unity.TextMeshPro",
+    "Unity.InputSystem.TestFramework"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

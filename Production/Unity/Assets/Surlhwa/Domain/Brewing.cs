@@ -93,7 +93,10 @@ namespace Surlhwa.Domain
         private ContainerRole flowTarget; private BrewAction flowKind; private bool flow; private decimal remainder;
         private StirMotion motion; private int motionRevision;
         private long acceptedInterval;
+        private int flowGeneration,lastTraceFlow=-1; private bool fineFlow,lastTraceFine; private decimal flowIntensity,lastTraceIntensity;
         public bool FlowActive => flow; public bool StirActive => motion!=null;
+        public double StirAcceptedDegrees => motion?.Degrees ?? Get(ContainerRole.Mixing).Stamp?.Degrees ?? 0;
+        public string GarnishId => garnish;
         public int Revision { get; private set; }
         public BrewingSession(BartendingCatalog catalog,BrewingTuning tuning,IEnumerable<string> supplied)
         {
@@ -107,7 +110,19 @@ namespace Surlhwa.Domain
         private void CheckSupply(string ingredient)
         { if(ingredient==null || !catalog.Ingredients.Contains(ingredient) || !supply.Contains(ingredient)) throw new InvalidOperationException("Ingredient is not supplied: "+ingredient); }
         private void Record(BrewAction kind,string source,ContainerRole target,decimal accepted=0,decimal spilled=0,IDictionary<string,decimal> components=null)
-        { trace.Add(new PreparationAction(trace.Count+1,kind,source,target,accepted,spilled,Get(target).Revision,components,acceptedInterval)); Revision++; }
+        {
+            var prior=trace.Count>0 ? trace[trace.Count-1] : null;
+            if(acceptedInterval>0 && lastTraceFlow==flowGeneration && lastTraceFine==fineFlow && lastTraceIntensity==flowIntensity &&
+                prior!=null && prior.ElapsedMicroseconds>0 && prior.Kind==kind && prior.Source==source && prior.Target==target)
+            {
+                var amounts=prior.AcceptedByIngredient.ToDictionary(x=>x.Key,x=>x.Value,StringComparer.Ordinal);
+                if(components!=null) foreach(var a in components) BrewContainer.Add(amounts,a.Key,a.Value);
+                trace[trace.Count-1]=new PreparationAction(prior.Sequence,kind,source,target,prior.AcceptedMl+accepted,prior.SpilledMl+spilled,
+                    Get(target).Revision,amounts,checked(prior.ElapsedMicroseconds+acceptedInterval));
+            }
+            else trace.Add(new PreparationAction(trace.Count+1,kind,source,target,accepted,spilled,Get(target).Revision,components,acceptedInterval));
+            lastTraceFlow=acceptedInterval>0 ? flowGeneration : -1; lastTraceFine=fineFlow; lastTraceIntensity=flowIntensity; Revision++;
+        }
         public LiquidMovement Pour(string ingredient,ContainerRole target,decimal ml,BrewAction kind=BrewAction.Pour)
         {
             CheckSupply(ingredient); LiquidMath.Validate(ml); var c=Get(target);
@@ -172,12 +187,13 @@ namespace Surlhwa.Domain
             if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer) || (kind==BrewAction.Strain && (source!=ContainerRole.Mixing || target!=ContainerRole.Serving))) throw new ArgumentException("Invalid transfer binding.");
             StartFlow(); flowSource=source; flowIngredient=null; flowTarget=target; flowKind=kind;
         }
-        private void StartFlow() { if(flow || motion!=null) throw new InvalidOperationException("Another tool action is active."); flow=true; remainder=0; }
+        private void StartFlow() { if(flow || motion!=null) throw new InvalidOperationException("Another tool action is active."); flow=true; remainder=0; flowGeneration++; }
         public LiquidMovement UpdateFlow(long microseconds,decimal intensity,bool fine)
         {
             if(microseconds<0 || intensity<0 || intensity>1) throw new ArgumentOutOfRangeException(nameof(microseconds));
             if(!flow || microseconds==0 || intensity==0) return LiquidMovement.Empty();
             decimal rate=flowSource.HasValue ? (fine ? tuning.FineTransferRate : tuning.TransferRate) : (fine ? tuning.FinePourRate : tuning.PourRate);
+            fineFlow=fine; flowIntensity=intensity;
             decimal exact=rate*intensity*microseconds/1000000m+remainder,ml=LiquidMath.Down(exact); remainder=exact-ml;
             acceptedInterval=microseconds;
             try { return flowSource.HasValue ? Transfer(flowSource.Value,flowTarget,ml,flowKind) : Pour(flowIngredient,flowTarget,ml); }

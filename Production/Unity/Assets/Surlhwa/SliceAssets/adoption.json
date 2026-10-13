@@ -1,0 +1,92 @@
+[
+  {
+    "source": "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/PrinceStanding.png",
+    "sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610"
+  },
+  {
+    "source": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Seated.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/PrinceSeated.png",
+    "sha256": "94e62dec9216e7671768b409c6fe184ac5f897700a0e0c86a54edf127995b33e"
+  },
+  {
+    "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Hands/Grip.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/Grip.png",
+    "sha256": "67a78c8eae4e23b99a88cc6bd78b1c230c46dbe54c5bac560c284638e8983a2b"
+  },
+  {
+    "source": "Assets/Data/NotoSansKR-Regular.ttf",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/NotoSansKR-Regular.ttf",
+    "sha256": "8cbc9b353bb9ce848fd69bb6a507319dfacc659cf5fd643db5d88f3c4970e1dd"
+  },
+  {
+    "source": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk0.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/PrinceWalk0.png",
+    "sha256": "391f2db7b35fdceef7fb895285f929eccfbb74beefbd0d4fd23b020b7d455c43"
+  },
+  {
+    "source": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk1.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/PrinceWalk1.png",
+    "sha256": "8408478b328481a1101f5e024d4968c8ec2f61b365054c49b30e0553789b27a8"
+  },
+  {
+    "source": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk2.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/PrinceWalk2.png",
+    "sha256": "30ab352a5759f4a7a2ab877035d9405ef48549725c9b0018c589eae936d75a41"
+  },
+  {
+    "source": "Assets/_SURLHWA/Art/Characters/Motion/LittlePrince-Walk3.png",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/PrinceWalk3.png",
+    "sha256": "8408478b328481a1101f5e024d4968c8ec2f61b365054c49b30e0553789b27a8"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Ambience/RoomTone.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/RoomTone.wav",
+    "sha256": "bfe57c04d12a7d677ad0332ef10ee95d21115406446a80d83754a0c42f5adf90"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Ambience/WinterAir.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/WinterAir.wav",
+    "sha256": "10b31259e244534e00ac110d7f822dda03ca315f1f8e385a15e30cfe7f44b81b"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Bartending/Pour.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/Pour.wav",
+    "sha256": "e2af857310d182ba7af1cb10245045198773538209bc0182e5d284fa53668ec0"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Bartending/Stir.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/Stir.wav",
+    "sha256": "f38ee22820b07dbd62ed20b4b5d9952052ed29f2720f4f5188676e28cd110da2"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Bartending/Strain.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/Strain.wav",
+    "sha256": "9d980bec4bde68fa157693a7ff5406ca7052fc7ee913a61b170fe8612c898bf3"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Bartending/Ice.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/Ice.wav",
+    "sha256": "0876ada7902f487a23ea10628bead1f9185bc7eca567f6e47a416c413179f442"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Bartending/GlassSet.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/GlassSet.wav",
+    "sha256": "e7c503422f4354f8e4842c20c210e798e6c7b56efcf3d04c6d8072a955d963ac"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Foley/Seat.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/Seat.wav",
+    "sha256": "895a3194614d83512a606c267d2ceffdb6612941da9d2b6f4b01e9abdddb3977"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Foley/EntranceAir.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/EntranceAir.wav",
+    "sha256": "3327802477b569230bee71c71dd788d543a32937d34b50768dde1fa05738ba07"
+  },
+  {
+    "source": "Assets/_SURLHWA/Audio/PhaseO/Foley/FootLeft.wav",
+    "destination": "Production/Unity/Assets/Surlhwa/SliceAssets/FootLeft.wav",
+    "sha256": "4124f2bc12f7c487c59dab98f65abe2d82e48cbf4ff9b9f349289d944c212fb1"
+  }
+]

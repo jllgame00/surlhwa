@@ -37,6 +37,24 @@ namespace Surlhwa.Tests
             if(recipe=="recipe_manhattan" && cherry) s.Garnish("cherry","in_glass");
             return s;
         }
+        [Test] public void ContinuousFlowEvidenceIsBoundedWithoutLosingActualLiquidOrTime()
+        {
+            var s=Session(); s.BeginPour("gin",ContainerRole.Mixing);
+            for(int i=0;i<10000;i++) s.UpdateFlow(100,1m,false);
+            s.EndFlow(); s.BeginPour("water",ContainerRole.Mixing); s.UpdateFlow(100000,1m,false); s.EndFlow();
+            var trace=s.Freeze().Trace; Assert.That(trace.Count,Is.EqualTo(2));
+            Assert.That(trace[0].AcceptedMl,Is.EqualTo(30m)); Assert.That(trace[0].AcceptedByIngredient["gin"],Is.EqualTo(30m));
+            Assert.That(trace[0].ElapsedMicroseconds,Is.EqualTo(1000000)); Assert.That(trace[1].AcceptedMl,Is.EqualTo(3m));
+            Assert.That(s.Container(ContainerRole.Mixing).TotalMl,Is.EqualTo(33m));
+        }
+        [Test] public void CoalescedOverflowPreservesSpill_AndFineChangesRemainSeparate()
+        {
+            var s=Session(); s.Pour("gin",ContainerRole.Mixing,290); s.BeginPour("water",ContainerRole.Mixing);
+            s.UpdateFlow(1000000,1m,false); s.UpdateFlow(1000000,1m,false); s.UpdateFlow(100000,1m,true); s.EndFlow();
+            var trace=s.Freeze().Trace; Assert.That(trace.Count,Is.EqualTo(3));
+            Assert.That(trace[1].AcceptedMl,Is.EqualTo(10m)); Assert.That(trace[1].SpilledMl,Is.EqualTo(50m));
+            Assert.That(trace[1].ElapsedMicroseconds,Is.EqualTo(2000000)); Assert.That(trace[2].SpilledMl,Is.EqualTo(.5m));
+        }
         [Test] public void FiniteJiggerOverflowConservesAllLiquid()
         {
             var s=Session(); s.Pour("gin",ContainerRole.Jigger,60m);

@@ -60,6 +60,11 @@ namespace Surlhwa.Application
             if(!CanInteract || input.HeldBlocked || State.Phase!=SlicePhase.Brewing) { Brew?.CancelInput(); return false; }
             Brew.UpdateFlow(microseconds,1m,fine); return true;
         }
+        public bool DiscardBrew(long eventId)
+        {
+            if(!input.Consume(eventId) || !CanInteract || State.Phase!=SlicePhase.Brewing) return false;
+            CancelHeld(); Brew=new BrewingSession(Content.Catalog,Content.Tuning,Content.Profile.Supply); return true;
+        }
         public async Task<bool> TickAsync(double seconds)
         {
             if(double.IsNaN(seconds) || double.IsInfinity(seconds) || seconds<0) throw new ArgumentOutOfRangeException(nameof(seconds));

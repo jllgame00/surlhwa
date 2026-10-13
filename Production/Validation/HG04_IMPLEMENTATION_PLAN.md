@@ -67,9 +67,9 @@
 
 **Interfaces:** Consumes Task3 read model and semantic commands. Input System events pass through production adapter; UI has one modal/focus owner. Tool views show actual volume/tint/ice/garnish/stir angle. Audio follows accepted flow/motion and stops on release/cancel/dispose. Logical arrival/departure progresses without animation/audio completion callbacks.
 
-- [ ] RED: real adapter Pour/release/modal/focus; one physical event consumes one line; UI projection; missing presentation fallback; one EventSystem/AudioListener; same domain result for flat/shallow tool views; sprite contacts; no clipping/counterfeit fill.
-- [ ] Build isolated Slice scene from locked C1 composition; bind identifiable Little Prince source art with provenance, 2D hands/grips, shallow tools, Korean licensed font, restrained room/winter/physical audio and silence. No final-art claim.
-- [ ] Simulated production-input recipe/flow checks, native Unity suite/build; actual rendered review at720p/1080p. Commit.
+- [x] RED: real adapter Pour/release/modal/focus; one physical event consumes one line; UI projection; missing presentation fallback; one EventSystem/AudioListener; same domain result for flat/shallow tool views; sprite contacts; no clipping/counterfeit fill.
+- [x] Build isolated Slice scene from locked C1 composition; bind identifiable Little Prince source art with provenance, 2D hands/grips, shallow tools, Korean licensed font, restrained room/winter/physical audio and silence. No final-art claim.
+- [x] Simulated production-input recipe/flow checks, native Unity suite/build; actual rendered review at720p/1080p. Commit.
 
 ### Task 5: Complete evidence and owner handoff
 
