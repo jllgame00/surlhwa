@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "scope": "Serialized C1 retention, not subjective acceptance",
+  "retainedBlocks": 1457,
+  "changedRetainedBlocks": [
+    "1219253514",
+    "1382161197",
+    "9223372036854775807"
+  ],
+  "removedBlocks": 25,
+  "addedBlocks": 26,
+  "allowedChanges": [
+    "root child list",
+    "camera AudioListener reference",
+    "SceneRoots list"
+  ],
+  "c1Sha256": "b1429e1b0290969a7cf3053cffb1d483411970c1dda8f1f8daa147563cd64dc8",
+  "sliceSha256": "8e8e4fdc3747b7bf7bcd8f631097fa9fe26e6460310e870c9572b3f781dd6e5a",
+  "nativeSpatialEvidence": "Evidence/hg04-slice-spatial.xml (retrieved completed93/93; no suite rerun)"
+}

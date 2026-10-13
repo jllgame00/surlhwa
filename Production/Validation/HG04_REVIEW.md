@@ -17,3 +17,5 @@ One fresh whole-branch reviewer (`hg04_review`) reviewed source, serialized asse
 The final source recheck reported no remaining blocking source finding within the reviewed HG04 scope. Native OS coverage, exact final evidence inventory, performance acceptance, and subjective gates are separate checks. Review is not proof that untested behavior works.
 
 Retained limits: actual GPU/main-thread time and physical input latency are not measured; inherited art remains provisional; human bartending feel and later gates are unapproved. Owner-interrupted input evidence is preserved without assigning a gameplay verdict.
+
+Final evidence consistency recheck: reviewer inspected the18-run/161-capture manifest, all23 native ownership observations, native file hashes and normal exit0. No significant inconsistency found. HG04_BLOCKED remains accurate for missing native keyboard/fullF01 evidence; no architecture revision or new blocking source finding is indicated. This was read-only, without rerunning tests or current-inventory validation.

@@ -1,0 +1,41 @@
+{
+  "status": "PARTIAL_NATIVE_COVERAGE",
+  "gate": "HG04_BLOCKED",
+  "attempt": "hg04-native-owned-02",
+  "processId": 39584,
+  "ownedObservations": 23,
+  "pointerVerified": [
+    "New Game",
+    "one line per click",
+    "arrival/request/brewing progression",
+    "0.50001ml pour and release",
+    "Guide open/close without extra liquid",
+    "discard with unchanged checkpoint6"
+  ],
+  "keyboard": "Return requested through native OS tool; Enter not observed; menu unchanged. Delivery/root cause unresolved. No callbacks or synthetic devices substituted.",
+  "fullF01": "NOT_VERIFIED: supported automation has no sustained key hold plus circular trajectory; no native full drink/service/Continue claim",
+  "unexpectedObservedKeys": [
+    "LeftAlt",
+    "NumLock",
+    "NumLock",
+    "LeftAlt",
+    "NumLock",
+    "NumLock"
+  ],
+  "unexpectedKeysNote": "Raw log retained; origin not attributed. These are not a requested Enter or gameplay success.",
+  "interference": "No ownership change recorded before intentional exit; previous owner-Escape attempt remains separately interrupted",
+  "exitCode": 0,
+  "files": {
+    "final-owned-observation.json": "974e6c74aa6b1d9bd2536613e4b95dc0159ce93e2fc13e53ed4d5a8e24ba07f9",
+    "inventory.json": "adeb370885abc0395aa9bb340bad1e0e1789f9bfa3f05bdb7f5b5851fa794b92",
+    "native-attempt.json": "ceaf841defba481a24e7ef40d0f5f17072b0a0c649737a395b72a6525ac88851",
+    "native-input-observed.jsonl": "36a967585635ddccd2dff02a8f622b2d6230fbfe929923c6027d5b08e24dacc9",
+    "native-pointer-discard.png": "d9c3477059cfc4591c4fa7f351094146184d228d35e2d2ad65ad1b42521ca8f5",
+    "native-pointer-guide.png": "c32e8feab6f72c6b39a58fd9b05a3a0efdcd6e7379ae3e1b19b5193ad002095a",
+    "observation.json": "919a1c1c4a10a279726f4c9d180eb821a2260df1284d198585121c9eec3b009c",
+    "ownership-actions.jsonl": "ca8b6988f2763f6434ffd16432018433189a5829bcfe276fd51879d2bc5cf6e9",
+    "Player.log": "36e6b6782fb7f219dc13707db2cec5d30ed2de990cf04158f2618339a7a3bd44",
+    "process-ended.json": "9b15d38770cd0782362a825044961ed4b7a04d04e4dd5af74ed15c81a0126903",
+    "save-stages.csv": "c4d10715e0b6dae5afc8dbc862b494437b2adfd7c764e3edef29725e9904ab87"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "status": "PASS",
+  "scope": "Player simulated-input/rendered artifacts only; does not approve native OS input or human feel",
+  "runs": [
+    {
+      "folder": "hg04-final-checkpoint-brew",
+      "fixture": "checkpoint-brew",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 3,
+      "runId": "e24eb3568444418fba6748ddf87e503f",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.66809844970703,
+      "maxSaveMs": 45.047900000000006
+    },
+    {
+      "folder": "hg04-final-checkpoint-farewell",
+      "fixture": "manhattan",
+      "stopAt": "farewell",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 8,
+      "runId": "933814094c6644c1bc7961bc78c222f5",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.668203353881836,
+      "maxSaveMs": 45.396300000000004
+    },
+    {
+      "folder": "hg04-final-checkpoint-intro",
+      "fixture": "manhattan",
+      "stopAt": "intro",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 2,
+      "runId": "6661a4c262f84b4790355c4b4bede4dd",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.70200538635254,
+      "maxSaveMs": 42.9765
+    },
+    {
+      "folder": "hg04-final-checkpoint-result",
+      "fixture": "manhattan",
+      "stopAt": "result",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 7,
+      "runId": "a33f4a28efce4173a7d10bfc6f40e060",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.667800903320312,
+      "maxSaveMs": 43.507200000000005
+    },
+    {
+      "folder": "hg04-final-continue-brew",
+      "fixture": "continue",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 2,
+      "runId": "e1419e534d65420db5950f89ed5e6c16",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 59.043601989746094,
+      "maxSaveMs": 0.0
+    },
+    {
+      "folder": "hg04-final-continue-complete",
+      "fixture": "continue",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 2,
+      "runId": "e35fde9d4eea40f485d50405ceb6ab1a",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 37.99070358276367,
+      "maxSaveMs": 0.0
+    },
+    {
+      "folder": "hg04-final-continue-farewell",
+      "fixture": "continue",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 2,
+      "runId": "5948e019448b48909a99caaf26d4648b",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 39.2212028503418,
+      "maxSaveMs": 0.0
+    },
+    {
+      "folder": "hg04-final-continue-intro",
+      "fixture": "continue",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 2,
+      "runId": "466360faa4524292a6e863f338229e4d",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 346.6517028808594,
+      "maxSaveMs": 0.0
+    },
+    {
+      "folder": "hg04-final-continue-result",
+      "fixture": "continue",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 2,
+      "runId": "f1f001270ada4f3cb3b90d567f86f796",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 38.390602111816406,
+      "maxSaveMs": 0.0
+    },
+    {
+      "folder": "hg04-final-dry-1080",
+      "fixture": "dry",
+      "stopAt": "",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "captures": 18,
+      "runId": "624346401ae3442785b2a28c16407b18",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.667898178100586,
+      "maxSaveMs": 42.455400000000004
+    },
+    {
+      "folder": "hg04-final-lifecycle-720",
+      "fixture": "lifecycle",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 5,
+      "runId": "4d9e61330b3b4781913d613b6cbc2741",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.66809844970703,
+      "maxSaveMs": 44.404900000000005
+    },
+    {
+      "folder": "hg04-final-manhattan-1080-no-media",
+      "fixture": "manhattan",
+      "stopAt": "",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "captures": 17,
+      "runId": "ee9db8f51ebd47a2b3370e869dd530e8",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.667800903320312,
+      "maxSaveMs": 40.9908
+    },
+    {
+      "folder": "hg04-final-manhattan-media-720",
+      "fixture": "manhattan",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 17,
+      "runId": "88312479dd844523952ccdc99e60aeda",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 26.53800392150879,
+      "maxSaveMs": 45.874900000000004
+    },
+    {
+      "folder": "hg04-final-missing-actor-720",
+      "fixture": "missing-actor",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 17,
+      "runId": "9ad46bd3439b49a5ac89510627eeeb5e",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.668296813964844,
+      "maxSaveMs": 42.508300000000006
+    },
+    {
+      "folder": "hg04-final-save-error-720",
+      "fixture": "save-error",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 6,
+      "runId": "7504da54931546c6b605a10dff945349",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.6830997467041,
+      "maxSaveMs": 44.2393
+    },
+    {
+      "folder": "hg04-final-seolya-720",
+      "fixture": "seolya",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 17,
+      "runId": "0ad8ca87c101430fb71799953efa7521",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.667800903320312,
+      "maxSaveMs": 43.138200000000005
+    },
+    {
+      "folder": "hg04-final-unknown-720",
+      "fixture": "unknown",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 17,
+      "runId": "89173dec90b74353b9581520e5cecbea",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.669998168945312,
+      "maxSaveMs": 44.423700000000004
+    },
+    {
+      "folder": "hg04-final-weak-720",
+      "fixture": "weak",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 17,
+      "runId": "3fd7712d2b1f4223b393229f932ceed4",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.66809844970703,
+      "maxSaveMs": 45.7674
+    }
+  ],
+  "sourceSha256": "1101b4cf0a62c60e7f161f6fc7e01eed7a6d0af1160b8a53f3aef89d995f60be",
+  "playerSha256": "f66f9c1f42233db0af1e65681b2f9edd366ad38a3caefdae37e356a7ec671f87"
+}

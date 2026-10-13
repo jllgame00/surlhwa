@@ -77,8 +77,10 @@
 
 **Interfaces:** Consumes exact built Player/content/tuning/fixture hashes and observable production diagnostic snapshots; never writes gameplay state after fixture setup.
 
-- [ ] Fresh domain and simulated production-input F01–F05 with three recipes/two guests/save boundaries; preserve failures separately.
+- [x] Preserve completed domain validation per owner instruction; final simulated production-input F01–F05 cover three recipes/two guests/save boundaries. Failed attempts stay separate.
 - [ ] Native OS input representative flows and release/modal/reading/Continue regressions, accurately labelled;720p/1080p UI/tool/character captures and clips.
-- [ ] Record Player frame/memory/transition/save distributions,60s idle and repeated lifecycle samples; disclose hardware/limits. No inherited A/B rerun or direction reopening.
-- [ ] Verify A/B/C/C1 evidence, RC165 dirty paths/index and74 specification hashes. Source/Player full inventory and reproducible build identity.
-- [ ] One fresh technical whole-branch review, fix objective significant findings with RED→GREEN; record human gates as review-pending. Commit handoff; keep branch local; no campaign expansion.
+- [x] Record Player frame/memory/transition/save distributions,60s idle and repeated lifecycle samples; disclose hardware/limits. No inherited A/B rerun or direction reopening.
+- [x] Verify A/B/C/C1 evidence, RC165 dirty paths/index and74 specification hashes. Source/Player full inventory and reproducible build identity.
+- [x] One fresh technical whole-branch review, fix objective significant findings with RED→GREEN; record human gates as review-pending. Commit handoff; keep branch local; no campaign expansion.
+
+Closure: HG04_BLOCKED for incomplete native keyboard/full F01 evidence only. See HG04_CLOSURE.md. Native pointer coverage is verified; the native evidence checkbox remains open. HG05+ has not begun.
