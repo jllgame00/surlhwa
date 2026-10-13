@@ -28,7 +28,7 @@ for row in report['runs']:
     prefix = 'Evidence/' + row['folder'] + '/'
     for name in ('run.json','expected-run.json','process.json','inventory.json'):
         assert (folder/name).is_file()
-        parts.append(f'<a href="{prefix+name}">{name}</a> ')
+        parts.append(f'<a href="{prefix+name}">{name}</a>')
     clip = folder / 'native-playthrough.mp4'
     if clip.is_file():
         media = json.loads((folder/'media.json').read_text(encoding='utf-8'))
