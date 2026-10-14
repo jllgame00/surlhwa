@@ -1,5 +1,5 @@
 {
-  "generatedUtc": "2026-10-14T14:22:54.026790+00:00",
+  "generatedUtc": "2026-10-14T14:57:11.152660+00:00",
   "status": "NATIVE_CLOSURE_PENDING",
   "ownerGate": "NOT_PRESENTED",
   "independentRequirements": {
@@ -142,6 +142,12 @@
       "status": "ENVIRONMENT_INTERRUPTED",
       "boundary": "Expected control 도감  Tab",
       "reason": "ENVIRONMENT_INTERRUPTED: {'reason': 'Unrelated physical or external input detected', 'message': 512, 'flags': 0, 'tag': 0, 'own': False, 'x': 2154, 'y': 401}"
+    },
+    {
+      "name": "gate2-native-act1-05",
+      "status": "ENVIRONMENT_INTERRUPTED",
+      "boundary": "Harness prepared; no Player input issued",
+      "reason": "ENVIRONMENT_INTERRUPTED: process/window ownership, target coverage, or client size changed: {\"pid\": 31688, \"hwnd\": 1246122, \"foregroundHwnd\": 5900588, \"foregroundPid\": 26404, \"region\": [1080, 371, 1280, 720], \"clientPoint\": [640, 360], \"screenPoint\": [1720, 731], \"hitRoot\": 5900588, \"activeGesture\": null, \"gestureStartRegion\": null}"
     }
   ],
   "unityTests": [

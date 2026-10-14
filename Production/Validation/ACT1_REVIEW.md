@@ -1,6 +1,6 @@
 # Gate 2 — complete ACT 1 review preparation
 
-Status: NATIVE_CLOSURE_PENDING. Independent ACT 1 implementation, review fixes, offscreen validation and review preparation are complete. Native desktop input is paused at the owner's request until the owner signals readiness. This is not Gate 2 technical closure or owner approval. ACTs 2–7 have not started.
+Status: NATIVE_CLOSURE_ENVIRONMENT_BLOCKED. Independent ACT 1 implementation, review fixes, offscreen validation and review preparation are complete. Native desktop input is paused at the owner's request until the owner signals readiness. This is not Gate 2 technical closure or owner approval. ACTs 2–7 have not started.
 
 | Current final Player evidence | Checks | Captures | Result |
 | --- | ---: | ---: | --- |
@@ -57,3 +57,5 @@ Native closure remains pending. Earlier attempts `gate2-native-act1-01` and `-02
 Technical evidence includes the retained 149/149 standalone domain/application/content checks, 172/172 affected Unity domain/input/presentation/retained-Slice integration checks, and now 9/9 native-observer guard tests that execute no desktop input. Only the focused observer tests were rerun after the harness-only fix. It also includes actual Player services and saves, full source/Player inventories, source adoption validation and preservation hashes. All six Important findings from the [fresh code review](ACT1_FINAL_REVIEW.md) have failing-then-passing regressions. Failed offscreen attempts remain retained; a partial 17-service trace whose fixture later fails is not labelled PASS.
 
 The [performance baseline](ACT1_PERFORMANCE.md) names the local hardware, workspace storage, instrumentation and sampling limits. Results include rendering/capture overhead. They are not a certified minimum specification, GPU profiler measurement, or final release optimization approval. Full seven-ACT, paired-character, seven-memory and long-session profiling belongs to later authorized expansion; those systems are not implemented before Gate 2.
+
+Final clean-environment attempt `gate2-native-act1-05` stopped before any input: Player PID 31688/HWND 1246122 did not own foreground or target coverage; PID 26404/HWND 5900588 did. No untagged event was recorded because the initial ownership check stopped the attempt before arming. Source/Player inventory remained unchanged. The owner-directed single attempt is exhausted; no further native retry until environment diagnosis. Exact evidence is retained in `Evidence/gate2-native-act1-05/native-events.jsonl` and `native-result.json`.
