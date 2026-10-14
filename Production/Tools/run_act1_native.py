@@ -15,6 +15,7 @@ import subprocess
 import sys
 import threading
 import time
+import traceback
 import uuid
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -235,10 +236,19 @@ def hook_thread():
 
 def observe():
     global last_observed
-    try:
-        o = json.loads(shared_read(OUT / 'observation.json'))
-    except (FileNotFoundError, json.JSONDecodeError, PermissionError):
-        return None
+    deadline=time.perf_counter()+.1
+    while True:
+        guard()
+        try:
+            o = json.loads(shared_read(OUT / 'observation.json'))
+            break
+        except (FileNotFoundError, json.JSONDecodeError, PermissionError) as error:
+            log('observation_read_retry',error=type(error).__name__)
+            if time.perf_counter()>=deadline:
+                raise RuntimeError('HARNESS_OBSERVATION_UNAVAILABLE: no readable publication within 100 ms') from error
+            # Read-only retry across atomic replacement; never reuse a cached observation,
+            # send substitute input or relax foreground/active-gesture ownership checks.
+            time.sleep(.005)
     try:
         published=dt.datetime.fromisoformat(o['observedUtc'].replace('Z','+00:00'))
         age=(dt.datetime.now(dt.timezone.utc)-published).total_seconds()
@@ -509,6 +519,7 @@ try:
     result.update(status='PASS',services=17,lastConfirmedBoundary='Complete native ACT 1, all four methods, earned glowing star',finishedUtc=utc())
     print('ACT1_NATIVE_COMPLETE',flush=True)
 except Exception as e:
+    (OUT/'failure-traceback.txt').write_text(traceback.format_exc(),encoding='utf-8')
     result.update(status='ENVIRONMENT_INTERRUPTED' if 'ENVIRONMENT_INTERRUPTED' in str(e) else 'BLOCKED',lastConfirmedBoundary=boundary,firstMissingOrIncorrectBoundary=str(e),finishedUtc=utc())
     print(json.dumps(result,ensure_ascii=False),flush=True)
 finally:

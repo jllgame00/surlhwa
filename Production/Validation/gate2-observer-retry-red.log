@@ -1,0 +1,33 @@
+Failed to find real location of C:\Users\surlw\AppData\Local\Programs\Python\Python313\python.exe
+.F...F..E
+======================================================================
+ERROR: test_transient_atomic_publication_gap_returns_a_validated_observation (__main__.ObservationGuardTests.test_transient_atomic_publication_gap_returns_a_validated_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 37, in test_transient_atomic_publication_gap_returns_a_validated_observation
+    self.assertEqual(self.g['observe']()['processId'],42)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+FAIL: test_focus_change_during_read_retry_stops_immediately (__main__.ObservationGuardTests.test_focus_change_during_read_retry_stops_immediately)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 51, in test_focus_change_during_read_retry_stops_immediately
+    with self.assertRaisesRegex(RuntimeError,'ENVIRONMENT_INTERRUPTED'): self.g['observe']()
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_persistent_missing_observation_fails_closed_with_named_boundary (__main__.ObservationGuardTests.test_persistent_missing_observation_fails_closed_with_named_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 42, in test_persistent_missing_observation_fails_closed_with_named_boundary
+    with self.assertRaisesRegex(RuntimeError,'HARNESS_OBSERVATION_UNAVAILABLE'): self.g['observe']()
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.052s
+
+FAILED (failures=2, errors=1)

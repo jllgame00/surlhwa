@@ -1,5 +1,5 @@
 {
-  "generatedUtc": "2026-10-14T13:30:43.626887+00:00",
+  "generatedUtc": "2026-10-14T14:22:54.026790+00:00",
   "status": "NATIVE_CLOSURE_PENDING",
   "ownerGate": "NOT_PRESENTED",
   "independentRequirements": {
@@ -130,6 +130,18 @@
       "status": "ENVIRONMENT_INTERRUPTED",
       "boundary": "Fresh foreground menu",
       "reason": "ENVIRONMENT_INTERRUPTED: {'reason': 'Unrelated physical or external input detected', 'message': 512, 'flags': 0, 'tag': 0, 'own': False, 'x': 1834, 'y': -495}"
+    },
+    {
+      "name": "gate2-native-act1-03",
+      "status": "BLOCKED",
+      "boundary": "Selected gin",
+      "reason": "'NoneType' object is not subscriptable"
+    },
+    {
+      "name": "gate2-native-act1-04",
+      "status": "ENVIRONMENT_INTERRUPTED",
+      "boundary": "Expected control 도감  Tab",
+      "reason": "ENVIRONMENT_INTERRUPTED: {'reason': 'Unrelated physical or external input detected', 'message': 512, 'flags': 0, 'tag': 0, 'own': False, 'x': 2154, 'y': 401}"
     }
   ],
   "unityTests": [
