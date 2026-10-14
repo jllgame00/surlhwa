@@ -91,7 +91,12 @@ def build(source_root):
     intro=[line(source(n,'narration' if n==381 else 'spoken'),complete_facts('recipe_manwol',n) if n==385 else facts('recipe_manwol',['preparation'],n) if n==386 else None) for n in range(381,387)]
     eid=encounter('enc_rc1_06',2,'guest_little_prince',intro,target='cocktail_manwol',prince='First',summary=source(432,'request_summary')); slot(eid)
     def discovery(n,night,rid,cid,a,b,guest='guest_repairer'):
-        eid=encounter(f'enc_rc1_{n:02d}',night,guest,[line(source(a),complete_facts(rid,a)),line(source(b),facts(rid,['preparation','garnish'],b))],
+        recipe=next(r for r in recipes if r['id']==rid)
+        late=recipe.get('lateIngredient')
+        # Grant only the part of this authored lesson that has actually been consumed.
+        first=['identity']+([] if rid=='recipe_manhattan' else ['method'])+['amount:'+x['ingredientId'] for x in recipe['amounts'] if x['ingredientId']!=late]
+        second=['preparation','garnish']+(['method'] if rid=='recipe_manhattan' else [])+(['amount:'+late] if late else [])
+        eid=encounter(f'enc_rc1_{n:02d}',night,guest,[line(source(a),facts(rid,first,a)),line(source(b),facts(rid,second,b))],
                       target=cid,required=rid,summary=authored('text_order_'+rid,next(c['name'] for c in cocktails if c['id']==cid),'request_summary','SURLHWA_CANON/31_CURRENT_AND_ORIGINAL_COCKTAILS.md','Selected canonical recipe title.'))
         alt=encounter(f'enc_rc1_{n:02d}_known',night,guest,[line(normal_intro['warmth'])]); slot(eid,alt,rid)
     discovery(7,3,'recipe_negroni','cocktail_negroni',402,403)

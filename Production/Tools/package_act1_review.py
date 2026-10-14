@@ -19,7 +19,8 @@ for folder in sorted(evidence.glob('gate2-player-*')):
         current=audit.returncode==0
         status='PASS_CURRENT' if current else 'SUPERSEDED_PASS'
     elif status=='PASS': status='INCOMPLETE_PROCESS_EVIDENCE'
-    records.append(dict(name=folder.name,status=status,checks=len(r.get('checks',[])),captures=r.get('captures',0),errors=r.get('errors',[]),tier=r.get('tier'),current=current))
+    expected=read(folder/'expected-run.json') if (folder/'expected-run.json').exists() else {}
+    records.append(dict(name=folder.name,status=status,fixture=expected.get('fixture'),height=expected.get('height'),checks=len(r.get('checks',[])),captures=r.get('captures',0),errors=r.get('errors',[]),tier=r.get('tier'),current=current))
     if not current: continue
     stills=[x for x in sorted(folder.glob('*.png')) if any(t in x.name for t in ['codex-initial','codex-clues','prince-intro','prince-choice','prepared-5-','prepared-6-','prepared-13-','prince-farewell','earned-memory','codex-known','settings-large'])]
     cards=''.join(f'<figure><a href="{href(x)}"><img loading="lazy" src="{href(x)}" alt="{html.escape(x.stem)}"></a><figcaption>{html.escape(x.stem)}</figcaption></figure>' for x in stills)
@@ -27,7 +28,7 @@ for folder in sorted(evidence.glob('gate2-player-*')):
     if media.exists() and read(media).get('status')=='PASS':
         for x in sorted(folder.glob('*.mp4')):
             clips+=f'<figure><video controls preload="metadata" src="{href(x)}"></video><figcaption>{html.escape(x.stem)} · Unity renders/audio; simulated production input</figcaption></figure>'
-    sections.append(f'<section><h2>{html.escape(folder.name)}</h2><p>{len(r.get("checks",[]))} checks · {r.get("captures",0)} captures · exact current source/Player inventory</p><p>{link(report,"Result")} · {link(inv,"964-file inventory")}</p><div class="grid">{cards}{clips}</div></section>')
+    sections.append(f'<section><h2>{html.escape(folder.name)}</h2><p>{len(r.get("checks",[]))} checks · {r.get("captures",0)} captures · exact current source/Player inventory</p><p>{link(report,"Result")} · {link(inv,str(len(read(inv)["files"]))+"-file inventory")}</p><div class="grid">{cards}{clips}</div></section>')
     frames=sorted(r.get('frames',[]))
     if frames:
         q=lambda f:frames[min(len(frames)-1,int((len(frames)-1)*f))]
@@ -43,11 +44,15 @@ for row in native:
     if row['status']=='PASS' and inv.exists() and audit.exists() and read(audit).get('exitCode')==0:
         native_ready=subprocess.run([sys.executable,str(root/'Tools/act1_inventory.py'),'verify',str(inv)],capture_output=True).returncode==0
 tests=[]
-for name in ['gate2-integration-green-03']:
+for name in ['gate2-final-review-green-02']:
     path=evidence/(name+'.xml')
     if path.exists():
         x=ET.parse(path).getroot(); tests.append(dict(name=name,total=int(x.attrib['total']),passed=int(x.attrib['passed']),failed=int(x.attrib['failed'])))
-manifest=dict(generatedUtc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status='AWAITING_FINAL_REVIEW_AND_NATIVE_CLOSURE',ownerGate='NOT_PRESENTED',nativeReady=native_ready,playerRuns=records,nativeRuns=native,unityTests=tests,performance=performance,presentationDebt='PD01–PD11 OPEN; no final owner approval',scope='ACT 1 only; ACTs 2–7 not started')
+requirements={key:any(r['current'] and r['fixture']==fixture and (height is None or r['height']==height) for r in records) for key,fixture,height in [('open720','open',720),('open1080','open',1080),('quietFarewell','quiet',None),('completedContinue','continue',None)]}
+requirements['finalReviewRegressions']=bool(tests) and all(t['failed']==0 and t['passed']==t['total'] for t in tests)
+requirements['recordedMedia']=any(r['current'] and (evidence/r['name']/'media.json').exists() and read(evidence/r['name']/'media.json').get('status')=='PASS' for r in records)
+status='READY_FOR_OWNER_REVIEW' if all(requirements.values()) and native_ready else 'NATIVE_CLOSURE_PENDING' if all(requirements.values()) else 'INDEPENDENT_VALIDATION_IN_PROGRESS'
+manifest=dict(generatedUtc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status=status,ownerGate='NOT_PRESENTED',independentRequirements=requirements,nativeReady=native_ready,playerRuns=records,nativeRuns=native,unityTests=tests,performance=performance,presentationDebt='PD01–PD11 OPEN; no final owner approval',scope='ACT 1 only; ACTs 2–7 not started')
 (validation/'Manifests/gate2-review.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
 rows=''.join(f'<tr><td>{html.escape(r["name"])}</td><td>{html.escape(r["status"])}</td><td>{r["checks"]}</td><td>{r["captures"]}</td></tr>' for r in records)
 nrows=''.join(f'<tr><td>{html.escape(r["name"])}</td><td>{html.escape(r["status"])}</td><td>{html.escape(r.get("reason") or "")}</td></tr>' for r in native)

@@ -12,8 +12,8 @@ namespace Surlhwa.Presentation
     public sealed class CampaignUi : MonoBehaviour
     {
         private CampaignController owner; private TMP_FontAsset font; private RectTransform root;
-        private GameObject welcome,dialogue,brewing,ingredients,modal,requestPanel,choicePanel,gesture;
-        private TextMeshProUGUI speaker,body,request,measurement,status,title,gestureText;
+        private GameObject welcome,dialogue,brewing,ingredients,modal,requestPanel,choicePanel;
+        private TextMeshProUGUI speaker,body,request,measurement,status,title;
         private Button next,continueButton; private readonly Stack<GameObject> focus=new Stack<GameObject>();
         private readonly List<GameObject> methodPanels=new List<GameObject>(); private int method,recipePage;
         private string shownModal; public string MenuModal; public string VisibleModal=>shownModal;
@@ -64,11 +64,11 @@ namespace Surlhwa.Presentation
             Text(methodPanels[1].transform,new Rect(6,0,990,25),"서빙 잔에 직접 담고 가볍게 섞습니다. 지거를 쓸 때는 이동할 대상을 먼저 고릅니다.",14,muted);
             Hold(methodPanels[2].transform,new Rect(6,29,124,38),"따르기 Q","pour"); Cmd(methodPanels[2].transform,138,"얼음 I","ice"); Cmd(methodPanels[2].transform,270,"뚜껑 L","lid");
             Hold(methodPanels[2].transform,new Rect(402,29,144,38),"흔들기 K","shake"); Hold(methodPanels[2].transform,new Rect(554,29,144,38),"잔에 옮기기 T","shaker_transfer"); Hold(methodPanels[2].transform,new Rect(706,29,144,38),"Splash X","splash");
-            Text(methodPanels[2].transform,new Rect(6,0,990,25),"뚜껑을 닫고 K를 누른 채 좌우로 흔듭니다. 뚜껑을 열고 옮긴 뒤 소다를 더합니다.",14,muted);
+            Text(methodPanels[2].transform,new Rect(6,0,990,25),"뚜껑을 닫고 K를 누른 채 화면 중앙에서 좌우로 흔듭니다. 뚜껑을 열고 T로 잔에 옮깁니다.",14,muted);
+            Text(methodPanels[2].transform,new Rect(862,29,124,38),"←  K  →",18,ink).alignment=TextAlignmentOptions.Center;
             Hold(methodPanels[3].transform,new Rect(6,29,174,38),"지거에 따르기 Q","pour"); Hold(methodPanels[3].transform,new Rect(188,29,190,38),"층 쌓기 F","float");
             Text(methodPanels[3].transform,new Rect(6,0,990,25),"지거로 양을 재고 F를 누릅니다. 낮게, 천천히 — 오른쪽은 유량, 위쪽은 높이입니다.",14,muted);
-            gesture=Panel(root,new Rect(512,252,256,216),new Color(.07f,.09f,.10f,.75f));
-            gestureText=Text(gesture.transform,new Rect(12,12,232,192),"",16,ink); gestureText.alignment=TextAlignmentOptions.Center;
+            Text(methodPanels[3].transform,new Rect(402,29,584,38),"F · 화면 중앙 아래에서 낮게, 천천히   |   높이 ↑   유량 →",16,ink).alignment=TextAlignmentOptions.Center;
             ingredients=Panel(root,new Rect(24,188,180,464),paper); Text(ingredients.transform,new Rect(12,430,156,28),"재료 선반",17,ink);
             int i=0; foreach(var id in owner.Content.Supply) { string ingredient=id; Button(ingredients.transform,new Rect(10,402-i*25,160,24),(i<9 ? (i+1)+"  " : "")+owner.Content.IngredientNames[id],()=>owner.Input.SelectIngredient(ingredient),14); i++; }
             Button(ingredients.transform,new Rect(10,8,160,30),"현재 잔 비우기",()=>owner.DiscardDrink(),14);
@@ -94,7 +94,24 @@ namespace Surlhwa.Presentation
         private void Hold(Transform parent,Rect rect,string label,string tool)
         { var b=Button(parent,rect,label,()=>{},15); var h=b.gameObject.AddComponent<SliceHoldButton>(); h.Down=()=>owner.Input.Begin(tool); h.Up=()=>owner.Input.Release(); }
         public void RememberFocus()=>focus.Push(EventSystem.current?.currentSelectedGameObject);
-        public void RestoreFocus() { var old=focus.Count>0 ? focus.Pop() : null; EventSystem.current?.SetSelectedGameObject(old!=null && old.activeInHierarchy ? old : next.gameObject); }
+        private static bool Available(GameObject target)
+        { var selectable=target!=null ? target.GetComponent<Selectable>() : null; return selectable!=null && selectable.isActiveAndEnabled && selectable.IsInteractable(); }
+        private GameObject ContextualFocus()
+        {
+            GameObject area=modal!=null && modal.activeInHierarchy ? modal : choicePanel.activeInHierarchy ? choicePanel : brewing.activeInHierarchy ? brewing : welcome.activeInHierarchy ? welcome : null;
+            var candidate=area?.GetComponentsInChildren<Button>().FirstOrDefault(x=>Available(x.gameObject));
+            if(candidate!=null) return candidate.gameObject;
+            if(Available(next.gameObject)) return next.gameObject;
+            return root.GetComponentsInChildren<Button>().FirstOrDefault(x=>Available(x.gameObject))?.gameObject;
+        }
+        private void RecoverFocus()
+        {
+            if(EventSystem.current==null || owner.Busy || owner.Session?.IsSaving==true) return;
+            var selected=EventSystem.current.currentSelectedGameObject;
+            if(!Available(selected) || (modal!=null && modal.activeInHierarchy && !selected.transform.IsChildOf(modal.transform)))
+                EventSystem.current.SetSelectedGameObject(ContextualFocus());
+        }
+        public void RestoreFocus() { var old=focus.Count>0 ? focus.Pop() : null; EventSystem.current?.SetSelectedGameObject(Available(old) ? old : ContextualFocus()); }
         public void CloseMenu() { MenuModal=null; focus.Clear(); }
         public bool ActivateFocused(bool modalOnly=false)
         {
@@ -122,19 +139,16 @@ namespace Surlhwa.Presentation
                 next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter";
                 if(brew) measurement.text=owner.Content.IngredientNames[owner.Input.SelectedIngredient]+" → "+TargetName(owner.Input.Target)+"   |   지거 "+Ml(s.Brew.Container(ContainerRole.Jigger).TotalMl)+"   혼합 "+Ml(s.Brew.Container(ContainerRole.Mixing).TotalMl)+"   셰이커 "+Ml(s.Brew.Container(ContainerRole.Shaker).TotalMl)+"   서빙 "+Ml(s.Brew.Container(ContainerRole.Serving).TotalMl)+" ml"+(owner.Input.Fine ? " · 미세" : "")+(s.Brew.ShakerClosed ? " · 뚜껑 닫힘" : "");
             }
-            gesture.SetActive(brew && (method==2 || method==3));
-            gestureText.text=method==2 ? "←              →\n\nK를 누른 채\n고른 리듬으로 좌우 이동" : "높이 ↑\n\n낮게, 천천히\n\n유량 →";
-            // Pointer gestures must pass through the guide surface to the world/control that owns them.
-            gesture.GetComponent<Image>().raycastTarget=false;
             string requested=s?.SaveError!=null ? "save_error" : s?.Modals.Top ?? MenuModal;
             if(requested!=shownModal) BuildModal(requested);
+            RecoverFocus();
         }
         private static string Ml(decimal value)=>value.ToString("0.##",System.Globalization.CultureInfo.InvariantCulture);
         private static string TargetName(ContainerRole role)=>role==ContainerRole.Jigger ? "지거" : role==ContainerRole.Mixing ? "혼합 잔" : role==ContainerRole.Shaker ? "셰이커" : "서빙 잔";
         private string ResultText()
         {
             var state=owner.Session.State; var o=state.CurrentService?.Outcome; if(o==null) return "";
-            string name=o.CocktailId==null ? "아직 이름을 알 수 없는 한 잔" : owner.Content.Catalog.Cocktails[o.CocktailId].Name;
+            string name=(o.RecipeId==null ? null : owner.Session.Knowledge.Project(o.RecipeId).Name) ?? "아직 이름을 알 수 없는 한 잔";
             if(state.Phase==CampaignPhase.Discovery) return name+"\n만들어 본 한 잔을 도감에 기록했습니다.";
             string preparation=o.Preparation==PreparationResult.NotEvaluable ? "재료 구성을 다시 살펴봅니다." : o.Preparation!=PreparationResult.Good ? "도감의 준비 순서와 마무리를 돌아봅니다." : !o.QualityApplicable ? "잔 안에서 준비가 고르게 담겼습니다." : !o.QualityGood ? "조금 더 고른 손길을 남길 수 있겠습니다." : "준비와 손길이 고르게 담겼습니다.";
             return name+" · "+Ml(state.CurrentService.Snapshot.TotalMl)+" ml\n"+preparation+" "+(o.Fits ? "손님의 바람에 닿았습니다." : "손님의 바람과는 다른 결입니다.");
@@ -147,7 +161,7 @@ namespace Surlhwa.Presentation
             Text(card.transform,new Rect(30,540,800,40),kind=="codex" ? "한 잔의 기록" : kind=="guide" ? "손에 익히는 일" : kind=="settings" ? "소리와 읽기" : kind=="reset" ? "새로운 밤을 시작할까요?" : kind=="recovery" ? "이전 기록에서 이어 하기" : "기록을 저장하지 못했습니다",27,ink);
             if(kind=="codex") Book(card.transform);
             else if(kind=="guide") Text(card.transform,new Rect(36,106,860,390),
-                "따르기 · Q를 누르는 동안 실제 양이 늘어납니다. Shift 또는 미세 따르기로 속도를 낮춥니다. 지거로 잰 뒤 대상을 고르고 E로 옮깁니다.\n\nStir · 혼합 잔에 얼음과 재료를 담고 S를 누른 채 잔 둘레를 돕니다. R로 거릅니다.\n\nBuild · 서빙 잔에서 얼음과 재료를 가볍게 섞습니다. G로 젓고 필요한 가니시를 놓습니다.\n\nShake · 셰이커에 재료와 얼음을 담고 L로 닫습니다. K와 좌우 움직임으로 흔든 뒤 열고 T로 옮깁니다. 소다는 마지막에 X로 더합니다.\n\nFloat · 재료마다 지거로 양을 잽니다. F를 누른 채 화면 중앙 아래에서 천천히 붓습니다. 오른쪽으로 갈수록 빠르고 위로 갈수록 높습니다.",19,ink);
+                "따르기 · Q를 누르는 동안 실제 양이 늘어납니다. Shift 또는 미세 따르기로 속도를 낮춥니다. 지거로 잰 뒤 대상을 고르고 E로 옮깁니다.\n\nStir · 혼합 잔에 얼음과 재료를 담고 S를 누른 채 잔 둘레를 돕니다. R로 거릅니다.\n\nBuild · 서빙 잔에서 얼음과 재료를 가볍게 섞습니다. G로 젓고 필요한 가니시를 놓습니다.\n\nShake · 셰이커에 재료와 얼음을 담고 L로 닫습니다. K와 좌우 움직임으로 흔든 뒤 열고 T로 옮깁니다. X로 선택한 재료를 조금씩 더할 수 있습니다.\n\nFloat · 재료마다 지거로 양을 잽니다. F를 누른 채 화면 중앙 아래에서 천천히 붓습니다. 오른쪽으로 갈수록 빠르고 위로 갈수록 높습니다.",19,ink);
             else if(kind=="settings")
             {
                 Text(card.transform,new Rect(36,438,860,50),"소리와 글자 설정은 새로운 기록에서도 유지됩니다.",20,muted);

@@ -56,7 +56,7 @@ namespace Surlhwa.Presentation
                     if(s.State.SlotIndex==3 || s.State.SlotIndex==5) { yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),s.State.SlotIndex==3 ? "recipe_dry_martini" : "recipe_manwol"); yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial recipe page "+page); yield return Capture("codex-clues-"+s.State.SlotIndex); yield return Click("돌아가기  Esc"); }
                     yield return Prepare(plan[s.State.SlotIndex]); continue;
                 }
-                if(phase==CampaignPhase.Choice) { yield return Capture("prince-choice"); yield return Click(owner.Content.Texts[owner.Content.PrinceChoices["keep"]].Value); continue; }
+                if(phase==CampaignPhase.Choice) { yield return Capture("prince-choice"); yield return Press(Key.Enter); Check(s.State.Phase==CampaignPhase.ChoiceResponse && s.State.PrinceChoice=="keep","keyboard choice exactly once through production focus"); continue; }
                 if(phase==CampaignPhase.Intro && s.CurrentEncounter.PrinceVisit.HasValue && s.State.LineIndex==0) yield return Capture("prince-intro-"+s.CurrentEncounter.PrinceVisit);
                 if(phase==CampaignPhase.Farewell && s.CurrentEncounter.PrinceVisit==PrinceVisit.Clarity) yield return Capture("prince-farewell-"+s.State.LineIndex);
                 if(media && s.CurrentText!=null) yield return new WaitForSecondsRealtime(1.5f);

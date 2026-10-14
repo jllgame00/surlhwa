@@ -92,6 +92,7 @@ gesture_rect = None
 gesture_name = None
 gesture_point = None
 last_observed = None
+last_action_utc = None
 last_guard = 0
 requirement = 'ACT 1 native production integration'
 boundary = 'Harness prepared; no Player input issued'
@@ -238,6 +239,15 @@ def observe():
         o = json.loads(shared_read(OUT / 'observation.json'))
     except (FileNotFoundError, json.JSONDecodeError, PermissionError):
         return None
+    try:
+        published=dt.datetime.fromisoformat(o['observedUtc'].replace('Z','+00:00'))
+        age=(dt.datetime.now(dt.timezone.utc)-published).total_seconds()
+    except (KeyError,ValueError,TypeError):
+        raise RuntimeError('HARNESS_OBSERVATION_INVALID: missing or invalid publication timestamp')
+    if o.get('processId')!=pid or age>1 or age<-.25:
+        raise RuntimeError('HARNESS_OBSERVATION_INVALID: producer/freshness boundary '+json.dumps(dict(expectedPid=pid,actualPid=o.get('processId'),ageSeconds=age)))
+    if last_observed and published<dt.datetime.fromisoformat(last_observed.replace('Z','+00:00')):
+        raise RuntimeError('HARNESS_OBSERVATION_INVALID: publication time moved backwards')
     if o['observedUtc'] != last_observed:
         last_observed = o['observedUtc']
         log('production_observation', observation=o)
@@ -258,7 +268,8 @@ def wait_for(predicate, description, timeout=8):
     while time.perf_counter() < end:
         guard()
         o = observe()
-        if o and predicate(o) and not o['saving']:
+        newer=o and (last_action_utc is None or dt.datetime.fromisoformat(o['observedUtc'].replace('Z','+00:00'))>last_action_utc)
+        if newer and predicate(o) and not o['saving']:
             log('boundary', description=description, observation=o)
             boundary = description
             return o
@@ -266,11 +277,14 @@ def wait_for(predicate, description, timeout=8):
     raise RuntimeError('Missing boundary: ' + description)
 
 def emit(i, description, cleanup=False):
+    global last_action_utc
     before = guard(record=True) if not cleanup else {'foregroundPid': owner(U.GetForegroundWindow())}
     C.set_last_error(0)
+    issued_utc=dt.datetime.now(dt.timezone.utc)
     count = U.SendInput(1, C.byref(i), C.sizeof(INPUT))
     error = C.get_last_error()
-    log('SendInput', description=description, issued=count, winError=error, before=before, foregroundPidAfter=owner(U.GetForegroundWindow()), cleanup=cleanup)
+    if count==1 and not cleanup: last_action_utc=issued_utc
+    log('SendInput', description=description, issued=count, issuedUtc=issued_utc.isoformat(), winError=error, before=before, foregroundPidAfter=owner(U.GetForegroundWindow()), cleanup=cleanup)
     if count != 1:
         raise RuntimeError('OS SendInput rejected: ' + description + ' error=' + str(error))
 

@@ -1700,20 +1700,6 @@
             },
             {
               "recipeId": "recipe_negroni",
-              "fact": "preparation",
-              "sourceIds": [
-                "SRC-RC1-0402"
-              ]
-            },
-            {
-              "recipeId": "recipe_negroni",
-              "fact": "garnish",
-              "sourceIds": [
-                "SRC-RC1-0402"
-              ]
-            },
-            {
-              "recipeId": "recipe_negroni",
               "fact": "amount:gin",
               "sourceIds": [
                 "SRC-RC1-0402"
@@ -1829,20 +1815,6 @@
             {
               "recipeId": "recipe_manwol",
               "fact": "method",
-              "sourceIds": [
-                "SRC-RC1-0400"
-              ]
-            },
-            {
-              "recipeId": "recipe_manwol",
-              "fact": "preparation",
-              "sourceIds": [
-                "SRC-RC1-0400"
-              ]
-            },
-            {
-              "recipeId": "recipe_manwol",
-              "fact": "garnish",
               "sourceIds": [
                 "SRC-RC1-0400"
               ]
@@ -1997,27 +1969,6 @@
             },
             {
               "recipeId": "recipe_manhattan",
-              "fact": "method",
-              "sourceIds": [
-                "SRC-RC1-0398"
-              ]
-            },
-            {
-              "recipeId": "recipe_manhattan",
-              "fact": "preparation",
-              "sourceIds": [
-                "SRC-RC1-0398"
-              ]
-            },
-            {
-              "recipeId": "recipe_manhattan",
-              "fact": "garnish",
-              "sourceIds": [
-                "SRC-RC1-0398"
-              ]
-            },
-            {
-              "recipeId": "recipe_manhattan",
               "fact": "amount:rye_whiskey",
               "sourceIds": [
                 "SRC-RC1-0398"
@@ -2052,6 +2003,13 @@
             {
               "recipeId": "recipe_manhattan",
               "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0399"
+              ]
+            },
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "method",
               "sourceIds": [
                 "SRC-RC1-0399"
               ]
@@ -2258,20 +2216,6 @@
             },
             {
               "recipeId": "recipe_gin_fizz",
-              "fact": "preparation",
-              "sourceIds": [
-                "SRC-RC1-0377"
-              ]
-            },
-            {
-              "recipeId": "recipe_gin_fizz",
-              "fact": "garnish",
-              "sourceIds": [
-                "SRC-RC1-0377"
-              ]
-            },
-            {
-              "recipeId": "recipe_gin_fizz",
               "fact": "amount:gin",
               "sourceIds": [
                 "SRC-RC1-0377"
@@ -2287,13 +2231,6 @@
             {
               "recipeId": "recipe_gin_fizz",
               "fact": "amount:simple_syrup",
-              "sourceIds": [
-                "SRC-RC1-0377"
-              ]
-            },
-            {
-              "recipeId": "recipe_gin_fizz",
-              "fact": "amount:soda_water",
               "sourceIds": [
                 "SRC-RC1-0377"
               ]
@@ -2313,6 +2250,13 @@
             {
               "recipeId": "recipe_gin_fizz",
               "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0378"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "amount:soda_water",
               "sourceIds": [
                 "SRC-RC1-0378"
               ]

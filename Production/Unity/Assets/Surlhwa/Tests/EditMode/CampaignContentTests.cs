@@ -13,6 +13,30 @@ namespace Surlhwa.Tests
     {
         internal static string Json() => File.ReadAllText(Path.Combine(SliceContentTests.ContentRoot(),"Campaign/act1.json"));
         internal static CampaignContent Content() => CampaignContentLoader.Load(Json());
+        [TestCase(6,"recipe_negroni")][TestCase(9,"recipe_manhattan")][TestCase(13,"recipe_gin_fizz")]
+        public void LessonFactsWaitForTheirConsumedTeachingLineAndSurviveContinue(int slot,string recipe)
+        {
+            var c=Content(); var store=new ValidatingStore(c); var s=CampaignSession.StartAsync(c,store).GetAwaiter().GetResult();
+            string[] plan={"recipe_test_stir","recipe_test_stir","recipe_test_stir","recipe_dry_martini","recipe_dry_martini","recipe_manwol","recipe_negroni","recipe_test_stir","recipe_negroni","recipe_manhattan","recipe_manhattan","recipe_test_stir","recipe_negroni"};
+            for(int n=0;n<slot;n++) {
+                CampaignFlowTests.ReachBrew(s); s.ReleaseHeldInput(); s.ExecuteBrew(++CampaignFlowTests.Event,b=>Make(b,plan[n]));
+                CampaignFlowTests.Advance(s); CampaignFlowTests.ReachDeparture(s); s.TickAsync(2).GetAwaiter().GetResult();
+            }
+            for(int n=0;n<10 && s.State.Phase!=CampaignPhase.Intro;n++)
+                if(s.State.Phase==CampaignPhase.Arriving) s.TickAsync(2).GetAwaiter().GetResult(); else CampaignFlowTests.Advance(s);
+            Assert.That(s.State.LineIndex,Is.Zero); CampaignFlowTests.Advance(s);
+            Assert.That(s.State.Phase,Is.EqualTo(CampaignPhase.Intro)); Assert.That(s.State.LineIndex,Is.EqualTo(1));
+            var restored=CampaignSession.Continue(c,store,CampaignSaveCodec.Decode(CampaignSaveCodec.Encode(s.State,c),c));
+            foreach(var session in new[]{s,restored}) {
+                Assert.That(session.Knowledge.Project(recipe).PreparationVisible,Is.False,"Unconsumed preparation");
+                Assert.That(session.Knowledge.Project(recipe).GarnishVisible,Is.False,"Unconsumed garnish");
+                if(recipe=="recipe_gin_fizz") Assert.That(session.Knowledge.Project(recipe).Ingredients,Does.Not.Contain("soda_water"));
+            }
+            CampaignFlowTests.Advance(restored);
+            Assert.That(restored.Knowledge.Project(recipe).PreparationVisible,Is.True);
+            Assert.That(restored.Knowledge.Project(recipe).GarnishVisible,Is.True);
+            if(recipe=="recipe_gin_fizz") Assert.That(restored.Knowledge.Project(recipe).Amounts["soda_water"],Is.EqualTo(15m));
+        }
         [Test] public void ActOneAdoptionKeepsUnknownRecipesUnlearnedAndAllFourMethodsReachable()
         {
             var c=Content(); Assert.That(c,Is.Not.Null); var k=c.CreateKnowledge();
