@@ -1,10 +1,10 @@
 # SURLHWA bounded Production expansion plan
 
-> For agentic workers: this is an owner-review plan, not an execution instruction. After explicit approval of a bounded package, use the existing inline execution workflow and a package-specific implementation checklist. Do not start implementation from this document alone.
+> For agentic workers: GATE 1 plan approval is pending. After that approval, execute autonomously through GATE 2 (complete ACT 1), then after GATE 2 approval continue ACTs 2–7 through GATE 3 (final Release Candidate). Use the existing inline workflow and package-specific checklists without requesting per-package permission. Follow [OWNER_APPROVAL_POLICY.md](OWNER_APPROVAL_POLICY.md); this policy revision is not plan approval.
 
 **Status:** PROPOSED / READY_FOR_OWNER_REVIEW. 2026-10-14, Asia/Seoul.
 
-**Goal:** Expand the accepted Vertical Slice into the seven-ACT main campaign through small, playable, independently reviewed packages while preserving actual bartending, readable knowledge progression and the bar's accumulated memories.
+**Goal:** Expand the accepted Vertical Slice into the seven-ACT main campaign through small, playable, technically verified packages with three bundled owner gates while preserving actual bartending, readable knowledge progression and the bar's accumulated memories.
 
 **Architecture:** Extend the existing plain C# domain and Application authorities, immutable JSON content and presentation adapters. Keep the accepted C1 room and resident workbench. Campaign, memory and ending behavior must be added deliberately; the two-encounter Slice is not already a full campaign framework.
 
@@ -18,7 +18,7 @@
 | --- | --- |
 | Final Canon | `C:/Users/surlw/.codex/.chatgpt-projects/g-p-6a8cfbb439748191ac8fac094112d31b/SURLHWA_CANON` |
 | Production Architecture | `C:/Users/surlw/.codex/.chatgpt-projects/g-p-6a8cfbb439748191ac8fac094112d31b/SURLHWA_ARCHITECTURE` |
-| Current owner ruling | [VERTICAL_SLICE_OWNER_APPROVAL.md](VERTICAL_SLICE_OWNER_APPROVAL.md) |
+| Current owner rulings | [Slice approval](VERTICAL_SLICE_OWNER_APPROVAL.md) and [approval minimization policy](OWNER_APPROVAL_POLICY.md) |
 | Explicit unfinished presentation | [PRESENTATION_DEBT.md](PRESENTATION_DEBT.md) |
 | Accepted implementation/evidence | [Slice review](review-slice.html), [HG04 baseline](HG04_OWNER_BASELINE.md), [completion ledger](SLICE_COMPLETION_PROGRESS.md), retained evidence/build manifests |
 | Frozen RC1 | `D:/univ/surlhwa/Surlhwa`; comparison and selective content provenance only. No modification, overlay copying, cleanup or index changes. |
@@ -35,18 +35,18 @@ Core authority chapters: Canon 00/01/02, 10–12, 14/15, 20–23, 30–33, 40/41
 
 ## 2. Recommended sequence and package size
 
-Recommend **representative methods, then one complete ACT, then staged campaign growth**. A methods-only expansion delays proof that learning and story work together. Bulk authoring all seven ACTs first would lock content against unproven Float/Shake, save and knowledge assumptions. The recommended order limits rework while keeping a playable path at every integration gate.
+Recommend **representative methods, then one complete ACT, then staged campaign growth**. A methods-only expansion delays proof that learning and story work together. Bulk authoring all seven ACTs first would lock content against unproven Float/Shake, save and knowledge assumptions. The recommended order limits rework while keeping a playable path at every internal integration checkpoint. These checkpoints do not interrupt the owner.
 
 | Wave | Packages / exit | Dependency and boundary |
 | --- | --- | --- |
-| 0 | P00 content/pacing decisions, P01 selected migration, P02 campaign/save foundation | Approve concrete content and D09 proposals before dependent narrative code. No mass content conversion. |
-| 1 | P03 Build → P04 Shake → P05 Float | One representative adopted recipe per new method. Reuse Stir/liquid authority; each has its own evidence and feel review. |
-| 2 | P06 learning/ordinary guests → P07a complete ACT 1, integrated with P08 memories | Fresh campaign start, Prince first/follow-up/closing, fair recovery and authored farewell. Stop for ACT 1 review. |
-| 3 | P07b ACT 2; P07c ACTs 3–4; P07d ACTs 5–6; P07e ACT 7/common ending | Each package is separately accepted. Memory and save extension ship with the owning ACT, not as a late retrofit. |
-| Presentation | P09 UI; P10 art; P11 animation; P12 audio/music | Develop representative approved samples before cast/asset batches. May proceed alongside accepted content work once dependencies are stable. No silent final approval. |
-| Candidate | P13 full-campaign regression, native and performance evidence, final owner gates | Exact candidate identities; close objective blockers and explicitly disposition remaining presentation debt. |
+| 0 | P00 content/pacing decisions, P01 selected migration, P02 campaign/save foundation | Author concrete content and D09 candidates, validate Canon coverage and escalate only a demonstrated policy exception. Bundle subjective judgment into GATE 2 where feasible. No mass content conversion. |
+| 1 | P03 Build → P04 Shake → P05 Float | One representative adopted recipe per new method. Reuse Stir/liquid authority; each has its own technical evidence; collect feel questions in GATE 2, without separate method approvals. |
+| 2 | P06 learning/ordinary guests → P07a complete ACT 1, integrated with P08 memories | Fresh campaign start, Prince first/follow-up/closing, fair recovery and authored farewell. Bundle with current UI/audio/music/art/animation and stop once at GATE 2. |
+| 3 | P07b ACT 2; P07c ACTs 3–4; P07d ACTs 5–6; P07e ACT 7/common ending | After GATE 2, implement these packages autonomously with internal technical checks. Memory and save extension ship with the owning ACT. No per-ACT owner gates. |
+| Presentation | P09 UI; P10 art; P11 animation; P12 audio/music | Develop representative samples within accepted direction, inspect them internally, then expand in bounded batches. Include current presentation in GATE 2 and final presentation in GATE 3. No separate mandatory asset approvals. |
+| Candidate | P13 full-campaign regression, native and performance evidence, GATE 3 | Exact candidate identities; close objective blockers and explicitly disposition remaining presentation debt. |
 
-No fixed calendar or release recipe count is promised before P00 establishes workload and representative production rates. Estimate each package after its concrete content/art list is reviewed. Approval of this roadmap should be followed by authorization of the next bounded package, not interpreted as permission for an unattended full-game implementation.
+No fixed calendar or release recipe count is promised before P00 establishes workload and representative production rates. Estimate packages internally from concrete content/art lists. GATE 1 authorizes autonomous execution toward complete ACT 1, including the relevant P09–P12 presentation work. GATE 2 approval authorizes continuation through ACTs 2–7 and the final candidate. Package completion does not require fresh permission; major scope increases remain exceptions.
 
 ## 3. Existing code and intended extension points
 
@@ -75,18 +75,18 @@ Authority: Canon CAM-01–05, NIGHT-05, SG-01, LP-03, CAT-D05, KNOW-005–007; A
 
 - [ ] Produce a campaign authoring matrix with one disposition for every `RC1-01` through `RC1-47`: source fields, preserved event/learning purpose, proposed ACT/block/encounter, ordinary spacing, supply/knowledge prerequisites, memory connection and change reason. Explicit split/merge mapping must preserve meaning; no silent omission or indefinite deferral of required main events.
 - [ ] Propose pacing in authored blocks: listening, preparation, response, departure, a quiet interval and next encounter. Review an early, middle and late sequence, with ordinary guests serving real daily contexts rather than padding. Choose the night count after reading these sequences; exact 18 nights and 47 new runtime encounters are not mandates.
-- [ ] Write the Prince D09 decision table from cumulative interpretation and service history, including mixed outcomes and absent records. It must permit failure, preserve two valid farewells and explain the MEM-01 chair/star variant fairly. Present concrete candidate conditions and examples for owner review; do not adopt strict 3/3 or invent thresholds here.
+- [ ] Write the Prince D09 decision table from cumulative interpretation and service history, including mixed outcomes and absent records. It must permit failure, preserve two valid farewells and explain the MEM-01 chair/star variant fairly. Prepare concrete candidate conditions and examples for the bundled GATE 2 review; do not adopt strict 3/3 or invent thresholds in this roadmap. A reversible preview is not final Canon. If an unresolved meaningful product choice must be settled before a reviewable ACT 1 can be built, document that exception and bundle it with all other known subjective decisions; keep independent work moving.
 - [ ] Produce a launch-candidate recipe/adoption list and learning map. Preserve Seolya and Manwol as Signature Originals. Consider the existing nine campaign recipes as traceable candidates, not an automatically approved release list. No bulk 102-recipe import.
 
 **Deliverables:** proposed `Production/Planning/CAMPAIGN_AUTHORING.md`, `PRINCE_FAREWELL_POLICY.md`, `CATALOG_SCOPE.md`, with source crosswalk tables. These files are future package outputs; this request does not author the final schedule or farewell formula.
 
-**Exit:** complete 47-row disposition and seven-ACT coverage; learning/supply feasibility; owner accepts pacing, D09 and bounded recipe selection. Unresolved D09 blocks ACT 1 completion/variant implementation, not independent method work. Unverified external recipes block their adoption, not all planning.
+**Technical exit:** complete 47-row disposition and seven-ACT coverage, learning/supply feasibility and documented reversible authoring choices. Pacing and D09 are reviewed with the complete ACT 1 package at GATE 2 unless a demonstrated exception makes an earlier bundled decision necessary. Routine recipe selection/migration within scope proceeds autonomously. Unverified external recipes block their adoption, not all planning.
 
 ### P01 Recipe, ingredient and cocktail adoption
 
 Depends on selected P00 representatives. Authority: Canon 20/30–33, Architecture 03/20/21.
 
-Use a small first set: retain approved Stir recipes; propose **Negroni for Build, Gin Fizz for Shake and Manwol for Float**. These are representatives for review, not new external recipe verification or automatic launch adoption. Hanky Panky, French 75 and Last Word are later campaign-linked batches after selection and evidence. Yeomyeong/Janseol remain historical prototypes.
+Use a small first set: retain approved Stir recipes; propose **Negroni for Build, Gin Fizz for Shake and Manwol for Float**. These are planned bounded representatives, not claims of new external verification. After GATE 1, adopt them autonomously when source, gameplay and migration checks pass; no per-recipe owner approval is required. Hanky Panky, French 75 and Last Word are later campaign-linked batches after selection and evidence. Yeomyeong/Janseol remain historical prototypes.
 
 - [ ] For each adopted item, record source/hash, old literal ID, new destination, six-category migration disposition, exact units/conversion, preparation, supply, disclosure policy, rights and review state. Verify real cocktail facts against the official individual source at adoption time; separate documented game approximations from external facts.
 - [ ] Preserve identity distinctions such as Gin/London Dry Gin, Whiskey/Rye, legacy/Sweet Red/Dry Vermouth, Syrup/Simple Syrup and fruit/juice. Do not rename `recipe_test_stir` merely for style. Do not turn approximate dash/splash values into universal conversions.
@@ -117,7 +117,7 @@ Depends on P01 Build adoption. Extend `Brewing.cs`, preparation evaluation and n
 - [ ] Test conservation/overflow/cancel, wrong container/action, omitted/incorrect garnish, correct WHAT with wrong HOW/FIT and normal failure progression. Build completion ends preparation; it never grants an automatic technique win or a detached timing game.
 - [ ] Capture the actual Player path and complete one Windows-native representative service, including recognition, reaction and supported departure. Review visible liquid/contact and ease of use.
 
-**Exit:** real Build preparation and independent evaluations, no Stir regression caused by shared changes; owner accepts new method feel before recipe expansion.
+**Technical exit:** real Build preparation and independent evaluations, no Stir regression caused by shared changes. Continue bounded recipe integration and include method feel in GATE 2; no separate method approval.
 
 ### P04 Shake representative
 
@@ -126,7 +126,7 @@ Depends on P01 Shake adoption; use P03's reviewed control conventions. Add `Shak
 - [ ] Define short, readable direction/reversal/rhythm input, supported accessibility range and versioned quality thresholds. RC1's eight-note timing is reference, not a compulsory rhythm game.
 - [ ] Bind evidence to the closed shaker's current batch; reject empty/open/wrong-target actions. New liquid invalidates prior evidence. Transfer provenance cannot duplicate good quality.
 - [ ] Preserve authored Strain versus PourFromContainer, actual amounts/ice policy and later Splash/Pour steps. Do not infer dirty-dump behavior from a button name.
-- [ ] Test absent/wrong/extra input, cancellation/focus/modal release, batch change, partial transfer and different frame sampling; complete one native representative service and owner feel review.
+- [ ] Test absent/wrong/extra input, cancellation/focus/modal release, batch change, partial transfer and different frame sampling; complete one native representative service and retain it for the bundled GATE 2 feel review.
 
 **Exit:** Shake is visibly and mechanically distinct, with normal recognition/service evidence. No animation-only completion or reuse of Stir grade.
 
@@ -134,10 +134,10 @@ Depends on P01 Shake adoption; use P03's reviewed control conventions. Add `Shak
 
 Depends on P01 Manwol adoption. Add `FloatLayers.cs` and an explicitly selected layer-aware transfer policy; preserve uniform Stir transfer for its existing context.
 
-- [ ] Keep actual per-ingredient ml authoritative while recording layer order and each adjacent boundary's mixing state. Define how interrupted/partial transfers preserve layers and what later mixing does; review the policy before implementation.
+- [ ] Keep actual per-ingredient ml authoritative while recording layer order and each adjacent boundary's mixing state. Define how interrupted/partial transfers preserve layers and what later mixing does; check the policy internally against Canon before implementation; escalate only a meaningful unresolved product choice.
 - [ ] Let accepted flow and authored height/tool-stability interaction determine boundary evidence. The first layer is ordinary addition. A good last boundary cannot repair a mixed lower boundary, wrong order or missing amount.
 - [ ] Test clean/partial/mixed boundaries, wrong order, overflow, stop/resume, partial transfer and post-layer mixing. Treat simplified layering as a game model, not a density simulation.
-- [ ] Complete native Manwol preparation/service through normal controls; inspect layers at 720p/1080p and review precision/fatigue before ACT 1 learning integration.
+- [ ] Complete native Manwol preparation/service through normal controls; inspect layers at 720p/1080p and assess precision/fatigue internally before ACT 1 learning integration. Bundle Manwol/Float feel with GATE 2.
 
 **Exit:** usable Float and fair feedback; no detached success meter, auto-filled layer or imported RC1 flow threshold without tuning evidence.
 
@@ -151,7 +151,7 @@ Depends on P00 learning plan, P01 selected catalog, P02 receipts and the method 
 - [ ] Map LEARN-SEOLYA/DRY/MANWOL/NEGRONI/MANHATTAN/GINFIZZ/HANKY/FRENCH75/LASTWORD into the reviewed schedule or an explicit source-preserving disposition. Manwol recovery must not overwrite the original Prince failure.
 - [ ] Test fresh knowledge, all-facts-but-not-Known, wrong valid drink discovery, impossible supply, ordinary success/failure departure, required retry, known fallback and every hidden-information surface. Where a request promises alternatives, prove multiple normally supplied and learnable responses.
 
-**Exit:** no outside-guide guessing, hidden-name leaks, fake knowledge or retry softlocks. Owner reviews ordinary voice variety, concise teaching and spacing using actual content rather than abstract tag labels.
+**Exit:** no outside-guide guessing, hidden-name leaks, fake knowledge or retry softlocks. Integrate ordinary guests autonomously; include voice variety, concise teaching and spacing in GATE 2, then the final campaign review at GATE 3.
 
 ### P07 Seven ACTs and common ending
 
@@ -167,12 +167,12 @@ Depends on P00 reviewed authoring, P02/P06 and relevant methods. Each package in
 | P07d ACT 6 — 돌아오지 않을 각오, 심청 | Emotional before-state, concise self-determined resolve, calmer return after meeting her father. | Distinct visits; no reward score for sacrifice. |
 | P07e ACT 7 — 그래도 돌아가는 인간, 오디세우스 | Wandering silence, recognized return, staying longer, then departure into the bartender/bar's time. | Correct identity, earned memory, common ending with history-sensitive small callbacks. |
 
-- [ ] For each package, complete its approved crosswalk rows and source-to-launch text ledger: speaker/narration/request/choice roles, preserved original, edited wording, reason and review state. The Canon's existing text is source material; the owner permits editorial polish, not silent source replacement.
+- [ ] For each package, complete its Canon-checked crosswalk rows and source-to-launch text ledger: speaker/narration/request/choice roles, preserved original, edited wording, reason and review state. The Canon's existing text is source material; the owner permits editorial polish, not silent source replacement.
 - [ ] Verify success and ordinary service failure continue; adopted RequiredDiscovery exceptions stay explicit. No hidden clicks/waiting, trophy counts or perfect-service chain blocks the main story.
 - [ ] Include a fresh start-to-package path and checkpoint resumes using actual transactions. Use developer checkpoints only as labelled isolated fixtures, never evidence that a full campaign was played.
 - [ ] After P07e, prove required-main-beat completion → EndingReady → entered/reading → read complete → stable coda/Continue. The ending is one common ending, not another guest or an infinite generated next night. Missing Prince star/success remains absent; ending variants never fabricate it.
 
-**Exit per package:** authored events preserved, no silent missing RC1 row, complete technical evidence and owner review of that ACT's emotional sequence. Full seven-ACT closure waits for P13.
+**Technical exit per package:** authored events preserved, no silent missing RC1 row and complete affected evidence. ACT 1 goes to the single bundled GATE 2 review. After approval, ACTs 2–7 continue autonomously; retain their emotional-sequence review material for GATE 3 unless a true policy exception arises. Full seven-ACT closure waits for P13.
 
 ### P08 Memories and bar evolution
 
@@ -194,51 +194,51 @@ Introduce `Domain/MemoryProgress.cs` and a presentation binding only when the fi
 - [ ] Test exactly-once grant at completed departure, failure-service narrative completion, missing presentation fallback, duplicate callbacks and Continue before/after grant. Test all seven groups for visual overlap and performance using clearly labelled stress fixtures.
 - [ ] Keep optional reactions separate from main progression. Future revisits and memory transformations remain preserved future content with separate scope; no click/idle labor or completionist ending lock.
 
-**Exit:** authentic earned traces survive reload and remain legible; owner accepts accumulated-room emotion without spatial redesign.
+**Exit:** authentic earned traces survive reload and remain legible; bundle ACT 1 memory presentation at GATE 2 and the accumulated room at GATE 3 without spatial redesign.
 
 ### P09 Dedicated UI and Codex refinement
 
-Depends on P06 disclosure states and representative four-method controls. PD01/PD02 remain open until this package's visual review.
+Depends on P06 disclosure states and representative four-method controls. PD01/PD02 remain open until explicitly dispositioned in GATE 2 or GATE 3. This is not a separate UI owner gate.
 
-- [ ] Present one bounded UI design proposal using real Korean dialogue, ingredient quantities, long names, Unknown/Partial/Known, unavailable supply and an expanded catalog. Review layout/card composition, spacing, chrome, hierarchy and color/material treatment before production reskinning.
+- [ ] Develop one bounded UI design proposal using real Korean dialogue, ingredient quantities, long names, Unknown/Partial/Known, unavailable supply and an expanded catalog. Inspect layout/card composition, spacing, chrome, hierarchy and color/material treatment internally before bounded implementation. Bundle owner judgment with GATE 2/GATE 3; pause earlier only for a demonstrated artistic-direction exception.
 - [ ] Implement within the existing UI/knowledge projection and modal ownership. Shared styling may be extracted from `SliceUi.cs` when required; do not change toolkit or introduce a second UI input system for cosmetic convenience.
 - [ ] Verify no clipped essential text/overlap, readable contrast and text scaling, navigable targets, non-color focus, safe restoration after selected-object destruction/component disable, no pointer blocking decoration and no hidden-information leakage.
-- [ ] Capture actual 720p/1080p surfaces and altered pointer/keyboard interactions; submit final visual and interaction polish for owner approval. Functional checks alone cannot change HG05's visual status.
+- [ ] Capture actual 720p/1080p surfaces and altered pointer/keyboard interactions; include current visual and interaction treatment in GATE 2 and final polish in GATE 3. Functional checks alone cannot change HG05's visual status.
 
-**Exit:** objective usability passes plus an explicit new visual ruling for the changed surfaces. Aesthetic iteration stays bounded to UI; C1 and HG04 are not reopened.
+**Technical exit:** objective usability passes and reviewable captures are retained. Work continues without a separate UI approval. Debt closes only through a named ruling in the bundled gates. Aesthetic iteration stays bounded to UI; C1 and HG04 are not reopened.
 
 ### P10 Environment, character and tool art production
 
 Depends on C1 and selected cast/tools/memory anchors. Covers PD03/PD04/PD06/PD10.
 
 - [ ] Produce a licensed/source-tracked art inventory: retain, replace or reauthor each provisional asset. Reference art and generated placeholders do not become release assets merely by appearing in an accepted Slice.
-- [ ] Approve one representative art family in the existing C1 composition: snow ground/accumulation/shadows, warm wood/lighting, bartender/ordinary/special character, one method tool and one memory. Preserve counter shape, exposed exterior and shared physical scale.
-- [ ] Expand to the selected cast, paired scene, props, all method tools and seven memories only after the sample family is approved. Use actual container state for liquid/ice/garnish visibility; material depth remains selective.
+- [ ] Develop and internally assess one representative art family in the existing C1 composition: snow ground/accumulation/shadows, warm wood/lighting, bartender/ordinary/special character, one method tool and one memory. Preserve counter shape, exposed exterior and shared physical scale.
+- [ ] Expand to the selected cast, paired scene, props, all method tools and seven memories after internal sample checks establish consistency with C1. GATE 2 reviews the current ACT 1 family; after its approval expand autonomously within that direction. Use actual container state for liquid/ice/garnish visibility; material depth remains selective.
 - [ ] Validate real foot/seat/hand contacts, pixel stability, alpha/depth/occlusion, faces/cup/UI safe areas and early/full room captures at both resolutions; check asset rights and hardware costs before final adoption.
 
-**Exit:** owner-approved art family and batch-specific adoption evidence. No globally 3D room, strong perspective, realistic material drift or unnecessary prop density.
+**Technical exit:** source-cleared, internally checked art family and batch-specific evidence. Bundle current family presentation at GATE 2 and final art at GATE 3; no per-batch approval. No globally 3D room, strong perspective, realistic material drift or unnecessary prop density.
 
 ### P11 Animation and tactile refinement
 
 Depends on P10 anchor/art contracts and each method's accepted interaction. Covers PD05/PD11 and timing dependency for PD07.
 
-- [ ] Author entry/approach/sit/listen/react/stand/depart for bartender, ordinary and special families; add paired shared-cup handling and character-specific restraint such as Hamlet's stillness. Approve one family before expanding clips.
+- [ ] Author entry/approach/sit/listen/react/stand/depart for bartender, ordinary and special families; add paired shared-cup handling and character-specific restraint such as Hamlet's stillness. Check one family internally before expanding clips, with current motion included in GATE 2 and final motion in GATE 3.
 - [ ] Refine tool pickup/alignment/pour/transfer/ice/garnish/return motion and feedback. Preserve actual accepted quantities, batch evidence and release/regrip behavior; no animation event awards technique, memory or service completion.
 - [ ] Test missing/cancelled clips, interrupted visits, one missing paired actor, seat release and normal fallback without blocking story. Align foot contacts to the audible step cadence; do not demand a fixed cue rate independent of motion.
 - [ ] Review motion and input response in the actual Player. Native reruns target changed gesture boundaries; unchanged broad HG04 suites remain historical accepted evidence.
 
-**Exit:** owner accepts grounded movement and control response; objective cancellation and lifecycle checks pass.
+**Technical exit:** objective cancellation/lifecycle checks pass and grounded movement/control response are reviewable. Bundle subjective judgment with GATE 2/GATE 3, not individual animation approvals.
 
 ### P12 Audio polish and music composition
 
 Depends on P11 contact timing, P07 scene contexts and P08 memory moments. Covers PD07/PD08/PD09; HG06 direction stays accepted.
 
-- [ ] Replace/tune footsteps from light 타박타박 toward grounded 뚜벅뚜벅. Compare body/weight, transient, low-mid presence, surface, cadence and character/world integration in the actual bar. Compare candidates at matched loudness, then approve final mix/loudness separately; louder alone is not heavier.
+- [ ] Replace/tune footsteps from light 타박타박 toward grounded 뚜벅뚜벅. Compare body/weight, transient, low-mid presence, surface, cadence and character/world integration in the actual bar. Compare candidates at matched loudness and assess final mix/loudness as a distinct criterion within the same bundled review; louder alone is not heavier.
 - [ ] Refine ambience and physical action cues, variation/fatigue, transitions, silence, dialogue ducking and settings. Accepted movement/flow owns loop activity; release/modal/focus/cancel/dispose stops it, and a missing clip never blocks progression.
 - [ ] Author a sparse music/motif cue map with narrative purpose, start/stop/fade and silence boundaries. Compose and clear rights for selected cues; review audition in context before recording final arrangements. No fixed track count, instrument palette, all-character themes or voice-acting mandate is assumed.
 - [ ] Test clipping, loop seams, concurrency, stale loops, mute/settings persistence and missing-device/clip fallbacks; listen through representative ACT and ending passages. Technical signal checks do not close owner audio polish debt.
 
-**Exit:** explicit listening rulings for footsteps, mix and compositions. Partial approval closes only named debt rows/assets, not all audio by association.
+**Technical exit:** lifecycle/signal checks pass and in-context listening evidence is packaged. Current audio/music, including any still-deferred composition, is disclosed at GATE 2; final footsteps/mix/compositions are judged at GATE 3. No separate mandatory listening gate. A bundled ruling closes only its named debt scope, not all audio by association.
 
 ## 5. P13 Regression, native input and performance strategy
 
@@ -275,23 +275,23 @@ These cross-cutting cases are mandatory in their owning package, not deferred va
 
 Stop the affected package on duplicated authority, impossible normal supply/learning, lost core event, corrupted/ambiguous saves, native evidence mislabelling, serious usability defects or reproducible performance stalls. Fix the narrow cause and rerun affected evidence. Do not reclassify these as presentation debt. Aesthetic dissatisfaction with still-open debt does not undo Slice approval; a proposed spatial architecture change still needs new owner approval.
 
-## 7. Human approval gates
+## 7. Three owner gates and exception handling
 
-Existing HG01–HG08 statuses are recorded unchanged in the owner approval record. New gates below have distinct IDs and are **PENDING**, not implied by the Slice ruling.
+The owner's [approval minimization policy](OWNER_APPROVAL_POLICY.md) supersedes the earlier nine proposed expansion gates and per-package permission requirements. HG01–HG08 remain historical Slice rulings; they do not become mandatory repeat gates for every new asset or ACT.
 
-| Gate | Concrete owner review | Blocks |
+| Gate | Single review package | What follows approval |
 | --- | --- | --- |
-| PE-G0 | This expansion plan and first bounded execution scope. | Any expansion implementation. |
-| PE-G1 | P00 schedule/crosswalk, launch candidates and Prince farewell decision table. | Dependent campaign/content policy implementation. |
-| PE-G2 | Build, Shake and Float representative feel, one method at a time. | Bulk recipes relying on that method. |
-| PE-G3 | Complete ACT 1 with learning, both farewells and memory variants. | Scaling narrative patterns to remaining ACTs. |
-| PE-G4 | ACT 2 paired scene, then ACTs 3–4, 5–6 and 7/ending as separate reviews. | Acceptance of each respective story batch. |
-| PE-G5 | Codex and broader UI actual screens/controls. | Final visual approval of those surfaces; aesthetic work remains deferred until this ruling. |
-| PE-G6 | Representative art/animation family, then cast/environment/tool batches and accumulated bar. | Final adoption of those assets. |
-| PE-G7 | Grounded footsteps, final mix and sparse compositions in context. | Final audio approval of named cues/mix. |
-| PE-G8 | Full campaign candidate: identity, reading/pacing, learning, ordinary/special contrast, memory and common ending. | Full-game acceptance/release readiness. |
+| GATE 1 | Production Expansion Plan. Currently PENDING. | Autonomous work through complete ACT 1; no separate P00, recipe, method, migration, save or technical approvals. |
+| GATE 2 | Complete ACT 1 Production Milestone: campaign pacing, Little Prince ACT, Manwol/Float, memory presentation, current UI, current audio/music, character/environment presentation and overall SURLHWA identity. Bundle all currently known subjective decisions, including any other new method feel questions. | Continue ACTs 2–7 and presentation refinement autonomously unless a true exception occurs. |
+| GATE 3 | Final Release Candidate human signoff: whole campaign, final presentation, evidence limits and remaining debt disposition. | Owner release acceptance; no claim that technical PASS substitutes for it. |
 
-At PE-G8 classify every outstanding item as PASS, VALIDATION_DEBT, HUMAN_SIGNOFF_REQUIRED, DEFERRED_PRESENTATION or OUT_OF_SCOPE. Objective defects remain blockers. Presentation debt closes only through specific approval; any further release deferral requires an explicit owner disposition. No technical total or broad identity approval implies all assets are final.
+Routine deterministic gameplay, Canon wiring, approved-architecture choices, data migration, save/progression, ordinary guests, QA/regressions, measured performance fixes, packaging, objective UI/audio-lifecycle fixes, minor reversible tuning and technical details require no owner approval. Make reasonable reversible decisions and document them. Internal technical failures require diagnosis and repair, not automatic owner escalation.
+
+Only stop for owner input when: (1) Canon does not determine a meaningful product choice; (2) viable alternatives materially change artistic experience; (3) approved narrative/theme would change; (4) approved visual/audio direction would be invalidated; (5) migration is destructive or irreversible; (6) the working implementation no longer feels like SURLHWA; or (7) major scope growth is necessary. Do not ask trivial preferences or add mandatory gates without demonstrated reason.
+
+If an exception genuinely requires judgment, prepare one concrete package containing all currently known subjective decisions, alternatives, consequences and the exact exception reason. Use the next planned gate when safe; otherwise pause only dependent work and continue independent authorized work. Do not silently settle an unresolved product choice, or use provisional previews to claim final Canon/art acceptance.
+
+At GATE 3 classify outstanding items as PASS, VALIDATION_DEBT, HUMAN_SIGNOFF_REQUIRED, DEFERRED_PRESENTATION or OUT_OF_SCOPE. Objective defects remain blockers for the affected deliverable and are fixed autonomously where possible. Presentation debt closes only by explicit named acceptance or deferral within a bundled ruling. Permission to continue is not blanket final presentation approval.
 
 ## 8. Coverage and handoff
 
@@ -309,8 +309,8 @@ At PE-G8 classify every outstanding item as PASS, VALIDATION_DEBT, HUMAN_SIGNOFF
 | Animation | P11 |
 | Audio polish / music | P12 |
 | Regression / native / performance | P13, affected checks per package |
-| Final human gates | PE-G0–PE-G8 |
+| Final human gates | GATE 1, GATE 2, GATE 3 only; documented exceptions under the owner policy |
 
-Planning decisions and costs: staged methods/ACT batches add review points but contain rework; source-preserving re-authoring adds ledger work but prevents silent narrative loss; keeping Slice as a separate mode preserves acceptance evidence but requires explicit shared-code regression; deferred aesthetics permit continued production while retaining a real later polish workload. No calendar, recipe count, D09 formula or final mix target is invented to hide those decisions.
+Planning decisions and costs: staged methods/ACT batches add internal verification points but contain rework; bundling owner decisions reduces interruptions while leaving some reversible presentation work provisional until GATE 2/3; source-preserving re-authoring adds ledger work but prevents silent narrative loss; keeping Slice as a separate mode preserves acceptance evidence but requires explicit shared-code regression; deferred aesthetics permit continued production while retaining a real later polish workload. No calendar, recipe count, D09 formula or final mix target is invented to hide those decisions.
 
-Recommended next authorization, after this plan is reviewed: **P00 only**, producing the concrete campaign/recipe/D09 proposals for PE-G1. Do not start P01–P13 or mass-author assets in this planning turn.
+**Handoff:** GATE 1 approval of this revised plan is still pending. Once approved, begin P00 and continue autonomously through the complete ACT 1 milestone, including its integrated presentation review material. Do not request separate package approvals. After GATE 2 approval continue ACTs 2–7 autonomously unless one of the seven true exceptions occurs. This policy-editing turn does not start expansion implementation.

@@ -2,7 +2,7 @@
 
 Owner record: [Vertical Slice approval](VERTICAL_SLICE_OWNER_APPROVAL.md), 2026-10-14 Asia/Seoul. All rows below remain **OPEN / NOT FINAL PRESENTATION APPROVAL**. They do not reopen accepted C1 or Stir architecture. Planned work packages refer to [the expansion plan](PRODUCTION_EXPANSION_PLAN.md).
 
-Each future closure must name the affected asset/screen, version, review evidence and explicit owner ruling. Automated PASS, a new build, or approval of another row cannot close presentation debt. Objective usability defects are corrected when found; deferred aesthetics alone do not block the accepted Slice or production expansion.
+Owner reviews are consolidated under [OWNER_APPROVAL_POLICY.md](OWNER_APPROVAL_POLICY.md): current ACT 1 presentation at GATE 2 and final Release Candidate presentation at GATE 3, with no per-row approval interruption. Continue implementation and minor reversible refinement autonomously within the accepted direction. Each future debt closure must name the affected asset/screen, version, review evidence and explicit scope of the bundled owner ruling. Automated PASS, a new build, or approval of another row cannot close presentation debt. Objective usability defects are corrected when found; deferred aesthetics alone do not block the accepted Slice or production expansion.
 
 | ID | Preserved debt | Planned package | Evidence required to close |
 | --- | --- | --- | --- |
