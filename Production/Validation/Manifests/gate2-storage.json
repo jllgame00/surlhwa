@@ -1,0 +1,14 @@
+[
+  {
+    "Model": "Samsung SSD 980 PRO 1TB",
+    "MediaType": "Fixed hard disk media",
+    "InterfaceType": "SCSI",
+    "Size": 1000202273280
+  },
+  {
+    "Model": "ST2000DM008-2UB102",
+    "MediaType": "Fixed hard disk media",
+    "InterfaceType": "IDE",
+    "Size": 2000396321280
+  }
+]

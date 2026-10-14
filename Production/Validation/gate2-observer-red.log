@@ -1,0 +1,50 @@
+F.FFFF
+======================================================================
+FAIL: test_backwards_publication_is_rejected (__main__.ObservationGuardTests.test_backwards_publication_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 21, in test_backwards_publication_is_rejected
+    with self.assertRaises(RuntimeError): self.g['observe']()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_future_publication_is_rejected (__main__.ObservationGuardTests.test_future_publication_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 24, in test_future_publication_is_rejected
+    with self.assertRaises(RuntimeError): self.g['observe']()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_other_player_is_rejected (__main__.ObservationGuardTests.test_other_player_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 15, in test_other_player_is_rejected
+    with self.assertRaises(RuntimeError): self.g['observe']()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_post_action_boundary_cannot_accept_pre_action_observation (__main__.ObservationGuardTests.test_post_action_boundary_cannot_accept_pre_action_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 32, in test_post_action_boundary_cannot_accept_pre_action_observation
+    with self.assertRaises(RuntimeError): self.g['wait_for'](lambda o:True,'post-action result',timeout=.05)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_stale_publication_is_rejected (__main__.ObservationGuardTests.test_stale_publication_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\univ\surlhwa\SURLHWA_PRODUCTION\Production\Tools\test_act1_native_observation.py", line 18, in test_stale_publication_is_rejected
+    with self.assertRaises(RuntimeError): self.g['observe']()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.036s
+
+FAILED (failures=5)

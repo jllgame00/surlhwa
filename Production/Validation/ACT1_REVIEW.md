@@ -1,6 +1,18 @@
 # Gate 2 — complete ACT 1 review preparation
 
-Status: INDEPENDENT_VALIDATION_IN_PROGRESS. Native desktop input is paused at the owner's request until the owner signals readiness. This is not Gate 2 technical closure or owner approval. ACTs 2–7 have not started.
+Status: NATIVE_CLOSURE_PENDING. Independent ACT 1 implementation, review fixes, offscreen validation and review preparation are complete. Native desktop input is paused at the owner's request until the owner signals readiness. This is not Gate 2 technical closure or owner approval. ACTs 2–7 have not started.
+
+| Current final Player evidence | Checks | Captures | Result |
+| --- | ---: | ---: | --- |
+| Full open ACT 1, 720p recorded | 167 | 54 | PASS |
+| Full open ACT 1, 1080p | 167 | 54 | PASS |
+| Quiet farewell from actual pre-Warmth save | 70 | 28 | PASS |
+| Continue at open completion | 5 | 10 | PASS |
+| Continue at quiet completion | 5 | 10 | PASS |
+
+All five processes exited 0 without errors and retained unchanged 966-file source/Player inventories. The 720p recording includes one complete playthrough plus five focused method/farewell/memory clips. Actual-resolution inspection covers method guides, character/tool visibility, Partial/Known Codex and large Korean settings text. Technical readability does not grant visual approval.
+
+The quiet path preserves its first ten actual service receipts, records a recognized but non-fitting Warmth service, then a fitting Clarity service and the unlit star after farewell/departure. Both completed Continue runs leave both published save generations byte-identical: 17 services, 17 departures and one memory, with no duplicate grant. See [save continuity evidence](Manifests/gate2-save-continuity.json). All actions in these five runs are explicitly simulated production InputSystem actions; none replaces the pending Windows-native run.
 
 ## Current experience
 
@@ -42,6 +54,6 @@ The generated [review page](review-act1.html) selects only passing Player runs a
 
 The native harness is prepared but must remain idle until the owner's signal. Earlier attempts `gate2-native-act1-01` and `-02` are ENVIRONMENT_INTERRUPTED, not gameplay failures. The first inherited a minimized window; the second stopped on unrelated external mouse movement at the menu.
 
-Technical evidence includes the 146-check standalone domain/application/content suite, affected Unity domain/input/presentation/retained-Slice integration checks, actual Player services and saves, full source/Player inventories, source adoption validation and preservation hashes. Failed offscreen attempts remain retained; a partial 17-service trace whose fixture later fails is not labelled PASS.
+Technical evidence includes 149/149 standalone domain/application/content checks, 172/172 affected Unity domain/input/presentation/retained-Slice integration checks, and 6/6 native-observer guard tests that execute no desktop input. It also includes actual Player services and saves, full source/Player inventories, source adoption validation and preservation hashes. All six Important findings from the [fresh code review](ACT1_FINAL_REVIEW.md) have failing-then-passing regressions. Failed offscreen attempts remain retained; a partial 17-service trace whose fixture later fails is not labelled PASS.
 
-Performance results are a local Windows development-build baseline, with rendering/capture overhead disclosed. They are not a certified minimum specification, GPU profiler measurement, or final release optimization approval. Full seven-ACT, paired-character, seven-memory and long-session profiling belongs to later authorized expansion; those systems are not implemented before Gate 2.
+The [performance baseline](ACT1_PERFORMANCE.md) names the local hardware, workspace storage, instrumentation and sampling limits. Results include rendering/capture overhead. They are not a certified minimum specification, GPU profiler measurement, or final release optimization approval. Full seven-ACT, paired-character, seven-memory and long-session profiling belongs to later authorized expansion; those systems are not implemented before Gate 2.

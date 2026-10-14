@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "utc": "2026-10-14T13:29:56.453429+00:00",
+  "tier": "Actual saved Player outcomes from simulated production InputSystem; NOT native OS input",
+  "runs": [
+    {
+      "name": "gate2-player-open-720-04",
+      "status": "PASS",
+      "checks": 167,
+      "captures": 54
+    },
+    {
+      "name": "gate2-player-open-1080-02",
+      "status": "PASS",
+      "checks": 167,
+      "captures": 54
+    },
+    {
+      "name": "gate2-player-quiet-720-01",
+      "status": "PASS",
+      "checks": 70,
+      "captures": 28
+    },
+    {
+      "name": "gate2-player-continue-720-02",
+      "status": "PASS",
+      "checks": 5,
+      "captures": 10
+    },
+    {
+      "name": "gate2-player-quiet-continue-720-01",
+      "status": "PASS",
+      "checks": 5,
+      "captures": 10
+    }
+  ],
+  "quietFirstTenServiceReceiptsUnchanged": true,
+  "quietWarmthMismatchPreserved": true,
+  "quietFittingClarityCannotSubstitute": true,
+  "continuedSaves": [
+    {
+      "saveRoot": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\gate2-complete-open-save-copy-final",
+      "variant": "star_glowing",
+      "currentSha256": "6244cb34d99c36b719491c2407d94a6038930cd3fb147fdce7a54f56f0bd5692",
+      "bothPublishedGenerationsUnchangedByContinue": true,
+      "services": 17,
+      "departures": 17,
+      "memories": 1
+    },
+    {
+      "saveRoot": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Evidence\\gate2-complete-quiet-save-copy-final",
+      "variant": "star_unlit",
+      "currentSha256": "f6b9b48c894d5df02b8ea3784c8b8423df537ac03f3051df214bb18abf943c35",
+      "bothPublishedGenerationsUnchangedByContinue": true,
+      "services": 17,
+      "departures": 17,
+      "memories": 1
+    }
+  ]
+}
