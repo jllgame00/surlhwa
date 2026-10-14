@@ -17,6 +17,7 @@ namespace Surlhwa.Presentation
         private Button next,continueButton; private readonly Stack<GameObject> focus=new Stack<GameObject>();
         private string shownModal; public string MenuModal;
         public string VisibleModal => shownModal;
+        public bool ModalOwnsFocus => modal!=null && EventSystem.current?.currentSelectedGameObject!=null && EventSystem.current.currentSelectedGameObject.transform.IsChildOf(modal.transform);
         public string DisplayedSpeaker => speaker.text;
         private readonly Color ink=new Color(.90f,.84f,.72f),muted=new Color(.67f,.72f,.73f),paper=new Color(.075f,.09f,.10f,.96f);
         public void Initialize(SliceController controller,TMP_FontAsset face)
@@ -73,6 +74,7 @@ namespace Surlhwa.Presentation
             var panel=Panel(parent,rect,new Color(.16f,.20f,.21f,.98f)); panel.name=label; var button=panel.AddComponent<Button>();
             var colors=button.colors; colors.highlightedColor=new Color(.71f,.66f,.48f); colors.selectedColor=new Color(.74f,.63f,.40f); button.colors=colors;
             var t=Text(panel.transform,new Rect(4,1,rect.width-8,rect.height-2),label,size,ink); t.alignment=TextAlignmentOptions.Center;
+            panel.AddComponent<SliceFocusOutline>().Initialize(button);
             button.onClick.AddListener(()=>click()); return button;
         }
         private void Hold(Transform parent,Rect rect,string label,string tool)
@@ -83,7 +85,7 @@ namespace Surlhwa.Presentation
         public bool ActivateFocused(bool modalOnly=false)
         {
             var selected=EventSystem.current?.currentSelectedGameObject; var button=selected!=null ? selected.GetComponent<Button>() : null;
-            if(modalOnly && (modal==null || selected==null || !selected.transform.IsChildOf(modal.transform))) return false;
+            if(modalOnly && !ModalOwnsFocus) return false;
             if(button!=null && button.isActiveAndEnabled && button.interactable) { button.onClick.Invoke(); return true; }
             return false;
         }
@@ -166,8 +168,59 @@ namespace Surlhwa.Presentation
                 Button(card.transform,new Rect(354,54,342,48),"저장된 기록으로 나가기",()=>owner.ReturnToSavedMenu());
             }
             if(kind!="save_error") close=Button(card.transform,new Rect(534,20,162,42),"돌아가기  Esc",()=>owner.CloseModal());
+            var controls=card.GetComponentsInChildren<Button>();
+            foreach(var control in controls) {
+                var navigation=control.navigation; navigation.mode=Navigation.Mode.Explicit;
+                navigation.selectOnLeft=ModalNeighbor(control,controls,Vector2.left); navigation.selectOnRight=ModalNeighbor(control,controls,Vector2.right);
+                navigation.selectOnUp=ModalNeighbor(control,controls,Vector2.up); navigation.selectOnDown=ModalNeighbor(control,controls,Vector2.down);
+                control.navigation=navigation;
+            }
             if(close!=null) EventSystem.current.SetSelectedGameObject(close.gameObject);
         }
+        private static Selectable ModalNeighbor(Button origin,Button[] controls,Vector2 direction)
+        {
+            var rect=(RectTransform)origin.transform; Vector2 center=rect.anchoredPosition+rect.sizeDelta*.5f;
+            Button best=origin; float bestScore=0;
+            foreach(var candidate in controls) {
+                if(candidate==origin || !candidate.IsInteractable()) continue;
+                var other=(RectTransform)candidate.transform; Vector2 delta=other.anchoredPosition+other.sizeDelta*.5f-center;
+                float forward=Vector2.Dot(delta,direction); if(forward<=0) continue;
+                float score=forward/delta.sqrMagnitude; if(score>bestScore) { best=candidate; bestScore=score; }
+            }
+            return best;
+        }
+    }
+    public sealed class SliceFocusOutline : MonoBehaviour,ISelectHandler,IDeselectHandler
+    {
+        private Button button; private GameObject marker;
+        public void Initialize(Button value)
+        {
+            button=value; marker=new GameObject("Focus outline",typeof(RectTransform));
+            var rect=marker.GetComponent<RectTransform>(); rect.SetParent(transform,false);
+            rect.anchorMin=Vector2.zero; rect.anchorMax=Vector2.one; rect.offsetMin=rect.offsetMax=Vector2.zero;
+            Edge("Top",new Vector2(0,1),Vector2.one,new Vector2(0,-1),new Vector2(0,2));
+            Edge("Bottom",Vector2.zero,new Vector2(1,0),new Vector2(0,1),new Vector2(0,2));
+            Edge("Left",Vector2.zero,new Vector2(0,1),new Vector2(1,0),new Vector2(2,0));
+            Edge("Right",new Vector2(1,0),Vector2.one,new Vector2(-1,0),new Vector2(2,0));
+            RefreshFocus();
+        }
+        private void Edge(string name,Vector2 min,Vector2 max,Vector2 position,Vector2 size)
+        {
+            var edge=new GameObject(name,typeof(RectTransform),typeof(Image));
+            var r=edge.GetComponent<RectTransform>(); r.SetParent(marker.transform,false);
+            r.anchorMin=min; r.anchorMax=max; r.anchoredPosition=position; r.sizeDelta=size;
+            var image=edge.GetComponent<Image>(); image.color=new Color(.90f,.84f,.72f); image.raycastTarget=false;
+        }
+        private void RefreshFocus()
+        {
+            if(marker==null) return;
+            bool visible=isActiveAndEnabled && button!=null && button.IsInteractable() && EventSystem.current!=null && EventSystem.current.currentSelectedGameObject==gameObject;
+            if(marker.activeSelf!=visible) marker.SetActive(visible);
+        }
+        public void OnSelect(BaseEventData data) { RefreshFocus(); }
+        public void OnDeselect(BaseEventData data) { if(marker!=null) marker.SetActive(false); }
+        private void LateUpdate() { RefreshFocus(); }
+        private void OnDisable() { if(marker!=null) marker.SetActive(false); }
     }
     public sealed class SliceHoldButton : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
     {

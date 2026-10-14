@@ -53,7 +53,7 @@ namespace Surlhwa.Presentation
             QualitySettings.vSyncCount=0; UnityEngine.Application.targetFrameRate=60;
             media=Argument("-sliceMedia")=="1";
             if(media) { Directory.CreateDirectory(Path.Combine(output,"frames")); channels=AudioSettings.speakerMode==AudioSpeakerMode.Mono ? 1 : 2; audioRecording=AudioRenderer.Start(); mediaStart=Time.realtimeSinceStartup; }
-            if(fixture=="lifecycle") yield return Lifecycle(); else if(fixture=="continue") yield return ContinueProof(); else if(fixture=="save-error") yield return SaveFailure(); else yield return Proof();
+            if(fixture=="ui-review") yield return UiReview(); else if(fixture=="lifecycle") yield return Lifecycle(); else if(fixture=="continue") yield return ContinueProof(); else if(fixture=="save-error") yield return SaveFailure(); else yield return Proof();
         }
         private void LateUpdate()
         {
@@ -136,6 +136,35 @@ namespace Surlhwa.Presentation
             while(owner.Session==null || owner.Session.State.Phase!=phase || owner.Session.IsSaving)
             { if(Time.realtimeSinceStartup>until) { Fail("Expected phase "+phase+"; actual "+owner.Session?.State.Phase); yield break; } yield return null; }
             yield return new WaitForSecondsRealtime(.15f);
+        }
+        private bool FocusShapeVisible()
+        {
+            var selected=UnityEngine.EventSystems.EventSystem.current?.currentSelectedGameObject;
+            var marker=selected!=null ? selected.transform.Find("Focus outline") : null;
+            return marker!=null && marker.gameObject.activeInHierarchy && marker.GetComponentsInChildren<UnityEngine.UI.Image>().All(x=>!x.raycastTarget);
+        }
+        private IEnumerator UiReview()
+        {
+            yield return null;
+            if(!FocusShapeVisible()) { Fail("Initial keyboard focus has no non-raycasting outline"); yield break; }
+            yield return Capture("menu-focus");
+            yield return Click(430,238); yield return WaitPhase(SlicePhase.Welcome); yield return ToBrew();
+            long sequence=owner.Session.State.Sequence;
+            yield return Capture("brew-layout");
+            foreach(var key in new[]{Key.B,Key.Tab,Key.Escape}) {
+                yield return Press(key); yield return null;
+                if(!FocusShapeVisible() || !owner.Ui.ModalOwnsFocus) { Fail("Modal focus outline missing or outside modal"); yield break; }
+                yield return Capture(key==Key.B ? "guide-functional" : key==Key.Tab ? "codex-visually-not-approved" : "settings-focus");
+                if(key==Key.Escape) {
+                    var selected=UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+                    yield return Press(Key.LeftArrow); yield return null;
+                    if(selected==UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject || !FocusShapeVisible() || !owner.Ui.ModalOwnsFocus) { Fail("Keyboard navigation did not stay within the modal"); yield break; }
+                    yield return Capture("settings-keyboard-navigation");
+                }
+                yield return Press(Key.Escape);
+            }
+            if(owner.Session.State.Sequence!=sequence || owner.Session.Brew.Container(ContainerRole.Jigger).TotalMl!=0 || owner.Session.Modals.Top!=null) { Fail("UI review changed gameplay or retained a modal"); yield break; }
+            yield return Capture("returned-to-brew"); Finish(true,null); UnityEngine.Application.Quit(0);
         }
         private IEnumerator ToBrew()
         {

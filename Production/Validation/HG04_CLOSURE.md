@@ -1,4 +1,12 @@
-# HG04 closure — 2026-10-13
+# HG04 — APPROVED, 2026-10-14
+
+The owner accepted liquid authority, measurement/transfer, native Stir completion, batch/regrip and production recognition/service flow. The earlier blockers below are superseded by the separately retained Windows SendInput evidence: [Enter](Evidence/hg04-sendinput-02/enter-result.json) and [one complete native Stir service](Evidence/hg04-native-stir-b-01/native-result.json). The latter contains 1475.237727 accepted degrees, 118.00676 ml served, recognized Seolya, good preparation/quality, matching FIT and natural departure. The interrupted attempt remains separate.
+
+The owner narrowed native closure to one complete service; this does not become a claim of native two-guest F01 or native Continue. The original full-flow and recovery evidence remains simulated production input. The [approved Player copy](Builds/HG04Approved/SurlhwaSlice.exe) is retained byte-for-byte. HG05+ is now authorized. Codex remains **FUNCTIONAL / VISUALLY_NOT_APPROVED** and its dedicated visual refinement is deferred by explicit owner choice. See [current Slice review](SLICE_REVIEW.md).
+
+## Historical closure report — 2026-10-13
+
+The following is the original report before the subsequent native closure and owner approval; its BLOCKED statements are historical.
 
 **HG04_BLOCKED — native full-playthrough evidence remains incomplete.**
 

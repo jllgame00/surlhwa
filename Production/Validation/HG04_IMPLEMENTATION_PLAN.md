@@ -1,5 +1,7 @@
 # Core Domain, Stir and ACT 1 excerpt Slice implementation plan
 
+**Owner closure, 2026-10-14:** HG04 APPROVED. The later bounded native Enter and one-service Stir proof supersede the historical missing-evidence closure at the end of this plan. The owner accepted that closure without requiring a native two-guest F01/Continue rerun. HG05+ now follows SLICE_COMPLETION_PLAN.md. Do not reinterpret the original unchecked broad native checklist as authority to repeat accepted checks.
+
 > For agentic workers: use superpowers:executing-plans task by task. The repository's autonomous working contract and the owner's proceed instruction authorize native execution here. Preserve this tracked ledger and evidence rather than deleting them.
 
 **Goal:** A playable two-encounter Slice that lets the player interpret, make and serve actual drinks, read distinct reactions, leave and Continue safely within the accepted C1 bar.

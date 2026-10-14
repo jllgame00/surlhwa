@@ -1,5 +1,5 @@
 param(
- [ValidateSet('seolya','manhattan','dry','weak','unknown','checkpoint-brew','continue','lifecycle','missing-actor','save-error')][string]$Fixture='manhattan',
+ [ValidateSet('seolya','manhattan','dry','weak','unknown','checkpoint-brew','continue','lifecycle','missing-actor','save-error','ui-review')][string]$Fixture='manhattan',
  [string]$SaveRoot,
  [switch]$Media,
  [ValidateSet('intro','result','farewell')][string]$StopAt,

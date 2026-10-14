@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "Player simulated-input/rendered artifacts only; does not approve native OS input or human feel",
+  "runs": [
+    {
+      "folder": "hg05-ui-final-720",
+      "fixture": "ui-review",
+      "stopAt": "",
+      "resolution": [
+        1280,
+        720
+      ],
+      "captures": 8,
+      "runId": "982955c105924b9eb72b8aae4777c8ad",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.895095825195312,
+      "maxSaveMs": 43.0353
+    },
+    {
+      "folder": "hg05-ui-final-1080",
+      "fixture": "ui-review",
+      "stopAt": "",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "captures": 8,
+      "runId": "2d0120f49eea46558a60e8bffdf34205",
+      "tier": "V4 Input System events; V6 native offscreen camera/UI render",
+      "p95FrameMs": 16.7882022857666,
+      "maxSaveMs": 42.7091
+    }
+  ],
+  "sourceSha256": "0450fc75dd657e351712ab57233d9f0c942802a3299a779d2ac12cb0de0f0904",
+  "playerSha256": "7f9e04299975a80760464c6b93a743320b9559891fe47422733b28aae2b52a16"
+}

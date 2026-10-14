@@ -1,5 +1,7 @@
 # HG04 execution ledger — Production/Validation/HG04_IMPLEMENTATION_PLAN.md
 
+**Current status, 2026-10-14: HG04 APPROVED by owner.** Later Windows SendInput evidence closed the bounded Enter and one-service native requirements. See HG04_OWNER_BASELINE.md and HG04_CLOSURE.md for the exact scope. All prior blocked/interrupted records below remain history. HG05+ continues under SLICE_COMPLETION_PLAN.md; Codex visual refinement is explicitly deferred.
+
 Baseline: 32b5c64f6db36e30c29c20ae33c2b71f6dd1ec9a, clean production-rebuild, 2026-10-13 Asia/Seoul.
 
 Owner accepted HG01–HG03/C1. Authoritative HG04 contracts reread from external read-only corpus. Owner explicitly chose the neutral Warmth-follow-up ACT1 excerpt with ACT completion/MEM-01 unearned. HG04_OWNER_BASELINE.md records the override to historical Quixote Slice selection.

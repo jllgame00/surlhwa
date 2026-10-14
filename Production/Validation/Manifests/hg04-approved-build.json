@@ -1,0 +1,7 @@
+{
+  "status": "PRESERVED",
+  "files": 284,
+  "path": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Builds\\HG04Approved",
+  "baselineInventory": "Evidence/hg04-final-dry-1080/inventory.json",
+  "verified": "Copied files match accepted HG04 Player hashes; no gameplay suite rerun"
+}

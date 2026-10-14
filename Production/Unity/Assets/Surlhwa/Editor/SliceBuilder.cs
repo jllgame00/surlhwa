@@ -86,7 +86,11 @@ namespace Surlhwa.Editor
         { string path=Root+"/"+file; asset.name=Path.GetFileNameWithoutExtension(file); var old=AssetDatabase.LoadAssetAtPath<T>(path); if(old!=null) { EditorUtility.CopySerialized(asset,old); Object.DestroyImmediate(asset); return old; } AssetDatabase.CreateAsset(asset,path); return asset; }
         public static void BuildPlayer()
         {
-            BuildScene(); string output=Path.GetFullPath("../Validation/Builds/Slice/SurlhwaSlice.exe"); Directory.CreateDirectory(Path.GetDirectoryName(output));
+            BuildScene(); BuildExistingPlayer();
+        }
+        public static void BuildExistingPlayer()
+        {
+            string output=Path.GetFullPath("../Validation/Builds/Slice/SurlhwaSlice.exe"); Directory.CreateDirectory(Path.GetDirectoryName(output));
             PlayerSettings.SetScriptingBackend(UnityEditor.Build.NamedBuildTarget.Standalone,ScriptingImplementation.Mono2x);
             PlayerSettings.SetUseDefaultGraphicsAPIs(BuildTarget.StandaloneWindows64,false);
             PlayerSettings.SetGraphicsAPIs(BuildTarget.StandaloneWindows64,new[]{UnityEngine.Rendering.GraphicsDeviceType.Direct3D11});
