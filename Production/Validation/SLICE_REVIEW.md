@@ -1,5 +1,7 @@
 # Bounded Vertical Slice — HG05–HG08 owner review
 
+**Current owner ruling, 2026-10-14: VERTICAL_SLICE_OWNER_APPROVED_WITH_PRESENTATION_DEBT.** HG01–HG04 APPROVED; HG05 FUNCTIONAL / VISUALLY_NOT_APPROVED; HG06 APPROVED WITH AUDIO POLISH DEBT; HG07 and HG08 APPROVED. See the [exact approval scope](VERTICAL_SLICE_OWNER_APPROVAL.md), [open presentation debt](PRESENTATION_DEBT.md) and [proposed expansion plan](PRODUCTION_EXPANSION_PLAN.md). The review submission below is retained as historical evidence; its pending-owner wording predates this ruling. No expansion implementation has started.
+
 HG01–HG04 are owner-approved. The implemented Slice is the disclosed ACT 1 Warmth-follow-up excerpt: postman, then Little Prince, through actual drinks, reaction, result, farewell and departure. Completing the excerpt does not complete ACT 1 or grant MEM-01 or any memory. Don Quixote remains historical visual-fixture-only material.
 
 ## Review surfaces
