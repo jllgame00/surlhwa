@@ -26,6 +26,7 @@ namespace Surlhwa.Tests
             Assert.That(result.Recognition,Is.EqualTo(DrinkRecognition.Recognized));
             Assert.That(result.Preparation,Is.EqualTo(PreparationResult.Good));
             Assert.That(result.QualityGood,Is.True); Assert.That(result.Fits,Is.True);
+            Assert.That(result.QualityApplicable,Is.False,"Build has no separate technique grade to present as a win.");
             Assert.That(s.Freeze().StirDegrees,Is.Zero); Assert.That(s.Freeze().TotalMl,Is.EqualTo(90m));
         }
         [Test] public void BuildAddedLiquidRequiresGentleStirOnCurrentBatch()

@@ -10,29 +10,32 @@ namespace Surlhwa.Presentation
 {
     public sealed class SliceInputAdapter : MonoBehaviour
     {
-        private readonly List<InputAction> actions=new List<InputAction>(); private SliceSession session; private Camera view;
+        private readonly List<InputAction> actions=new List<InputAction>(); private IBrewingSession session; private Camera view;
         private Vector3 mixing; private long serial=10000; private string held; private Vector2 previousPointer;
         public string SelectedIngredient { get; private set; }="whiskey";
         public ContainerRole Target { get; private set; }=ContainerRole.Jigger;
         public string ActiveTool => held; public bool Fine { get; set; }
         public bool AcceptedLiquidThisStep { get; private set; } public bool AcceptedStirThisStep { get; private set; }
         public float SpoonAngle { get; private set; } public string Feedback { get; private set; }
+        public float ShakePosition { get; private set; } public float FloatHeight { get; private set; } public float FloatIntensity { get; private set; }
         public Action<string> UiCommand; public event Action<string> AcceptedCue;
         public long NextEventId() => ++serial;
-        public void Bind(SliceSession value,Camera camera,Vector3 mixingCenter)
+        public void Bind(IBrewingSession value,Camera camera,Vector3 mixingCenter)
         {
-            Stop(); session=value; view=camera; mixing=mixingCenter; Target=ContainerRole.Jigger; Fine=false; SelectedIngredient=value.Content.Profile.Supply.First();
-            Configure(value.Content.Profile.Supply);
+            Stop(); session=value; view=camera; mixing=mixingCenter; Target=ContainerRole.Jigger; Fine=false; SelectedIngredient=value.Supply.First();
+            Configure(value.Supply);
         }
         public void Configure(IEnumerable<string> supply)
         {
             if(actions.Count>0) return;
             ActionKey("pour","q",true); ActionKey("transfer","e",true); ActionKey("strain","r",true); ActionKey("stir","s",true);
+            ActionKey("shake","k",true); ActionKey("float","f",true); ActionKey("shaker_transfer","t",true); ActionKey("splash","x",true);
+            ActionKey("lid","l",false); ActionKey("gentle","g",false); ActionKey("orange","o",false);
             ActionKey("ice","i",false); ActionKey("cherry","c",false); ActionKey("dash","d",false);
             ActionKey("target","j",false); ActionKey("glass","v",false); ActionKey("guide","b",false);
             ActionKey("codex","tab",false); ActionKey("back","escape",false); ActionKey("advance","enter",false);
             string[] ingredients=supply.ToArray();
-            for(int n=0;n<ingredients.Length;n++) { string id=ingredients[n]; var a=new InputAction("ingredient"+n,InputActionType.Button,"<Keyboard>/"+(n+1)); a.performed+=_=>SelectIngredient(id); a.Enable(); actions.Add(a); }
+            for(int n=0;n<Math.Min(9,ingredients.Length);n++) { string id=ingredients[n]; var a=new InputAction("ingredient"+n,InputActionType.Button,"<Keyboard>/"+(n+1)); a.performed+=_=>SelectIngredient(id); a.Enable(); actions.Add(a); }
         }
         private void ActionKey(string command,string key,bool continuous)
         {
@@ -41,20 +44,24 @@ namespace Surlhwa.Presentation
             if(continuous) a.canceled+=_=>Release(); a.Enable(); actions.Add(a);
         }
         public void SelectIngredient(string id)
-        { if(session==null || !session.CanInteract || !session.Content.Profile.Supply.Contains(id)) return; Stop(); SelectedIngredient=id; Feedback=null; }
+        { if(session==null || !session.CanInteract || !session.Supply.Contains(id)) return; Stop(); SelectedIngredient=id; Feedback=null; }
         public void SelectTarget(ContainerRole role) { if(session==null || !session.CanInteract) return; Stop(); Target=role; Feedback=null; }
         public void Command(string command)
         {
             if(command=="guide" || command=="codex" || command=="back" || command=="advance" || command=="glass") { UiCommand?.Invoke(command); return; }
             if(session==null) return;
-            if(command=="target") { SelectTarget((ContainerRole)(((int)Target+1)%3)); return; }
+            if(command=="target") { SelectTarget((ContainerRole)(((int)Target+1)%(session.ExtendedMethods ? 4 : 3))); return; }
             if(!session.CanInteract) return;
+            if(!session.ExtendedMethods && (command=="lid" || command=="gentle" || command=="orange")) return;
             try
             {
                 Stop(); bool accepted=session.ExecuteBrew(++serial,b=> {
                     if(command=="ice") b.AddIce(Target);
                     else if(command=="cherry") b.Garnish("cherry","in_glass");
-                    else if(command=="dash") b.Pour(SelectedIngredient,Target,session.Content.Tuning.DashMl,BrewAction.Dash);
+                    else if(command=="orange") b.Garnish("orange_slice","rim");
+                    else if(command=="gentle") b.GentleStir();
+                    else if(command=="lid") b.SetShakerClosed(!b.ShakerClosed);
+                    else if(command=="dash") b.Pour(SelectedIngredient,Target,session.Tuning.DashMl,BrewAction.Dash);
                 });
                 if(accepted) { AcceptedCue?.Invoke(command); Feedback=null; }
             }
@@ -64,15 +71,20 @@ namespace Surlhwa.Presentation
         public void Begin(string tool)
         {
             if(session==null || held!=null || !session.CanInteract) return;
+            if(!session.ExtendedMethods && tool!="pour" && tool!="transfer" && tool!="strain" && tool!="stir") return;
             try
             {
                 bool accepted=session.ExecuteBrew(++serial,b=> {
                     if(tool=="pour") b.BeginPour(SelectedIngredient,Target);
-                    else if(tool=="transfer") b.BeginTransfer(ContainerRole.Jigger,ContainerRole.Mixing,BrewAction.PourFromContainer);
+                    else if(tool=="splash") b.BeginPour(SelectedIngredient,Target,BrewAction.Splash);
+                    else if(tool=="transfer") b.BeginTransfer(ContainerRole.Jigger,session.ExtendedMethods && Target!=ContainerRole.Jigger ? Target : ContainerRole.Mixing,BrewAction.PourFromContainer);
                     else if(tool=="strain") b.BeginTransfer(ContainerRole.Mixing,ContainerRole.Serving,BrewAction.Strain);
                     else if(tool=="stir") { var p=StirPoint(); b.BeginStir(p.x,p.y); }
+                    else if(tool=="shake") b.BeginShake(ReadShake());
+                    else if(tool=="shaker_transfer") b.BeginTransfer(ContainerRole.Shaker,ContainerRole.Serving,BrewAction.PourFromContainer);
+                    else if(tool=="float") b.BeginFloat();
                 });
-                if(accepted && (session.Brew.FlowActive || session.Brew.StirActive)) { held=tool; previousPointer=Mouse.current?.position.ReadValue() ?? Vector2.zero; Feedback=null; }
+                if(accepted && (session.Brew.FlowActive || session.Brew.StirActive || session.Brew.ShakeActive)) { held=tool; previousPointer=Mouse.current?.position.ReadValue() ?? Vector2.zero; Feedback=null; }
                 else if(accepted && tool=="stir") Feedback="술과 얼음이 필요해요";
             }
             catch(InvalidOperationException) { Feedback="도구와 재료를 확인해요"; }
@@ -86,12 +98,19 @@ namespace Surlhwa.Presentation
             float radius=view!=null ? Screen.height/(2*view.orthographicSize)*.28f : 30;
             return ((Mouse.current?.position.ReadValue() ?? center)-center)/radius;
         }
+        private float ReadShake() => ShakePosition=Mathf.Clamp(((Mouse.current?.position.ReadValue().x ?? Screen.width*.5f)/Screen.width-.5f)/.1f,-1,1);
+        private void ReadFloat()
+        {
+            var p=Mouse.current?.position.ReadValue() ?? new Vector2(Screen.width*.4f,Screen.height*.35f);
+            FloatIntensity=Mathf.Clamp01((p.x/Screen.width-.4f)/.2f);
+            FloatHeight=Mathf.Clamp01((p.y/Screen.height-.35f)/.3f);
+        }
         public void Step(double seconds)
         {
             AcceptedLiquidThisStep=false; AcceptedStirThisStep=false;
             if(session==null || !session.CanInteract || session.Brew==null) { Stop(); return; }
             var keyboard=Keyboard.current;
-            if(held==null && !(Mouse.current?.leftButton.isPressed ?? false) && (keyboard==null || (!keyboard.qKey.isPressed && !keyboard.eKey.isPressed && !keyboard.rKey.isPressed && !keyboard.sKey.isPressed))) session.ReleaseHeldInput();
+            if(held==null && !(Mouse.current?.leftButton.isPressed ?? false) && (keyboard==null || (!keyboard.qKey.isPressed && !keyboard.eKey.isPressed && !keyboard.rKey.isPressed && !keyboard.sKey.isPressed && !keyboard.kKey.isPressed && !keyboard.fKey.isPressed && !keyboard.tKey.isPressed && !keyboard.xKey.isPressed))) session.ReleaseHeldInput();
             if(held==null || seconds<=0) return;
             long micros=(long)Math.Round(Math.Min(seconds,.25)*1000000); // Hitches pause excess time rather than delivering an unseen surge.
             bool fine=Fine || (Keyboard.current?.leftShiftKey.isPressed ?? false) || (Keyboard.current?.rightShiftKey.isPressed ?? false);
@@ -100,6 +119,15 @@ namespace Surlhwa.Presentation
                 var p=StirPoint(); double before=session.Brew.StirAcceptedDegrees;
                 session.ExecuteBrew(++serial,b=>b.MoveStir(p.x,p.y,micros)); AcceptedStirThisStep=session.Brew.StirAcceptedDegrees>before;
                 if(AcceptedStirThisStep) SpoonAngle=Mathf.Atan2(p.y,p.x)*Mathf.Rad2Deg;
+            }
+            else if(held=="shake")
+            {
+                int before=session.Brew.ShakeReversals; session.ExecuteBrew(++serial,b=>b.MoveShake(ReadShake(),micros)); AcceptedStirThisStep=session.Brew.ShakeReversals>before;
+            }
+            else if(held=="float")
+            {
+                ReadFloat(); int before=session.Brew.Revision;
+                session.ExecuteBrew(++serial,b=>b.UpdateFloat(micros,(decimal)FloatIntensity,FloatHeight)); AcceptedLiquidThisStep=session.Brew.Revision!=before;
             }
             else
             {

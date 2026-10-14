@@ -81,5 +81,20 @@ namespace Surlhwa.Tests
             Assert.That(result.Recognition,Is.EqualTo(DrinkRecognition.Recognized));
             Assert.That(result.Preparation,Is.EqualTo(PreparationResult.Weak)); Assert.That(result.QualityGood,Is.False);
         }
+        [Test] public void HeldSplashRecordsOnlyActuallyDeliveredLiquidAndKeepsActionMeaning()
+        {
+            var s=Session(); Fill(s); Motion(s); s.Transfer(ContainerRole.Shaker,ContainerRole.Serving,85m,BrewAction.PourFromContainer);
+            s.BeginPour("soda_water",ContainerRole.Serving,BrewAction.Splash); s.UpdateFlow(3000000,1m,true); s.EndFlow();
+            var result=ServiceEvaluator.Evaluate(Catalog(),BartendingDomainTests.Tuning(),s.Freeze(),new DrinkRequest("clarity"));
+            Assert.That(s.Freeze().Amounts["soda_water"],Is.EqualTo(15m)); Assert.That(result.Preparation,Is.EqualTo(PreparationResult.Good));
+            Assert.That(s.Freeze().Trace[s.Freeze().Trace.Count-1].Kind,Is.EqualTo(BrewAction.Splash));
+        }
+        [Test] public void UnknownCocktailRetainsIndependentActualShakeEvidence()
+        {
+            var s=Session(); Fill(s); s.Pour("lemon_juice",ContainerRole.Shaker,10m); Motion(s);
+            var result=Finish(s,95m);
+            Assert.That(result.Recognition,Is.EqualTo(DrinkRecognition.Unknown)); Assert.That(result.Preparation,Is.EqualTo(PreparationResult.NotEvaluable));
+            Assert.That(result.QualityGood,Is.True); Assert.That(result.Fits,Is.False);
+        }
     }
 }

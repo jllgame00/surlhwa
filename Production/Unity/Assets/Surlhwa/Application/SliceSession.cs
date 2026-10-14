@@ -7,7 +7,7 @@ using Surlhwa.Domain;
 namespace Surlhwa.Application
 {
     public interface ISliceSaveStore { Task SaveAsync(SliceCheckpoint checkpoint); }
-    public sealed class SliceSession : IDisposable
+    public sealed class SliceSession : IDisposable,IBrewingSession
     {
         private readonly ISliceSaveStore store; private readonly InputGate input=new InputGate();
         private SliceCheckpoint pending; private double stageElapsed; private bool disposed;
@@ -17,6 +17,9 @@ namespace Surlhwa.Application
         public string SaveError { get; private set; } public bool Focused { get; private set; }=true;
         public bool CanInteract => !disposed && Focused && !IsSaving && SaveError==null && Modals.Count==0;
         public SliceEncounter CurrentEncounter => Content.Encounters[State.EncounterIndex];
+        public System.Collections.Generic.IReadOnlyCollection<string> Supply => Content.Profile.Supply;
+        public BrewingTuning Tuning => Content.Tuning;
+        public bool ExtendedMethods => false;
         public SourcedText CurrentText
         {
             get

@@ -7,11 +7,14 @@ using Surlhwa.Domain;
 namespace Surlhwa.Application
 {
     public interface ICampaignSaveStore { Task SaveAsync(CampaignCheckpoint checkpoint); }
-    public sealed class CampaignSession : IDisposable
+    public sealed class CampaignSession : IDisposable,IBrewingSession
     {
         private readonly ICampaignSaveStore store; private readonly InputGate input=new InputGate();
         private CampaignCheckpoint pending; private double stageElapsed; private bool disposed;
         public CampaignContent Content { get; }
+        public IReadOnlyCollection<string> Supply => Content.Supply;
+        public BrewingTuning Tuning => Content.Tuning;
+        public bool ExtendedMethods => true;
         public CampaignCheckpoint State { get; private set; }
         public BrewingSession Brew { get; private set; }
         public RecipeKnowledge Knowledge { get; private set; }

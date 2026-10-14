@@ -32,12 +32,13 @@ namespace Surlhwa.Domain
         public DrinkRecognition Recognition { get; }
         public string RecipeId { get; } public string CocktailId { get; }
         public PreparationResult Preparation { get; } public bool QualityGood { get; } public bool Fits { get; }
+        public bool QualityApplicable { get; }
         public IReadOnlyCollection<string> Reasons { get; }
         public ServiceOutcome(DrinkRecognition recognition,StirRecipe recipe,PreparationResult preparation,bool quality,bool fits,List<string> reasons)
         {
             if(!Enum.IsDefined(typeof(DrinkRecognition),recognition) || !Enum.IsDefined(typeof(PreparationResult),preparation) ||
                 (recognition==DrinkRecognition.Recognized)!=(recipe!=null) || (recipe==null && (fits || preparation!=PreparationResult.NotEvaluable))) throw new ArgumentException("Invalid saved outcome.");
-            Recognition=recognition; RecipeId=recipe?.Id; CocktailId=recipe?.CocktailId; Preparation=preparation; QualityGood=quality; Fits=fits; Reasons=Array.AsReadOnly(reasons.ToArray());
+            Recognition=recognition; RecipeId=recipe?.Id; CocktailId=recipe?.CocktailId; Preparation=preparation; QualityGood=quality; QualityApplicable=recipe?.Method!="build"; Fits=fits; Reasons=Array.AsReadOnly(reasons.ToArray());
         }
     }
     public static class ServiceEvaluator
@@ -47,7 +48,7 @@ namespace Surlhwa.Domain
             if(snapshot.TuningRevision!=tuning.Revision) throw new ArgumentException("Snapshot tuning revision mismatch.");
             var candidates=catalog.Recipes.Values.Where(r=>Matches(r,tuning,snapshot)).ToArray();
             if(candidates.Length!=1) return new ServiceOutcome(candidates.Length==0 ? DrinkRecognition.Unknown : DrinkRecognition.Ambiguous,
-                null,PreparationResult.NotEvaluable,snapshot.StirQualityGood,false,new List<string>{candidates.Length==0 ? "unrecognized_composition" : "ambiguous_composition"});
+                null,PreparationResult.NotEvaluable,snapshot.StirQualityGood || (snapshot.Shake?.QualityGood ?? false) || FloatLayers.Quality(snapshot),false,new List<string>{candidates.Length==0 ? "unrecognized_composition" : "ambiguous_composition"});
             var recipe=candidates[0]; var reasons=new List<string>();
             if(recipe.Method=="stir")
             {

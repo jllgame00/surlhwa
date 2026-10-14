@@ -259,8 +259,8 @@ namespace Surlhwa.Domain
             if(Get(ContainerRole.Serving).Total==0) throw new InvalidOperationException("No serving liquid.");
             garnish=id; position=placement; Record(BrewAction.Garnish,id,ContainerRole.Serving);
         }
-        public void BeginPour(string ingredient,ContainerRole target)
-        { CheckSupply(ingredient); Get(target); CheckOpen(target); StartFlow(); flowIngredient=ingredient; flowSource=null; flowTarget=target; flowKind=BrewAction.Pour; }
+        public void BeginPour(string ingredient,ContainerRole target,BrewAction kind=BrewAction.Pour)
+        { if(kind!=BrewAction.Pour && kind!=BrewAction.Splash) throw new ArgumentException("Bottle flow must pour or splash."); CheckSupply(ingredient); Get(target); CheckOpen(target); StartFlow(); flowIngredient=ingredient; flowSource=null; flowTarget=target; flowKind=kind; }
         public void BeginTransfer(ContainerRole source,ContainerRole target,BrewAction kind)
         {
             Get(source); Get(target);
@@ -279,7 +279,7 @@ namespace Surlhwa.Domain
             fineFlow=fine; flowIntensity=intensity;
             decimal exact=rate*intensity*microseconds/1000000m+remainder,ml=LiquidMath.Down(exact); remainder=exact-ml;
             acceptedInterval=microseconds;
-            try { return flowSource.HasValue ? Transfer(flowSource.Value,flowTarget,ml,flowKind) : Pour(flowIngredient,flowTarget,ml); }
+            try { return flowSource.HasValue ? Transfer(flowSource.Value,flowTarget,ml,flowKind) : Pour(flowIngredient,flowTarget,ml,flowKind); }
             finally { acceptedInterval=0; }
         }
         public void EndFlow() { flow=false; remainder=0; flowIngredient=null; flowSource=null; stableFloat=false; lastFloatHeight=null; }
