@@ -1,0 +1,615 @@
+{
+  "rows": [
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/Act1Korean.asset",
+      "sha256": "b1d6459acd8e9795e87d07825210cb1194c49b89c4bfe36d0af816ced5a44b7c",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/FirstNightMotif.wav",
+      "sha256": "72f045f6097dccb852e4d8cefdc9cd28d930a8ed4fbe5615d4fe8a117c70089f",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/FootGrounded.wav",
+      "sha256": "97702a9e973dd79bbb699046a0549d5db35e6b2c9b1d51f97fa69ca7bd9f4eee",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/Linen.mat",
+      "sha256": "2e0f7a323a2fcfd1fc329d791523e937d3ab0f765cd123a603e865a999abf229",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/LinenSeam.mat",
+      "sha256": "3880c11424310490d1f9980a0356485253d9b6876df0b77ce096c6341c4297b5",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/OrdinarySeated.mat",
+      "sha256": "af9b82bbd403490dc91e55d039abfb930f4a320b78faaa4b4475640c14f925ed",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/OrdinaryStanding.mat",
+      "sha256": "e596713519ed08aa2e45cfc4fd6ff63b8f252dd76a8cde8cf11e6ab549e05b22",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/OrdinaryWalk0.mat",
+      "sha256": "8ea11db16360b67d845d860115272aba6189fedb27248b4672cd7f3894282097",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/OrdinaryWalk1.mat",
+      "sha256": "28d1d3d69631501cfbc05bc87bbde181a0336d3fea2157fb48590bc92ec71f52",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/OrdinaryWalk2.mat",
+      "sha256": "1630570a1faa5cc4180ce293cfbc482968e1704afdb76fc0f42d503cc8af7d05",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/OrdinaryWalk3.mat",
+      "sha256": "a30721b8bc11b9c64fead8a9d70a12f0451f2fa8d77ac3d28de738de4decddba",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/SoftBrass.mat",
+      "sha256": "b1ca28999e46013bffe89e356b4bdf7d516d8822a8b96d1839332c9d011d4e13",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/WinterGround.mat",
+      "sha256": "314d564da3f39bb4b9eddd63cca4c307008d5620e3a49a6bdadb48d2ff5a1c04",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/WinterGround.png",
+      "sha256": "77c626f8ea45ee4e6ee92fe6f445063b7db56cdeb28156be5f2c8fb9860f5100",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/Bartender.png",
+      "sha256": "d5b8f5d0440f28340bc0933e7a4d7d1ab11870b2ee022f0cd37dc337768588af",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinarySeated.png",
+      "sha256": "5eb685f54168394a66abc43d4ddba7126e19130f07254e81ce8310ab0e559b07",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryStanding.png",
+      "sha256": "475adc539c34dc90fb7e6b56d04e6262b79b7d0bda85acee9f3752fb32a1021a",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk0.png",
+      "sha256": "9262b141e6f4c3ed32aa5034088341ae6525561e3ee95ce8dc68989856d8c802",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk1.png",
+      "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk2.png",
+      "sha256": "9bb844329edbb2cc538077119e64c2fea6aa020db18d604a53cebb7666f16bc6",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Art/OrdinaryWalk3.png",
+      "sha256": "96e9bc97a481da156697bb95a589f55e9affa6bc5a5dd6716c0b7c87d59388c4",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/EntranceAir.wav",
+      "sha256": "3327802477b569230bee71c71dd788d543a32937d34b50768dde1fa05738ba07",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/GlassSet.wav",
+      "sha256": "e7c503422f4354f8e4842c20c210e798e6c7b56efcf3d04c6d8072a955d963ac",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Grip.png",
+      "sha256": "67a78c8eae4e23b99a88cc6bd78b1c230c46dbe54c5bac560c284638e8983a2b",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Ice.wav",
+      "sha256": "0876ada7902f487a23ea10628bead1f9185bc7eca567f6e47a416c413179f442",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/NotoSansKR-Regular.ttf",
+      "sha256": "8cbc9b353bb9ce848fd69bb6a507319dfacc659cf5fd643db5d88f3c4970e1dd",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Pour.wav",
+      "sha256": "e2af857310d182ba7af1cb10245045198773538209bc0182e5d284fa53668ec0",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceSeated.mat",
+      "sha256": "91a024da6af1855b423a282705231334f53fce3e295d66737692ee116db87497",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceSeated.png",
+      "sha256": "94e62dec9216e7671768b409c6fe184ac5f897700a0e0c86a54edf127995b33e",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceSeatedMesh.asset",
+      "sha256": "bc69b2d6fb08e87722e5ee55bf9f70d519ab48eb54c5b7bec769692c9c9cf067",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceStanding.mat",
+      "sha256": "3b0e212b5a7c4ecc2cbd61dee3728cd5106e6df7a2b648f7e04efba642d555dd",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceStanding.png",
+      "sha256": "56da6f029b5ea8599d6faf44b5260d49ed955a3d88bf1d35f1d7d8245a568610",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceStandingMesh.asset",
+      "sha256": "e3fd30c5c2cbfda81a6102827b168e772c8176ec8874a1a51eafa77e7a75b3d7",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk0.mat",
+      "sha256": "745940e1b66963147c889126d8617155982d20c37730dfe70c14a69abd59acdf",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk0.png",
+      "sha256": "391f2db7b35fdceef7fb895285f929eccfbb74beefbd0d4fd23b020b7d455c43",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk0Mesh.asset",
+      "sha256": "b53e65ebe92bbdff450075729225521725a6f5635736a4211ef8e9b4dc54e2f5",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk1.mat",
+      "sha256": "731369a768bab9ca7faa445f7bcdcf516426200b23c47212defaf742305cd0de",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk1.png",
+      "sha256": "8408478b328481a1101f5e024d4968c8ec2f61b365054c49b30e0553789b27a8",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk1Mesh.asset",
+      "sha256": "a0bc7de5d1260a52d7d5114b7720fca49c8d7239884eb015744bf76b147afe88",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk2.mat",
+      "sha256": "0ce86116933d7b3648808d9bb7281a5de8c8ac3a1a0e9728e5c84cbb239c4d2a",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk2.png",
+      "sha256": "30ab352a5759f4a7a2ab877035d9405ef48549725c9b0018c589eae936d75a41",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk2Mesh.asset",
+      "sha256": "b1eadb12668a49bfba65a60c9bce8f912159a04f6c0da55dc5a72471d9d8c1ae",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk3.mat",
+      "sha256": "ec5ed46672586118daa899ab884f01ca53475e4df3739c45363bf5217078f9e9",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk3.png",
+      "sha256": "8408478b328481a1101f5e024d4968c8ec2f61b365054c49b30e0553789b27a8",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/PrinceWalk3Mesh.asset",
+      "sha256": "a8ae5e71fce6d5d92bbd28168186e53be3b662745165b5d440d7e32537439231",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/RoomTone.wav",
+      "sha256": "bfe57c04d12a7d677ad0332ef10ee95d21115406446a80d83754a0c42f5adf90",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Seat.wav",
+      "sha256": "895a3194614d83512a606c267d2ceffdb6612941da9d2b6f4b01e9abdddb3977",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Stir.wav",
+      "sha256": "f38ee22820b07dbd62ed20b4b5d9952052ed29f2720f4f5188676e28cd110da2",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Strain.wav",
+      "sha256": "9d980bec4bde68fa157693a7ff5406ca7052fc7ee913a61b170fe8612c898bf3",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/WinterAir.wav",
+      "sha256": "10b31259e244534e00ac110d7f822dda03ca315f1f8e385a15e30cfe7f44b81b",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BartenderMesh.asset",
+      "sha256": "51742c544d44f1d8808894900caf91dc08403ef278f7633856b2b0b8c92b4db7",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleAmber.mat",
+      "sha256": "2639038e8cd8138d7cd803704f98c0c63a1f358c6f176b2f13fca2802392a303",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleBlue.mat",
+      "sha256": "5696f1ab17103729b4aacac4ab3875a16a8daa8424efeb9d580072ddde452b61",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleOlive.mat",
+      "sha256": "d61886d707e5e1444cfcca881b2af193d0f2e65dd5328f78a965be6f9e5d4908",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Brass.mat",
+      "sha256": "1c856975f7932cc7f8f5136e951d5e447a077fd0f00c47563ab25bcd2bbbfc02",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BrownGlass.mat",
+      "sha256": "22c09e729944c985ae63e21e6f9de948826393099b00b7cb7080ac3f8a6b7412",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Contact.mat",
+      "sha256": "e27740b16ec34f3321dde9abcdb6cbd10c6dbeda34f85a7f71dd699a43fe8f32",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.mat",
+      "sha256": "bc9472bf011859b0487febfaec2b1b8eeb89e06d9b07c80a0904a874f9944eab",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.png",
+      "sha256": "1043378762e7d40893cfbbcb64c196808db2477144d1868daca7520b326e27b1",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterPanel.mat",
+      "sha256": "cb3d52928c0197d1c73300310da6cdb9bbd5a3360b5098a79a71d25424465944",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterPanel.png",
+      "sha256": "ff078ca29fbb8f8fc0f247b1cc932abafcbdcdafdd89ea3b21ef9db39356291d",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/DarkWood.mat",
+      "sha256": "59a6202122abc10c372b161d450a6a77203755b13601ffb761cd30b426006861",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FaceBox.asset",
+      "sha256": "adbb9cb819625e96472523c139f54c68f0b2abd2c86b5c219cd6df5d8b2c256c",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FloorPlanks.mat",
+      "sha256": "c641a79679f46c38fcb4a9404de8102a7bfb33c46eb73ccfa297193b4f7e30a2",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FloorPlanks.png",
+      "sha256": "9633154809f52ff94815108f88ae136be446ff2cbd8416cbb502b1d53a1045c2",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/GreenGlass.mat",
+      "sha256": "8bf5a7535cfc03ce64e257239a219cf0a6eede682c798e250b8522d9b7744c69",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Iron.mat",
+      "sha256": "f896de43a17d1ede2fa5ed9beb99909fcb41ad97378049f1119ed775443e8db9",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Lamplight.mat",
+      "sha256": "7f8f731fc44ed7709a5a54e1206f2ef6eaafdbb03b10229994c8eaaf4f3512be",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinarySeatedMesh.asset",
+      "sha256": "c9922d7c4c358468c1a5a30744a79e097e36c0d51f99b0a4d4dc3b4e4b08dbd8",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryStandingMesh.asset",
+      "sha256": "9414f6dfe4b06fdbe81340ed9db75b70d9529e35bebebe7a2a29d510d1979d7b",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk0Mesh.asset",
+      "sha256": "ebb528e1275d28dc4eb8acb732b13bd15a4a257b281cfd143f6b14b160c24758",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk1Mesh.asset",
+      "sha256": "0d9e8399f673dc4bb05b22e992439e9406ffc2d104cf1bbca1243e4e0b5541fc",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk2Mesh.asset",
+      "sha256": "12df97a60de0da169d7892a000848419c98c94f3960636d83bea996f5ab6590d",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/OrdinaryWalk3Mesh.asset",
+      "sha256": "a4dcc894e71df4723cedfdc0ed07246bc36ed1494c4201e6583a3c9b27748911",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.mat",
+      "sha256": "3936585e8b4d34f4cc1cc4975893d1990cbcc512f76fb6db5dbf77d6afb68902",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.png",
+      "sha256": "e764f911f7536e03974f72627fd85ce0c3e725fbbff06fd9b97693a01951c070",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.mat",
+      "sha256": "a10c8978e12528c3081db00fff18b9e9234353b947b41edb63a47ad8c9489688",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.png",
+      "sha256": "1c2237212e988db05aa7079296660a987af10075b135e1979056c4f9913dcda6",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.mat",
+      "sha256": "60b8cbe25f6da70cced1400c6532ae1366e494738044d743e343d0e41ad731ee",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.png",
+      "sha256": "8e3e9a7961069514fb108daacb02882855e2ad67a6e65e4110680728b3b145c4",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowField.png",
+      "sha256": "5dc6d8eacb9fee9f72f3517dce5b70e754a9002ae8e2c21b4709f6b007504742",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowFlakes.mat",
+      "sha256": "6371555293f262a80ead610a1ab8ef83078e10afe3ea69ab37ea654570dc75e3",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_Bartender.mat",
+      "sha256": "5d981509242ed1cc5f586c23bb0de1db226fbc93a6a50fee2f9bf9e4775392ec",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Sprite_OrdinarySeated.mat",
+      "sha256": "bd83efac52c043990a3bb2a666e8d1bc7e2146351536b2b2e0294f7fefda5245",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.mat",
+      "sha256": "78459ce681fe8f212d39a52a66addc671b9fec489757b8ab480ae151066496b6",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.png",
+      "sha256": "f905caa48a12c8ca15c873d2c822511e5752fe0b14ea7ab758324dbc59185dae",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/WoodEdge.mat",
+      "sha256": "336bb11734147e6228981294592bd4dc0cbd14ef726621c35e5ffc84126cc6f8",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    }
+  ],
+  "rightsBoundary": "Internal procedural/source-tracked candidates. Inherited imagegen references remain pending final asset adoption/rights review; Noto Sans KR uses retained Noto-OFL.txt. No claim of legal clearance from functional acceptance.",
+  "spatialBoundary": "C1 camera and geometry preserved; winter ground material, restrained props and ordinary coat tint are ACT 1 derivatives."
+}

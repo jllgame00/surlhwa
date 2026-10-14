@@ -1,0 +1,20 @@
+{
+  "FootGrounded": {
+    "seconds": 0.55,
+    "peak": 0.4259884642389253,
+    "rms": 0.062382546632626955,
+    "source": "Original procedural synthesis, authored for ACT 1; provisional owner listening"
+  },
+  "FirstNightMotif": {
+    "seconds": 22.0,
+    "peak": 0.09852223359470903,
+    "rms": 0.022417086300723713,
+    "source": "Original procedural synthesis, authored for ACT 1; provisional owner listening"
+  },
+  "footstepComparison": {
+    "historicalRms": 0.062382546637147256,
+    "candidateRms": 0.062382546632626955,
+    "matchedRmsBeforeProductionMix": true,
+    "notFinalLoudnessApproval": true
+  }
+}

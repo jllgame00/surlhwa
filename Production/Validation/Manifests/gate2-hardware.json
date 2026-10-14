@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-14T12:40:07.8494411Z",
+  "cpu": {
+    "Name": "12th Gen Intel(R) Core(TM) i7-12700KF",
+    "NumberOfCores": 12,
+    "NumberOfLogicalProcessors": 20
+  },
+  "gpu": [
+    {
+      "Name": "Parsec Virtual Display Adapter",
+      "DriverVersion": "0.45.0.0",
+      "AdapterRAM": null
+    },
+    {
+      "Name": "NVIDIA GeForce RTX 3070",
+      "DriverVersion": "32.0.15.9186",
+      "AdapterRAM": 4293918720
+    }
+  ],
+  "os": {
+    "Caption": "Microsoft Windows 11 Home",
+    "Version": "10.0.26200",
+    "TotalVisibleMemorySize": 33363376
+  },
+  "power": "전원 구성표 GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (고성능)"
+}

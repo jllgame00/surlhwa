@@ -214,7 +214,7 @@ namespace Surlhwa.Presentation
         private void RefreshFocus()
         {
             if(marker==null) return;
-            bool visible=isActiveAndEnabled && button!=null && button.IsInteractable() && EventSystem.current!=null && EventSystem.current.currentSelectedGameObject==gameObject;
+            bool visible=isActiveAndEnabled && button!=null && button.isActiveAndEnabled && button.IsInteractable() && EventSystem.current!=null && EventSystem.current.currentSelectedGameObject==gameObject;
             if(marker.activeSelf!=visible) marker.SetActive(visible);
         }
         public void OnSelect(BaseEventData data) { RefreshFocus(); }
