@@ -33,13 +33,22 @@ namespace Surlhwa.Domain
             if(candidates.Length!=1) return new ServiceOutcome(candidates.Length==0 ? DrinkRecognition.Unknown : DrinkRecognition.Ambiguous,
                 null,PreparationResult.NotEvaluable,snapshot.StirQualityGood,false,new List<string>{candidates.Length==0 ? "unrecognized_composition" : "ambiguous_composition"});
             var recipe=candidates[0]; var reasons=new List<string>();
-            if(!snapshot.Strained) reasons.Add("strain_missing");
-            if(!snapshot.StirHowGood || recipe.Amounts.Keys.Any(x=>!snapshot.StirIngredients.Contains(x))) reasons.Add("stir_batch_missing");
+            if(recipe.Method=="stir")
+            {
+                if(!snapshot.Strained) reasons.Add("strain_missing");
+                if(!snapshot.StirHowGood || recipe.Amounts.Keys.Any(x=>!snapshot.StirIngredients.Contains(x))) reasons.Add("stir_batch_missing");
+            }
+            else if(recipe.Method=="build") BuildPreparation.Validate(snapshot,reasons);
+            else if(recipe.Method=="shake") ShakePreparation.Validate(recipe,tuning,snapshot,reasons);
+            else FloatLayers.Validate(recipe,snapshot,reasons);
             if(recipe.DashIngredient!=null && (!snapshot.DashAmounts.TryGetValue(recipe.DashIngredient,out decimal dash) || dash<recipe.Amounts[recipe.DashIngredient]-tuning.ExtraToleranceMl)) reasons.Add("dash_missing");
-            if(recipe.RequiredGarnish!=null && (snapshot.Garnish!=recipe.RequiredGarnish || snapshot.GarnishPosition!="in_glass")) reasons.Add("required_garnish_missing");
-            bool quality=snapshot.StirQualityGood; if(!quality) reasons.Add("stir_quality_weak");
+            if(recipe.RequiredGarnish!=null && (snapshot.Garnish!=recipe.RequiredGarnish || snapshot.GarnishPosition!=recipe.GarnishPosition)) reasons.Add("required_garnish_missing");
+            bool how=reasons.Count==0;
+            // Build has preparation constraints, not an invented timing skill grade.
+            bool quality=recipe.Method=="build" || (recipe.Method=="shake" ? (snapshot.Shake?.QualityGood ?? false) && ShakePreparation.CoversCurrentBatch(recipe,tuning,snapshot) :
+                recipe.Method=="float" ? FloatLayers.Quality(snapshot) : snapshot.StirQualityGood);
+            if(!quality) reasons.Add(recipe.Method+"_quality_weak");
             bool fits=catalog.Cocktails[recipe.CocktailId].Tags.Contains(request.Tag); if(!fits) reasons.Add("request_mismatch");
-            bool how=!reasons.Any(x=>x=="strain_missing" || x=="stir_batch_missing" || x=="dash_missing" || x=="required_garnish_missing");
             return new ServiceOutcome(DrinkRecognition.Recognized,recipe,how ? PreparationResult.Good : PreparationResult.Weak,quality,fits,reasons);
         }
         private static bool Matches(StirRecipe r,BrewingTuning t,ServiceSnapshot s)

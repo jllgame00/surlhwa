@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace Surlhwa.Domain
 {
-    public enum ContainerRole { Jigger, Mixing, Serving }
-    public enum BrewAction { Pour, Dash, PourFromContainer, Strain, AddIce, Stir, Garnish }
+    public enum ContainerRole { Jigger, Mixing, Serving, Shaker }
+    public enum BrewAction { Pour, Dash, PourFromContainer, Strain, AddIce, Stir, Garnish, GentleStir, Splash, Shake, CloseShaker, OpenShaker, Float }
     public sealed class LiquidMovement
     {
         public decimal AcceptedMl { get; } public decimal SpilledMl { get; }
@@ -43,6 +43,9 @@ namespace Surlhwa.Domain
         internal readonly decimal Capacity;
         internal readonly Dictionary<string,decimal> Amounts=new Dictionary<string,decimal>(StringComparer.Ordinal);
         internal readonly Dictionary<string,decimal> DashAmounts=new Dictionary<string,decimal>(StringComparer.Ordinal);
+        internal readonly Dictionary<string,decimal> ShakenAmounts=new Dictionary<string,decimal>(StringComparer.Ordinal);
+        internal ShakeStamp Shake;
+        internal FloatLayers Layers;
         internal decimal Total => Amounts.Values.Sum();
         internal bool Ice,Strained; internal int Revision; internal StirStamp Stamp;
         internal BrewContainer(decimal capacity) { Capacity=capacity; }
@@ -60,26 +63,41 @@ namespace Surlhwa.Domain
         public IReadOnlyCollection<string> StirIngredients { get; }
         public string Garnish { get; } public string GarnishPosition { get; }
         public IReadOnlyList<PreparationAction> Trace { get; }
-        internal ServiceSnapshot(string attempt,string revision,BrewContainer c,string garnish,string position,List<PreparationAction> trace)
+        public ShakeEvidence Shake { get; }
+        public IReadOnlyList<FloatLayerEvidence> Layers { get; }
+        public string FloatTuningRevision { get; }
+        internal ServiceSnapshot(string attempt,string revision,BrewContainer c,string garnish,string position,List<PreparationAction> trace,string floatRevision)
         {
             AttemptId=attempt; TuningRevision=revision; Amounts=LiquidMath.Copy(c.Amounts); DashAmounts=LiquidMath.Copy(c.DashAmounts);
             HasIce=c.Ice; Strained=c.Strained; StirHowGood=c.Stamp?.HowGood ?? false; StirQualityGood=c.Stamp?.QualityGood ?? false;
             StirDegrees=c.Stamp?.Degrees ?? 0; StableFraction=c.Stamp?.StableFraction ?? 0;
             StirIngredients=Array.AsReadOnly(c.Stamp?.Ingredients.ToArray() ?? Array.Empty<string>());
             Garnish=garnish; GarnishPosition=position; Trace=new ReadOnlyCollection<PreparationAction>(trace.ToArray());
+            Shake=c.Shake?.Freeze(c.ShakenAmounts);
+            Layers=c.Layers?.Freeze() ?? Array.Empty<FloatLayerEvidence>(); FloatTuningRevision=floatRevision;
         }
         // Restore immutable evidence only; Continue never reconstructs a live mid-pour container.
         public ServiceSnapshot(string attempt,string revision,IDictionary<string,decimal> amounts,IDictionary<string,decimal> dash,
             bool ice,bool strained,bool how,bool quality,double degrees,double stable,IEnumerable<string> stirIngredients,
-            string garnish,string position,IEnumerable<PreparationAction> trace)
+            string garnish,string position,IEnumerable<PreparationAction> trace,ShakeEvidence shake=null,
+            IEnumerable<FloatLayerEvidence> layers=null,string floatRevision=null)
         {
             if(!Guid.TryParseExact(attempt,"N",out _) || string.IsNullOrWhiteSpace(revision) || double.IsNaN(degrees) || double.IsInfinity(degrees) || degrees<0 || double.IsNaN(stable) || stable<0 || stable>1) throw new ArgumentException("Invalid service evidence.");
             foreach(var a in amounts) { _=new StableId<IngredientIdentity>(a.Key); LiquidMath.Validate(a.Value); if(a.Value==0) throw new ArgumentException("Empty component."); }
             foreach(var a in dash) if(a.Value<=0 || decimal.Round(a.Value,6)!=a.Value || !amounts.TryGetValue(a.Key,out var v) || a.Value>v) throw new ArgumentException("Invalid dash evidence.");
-            if((garnish==null)!=(position==null) || (garnish!=null && (garnish!="cherry" || position!="in_glass"))) throw new ArgumentException("Invalid garnish evidence.");
+            if((garnish==null)!=(position==null) || (garnish!=null && !GarnishRules.Valid(garnish,position))) throw new ArgumentException("Invalid garnish evidence.");
             AttemptId=attempt; TuningRevision=revision; Amounts=LiquidMath.Copy(amounts); DashAmounts=LiquidMath.Copy(dash);
             HasIce=ice; Strained=strained; StirHowGood=how; StirQualityGood=quality; StirDegrees=degrees; StableFraction=stable;
             StirIngredients=Array.AsReadOnly(stirIngredients.ToArray()); Garnish=garnish; GarnishPosition=position; Trace=Array.AsReadOnly(trace.ToArray());
+            if(shake!=null && shake.Amounts.Any(x=>!amounts.TryGetValue(x.Key,out var ml) || x.Value>ml)) throw new ArgumentException("Shake evidence exceeds actual liquid.");
+            Shake=shake;
+            Layers=Array.AsReadOnly((layers ?? Array.Empty<FloatLayerEvidence>()).ToArray()); FloatTuningRevision=floatRevision;
+            if(Layers.Count>0)
+            {
+                if(string.IsNullOrWhiteSpace(floatRevision)) throw new ArgumentException("Missing Float revision.");
+                var sum=new Dictionary<string,decimal>(); foreach(var layer in Layers) foreach(var a in layer.Amounts) BrewContainer.Add(sum,a.Key,a.Value);
+                if(sum.Count!=amounts.Count || sum.Any(x=>!amounts.TryGetValue(x.Key,out var ml) || ml!=x.Value)) throw new ArgumentException("Layer evidence differs from actual liquid.");
+            }
             for(int i=0;i<Trace.Count;i++) if(Trace[i].Sequence!=i+1) throw new ArgumentException("Unordered action record.");
         }
     }
@@ -92,6 +110,11 @@ namespace Surlhwa.Domain
         private string garnish,position,flowIngredient; private ContainerRole? flowSource;
         private ContainerRole flowTarget; private BrewAction flowKind; private bool flow; private decimal remainder;
         private StirMotion motion; private int motionRevision;
+        private ShakeMotion shakeMotion; private int shakeRevision;
+        private bool stableFloat; private double? lastFloatHeight;
+        public bool ShakerClosed { get; private set; }
+        public bool ShakeActive => shakeMotion!=null;
+        public int ShakeReversals => shakeMotion?.Reversals ?? Get(ContainerRole.Shaker).Shake?.Reversals ?? 0;
         private long acceptedInterval;
         private int flowGeneration,lastTraceFlow=-1; private bool fineFlow,lastTraceFine; private decimal flowIntensity,lastTraceIntensity;
         public bool FlowActive => flow; public bool StirActive => motion!=null;
@@ -103,7 +126,7 @@ namespace Surlhwa.Domain
             this.catalog=catalog ?? throw new ArgumentNullException(nameof(catalog)); this.tuning=tuning ?? throw new ArgumentNullException(nameof(tuning));
             supply=new HashSet<string>(supplied,StringComparer.Ordinal);
             if(supply.Any(x=>!catalog.Ingredients.Contains(x))) throw new ArgumentException("Unknown supply ingredient.");
-            containers=new Dictionary<ContainerRole,BrewContainer> { [ContainerRole.Jigger]=new BrewContainer(tuning.JiggerMl),[ContainerRole.Mixing]=new BrewContainer(tuning.MixingMl),[ContainerRole.Serving]=new BrewContainer(tuning.ServingMl) };
+            containers=new Dictionary<ContainerRole,BrewContainer> { [ContainerRole.Jigger]=new BrewContainer(tuning.JiggerMl),[ContainerRole.Mixing]=new BrewContainer(tuning.MixingMl),[ContainerRole.Serving]=new BrewContainer(tuning.ServingMl),[ContainerRole.Shaker]=new BrewContainer(tuning.MixingMl) };
         }
         public ContainerReadModel Container(ContainerRole role) => new ContainerReadModel(Get(role));
         private BrewContainer Get(ContainerRole role) => containers.TryGetValue(role,out var c) ? c : throw new ArgumentOutOfRangeException(nameof(role));
@@ -126,7 +149,8 @@ namespace Surlhwa.Domain
         public LiquidMovement Pour(string ingredient,ContainerRole target,decimal ml,BrewAction kind=BrewAction.Pour)
         {
             CheckSupply(ingredient); LiquidMath.Validate(ml); var c=Get(target);
-            if(kind!=BrewAction.Pour && kind!=BrewAction.Dash) throw new ArgumentException("Invalid supply action.");
+            CheckOpen(target);
+            if(kind!=BrewAction.Pour && kind!=BrewAction.Dash && kind!=BrewAction.Splash) throw new ArgumentException("Invalid supply action.");
             if(kind==BrewAction.Dash && ml!=tuning.DashMl) throw new ArgumentException("Dash requires the authored game unit.");
             if(ml==0) return LiquidMovement.Empty();
             decimal accepted=Math.Min(ml,c.Capacity-c.Total),spill=ml-accepted;
@@ -135,6 +159,8 @@ namespace Surlhwa.Domain
                 BrewContainer.Add(c.Amounts,ingredient,accepted);
                 if(kind==BrewAction.Dash) BrewContainer.Add(c.DashAmounts,ingredient,accepted);
                 c.Revision++; c.Stamp=null; c.Strained=false;
+                if(target!=ContainerRole.Serving) { c.Shake=null; c.ShakenAmounts.Clear(); }
+                if(c.Layers!=null) c.Layers=new FloatLayers(c.Amounts);
             }
             var received=new Dictionary<string,decimal> { [ingredient]=accepted };
             Record(kind,ingredient,target,accepted,spill,received);
@@ -143,51 +169,108 @@ namespace Surlhwa.Domain
         public LiquidMovement Transfer(ContainerRole source,ContainerRole target,decimal ml,BrewAction kind)
         {
             LiquidMath.Validate(ml); var from=Get(source); var to=Get(target);
-            if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer)) throw new ArgumentException("Invalid container transfer.");
+            CheckOpen(source); CheckOpen(target);
+            if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer && kind!=BrewAction.Float)) throw new ArgumentException("Invalid container transfer.");
+            if(kind==BrewAction.Float && (source!=ContainerRole.Jigger || target!=ContainerRole.Serving)) throw new ArgumentException("Float transfers jigger to serving.");
             if(kind==BrewAction.Strain && (source!=ContainerRole.Mixing || target!=ContainerRole.Serving)) throw new ArgumentException("Strain is mixing to serving.");
             decimal moved=Math.Min(ml,from.Total); if(moved==0) return LiquidMovement.Empty();
             decimal accepted=Math.Min(moved,to.Capacity-to.Total),spill=moved-accepted;
-            var extracted=LiquidMath.Portion(from.Amounts,moved); var received=LiquidMath.Portion(extracted,accepted);
+            Dictionary<string,decimal> extracted,received;
+            if(from.Layers!=null)
+            {
+                received=from.Layers.TakeTop(accepted); extracted=new Dictionary<string,decimal>(received);
+                foreach(var a in from.Layers.TakeTop(spill)) BrewContainer.Add(extracted,a.Key,a.Value);
+            }
+            else { extracted=LiquidMath.Portion(from.Amounts,moved); received=LiquidMath.Portion(extracted,accepted); }
+            if(kind==BrewAction.Float && to.Layers==null) to.Layers=new FloatLayers(to.Amounts);
             decimal before=from.Total,targetBefore=to.Total; var stamp=from.Stamp;
+            var shakeStamp=from.Shake;
+            bool combineShake=targetBefore==0 || (to.Shake!=null && shakeStamp!=null && to.Shake.Id==shakeStamp.Id);
             foreach(var item in extracted)
             {
                 decimal got=received.TryGetValue(item.Key,out decimal value) ? value : 0;
                 decimal old=from.Amounts[item.Key]; decimal oldDash=from.DashAmounts.TryGetValue(item.Key,out decimal dash) ? dash : 0;
                 decimal removedDash=item.Value==old ? oldDash : LiquidMath.Down(oldDash*item.Value/old);
                 decimal acceptedDash=item.Value==0 ? 0 : LiquidMath.Down(removedDash*got/item.Value);
+                decimal oldShaken=from.ShakenAmounts.TryGetValue(item.Key,out var shaken) ? shaken : 0;
+                decimal removedShaken=item.Value==old ? oldShaken : LiquidMath.Down(oldShaken*item.Value/old);
+                decimal acceptedShaken=item.Value==0 ? 0 : LiquidMath.Down(removedShaken*got/item.Value);
                 from.Amounts[item.Key]-=item.Value; if(from.Amounts[item.Key]==0) from.Amounts.Remove(item.Key);
                 if(oldDash>0) { from.DashAmounts[item.Key]-=removedDash; if(from.DashAmounts[item.Key]==0) from.DashAmounts.Remove(item.Key); }
                 BrewContainer.Add(to.Amounts,item.Key,got); BrewContainer.Add(to.DashAmounts,item.Key,acceptedDash);
+                if(oldShaken>0) { from.ShakenAmounts[item.Key]-=removedShaken; if(from.ShakenAmounts[item.Key]==0) from.ShakenAmounts.Remove(item.Key); }
+                if(combineShake) BrewContainer.Add(to.ShakenAmounts,item.Key,acceptedShaken);
             }
             from.Revision++;
-            if(from.Total==0) { from.Stamp=null; from.Strained=false; }
+            if(from.Total==0) { from.Stamp=null; from.Strained=false; from.Shake=null; from.ShakenAmounts.Clear(); }
             if(accepted>0)
             {
                 to.Revision++;
                 to.Stamp=targetBefore==0 || (to.Stamp!=null && stamp!=null && to.Stamp.Id==stamp.Id) ? stamp : null;
                 to.Strained=kind==BrewAction.Strain && (targetBefore==0 || to.Strained);
+                to.Shake=combineShake ? shakeStamp : null;
+                if(!combineShake) to.ShakenAmounts.Clear();
+                if(kind==BrewAction.Float) to.Layers.Add(received,stableFloat);
+                else if(to.Layers!=null) to.Layers=new FloatLayers(to.Amounts);
             }
             if(before-from.Total!=accepted+spill) throw new InvalidOperationException("Liquid conservation failure.");
             Record(kind,source.ToString().ToLowerInvariant(),target,accepted,spill,received);
             return new LiquidMovement(received,spill);
         }
         public void AddIce(ContainerRole target)
-        { var c=Get(target); if(c.Ice) return; c.Ice=true; c.Revision++; c.Stamp=null; Record(BrewAction.AddIce,"ice",target); }
+        { CheckOpen(target); var c=Get(target); if(c.Ice) return; c.Ice=true; c.Revision++; c.Stamp=null; c.Shake=null; c.ShakenAmounts.Clear(); Record(BrewAction.AddIce,"ice",target); }
+        public void GentleStir()
+        {
+            if(flow || motion!=null || shakeMotion!=null) throw new InvalidOperationException("Another tool action is active.");
+            if(Get(ContainerRole.Serving).Total==0) return;
+            var serving=Get(ContainerRole.Serving); if(serving.Layers!=null) serving.Layers=new FloatLayers(serving.Amounts);
+            Record(BrewAction.GentleStir,"spoon",ContainerRole.Serving);
+        }
+        private void CheckOpen(ContainerRole role)
+        { if(role==ContainerRole.Shaker && ShakerClosed) throw new InvalidOperationException("The shaker is closed."); }
+        public void SetShakerClosed(bool closed)
+        {
+            if(ShakerClosed==closed) return;
+            if(flow || motion!=null) throw new InvalidOperationException("Another tool action is active.");
+            if(!closed) EndShake(); ShakerClosed=closed;
+            Record(closed ? BrewAction.CloseShaker : BrewAction.OpenShaker,"lid",ContainerRole.Shaker);
+        }
+        public void BeginShake(double position)
+        {
+            if(flow || motion!=null || shakeMotion!=null) throw new InvalidOperationException("Another tool action is active.");
+            var c=Get(ContainerRole.Shaker); if(!ShakerClosed || c.Total==0 || !c.Ice) return;
+            shakeMotion=new ShakeMotion(tuning.Shake,position,c.Shake); shakeRevision=c.Revision;
+        }
+        public void MoveShake(double position,long microseconds) { shakeMotion?.Move(position,microseconds); }
+        public void EndShake()
+        {
+            if(shakeMotion==null) return; var c=Get(ContainerRole.Shaker);
+            if(ShakerClosed && c.Revision==shakeRevision && c.Total>0 && c.Ice)
+            {
+                c.Shake=new ShakeStamp(shakeMotion.Reversals,shakeMotion.StableReversals,tuning.Shake);
+                c.ShakenAmounts.Clear(); foreach(var a in c.Amounts) c.ShakenAmounts.Add(a.Key,a.Value);
+                Record(BrewAction.Shake,"shaker",ContainerRole.Shaker);
+            }
+            shakeMotion=null;
+        }
         public void Garnish(string id,string placement)
         {
-            if(id!="cherry" || placement!="in_glass") throw new ArgumentException("Unsupported garnish placement.");
+            if(!GarnishRules.Valid(id,placement)) throw new ArgumentException("Unsupported garnish placement.");
             if(Get(ContainerRole.Serving).Total==0) throw new InvalidOperationException("No serving liquid.");
             garnish=id; position=placement; Record(BrewAction.Garnish,id,ContainerRole.Serving);
         }
         public void BeginPour(string ingredient,ContainerRole target)
-        { CheckSupply(ingredient); Get(target); StartFlow(); flowIngredient=ingredient; flowSource=null; flowTarget=target; flowKind=BrewAction.Pour; }
+        { CheckSupply(ingredient); Get(target); CheckOpen(target); StartFlow(); flowIngredient=ingredient; flowSource=null; flowTarget=target; flowKind=BrewAction.Pour; }
         public void BeginTransfer(ContainerRole source,ContainerRole target,BrewAction kind)
         {
             Get(source); Get(target);
-            if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer) || (kind==BrewAction.Strain && (source!=ContainerRole.Mixing || target!=ContainerRole.Serving))) throw new ArgumentException("Invalid transfer binding.");
+            CheckOpen(source); CheckOpen(target);
+            if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer && kind!=BrewAction.Float) ||
+                (kind==BrewAction.Strain && (source!=ContainerRole.Mixing || target!=ContainerRole.Serving)) ||
+                (kind==BrewAction.Float && (source!=ContainerRole.Jigger || target!=ContainerRole.Serving))) throw new ArgumentException("Invalid transfer binding.");
             StartFlow(); flowSource=source; flowIngredient=null; flowTarget=target; flowKind=kind;
         }
-        private void StartFlow() { if(flow || motion!=null) throw new InvalidOperationException("Another tool action is active."); flow=true; remainder=0; flowGeneration++; }
+        private void StartFlow() { if(flow || motion!=null || shakeMotion!=null) throw new InvalidOperationException("Another tool action is active."); flow=true; remainder=0; flowGeneration++; }
         public LiquidMovement UpdateFlow(long microseconds,decimal intensity,bool fine)
         {
             if(microseconds<0 || intensity<0 || intensity>1) throw new ArgumentOutOfRangeException(nameof(microseconds));
@@ -199,10 +282,20 @@ namespace Surlhwa.Domain
             try { return flowSource.HasValue ? Transfer(flowSource.Value,flowTarget,ml,flowKind) : Pour(flowIngredient,flowTarget,ml); }
             finally { acceptedInterval=0; }
         }
-        public void EndFlow() { flow=false; remainder=0; flowIngredient=null; flowSource=null; }
+        public void EndFlow() { flow=false; remainder=0; flowIngredient=null; flowSource=null; stableFloat=false; lastFloatHeight=null; }
+        public void BeginFloat() { BeginTransfer(ContainerRole.Jigger,ContainerRole.Serving,BrewAction.Float); lastFloatHeight=null; }
+        public LiquidMovement UpdateFloat(long microseconds,decimal intensity,double height)
+        {
+            if(microseconds<0 || intensity<0 || intensity>1 || double.IsNaN(height) || double.IsInfinity(height) || height<0 || height>1) throw new ArgumentOutOfRangeException(nameof(height));
+            if(!flow || flowKind!=BrewAction.Float || microseconds==0) return LiquidMovement.Empty();
+            stableFloat=tuning.TransferRate*intensity<=tuning.Float.MaxStableRate && height<=tuning.Float.MaxHeight &&
+                (!lastFloatHeight.HasValue || Math.Abs(height-lastFloatHeight.Value)*1000000/microseconds<=tuning.Float.MaxHeightSpeed);
+            lastFloatHeight=height;
+            try { return UpdateFlow(microseconds,intensity,false); } finally { stableFloat=false; }
+        }
         public void BeginStir(double x,double y)
         {
-            if(flow || motion!=null) throw new InvalidOperationException("Another tool action is active.");
+            if(flow || motion!=null || shakeMotion!=null) throw new InvalidOperationException("Another tool action is active.");
             var c=Get(ContainerRole.Mixing); if(c.Total==0 || !c.Ice) return;
             motion=new StirMotion(tuning,x,y,c.Stamp); motionRevision=c.Revision;
         }
@@ -215,7 +308,7 @@ namespace Surlhwa.Domain
             { c.Stamp=new StirStamp(motion.Degrees,motion.MovingMicros,motion.StableMicros,tuning,c.Amounts.Keys); Record(BrewAction.Stir,"spoon",ContainerRole.Mixing); }
             motion=null;
         }
-        public void CancelInput() { EndFlow(); EndStir(); }
-        public ServiceSnapshot Freeze() => new ServiceSnapshot(attempt,tuning.Revision,Get(ContainerRole.Serving),garnish,position,trace);
+        public void CancelInput() { EndFlow(); EndStir(); EndShake(); }
+        public ServiceSnapshot Freeze() => new ServiceSnapshot(attempt,tuning.Revision,Get(ContainerRole.Serving),garnish,position,trace,tuning.Float.Revision);
     }
 }

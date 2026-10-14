@@ -42,7 +42,7 @@ namespace Surlhwa.Domain
             var r=catalog.Recipes[recipeId]; bool full=known.ContainsKey(recipeId);
             facts.TryGetValue(recipeId,out var set); bool Has(string f) => full || (set!=null && set.Contains(f));
             var amounts=r.Amounts.Where(x=>Has("amount:"+x.Key)).ToDictionary(x=>x.Key,x=>x.Value,StringComparer.Ordinal);
-            return new KnowledgeProjection(full,Has("identity") ? catalog.Cocktails[r.CocktailId].Name : null,Has("method") ? "Stir" : null,
+            return new KnowledgeProjection(full,Has("identity") ? catalog.Cocktails[r.CocktailId].Name : null,Has("method") ? char.ToUpperInvariant(r.Method[0])+r.Method.Substring(1) : null,
                 r.Amounts.Keys.Where(x=>Has("ingredient:"+x)),amounts,Has("preparation"),Has("garnish"));
         }
         public IReadOnlyDictionary<string,string> KnownReceipts => new ReadOnlyDictionary<string,string>(new Dictionary<string,string>(known,StringComparer.Ordinal));

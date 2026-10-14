@@ -31,16 +31,32 @@ namespace Surlhwa.Domain
         public IReadOnlyDictionary<string,decimal> Amounts { get; }
         public string DashIngredient { get; }
         public string RequiredGarnish { get; }
-        public StirRecipe(string id,string cocktailId,IDictionary<string,decimal> amounts,string dashIngredient=null,string requiredGarnish=null)
+        public string Method { get; }
+        public string GarnishPosition { get; }
+        public string LateIngredient { get; }
+        public IReadOnlyList<string> LayerOrder { get; }
+        public StirRecipe(string id,string cocktailId,IDictionary<string,decimal> amounts,string dashIngredient=null,string requiredGarnish=null,
+            string method="stir",string garnishPosition="in_glass",string lateIngredient=null,IEnumerable<string> layerOrder=null)
         {
             Key=new StableId<RecipeIdentity>(id); CocktailKey=new StableId<CocktailIdentity>(cocktailId);
             if(amounts==null || amounts.Count==0) throw new ArgumentException("A recipe needs actual ingredients.");
             foreach(var a in amounts) { _=new StableId<IngredientIdentity>(a.Key); LiquidMath.Validate(a.Value); if(a.Value==0) throw new ArgumentException("Recipe amounts must be positive."); }
             if(dashIngredient!=null && !amounts.ContainsKey(dashIngredient)) throw new ArgumentException("Dash ingredient is absent from recipe.");
-            if(requiredGarnish!=null && requiredGarnish!="cherry") throw new ArgumentException("Unsupported Stir-slice garnish.");
+            if(method!="stir" && method!="build" && method!="shake" && method!="float") throw new ArgumentException("Unsupported recipe method.");
+            if(lateIngredient!=null && (method!="shake" || !amounts.ContainsKey(lateIngredient))) throw new ArgumentException("Invalid late addition.");
+            if(requiredGarnish!=null && !GarnishRules.Valid(requiredGarnish,garnishPosition)) throw new ArgumentException("Unsupported garnish.");
             Amounts=new ReadOnlyDictionary<string,decimal>(new Dictionary<string,decimal>(amounts,StringComparer.Ordinal));
             DashIngredient=dashIngredient; RequiredGarnish=requiredGarnish;
+            Method=method; GarnishPosition=garnishPosition;
+            LateIngredient=lateIngredient;
+            LayerOrder=Array.AsReadOnly((layerOrder ?? Array.Empty<string>()).ToArray());
+            if(method=="float" && (LayerOrder.Count!=amounts.Count || LayerOrder.Distinct().Count()!=LayerOrder.Count || LayerOrder.Any(x=>!amounts.ContainsKey(x)))) throw new ArgumentException("Invalid layer order.");
         }
+    }
+    internal static class GarnishRules
+    {
+        internal static bool Valid(string id,string placement) =>
+            (id=="cherry" && placement=="in_glass") || (id=="orange_slice" && placement=="rim");
     }
     public sealed class BartendingCatalog
     {
@@ -64,6 +80,8 @@ namespace Surlhwa.Domain
     }
     public sealed class BrewingTuning
     {
+        public ShakeTuning Shake { get; }
+        public FloatTuning Float { get; }
         public string Revision { get; }
         public decimal JiggerMl { get; } public decimal MixingMl { get; } public decimal ServingMl { get; }
         public decimal PourRate { get; } public decimal FinePourRate { get; }
@@ -73,7 +91,7 @@ namespace Surlhwa.Domain
         public decimal RecognitionFraction { get; } public decimal IngredientToleranceMl { get; } public decimal ExtraToleranceMl { get; }
         public BrewingTuning(string revision,decimal jigger,decimal mixing,decimal serving,decimal pour,decimal finePour,
             decimal transfer,decimal fineTransfer,decimal dash,double how,double quality,double minSpeed,double maxSpeed,double stable,
-            decimal recognitionFraction=.05m,decimal ingredientTolerance=.25m,decimal extraTolerance=.01m)
+            decimal recognitionFraction=.05m,decimal ingredientTolerance=.25m,decimal extraTolerance=.01m,ShakeTuning shake=null,FloatTuning floatTuning=null)
         {
             if(string.IsNullOrWhiteSpace(revision)) throw new ArgumentException("Tuning revision required.");
             foreach(var x in new[]{jigger,mixing,serving,pour,finePour,transfer,fineTransfer,dash}) { LiquidMath.Validate(x); if(x<=0) throw new ArgumentOutOfRangeException(nameof(x)); }
@@ -83,6 +101,8 @@ namespace Surlhwa.Domain
             TransferRate=transfer; FineTransferRate=fineTransfer; DashMl=dash; HowDegrees=how; QualityDegrees=quality;
             MinSpeed=minSpeed; MaxSpeed=maxSpeed; StableFraction=stable; RecognitionFraction=recognitionFraction;
             IngredientToleranceMl=ingredientTolerance; ExtraToleranceMl=extraTolerance;
+            Shake=shake ?? new ShakeTuning();
+            Float=floatTuning ?? new FloatTuning();
         }
     }
     internal static class LiquidMath

@@ -1,8 +1,8 @@
 # SURLHWA bounded Production expansion plan
 
-> For agentic workers: GATE 1 plan approval is pending. After that approval, execute autonomously through GATE 2 (complete ACT 1), then after GATE 2 approval continue ACTs 2–7 through GATE 3 (final Release Candidate). Use the existing inline workflow and package-specific checklists without requesting per-package permission. Follow [OWNER_APPROVAL_POLICY.md](OWNER_APPROVAL_POLICY.md); this policy revision is not plan approval.
+> For agentic workers: GATE 1 is OWNER_APPROVED at plan commit 6a6637e; see [approval record](GATE1_OWNER_APPROVAL.md). Now execute autonomously through GATE 2 (complete ACT 1), then after GATE 2 approval continue ACTs 2–7 through GATE 3 (final Release Candidate). Use the existing inline workflow and package-specific checklists without requesting per-package permission. Follow [OWNER_APPROVAL_POLICY.md](OWNER_APPROVAL_POLICY.md); this policy revision is not plan approval.
 
-**Status:** PROPOSED / READY_FOR_OWNER_REVIEW. 2026-10-14, Asia/Seoul.
+**Status:** OWNER_APPROVED / EXECUTING_TO_GATE_2. 2026-10-14, Asia/Seoul.
 
 **Goal:** Expand the accepted Vertical Slice into the seven-ACT main campaign through small, playable, technically verified packages with three bundled owner gates while preserving actual bartending, readable knowledge progression and the bar's accumulated memories.
 
@@ -281,7 +281,7 @@ The owner's [approval minimization policy](OWNER_APPROVAL_POLICY.md) supersedes 
 
 | Gate | Single review package | What follows approval |
 | --- | --- | --- |
-| GATE 1 | Production Expansion Plan. Currently PENDING. | Autonomous work through complete ACT 1; no separate P00, recipe, method, migration, save or technical approvals. |
+| GATE 1 | Production Expansion Plan. OWNER_APPROVED at 6a6637e. | Autonomous work through complete ACT 1; no separate P00, recipe, method, migration, save or technical approvals. |
 | GATE 2 | Complete ACT 1 Production Milestone: campaign pacing, Little Prince ACT, Manwol/Float, memory presentation, current UI, current audio/music, character/environment presentation and overall SURLHWA identity. Bundle all currently known subjective decisions, including any other new method feel questions. | Continue ACTs 2–7 and presentation refinement autonomously unless a true exception occurs. |
 | GATE 3 | Final Release Candidate human signoff: whole campaign, final presentation, evidence limits and remaining debt disposition. | Owner release acceptance; no claim that technical PASS substitutes for it. |
 
@@ -313,4 +313,4 @@ At GATE 3 classify outstanding items as PASS, VALIDATION_DEBT, HUMAN_SIGNOFF_REQ
 
 Planning decisions and costs: staged methods/ACT batches add internal verification points but contain rework; bundling owner decisions reduces interruptions while leaving some reversible presentation work provisional until GATE 2/3; source-preserving re-authoring adds ledger work but prevents silent narrative loss; keeping Slice as a separate mode preserves acceptance evidence but requires explicit shared-code regression; deferred aesthetics permit continued production while retaining a real later polish workload. No calendar, recipe count, D09 formula or final mix target is invented to hide those decisions.
 
-**Handoff:** GATE 1 approval of this revised plan is still pending. Once approved, begin P00 and continue autonomously through the complete ACT 1 milestone, including its integrated presentation review material. Do not request separate package approvals. After GATE 2 approval continue ACTs 2–7 autonomously unless one of the seven true exceptions occurs. This policy-editing turn does not start expansion implementation.
+**Handoff:** GATE 1 is approved. Begin P00 and continue autonomously through the complete ACT 1 milestone, including its integrated presentation review material. Do not request separate package approvals. After GATE 2 approval continue ACTs 2–7 autonomously unless one of the seven true exceptions occurs. Execution is now authorized through Gate 2 under GATE1_OWNER_APPROVAL.md.
