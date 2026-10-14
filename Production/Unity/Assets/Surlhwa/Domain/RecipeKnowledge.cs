@@ -37,6 +37,14 @@ namespace Surlhwa.Domain
             if(outcome.Recognition!=DrinkRecognition.Recognized || known.ContainsKey(outcome.RecipeId)) return false;
             known.Add(outcome.RecipeId,"service:"+occurrenceId); return true;
         }
+        public bool DiscoverRequired(ServiceOutcome outcome,string occurrenceId,string targetRecipeId)
+        {
+            if(!catalog.Recipes.ContainsKey(targetRecipeId)) throw new ArgumentException("Unknown discovery target.");
+            if(string.IsNullOrWhiteSpace(occurrenceId)) throw new ArgumentException("Occurrence required.");
+            if(outcome.Recognition!=DrinkRecognition.Recognized || outcome.RecipeId!=targetRecipeId || !outcome.Fits ||
+                outcome.Preparation!=PreparationResult.Good || !outcome.QualityGood) return false;
+            return Discover(outcome,occurrenceId);
+        }
         public KnowledgeProjection Project(string recipeId)
         {
             var r=catalog.Recipes[recipeId]; bool full=known.ContainsKey(recipeId);

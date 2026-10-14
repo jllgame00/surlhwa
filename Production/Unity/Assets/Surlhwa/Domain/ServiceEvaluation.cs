@@ -9,7 +9,23 @@ namespace Surlhwa.Domain
     public sealed class DrinkRequest
     {
         public string Tag { get; }
-        public DrinkRequest(string tag) { _=new StableId<TextIdentity>(tag); Tag=tag; }
+        public string CocktailId { get; }
+        public IReadOnlyList<string> AnyTags { get; } public IReadOnlyList<string> AllTags { get; } public IReadOnlyList<string> ExcludedTags { get; }
+        public DrinkRequest(string tag) : this(null,new[]{tag},null,null) { Tag=tag; }
+        private DrinkRequest(string cocktail,IEnumerable<string> any,IEnumerable<string> all,IEnumerable<string> excluded)
+        {
+            CocktailId=cocktail; if(cocktail!=null) _=new StableId<CocktailIdentity>(cocktail);
+            string[] Validate(IEnumerable<string> tags)
+            { var values=(tags ?? Array.Empty<string>()).Distinct(StringComparer.Ordinal).ToArray(); foreach(var tag in values) _=new StableId<TextIdentity>(tag); return values; }
+            AnyTags=Array.AsReadOnly(Validate(any)); AllTags=Array.AsReadOnly(Validate(all)); ExcludedTags=Array.AsReadOnly(Validate(excluded));
+            if(cocktail==null && AnyTags.Count+AllTags.Count==0) throw new ArgumentException("Recommendation requires a positive interpretation.");
+            Tag=AnyTags.FirstOrDefault() ?? AllTags.FirstOrDefault();
+        }
+        public static DrinkRequest Specific(string cocktailId)
+        { if(cocktailId==null) throw new ArgumentNullException(nameof(cocktailId)); return new DrinkRequest(cocktailId,null,null,null); }
+        public static DrinkRequest Recommendation(IEnumerable<string> any,IEnumerable<string> all=null,IEnumerable<string> excluded=null) => new DrinkRequest(null,any,all,excluded);
+        internal bool Fits(CocktailDefinition drink) => CocktailId!=null ? CocktailId==drink.Id :
+            (AnyTags.Count==0 || AnyTags.Any(drink.Tags.Contains)) && AllTags.All(drink.Tags.Contains) && !ExcludedTags.Any(drink.Tags.Contains);
     }
     public sealed class ServiceOutcome
     {
@@ -48,7 +64,7 @@ namespace Surlhwa.Domain
             bool quality=recipe.Method=="build" || (recipe.Method=="shake" ? (snapshot.Shake?.QualityGood ?? false) && ShakePreparation.CoversCurrentBatch(recipe,tuning,snapshot) :
                 recipe.Method=="float" ? FloatLayers.Quality(snapshot) : snapshot.StirQualityGood);
             if(!quality) reasons.Add(recipe.Method+"_quality_weak");
-            bool fits=catalog.Cocktails[recipe.CocktailId].Tags.Contains(request.Tag); if(!fits) reasons.Add("request_mismatch");
+            bool fits=request.Fits(catalog.Cocktails[recipe.CocktailId]); if(!fits) reasons.Add("request_mismatch");
             return new ServiceOutcome(DrinkRecognition.Recognized,recipe,how ? PreparationResult.Good : PreparationResult.Weak,quality,fits,reasons);
         }
         private static bool Matches(StirRecipe r,BrewingTuning t,ServiceSnapshot s)
