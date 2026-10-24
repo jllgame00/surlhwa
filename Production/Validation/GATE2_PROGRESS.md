@@ -1,6 +1,40 @@
 # Execution ledger — Production/Validation/PRODUCTION_EXPANSION_PLAN.md
 
-## Current ACT 1 art checkpoint — 2026-10-25
+## Current ACT 1 Production Art review package — 2026-10-25
+
+Resumed from `dcc0297` after license activation. The prepared art is integrated
+into the existing Bar_Act1 hierarchy with unchanged C1 camera/anchors/colliders,
+HG01–HG04 behavior and Canon/Architecture authorities. All 43 source images,
+their import metadata and four source atlases are unchanged. One scene is wired;
+no prefab/ProjectSettings or historical C1 scene churn.
+
+**READY_FOR_OWNER_ART_REVIEW_WITH_NATIVE_INPUT_DEBT**:
+[actual Player review](review-act1-art.html), [review guide](ACT1_ART_GATE2_REVIEW.md),
+[machine-readable evidence](Manifests/art-gate2-review.json).
+Affected Unity tests 29/29; Player build succeeds with zero errors/warnings.
+Full 720p and 1080p each pass 167 checks/54 captures, 17 services/departures,
+six known recipes and earned memory. Open/Quiet completed Continue each pass
+five checks/ten captures and preserve both saved generations byte-for-byte.
+All four successful runs retain exact 1193-file source/Player inventories.
+720p includes a full recorded playthrough, real Unity mix and six focused clips.
+
+Actual-render corrections are bounded: legacy snow/cloth proxy visibility,
+quieter ground bands, bottle/face clearance and Float spoon readability. A QA-only
+pointer-timing correction handles capture hitches without changing Stir behavior.
+Initial failed/stopped records and the sandboxed observation-write denial are
+preserved. Serialized/reference checks pass; six harmless whitespace findings in
+three new Unity-written materials are disclosed and their tested bytes retained.
+
+Original RC1 branch/HEAD/index/status and 74 protected specifications remain as
+found on resume. Pre-existing local Editor-layout bytes/font mtime differences
+from the older strict baseline are documented separately, never overwritten.
+The owner-local review-slice.html remains untouched and uncommitted.
+
+This is the requested stop for bundled owner art review. PD01–PD11 remain OPEN;
+native input remains the separate prior debt. No full Codex redesign, later ACTs,
+full cast/cocktail art, final music or final game acceptance is claimed.
+
+## Historical ACT 1 source checkpoint — 2026-10-25
 
 The owner has accepted C1 as the provisional composition and initiated the ACT 1
 Production Art Pass. Source assets and integration code are prepared; see

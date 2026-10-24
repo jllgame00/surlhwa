@@ -23,3 +23,25 @@ Reviewer declined-to-judge disposition:
 - Owner-local review-slice.html and historical project closure: OUT_OF_SCOPE and preserved.
 
 No additional reviewer is commissioned. The executor owns the pending integration, failing-then-passing evidence where available, final actual-resolution inspection and intentional serialized diff review.
+
+## Licensed execution follow-up
+
+The source checkpoint above remains historical. After the owner activated Unity,
+the executor ran the new art regressions and affected presentation/input/Slice
+suite: final result 29/29 PASS (`art-integration-final-green.xml`). The pre-apply
+run retained three genuine missing-art failures and one passing dirty-scene guard;
+it is an integration RED→GREEN, not a claim that each earlier source-coordinate
+bug was executed before its source correction.
+
+Actual 720p Player images and active Float frames now exercise the imported art,
+character contacts, empty/filled/layered containers, spoon support and Korean UI.
+All 17 recorded services pass the unchanged recognition/preparation/quality
+assertions. The executor additionally corrected render-discovered legacy proxy
+duplicates, ground patches, bottle/face occlusion and a disappearing thin spoon
+handle. Original C1 transforms/camera/colliders and all 43 source images remain
+unchanged. Full evidence and remaining owner judgments are in
+[the Gate 2 art package](ACT1_ART_GATE2_REVIEW.md).
+
+The final visual/animation/audio judgments are still HUMAN_SIGNOFF_REQUIRED.
+Recorded media has the disclosed simulated-input and capture-frequency limits.
+No second reviewer or new native-input approval is implied by this follow-up.

@@ -1,0 +1,306 @@
+{
+  "status": "ACTUAL_PLAYER_INSPECTION_RECORDED",
+  "visualApproval": "HUMAN_SIGNOFF_REQUIRED",
+  "viewedImages": [
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/001-menu.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "3985154a6b491c29226b4ea3b36c5694af19de6c4cd47b01bde20ca030be01e7"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/004-reaction-0.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "392b25b7da13e9a36af9708a225de450732e49eb8d810a3393a561e34e91c310"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/014-prince-intro-First.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "a8719a3f2a1f9259acab0bf4d6fb45ef60c80835fadd3d846b6e8ff76c257db7"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/017-prepared-5-float.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "d18694174ae18b3c89ec39a4c7b958024f07d77bbe3d63e5d360d7e6eed80706"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/047-earned-memory.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "6d2a9eea32388e775176007afb55e38dc65a938615d60c98ab89abc4a6d8c08c"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/frames/00933.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "55487303e62a8d1b09b89134544201112a4ace535b3fa5d3062e0887b5274b79"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/frames/01114.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "94fde6b79d31fa005e3562586d8c4f41d37cb923bdf97abfda8fb6c56ed325b7"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-1080-final/014-prince-intro-First.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "220d3a3d59f5ea687dbcdbd86894ad8ff2324055646c06c87c0be90cc5fac5d8"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-1080-final/017-prepared-5-float.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "40a8e76d4e8e5ef0c6b6fd0a25d2bd81b7eec4f17a48e94e4b4f42cb8b1771cf"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-1080-final/034-prepared-13-shake.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "b31c65b6bdce77204689e83043b4265669e6c2af880fa2212bbcf356f856bd42"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-1080-final/047-earned-memory.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "67050d7aea2f830bfd71ab4c4d6fe75a06d40866953871b77848293774589f72"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-1080-final/054-settings-large.png",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "639aa53d57b4f7d36199e8520424414dd0f11cb8baf6a4fc6b23ae3fb267ace6"
+    },
+    {
+      "file": "Evidence/gate2-player-art-quiet-continue-final/003-earned-memory.png",
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "417845ba560c020c2e1c57ea13f316f4bb3e36910cb4d6054be40bf86c293e3f"
+    }
+  ],
+  "media": [
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/earned-memory.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "26.000000",
+          "size": "908050"
+        }
+      },
+      "sha256": "31dab38ea106fba09543d7ec4a28b5915e791159e602e1b8fbd57a113ab2281b"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/player-playthrough.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "636.240000",
+          "size": "24161007"
+        }
+      },
+      "sha256": "a71db18c8b954df81e0c38a4e9c8579050ecf2b208b9cc3b04f10a463d3add37"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/prepared-0-stir.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "48.000000",
+          "size": "1585883"
+        }
+      },
+      "sha256": "367738a53c61127f535ea6954b001b31c186ccbfad31c6ee9ea84ec34b19e4c0"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/prepared-13-shake.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "48.040000",
+          "size": "1663743"
+        }
+      },
+      "sha256": "0d9ea06b0df0e504fb6ba89af3eb2c39961380241eb3dba10f1a4ece09cad53c"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/prepared-5-float.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "48.120000",
+          "size": "1831099"
+        }
+      },
+      "sha256": "a46e822293b1742143692cf7e3578e36f96a52af3134df7c10a452c20451a71b"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/prepared-6-build.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "48.160000",
+          "size": "1651020"
+        }
+      },
+      "sha256": "d301b8286940642d9dce6dc11c102ccdce1b664b0c3d20267a4d00a92af715b7"
+    },
+    {
+      "file": "Evidence/gate2-player-art-open-720-final/prince-farewell-0.mp4",
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "h264",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 720
+          },
+          {
+            "codec_name": "aac",
+            "codec_type": "audio",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "26.160000",
+          "size": "850978"
+        }
+      },
+      "sha256": "cc76b9adae1f2710768b02e06b08f1fbf03b5126b1ee4d0f0bd633b08ac5f991"
+    }
+  ],
+  "findings": [
+    "C1 exterior remains visible with unchanged camera and spatial anchors; detailed wood, shelves, lamps and snow silhouettes now rendered.",
+    "Bartender face visible after bottle clearance; Prince and both representative ordinary silhouettes present.",
+    "Actual 720p active Float support/stream/grip and 1080p prepared layers visible; liquid/state assertions pass.",
+    "Requests, results, focus and large Korean settings remain legible in inspected frames.",
+    "Completed open and quiet memory presentations retained; art/motion/audio/emotional judgments remain owner-owned."
+  ],
+  "limits": [
+    "Representative actual frames inspected, not every captured pixel or alternate glass profile.",
+    "Motion clips use approximately 5 Hz actual captures; no native-input or 60 fps motion claim.",
+    "No claim of subjective audio audition, final mix approval, or sample-synchronized contact."
+  ]
+}

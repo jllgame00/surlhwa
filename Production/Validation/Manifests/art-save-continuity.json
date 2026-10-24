@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "utc": "2026-10-24T18:25:14.351432+00:00",
+  "sourceCheckpoint": "dcc0297",
+  "runs": [
+    {
+      "name": "gate2-player-art-open-720-final",
+      "status": "PASS",
+      "checks": 167,
+      "captures": 54,
+      "width": 1280,
+      "height": 720,
+      "exitCode": 0
+    },
+    {
+      "name": "gate2-player-art-open-1080-final",
+      "status": "PASS",
+      "checks": 167,
+      "captures": 54,
+      "width": 1920,
+      "height": 1080,
+      "exitCode": 0
+    },
+    {
+      "name": "gate2-player-art-open-continue-final-02",
+      "status": "PASS",
+      "checks": 5,
+      "captures": 10,
+      "width": 1280,
+      "height": 720,
+      "exitCode": 0
+    },
+    {
+      "name": "gate2-player-art-quiet-continue-final",
+      "status": "PASS",
+      "checks": 5,
+      "captures": 10,
+      "width": 1280,
+      "height": 720,
+      "exitCode": 0
+    }
+  ],
+  "continuedSaves": [
+    {
+      "fixture": "open",
+      "currentSha256": "6244cb34d99c36b719491c2407d94a6038930cd3fb147fdce7a54f56f0bd5692",
+      "memory": "star_glowing",
+      "services": 17,
+      "departures": 17,
+      "memories": 1,
+      "bothPublishedGenerationsUnchangedByContinue": true
+    },
+    {
+      "fixture": "quiet",
+      "currentSha256": "f6b9b48c894d5df02b8ea3784c8b8423df537ac03f3051df214bb18abf943c35",
+      "memory": "star_unlit",
+      "services": 17,
+      "departures": 17,
+      "memories": 1,
+      "bothPublishedGenerationsUnchangedByContinue": true
+    }
+  ],
+  "files": [
+    {
+      "variant": "open",
+      "source": "Production/Validation/Evidence/gate2-player-open-720-04/slot1/current.json",
+      "copy": "Production/Validation/Evidence/art-continue-fixtures/open/slot1/current.json",
+      "sha256": "6244cb34d99c36b719491c2407d94a6038930cd3fb147fdce7a54f56f0bd5692"
+    },
+    {
+      "variant": "open",
+      "source": "Production/Validation/Evidence/gate2-player-open-720-04/slot1/previous.json",
+      "copy": "Production/Validation/Evidence/art-continue-fixtures/open/slot1/previous.json",
+      "sha256": "dfd4c5614c8597d9f28136e73649222b0cc0f9f11246c492d29444816cb5d7c2"
+    },
+    {
+      "variant": "quiet",
+      "source": "Production/Validation/Evidence/gate2-complete-quiet-save-copy-final/slot1/current.json",
+      "copy": "Production/Validation/Evidence/art-continue-fixtures/quiet/slot1/current.json",
+      "sha256": "f6b9b48c894d5df02b8ea3784c8b8423df537ac03f3051df214bb18abf943c35"
+    },
+    {
+      "variant": "quiet",
+      "source": "Production/Validation/Evidence/gate2-complete-quiet-save-copy-final/slot1/previous.json",
+      "copy": "Production/Validation/Evidence/art-continue-fixtures/quiet/slot1/previous.json",
+      "sha256": "c20bf41651fca7fa1deaa90639b12f3e6154eb66d793b99e1157be1613b909d8"
+    }
+  ],
+  "scope": "Full open ACT 1 on final art Player at both resolutions; completed Continue from byte-identical earned historical open/quiet saves. Quiet campaign traversal remains prior baseline evidence. Simulated production InputSystem, not native OS input.",
+  "retainedEnvironmentFailure": "gate2-player-art-open-continue-final: File.Replace denied in sandboxed QA observation writer before checks; unchanged Player succeeded with desktop execution permissions."
+}

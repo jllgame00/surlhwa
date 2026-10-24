@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "sourceCheckpoint": "dcc0297",
+  "sourceImagesUnchanged": 43,
+  "sourceAtlasesUnchanged": 4,
+  "checkpointImportersUnchanged": 43,
+  "sceneBlocksBefore": 1499,
+  "sceneBlocksAfter": 1581,
+  "addedSceneBlocks": 82,
+  "removedSceneBlocks": 0,
+  "changedExistingBlocks": 240,
+  "spatialBlocksUnchanged": true,
+  "checkedSerializedFiles": 65,
+  "resolvedReferenceGuids": 153,
+  "packageReferences": {
+    "650dd9526735d5b46b79224bc6e94025": [
+      "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Unity\\Library\\PackageCache\\com.unity.render-pipelines.universal@a6e30d1f59f5\\Shaders\\Unlit.shader.meta"
+    ],
+    "a79441f348de89743a2939f4d699eac1": [
+      "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Unity\\Library\\PackageCache\\com.unity.render-pipelines.universal@a6e30d1f59f5\\Runtime\\UniversalAdditionalCameraData.cs.meta"
+    ],
+    "d0353a89b1f911e48b9e16bdc9f2e058": [
+      "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Unity\\Library\\PackageCache\\com.unity.render-pipelines.universal@a6e30d1f59f5\\Editor\\AssetVersion.cs.meta"
+    ]
+  },
+  "resumePreservation": "PASS",
+  "historicalBaselineDrift": "Retained separately: owner layout bytes and font mtime predate resume",
+  "sceneSha256": "32eff2bd6e9ada63942652e19ff94c49f625665b0f0eb8cec0bf5dde952dc9fa",
+  "scope": "Serialized references/import-source contracts, not rendered or aesthetic approval"
+}

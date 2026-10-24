@@ -1,6 +1,16 @@
 # Production presentation debt
 
-2026-10-25 ACT 1 art-pass update: PD02–PD07 and PD10–PD11 have new source candidates
+2026-10-25 licensed integration: the prepared ACT 1 candidates are now imported,
+wired into Bar_Act1 and built in the actual Player. See
+[the current Gate 2 art package](ACT1_ART_GATE2_REVIEW.md) for rendered evidence,
+recorded motion/mix and the bundled owner questions. Environment, characters,
+Stir/Float tools, core UI and the footstep candidate are reviewable in context.
+All PD01–PD11 remain **OPEN / HUMAN_SIGNOFF_REQUIRED** for their adopted scope;
+implementation and rendered verification do not grant final aesthetic approval.
+Broader character reaction animation, remaining tool/glass variants, full Codex,
+final mix/music and later-ACT assets are still deferred. Native-input debt remains.
+
+Historical source checkpoint, before license activation: PD02–PD07 and PD10–PD11 have new source candidates
 and integration code in [the source checkpoint](ACT1_ART_PASS_PLAN.md). This covers
 modular wood/shelf/prop/snow art, bartender/Prince/two ordinary pose families,
 state-driven tool shells and Float contact, restrained core UI treatment and one

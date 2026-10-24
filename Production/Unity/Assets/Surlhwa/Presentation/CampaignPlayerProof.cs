@@ -20,6 +20,7 @@ namespace Surlhwa.Presentation
     {
         private CampaignController owner; private string output,fixture; private Keyboard keyboard; private Mouse mouse;
         private Vector2 pointer; private Key[] keys=Array.Empty<Key>(); private bool down,failed; private RenderTexture render;
+        private bool stirInput; private Vector2 stirCenter; private float stirRadius,stirAngle;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
         private string Arg(string key) { var args=Environment.GetCommandLineArgs(); int i=Array.IndexOf(args,key); return i<0 || i+1>=args.Length ? null : args[i+1]; }
@@ -30,6 +31,7 @@ namespace Surlhwa.Presentation
             UnityEngine.Application.logMessageReceived+=Log; float until=Time.realtimeSinceStartup+40;
             while(owner.Ui==null || owner.Busy) { if(Time.realtimeSinceStartup>until) { Fail("Initialization timeout"); yield break; } yield return null; }
             keyboard=InputSystem.AddDevice<Keyboard>(); mouse=InputSystem.AddDevice<Mouse>();
+            InputSystem.onBeforeUpdate+=QueueStirForCurrentFrame;
             render=new RenderTexture(Screen.width,Screen.height,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB); render.Create();
             media=Arg("-campaignMedia")=="1";
             if(media) {
@@ -99,6 +101,16 @@ namespace Surlhwa.Presentation
         }
         private void Queue()
         { InputSystem.QueueStateEvent(keyboard,new KeyboardState(keys)); var state=new MouseState{position=pointer}.WithButton(MouseButton.Left,down); InputSystem.QueueStateEvent(mouse,state); }
+        private void QueueStirForCurrentFrame()
+        {
+            if(!stirInput || InputState.currentUpdateType!=InputUpdateType.Dynamic) return;
+            // Capture can stall a frame. Deliver this frame's simulated motion before
+            // input processing, using the same elapsed time as the production adapter.
+            // No recipe, technique or gameplay time is injected or changed.
+            stirAngle+=Mathf.Min(Time.unscaledDeltaTime,.25f)*150*Mathf.Deg2Rad;
+            pointer=stirCenter+new Vector2(Mathf.Cos(stirAngle),Mathf.Sin(stirAngle))*stirRadius;
+            Queue();
+        }
         private IEnumerator Idle()
         { float until=Time.realtimeSinceStartup+10; while(owner.Busy || owner.Session?.IsSaving==true) { if(Time.realtimeSinceStartup>until) { Fail("Save timeout"); yield break; } yield return null; } }
         private Button Find(string label)
@@ -146,8 +158,10 @@ namespace Surlhwa.Presentation
                 yield return Target(ContainerRole.Mixing); if(recipe.DashIngredient!=null) { yield return SelectIngredient(recipe.DashIngredient); yield return Press(Key.D); } yield return Press(Key.I);
                 Vector2 center=owner.Camera.WorldToScreenPoint(owner.Workbench.MixingCenter); float radius=Screen.height/(2*owner.Camera.orthographicSize)*.25f;
                 pointer=center+Vector2.right*radius; Queue(); yield return null; keys=new[]{Key.S}; Queue();
-                float angle=0,until=Time.realtimeSinceStartup+20;
-                while(owner.Session.Brew.StirAcceptedDegrees<1080) { if(Time.realtimeSinceStartup>until) { Fail("Stir stalled"); yield break; } angle+=Mathf.Min(Time.unscaledDeltaTime,.04f)*150*Mathf.Deg2Rad; pointer=center+new Vector2(Mathf.Cos(angle),Mathf.Sin(angle))*radius; Queue(); yield return null; }
+                stirCenter=center; stirRadius=radius; stirAngle=0; stirInput=true;
+                float until=Time.realtimeSinceStartup+20;
+                while(owner.Session.Brew.StirAcceptedDegrees<1080) { if(Time.realtimeSinceStartup>until) { stirInput=false; Fail("Stir stalled"); yield break; } yield return null; }
+                stirInput=false;
                 keys=Array.Empty<Key>(); Queue(); yield return null; yield return Press(Key.R,4); if(recipe.RequiredGarnish=="cherry") yield return Press(Key.C);
             }
             else if(recipe.Method=="build")
@@ -193,6 +207,6 @@ namespace Surlhwa.Presentation
             UnityEngine.Application.Quit(errors.Count==0 ? 0 : 2);
         }
         [Serializable] private sealed class Result { public string status,tier; public string[] checks,errors; public float[] frames; public int captures; }
-        private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
+        private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; InputSystem.onBeforeUpdate-=QueueStirForCurrentFrame; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
     }
 }

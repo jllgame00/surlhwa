@@ -1,5 +1,14 @@
 # Gate 2 — complete ACT 1 review preparation
 
+The current ACT 1 Production Art Pass is reviewed in
+[the art Gate 2 package](ACT1_ART_GATE2_REVIEW.md) and
+[actual Player gallery](review-act1-art.html). The records below describe the
+preceding 2026-10-14 presentation and its 966-file Player inventory. They remain
+historical gameplay evidence, not captures of the new art build. The executable
+path now contains the art-pass Player. Native-input debt remains separate.
+
+## Historical pre-art package
+
 Status: NATIVE_CLOSURE_ENVIRONMENT_BLOCKED. Independent ACT 1 implementation, review fixes, offscreen validation and review preparation are complete. Native desktop input is paused at the owner's request until the owner signals readiness. This is not Gate 2 technical closure or owner approval. ACTs 2–7 have not started.
 
 | Current final Player evidence | Checks | Captures | Result |

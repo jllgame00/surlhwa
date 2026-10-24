@@ -56,6 +56,7 @@ namespace Surlhwa.Editor
             }
             // Front panel moulding is now in the texture; preserve geometry/colliders.
             Hide("C_CounterPanelTrim");
+            Hide("C_SnowAccumulation");
         }
         private static void ReplaceSurface(Renderer renderer,int index,Material value)
         { var materials=renderer.sharedMaterials; if(index>=materials.Length) throw new InvalidOperationException(renderer.name+" face layout changed"); materials[index]=value; renderer.sharedMaterials=materials; }
@@ -80,18 +81,19 @@ namespace Surlhwa.Editor
             Plane("Clean cloth and glasses","ClothTray",new Vector3(-2.75f,.991f,-.69f),.85f,.43f,View);
             Plane("Ceramic pitcher and cups","CeramicSet",new Vector3(3.43f,.991f,1.22f),.62f,.49f,View);
             Plane("Notebook and candle","NotebookCandle",new Vector3(-3.43f,.991f,1.30f),.67f,.43f,View);
-            // Existing cloth/tray support meshes are retained for contact tests, concealed by new art.
+            // Keep the accepted support bounds, but remove visible blockout duplicates.
+            Hide("Folded bar cloth"); Hide("Cloth fold"); Hide("Small resting tray");
         }
 
         private static void Exterior()
         {
             const int width=512,height=384;
             var texture=new Texture2D(width,height,TextureFormat.RGB24,false); var pixels=new Color[width*height];
-            Color shadow=Hex("263640"),snow=Hex("647780"),crest=Hex("899ba1"),warm=Hex("a08c67");
+            Color shadow=Hex("526772"),snow=Hex("73858d"),crest=Hex("99a9ae"),warm=Hex("a08c67");
             for(int y=0;y<height;y++) for(int x=0;x<width;x++) {
                 float wx=(x/(float)(width-1)-.5f)*24,wz=(y/(float)(height-1)-.5f)*24+.8f;
                 // Broad wind-carved forms with a quiet five-step value ramp. No mottled islands.
-                float drift=.5f+.17f*Mathf.Sin(wx*.73f+wz*.24f)+.09f*Mathf.Sin(wz*1.9f+wx*.21f);
+                float drift=.48f+.20f*Mathf.Sin(wz*2.1f+wx*.24f+.16f*Mathf.Sin(wx*.55f));
                 float q=Mathf.Round(drift*5)/5;
                 Color c=Color.Lerp(shadow,snow,q);
                 if(Mathf.Sin(wz*3.2f+Mathf.Sin(wx*.65f)*.6f)>.94f) c=Color.Lerp(c,crest,.18f);

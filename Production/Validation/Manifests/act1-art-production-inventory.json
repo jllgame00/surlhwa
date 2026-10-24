@@ -1,0 +1,1035 @@
+{
+  "rows": [
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/Act1Korean.asset",
+      "sha256": "ed596ab67fa447e321c110f7fd9b4d984bd2fba4a932fea5bae845ac379c0d2f",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/FirstNightMotif.wav",
+      "sha256": "72f045f6097dccb852e4d8cefdc9cd28d930a8ed4fbe5615d4fe8a117c70089f",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/Linen.mat",
+      "sha256": "2e0f7a323a2fcfd1fc329d791523e937d3ab0f765cd123a603e865a999abf229",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/LinenSeam.mat",
+      "sha256": "3880c11424310490d1f9980a0356485253d9b6876df0b77ce096c6341c4297b5",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Act1Art.asset",
+      "sha256": "d5361f1a444696ebf269706f93da142c84ded22c175636a05b53fac0be57e148",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderBlink.mat",
+      "sha256": "da17a472c9482860a0133dd6bcdbffe32d6a14594a862c8e82a312f13b67b89d",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderBlink.png",
+      "sha256": "ceee6dbb7ba6d73f10462d1b0bd5e73937506288cd5798ed1e794eca75acab0a",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderListening.mat",
+      "sha256": "ebcc9c04839801be87689343882db77d4a578675205215c8e6bad2951c37b9a2",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderListening.png",
+      "sha256": "f94dea26d11429d3de2edcfb5def1fb95b99858ff30bee47b8e77b71930d05c8",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderStanding.mat",
+      "sha256": "9dd79f2f3496fc9c02390e5686a243cb81688135af087f580d28dc11dd0064d8",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderStanding.png",
+      "sha256": "81584980d13dcf2d046b25d296343be2cb89e2ef56ac6a8768afd8b8fe6d64f6",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderStandingMesh.asset",
+      "sha256": "1f5cb27aef57fce09a0f230b39fa733f1fa7caec15c65c79a3cb99aa17793097",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderTowel.mat",
+      "sha256": "3396c5afb30ff51111f8479f7251d3d966a4af15be2d2d6d417c2197c394794d",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderTowel.png",
+      "sha256": "5d8df9a4d4b3dec3b3b42697e2f270fc810846d9ce6d09266d1ef746771d04a0",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Bottle_shelf_upper.mat",
+      "sha256": "c6cce43a6f17a1d7ce55dcdfa273be9bbad29723c173cc09b573c60e25f9a9a9",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Bottle_shelf_upperMesh.asset",
+      "sha256": "39738ea9c8d1167427f66c6c2840392f9a4f6edbaf3fbe9d0135f8732fbbfcb9",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Ceramic_pitcher_and_cups.mat",
+      "sha256": "c11c5f4e7ba01032cfd8bcec1422afdc3cb89e946f650dc68ed5d3de1141d3d7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Ceramic_pitcher_and_cupsMesh.asset",
+      "sha256": "1fa3ad168e074ddcbf5924d7a90504db3fdc50f2794ebb8ce274324929dab202",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CeramicSet.png",
+      "sha256": "d4e51916f93ca3d2b57e774dd58749998b4d0f908a433aee0c6a13b643927469",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Clean_cloth_and_glasses.mat",
+      "sha256": "c209f2faa845fb37e47124433fa936911a1e0f995a3160619c506bda5010030f",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Clean_cloth_and_glassesMesh.asset",
+      "sha256": "0e0b4de513eeed9d97adef82f77ace51a64e47cde27d3d3b7be14a867f2fad5e",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ClothTray.png",
+      "sha256": "0b7192a8bb71cfb212f146cf6801ef060925d6f7dd213dc3a3c88bb84c6ad316",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CounterPanels.mat",
+      "sha256": "dd1c1f666d566aabf4a263e93645a6b40c3a5cf2e1f19c5487ad3209db7962b5",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CounterPanels.png",
+      "sha256": "ad3f9d3d0dac37ee753f66b7b455d3922ddc006ad02719bd21ceece2a19de42f",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Materials.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CounterWood.mat",
+      "sha256": "9c25694c4e082f87b42f1ad6e8e10faf59eb6d914ef6d362782e12a57b63e9da",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CounterWood.png",
+      "sha256": "9ab436dcc8decac6e2b40d07abc6bb25d8b18abfa5731b8bc993eb12f609c2dd",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Materials.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Distant_east_pine.mat",
+      "sha256": "1da7680c0708fc269aaff3f790491fe33fe7b785abd23d87b65442e890107334",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Distant_east_pineMesh.asset",
+      "sha256": "6f402fede777cc12b88210a96abddd905694c22078fecbc366d0ac6468b12adf",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Distant_west_pine.mat",
+      "sha256": "439826f080005dfe33bc0a21c3e43e481c1f2d9b42f286d51e50e1d619b3353e",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Distant_west_pineMesh.asset",
+      "sha256": "4a20e700d156dfab308240f4265626024491c01c1d8720c98cc431dc62b82a6b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/DistantPines.png",
+      "sha256": "24ad20f0d80ee24bb7c6103f18e194d2e81c84bb1593f54591caa8d643afc60b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/East_snow_bank.mat",
+      "sha256": "5fe14e9fa92aefb620223eaa8cf52807cc52c5ae01ab11cce0dc1d68c1ce71a7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/East_snow_bankMesh.asset",
+      "sha256": "57495bcc1dc98528ea511c09f9a2f0a8f74a5fd1f1322d4e3b74f6c343c2ac66",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/East_snow_rocks.mat",
+      "sha256": "74a28f53fe24b4e97fbb5aa726c937028f49f71dec32554bd5a0224f59d5fd79",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/East_snow_rocksMesh.asset",
+      "sha256": "0ac654f7ce63f2a87dfdef59e37465a69ae69e232a6c54c145751ef55e3e7efb",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/East_winter_pine.mat",
+      "sha256": "d532f9a70b1ce1a8955856a7b8959d098dd9ad4419f4407443ffdaa1a4144c67",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/East_winter_pineMesh.asset",
+      "sha256": "bbae5947ab92a8b6245a6382ec12688bba2836fbe02f6e934656ef71207b76bc",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Empty_memory_niche.mat",
+      "sha256": "e6b500778473569390e3858a0869a9f86178b9891d2f879579f4a133dc3f0507",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Empty_memory_nicheMesh.asset",
+      "sha256": "9cdb8a7cdc9b9fa8bee436da5f75c7b65870e9a11518c9e02b6693e1e85aa37a",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/EmptyNiche.png",
+      "sha256": "47bd5787848d897880d76cfeee20ef559f61203d68cd44234092a352ffcdc275",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/FloorWood.mat",
+      "sha256": "23d331c4e63cbc251056334a2f2042566b99f2eb0a3efb84269bae3d52766e34",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/FloorWood.png",
+      "sha256": "3560af6bd8c146e24899463acf166d903c4c8cafc15cd201dba354561b317476",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Materials.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/FootstepFeltWood.wav",
+      "sha256": "6bdffc91a8816662f452a9df81a5e32810a4db7f059cdca342fdeda5e63d7c2a",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original procedural felt/wood contact; author_act1_footstep.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Glass_shelf_lower.mat",
+      "sha256": "efa16988105fd745bfcc12e7a2621b3bf15b52b03a7d0a8dcbed2ffe0625a9c7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Glass_shelf_lowerMesh.asset",
+      "sha256": "82780e205de4dcf01461d74ed5997ee377b438243d8820cb3c68dbb62c0ea182",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Lantern.png",
+      "sha256": "98dbf8e02d01c59c40aaf9066015f298f635d3aed660fbf6134f3826d7a0daaa",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Notebook_and_candle.mat",
+      "sha256": "a8da03276429a67776f164e09878a0fc13b84618beb035555ef203beb4d9b35a",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Notebook_and_candleMesh.asset",
+      "sha256": "d495668d9d914c5cc88f4914286ce6ab37cbc7793b81d29e9f998a3ac9e87ad2",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/NotebookCandle.png",
+      "sha256": "80bdc0848b116a013c52ca1ccb8406d640e387f5fbd39ca82f9366aece3fafbc",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunSeated.mat",
+      "sha256": "56b5a83521c4cf6d67726fe3bbc30dcc0c388e6a23943c2025fb58f2479876a7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunSeated.png",
+      "sha256": "91991d839aa108c5df6b50435d664d9c645d852e63775d1f1afb35328efb74f8",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunStanding.mat",
+      "sha256": "fb2a4973004bfd5c2e45a787695a81c271a35e1cc517ed28d42c02184e9625af",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunStanding.png",
+      "sha256": "aded24d06f05f29fd43b1c4667f51801061aa8043a222190b94d243112539fe7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunWalkA.mat",
+      "sha256": "31998a5c47e57d36066d827361a7b1de358be6db2fde553e88ebffaf8af94699",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunWalkA.png",
+      "sha256": "c401879c7834eb5b0a4b78f9c7693362cf7ddd596a778b0cbfea4d145c8de57d",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunWalkB.mat",
+      "sha256": "8a980eb6ed7b7b0fc07a064a79dfb97d858f082701797ae84add5ff5f17c8816",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunWalkB.png",
+      "sha256": "2f181dd05b3ba523be96468337ac1a3c546e13127136915adbf8aa2feaf084eb",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatSeated.mat",
+      "sha256": "0a62017fd6b612cc942097484d6b17e3526b36f253c06455486df1584889550c",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatSeated.png",
+      "sha256": "42ee09ba9997727901a2e37fe987bc1ba30c1e52b6840be136b47d1730e8c9a4",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatSeatedMesh.asset",
+      "sha256": "973da7fd5d86d841682d05e6cabd84a37d53a6d9e597401a14e56c131f77cbb7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatStanding.mat",
+      "sha256": "7a1c4d295ee2fe0b5b414d83288e2fd66db96819ae5c91a5784d2994612f73d7",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatStanding.png",
+      "sha256": "475a31e44e4daabef19e9c1d3363d8ad12117d2cc0feb4c218c9e27a8d6b5608",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatStandingMesh.asset",
+      "sha256": "c23be2934b40369651a54285b480a67ffe0e0e4fd757fb670507732d1e5c7fe0",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkA.mat",
+      "sha256": "48dc6860b27f9ef906180068cbbdf6617cdba6e90240911e400cfe3d3a63a6e1",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkA.png",
+      "sha256": "d47bb5d641e5848d9195d569a8216aad57a817623ee582cba1f83c50ba8980a0",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkAMesh.asset",
+      "sha256": "caa8f9ce52b7b26ee50b0ec735b9af2e98ff553a96d8d73f85bc072ae6672b69",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkB.mat",
+      "sha256": "c1f155c543b576b6ff8cf1f6cdc2e1ebb46007e6aec0e5b89979bc5a792ca0f9",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkB.png",
+      "sha256": "127d9a458e47fda7edc82adb021069c6083f9522f5e4daae2046e1525a6fa05b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkBMesh.asset",
+      "sha256": "6907d0a0687ced805fe14ddfd50ba684ec2d6e6938fa0785248999ea7b90109b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceSeated.mat",
+      "sha256": "2e073796a6a894e5300c9d9e2c6f26a45e1acbb41f717767d3095d2675f2c443",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceSeated.png",
+      "sha256": "55fa3a2211ffb90c55f98029fea416441a9549dd2860547dddaea5759f4b6ae2",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceSeatedMesh.asset",
+      "sha256": "f153439b0f5e035708260c5b42e42470b44a3d180f23d13082fee984399a02fc",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceStanding.mat",
+      "sha256": "d7b6d034a2346645cfcb9fb58e7c5de7a61db564a94bf6f0338d6013f069ce2b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceStanding.png",
+      "sha256": "972d71617dcf547603c6ccf23b0ec6a7b78e61a429f54d9b3077251a0aa26051",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceStandingMesh.asset",
+      "sha256": "af7ae02dc4ef71a15b0568e16903a81ebe56cc9b404e31a18f179115fe61b9a5",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkA.mat",
+      "sha256": "c466cb05760d77e0dc4df168e20b2ab98d532f72fc9fed5b2364b51a36f2847b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkA.png",
+      "sha256": "662317cb696693d5a1df46769111713b4597274b698db7f308094f8d9cc849e3",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkAMesh.asset",
+      "sha256": "a0c34d58fba8abce44dd5f97de6fce1f6a954a83639ae004c08fa321f48069cd",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkB.mat",
+      "sha256": "7a8c36c7f93e50b5c54c3187286142bc227dfc0a5d14341e6d8fcbecc09eec3c",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkB.png",
+      "sha256": "624b32d33a30f02ff3d2cf6f8a92186a639aee9ded69a3dac2ccf3614a2a5d66",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Characters.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkBMesh.asset",
+      "sha256": "c3f4582a7e18c6570cb217b320626422d49ed54621d7bb388520e4617dcbe5b8",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/RearWood.mat",
+      "sha256": "576f9e11ebdf602df0fbfc64c0bb7c00575a507f165227a47feec72f417eb62b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/RearWood.png",
+      "sha256": "d8d0b15bbb84d2a480a2709f6779200ee31b174fa940c013c7b7bc71bdf4d580",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Materials.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ShelfBottles.png",
+      "sha256": "b72816eb76546ef847f33c7e11466a85d9e4530cce949e3ead1d480432801455",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Shelves-generated.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ShelfGlasses.png",
+      "sha256": "67f9a3add45b57b6952793b4bdb4ebdefa1817839fe3bb20f051d226767ab12b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Shelves-generated.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowBank.png",
+      "sha256": "e49ff51e73cb9b96239990a446a29354929d3c0801765c5ae216281f5b65fefd",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowGround.mat",
+      "sha256": "7dbaeabf7f21dc8df69c526c2f8c757171f95f3fd15347396706500dc79402e9",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowGround.png",
+      "sha256": "60c71901f20a016ad6ed85370c5be6d3b402f4322a989b19caa4f74ee88556f9",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowPine.png",
+      "sha256": "9fdc22522294806956c03451b97ecd7440bf7774bc7e8148d6dc84d9d48e21c4",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowRocks.png",
+      "sha256": "8e123e20b729143d172c7991ac1f7c8ba96c06bdd9cb55478bc84db20ccbf570",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/StoolLeather.mat",
+      "sha256": "cbdf68d13efd734b1fa219f0cd0100732fa47d0dd3bdd89b2d967fd41dbd3be6",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/StoolLeather.png",
+      "sha256": "6e6eb947036e980af418c920a599c0750fbc5fbc11b9dd0752bd85a1ebd396dd",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Original built-in ImageGen atlas; declared crop/palette/nearest normalization: Environment.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolBottle.png",
+      "sha256": "22f549c847f15a59c2e57ab7e2fa0205e411c2c7051f8d2d7812ded3b69f99a4",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleTall.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolCocktail.png",
+      "sha256": "a15ba0efe038941b8e9f4b40621447cce47553f059bb44a12ad9d02d5e3b361e",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/CocktailGlass.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolFloatSpoon.png",
+      "sha256": "e275aa29fdb06427673be6b609f0bf00c7e4d701b82711fe5a550ba8690a24e1",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Tools/SpoonHorizontal.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolGrip.png",
+      "sha256": "67a78c8eae4e23b99a88cc6bd78b1c230c46dbe54c5bac560c284638e8983a2b",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Hands/Grip.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolIce.png",
+      "sha256": "bb8980081c88374d5984cf45fcd582c40aebe20f4e975b6239c01363a6ba65ed",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Ice/IceCluster.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolJigger.png",
+      "sha256": "336c19ea3fb06c848b60034ad5aa53d919d088495a7c9d742ed44793903b55c4",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Jigger.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolMixing.png",
+      "sha256": "edbb61395d2f19afe6daec7592b14ffb4f42587f5781d1f6073988d8384bedae",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/MixingGlass.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolRocks.png",
+      "sha256": "5fbeacf8480f86aeb2529c5e6a8153db54660de01353a75ff1ae1cbef82fdcc5",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/RocksGlass.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolSpoon.png",
+      "sha256": "e4075323fb07469142bd5e589920f23b179156d05db890cff9958a4a91b74ea4",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Spoon.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolStrainer.png",
+      "sha256": "659b2218bc6f3a8ec8719aa793ccb5efac60f454216ef2a763d30f534ce94b13",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "Existing pixel tool copied byte-identically: Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Strainer.png",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Warm_rear_lantern.mat",
+      "sha256": "78c86aa849d851da8685339e64f67eaa7330ebb100073605dd96fbe1a1ac0deb",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Warm_rear_lanternMesh.asset",
+      "sha256": "a50f685ef26b001f8901f542f8b467de3b6b23d2f45ca6001515c89e5aa6d1b8",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Warm_snow_lantern.mat",
+      "sha256": "f3fb70ea36ee76390d931ee9e092e614dce54d222096f19a6ca510215031c0a1",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Warm_snow_lanternMesh.asset",
+      "sha256": "f9d331a50d3cdd0dd0ca9da82a140c28be1484e65df27d5e90d5995d65b66bc2",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/West_snow_bank.mat",
+      "sha256": "e287209feca11dc46f4a38315ce1dab325049d790fedf86ba0ebce6e9351f9db",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/West_snow_bankMesh.asset",
+      "sha256": "4c70e655e761be84cd5fa1ff8e1f35c2370e44383ca25a0e091d97fa9c3dd899",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/West_snow_rocks.mat",
+      "sha256": "e389ef729d2c8d1f2d9cfe91cc94e398ef74ef2c57b86e31651866e47fd3ad3a",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/West_snow_rocksMesh.asset",
+      "sha256": "b771460e41dc9d0b7c9c4ef42a84358adbfe8ea4bd1a3b8a87e1147006851d5e",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/West_winter_pine.mat",
+      "sha256": "8e5f9296f849575ada3d6a92704d1d94e365fc6017bae618ac84814f345540cd",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/ProductionArt/West_winter_pineMesh.asset",
+      "sha256": "2ffc66fc9270e31077e8929274b2803818220ff3b33d8c9f461f9acbb983403a",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/Act1Assets/SoftBrass.mat",
+      "sha256": "b1ca28999e46013bffe89e356b4bdf7d516d8822a8b96d1839332c9d011d4e13",
+      "disposition": "REAUTHOR_VERSION_FOR_GATE2",
+      "origin": "ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/EntranceAir.wav",
+      "sha256": "3327802477b569230bee71c71dd788d543a32937d34b50768dde1fa05738ba07",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/GlassSet.wav",
+      "sha256": "e7c503422f4354f8e4842c20c210e798e6c7b56efcf3d04c6d8072a955d963ac",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Grip.png",
+      "sha256": "67a78c8eae4e23b99a88cc6bd78b1c230c46dbe54c5bac560c284638e8983a2b",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Ice.wav",
+      "sha256": "0876ada7902f487a23ea10628bead1f9185bc7eca567f6e47a416c413179f442",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/NotoSansKR-Regular.ttf",
+      "sha256": "8cbc9b353bb9ce848fd69bb6a507319dfacc659cf5fd643db5d88f3c4970e1dd",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Pour.wav",
+      "sha256": "e2af857310d182ba7af1cb10245045198773538209bc0182e5d284fa53668ec0",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/RoomTone.wav",
+      "sha256": "bfe57c04d12a7d677ad0332ef10ee95d21115406446a80d83754a0c42f5adf90",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Seat.wav",
+      "sha256": "895a3194614d83512a606c267d2ceffdb6612941da9d2b6f4b01e9abdddb3977",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Stir.wav",
+      "sha256": "f38ee22820b07dbd62ed20b4b5d9952052ed29f2720f4f5188676e28cd110da2",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/Strain.wav",
+      "sha256": "9d980bec4bde68fa157693a7ff5406ca7052fc7ee913a61b170fe8612c898bf3",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/SliceAssets/WinterAir.wav",
+      "sha256": "10b31259e244534e00ac110d7f822dda03ca315f1f8e385a15e30cfe7f44b81b",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleAmber.mat",
+      "sha256": "2639038e8cd8138d7cd803704f98c0c63a1f358c6f176b2f13fca2802392a303",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleBlue.mat",
+      "sha256": "5696f1ab17103729b4aacac4ab3875a16a8daa8424efeb9d580072ddde452b61",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BottleOlive.mat",
+      "sha256": "d61886d707e5e1444cfcca881b2af193d0f2e65dd5328f78a965be6f9e5d4908",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Brass.mat",
+      "sha256": "1c856975f7932cc7f8f5136e951d5e447a077fd0f00c47563ab25bcd2bbbfc02",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/BrownGlass.mat",
+      "sha256": "22c09e729944c985ae63e21e6f9de948826393099b00b7cb7080ac3f8a6b7412",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Contact.mat",
+      "sha256": "e27740b16ec34f3321dde9abcdb6cbd10c6dbeda34f85a7f71dd699a43fe8f32",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.mat",
+      "sha256": "bc9472bf011859b0487febfaec2b1b8eeb89e06d9b07c80a0904a874f9944eab",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/CounterGrain.png",
+      "sha256": "1043378762e7d40893cfbbcb64c196808db2477144d1868daca7520b326e27b1",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/DarkWood.mat",
+      "sha256": "59a6202122abc10c372b161d450a6a77203755b13601ffb761cd30b426006861",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/FaceBox.asset",
+      "sha256": "adbb9cb819625e96472523c139f54c68f0b2abd2c86b5c219cd6df5d8b2c256c",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/GreenGlass.mat",
+      "sha256": "8bf5a7535cfc03ce64e257239a219cf0a6eede682c798e250b8522d9b7744c69",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Iron.mat",
+      "sha256": "f896de43a17d1ede2fa5ed9beb99909fcb41ad97378049f1119ed775443e8db9",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/Lamplight.mat",
+      "sha256": "7f8f731fc44ed7709a5a54e1206f2ef6eaafdbb03b10229994c8eaaf4f3512be",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.mat",
+      "sha256": "3936585e8b4d34f4cc1cc4975893d1990cbcc512f76fb6db5dbf77d6afb68902",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/RearPanels.png",
+      "sha256": "e764f911f7536e03974f72627fd85ce0c3e725fbbff06fd9b97693a01951c070",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.mat",
+      "sha256": "a10c8978e12528c3081db00fff18b9e9234353b947b41edb63a47ad8c9489688",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SmallColdPane.png",
+      "sha256": "1c2237212e988db05aa7079296660a987af10075b135e1979056c4f9913dcda6",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.mat",
+      "sha256": "60b8cbe25f6da70cced1400c6532ae1366e494738044d743e343d0e41ad731ee",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowCap.png",
+      "sha256": "8e3e9a7961069514fb108daacb02882855e2ad67a6e65e4110680728b3b145c4",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/SnowFlakes.mat",
+      "sha256": "6371555293f262a80ead610a1ab8ef83078e10afe3ea69ab37ea654570dc75e3",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.mat",
+      "sha256": "78459ce681fe8f212d39a52a66addc671b9fec489757b8ab480ae151066496b6",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/StoneFooting.png",
+      "sha256": "f905caa48a12c8ca15c873d2c822511e5752fe0b14ea7ab758324dbc59185dae",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/VariantC1/WoodEdge.mat",
+      "sha256": "336bb11734147e6228981294592bd4dc0cbd14ef726621c35e5ffc84126cc6f8",
+      "disposition": "RETAIN_CURRENT_REFERENCE_FOR_GATE2",
+      "origin": "Retained C1/Slice reference; historical provenance remains applicable",
+      "approval": "CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL"
+    }
+  ],
+  "rightsBoundary": "Original art-pass ImageGen sources and exact prompts are retained separately from inherited reference art. Prior adoption/rights caveats remain; Noto Sans KR uses retained Noto-OFL.txt. Functional acceptance does not approve final assets.",
+  "spatialBoundary": "C1 camera, original transforms and colliders retained; production surfaces, modular dressing, character frames and tool shells integrated. Traversal includes retained disabled blockout renderers; a reference is not a claim that it is visible."
+}

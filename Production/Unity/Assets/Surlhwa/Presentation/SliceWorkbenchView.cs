@@ -30,6 +30,8 @@ namespace Surlhwa.Presentation
         {
             if(!initialized || source==null || art!=null) return;
             art=source;
+            // Opaque production bottle must leave the bartender's face readable.
+            bottle.localPosition=new Vector3(-1.20f,.02f,0);
             foreach(var node in new[]{bottle,jigger,mixing,serving})
                 foreach(var line in node.GetComponentsInChildren<LineRenderer>()) line.enabled=false;
             foreach(string name in new[]{"Bottle glass","Label"}) bottle.Find(name).gameObject.SetActive(false);
@@ -41,7 +43,10 @@ namespace Surlhwa.Presentation
             foreach(var child in spoon.GetComponentsInChildren<Renderer>()) child.enabled=false;
             Shell(spoon,"Authored stir spoon",new Rect(-.027f,-.035f,.054f,.48f),art.Spoon);
             floatSpoon=Node("Float spoon support",new Vector3(1.5f,.52f,-.06f));
-            Shell(floatSpoon,"Authored float spoon",new Rect(-.035f,-.025f,.55f,.055f),art.FloatSpoon);
+            Shell(floatSpoon,"Authored float spoon",new Rect(-.035f,-.045f,.70f,.09f),art.FloatSpoon);
+            // Preserve a readable one-pixel metal handle when the source's narrow
+            // stem falls between Point-sampled pixels at the 720p camera scale.
+            Outline(floatSpoon,new[]{new Vector3(.04f,0,-.05f),new Vector3(.62f,0,-.05f)},Mat(new Color(.68f,.72f,.70f)),false,.014f);
             spoonRunoff=Outline(transform,new[]{Vector3.zero,Vector3.zero},liquid,false,.010f);
             spoonRunoff.gameObject.name="Accepted spoon runoff"; spoonRunoff.enabled=false;
             strainer=Node("Strainer on source",new Vector3(0,.53f,-.05f),mixing);

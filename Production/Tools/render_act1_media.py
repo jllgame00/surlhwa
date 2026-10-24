@@ -28,7 +28,7 @@ ffmpeg=shutil.which('ffmpeg') or 'ffmpeg'
 subprocess.run([ffmpeg,'-hide_banner','-loglevel','error','-f','concat','-safe','1','-i',str(sequence),'-i',str(folder/'unity-mix.wav'),'-fps_mode','vfr','-c:v','libx264','-crf','18','-pix_fmt','yuv420p','-c:a','aac','-b:a','160k','-shortest','-movflags','+faststart',str(target)],check=True)
 captures=[(int(n),label,float(t)) for n,label,t in (line.split(',') for line in (folder/'capture-times.csv').read_text().splitlines())]
 clips=[]
-for label in ['prepared-5-float','prepared-6-build','prepared-13-shake','prince-farewell-0','earned-memory']:
+for label in ['prepared-0-stir','prepared-5-float','prepared-6-build','prepared-13-shake','prince-farewell-0','earned-memory']:
     match=next((x for x in captures if x[1]==label),None)
     if not match: continue
     start=max(0,match[2]-(38 if label.startswith('prepared') else 1)); duration=48 if label.startswith('prepared') else 26

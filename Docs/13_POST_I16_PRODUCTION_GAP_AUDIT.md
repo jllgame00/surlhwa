@@ -2721,3 +2721,70 @@ in the bundled Gate 2 review. Exact resume steps, provenance and reviewer limits
 `Production/Validation/ACT1_ART_PASS_PLAN.md`, `ACT1_ART_SOURCE_REVIEW.md` and
 `Production/SourceArt/Act1Production/README.md`. A supplementary source gallery
 is at `Production/Validation/review-act1-art-source.html`.
+
+### ACT 1 Production Art Pass — licensed integration and Gate 2 package (2026-10-25)
+
+Resumed from source checkpoint `dcc0297` after the owner activated Unity licensing.
+The historical source-only record above remains intact. The prepared 43 PNGs,
+their importer metadata and four original atlases are byte-identical; no source
+art was regenerated. The existing Bar_Act1 hierarchy now references the art set,
+materials, meshes, character pose families and original footstep candidate.
+Warm wood/shelves/stools/props, exterior snow/evergreens/rocks/light spill,
+bartender/Prince/two ordinary silhouettes, Stir/Float shells and restrained core
+UI are present in the actual Player. C1's existing transforms, camera and
+colliders are unchanged; no prefab or ProjectSettings serialization changed.
+
+Actual-render review corrected exposed legacy snow/cloth/tray proxies, enclosed
+dark ground patches, a bottle obscuring the bartender's mouth and a subpixel
+Float spoon handle. These are visibility/material/tool-display changes within
+the accepted direction. The first recorded run exposed stale-frame simulated
+Stir pointer timing in the QA coroutine; its input is now queued before the
+current dynamic InputSystem update. Gameplay timing, technique thresholds,
+actual liquid, recipe/knowledge/supply/request authority and save identities are
+unchanged. Initial FAIL and deliberately stopped partial records remain separate.
+
+Licensed Unity 6000.3.7f1: pre-apply art regression run retained three missing-art
+failures and one passing unsaved-scene guard. Final affected art, presentation,
+input, review, Slice integration and focus suite: **29/29 PASS**. The earlier
+149/149 independent baseline is retained; broad unrelated QA was not rerun.
+Editor compilation has zero errors and the inherited CS0108 proof-field warning.
+The final Windows Player build succeeds with zero errors/warnings, 174043863
+reported bytes. Serialized audit resolves 153 GUIDs in 65 scene/art files;
+82 dressing blocks added, zero original blocks removed. Original spatial blocks
+are byte-identical. Code/scene/meta whitespace checks are clean; the full check
+reports six spaces after empty YAML fields in three new Unity-written standing
+materials. Valid tested serialization is intentionally retained, not hidden.
+
+Final actual Player evidence: 1280×720 and 1920×1080 each **167 checks / 54 captures
+PASS**, 17 services and natural departures, six known recipes, complete farewell
+and earned glowing memory. Open/Quiet completed Continue each **5 checks /
+10 captures PASS**, retaining both published generations byte-for-byte and the
+correct glowing/unlit memory. All four processes exit 0 with unchanged 1193-file
+source/Player inventories. Quiet traversal itself remains prior gameplay
+evidence; the art pass revalidates its completed Continue. One initial sandboxed
+Continue failed before checks on atomic replacement of the QA observation file;
+actual saves were unchanged and the same Player passed with desktop permissions.
+
+Actual images were inspected for environment density, character/seat support,
+face/tool clearance, Float layers/support, requests/results and large Korean
+settings. The 720p record contains 3050 frames, a full 10m36s video, six focused
+clips and stereo 48 kHz Unity audio with zero clipped samples. Roughly 5 Hz capture
+and simulated production InputSystem are explicitly labeled; no native input,
+60 fps motion, sample-synchronized contacts or minimum-machine performance claim.
+Final art, animation, footstep character, mix, dialogue/pacing and emotional
+approval remain HUMAN_SIGNOFF_REQUIRED. All PD01–PD11 remain OPEN.
+
+Frozen RC1's HEAD/branch/index/status and all 74 protected specifications remain
+as found on resume. A pre-existing local Editor-layout byte change and unchanged
+font file's mtime differ from the older strict preservation baseline; a separate
+resume snapshot proves no further change by this pass. Neither the original
+files nor historical baseline were overwritten. Owner-local review-slice.html
+remains unchanged and excluded. Historical RC1 closure is not revised here.
+
+Disposition: **READY_FOR_OWNER_ART_REVIEW_WITH_NATIVE_INPUT_DEBT**. Licensed
+integration debt is cleared; the separate pre-existing native-input debt remains.
+The requested ACT 1 review-preparation milestone is complete and stops for owner
+review. Full Codex, later ACTs, mass guest/cocktail sets and final audio production
+remain deferred/out of scope. Package:
+`Production/Validation/review-act1-art.html`, `ACT1_ART_GATE2_REVIEW.md`,
+`Manifests/art-gate2-review.json`; execution rulings in `ACT1_ART_PASS_PLAN.md`.

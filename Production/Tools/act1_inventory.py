@@ -17,6 +17,8 @@ elif mode=='verify':
     print('INVENTORY_UNCHANGED',len(now))
 elif mode=='art':
     assets=root/'Unity/Assets';meta={}
+    source_manifest=root/'SourceArt/Act1Production/assets.json'
+    source_rows={row['runtime'].removeprefix('Production/'):row for row in json.loads(source_manifest.read_text(encoding='utf-8'))['assets']}
     for p in assets.rglob('*.meta'):
         m=re.search(r'^guid: ([a-f0-9]{32})$',p.read_text(encoding='utf-8'),re.M)
         if m: meta[m[1]]=Path(str(p)[:-5])
@@ -34,6 +36,11 @@ elif mode=='art':
         key=str(p.relative_to(root)).replace('\\','/')
         authored='/Act1Assets/' in key and p.name!='Act1Korean.asset'
         origin='ACT 1 code-authored derivative or original procedural audio; see CampaignArtBuilder / author_act1_audio.py' if authored else 'Retained C1/Slice reference; historical provenance remains applicable'
+        if key in source_rows:
+            source=source_rows[key]['source']
+            origin=('Existing pixel tool copied byte-identically: ' if 'method' in source_rows[key] else 'Original built-in ImageGen atlas; declared crop/palette/nearest normalization: ')+source
+        elif '/ProductionArt/' in key:
+            origin='Original procedural felt/wood contact; author_act1_footstep.py' if p.suffix=='.wav' else 'ACT 1 generated mesh/material or snow-ground pixels; CampaignProductionArtBuilder, retaining C1 geometry'
         rows.append(dict(path=key,sha256=digest(p),disposition='REAUTHOR_VERSION_FOR_GATE2' if authored else 'RETAIN_CURRENT_REFERENCE_FOR_GATE2',origin=origin,approval='CURRENT_MILESTONE_REVIEW; NOT FINAL ART/AUDIO APPROVAL'))
-    path.write_text(json.dumps({'rows':rows,'rightsBoundary':'Internal procedural/source-tracked candidates. Inherited imagegen references remain pending final asset adoption/rights review; Noto Sans KR uses retained Noto-OFL.txt. No claim of legal clearance from functional acceptance.','spatialBoundary':'C1 camera and geometry preserved; winter ground material, restrained props and ordinary coat tint are ACT 1 derivatives.'},indent=2),encoding='utf-8');print('ART_INVENTORY',len(rows))
+    path.write_text(json.dumps({'rows':rows,'rightsBoundary':'Original art-pass ImageGen sources and exact prompts are retained separately from inherited reference art. Prior adoption/rights caveats remain; Noto Sans KR uses retained Noto-OFL.txt. Functional acceptance does not approve final assets.','spatialBoundary':'C1 camera, original transforms and colliders retained; production surfaces, modular dressing, character frames and tool shells integrated. Traversal includes retained disabled blockout renderers; a reference is not a claim that it is visible.'},indent=2),encoding='utf-8');print('ART_INVENTORY',len(rows))
 else:raise ValueError(mode)

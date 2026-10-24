@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checks": 167,
+  "captures": 54,
+  "services": 17,
+  "departures": 17,
+  "knownRecipes": 6,
+  "phase": "Complete",
+  "memory": [
+    {
+      "id": "mem_01",
+      "variant": "star_glowing",
+      "occurrenceId": "adaed9a76f4344288befaf54d812be3d:16",
+      "sequence": 173
+    }
+  ],
+  "allServicesGood": true,
+  "evidenceTier": "Simulated production InputSystem in built Player; NOT native OS input",
+  "inputCorrection": "Service 0 quality failure in initial run; final recorded 17-service run passes unchanged gameplay assertions",
+  "sourcePlayerInventoryFiles": 1193
+}

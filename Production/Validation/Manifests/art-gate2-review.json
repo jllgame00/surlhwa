@@ -1,0 +1,147 @@
+{
+  "generatedUtc": "2026-10-24T18:29:23.064618+00:00",
+  "status": "READY_FOR_OWNER_ART_REVIEW_WITH_NATIVE_INPUT_DEBT",
+  "sourceCheckpoint": "dcc0297",
+  "requirements": {
+    "open720": true,
+    "open1080": true,
+    "openContinue": true,
+    "quietContinue": true,
+    "affectedUnitySuite": true,
+    "referencesAndPreservation": true,
+    "saveContinuity": true,
+    "playerBuild": true
+  },
+  "runs": [
+    {
+      "name": "gate2-player-art-open-1080-final",
+      "status": "PASS_CURRENT",
+      "current": true,
+      "height": 1080,
+      "fixture": "open",
+      "checks": 167,
+      "captures": 54,
+      "media": false,
+      "errors": [],
+      "review": {}
+    },
+    {
+      "name": "gate2-player-art-open-720-01",
+      "status": "FAIL_RETAINED",
+      "current": false,
+      "height": 720,
+      "fixture": "open",
+      "checks": 10,
+      "captures": 3,
+      "media": false,
+      "errors": [
+        "service 0 recipe_test_stir"
+      ],
+      "review": {
+        "status": "FAIL_RETAINED",
+        "execution": "Player exited 2 before executor stop attempt; no stop signal was sent",
+        "runtimeFailure": "service 0: stir_quality_weak; recognition and preparation Good; stable fraction 0.710920100846253",
+        "harnessCause": "Recorded-frame hitches expose coroutine pointer samples computed with previous-frame delta capped at .04, then consumed on a different frame. Gameplay adapter/quality thresholds are unchanged.",
+        "visualFindings": [
+          "Legacy square snow blocks visible beside new banks",
+          "Cloth/tray proxy supports exposed",
+          "Broad dark closed ground patches read as pools"
+        ],
+        "fixScope": "Presentation builder and explicitly enabled QA pointer timing only; all 43 checkpoint PNGs remain unchanged"
+      }
+    },
+    {
+      "name": "gate2-player-art-open-720-02",
+      "status": "STOPPED_FOR_RENDER_REFINEMENT",
+      "current": false,
+      "height": 720,
+      "fixture": "open",
+      "checks": 0,
+      "captures": 0,
+      "media": false,
+      "errors": [],
+      "review": {
+        "status": "STOPPED_FOR_RENDER_REFINEMENT",
+        "completedServices": 9,
+        "scope": "Passing partial services are not a completed campaign",
+        "findings": [
+          "Opaque selected bottle covers bartender mouth in dialogue",
+          "Float spoon handle is subpixel at 720p and needs visible support"
+        ],
+        "gameplayAuthoritiesChanged": false,
+        "sourceImagesRegenerated": false
+      }
+    },
+    {
+      "name": "gate2-player-art-open-720-final",
+      "status": "PASS_CURRENT",
+      "current": true,
+      "height": 720,
+      "fixture": "open",
+      "checks": 167,
+      "captures": 54,
+      "media": true,
+      "errors": [],
+      "review": {}
+    },
+    {
+      "name": "gate2-player-art-open-continue-final",
+      "status": "VALIDATION_BLOCKED_BY_ENVIRONMENT",
+      "current": false,
+      "height": 720,
+      "fixture": "continue",
+      "checks": 0,
+      "captures": 0,
+      "media": false,
+      "errors": [
+        "UnauthorizedAccessException: Access to the path is denied."
+      ],
+      "review": {
+        "status": "VALIDATION_BLOCKED_BY_ENVIRONMENT",
+        "cause": "Sandboxed Player File.Replace in CampaignEvidenceProbe.TryPublish denied before any checks; actual copied saves unchanged.",
+        "action": "Retain this run and retry unchanged Player with the desktop execution context used by final full runs."
+      }
+    },
+    {
+      "name": "gate2-player-art-open-continue-final-02",
+      "status": "PASS_CURRENT",
+      "current": true,
+      "height": 720,
+      "fixture": "continue",
+      "checks": 5,
+      "captures": 10,
+      "media": false,
+      "errors": [],
+      "review": {}
+    },
+    {
+      "name": "gate2-player-art-quiet-continue-final",
+      "status": "PASS_CURRENT",
+      "current": true,
+      "height": 720,
+      "fixture": "quiet",
+      "checks": 5,
+      "captures": 10,
+      "media": false,
+      "errors": [],
+      "review": {}
+    }
+  ],
+  "unity": {
+    "total": 29,
+    "passed": 29,
+    "failed": 0
+  },
+  "build": {
+    "result": "Succeeded",
+    "unity": "6000.3.7f1",
+    "output": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Builds\\Act1\\SurlhwaAct1.exe",
+    "errors": 0,
+    "warnings": 0,
+    "bytes": 174043863,
+    "seconds": 9.2790442
+  },
+  "nativeInput": "Existing environment debt retained; no new native-input claim",
+  "ownerApproval": "HUMAN_SIGNOFF_REQUIRED; PD01–PD11 remain OPEN",
+  "scope": "ACT 1 Production Art Pass only; C1 and HG01–HG04 retained"
+}

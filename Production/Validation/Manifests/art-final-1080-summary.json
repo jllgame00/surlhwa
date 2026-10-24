@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "checks": 167,
+  "captures": 54,
+  "services": 17,
+  "departures": 17,
+  "knownRecipes": 6,
+  "phase": "Complete",
+  "memory": [
+    {
+      "id": "mem_01",
+      "variant": "star_glowing",
+      "occurrenceId": "bd6cc440702f4073b67c59bab0269b84:16",
+      "sequence": 173
+    }
+  ],
+  "allServicesGood": true,
+  "evidenceTier": "Simulated production InputSystem in built Player; NOT native OS input",
+  "sourcePlayerInventoryFiles": 1193
+}
