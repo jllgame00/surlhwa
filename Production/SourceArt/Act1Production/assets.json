@@ -1,0 +1,1136 @@
+{
+  "method": "Built-in ImageGen, followed by declared crop / nearest normalization / palette reduction / binary alpha",
+  "sourceHashes": {
+    "Characters.png": "bdb580d127685a9d6a1efa7e8a3f1bee3a511fee579da96c73722b29cbc82368",
+    "Environment.png": "7631df7f7c50a0ffe6df2d1cf60ec9342ebb161a54e46a4136a76403050c49f3",
+    "Materials.png": "fc52c622125ad7de2d92fb802ed76de0e889c36c96618bec90824a542132de09",
+    "Shelves-generated.png": "1e62fb4474504c8582461bceec7b2a843da2a44a77ce3556cd419a1b5b4ade29"
+  },
+  "approval": "PRODUCTION_BASELINE_CANDIDATE / HUMAN_SIGNOFF_REQUIRED",
+  "assets": [
+    {
+      "name": "Lantern",
+      "source": "Environment.png",
+      "crop": [
+        785,
+        40,
+        968,
+        438
+      ],
+      "opaqueBounds": [
+        17,
+        69,
+        163,
+        372
+      ],
+      "dimensions": [
+        48,
+        100
+      ],
+      "normalizedSize": [
+        48,
+        100
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Lantern.png",
+      "sha256": "98dbf8e02d01c59c40aaf9066015f298f635d3aed660fbf6134f3826d7a0daaa"
+    },
+    {
+      "name": "Stool",
+      "source": "Environment.png",
+      "crop": [
+        980,
+        45,
+        1254,
+        438
+      ],
+      "opaqueBounds": [
+        45,
+        100,
+        219,
+        377
+      ],
+      "dimensions": [
+        48,
+        56
+      ],
+      "normalizedSize": [
+        48,
+        56
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/Stool.png",
+      "sha256": "ace2217a58b1530c291a184ae67a964f87597de51cbffd0ddbc2ca5ecbc1d27d"
+    },
+    {
+      "name": "StoolLeather",
+      "source": "Environment.png",
+      "crop": [
+        1042,
+        163,
+        1172,
+        190
+      ],
+      "opaqueBounds": [
+        0,
+        0,
+        130,
+        27
+      ],
+      "dimensions": [
+        64,
+        24
+      ],
+      "normalizedSize": [
+        64,
+        24
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/StoolLeather.png",
+      "sha256": "6e6eb947036e980af418c920a599c0750fbc5fbc11b9dd0752bd85a1ebd396dd"
+    },
+    {
+      "name": "ClothTray",
+      "source": "Environment.png",
+      "crop": [
+        0,
+        450,
+        380,
+        812
+      ],
+      "opaqueBounds": [
+        29,
+        160,
+        348,
+        342
+      ],
+      "dimensions": [
+        82,
+        46
+      ],
+      "normalizedSize": [
+        82,
+        46
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ClothTray.png",
+      "sha256": "0b7192a8bb71cfb212f146cf6801ef060925d6f7dd213dc3a3c88bb84c6ad316"
+    },
+    {
+      "name": "CeramicSet",
+      "source": "Environment.png",
+      "crop": [
+        385,
+        450,
+        674,
+        812
+      ],
+      "opaqueBounds": [
+        21,
+        151,
+        259,
+        338
+      ],
+      "dimensions": [
+        58,
+        46
+      ],
+      "normalizedSize": [
+        58,
+        46
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CeramicSet.png",
+      "sha256": "d4e51916f93ca3d2b57e774dd58749998b4d0f908a433aee0c6a13b643927469"
+    },
+    {
+      "name": "NotebookCandle",
+      "source": "Environment.png",
+      "crop": [
+        675,
+        460,
+        956,
+        812
+      ],
+      "opaqueBounds": [
+        9,
+        168,
+        261,
+        336
+      ],
+      "dimensions": [
+        65,
+        44
+      ],
+      "normalizedSize": [
+        65,
+        44
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/NotebookCandle.png",
+      "sha256": "80bdc0848b116a013c52ca1ccb8406d640e387f5fbd39ca82f9366aece3fafbc"
+    },
+    {
+      "name": "EmptyNiche",
+      "source": "Environment.png",
+      "crop": [
+        960,
+        450,
+        1254,
+        818
+      ],
+      "opaqueBounds": [
+        12,
+        32,
+        271,
+        363
+      ],
+      "dimensions": [
+        72,
+        88
+      ],
+      "normalizedSize": [
+        72,
+        88
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/EmptyNiche.png",
+      "sha256": "47bd5787848d897880d76cfeee20ef559f61203d68cd44234092a352ffcdc275"
+    },
+    {
+      "name": "SnowRocks",
+      "source": "Environment.png",
+      "crop": [
+        0,
+        820,
+        380,
+        1254
+      ],
+      "opaqueBounds": [
+        27,
+        182,
+        367,
+        374
+      ],
+      "dimensions": [
+        112,
+        70
+      ],
+      "normalizedSize": [
+        112,
+        70
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowRocks.png",
+      "sha256": "8e123e20b729143d172c7991ac1f7c8ba96c06bdd9cb55478bc84db20ccbf570"
+    },
+    {
+      "name": "SnowPine",
+      "source": "Environment.png",
+      "crop": [
+        380,
+        820,
+        660,
+        1254
+      ],
+      "opaqueBounds": [
+        17,
+        10,
+        231,
+        379
+      ],
+      "dimensions": [
+        104,
+        180
+      ],
+      "normalizedSize": [
+        104,
+        180
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowPine.png",
+      "sha256": "9fdc22522294806956c03451b97ecd7440bf7774bc7e8148d6dc84d9d48e21c4"
+    },
+    {
+      "name": "DistantPines",
+      "source": "Environment.png",
+      "crop": [
+        660,
+        830,
+        915,
+        1254
+      ],
+      "opaqueBounds": [
+        9,
+        108,
+        232,
+        369
+      ],
+      "dimensions": [
+        104,
+        122
+      ],
+      "normalizedSize": [
+        104,
+        122
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/DistantPines.png",
+      "sha256": "24ad20f0d80ee24bb7c6103f18e194d2e81c84bb1593f54591caa8d643afc60b"
+    },
+    {
+      "name": "SnowBank",
+      "source": "Environment.png",
+      "crop": [
+        916,
+        830,
+        1254,
+        1254
+      ],
+      "opaqueBounds": [
+        16,
+        169,
+        314,
+        363
+      ],
+      "dimensions": [
+        124,
+        82
+      ],
+      "normalizedSize": [
+        124,
+        82
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/SnowBank.png",
+      "sha256": "e49ff51e73cb9b96239990a446a29354929d3c0801765c5ae216281f5b65fefd"
+    },
+    {
+      "name": "ShelfBottles",
+      "source": "Shelves-generated.png",
+      "crop": [
+        0,
+        0,
+        1536,
+        515
+      ],
+      "opaqueBounds": [
+        23,
+        92,
+        1514,
+        504
+      ],
+      "dimensions": [
+        160,
+        45
+      ],
+      "normalizedSize": [
+        160,
+        45
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ShelfBottles.png",
+      "sha256": "b72816eb76546ef847f33c7e11466a85d9e4530cce949e3ead1d480432801455"
+    },
+    {
+      "name": "ShelfGlasses",
+      "source": "Shelves-generated.png",
+      "crop": [
+        0,
+        515,
+        1536,
+        1024
+      ],
+      "opaqueBounds": [
+        23,
+        55,
+        1514,
+        445
+      ],
+      "dimensions": [
+        160,
+        44
+      ],
+      "normalizedSize": [
+        160,
+        44
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 40,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ShelfGlasses.png",
+      "sha256": "67f9a3add45b57b6952793b4bdb4ebdefa1817839fe3bb20f051d226767ab12b"
+    },
+    {
+      "name": "CounterWood",
+      "source": "Materials.png",
+      "crop": [
+        2,
+        2,
+        625,
+        625
+      ],
+      "opaqueBounds": [
+        0,
+        0,
+        623,
+        623
+      ],
+      "dimensions": [
+        256,
+        96
+      ],
+      "normalizedSize": [
+        256,
+        96
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 48,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CounterWood.png",
+      "sha256": "9ab436dcc8decac6e2b40d07abc6bb25d8b18abfa5731b8bc993eb12f609c2dd"
+    },
+    {
+      "name": "FloorWood",
+      "source": "Materials.png",
+      "crop": [
+        629,
+        2,
+        1252,
+        625
+      ],
+      "opaqueBounds": [
+        0,
+        0,
+        623,
+        623
+      ],
+      "dimensions": [
+        320,
+        160
+      ],
+      "normalizedSize": [
+        320,
+        160
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 48,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/FloorWood.png",
+      "sha256": "3560af6bd8c146e24899463acf166d903c4c8cafc15cd201dba354561b317476"
+    },
+    {
+      "name": "CounterPanels",
+      "source": "Materials.png",
+      "crop": [
+        2,
+        629,
+        625,
+        1252
+      ],
+      "opaqueBounds": [
+        0,
+        0,
+        623,
+        623
+      ],
+      "dimensions": [
+        256,
+        80
+      ],
+      "normalizedSize": [
+        256,
+        80
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 48,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/CounterPanels.png",
+      "sha256": "ad3f9d3d0dac37ee753f66b7b455d3922ddc006ad02719bd21ceece2a19de42f"
+    },
+    {
+      "name": "RearWood",
+      "source": "Materials.png",
+      "crop": [
+        629,
+        629,
+        1252,
+        1252
+      ],
+      "opaqueBounds": [
+        0,
+        0,
+        623,
+        623
+      ],
+      "dimensions": [
+        256,
+        128
+      ],
+      "normalizedSize": [
+        256,
+        128
+      ],
+      "canvas": null,
+      "offset": null,
+      "colors": 48,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/RearWood.png",
+      "sha256": "d8d0b15bbb84d2a480a2709f6779200ee31b174fa940c013c7b7bc71bdf4d580"
+    },
+    {
+      "name": "BartenderStanding",
+      "source": "Characters.png",
+      "crop": [
+        0,
+        0,
+        314,
+        316
+      ],
+      "opaqueBounds": [
+        97,
+        14,
+        234,
+        312
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        39,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderStanding.png",
+      "sha256": "81584980d13dcf2d046b25d296343be2cb89e2ef56ac6a8768afd8b8fe6d64f6"
+    },
+    {
+      "name": "BartenderTowel",
+      "source": "Characters.png",
+      "crop": [
+        314,
+        0,
+        627,
+        316
+      ],
+      "opaqueBounds": [
+        96,
+        14,
+        233,
+        312
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        39,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderTowel.png",
+      "sha256": "5d8df9a4d4b3dec3b3b42697e2f270fc810846d9ce6d09266d1ef746771d04a0"
+    },
+    {
+      "name": "BartenderBlink",
+      "source": "Characters.png",
+      "crop": [
+        627,
+        0,
+        940,
+        316
+      ],
+      "opaqueBounds": [
+        98,
+        16,
+        236,
+        312
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        39,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderBlink.png",
+      "sha256": "ceee6dbb7ba6d73f10462d1b0bd5e73937506288cd5798ed1e794eca75acab0a"
+    },
+    {
+      "name": "BartenderListening",
+      "source": "Characters.png",
+      "crop": [
+        940,
+        0,
+        1254,
+        316
+      ],
+      "opaqueBounds": [
+        87,
+        16,
+        222,
+        312
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        38,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/BartenderListening.png",
+      "sha256": "f94dea26d11429d3de2edcfb5def1fb95b99858ff30bee47b8e77b71930d05c8"
+    },
+    {
+      "name": "PrinceStanding",
+      "source": "Characters.png",
+      "crop": [
+        0,
+        320,
+        314,
+        642
+      ],
+      "opaqueBounds": [
+        88,
+        7,
+        305,
+        317
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        59,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceStanding.png",
+      "sha256": "972d71617dcf547603c6ccf23b0ec6a7b78e61a429f54d9b3077251a0aa26051"
+    },
+    {
+      "name": "PrinceSeated",
+      "source": "Characters.png",
+      "crop": [
+        314,
+        320,
+        627,
+        642
+      ],
+      "opaqueBounds": [
+        88,
+        20,
+        304,
+        318
+      ],
+      "dimensions": [
+        96,
+        100
+      ],
+      "normalizedSize": [
+        55,
+        76
+      ],
+      "canvas": [
+        96,
+        100
+      ],
+      "offset": [
+        32,
+        9
+      ],
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceSeated.png",
+      "sha256": "55fa3a2211ffb90c55f98029fea416441a9549dd2860547dddaea5759f4b6ae2"
+    },
+    {
+      "name": "PrinceWalkA",
+      "source": "Characters.png",
+      "crop": [
+        627,
+        320,
+        940,
+        642
+      ],
+      "opaqueBounds": [
+        74,
+        10,
+        307,
+        321
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        63,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkA.png",
+      "sha256": "662317cb696693d5a1df46769111713b4597274b698db7f308094f8d9cc849e3"
+    },
+    {
+      "name": "PrinceWalkB",
+      "source": "Characters.png",
+      "crop": [
+        940,
+        320,
+        1254,
+        642
+      ],
+      "opaqueBounds": [
+        75,
+        10,
+        303,
+        319
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        62,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/PrinceWalkB.png",
+      "sha256": "624b32d33a30f02ff3d2cf6f8a92186a639aee9ded69a3dac2ccf3614a2a5d66"
+    },
+    {
+      "name": "OrdinaryCoatStanding",
+      "source": "Characters.png",
+      "crop": [
+        0,
+        645,
+        314,
+        950
+      ],
+      "opaqueBounds": [
+        110,
+        3,
+        238,
+        296
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        37,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatStanding.png",
+      "sha256": "475a31e44e4daabef19e9c1d3363d8ad12117d2cc0feb4c218c9e27a8d6b5608"
+    },
+    {
+      "name": "OrdinaryCoatSeated",
+      "source": "Characters.png",
+      "crop": [
+        314,
+        645,
+        627,
+        950
+      ],
+      "opaqueBounds": [
+        93,
+        36,
+        272,
+        295
+      ],
+      "dimensions": [
+        96,
+        100
+      ],
+      "normalizedSize": [
+        53,
+        76
+      ],
+      "canvas": [
+        96,
+        100
+      ],
+      "offset": [
+        30,
+        9
+      ],
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatSeated.png",
+      "sha256": "42ee09ba9997727901a2e37fe987bc1ba30c1e52b6840be136b47d1730e8c9a4"
+    },
+    {
+      "name": "OrdinaryCoatWalkA",
+      "source": "Characters.png",
+      "crop": [
+        627,
+        645,
+        940,
+        950
+      ],
+      "opaqueBounds": [
+        79,
+        3,
+        275,
+        299
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        56,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkA.png",
+      "sha256": "d47bb5d641e5848d9195d569a8216aad57a817623ee582cba1f83c50ba8980a0"
+    },
+    {
+      "name": "OrdinaryCoatWalkB",
+      "source": "Characters.png",
+      "crop": [
+        940,
+        645,
+        1254,
+        950
+      ],
+      "opaqueBounds": [
+        82,
+        3,
+        284,
+        299
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        57,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryCoatWalkB.png",
+      "sha256": "127d9a458e47fda7edc82adb021069c6083f9522f5e4daae2046e1525a6fa05b"
+    },
+    {
+      "name": "OrdinaryBunStanding",
+      "source": "Characters.png",
+      "crop": [
+        0,
+        952,
+        314,
+        1254
+      ],
+      "opaqueBounds": [
+        104,
+        2,
+        230,
+        287
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        37,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunStanding.png",
+      "sha256": "aded24d06f05f29fd43b1c4667f51801061aa8043a222190b94d243112539fe7"
+    },
+    {
+      "name": "OrdinaryBunSeated",
+      "source": "Characters.png",
+      "crop": [
+        314,
+        952,
+        627,
+        1254
+      ],
+      "opaqueBounds": [
+        85,
+        31,
+        272,
+        287
+      ],
+      "dimensions": [
+        96,
+        100
+      ],
+      "normalizedSize": [
+        56,
+        76
+      ],
+      "canvas": [
+        96,
+        100
+      ],
+      "offset": [
+        30,
+        9
+      ],
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunSeated.png",
+      "sha256": "91991d839aa108c5df6b50435d664d9c645d852e63775d1f1afb35328efb74f8"
+    },
+    {
+      "name": "OrdinaryBunWalkA",
+      "source": "Characters.png",
+      "crop": [
+        627,
+        952,
+        940,
+        1254
+      ],
+      "opaqueBounds": [
+        75,
+        9,
+        273,
+        291
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        59,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunWalkA.png",
+      "sha256": "c401879c7834eb5b0a4b78f9c7693362cf7ddd596a778b0cbfea4d145c8de57d"
+    },
+    {
+      "name": "OrdinaryBunWalkB",
+      "source": "Characters.png",
+      "crop": [
+        940,
+        952,
+        1254,
+        1254
+      ],
+      "opaqueBounds": [
+        76,
+        9,
+        274,
+        287
+      ],
+      "dimensions": [
+        96,
+        84
+      ],
+      "normalizedSize": [
+        60,
+        84
+      ],
+      "canvas": [
+        96,
+        84
+      ],
+      "offset": null,
+      "colors": 32,
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/OrdinaryBunWalkB.png",
+      "sha256": "2f181dd05b3ba523be96468337ac1a3c546e13127136915adbf8aa2feaf084eb"
+    },
+    {
+      "name": "ToolBottle",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleTall.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolBottle.png",
+      "dimensions": [
+        32,
+        112
+      ],
+      "sha256": "22f549c847f15a59c2e57ab7e2fa0205e411c2c7051f8d2d7812ded3b69f99a4"
+    },
+    {
+      "name": "ToolJigger",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Jigger.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolJigger.png",
+      "dimensions": [
+        28,
+        48
+      ],
+      "sha256": "336c19ea3fb06c848b60034ad5aa53d919d088495a7c9d742ed44793903b55c4"
+    },
+    {
+      "name": "ToolSpoon",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Spoon.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolSpoon.png",
+      "dimensions": [
+        12,
+        128
+      ],
+      "sha256": "e4075323fb07469142bd5e589920f23b179156d05db890cff9958a4a91b74ea4"
+    },
+    {
+      "name": "ToolFloatSpoon",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/SpoonHorizontal.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolFloatSpoon.png",
+      "dimensions": [
+        128,
+        12
+      ],
+      "sha256": "e275aa29fdb06427673be6b609f0bf00c7e4d701b82711fe5a550ba8690a24e1"
+    },
+    {
+      "name": "ToolStrainer",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Strainer.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolStrainer.png",
+      "dimensions": [
+        44,
+        64
+      ],
+      "sha256": "659b2218bc6f3a8ec8719aa793ccb5efac60f454216ef2a763d30f534ce94b13"
+    },
+    {
+      "name": "ToolMixing",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/MixingGlass.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolMixing.png",
+      "dimensions": [
+        72,
+        104
+      ],
+      "sha256": "edbb61395d2f19afe6daec7592b14ffb4f42587f5781d1f6073988d8384bedae"
+    },
+    {
+      "name": "ToolRocks",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/RocksGlass.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolRocks.png",
+      "dimensions": [
+        56,
+        56
+      ],
+      "sha256": "5fbeacf8480f86aeb2529c5e6a8153db54660de01353a75ff1ae1cbef82fdcc5"
+    },
+    {
+      "name": "ToolCocktail",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/CocktailGlass.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolCocktail.png",
+      "dimensions": [
+        80,
+        88
+      ],
+      "sha256": "a15ba0efe038941b8e9f4b40621447cce47553f059bb44a12ad9d02d5e3b361e"
+    },
+    {
+      "name": "ToolIce",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Ice/IceCluster.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolIce.png",
+      "dimensions": [
+        26,
+        24
+      ],
+      "sha256": "bb8980081c88374d5984cf45fcd582c40aebe20f4e975b6239c01363a6ba65ed"
+    },
+    {
+      "name": "ToolGrip",
+      "source": "Assets/_SURLHWA/Art/Bartending/Pixel/Hands/Grip.png",
+      "method": "Unchanged existing authored pixel asset bytes",
+      "runtime": "Production/Unity/Assets/Surlhwa/Act1Assets/ProductionArt/ToolGrip.png",
+      "dimensions": [
+        40,
+        32
+      ],
+      "sha256": "67a78c8eae4e23b99a88cc6bd78b1c230c46dbe54c5bac560c284638e8983a2b"
+    }
+  ]
+}

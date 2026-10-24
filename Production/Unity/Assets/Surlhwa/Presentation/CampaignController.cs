@@ -12,6 +12,7 @@ namespace Surlhwa.Presentation
     public sealed class CampaignController : MonoBehaviour
     {
         public TextAsset Bundle; public TMP_FontAsset Font; public Texture2D Grip;
+        public CampaignArtSet Art;
         public Camera Camera; public CharacterView Bartender,Ordinary,Prince;
         public AudioClip Room,Winter,Pour,Stir,Strain,Ice,Glass,Seat,Entrance,Foot,Music;
         public CampaignContent Content { get; private set; } public CampaignSession Session { get; private set; }
@@ -46,7 +47,8 @@ namespace Surlhwa.Presentation
                 LoadSettings(); store=new CampaignSaveStore(Path.Combine(StorageRoot,"slot1"),Content);
                 Input=gameObject.AddComponent<SliceInputAdapter>(); Input.UiCommand=HandleCommand; Input.Configure(Content.Supply);
                 var work=new GameObject("Resident ACT 1 workbench"); work.transform.position=new Vector3(.80f,1.055f,-.65f);
-                Workbench=work.AddComponent<SliceWorkbenchView>(); Workbench.Initialize(Grip); Workbench.ExtendedTools=true;
+                Workbench=work.AddComponent<SliceWorkbenchView>(); Workbench.Initialize(Art!=null ? Art.Grip : Grip); Workbench.ExtendedTools=true;
+                if(Art!=null) { Workbench.ApplyArt(Art); gameObject.AddComponent<CampaignCharacterArt>().Initialize(this); }
                 Audio=gameObject.AddComponent<CampaignAudio>(); Audio.Initialize(this); Input.AcceptedCue+=Audio.Cue;
                 Ui=gameObject.AddComponent<CampaignUi>(); Ui.Initialize(this,Font); Memory=gameObject.AddComponent<CampaignMemoryView>();
                 seatPosition=Ordinary!=null ? Ordinary.transform.position : new Vector3(-.72f,0,-2);

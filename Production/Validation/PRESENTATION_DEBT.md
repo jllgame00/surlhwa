@@ -1,5 +1,15 @@
 # Production presentation debt
 
+2026-10-25 ACT 1 art-pass update: PD02–PD07 and PD10–PD11 have new source candidates
+and integration code in [the source checkpoint](ACT1_ART_PASS_PLAN.md). This covers
+modular wood/shelf/prop/snow art, bartender/Prince/two ordinary pose families,
+state-driven tool shells and Float contact, restrained core UI treatment and one
+felt/wood footstep candidate. **None is adopted by a rebuilt Player yet**: Unity
+licensing blocks scene application, actual-resolution inspection and regression
+execution. Source art quality is also HUMAN_SIGNOFF_REQUIRED. PD01 full Codex
+redesign, PD08 final mix and PD09 full composition remain deferred. All eleven
+rows stay OPEN; the earlier candidate descriptions below retain historical scope.
+
 Owner record: [Vertical Slice approval](VERTICAL_SLICE_OWNER_APPROVAL.md), 2026-10-14 Asia/Seoul. All rows below remain **OPEN / NOT FINAL PRESENTATION APPROVAL**. They do not reopen accepted C1 or Stir architecture. Planned work packages refer to [the expansion plan](PRODUCTION_EXPANSION_PLAN.md).
 
 Owner reviews are consolidated under [OWNER_APPROVAL_POLICY.md](OWNER_APPROVAL_POLICY.md): current ACT 1 presentation at GATE 2 and final Release Candidate presentation at GATE 3, with no per-row approval interruption. Continue implementation and minor reversible refinement autonomously within the accepted direction. Each future debt closure must name the affected asset/screen, version, review evidence and explicit scope of the bundled owner ruling. Automated PASS, a new build, or approval of another row cannot close presentation debt. Objective usability defects are corrected when found; deferred aesthetics alone do not block the accepted Slice or production expansion.

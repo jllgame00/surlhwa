@@ -11,7 +11,11 @@ namespace Surlhwa.Presentation
     {
         public bool FlatTools; public bool CocktailGlass; public decimal ServingFillMl { get; private set; }
         public bool ExtendedTools; public decimal ShakerFillMl { get; private set; } public int VisibleLayerCount { get; private set; }
-        public float ServingStemTop => .17f; public float ServingFillBottom => CocktailGlass ? .19f : .035f;
+        public float ServingStemTop => art!=null ? .267f : .17f;
+        public float ServingFillBottom => CocktailGlass ? (art!=null ? .275f : .19f) : (art!=null ? .065f : .035f);
+        private float BowlHeight => CocktailGlass ? (art!=null ? .245f : .33f) : (art!=null ? .40f : .44f);
+        private float RocksBottomWidth => art!=null ? .144f : .16f;
+        private float RocksTopWidth => art!=null ? .17f : .18f;
         public Vector3 MixingCenter => transform.TransformPoint(new Vector3(.75f,.4f,0));
         private readonly List<UnityEngine.Object> owned=new List<UnityEngine.Object>(); private readonly List<Transform> depth=new List<Transform>();
         private Transform bottle,jigger,mixing,serving,spoon,hand; private MeshFilter jiggerFill,mixingFill,servingFill;
@@ -19,6 +23,42 @@ namespace Surlhwa.Presentation
         private bool initialized; private int lastRevision=-1; private bool lastGlass;
         private Transform shaker; private MeshFilter shakerFill; private GameObject shakerIce,shakerLid,orange;
         private readonly List<MeshFilter> layerFills=new List<MeshFilter>();
+        private CampaignArtSet art; private GameObject rocksShell,cocktailShell; private Transform floatSpoon,strainer;
+        private LineRenderer spoonRunoff;
+        private MeshFilter servingIceArt;
+        public void ApplyArt(CampaignArtSet source)
+        {
+            if(!initialized || source==null || art!=null) return;
+            art=source;
+            foreach(var node in new[]{bottle,jigger,mixing,serving})
+                foreach(var line in node.GetComponentsInChildren<LineRenderer>()) line.enabled=false;
+            foreach(string name in new[]{"Bottle glass","Label"}) bottle.Find(name).gameObject.SetActive(false);
+            Shell(bottle,"Authored bottle",new Rect(-.15f,0,.30f,.68f),art.Bottle);
+            Shell(jigger,"Authored jigger",new Rect(-.17f,0,.34f,.40f),art.Jigger);
+            Shell(mixing,"Authored mixing glass",new Rect(-.245f,0,.49f,.57f),art.Mixing);
+            rocksShell=Shell(serving,"Authored rocks glass",new Rect(-.21f,0,.42f,.52f),art.Rocks);
+            cocktailShell=Shell(serving,"Authored cocktail glass",new Rect(-.26f,0,.52f,.56f),art.Cocktail);
+            foreach(var child in spoon.GetComponentsInChildren<Renderer>()) child.enabled=false;
+            Shell(spoon,"Authored stir spoon",new Rect(-.027f,-.035f,.054f,.48f),art.Spoon);
+            floatSpoon=Node("Float spoon support",new Vector3(1.5f,.52f,-.06f));
+            Shell(floatSpoon,"Authored float spoon",new Rect(-.035f,-.025f,.55f,.055f),art.FloatSpoon);
+            spoonRunoff=Outline(transform,new[]{Vector3.zero,Vector3.zero},liquid,false,.010f);
+            spoonRunoff.gameObject.name="Accepted spoon runoff"; spoonRunoff.enabled=false;
+            strainer=Node("Strainer on source",new Vector3(0,.53f,-.05f),mixing);
+            Shell(strainer,"Authored strainer",new Rect(-.16f,-.12f,.32f,.32f),art.Strainer);
+            foreach(var ice in new[]{mixingIce,servingIce}) {
+                foreach(Transform child in ice.transform) child.gameObject.SetActive(false);
+                var shell=Shell(ice.transform,"Authored actual ice",new Rect(-.16f,.11f,.32f,.23f),art.Ice);
+                if(ice==servingIce) servingIceArt=shell.GetComponent<MeshFilter>();
+            }
+        }
+        private GameObject Shell(Transform parent,string name,Rect rect,Texture2D texture)
+        {
+            var material=Mat(Color.white); material.SetTexture("_BaseMap",texture);
+            material.SetFloat("_AlphaClip",1); material.SetFloat("_Cutoff",.4f); material.SetFloat("_ZWrite",1);
+            material.EnableKeyword("_ALPHATEST_ON"); material.renderQueue=2450;
+            return Quad(parent,name,rect,material,-.04f).gameObject;
+        }
         public void Initialize(Texture2D grip)
         {
             if(initialized) return; initialized=true; transform.rotation=Quaternion.Euler(28,0,0);
@@ -74,11 +114,11 @@ namespace Surlhwa.Presentation
             Color sum=Color.black; if(total==0) return new Color(.5f,.7f,.7f);
             foreach(var a in amounts) { Color color=a.Key=="cream" ? new Color(.91f,.86f,.72f) : a.Key=="coffee_liqueur" ? new Color(.22f,.12f,.08f) : a.Key=="campari" ? new Color(.72f,.16f,.08f) : a.Key.Contains("whiskey") ? new Color(.66f,.37f,.13f) : a.Key=="sweet_red_vermouth" || a.Key=="angostura_bitters" ? new Color(.47f,.19f,.14f) : new Color(.65f,.72f,.63f); sum+=color*(float)(a.Value/total); } sum.a=1; return sum;
         }
-        private static void FrustumFill(MeshFilter f,float bottomWidth,float topWidth,float bottom,float height,float fraction)
+        private static void FrustumFill(MeshFilter f,float bottomWidth,float topWidth,float bottom,float height,float fraction,float z=.015f)
         {
             float width=Mathf.Pow(Mathf.Lerp(bottomWidth*bottomWidth*bottomWidth,topWidth*topWidth*topWidth,fraction),1f/3);
             float top=bottom+height*(width-bottomWidth)/(topWidth-bottomWidth); var m=f.sharedMesh; m.Clear();
-            m.vertices=new[]{new Vector3(-bottomWidth,bottom,.015f),new Vector3(-width,top,.015f),new Vector3(width,top,.015f),new Vector3(bottomWidth,bottom,.015f)};
+            m.vertices=new[]{new Vector3(-bottomWidth,bottom,z),new Vector3(-width,top,z),new Vector3(width,top,z),new Vector3(bottomWidth,bottom,z)};
             m.triangles=new[]{0,1,2,0,2,3}; m.RecalculateBounds();
         }
         public void Refresh(BrewingSession brew,SliceInputAdapter adapter,float unused,ServiceSnapshot served=null)
@@ -92,8 +132,10 @@ namespace Surlhwa.Presentation
                 lastRevision=brew?.Revision ?? -1; lastGlass=CocktailGlass;
                 decimal j=brew?.Container(ContainerRole.Jigger).TotalMl ?? 0,m=brew?.Container(ContainerRole.Mixing).TotalMl ?? 0;
                 ServingFillMl=brew?.Container(ContainerRole.Serving).TotalMl ?? served?.TotalMl ?? 0;
-                FrustumFill(jiggerFill,.065f,.145f,.22f,.15f,(float)(j/60m));
-                FrustumFill(mixingFill,.175f,.215f,.025f,.49f,(float)(m/300m));
+                // Authored metal uses a small upper-cup cutaway; measured liquid remains visible.
+                if(art!=null) FrustumFill(jiggerFill,.035f,.132f,.235f,.135f,(float)(j/60m),-.05f);
+                else FrustumFill(jiggerFill,.065f,.145f,.22f,.15f,(float)(j/60m));
+                FrustumFill(mixingFill,.175f,.215f,art!=null ? .04f : .025f,.49f,(float)(m/300m));
                 jiggerFill.gameObject.SetActive(j>0); mixingFill.gameObject.SetActive(m>0); servingFill.gameObject.SetActive(ServingFillMl>0);
                 var outline=CocktailGlass ? new[]{new Vector3(-.17f,0,0),new Vector3(.17f,0,0),Vector3.zero,new Vector3(0,.18f,0),new Vector3(-.25f,.54f,0),new Vector3(.25f,.54f,0),new Vector3(0,.18f,0)} :
                     new[]{new Vector3(-.20f,.5f,0),new Vector3(-.18f,.01f,0),new Vector3(.18f,.01f,0),new Vector3(.20f,.5f,0)};
@@ -101,22 +143,44 @@ namespace Surlhwa.Presentation
                 float rimWidth=CocktailGlass ? .25f : .20f,rimHeight=CocktailGlass ? .54f : .5f;
                 servingRim.SetPositions(new[]{new Vector3(-rimWidth,rimHeight,0),new Vector3(-rimWidth,rimHeight,.08f),new Vector3(rimWidth,rimHeight,.08f),new Vector3(rimWidth,rimHeight,0)});
                 if(CocktailGlass) {
-                    float h=Mathf.Pow((float)(ServingFillMl/180m),1f/3),top=.19f+.33f*h,w=.23f*h; var mesh=servingFill.sharedMesh; mesh.Clear();
-                    mesh.vertices=new[]{new Vector3(0,.19f,.015f),new Vector3(-w,top,.015f),new Vector3(w,top,.015f)}; mesh.triangles=new[]{0,1,2}; mesh.RecalculateBounds();
-                } else FrustumFill(servingFill,.16f,.18f,.035f,.44f,(float)(ServingFillMl/180m));
+                    float h=Mathf.Pow((float)(ServingFillMl/180m),1f/3),top=ServingFillBottom+BowlHeight*h,w=.23f*h; var mesh=servingFill.sharedMesh; mesh.Clear();
+                    mesh.vertices=new[]{new Vector3(0,ServingFillBottom,.015f),new Vector3(-w,top,.015f),new Vector3(w,top,.015f)}; mesh.triangles=new[]{0,1,2}; mesh.RecalculateBounds();
+                } else FrustumFill(servingFill,RocksBottomWidth,RocksTopWidth,ServingFillBottom,BowlHeight,(float)(ServingFillMl/180m));
                 mixingIce.SetActive(!zero && brew.Container(ContainerRole.Mixing).HasIce); servingIce.SetActive(brew?.Container(ContainerRole.Serving).HasIce ?? served?.HasIce ?? false); cherry.SetActive((brew?.GarnishId ?? served?.Garnish)=="cherry");
+                if(servingIceArt!=null) {
+                    if(CocktailGlass) SetQuad(servingIceArt,-.085f,.085f,.39f,.51f,-.04f);
+                    else SetQuad(servingIceArt,-.14f,.14f,.16f,.36f,-.04f);
+                }
                 if(ExtendedTools) RefreshExtended(brew,served);
                 if(!zero) { jiggerFill.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor",Tint(brew.Container(ContainerRole.Jigger))); mixingFill.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor",Tint(brew.Container(ContainerRole.Mixing))); servingFill.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor",Tint(brew.Container(ContainerRole.Serving))); }
                 else if(served!=null) servingFill.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor",Tint(served.Amounts,served.TotalMl));
             }
             string tool=adapter?.ActiveTool; bottle.localRotation=Quaternion.Euler(0,0,tool=="pour" || tool=="splash" ? -45 : 0);
+            if(art!=null) {
+                rocksShell.SetActive(!CocktailGlass); cocktailShell.SetActive(CocktailGlass);
+                floatSpoon.gameObject.SetActive(tool=="float"); strainer.gameObject.SetActive(tool=="strain");
+                floatSpoon.localPosition=new Vector3(1.5f,.51f+(adapter?.FloatHeight ?? 0)*.25f,-.06f);
+                // Put the tilted source mouth just above the supported spoon. The adapter
+                // still owns height/flow; visual placement never delivers any liquid.
+                jigger.localPosition=tool=="float" ? floatSpoon.localPosition+new Vector3(-.319f,-.144f,-.02f) : Vector3.zero;
+            }
             jigger.localRotation=Quaternion.Euler(0,0,tool=="transfer" || tool=="float" ? -55 : 0); mixing.localRotation=Quaternion.Euler(0,0,tool=="strain" ? -55 : 0);
             if(shaker!=null) { shaker.localRotation=Quaternion.Euler(0,0,tool=="shake" ? adapter.ShakePosition*25 : tool=="shaker_transfer" ? -55 : 0); shaker.localPosition=new Vector3(2.2f+(tool=="shake" ? adapter.ShakePosition*.12f : 0),0,0); }
             spoon.localRotation=Quaternion.Euler(0,0,adapter?.SpoonAngle ?? 0); spoon.gameObject.SetActive(tool=="stir"); hand.gameObject.SetActive(tool!=null);
             Transform grip=tool=="pour" || tool=="splash" ? bottle : tool=="transfer" || tool=="float" ? jigger : tool=="strain" ? mixing : tool=="shake" || tool=="shaker_transfer" ? shaker : spoon;
-            if(tool!=null) { hand.position=grip.TransformPoint(tool=="stir" ? new Vector3(.12f,.32f,-.05f) : new Vector3(.08f,.27f,-.05f)); hand.rotation=grip.rotation; }
+            if(tool!=null) { hand.position=grip.TransformPoint(tool=="stir" ? new Vector3(art!=null ? 0 : .12f,.32f,-.05f) : new Vector3(.08f,.27f,-.05f)); hand.rotation=grip.rotation; }
             stream.enabled=adapter!=null && adapter.AcceptedLiquidThisStep;
             if(stream.enabled) { float mouth=tool=="pour" || tool=="splash" ? .67f : tool=="transfer" || tool=="float" ? .39f : .55f; stream.SetPosition(0,transform.InverseTransformPoint(grip.TransformPoint(new Vector3(0,mouth,-.02f)))); Transform target=tool=="strain" || tool=="float" || tool=="shaker_transfer" ? serving : tool=="transfer" && (!ExtendedTools || adapter.Target==ContainerRole.Jigger) ? mixing : adapter.Target==ContainerRole.Jigger ? jigger : adapter.Target==ContainerRole.Mixing ? mixing : adapter.Target==ContainerRole.Shaker ? shaker : serving; stream.SetPosition(1,target.localPosition+new Vector3(0,.26f,-.02f)); }
+            if(spoonRunoff!=null) {
+                spoonRunoff.enabled=stream.enabled && tool=="float";
+                if(spoonRunoff.enabled) {
+                    Vector3 contact=floatSpoon.localPosition;
+                    float fraction=(float)(ServingFillMl/180m);
+                    float surface=CocktailGlass ? ServingFillBottom+BowlHeight*Mathf.Pow(fraction,1f/3) : ServingFillBottom+BowlHeight*(Mathf.Pow(Mathf.Lerp(Mathf.Pow(RocksBottomWidth,3),Mathf.Pow(RocksTopWidth,3),fraction),1f/3)-RocksBottomWidth)/(RocksTopWidth-RocksBottomWidth);
+                    stream.SetPosition(1,contact); spoonRunoff.SetPosition(0,contact);
+                    spoonRunoff.SetPosition(1,serving.localPosition+new Vector3(0,surface,-.03f));
+                }
+            }
         }
         private void BuildExtendedTools()
         {
@@ -140,8 +204,8 @@ namespace Surlhwa.Presentation
                 var f=layerFills[i]; f.gameObject.SetActive(i<VisibleLayerCount); if(i>=VisibleLayerCount) continue;
                 decimal amount=layers[i].Amounts.Values.Sum(); float low=(float)(accumulated/180m),high=(float)((accumulated+amount)/180m); accumulated+=amount;
                 float w0,w1,y0,y1;
-                if(CocktailGlass) { float a=Mathf.Pow(low,1f/3),b=Mathf.Pow(high,1f/3); w0=.23f*a; w1=.23f*b; y0=.19f+.33f*a; y1=.19f+.33f*b; }
-                else { w0=Mathf.Pow(Mathf.Lerp(.16f*.16f*.16f,.18f*.18f*.18f,low),1f/3); w1=Mathf.Pow(Mathf.Lerp(.16f*.16f*.16f,.18f*.18f*.18f,high),1f/3); y0=.035f+.44f*(w0-.16f)/.02f; y1=.035f+.44f*(w1-.16f)/.02f; }
+                if(CocktailGlass) { float a=Mathf.Pow(low,1f/3),b=Mathf.Pow(high,1f/3); w0=.23f*a; w1=.23f*b; y0=ServingFillBottom+BowlHeight*a; y1=ServingFillBottom+BowlHeight*b; }
+                else { float bottom=RocksBottomWidth,top=RocksTopWidth; w0=Mathf.Pow(Mathf.Lerp(bottom*bottom*bottom,top*top*top,low),1f/3); w1=Mathf.Pow(Mathf.Lerp(bottom*bottom*bottom,top*top*top,high),1f/3); y0=ServingFillBottom+BowlHeight*(w0-bottom)/(top-bottom); y1=ServingFillBottom+BowlHeight*(w1-bottom)/(top-bottom); }
                 var mesh=f.sharedMesh; mesh.Clear(); mesh.vertices=new[]{new Vector3(-w0,y0,-.005f),new Vector3(-w1,y1,-.005f),new Vector3(w1,y1,-.005f),new Vector3(w0,y0,-.005f)}; mesh.triangles=new[]{0,1,2,0,2,3}; mesh.RecalculateBounds();
                 f.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor",Tint(layers[i].Amounts,amount));
             }

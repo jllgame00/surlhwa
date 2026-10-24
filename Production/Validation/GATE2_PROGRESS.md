@@ -1,5 +1,27 @@
 # Execution ledger — Production/Validation/PRODUCTION_EXPANSION_PLAN.md
 
+## Current ACT 1 art checkpoint — 2026-10-25
+
+The owner has accepted C1 as the provisional composition and initiated the ACT 1
+Production Art Pass. Source assets and integration code are prepared; see
+[the art-pass ledger](ACT1_ART_PASS_PLAN.md) and
+[source gallery](review-act1-art-source.html). Four original source atlases yield
+43 prepared images; one original footstep candidate is separate. C1 camera,
+floor/counter/contact anchors and gameplay/content/save authorities are retained.
+
+Evidence: 149/149 standalone contracts, static C# compile zero errors/one inherited
+warning, 48 source checks and byte-identical extraction reproduction. One fresh
+source review's findings are corrected; new Unity regressions remain NOT_RUN.
+Editor startup exits 198 with no valid license. **SOURCE_READY /
+UNITY_INTEGRATION_PENDING**: no new scene serialization, generated art references,
+Player build or actual-resolution game captures exist yet. The owner will notify
+after license activation; resume actual integration and bundled review then.
+This source checkpoint does not close Gate 2, any presentation debt, native input
+debt or human art/audio/feel approval. The historical evidence below remains
+versioned evidence for its original builds.
+
+## Prior ACT 1 implementation and validation ledger
+
 Baseline 6a6637e, production-rebuild. Gate 1 owner approval received 2026-10-14 Asia/Seoul in attachment b5314e47-5503-4f11-b77e-f8508641e3c4. Execute autonomously to complete ACT 1; do not begin ACTs 2–7 before Gate 2. The pre-existing local change to review-slice.html is owner/local state and excluded from this work.
 
 Initial read-only preservation check passed: 74 specification hashes, RC1 branch/HEAD/status/index and 65 dirty paths unchanged. Existing linked worktree verified; no new branch/worktree. Engine remains 6000.3.7f1.

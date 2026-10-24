@@ -16,10 +16,11 @@ namespace Surlhwa.Presentation
         private TextMeshProUGUI speaker,body,request,measurement,status,title;
         private Button next,continueButton; private readonly Stack<GameObject> focus=new Stack<GameObject>();
         private readonly List<GameObject> methodPanels=new List<GameObject>(); private int method,recipePage;
+        private readonly List<GameObject> methodMarks=new List<GameObject>();
         private string shownModal; public string MenuModal; public string VisibleModal=>shownModal;
         public string DisplayedSpeaker=>speaker.text;
         public bool ModalOwnsFocus=>modal!=null && EventSystem.current?.currentSelectedGameObject!=null && EventSystem.current.currentSelectedGameObject.transform.IsChildOf(modal.transform);
-        private readonly Color ink=new Color(.93f,.86f,.73f),muted=new Color(.62f,.70f,.71f),paper=new Color(.065f,.085f,.09f,.97f),gold=new Color(.72f,.53f,.29f);
+        private readonly Color ink=new Color(.93f,.86f,.73f),muted=new Color(.70f,.68f,.62f),paper=new Color(.075f,.068f,.061f,.97f),gold=new Color(.72f,.53f,.29f);
         public void Initialize(CampaignController controller,TMP_FontAsset face)
         {
             owner=controller; font=face;
@@ -49,7 +50,10 @@ namespace Surlhwa.Presentation
             brewing=Panel(root,new Rect(220,18,1032,174),paper);
             measurement=Text(brewing.transform,new Rect(18,134,996,28),"",16,ink);
             string[] methods={"Stir","Build","Shake","Float"};
-            for(int n=0;n<4;n++) { int index=n; Button(brewing.transform,new Rect(18+n*120,92,112,34),methods[n],()=>SelectMethod(index)); }
+            for(int n=0;n<4;n++) {
+                int index=n; var control=Button(brewing.transform,new Rect(18+n*120,92,112,34),methods[n],()=>SelectMethod(index));
+                methodMarks.Add(Rule(control.transform,new Rect(12,2,88,2),gold));
+            }
             Button(brewing.transform,new Rect(508,92,120,34),"대상 변경 J",()=>owner.Input.Command("target"),15);
             Button(brewing.transform,new Rect(636,92,120,34),"미세 따르기",()=>owner.Input.Fine=!owner.Input.Fine,15);
             Button(brewing.transform,new Rect(764,92,112,34),"잔 바꾸기 V",()=>owner.HandleCommand("glass"),15);
@@ -75,9 +79,25 @@ namespace Surlhwa.Presentation
             SelectMethod(0); Refresh(); EventSystem.current.SetSelectedGameObject(newGame.gameObject);
         }
         private void Cmd(Transform parent,float x,string label,string command)=>Button(parent,new Rect(x,29,124,38),label,()=>owner.Input.Command(command),15);
-        private void SelectMethod(int index) { owner.Input.Stop(); method=index; for(int i=0;i<methodPanels.Count;i++) methodPanels[i].SetActive(i==index); }
+        private void SelectMethod(int index) { owner.Input.Stop(); method=index; for(int i=0;i<methodPanels.Count;i++) methodPanels[i].SetActive(i==index); for(int i=0;i<methodMarks.Count;i++) methodMarks[i].SetActive(i==index); }
         private GameObject Panel(Transform parent,Rect rect,Color color)
-        { var g=new GameObject("Panel",typeof(RectTransform),typeof(Image)); g.transform.SetParent(parent,false); Position((RectTransform)g.transform,rect); g.GetComponent<Image>().color=color; return g; }
+        {
+            var g=new GameObject("Panel",typeof(RectTransform),typeof(Image)); g.transform.SetParent(parent,false); Position((RectTransform)g.transform,rect); g.GetComponent<Image>().color=color;
+            if(rect.width>160 && rect.height>60 && color.a>.9f) {
+                var edge=new Color(.40f,.31f,.21f,.8f);
+                Rule(g.transform,new Rect(1,rect.height-2,rect.width-2,1),edge);
+                Rule(g.transform,new Rect(1,1,rect.width-2,1),edge);
+                Rule(g.transform,new Rect(1,1,1,rect.height-2),edge);
+                Rule(g.transform,new Rect(rect.width-2,1,1,rect.height-2),edge);
+                foreach(float x in new[]{5f,rect.width-18f}) Rule(g.transform,new Rect(x,rect.height-6,13,2),gold);
+            }
+            return g;
+        }
+        private static GameObject Rule(Transform parent,Rect rect,Color color)
+        {
+            var g=new GameObject("Quiet brass rule",typeof(RectTransform),typeof(Image)); g.transform.SetParent(parent,false);
+            Position((RectTransform)g.transform,rect); var image=g.GetComponent<Image>(); image.color=color; image.raycastTarget=false; return g;
+        }
         private static void Position(RectTransform t,Rect r) { t.anchorMin=t.anchorMax=Vector2.zero; t.pivot=Vector2.zero; t.anchoredPosition=r.position; t.sizeDelta=r.size; }
         private TextMeshProUGUI Text(Transform parent,Rect rect,string value,float size,Color color)
         {
@@ -86,7 +106,7 @@ namespace Surlhwa.Presentation
         }
         private Button Button(Transform parent,Rect rect,string label,Action click,float size=17)
         {
-            var panel=Panel(parent,rect,new Color(.14f,.19f,.20f,.98f)); panel.name=label; var b=panel.AddComponent<Button>();
+            var panel=Panel(parent,rect,new Color(.17f,.15f,.12f,.98f)); panel.name=label; var b=panel.AddComponent<Button>();
             var colors=b.colors; colors.highlightedColor=new Color(.76f,.70f,.55f); colors.selectedColor=new Color(.78f,.64f,.42f); b.colors=colors;
             var text=Text(panel.transform,new Rect(5,1,rect.width-10,rect.height-2),label,size,ink); text.alignment=TextAlignmentOptions.Center;
             panel.AddComponent<SliceFocusOutline>().Initialize(b); b.onClick.AddListener(()=>click()); return b;

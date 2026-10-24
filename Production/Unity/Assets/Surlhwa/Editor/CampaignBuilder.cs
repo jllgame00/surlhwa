@@ -38,6 +38,7 @@ namespace Surlhwa.Editor
             c.Foot=AssetDatabase.LoadAssetAtPath<AudioClip>(Root+"/FootGrounded.wav") ?? old.Foot;
             c.Music=AssetDatabase.LoadAssetAtPath<AudioClip>(Root+"/FirstNightMotif.wav");
             CampaignArtBuilder.Apply(c);
+            CampaignProductionArtBuilder.Apply(c);
             Object.DestroyImmediate(old.gameObject); EditorSceneManager.SaveScene(scene,ScenePath);
             Debug.Log("ACT1_SCENE_BUILT: accepted C1 scene geometry retained");
         }

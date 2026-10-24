@@ -1,0 +1,13 @@
+{
+  "source": "Original deterministic noise/resonance synthesis; no external samples",
+  "candidate": "Unity\\Assets\\Surlhwa\\Act1Assets\\ProductionArt\\FootstepFeltWood.wav",
+  "sampleRate": 48000,
+  "seconds": 0.55,
+  "peak": 0.5847217252630872,
+  "rms": 0.062373490527541174,
+  "previousRms": 0.062373490527649705,
+  "clippedSamples": 0,
+  "sha256": "6bdffc91a8816662f452a9df81a5e32810a4db7f059cdca342fdeda5e63d7c2a",
+  "approval": "HUMAN_SIGNOFF_REQUIRED: in-room weight, cadence and final loudness",
+  "lifecycle": "Existing accepted walk-contact event timing and volume/pause policy retained"
+}

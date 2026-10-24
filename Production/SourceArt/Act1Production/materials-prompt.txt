@@ -1,0 +1,7 @@
+Use case: stylized-concept. Asset type: four texture surfaces for an existing pixel-first game bar, not a room illustration.
+Square texture atlas with exactly 2 columns and 2 rows. Each quadrant entirely filled edge to edge by a flat orthographic material surface, no margins, no text, no perspective, no surrounding objects. Crisp pixel art with broad quiet clusters and restrained hand-placed details. Warm walnut and deep umber, localized amber light, no orange saturation, no photorealism.
+Top left: long horizontal polished walnut countertop planks, subtle worn amber leading edge, quiet broad wood grain, occasional knots, no seams every few pixels, no objects.
+Top right: aged wide floorboards, horizontal boards with staggered joints, deep warm brown, sparse shoe wear and restrained amber reflection, no dirt noise.
+Bottom left: beautiful dark walnut bar front cabinet panelling, four recessed rectangular panels across, narrow handcrafted moulding and brass inset accents, shallow flat frontal appearance, coherent dark shadow at panel edges.
+Bottom right: vertical dark walnut wall panelling, eight broad boards with quiet joints and upper crown trim, lit gently from sides, center dark enough for a figure silhouette. No windows, lamps, bottles or doors.
+Use a limited common palette. Source is intended to be reduced to actual low-resolution pixel surfaces and mapped to unchanged shallow 3D geometry. Broad shapes and crafted value groupings matter more than tiny grain marks.

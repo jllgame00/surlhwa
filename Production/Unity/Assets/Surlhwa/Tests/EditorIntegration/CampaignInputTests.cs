@@ -65,5 +65,22 @@ namespace Surlhwa.SpatialTests
             session.SetFocus(false); input.Step(.1); var total=session.Brew.Container(ContainerRole.Serving).TotalMl;
             session.SetFocus(true); input.Step(.1); Assert.That(session.Brew.Container(ContainerRole.Serving).TotalMl,Is.EqualTo(total)); Assert.That(input.ActiveTool,Is.Null);
         }
+        [Test] public void AuthoredFloatStreamTouchesSpoonAndStopsWithAcceptedFlow()
+        {
+            var work=new GameObject("Authored Float contact");
+            try {
+                var view=work.AddComponent<SliceWorkbenchView>(); view.ExtendedTools=true; view.Initialize(null);
+                view.ApplyArt(UnityEditor.AssetDatabase.LoadAssetAtPath<CampaignArtSet>("Assets/Surlhwa/Act1Assets/ProductionArt/Act1Art.asset"));
+                input.SelectIngredient("vodka"); Flow(Key.Q,1); Move(.45f,.38f); Down(Key.F); input.Step(.1); view.Refresh(session.Brew,input,.1f);
+                var spoon=work.transform.Find("Float spoon support"); Assert.That(spoon,Is.Not.Null);
+                var stream=work.transform.Find("Accepted liquid stream").GetComponent<LineRenderer>();
+                var drop=work.transform.Find("Accepted spoon runoff").GetComponent<LineRenderer>();
+                Assert.That(stream.enabled && drop.enabled,Is.True);
+                Assert.That(Vector3.Distance(work.transform.TransformPoint(stream.GetPosition(1)),spoon.position),Is.LessThan(.002f));
+                Assert.That(Vector3.Distance(work.transform.TransformPoint(drop.GetPosition(0)),spoon.position),Is.LessThan(.002f));
+                session.SetFocus(false); input.Step(.1); view.Refresh(session.Brew,input,.1f);
+                Assert.That(stream.enabled || drop.enabled,Is.False,"No decorative stream after focus cancellation.");
+            } finally { UnityEngine.Object.DestroyImmediate(work); }
+        }
     }
 }

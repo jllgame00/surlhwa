@@ -2677,3 +2677,47 @@ SURLHWA_RC1_REPRODUCIBLE_RELEASE_CANDIDATE / HUMAN_ACCEPTANCE_PENDING; known P0/
 Human sign-off remains visual, audio, writing and play feel. Final presentation
 work is deferred; future/reserve content, other platforms and performance work
 remain out of scope. Historical findings above are unchanged.
+
+### ACT 1 Production Art Pass — source checkpoint (2026-10-25)
+
+This record concerns the separate `Production/Unity` ACT 1 project on
+`production-rebuild`, starting from `f6d83d8`. It does not revise the historical
+RC1 closure above. The owner accepted C1 as the provisional spatial baseline and
+requested an ACT 1 production art pass, without camera/layout exploration or
+full-game art expansion.
+
+Implemented source scope: four original ImageGen atlases and exact prompts;
+43 prepared pixel assets (33 new environment/material/character images and ten
+byte-identical existing tools); a separate original felt/wood footstep candidate;
+an existing-scene art upgrader; bartender/Prince/two ordinary-guest pose families;
+optional state-driven workbench shells and Float spoon contact; restrained core
+UI material, edge and active-method treatment. No recipe, knowledge, supply,
+schedule, dialogue, save identity/schema or C1 spatial authority changed. Full
+Codex redesign, full music, later ACTs and full guest/cocktail sets remain deferred.
+
+Evidence: standalone domain/application contracts 149/149 PASS; all production
+C# sources, including Editor/tests, compile against installed Unity assemblies
+with zero errors and one inherited CS0108 warning. This auxiliary compile is not
+Unity assembly/import validation. Source checks 48 PASS; all 88 current prepared
+PNG/WAV/meta files remain byte-identical after extraction. Preservation checks
+retain 74 specification hashes and the original RC1 HEAD/branch/index/status/65
+dirty paths. The existing owner-local review-slice.html is excluded and unchanged.
+One fresh source review's five Important and one Minor findings are corrected;
+four new Unity regressions are authored/compiled, **NOT_RUN**.
+
+Environment: Unity 6000.3.7f1 exits before project load, code 198,
+`No valid Unity Editor license found`. **VALIDATION_BLOCKED_BY_ENVIRONMENT**.
+The owner will notify after license activation. The art upgrader has NOT run;
+Bar_Act1 serialization, generated ArtSet/material/mesh assets, rebuilt Player,
+actual 720p/1080p art captures, new-art Continue and audio/contact verification
+remain pending. Existing Player evidence belongs to the preceding presentation.
+Native input retains its separately recorded environment blockage.
+
+Disposition: **SOURCE_READY / UNITY_INTEGRATION_PENDING**, not Gate 2 completion
+or subjective art acceptance. Next work critically requires licensed Unity and
+actual renders; source previews cannot close that gap. All PD01–PD11 remain OPEN.
+Final visual, motion, audio, pacing and emotional judgment stays with the owner
+in the bundled Gate 2 review. Exact resume steps, provenance and reviewer limits:
+`Production/Validation/ACT1_ART_PASS_PLAN.md`, `ACT1_ART_SOURCE_REVIEW.md` and
+`Production/SourceArt/Act1Production/README.md`. A supplementary source gallery
+is at `Production/Validation/review-act1-art-source.html`.
