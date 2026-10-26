@@ -1,0 +1,3459 @@
+{
+  "status": "QUARTER_VIEW_READY_FOR_OWNER_COMPARISON",
+  "shots": [
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Seated_1280.png",
+      "candidate": "C1",
+      "fixture": "Seated",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Seated_1280.png",
+      "sha256": "4ec0b31414703508b2a2aaffa925bef846a81eb8c05fb44e6aa93585d5216f26"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Seated_1920.png",
+      "candidate": "C1",
+      "fixture": "Seated",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Seated_1920.png",
+      "sha256": "5510d2e06b49f46dbd23b748b3226b5bbc9c43fe120b7dba69cf5f7e409818b6"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Composition_1280.png",
+      "candidate": "C1",
+      "fixture": "Composition",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Composition_1280.png",
+      "sha256": "c4f5f507d3d7614a188fecf973e81423cc911923ec2cd95af881bf3fbca91da6"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Composition_1920.png",
+      "candidate": "C1",
+      "fixture": "Composition",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Composition_1920.png",
+      "sha256": "8738589012bad60203f661f1ad93daabdb521c85e83022e3cde24cabd1c07ef0"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Wide_1280.png",
+      "candidate": "C1",
+      "fixture": "Wide",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.550000190734863,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4218505024909973,
+        "y": 0.28191113471984863,
+        "width": 0.08477234840393066,
+        "height": 0.15698587894439697
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.2032966911792755,
+        "y": 0.254686176776886,
+        "width": 0.5934066772460938,
+        "height": 0.33216559886932373
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Wide_1280.png",
+      "sha256": "6032507bf135821fa5d15abc7e9e39870d1d63299cc242257b5d329b4524294f"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Wide_1920.png",
+      "candidate": "C1",
+      "fixture": "Wide",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.550000190734863,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4218505024909973,
+        "y": 0.28191113471984863,
+        "width": 0.08477234840393066,
+        "height": 0.15698587894439697
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.2032966911792755,
+        "y": 0.254686176776886,
+        "width": 0.5934066772460938,
+        "height": 0.33216559886932373
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Wide_1920.png",
+      "sha256": "c61224d5e90f79341775c83722e02aba0bf2bd180051baccf90670fdec8f124d"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Grounding_1280.png",
+      "candidate": "C1",
+      "fixture": "Grounding",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": -0.4000000059604645,
+        "y": 14.704147338867188,
+        "z": -27.08842658996582
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3526785671710968,
+        "y": 0.06938540935516357,
+        "width": 0.23376622796058655,
+        "height": 0.43290048837661743
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.2500000596046448,
+        "y": -0.005689501762390137,
+        "width": 1.6363637447357178,
+        "height": 0.9159718751907349
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Grounding_1280.png",
+      "sha256": "58ac6bc2746c35ea8ab7ca4c94010571d36d96f8d7e3ec825ad6082e79351ebb"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Grounding_1920.png",
+      "candidate": "C1",
+      "fixture": "Grounding",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": -0.4000000059604645,
+        "y": 14.704147338867188,
+        "z": -27.08842658996582
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3526785671710968,
+        "y": 0.06938540935516357,
+        "width": 0.23376622796058655,
+        "height": 0.43290048837661743
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.2500000596046448,
+        "y": -0.005689501762390137,
+        "width": 1.6363637447357178,
+        "height": 0.9159718751907349
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Grounding_1920.png",
+      "sha256": "322c3a55146d56c776a805283a902bf338841b7f2d135a7189547453154580bf"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_ExistingSprites_1280.png",
+      "candidate": "C1",
+      "fixture": "ExistingSprites",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_ExistingSprites_1280.png",
+      "sha256": "c4f5f507d3d7614a188fecf973e81423cc911923ec2cd95af881bf3fbca91da6"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_ExistingSprites_1920.png",
+      "candidate": "C1",
+      "fixture": "ExistingSprites",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_ExistingSprites_1920.png",
+      "sha256": "8738589012bad60203f661f1ad93daabdb521c85e83022e3cde24cabd1c07ef0"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Empty_1280.png",
+      "candidate": "C1",
+      "fixture": "Empty",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Empty_1280.png",
+      "sha256": "b486815725db0d174c31a97ee9cb0e76e241b5b1611e3876419bd8075d7e3a34"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_Empty_1920.png",
+      "candidate": "C1",
+      "fixture": "Empty",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_Empty_1920.png",
+      "sha256": "22465b456d0e041eba5c58317df3331b5cf70e4b5a432a0fcd0a80777505b7e1"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_ContextUI_1280.png",
+      "candidate": "C1",
+      "fixture": "ContextUI",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_ContextUI_1280.png",
+      "sha256": "a0c3e225b7d00e167578269eee6a4cb995478dd22e4894a8b69d6cde437d737b"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "C1_Ordinary_ContextUI_1920.png",
+      "candidate": "C1",
+      "fixture": "ContextUI",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_ContextUI_1920.png",
+      "sha256": "e065222ae718b52561b64245e4a1752c1ea45e29e0eecda091f15bce1e72b1bb"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Seated_1280.png",
+      "candidate": "Q1",
+      "fixture": "Seated",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Seated_1280.png",
+      "sha256": "802902c7a18506932869da4540d80cb117abaabeedba367cf0b6ab430bc05ec8"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Seated_1920.png",
+      "candidate": "Q1",
+      "fixture": "Seated",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Seated_1920.png",
+      "sha256": "49ab5ba795afaedec19f9be7fac97a6fa56f34666452138ac219400059acf592"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Composition_1280.png",
+      "candidate": "Q1",
+      "fixture": "Composition",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Composition_1280.png",
+      "sha256": "e0803f77ae9939d16003f1e8324f1654349a3fd5d2d112577632a81e0a06c84c"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Composition_1920.png",
+      "candidate": "Q1",
+      "fixture": "Composition",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Composition_1920.png",
+      "sha256": "8ddf574fb59df4b05fd3cb381538903da4a7bf623853fd0a26a6695a51b83d35"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Wide_1280.png",
+      "candidate": "Q1",
+      "fixture": "Wide",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 5.75,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3665274977684021,
+        "y": 0.3034406304359436,
+        "width": 0.10274577140808105,
+        "height": 0.18509191274642944
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21692046523094177,
+        "y": 0.17677506804466248,
+        "width": 0.5546774864196777,
+        "height": 0.5419585704803467
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Wide_1280.png",
+      "sha256": "5416b154cf47b438f06a1955f1a17c91a5c5e2727693d3ba40a3e2deda92d1f5"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Wide_1920.png",
+      "candidate": "Q1",
+      "fixture": "Wide",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 5.75,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3665274977684021,
+        "y": 0.3034406304359436,
+        "width": 0.10274577140808105,
+        "height": 0.18509191274642944
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21692046523094177,
+        "y": 0.17677506804466248,
+        "width": 0.5546774864196777,
+        "height": 0.5419585704803467
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Wide_1920.png",
+      "sha256": "dfbdeb71bebd6f419bfa2eaa15211d1c166de5a37b76fd9693edb376e3c2b6ec"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Grounding_1280.png",
+      "candidate": "Q1",
+      "fixture": "Grounding",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 10.69845962524414,
+        "y": 19.08984375,
+        "z": -21.473167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.19509893655776978,
+        "y": -0.04276144504547119,
+        "width": 0.3580535054206848,
+        "height": 0.6450173854827881
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.3262588381767273,
+        "y": -0.4841717481613159,
+        "width": 1.932966947555542,
+        "height": 1.8886436223983765
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Grounding_1280.png",
+      "sha256": "2f918efceb21225b0c87212a48eb5b342db0117a2332014055107b680d5cd51a"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Grounding_1920.png",
+      "candidate": "Q1",
+      "fixture": "Grounding",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 10.69845962524414,
+        "y": 19.08984375,
+        "z": -21.473167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.19509893655776978,
+        "y": -0.04276144504547119,
+        "width": 0.3580535054206848,
+        "height": 0.6450173854827881
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.3262588381767273,
+        "y": -0.4841717481613159,
+        "width": 1.932966947555542,
+        "height": 1.8886436223983765
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Grounding_1920.png",
+      "sha256": "4e4bb2273bcacd87e8e8d2c0a071cbfa430f3a0b798cee158ca29a7284fa543c"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_ExistingSprites_1280.png",
+      "candidate": "Q1",
+      "fixture": "ExistingSprites",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_ExistingSprites_1280.png",
+      "sha256": "9643f22fdf2ebebbeb8c2d68092bb85cb6cba4709d6c80e58867b4d498ff350c"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_ExistingSprites_1920.png",
+      "candidate": "Q1",
+      "fixture": "ExistingSprites",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_ExistingSprites_1920.png",
+      "sha256": "e42772f10a988915f1626611f1400cab04fb9aa5300590909589c0e08833c2ef"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Empty_1280.png",
+      "candidate": "Q1",
+      "fixture": "Empty",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Empty_1280.png",
+      "sha256": "e9133c15bc48d433586a9b51d0cabb61c6114180a7bd98d61ed2a44d1be4a598"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_Empty_1920.png",
+      "candidate": "Q1",
+      "fixture": "Empty",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_Empty_1920.png",
+      "sha256": "d4339e0e42ad2e0474c32b0cb553496402f7417d18a357d7f40bc9826b6c3306"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_ContextUI_1280.png",
+      "candidate": "Q1",
+      "fixture": "ContextUI",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_ContextUI_1280.png",
+      "sha256": "ee9f33f6cfe915aefa697e9ae321f033306362e9146c49a242e489a8d958d06b"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q1_Ordinary_ContextUI_1920.png",
+      "candidate": "Q1",
+      "fixture": "ContextUI",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_ContextUI_1920.png",
+      "sha256": "fc69817225468c2e7e09d735d492943816946d448f96802f4ec8917c9240a057"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Seated_1280.png",
+      "candidate": "Q2",
+      "fixture": "Seated",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Seated_1280.png",
+      "sha256": "6c6cc6a9d001393475f411c9f2bf7d1bf191a79f8b79f92afd1a6b96e396ad77"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Seated_1920.png",
+      "candidate": "Q2",
+      "fixture": "Seated",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Seated_1920.png",
+      "sha256": "e5ce9ecc6aa1a3e089c5098d381a0ec90e568f3a86b2ec1cc32004527f4bdc36"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Composition_1280.png",
+      "candidate": "Q2",
+      "fixture": "Composition",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Composition_1280.png",
+      "sha256": "512bf30203fb1ec839266415a433a8650447fc94e8fc4dfa0cd0062cf1f56fd2"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Composition_1920.png",
+      "candidate": "Q2",
+      "fixture": "Composition",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Composition_1920.png",
+      "sha256": "e62bda4761c818b392396b8c5b67c5b803c5d45b8a0bc0ae79e963bdec22c864"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Wide_1280.png",
+      "candidate": "Q2",
+      "fixture": "Wide",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 17.324726104736328,
+        "y": 29.33147430419922,
+        "z": -31.933069229125977
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.36027252674102783,
+        "y": 0.2946533262729645,
+        "width": 0.10831946134567261,
+        "height": 0.19360148906707764
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21563079953193665,
+        "y": 0.14942815899848938,
+        "width": 0.553209662437439,
+        "height": 0.5519665479660034
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Wide_1280.png",
+      "sha256": "658b39b7eb7b0cffb109ef3a90d0d29a662fa5f393b103f18efc8d6009c98e1d"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Wide_1920.png",
+      "candidate": "Q2",
+      "fixture": "Wide",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 17.324726104736328,
+        "y": 29.33147430419922,
+        "z": -31.933069229125977
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.36027252674102783,
+        "y": 0.2946533262729645,
+        "width": 0.10831946134567261,
+        "height": 0.19360148906707764
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21563079953193665,
+        "y": 0.14942815899848938,
+        "width": 0.553209662437439,
+        "height": 0.5519665479660034
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Wide_1920.png",
+      "sha256": "3b46fa94f28210159300caa4e45e48af6c59d9331accafbe3b1326de0bbdd891"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Grounding_1280.png",
+      "candidate": "Q2",
+      "fixture": "Grounding",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 4.5714335441589355,
+        "y": 8.893363952636719,
+        "z": -9.949907302856445
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.16242116689682007,
+        "y": -0.09639418125152588,
+        "width": 0.3946068286895752,
+        "height": 0.7010849714279175
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.29189449548721313,
+        "y": -0.749968945980072,
+        "width": 1.8026397228240967,
+        "height": 1.9153997898101807
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Grounding_1280.png",
+      "sha256": "d66a7efc7facc02743b666c4c40c69e176d6e72d582171470394f3a5b0b1e38f"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Grounding_1920.png",
+      "candidate": "Q2",
+      "fixture": "Grounding",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 4.5714335441589355,
+        "y": 8.893363952636719,
+        "z": -9.949907302856445
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.16242116689682007,
+        "y": -0.09639418125152588,
+        "width": 0.3946068286895752,
+        "height": 0.7010849714279175
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.29189449548721313,
+        "y": -0.749968945980072,
+        "width": 1.8026397228240967,
+        "height": 1.9153997898101807
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Grounding_1920.png",
+      "sha256": "2356665e3d81ec33752ab666429db35921f2b66b9f563d8cb9c61c4e9dcbb73f"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_ExistingSprites_1280.png",
+      "candidate": "Q2",
+      "fixture": "ExistingSprites",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3335132598876953,
+        "y": 0.2554236650466919,
+        "width": 0.1292320191860199,
+        "height": 0.23063936829566956
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_ExistingSprites_1280.png",
+      "sha256": "9e194f3557f57823f2f9c82bfe3619e0b2f9c0b68d290bfb582eaee42fed106a"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_ExistingSprites_1920.png",
+      "candidate": "Q2",
+      "fixture": "ExistingSprites",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3335132598876953,
+        "y": 0.2554236650466919,
+        "width": 0.1292320191860199,
+        "height": 0.23063936829566956
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_ExistingSprites_1920.png",
+      "sha256": "6d82b21a503711e9e485d9dfae36f56bc75773338b03beb1fe671feb9274ad14"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Empty_1280.png",
+      "candidate": "Q2",
+      "fixture": "Empty",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Empty_1280.png",
+      "sha256": "b9d84e3434a3b391e7977d4622d363d5959d5abe106564cb75cf5e8ea5e3789d"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_Empty_1920.png",
+      "candidate": "Q2",
+      "fixture": "Empty",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_Empty_1920.png",
+      "sha256": "8841e2a58a449105e1f37d9c0bf0abb098aa6d0e8dbe13881e8d2803ca6fc4b8"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_ContextUI_1280.png",
+      "candidate": "Q2",
+      "fixture": "ContextUI",
+      "phase": "Intro",
+      "width": 1280,
+      "height": 720,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_ContextUI_1280.png",
+      "sha256": "1be42ae5cfa51bdfff3d2662535345aa8fd4f298688b217f8922feadc552d8ff"
+    },
+    {
+      "actor": "Ordinary",
+      "file": "Q2_Ordinary_ContextUI_1920.png",
+      "candidate": "Q2",
+      "fixture": "ContextUI",
+      "phase": "Intro",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 4,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_ContextUI_1920.png",
+      "sha256": "b9c30524d069458c2eaf2f7b1e7d76e37d87ff814079b956ddcfff83cdbd7bc3"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Seated_1280.png",
+      "candidate": "C1",
+      "fixture": "Seated",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Seated_1280.png",
+      "sha256": "117aa3f8b1914b4c9bb7a7212cbb79140d019d078e5972372999e0b14a283eee"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Seated_1920.png",
+      "candidate": "C1",
+      "fixture": "Seated",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Seated_1920.png",
+      "sha256": "d40fa8d5f83226e825d86b462709052e0fd28a5668fdf829632357366b68bdf0"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Composition_1280.png",
+      "candidate": "C1",
+      "fixture": "Composition",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Composition_1280.png",
+      "sha256": "96329afb3c2c1c44d61b11bcb27ea2c5675f08a74f41ecffcbecc6aecfe0a4d9"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Composition_1920.png",
+      "candidate": "C1",
+      "fixture": "Composition",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Composition_1920.png",
+      "sha256": "52dd60e0d031e9ea53852062ffe877a484c22588b8bcc8a49e1249a2c7ac0344"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Wide_1280.png",
+      "candidate": "C1",
+      "fixture": "Wide",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.550000190734863,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4218505024909973,
+        "y": 0.28191113471984863,
+        "width": 0.08477234840393066,
+        "height": 0.15698587894439697
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.2032966911792755,
+        "y": 0.254686176776886,
+        "width": 0.5934066772460938,
+        "height": 0.33216559886932373
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Wide_1280.png",
+      "sha256": "78537add3aa21ed1656bba5bd5faefc9d893258733a3e33ae8f4136994c79741"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Wide_1920.png",
+      "candidate": "C1",
+      "fixture": "Wide",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.550000190734863,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4218505024909973,
+        "y": 0.28191113471984863,
+        "width": 0.08477234840393066,
+        "height": 0.15698587894439697
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.2032966911792755,
+        "y": 0.254686176776886,
+        "width": 0.5934066772460938,
+        "height": 0.33216559886932373
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Wide_1920.png",
+      "sha256": "f0230ae0d16d510e8e1a0c764651b3b8c8693760eda60c4934852682320e0f0f"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Grounding_1280.png",
+      "candidate": "C1",
+      "fixture": "Grounding",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": -0.4000000059604645,
+        "y": 14.704147338867188,
+        "z": -27.08842658996582
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3526785671710968,
+        "y": 0.06938540935516357,
+        "width": 0.23376622796058655,
+        "height": 0.43290048837661743
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.2500000596046448,
+        "y": -0.005689501762390137,
+        "width": 1.6363637447357178,
+        "height": 0.9159718751907349
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Grounding_1280.png",
+      "sha256": "66f66303f1aa66f5ba4a840d715fa851ba21b1fbda5561fa9fbf3613f5aeeea5"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_Grounding_1920.png",
+      "candidate": "C1",
+      "fixture": "Grounding",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": -0.4000000059604645,
+        "y": 14.704147338867188,
+        "z": -27.08842658996582
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3526785671710968,
+        "y": 0.06938540935516357,
+        "width": 0.23376622796058655,
+        "height": 0.43290048837661743
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.2500000596046448,
+        "y": -0.005689501762390137,
+        "width": 1.6363637447357178,
+        "height": 0.9159718751907349
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_Grounding_1920.png",
+      "sha256": "ce10864e7aa3187a00be500b27a649d9c50c2addea154734492241f0f3359fa5"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_ExistingSprites_1280.png",
+      "candidate": "C1",
+      "fixture": "ExistingSprites",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_ExistingSprites_1280.png",
+      "sha256": "96329afb3c2c1c44d61b11bcb27ea2c5675f08a74f41ecffcbecc6aecfe0a4d9"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_ExistingSprites_1920.png",
+      "candidate": "C1",
+      "fixture": "ExistingSprites",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_ExistingSprites_1920.png",
+      "sha256": "52dd60e0d031e9ea53852062ffe877a484c22588b8bcc8a49e1249a2c7ac0344"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_ContextUI_1280.png",
+      "candidate": "C1",
+      "fixture": "ContextUI",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_ContextUI_1280.png",
+      "sha256": "0c99d2fdf1f2a8f2f027d2d80a53465cb74412c020ea1e8f49beed8bca5aeb98"
+    },
+    {
+      "actor": "Prince",
+      "file": "C1_Prince_ContextUI_1920.png",
+      "candidate": "C1",
+      "fixture": "ContextUI",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 0.0,
+        "y": 10.089430809020996,
+        "z": -17.20895004272461
+      },
+      "rotation": {
+        "x": 28.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 3.700000047683716,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.4038971960544586,
+        "y": 0.23180963099002838,
+        "width": 0.10424712300300598,
+        "height": 0.19305019080638885
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.13513511419296265,
+        "y": 0.19833031296730042,
+        "width": 0.7297298312187195,
+        "height": 0.408473938703537
+      },
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_ContextUI_1920.png",
+      "sha256": "d1f524c10a13d55fabdd0e6608cb4815d6933b7d6e74bcd9b49aaa43d7ba4c83"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Seated_1280.png",
+      "candidate": "Q1",
+      "fixture": "Seated",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Seated_1280.png",
+      "sha256": "8eecb5ee64a2265963138cf56d4cfeddf570a3ed479cb9fc40f4fa9c3e05767e"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Seated_1920.png",
+      "candidate": "Q1",
+      "fixture": "Seated",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Seated_1920.png",
+      "sha256": "279d3bb1ffb90c4f3a183b90723fa338ef3be166e7b399ad04a0cc9eecc9c594"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Composition_1280.png",
+      "candidate": "Q1",
+      "fixture": "Composition",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Composition_1280.png",
+      "sha256": "8e31c705c8843c26288db7d53712863ea02f27acccce8c01e292407902bd55c7"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Composition_1920.png",
+      "candidate": "Q1",
+      "fixture": "Composition",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Composition_1920.png",
+      "sha256": "c7751fdc20c4f4a9fa89b0ffa50e2203c9c29892bc221822868d47c0fe207e0f"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Wide_1280.png",
+      "candidate": "Q1",
+      "fixture": "Wide",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 5.75,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3665274977684021,
+        "y": 0.3034406304359436,
+        "width": 0.10274577140808105,
+        "height": 0.18509191274642944
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21692046523094177,
+        "y": 0.17677506804466248,
+        "width": 0.5546774864196777,
+        "height": 0.5419585704803467
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Wide_1280.png",
+      "sha256": "826557a7ee16eebbe2b48ed8a0b019af6efcd986c6e6ae6e21b4cf0e7ca00703"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Wide_1920.png",
+      "candidate": "Q1",
+      "fixture": "Wide",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 5.75,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3665274977684021,
+        "y": 0.3034406304359436,
+        "width": 0.10274577140808105,
+        "height": 0.18509191274642944
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21692046523094177,
+        "y": 0.17677506804466248,
+        "width": 0.5546774864196777,
+        "height": 0.5419585704803467
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Wide_1920.png",
+      "sha256": "c8b364458574d4ff16402b08463edf81b75f50e96db4a4fcfbfcb041121586f1"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Grounding_1280.png",
+      "candidate": "Q1",
+      "fixture": "Grounding",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 10.69845962524414,
+        "y": 19.08984375,
+        "z": -21.473167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.19509893655776978,
+        "y": -0.04276144504547119,
+        "width": 0.3580535054206848,
+        "height": 0.6450173854827881
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.3262588381767273,
+        "y": -0.4841717481613159,
+        "width": 1.932966947555542,
+        "height": 1.8886436223983765
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Grounding_1280.png",
+      "sha256": "49008ad7f7c267c800b455296d3c5ff3c7f22aa303758e2aa1d57154d12cc819"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_Grounding_1920.png",
+      "candidate": "Q1",
+      "fixture": "Grounding",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 10.69845962524414,
+        "y": 19.08984375,
+        "z": -21.473167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 1.649999976158142,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.19509893655776978,
+        "y": -0.04276144504547119,
+        "width": 0.3580535054206848,
+        "height": 0.6450173854827881
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.3262588381767273,
+        "y": -0.4841717481613159,
+        "width": 1.932966947555542,
+        "height": 1.8886436223983765
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_Grounding_1920.png",
+      "sha256": "8807432118e607762b0308a0bad2bfb123e90c8579afe84d5d061ddeaf523aaa"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_ExistingSprites_1280.png",
+      "candidate": "Q1",
+      "fixture": "ExistingSprites",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_ExistingSprites_1280.png",
+      "sha256": "c29614e86f1f9266015cfe0433e51c2872a6ae409c5cd75e2af4182db1acf233"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_ExistingSprites_1920.png",
+      "candidate": "Q1",
+      "fixture": "ExistingSprites",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_ExistingSprites_1920.png",
+      "sha256": "31466448e81aa05489ccd2fbc0b08dd94c24916ea531be53f17a87fce404b67f"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_ContextUI_1280.png",
+      "candidate": "Q1",
+      "fixture": "ContextUI",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_ContextUI_1280.png",
+      "sha256": "7d566f44effe5467162c2e4cd243ba1221b979ce75219c42848a9d43fee917b0"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q1_Prince_ContextUI_1920.png",
+      "candidate": "Q1",
+      "fixture": "ContextUI",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 11.098459243774414,
+        "y": 18.9698429107666,
+        "z": -20.223167419433594
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": true,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3417593836784363,
+        "y": 0.26696568727493286,
+        "width": 0.12181201577186584,
+        "height": 0.21943891048431396
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16439026594161987,
+        "y": 0.11679521203041077,
+        "width": 0.6576072573661804,
+        "height": 0.6425282955169678
+      },
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_ContextUI_1920.png",
+      "sha256": "b55755646552bc90cd9329f1b8e842131538ebc5305fa51cb8f4827bd51e63ae"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Seated_1280.png",
+      "candidate": "Q2",
+      "fixture": "Seated",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Seated_1280.png",
+      "sha256": "d69ccea62d4f6d7c443b6cda3e702c7f0e1b8db6d7d7cde1e859e3632e016305"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Seated_1920.png",
+      "candidate": "Q2",
+      "fixture": "Seated",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Seated_1920.png",
+      "sha256": "5f7373fa63055df557c33a63c9f72c6592e9ca06f4d28a515eb96575a523dba6"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Composition_1280.png",
+      "candidate": "Q2",
+      "fixture": "Composition",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Composition_1280.png",
+      "sha256": "424f62b762fe4a2b482db31093d416b5df4a1ae784f5a210f1672eadccd3a887"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Composition_1920.png",
+      "candidate": "Q2",
+      "fixture": "Composition",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.332890123128891,
+        "y": 0.2545105218887329,
+        "width": 0.12971970438957214,
+        "height": 0.23150169849395752
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Composition_1920.png",
+      "sha256": "3cded2116ac73a2508940cf3d812f73ed02a7b53cc2606d9179fe1669c26c0ae"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Wide_1280.png",
+      "candidate": "Q2",
+      "fixture": "Wide",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 17.324726104736328,
+        "y": 29.33147430419922,
+        "z": -31.933069229125977
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.36027252674102783,
+        "y": 0.2946533262729645,
+        "width": 0.10831946134567261,
+        "height": 0.19360148906707764
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21563079953193665,
+        "y": 0.14942815899848938,
+        "width": 0.553209662437439,
+        "height": 0.5519665479660034
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Wide_1280.png",
+      "sha256": "435f7dc33779d1d640f3d7635b9d7e0199a461aa19ca38af414acb9bf9270eb6"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Wide_1920.png",
+      "candidate": "Q2",
+      "fixture": "Wide",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 17.324726104736328,
+        "y": 29.33147430419922,
+        "z": -31.933069229125977
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.36027252674102783,
+        "y": 0.2946533262729645,
+        "width": 0.10831946134567261,
+        "height": 0.19360148906707764
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.21563079953193665,
+        "y": 0.14942815899848938,
+        "width": 0.553209662437439,
+        "height": 0.5519665479660034
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Wide_1920.png",
+      "sha256": "edcffbd2cd754c88bbf493fc4baaff5c75efcafbddd1ff73effacddc843e0ba8"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Grounding_1280.png",
+      "candidate": "Q2",
+      "fixture": "Grounding",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 4.5714335441589355,
+        "y": 8.893363952636719,
+        "z": -9.949907302856445
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.16242116689682007,
+        "y": -0.09639418125152588,
+        "width": 0.3946068286895752,
+        "height": 0.7010849714279175
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.29189449548721313,
+        "y": -0.749968945980072,
+        "width": 1.8026397228240967,
+        "height": 1.9153997898101807
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Grounding_1280.png",
+      "sha256": "e5c5be01fd230c1a2cc2df9ca9c3584320845369a50a234f9b76da04d66c113a"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_Grounding_1920.png",
+      "candidate": "Q2",
+      "fixture": "Grounding",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 4.5714335441589355,
+        "y": 8.893363952636719,
+        "z": -9.949907302856445
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.16242116689682007,
+        "y": -0.09639418125152588,
+        "width": 0.3946068286895752,
+        "height": 0.7010849714279175
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": -0.29189449548721313,
+        "y": -0.749968945980072,
+        "width": 1.8026397228240967,
+        "height": 1.9153997898101807
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_Grounding_1920.png",
+      "sha256": "f13d836e04ae33858ffb9df9305788c432e7f58952e4bbb601414b2e940a3852"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_ExistingSprites_1280.png",
+      "candidate": "Q2",
+      "fixture": "ExistingSprites",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3335132598876953,
+        "y": 0.2554236650466919,
+        "width": 0.1292320191860199,
+        "height": 0.23063936829566956
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_ExistingSprites_1280.png",
+      "sha256": "ad681ee229c78c1311cca32f4b961b7852c7a37beeb34d937f560e7a60c13f35"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_ExistingSprites_1920.png",
+      "candidate": "Q2",
+      "fixture": "ExistingSprites",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3335132598876953,
+        "y": 0.2554236650466919,
+        "width": 0.1292320191860199,
+        "height": 0.23063936829566956
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_ExistingSprites_1920.png",
+      "sha256": "3a095524d2f306defc1fa4c6cfe1937b6bb0a18323cbf672ad69760110ce52de"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_ContextUI_1280.png",
+      "candidate": "Q2",
+      "fixture": "ContextUI",
+      "phase": "Brewing",
+      "width": 1280,
+      "height": 720,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3335132598876953,
+        "y": 0.2554236650466919,
+        "width": 0.1292320191860199,
+        "height": 0.23063936829566956
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_ContextUI_1280.png",
+      "sha256": "7872a8f25426a26416d2c8444909679e63da3183f26a7a862ca5068c77ee1a02"
+    },
+    {
+      "actor": "Prince",
+      "file": "Q2_Prince_ContextUI_1920.png",
+      "candidate": "Q2",
+      "fixture": "ContextUI",
+      "phase": "Brewing",
+      "width": 1920,
+      "height": 1080,
+      "sequence": 110,
+      "position": {
+        "x": 14.613001823425293,
+        "y": 24.818675994873047,
+        "z": -26.833059310913086
+      },
+      "rotation": {
+        "x": 37.999996185302734,
+        "y": 332.0,
+        "z": 0.0
+      },
+      "orthographic": false,
+      "size": 4.849999904632568,
+      "fov": 14.0,
+      "characterViewport": {
+        "serializedVersion": "2",
+        "x": 0.3335132598876953,
+        "y": 0.2554236650466919,
+        "width": 0.1292320191860199,
+        "height": 0.23063936829566956
+      },
+      "barViewport": {
+        "serializedVersion": "2",
+        "x": 0.16257527470588684,
+        "y": 0.07774296402931213,
+        "width": 0.6555544137954712,
+        "height": 0.6575628519058228
+      },
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_ContextUI_1920.png",
+      "sha256": "0f70054299926f3cd83d7995cf0a6a48997abd5303fc06668ffc852a97f5c65c"
+    }
+  ],
+  "clips": [
+    {
+      "actor": "Ordinary",
+      "candidate": "C1",
+      "width": 1280,
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_motion_1280.mp4",
+      "sha256": "a568fd265a304b56364b9fb1e2e7d6c5e0a4dd88b9b1333cab3d953334bc08d6",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "duration": "4.680000",
+        "nb_frames": "55"
+      }
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "C1",
+      "width": 1920,
+      "path": "Evidence/quarter-final-ordinary-02/C1_Ordinary_motion_1920.mp4",
+      "sha256": "163280c0d05d4602a59f6f9f9e83db9a7f4c2d35dbd04e017e7eed465a815b73",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "duration": "4.680000",
+        "nb_frames": "55"
+      }
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q1",
+      "width": 1280,
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_motion_1280.mp4",
+      "sha256": "0eb0bcabd4111de4d2be2e2853a7e10e023fcc1cb56524bd1471f01ef6862476",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "duration": "4.680000",
+        "nb_frames": "55"
+      }
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q1",
+      "width": 1920,
+      "path": "Evidence/quarter-final-ordinary-02/Q1_Ordinary_motion_1920.mp4",
+      "sha256": "c008ba9ecab2ebface75cc1822be9ef410695b17c8c698628f5bd9f7353b78bb",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "duration": "4.680000",
+        "nb_frames": "55"
+      }
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q2",
+      "width": 1280,
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_motion_1280.mp4",
+      "sha256": "3e430cadc96eb0bcb88c0227c90d2f7dc8c9198af093b499f13100f1c279cdea",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "duration": "4.680000",
+        "nb_frames": "55"
+      }
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q2",
+      "width": 1920,
+      "path": "Evidence/quarter-final-ordinary-02/Q2_Ordinary_motion_1920.mp4",
+      "sha256": "ef0e180bdbd8592921275fe2cac2d96c8599c8a689fc735976306793d8077656",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "duration": "4.680000",
+        "nb_frames": "55"
+      }
+    },
+    {
+      "actor": "Prince",
+      "candidate": "C1",
+      "width": 1280,
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_motion_1280.mp4",
+      "sha256": "a17f8a2b84d80e4ca1831d5d6d92f2abd75b9d1f0e430dbc678a6ff71063c343",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "duration": "3.600000",
+        "nb_frames": "42"
+      }
+    },
+    {
+      "actor": "Prince",
+      "candidate": "C1",
+      "width": 1920,
+      "path": "Evidence/quarter-final-prince-02/C1_Prince_motion_1920.mp4",
+      "sha256": "9951c62135830ba81101840a14d5a9be140eebbc66f42580f4712da8288f85ee",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "duration": "3.600000",
+        "nb_frames": "42"
+      }
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q1",
+      "width": 1280,
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_motion_1280.mp4",
+      "sha256": "10ec1c962321ed6b0d4bc9272c02ba12b2f5133fb99f11908368fc94757629da",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "duration": "3.600000",
+        "nb_frames": "42"
+      }
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q1",
+      "width": 1920,
+      "path": "Evidence/quarter-final-prince-02/Q1_Prince_motion_1920.mp4",
+      "sha256": "ada8f54555447c1e5a5f66b491a72940ecaf08a8ebea0cfe538c2e1856a977b9",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "duration": "3.600000",
+        "nb_frames": "42"
+      }
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q2",
+      "width": 1280,
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_motion_1280.mp4",
+      "sha256": "81f921f15c804f35e100824667e892641580a2d8fbf086ab5db0ea83854e3f2a",
+      "stream": {
+        "width": 1280,
+        "height": 720,
+        "duration": "3.600000",
+        "nb_frames": "42"
+      }
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q2",
+      "width": 1920,
+      "path": "Evidence/quarter-final-prince-02/Q2_Prince_motion_1920.mp4",
+      "sha256": "83839446361c276198f450cd0982541d308216ba4c1c3c92599d1f8b26436cb6",
+      "stream": {
+        "width": 1920,
+        "height": 1080,
+        "duration": "3.600000",
+        "nb_frames": "42"
+      }
+    }
+  ],
+  "measurements": [
+    {
+      "actor": "Ordinary",
+      "candidate": "C1",
+      "width": 1280,
+      "samples": 22647,
+      "renderers": 148,
+      "materials": 35,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.005172729492188,
+      "p50": 0.4335033893585205,
+      "p95": 0.5283021330833435,
+      "p99": 0.593105137348175,
+      "gcMean": 10.60025610456131,
+      "draws": 365.4642115953548,
+      "batches": 365.4642115953548,
+      "gcMax": 160032,
+      "allocated": 70868930,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "C1",
+      "width": 1920,
+      "samples": 22420,
+      "renderers": 148,
+      "materials": 35,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003830909729004,
+      "p50": 0.43789681792259216,
+      "p95": 0.5360048413276672,
+      "p99": 0.6089994311332703,
+      "gcMean": 10.707582515611062,
+      "draws": 363.9138715432649,
+      "batches": 363.9138715432649,
+      "gcMax": 160032,
+      "allocated": 70870859,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q1",
+      "width": 1280,
+      "samples": 20342,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003593444824219,
+      "p50": 0.48339709639549255,
+      "p95": 0.5928996801376343,
+      "p99": 0.6706987023353577,
+      "gcMean": 11.801396126241274,
+      "draws": 423.0451283059679,
+      "batches": 423.0451283059679,
+      "gcMax": 160032,
+      "allocated": 70874306,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q1",
+      "width": 1920,
+      "samples": 20473,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003238677978516,
+      "p50": 0.4810941219329834,
+      "p95": 0.5844033360481262,
+      "p99": 0.6575964093208313,
+      "gcMean": 11.725882870121623,
+      "draws": 422.76710789820737,
+      "batches": 422.76710789820737,
+      "gcMax": 160032,
+      "allocated": 70874763,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q2",
+      "width": 1280,
+      "samples": 20560,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.004203796386719,
+      "p50": 0.47829505801200867,
+      "p95": 0.5821003317832947,
+      "p99": 0.6585955023765564,
+      "gcMean": 11.676264591439688,
+      "draws": 422.9514105058366,
+      "batches": 422.9514105058366,
+      "gcMax": 160032,
+      "allocated": 70875066,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Ordinary",
+      "candidate": "Q2",
+      "width": 1920,
+      "samples": 20530,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003341674804688,
+      "p50": 0.4782029390335083,
+      "p95": 0.5893990993499756,
+      "p99": 0.6701955795288086,
+      "gcMean": 11.693326838772528,
+      "draws": 422.71782756941064,
+      "batches": 422.71782756941064,
+      "gcMax": 160032,
+      "allocated": 70875011,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Prince",
+      "candidate": "C1",
+      "width": 1280,
+      "samples": 21720,
+      "renderers": 148,
+      "materials": 35,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.004928588867188,
+      "p50": 0.45219671726226807,
+      "p95": 0.5567035675048828,
+      "p99": 0.635303258895874,
+      "gcMean": 11.052670349907919,
+      "draws": 365.8562615101289,
+      "batches": 365.8562615101289,
+      "gcMax": 160032,
+      "allocated": 70865934,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Prince",
+      "candidate": "C1",
+      "width": 1920,
+      "samples": 21801,
+      "renderers": 148,
+      "materials": 35,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003700256347656,
+      "p50": 0.44790250062942505,
+      "p95": 0.5564979910850525,
+      "p99": 0.6344032883644104,
+      "gcMean": 11.01160497224898,
+      "draws": 363.6690518783542,
+      "batches": 363.6690518783542,
+      "gcMax": 160032,
+      "allocated": 70868231,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q1",
+      "width": 1280,
+      "samples": 20159,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003595352172852,
+      "p50": 0.4900014102458954,
+      "p95": 0.5878047347068787,
+      "p99": 0.6618055701255798,
+      "gcMean": 11.908527208690908,
+      "draws": 423.3311672205963,
+      "batches": 423.3311672205963,
+      "gcMax": 160032,
+      "allocated": 70870518,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q1",
+      "width": 1920,
+      "samples": 20119,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003578186035156,
+      "p50": 0.4909013509750366,
+      "p95": 0.584800124168396,
+      "p99": 0.6585955023765564,
+      "gcMean": 11.932203389830509,
+      "draws": 422.44311347482477,
+      "batches": 422.44311347482477,
+      "gcMax": 160032,
+      "allocated": 70905111,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q2",
+      "width": 1280,
+      "samples": 20105,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003124237060547,
+      "p50": 0.4902990162372589,
+      "p95": 0.5842970609664917,
+      "p99": 0.655102014541626,
+      "gcMean": 11.940512310370554,
+      "draws": 423.1428002984332,
+      "batches": 423.1428002984332,
+      "gcMax": 160032,
+      "allocated": 70916670,
+      "reserved": 221224960,
+      "workingSet": 0
+    },
+    {
+      "actor": "Prince",
+      "candidate": "Q2",
+      "width": 1920,
+      "samples": 20207,
+      "renderers": 208,
+      "materials": 39,
+      "lights": 0,
+      "shadowLights": 0,
+      "seconds": 10.003284454345703,
+      "p50": 0.4875991940498352,
+      "p95": 0.5840986371040344,
+      "p99": 0.6483985185623169,
+      "gcMean": 11.880239520958083,
+      "draws": 422.3353788291186,
+      "batches": 422.3353788291186,
+      "gcMax": 160032,
+      "allocated": 70916359,
+      "reserved": 221224960,
+      "workingSet": 0
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "verdict": "QUARTER_VIEW_READY_FOR_OWNER_COMPARISON",
+  "environment": "LICENSE_BLOCK_CLEARED_BY_OWNER_REFRESH",
+  "historicalBlock": "First launch: sandbox UPM IPC timeout; desktop retry: Unity exit 198, no valid Editor license. Original logs retained.",
+  "sourcePreservation": "PASS",
+  "protectedFiles": 2970,
+  "protectedSpecifications": 74,
+  "rc1Head": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+  "rc1InitialSnapshotExactlyUnchanged": false,
+  "rc1PostLicenseSnapshotExactlyUnchanged": true,
+  "rc1GitHeadBranchStatusIndexUnchanged": true,
+  "rc1ObservedEditorLocalDelta": {
+    "Assets/_SURLHWA/Art/Fonts/KoreanFallback.asset": {
+      "before": {
+        "sha256": "0d9d223b6aa31de7ee48a4c4d7dd305808fda006cd99fc96f1e693ac2e308fbb",
+        "bytes": 49903,
+        "mtime_ns": 1792863648589150400,
+        "attributes": 8224
+      },
+      "after": {
+        "sha256": "0d9d223b6aa31de7ee48a4c4d7dd305808fda006cd99fc96f1e693ac2e308fbb",
+        "bytes": 49903,
+        "mtime_ns": 1793015937246356100,
+        "attributes": 8224
+      }
+    },
+    "UserSettings/Layouts/default-6000.dwlt": {
+      "before": {
+        "sha256": "a15cc6dfe2e5357dfd19062048d308481ad73a1320fc419e0e5369eba9f808e3",
+        "bytes": 58114,
+        "mtime_ns": 1792863648423674600,
+        "attributes": 8224
+      },
+      "after": {
+        "sha256": "ad799600063e4c43addfb0bcf76fd822bb7f441ba68132626363f15dc13cc4d9",
+        "bytes": 58118,
+        "mtime_ns": 1793015937077984400,
+        "attributes": 8224
+      }
+    }
+  },
+  "rc1DeltaAttribution": "Observed during owner license refresh. No agent command targeted RC1 for editing or Editor launch; original and subsequent snapshots both retained, no restore attempted.",
+  "preexistingReviewSliceEditPreserved": true,
+  "changes": [],
+  "runtime": "PASS",
+  "nativeComparisonRenders": 78,
+  "movementClips": 12,
+  "targetedUnityTests": {
+    "id": "2",
+    "testcasecount": "7",
+    "result": "Passed",
+    "total": "7",
+    "passed": "7",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-26 12:24:47Z",
+    "end-time": "2026-10-26 12:24:48Z",
+    "duration": "0.7435663"
+  },
+  "performanceSamples": 12,
+  "newDirectionalRasterAssets": 2,
+  "c1RemainsProductionBaseline": true
+}

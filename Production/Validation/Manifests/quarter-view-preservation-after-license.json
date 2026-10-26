@@ -1,0 +1,700 @@
+{
+  "specifications": {
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\00_MASTER_CANON.md": {
+      "sha256": "4268d2cc60b2fee9a525d4e073c6e5d964a2d8f17d35ea8e08c595181fe980e9",
+      "bytes": 10569
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\01_PRODUCT_VISION.md": {
+      "sha256": "79edd9f55f4fb2cf2399ba6f09bbe8344367b29de0b113f3afccbcf5dc3cc16b",
+      "bytes": 4401
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\02_CORE_LOOP_AND_NIGHT_STRUCTURE.md": {
+      "sha256": "cb52f90d1d23657ee1f8532e2985cd46958738fd78812840d88af479b43faf43",
+      "bytes": 4466
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\10_WORLD_AND_BAR_MEMORY.md": {
+      "sha256": "af370fca22acbecc29669240314eca0fba142a4d9482712ff8d758a4813d4b92",
+      "bytes": 16616
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\11_VISUAL_AND_CHARACTER_DIRECTION.md": {
+      "sha256": "ff34a03f2cc9e34fb67fa35342d268ac8dd35897a199e407f6bef710810bdcb1",
+      "bytes": 11232
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\12_HYBRID_2_5D_DECISION.md": {
+      "sha256": "c942e8c3bacf44d7feaa17d24a7c63e1ffb19d356993ae36d1ec07b01aa858b7",
+      "bytes": 6860
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\14_UI_UX_DIRECTION.md": {
+      "sha256": "f22f5bbee57f9b5dd6e525aa03734685af95d1259ac425f3ae3068ff61ba293f",
+      "bytes": 11919
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\15_AUDIO_DIRECTION.md": {
+      "sha256": "a53e2688b6cae1d98efad8c250a6932e3a6850eeda46a8e4d126638390f5994a",
+      "bytes": 9718
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\20_BARTENDING_CANON.md": {
+      "sha256": "168b2af92749e563894e922b2009862ea5b453c249cfc19290864d4e52b4d40f",
+      "bytes": 8830
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\21_PREPARATION_VOCABULARY.md": {
+      "sha256": "3a6bcc5f19e537be5f874de7b506331d2b667285f4c9f4f8073d19fad088aff1",
+      "bytes": 13393
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\22_RECIPE_KNOWLEDGE_AND_DISCOVERY.md": {
+      "sha256": "dfdeb0fe24ad4ac6cd65ca8996d45d5d21b82bf0dfebb9cf237c0d453635c3f6",
+      "bytes": 12258
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\23_REQUEST_FIT_AND_RESPONSE.md": {
+      "sha256": "779c8b86779feefeda219d77228b499b9efeb8122b14f1766670ac9dc45b4ee1",
+      "bytes": 7879
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\30_COCKTAIL_CATALOG_POLICY.md": {
+      "sha256": "f88430c1cc8418e68664ca788d5de7ecb465cd75c592f4e269abcdbd17b511cf",
+      "bytes": 9689
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\31_CURRENT_AND_ORIGINAL_COCKTAILS.md": {
+      "sha256": "8e671cfcbf298ff5099119151145044bc82855b6bbb68f0d3b5333a62cf23faf",
+      "bytes": 40714
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\32_IBA_LONG_TERM_CATALOG.md": {
+      "sha256": "3dfe4850447a4ca4466dcc96d07a2402374da2fb423d7d982f4395b16a7ac354",
+      "bytes": 11350
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\33_INGREDIENT_AND_GLASSWARE_POLICY.md": {
+      "sha256": "b874b27e9d95ab84fb3a0c4bc1dcc5f63646a97160c9b2a4ca18baad1ad69ce4",
+      "bytes": 12940
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\40_CAMPAIGN_AND_ENDING.md": {
+      "sha256": "fc8b1f316dca43eb2203a83419b2369e1f2019724ceb6618d451ed46faa4e083",
+      "bytes": 13207
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\41_NIGHT_BY_NIGHT.md": {
+      "sha256": "6894eb320c9259209660bbc9b7495f46e461a69990fd8a877d622a465cae6d4d",
+      "bytes": 15625
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\50_SPECIAL_GUEST_MASTER.md": {
+      "sha256": "81aa283b26cb58924a226041cd5471b232b2d35ce3dd7e0fcf1560b35fac8ebc",
+      "bytes": 17267
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\51_LITTLE_PRINCE.md": {
+      "sha256": "2c1f8ef9642548efc4764f78de86f31d8013355d81983d7d3d306c0ad62c6dd1",
+      "bytes": 29782
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\52_CHUNHYANG_MONGRYONG.md": {
+      "sha256": "fdaa25aabceccc389bc134d9f0f954f79e2cbeaa38bbbcdd5ef0ec69e2586be7",
+      "bytes": 32975
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\53_DON_QUIXOTE.md": {
+      "sha256": "93a405b8419be70dbff9d229a7e777583e40c722ac9965cedd56a0cb2a07f9b0",
+      "bytes": 15951
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\54_HAMLET.md": {
+      "sha256": "e0cf014e726f5ede48f4fe8f3446c8d21cb02fc74e2525ceca9b6b6e7d7400dc",
+      "bytes": 21211
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\55_FAUST.md": {
+      "sha256": "f8c00c38e0b709e84915715edd5124b237a5e256d299b112d236d162bde79eef",
+      "bytes": 18829
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\56_SIM_CHEONG.md": {
+      "sha256": "8d614c36d3a0ea1cd6755708f65e272e7b3a83ee79a3196ae1908b9089c55608",
+      "bytes": 22607
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\57_ODYSSEUS.md": {
+      "sha256": "689e3c77878c7130af3b38ba7f9833b25081b3143f1a6f30c4bacf2fe7f8f53b",
+      "bytes": 17884
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\58_FUTURE_REVISITS_AND_GUEST_SEEDS.md": {
+      "sha256": "759b5a187754c6d3084204dc25d19087d4adeda826ee208fb7cfb497e6a45835",
+      "bytes": 22564
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\60_ORDINARY_GUESTS.md": {
+      "sha256": "0c3f1e0d00385123e6d7ec8413ee15ea6e732e434178106e985eb6da12503630",
+      "bytes": 3695
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\61_ORDINARY_REQUEST_DIALOGUE.md": {
+      "sha256": "6af9f2194e50b4521f64f77282dd017401a287afd6c4e5ccd77ab1d15a772cb8",
+      "bytes": 70903
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\62_SERVICE_REACTION_CORPUS.md": {
+      "sha256": "4901bfe6394b5cccafd2d2ef811c529fe3e25958fb0b6b67fe31017341a38237",
+      "bytes": 91669
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\70_TECHNICAL_PRODUCT_BOUNDARIES.md": {
+      "sha256": "4bfcb502caace2e8a22e15912744761c6bb4a960dcb4b4aa82cdf9421ecde68b",
+      "bytes": 4605
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\71_DATA_AUTHORITY_PRINCIPLES.md": {
+      "sha256": "6a75bb6d4e052d876207d4ff4ca20207a1ca2ff1a306265d50002652edbb8be3",
+      "bytes": 4382
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\72_SAVE_AND_PROGRESS_REQUIREMENTS.md": {
+      "sha256": "29a299bd1e361473cb3abc37dedb5d091459e90ceccad0e72ebd0b8a3053277e",
+      "bytes": 4356
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\73_QA_ACCEPTANCE_CONTRACT.md": {
+      "sha256": "cf1ba5f0cd4059008e26f86e3ea1fe1fd3e4ca0ca0847133bb5c507ea265badc",
+      "bytes": 4459
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\80_REFERENCE_IMPLEMENTATION_RC1.md": {
+      "sha256": "41531d61bb4269faa2862bd52f173f3b61b4591b8d3ce5e18a3078fad6d7c1d4",
+      "bytes": 6867
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\81_LESSONS_AND_DO_NOT_REPEAT.md": {
+      "sha256": "0739f0094c3aaae2854c06ce2862453c18c632ead8ed3e397d2d0df6293ea991",
+      "bytes": 10555
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\83_HISTORICAL_INDEX.md": {
+      "sha256": "81db11216d08fe6dabc5e3d80275c2b0d9646f7d3b2ba57b1222d8f7bb8f290e",
+      "bytes": 55545
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\90_CONTRADICTIONS.md": {
+      "sha256": "005221d80d20b2a0d9c53540e5eb9af91caeb081b6e42a5983ba128b0eafc851",
+      "bytes": 6185
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\91_OPEN_DECISIONS.md": {
+      "sha256": "8139baa300fba864eb9d84b3686a42d71807a8c68c4ab440a112a65cb3a68c72",
+      "bytes": 4819
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\92_CANON_MIGRATION_MAP.md": {
+      "sha256": "f229e937815c9b6a7d07860d111fe58844995718ac066365b8db6f97df688639",
+      "bytes": 20260
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_sources\\AUTHORED_DIALOGUE.md": {
+      "sha256": "dd5e4f713db6206abd3bb1f21d391d7c1a7f7cabe40f1be36fae1a1a321669f8",
+      "bytes": 138295
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_sources\\COCKTAIL_ASSET_EVIDENCE.json": {
+      "sha256": "3a33707dc1b5efb28b30a459a8a924bf347b76fba2760a3c9da3f83ee3c91577",
+      "bytes": 35236
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_sources\\IBA_102_MEMBERSHIP.json": {
+      "sha256": "fc4322484b04c5663ff297a96dad758aa3e38a8ec6929fc8c18ef0305f8b1d41",
+      "bytes": 22426
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_sources\\NARRATIVE_EXTRACTION.json": {
+      "sha256": "fc16a5212c5a685959a6ca70746d8fd2087823bc10dd88f98b6b175178442e5f",
+      "bytes": 518928
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_sources\\NARRATIVE_PROFILES.json": {
+      "sha256": "194fabcb2942351b2c423ee04d121db0b76357eac2af733714a4000555a7bd32",
+      "bytes": 16952
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_sources\\OWNER_DECISIONS_APPROVED.txt": {
+      "sha256": "8aba543796038be0167d5acb8501c9bf162cdee72a63c7530211cfd7e27c1de3",
+      "bytes": 7046
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_verification\\FINAL_COVERAGE.md": {
+      "sha256": "0e307e538a229273edb074de9df988fffbd7b22eb15a1ad1544e7093276e8e62",
+      "bytes": 5469
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_verification\\FINAL_VERIFICATION.json": {
+      "sha256": "80d0e8401f2ac4231c20a2b044be44697c9d2f7c1c92e3387db5cfe1941e8265",
+      "bytes": 9149
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_verification\\migration_map.json": {
+      "sha256": "ce681e4976c1d758a068bcafddc3659b3703cd23fae29fdb71788c65a93ab344",
+      "bytes": 161660
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_verification\\PACKAGE_CONTENT_MANIFEST.json": {
+      "sha256": "4e6e63d7a9de34c8c3950be3eefc442ed6c78c7e95de9a6e6814898ef730d883",
+      "bytes": 124943
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_CANON\\_verification\\wording_registry.json": {
+      "sha256": "4313d6640f82800008b6adbc59c106965abe33b8349fa477d81e6ba81311b348",
+      "bytes": 762790
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\00_ARCHITECTURE_EXECUTIVE.md": {
+      "sha256": "0e32f4a6bf91e3aafd23a200ce52b92c78d401df5625e36e6074d3c54ab78394",
+      "bytes": 5130
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\01_SYSTEM_CONTEXT.md": {
+      "sha256": "dd96aa09b9bf84c7b588ca8eeb4321a4170b41d4a7c2640423f1737ed538025e",
+      "bytes": 6754
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\02_DOMAIN_ARCHITECTURE.md": {
+      "sha256": "61c0624e2a4a7592e225ec34d1b91f42c7ab2c81629ae0252a138d80e034b2aa",
+      "bytes": 11802
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\03_DATA_MODEL.md": {
+      "sha256": "c516fa5cc8437bd8505261a4a083873ac4ae8809f488101c32a1b12f8a887924",
+      "bytes": 9183
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\04_RUNTIME_FLOW.md": {
+      "sha256": "e51a43682c48b3d8b238655a81bb767a2749b68774905b8a07cb9d68b5f8abfd",
+      "bytes": 7142
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\05_SAVE_ARCHITECTURE.md": {
+      "sha256": "4a4165c42787882a394f4eee8684ad05612ce94ef0fc35ba475fa9874e50992b",
+      "bytes": 7438
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\10_HYBRID_RENDER_ARCHITECTURE.md": {
+      "sha256": "2e2ab66673204add1c15b31a53f38b4c0dc9529aa2c7fefb88b30dc7550f5290",
+      "bytes": 9696
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\11_CHARACTER_IN_3D_WORLD.md": {
+      "sha256": "e9c2fb0022d0257120e39a1125dcf2103f25ae689c1037d521ca21749c9b6b15",
+      "bytes": 9562
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\12_BARTENDING_PRESENTATION_ARCHITECTURE.md": {
+      "sha256": "2b672e3341ceeee84eba595c393629a7bd6b71b69dea229023c454185c751238",
+      "bytes": 10426
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\13_UI_AUDIO_PRESENTATION_ARCHITECTURE.md": {
+      "sha256": "799589e1f7e57cb1876051dd36716bcd0740c05f2e25ea4b27e38b11133d5f7d",
+      "bytes": 11590
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\20_CONTENT_AUTHORING_PIPELINE.md": {
+      "sha256": "03e6aaff74162be86b5cdeb2852d54776b5c5bc3be239a200601cc4579a3d2b5",
+      "bytes": 8965
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\21_RC1_MIGRATION_PLAN.md": {
+      "sha256": "0aefb9403fc953191373921b9cc4edfac6674df9738cd4d9e37d6583efc43230",
+      "bytes": 14388
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\30_VALIDATION_STRATEGY.md": {
+      "sha256": "f4cbbf82571417f9a97ecc77600e8da287496792e7e84ee42e1ff03b82c4003a",
+      "bytes": 14590
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\31_PERFORMANCE_MEASUREMENT_PLAN.md": {
+      "sha256": "c05722d7e3460c4857ee4408a5e479c98514d7686fd48b5a91c56b1dd9295e18",
+      "bytes": 10329
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\40_VERTICAL_SLICE_SPEC.md": {
+      "sha256": "a8dbf53713b03ece9a3cfd541873d86953da6382635da0d04b29322e3ff26e40",
+      "bytes": 18613
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\41_VERTICAL_SLICE_ACCEPTANCE.md": {
+      "sha256": "4eb9b7d3be246083ee2f8107de76e314342306ef883b1c62290cbb9a7e91592d",
+      "bytes": 12027
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\42_VISUAL_AB_PLAN.md": {
+      "sha256": "7c181902a95911141d34eae7d931aeeee8f005c11a30f694843fcabc4fab3a2f",
+      "bytes": 12849
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\50_PRODUCTION_WORKSPACE_PLAN.md": {
+      "sha256": "a68e9b071e298ebe0f21a0a5f93cc1a5f4d0e01e6743eadfb5e00667ff326d64",
+      "bytes": 6285
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\51_IMPLEMENTATION_SEQUENCE.md": {
+      "sha256": "afc0d00149f4fed42791afd48028d91b7e8bed989235445b920b84e7a48502f2",
+      "bytes": 8132
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\90_ARCHITECTURE_DECISIONS.md": {
+      "sha256": "e42aa81c3518df61892c74a83ea5c57dbb8861f2b52e09a8aace66d35c2ebed9",
+      "bytes": 7462
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\91_ARCHITECTURE_RISKS.md": {
+      "sha256": "f013e2274e9c0004ab2689a65ab9bcfb789c58df529d940a6796bed6057dea68",
+      "bytes": 5322
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\_verification\\ARCHITECTURE_VERIFICATION.json": {
+      "sha256": "4fd59cdf0da58bd08afd149ddbcc4e55fda426fe6c3ace48c09c09ca2f123015",
+      "bytes": 7660
+    },
+    "C:\\Users\\surlw\\.codex\\.chatgpt-projects\\g-p-6a8cfbb439748191ac8fac094112d31b\\SURLHWA_ARCHITECTURE\\_verification\\CANON_TRACEABILITY.md": {
+      "sha256": "6c0f70b5c0362bbe501670708245709755be9fb02246dfc9e57affb80d0a57f6",
+      "bytes": 7547
+    }
+  },
+  "rc1": {
+    "path": "D:\\univ\\surlhwa\\Surlhwa",
+    "branch": "refactor/project-rebuild",
+    "head": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+    "status": " M .codex/config.toml\n M Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleBroad.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleSmall.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleTall.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/Cherry.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/LemonSlice.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/LemonTwist.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/Olive.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/OrangeSlice.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/OrangeZest.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/CocktailGlass.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/CocktailGlassMask.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/Flute.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/FluteMask.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/MixingGlass.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/MixingGlassMask.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/RocksGlass.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/RocksGlassMask.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/TallGlass.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/TallGlassMask.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Hands/Grip.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Ice/IceCluster.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/Fill.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/NormalStream.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/OverflowStream.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/SmallDroplet.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/ThinFloatStream.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/TransferStream.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Jigger.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Spoon.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Tools/SpoonHorizontal.png.meta\n M Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Strainer.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/Faust.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png.meta\n M Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/CounterArms.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/CounterDressing.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/CounterFace.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/CounterTop.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/DisplayNiche.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/Floor.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/Lantern.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/Pedestal.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/Shelf.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/ShelfBottles.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/SidePlant.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/Stool.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/WallPanel.png.meta\n M Assets/_SURLHWA/Art/Environment/ModularBar/WinterWindow.png.meta\n M Assets/_SURLHWA/Art/Fonts/KoreanFallback.asset\n M ProjectSettings/ProjectSettings.asset\n M UserSettings/EditorUserSettings.asset\n M UserSettings/Layouts/default-6000.dwlt\n?? \"Assets/_Recovery/0 (1).unity\"\n?? \"Assets/_Recovery/0 (1).unity.meta\"\n?? \"Assets/_Recovery/0 (2).unity\"\n?? \"Assets/_Recovery/0 (2).unity.meta\"\n",
+    "staged": "",
+    "index_sha256": "e7d22e7d215733d09053f1de69606cc24d2014a349f3b654980f113365cc7e15",
+    "dirty_files": {
+      ".codex/config.toml": {
+        "sha256": "adc64a6df66005dbc3f384f7889bb15596b28cd0b10dff287c11f4ab01e55c03",
+        "bytes": 204,
+        "mtime_ns": 1790585680886331400,
+        "attributes": 8224
+      },
+      "Assets/_Recovery/0 (1).unity": {
+        "sha256": "58c9fad180b8545d8182a7847fc9f3a3d6ce756950b62057bf874c85b8793ac8",
+        "bytes": 557910,
+        "mtime_ns": 1790882548621387500,
+        "attributes": 8224
+      },
+      "Assets/_Recovery/0 (1).unity.meta": {
+        "sha256": "ada7ef4c5d5116c22d2d7fbc05d24c0e69a13d0d251bf2c88894a58e84455005",
+        "bytes": 155,
+        "mtime_ns": 1790882530252522700,
+        "attributes": 32
+      },
+      "Assets/_Recovery/0 (2).unity": {
+        "sha256": "58c9fad180b8545d8182a7847fc9f3a3d6ce756950b62057bf874c85b8793ac8",
+        "bytes": 557910,
+        "mtime_ns": 1790882548821930100,
+        "attributes": 8224
+      },
+      "Assets/_Recovery/0 (2).unity.meta": {
+        "sha256": "8b036ea383d9dadd86237478fde750fe3909564b8d17f3552481f1427a98093e",
+        "bytes": 155,
+        "mtime_ns": 1790882530255740100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleBroad.png.meta": {
+        "sha256": "15ce70562b7f2c1053353536ef2c19ec5b8ce3380c6ef448784386148d367eda",
+        "bytes": 3755,
+        "mtime_ns": 1790882533355697800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleSmall.png.meta": {
+        "sha256": "59266fe965327081283cf52563713034e7b5eca40611670e686e832cc5ca2991",
+        "bytes": 3755,
+        "mtime_ns": 1790882532547220400,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Bottles/BottleTall.png.meta": {
+        "sha256": "564dd230c0768e6f4ad44e2baedb4a6065749f91efa1c2f5f52c3857463977f1",
+        "bytes": 3755,
+        "mtime_ns": 1790882532782623500,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/Cherry.png.meta": {
+        "sha256": "a83c43e74a4b8a80a82e1c98737556b16ebc20147a52a74b4d7501576afd9ddf",
+        "bytes": 3755,
+        "mtime_ns": 1790882530768651100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/LemonSlice.png.meta": {
+        "sha256": "31795ada9161715b6dd0c341f811dc04983c15fb0f0ef0a208e755dbe39fb32d",
+        "bytes": 3755,
+        "mtime_ns": 1790882530917984300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/LemonTwist.png.meta": {
+        "sha256": "0ae299348b5e2233b6d87f55868658d3063624a47a405070bd0df7251d7832f0",
+        "bytes": 3755,
+        "mtime_ns": 1790882532179957100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/Olive.png.meta": {
+        "sha256": "046ce847d0eb9c0dbba3c8423fecf1eee2dc7980cd9245f9656cbc8f694a209a",
+        "bytes": 3755,
+        "mtime_ns": 1790882533264250200,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/OrangeSlice.png.meta": {
+        "sha256": "bc8c82057a54d975d54d7e4b6981c6da411841ea17f7964894d8e6afc5304831",
+        "bytes": 3755,
+        "mtime_ns": 1790882533689037900,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Garnishes/OrangeZest.png.meta": {
+        "sha256": "ec2fde7eaddc4aa33ae45fd24a87979b87ea4141853c7074e180f4ffd6268f7d",
+        "bytes": 3755,
+        "mtime_ns": 1790882531780945000,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/CocktailGlass.png.meta": {
+        "sha256": "6a44eae45d8d72246b9b772e4828fdff36889c5cc6e3132e67cd96a526e8e2ac",
+        "bytes": 3755,
+        "mtime_ns": 1790882531023355700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/CocktailGlassMask.png.meta": {
+        "sha256": "77b77f129ca024cdf2bf3c9b6d3aa8aa9fe1ca7cc2316a76a48986b53271855e",
+        "bytes": 3755,
+        "mtime_ns": 1790882531055979700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/Flute.png.meta": {
+        "sha256": "01f9ee5742152484f8e04a8a42770e1b65d8c058bcf4eb57b1666fc71cdda568",
+        "bytes": 3755,
+        "mtime_ns": 1790882533645507700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/FluteMask.png.meta": {
+        "sha256": "5ff6b806a97acc7a6137982b607ff253d656ac7b09abc75c43dfbc92e271b0c0",
+        "bytes": 3755,
+        "mtime_ns": 1790882531041430200,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/MixingGlass.png.meta": {
+        "sha256": "dc595c1d30428e2d3b13aefe0eb11c5b4bfac44c0db360a479c2c5d2ff3448af",
+        "bytes": 3755,
+        "mtime_ns": 1790882533564439500,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/MixingGlassMask.png.meta": {
+        "sha256": "7fcd5e3b6f9a06edff09c9517a493601657e988be2aafe82648dad256b0fcc6a",
+        "bytes": 3755,
+        "mtime_ns": 1790882533747974800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/RocksGlass.png.meta": {
+        "sha256": "0ea08f3b26561a6c2ce763a8561996e326a0b9d357e62bceacf3a8bb852d57ae",
+        "bytes": 3755,
+        "mtime_ns": 1790882534397303700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/RocksGlassMask.png.meta": {
+        "sha256": "e6eea7f85b5a90497aa6ce6153b69571f9b1502ece2a72a7ac0303ce23afcd0f",
+        "bytes": 3755,
+        "mtime_ns": 1790882532996085400,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/TallGlass.png.meta": {
+        "sha256": "74bedf3aa4956ef83073f0bef5fe268e16f2bd74d161c40a370cd3102c8d86e4",
+        "bytes": 3755,
+        "mtime_ns": 1790882533793519600,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Glassware/TallGlassMask.png.meta": {
+        "sha256": "0c7b02bcc205b15a18b449884656ec6f7954ac34d215cf4659aa303d76f5ae36",
+        "bytes": 3755,
+        "mtime_ns": 1790882531885552100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Hands/Grip.png.meta": {
+        "sha256": "00ca35d520d67c7744de1102c0a7195278901fe3bfd1a76a5567e79cef95f7b5",
+        "bytes": 3755,
+        "mtime_ns": 1790882533157080500,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Ice/IceCluster.png.meta": {
+        "sha256": "ff9a03c64d1f379349400c04acf4dc3836e48eff420088f798ad6d0158b04bbf",
+        "bytes": 3755,
+        "mtime_ns": 1790882534511240300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/Fill.png.meta": {
+        "sha256": "829f577d014b1957376ff050d692c91238a2c4cd7aa47e7f0e50529cc2e241b6",
+        "bytes": 3755,
+        "mtime_ns": 1790882533636740500,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/NormalStream.png.meta": {
+        "sha256": "1e0662e74826a08d5a1018a305a3b612db0c967d11ce83bfca5c632dd32e50d6",
+        "bytes": 3753,
+        "mtime_ns": 1790882534024416800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/OverflowStream.png.meta": {
+        "sha256": "332177cbd947aba42d5f551e36991938c51a643cc3cc202a3003851a687a9da1",
+        "bytes": 3753,
+        "mtime_ns": 1790882530821512900,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/SmallDroplet.png.meta": {
+        "sha256": "cde0eeda44e72c3d0ee06b40cb0781d5282d320a0cfebd70e3980beacbb5ce69",
+        "bytes": 3755,
+        "mtime_ns": 1790882533360719200,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/ThinFloatStream.png.meta": {
+        "sha256": "cc34532e4f9f898dd9430163e84736f45fa0feb534e2009add4843dfd21640d4",
+        "bytes": 3753,
+        "mtime_ns": 1790882532343329500,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Liquids/TransferStream.png.meta": {
+        "sha256": "f955340ec4d2ec477496204ef02558fec5636650562568ae3a53bb9c3c2f5c63",
+        "bytes": 3753,
+        "mtime_ns": 1790882534351187800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Jigger.png.meta": {
+        "sha256": "3c4e7544c266beddf7e08025e08acf4109ac7de40e9e020b0e324db7112d1caa",
+        "bytes": 3755,
+        "mtime_ns": 1790882533558430700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Spoon.png.meta": {
+        "sha256": "d5a21246f2b31835a75705ba77a8432cded409b04efb2349b1922ed88fca729c",
+        "bytes": 3753,
+        "mtime_ns": 1790882532458165300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/SpoonHorizontal.png.meta": {
+        "sha256": "a6c6e8f9ee8299b3bdf06ecce4fa4cf1b29256ed46e1c839a637a727a387e639",
+        "bytes": 3753,
+        "mtime_ns": 1790882534165010600,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Bartending/Pixel/Tools/Strainer.png.meta": {
+        "sha256": "3815d422f69a26bfba556ea0f60e547986f6bc0d81208b1cda14750f0a81a7c8",
+        "bytes": 3755,
+        "mtime_ns": 1790882530552972800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/Bartender.png.meta": {
+        "sha256": "70497dee34a22dbc0249638e176bcbe3398e955701cb8528f3f37c33c14a7ca9",
+        "bytes": 3759,
+        "mtime_ns": 1790882534019875500,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/Chunhyang.png.meta": {
+        "sha256": "8c51140a455741d9cd03fc6bde7982ab509bed4b8b4007ed5f53be169c331e97",
+        "bytes": 3759,
+        "mtime_ns": 1790882533257165700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png.meta": {
+        "sha256": "a236fc09d5a658d6fe826db3b2c18295909a9935cd1cbb089009e7af244c2c69",
+        "bytes": 3759,
+        "mtime_ns": 1790882530883722900,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/Faust.png.meta": {
+        "sha256": "4c90d22be217b9341c70dfe36394eb69ad65cfcf50f09c8fe05ce328453d4c38",
+        "bytes": 3759,
+        "mtime_ns": 1790882530938570200,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png.meta": {
+        "sha256": "cf5a034e5498f82449a36606ef881a516972a2d193c9926a3b0079c6881dd36e",
+        "bytes": 3759,
+        "mtime_ns": 1790882532824469000,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/LittlePrince.png.meta": {
+        "sha256": "5067cf6c50acff26b95b25e41c589406c30876649e986e9d41d89d194bbacbe1",
+        "bytes": 3759,
+        "mtime_ns": 1790882530642017100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/Mongryong.png.meta": {
+        "sha256": "97b130a0b09766ec7385af912ae1e858ffe25afe9ba060144b8f1f8932889930",
+        "bytes": 3759,
+        "mtime_ns": 1790882533472882600,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png.meta": {
+        "sha256": "8e6606155964a4ff943e2f71a96ab14741ffdb19978f24bd48b3ec459095ff70",
+        "bytes": 3759,
+        "mtime_ns": 1790882532101505300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryCoat.png.meta": {
+        "sha256": "7d03819084036df3f6d3e0268ae9b16532437e315993c6b604da2559332b29b8",
+        "bytes": 3759,
+        "mtime_ns": 1790882531756833600,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/OrdinaryPonytail.png.meta": {
+        "sha256": "8d946021ff4553b44df0e43039de56d186e664ae325c9b94f2c31d0f1d9fca5a",
+        "bytes": 3759,
+        "mtime_ns": 1790882532265304900,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png.meta": {
+        "sha256": "ae7879d0f9c1748f7299785a19c737f46169a0e56f72af7db1c077ba284679a6",
+        "bytes": 3759,
+        "mtime_ns": 1790882531142649000,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/CounterArms.png.meta": {
+        "sha256": "b5187b19e752a6ec4b70a406945f1e814e6b24af68448c524bbe4791777df7dd",
+        "bytes": 3761,
+        "mtime_ns": 1790882534751684900,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/CounterDressing.png.meta": {
+        "sha256": "79b06634caa02d37117d9cef4bdaf533e44a3ecefad54c0fe68a8b1eac46f92e",
+        "bytes": 3761,
+        "mtime_ns": 1790882534151746800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/CounterFace.png.meta": {
+        "sha256": "4cdf10271fbb02a9d1786fd2e6affcf3c03f28b6019b29042c24dfe182c62920",
+        "bytes": 3761,
+        "mtime_ns": 1790882532939452300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/CounterTop.png.meta": {
+        "sha256": "c602179ac7d69ca071ec5952d8192c00856f4918bf1433856661144ef9fb19cc",
+        "bytes": 3761,
+        "mtime_ns": 1790882533683524600,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/DisplayNiche.png.meta": {
+        "sha256": "ef1e7503777ec7619e782e8732c866954dfb26a46878ac541e0828d5ea381a33",
+        "bytes": 3761,
+        "mtime_ns": 1790882531957448800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/Floor.png.meta": {
+        "sha256": "e5f512f7eb2881d6517420698ef7040d99c343abd0e536f294fceaf53770a4db",
+        "bytes": 3761,
+        "mtime_ns": 1790882531613435800,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/Lantern.png.meta": {
+        "sha256": "51ef34074b3561307fe5969782ff7e339dfe40d2a0b3557db4672c089be8f1c6",
+        "bytes": 3761,
+        "mtime_ns": 1790882532772592300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/Pedestal.png.meta": {
+        "sha256": "ddf2f2ac508c2780fd39fbc480b7a92a1f7c6be6e3b0dd7501eff2bc6b6c0157",
+        "bytes": 3761,
+        "mtime_ns": 1790882534338142700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/Shelf.png.meta": {
+        "sha256": "a7567f96d67d01182cb3230edf3f8929da10ebe18914192857b98245b9305bec",
+        "bytes": 3761,
+        "mtime_ns": 1790882531516126900,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/ShelfBottles.png.meta": {
+        "sha256": "8c4f1218eda90d8dc193af6107d0a44b06817e6a0ccaae6c0c5472d62bf0d608",
+        "bytes": 3761,
+        "mtime_ns": 1790882534654246700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/SidePlant.png.meta": {
+        "sha256": "fd9c62d6faff45f28f19a22c6086ef3f74ad459bff0d9502483abf71b86c2b77",
+        "bytes": 3761,
+        "mtime_ns": 1790882530701063100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/Stool.png.meta": {
+        "sha256": "fe950c83c0f023972ca7f1ca4f5177980314625b2e9a810955d10ee54fb07f18",
+        "bytes": 3761,
+        "mtime_ns": 1790882533421753100,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/WallPanel.png.meta": {
+        "sha256": "14c1ff11a0d9cfee28443d6565818208b066153c2c8b6bade23ee4561f90b411",
+        "bytes": 3761,
+        "mtime_ns": 1790882533920435700,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Environment/ModularBar/WinterWindow.png.meta": {
+        "sha256": "a73d387bbf807e6f32ad2312ddefe8febcf9233198788c977edeab7ae6a6b1a2",
+        "bytes": 3761,
+        "mtime_ns": 1790882530484388300,
+        "attributes": 32
+      },
+      "Assets/_SURLHWA/Art/Fonts/KoreanFallback.asset": {
+        "sha256": "0d9d223b6aa31de7ee48a4c4d7dd305808fda006cd99fc96f1e693ac2e308fbb",
+        "bytes": 49903,
+        "mtime_ns": 1793015937246356100,
+        "attributes": 8224
+      },
+      "ProjectSettings/ProjectSettings.asset": {
+        "sha256": "7164a495ab0f50825079f51dec8bdc2e70b531a0341121d868cda53434cda827",
+        "bytes": 24608,
+        "mtime_ns": 1790691430971748100,
+        "attributes": 8224
+      },
+      "UserSettings/EditorUserSettings.asset": {
+        "sha256": "5cd5ff72b9756795c51adda5e2d646a0fe9e479d242f1fde244c1fe792c03bb3",
+        "bytes": 1856,
+        "mtime_ns": 1790882549028228200,
+        "attributes": 8224
+      },
+      "UserSettings/Layouts/default-6000.dwlt": {
+        "sha256": "ad799600063e4c43addfb0bcf76fd822bb7f441ba68132626363f15dc13cc4d9",
+        "bytes": 58118,
+        "mtime_ns": 1793015937077984400,
+        "attributes": 8224
+      }
+    }
+  }
+}

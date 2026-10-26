@@ -2788,3 +2788,47 @@ review. Full Codex, later ACTs, mass guest/cocktail sets and final audio product
 remain deferred/out of scope. Package:
 `Production/Validation/review-act1-art.html`, `ACT1_ART_GATE2_REVIEW.md`,
 `Manifests/art-gate2-review.json`; execution rulings in `ACT1_ART_PASS_PLAN.md`.
+
+## Quarter View visual spike - 2026-10-26
+
+Separate visual-direction spike based on ACT 1 art integration ed88773/dcc0297.
+Disposition: QUARTER_VIEW_READY_FOR_OWNER_COMPARISON; owner visual approval remains
+pending and C1 remains the accepted Production baseline. No ACT 2 work or push.
+
+Bar_QuarterView is a sibling of the actual ACT 1 scene. Two fixed soft quarter
+views compare orthographic against restrained 14-degree perspective. Existing bar
+footprint, character roots/anchors and colliders remain; Q-only snow, shallow
+exterior/shelf details and reused counter-side art clarify depth. Two provisional
+back-quarter seated images are retained separately with exact prompts/import
+provenance; no accepted art was regenerated. Existing active bartending returns
+to C1 projection without changing input, actual liquid, service or progression.
+
+Final compilation passes (inherited proof-field CS0108 warning); licensed Unity
+Player build succeeds with zero build errors/warnings. Targeted Editor tests:
+7/7 PASS. Final ordinary/Prince Player runs: 7/9 checks, no runtime errors,
+1,224-file source/Player inventories unchanged. Review package: 78 actual native
+720p/1080p stills, 12 motion replay clips and 12 bounded performance rows.
+Camera comparisons preserve encoded ACT 1 checkpoints. No broad campaign QA was
+rerun. Motion uses actual controller samples; service preparation is a technical
+fixture, not native-input validation. Prince rear-pose study is static; his motion
+control retains accepted poses. Q Prince ContextUI is a forced diagnostic; normal
+active bartending remains C1. No 60 fps, audio or final game-feel PASS is claimed.
+
+Initial sandbox UPM IPC failure and missing-license exit 198 are retained. Owner
+license refresh cleared the blocker. Preliminary ground-edge, snow-contrast and
+coat/stool observations were corrected before final evidence. Incidental Unity
+serialization of two seated materials was restored to exact original bytes; the
+Editor test uses temporary materials, and final build/captures were repeated.
+
+2,970 protected source/evidence files and 74 Canon/Architecture files are checked.
+RC1 Git HEAD/branch/status/index is preserved. During owner license refresh its
+local Editor layout bytes and unchanged font timestamp changed; the initial and
+post-refresh snapshots are both retained, no RC1 file was restored or edited by
+this spike, and the post-refresh snapshot remains stable. This is disclosed, not
+reported as an exactly unchanged initial filesystem snapshot. The pre-existing
+review-slice.html edit is preserved and excluded.
+
+Human comparison still owns warmth, pixel coherence, scale/contact impression,
+directional transitions, UI composition and overall emotional effect. New art is
+SPIKE_ONLY_UNAPPROVED. No baseline promotion is made. Package and reproducible
+launcher: Production/Validation/QUARTER_VIEW_REVIEW.md and review-quarter-view.html.

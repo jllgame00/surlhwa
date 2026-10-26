@@ -1,0 +1,56 @@
+{
+  "classification": "SPIKE_ONLY_UNAPPROVED_DIRECTIONAL_STUDY",
+  "source": "SourceArt/QuarterView/SeatedBackQuarterAtlasAnonymous.png",
+  "sourceSha256": "b42304dd6769219c3c4276110c6ae256130d2b5bb6340bb4d1dc5bebdc384f45",
+  "method": "Alpha-bounds crop, nearest-neighbor normalization to the existing seated frame canvas. No accepted source overwritten.",
+  "assets": [
+    {
+      "path": "Unity/Assets/Surlhwa/QuarterView/PrinceBackQuarter.png",
+      "sourceHalf": [
+        0,
+        0,
+        887,
+        887
+      ],
+      "alphaBounds": [
+        251,
+        147,
+        734,
+        728
+      ],
+      "normalizedSize": [
+        63,
+        76
+      ],
+      "pasteAt": [
+        28,
+        9
+      ],
+      "sha256": "277dd1fdb4a0a3d5bc58c9ccc19403f360174232d59713cad2706bfb08e31e80"
+    },
+    {
+      "path": "Unity/Assets/Surlhwa/QuarterView/OrdinaryBackQuarter.png",
+      "sourceHalf": [
+        887,
+        0,
+        1774,
+        887
+      ],
+      "alphaBounds": [
+        181,
+        157,
+        652,
+        736
+      ],
+      "normalizedSize": [
+        62,
+        76
+      ],
+      "pasteAt": [
+        28,
+        9
+      ],
+      "sha256": "c379ba19fb6154f823b11b44451a22830d7fdc7c9197ccfb80919128bdacb1b4"
+    }
+  ]
+}

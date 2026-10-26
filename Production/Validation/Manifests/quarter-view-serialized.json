@@ -1,0 +1,12 @@
+{
+  "originalBlocks": 1581,
+  "spikeBlocks": 1831,
+  "changedOriginalBlocks": [
+    9223372036854775807
+  ],
+  "removedOriginalBlocks": [],
+  "newBlocks": 250,
+  "originalRootsPreserved": true,
+  "serializedReferences": 112,
+  "unresolved": []
+}

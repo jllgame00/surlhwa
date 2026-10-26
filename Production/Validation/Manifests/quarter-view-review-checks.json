@@ -1,0 +1,12 @@
+{
+  "linksChecked": 172,
+  "missing": [],
+  "visuallyInspected": [
+    "QUARTER_VIEW_COMPARISON.png",
+    "Evidence/quarter-final-prince-02/Q1_Prince_Composition_1920.png",
+    "Evidence/quarter-final-prince-02/Q1_Prince_ContextUI_1280.png",
+    "Evidence/quarter-final-ordinary-02/Q1_Ordinary_motion_1280/0008.png"
+  ],
+  "additionalInspection": "720p Q1/Q2 composition, wide and grounding previews; exact final source has same rendering parameters. Final board shows final C1/Q1/Q2 composition/wide/grounding. All native dimensions and clip streams verified by packager.",
+  "ownerApproval": "PENDING"
+}
