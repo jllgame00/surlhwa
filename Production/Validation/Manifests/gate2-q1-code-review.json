@@ -1,0 +1,50 @@
+{
+  "review": "Independent read-only focused review and build/launcher follow-up",
+  "result": "No critical or important defects found",
+  "reviewed": [
+    "Immediate camera projection switch, nonblocking reveal below reading UI",
+    "No input raycaster, no timeScale or progression mutation",
+    "Single reused reveal canvas and disable/expiry cleanup",
+    "Memory rotation only; receipt, variant and chair offset preserved",
+    "Proof capture order follows Q1 presentation",
+    "Default build compiles accepted scene without regenerating art or old evidence",
+    "Owner launcher copies earned checkpoints into isolated saves without simulated inputs"
+  ],
+  "validationLimits": [
+    "Reviewer did not execute Unity or Player",
+    "Actual runtime/media and checkpoint completion verified separately",
+    "Subjective visual, pacing and audio judgment remains owner-owned"
+  ],
+  "editsByReviewer": false,
+  "captureHarnessFollowup": {
+    "finding": "Fine-pour prediction could stall between frame increments at 50 ms",
+    "resolution": "Complete within unchanged strict .5 ml tolerance when next step would overshoot; release keys and clear wait flag",
+    "regression": "Exact 29.874/30/.25 case plus strict boundary, unacceptable measurement and normal progress; Q1 tests 7/7",
+    "reviewerFinal": "Prior important finding resolved; no remaining defect found"
+  },
+  "observerFollowup": {
+    "finding": "Optional Q1 postconditions searched the controller object and could silently skip the separate Q1 root",
+    "resolution": "Scene-root lookup, explicit Bar_Q1 presence, correct Q1 child hierarchy, exact reveal counts, and six mandatory named postconditions in package validation",
+    "reviewerFinal": "Silent-skip issue resolved; no remaining defect found",
+    "confirmedReports": {
+      "open": "173 checks, PASS, zero errors",
+      "quietStills": "76 checks, PASS, zero errors"
+    }
+  },
+  "lateSplashRegression": {
+    "evidence": "Quiet media slot13: recognized Gin Fizz, good Shake quality, weak preparation with late_splash_missing; actual soda14.727195ml below existing14.75ml minimum",
+    "resolution": "QA aim within .2ml; measurement assertion tightened from .5ml to .25ml; no production tolerance/rate changes",
+    "tests": "7/7 Q1 tests including captured amount and strict .25ml edge",
+    "productionSourceEquivalence": "Only CampaignPlayerProof.cs and Q1ProductionTests.cs differ between archived passing Open media Player and final active Player"
+  },
+  "finalFollowup": {
+    "result": "No important defects found",
+    "confirmed": [
+      ".2ml aim and strict .25ml assertion reject the captured late-splash failure and boundary",
+      "Recorded and active source inventories differ only in QA harness and its test",
+      "Retained and active Player each match all284file hashes",
+      "Review and launcher paths select final evidence correctly"
+    ],
+    "scope": "Read-only; no Unity execution; runtime/media/performance completion verified separately"
+  }
+}

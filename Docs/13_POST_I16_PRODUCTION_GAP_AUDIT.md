@@ -2875,3 +2875,51 @@ focused-view hard cuts remain explicit presentation debt. See
 Production/Validation/Q1_POLISH_REVIEW.md, review-q1-polish.html and the associated
 q1-polish manifests for evidence, limits and reproducible commands. Do not begin
 ACT 2 or revert the direction to C1 without explicit owner instruction.
+
+## Approved Q1 ACT 1 Production integration - 2026-10-27
+
+Owner confirmed Q1 and its bounded polish as the Production spatial baseline.
+Q2 is REFERENCE_ONLY; C1 is historical accepted evidence. No camera exploration
+or ACT 2 work was performed. Normal builds now compile the accepted Bar_Q1 scene
+without regenerating historical art/scene or overwriting the old polish manifest.
+
+Integration adds only a nonblocking 220 ms focused-view dim/reveal and Q1-facing
+memory star. Projection changes immediately; input and progression are never
+owned by the transition. Actual liquid/domain authority, all four methods,
+Prince content, Return-Visit Understanding, knowledge/FIT/recognition, save format,
+UI, animation and audio policy remain unchanged. No serialized scene/prefab or
+project-setting changes. Approved polish and recorded media Players are archived.
+
+Validation: 50 unique targeted checks resolved; final Q1 regression rerun 7/7.
+Build succeeds with zero errors/warnings. Full Open 720p passes 173 checks/54
+stills; Quiet return/closing 1080p passes 76/29; completed Open and Quiet Continue
+pass 11/10 each. Both saved generations remain byte-identical after Continue.
+All six explicit Q1 postconditions are present in every final report. One correct
+chair/star memory follows each existing outcome rule. There are 103 named native
+stills, two playthroughs, nine clips and retained raw frames/mixes.
+
+Capture-only fine-pour timing, strict late-splash precision and separate Q1-root
+observer corrections are documented, including original failed/superseded runs.
+The valid Open media Player is retained exactly; it differs from the final Player
+only in the QA recorder and its test. All other production source/assets/content
+are identical. Simulated production InputSystem evidence is NOT OS-native proof.
+
+Two bounded held-pose samples keep 225 renderers, 46 materials, about 429-431
+batches, no realtime lights/shadows, about 67.7 MiB allocated and zero sampled idle
+GC. p50 0.523-0.541 ms, p95 0.676-0.765 ms; the tail is modestly above the earlier
+sample, with both comparisons retained. This is not normal-play GC, GPU timing or
+minimum-machine certification. Recorded audio is shorter than wall-clock video
+by 3.845 s / 1.985 s; live review is required for audiovisual synchronization.
+
+Preservation: 74 Canon/Architecture files, frozen RC1 snapshot, 918 protected
+native evidence files and the owner-local review-slice.html are unchanged.
+HUMAN_SIGNOFF_REQUIRED: one final Gate 2 review of all twelve requested areas.
+VALIDATION_DEBT: historical native-input environment closure, capture audiovisual
+sync and minimum-hardware profiling. DEFERRED_PRESENTATION: directional transitions,
+oblique pixel shimmer, deeper focused-view continuity, final environment/character,
+UI/Codex and audio/music polish. None reopens Q1. ACT 2-7 remain OUT_OF_SCOPE.
+
+Result: GATE2_Q1_ACT1_READY_FOR_OWNER_REVIEW.
+Review: [Q1 ACT 1 Gate 2](../Production/Validation/review-gate2-q1.html),
+[technical report](../Production/Validation/GATE2_Q1_REVIEW.md),
+[validation](../Production/Validation/Manifests/gate2-q1-validation.json).

@@ -7,13 +7,23 @@ begun. Gameplay, Canon and architecture authorities remain unchanged.
 
 Open `Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity`. Normal Unity Build/Build And Run and
 `CampaignBuilder.BuildPlayer` / `BuildExistingPlayer` and `run_unity.ps1 -Operation Build`
-select Q1. Existing ACT 1 proof/native launchers now target that Player; their
-assertions and input protocols are unchanged. The build lives at
+select Q1. Existing ACT 1 launchers target that Player; simulated production input
+and OS-native evidence remain separately classified. The build lives at
 `Validation/Builds/Q1Production/SurlhwaQ1.exe`; historical C1/ACT 1/QuarterView
 builds and review evidence are retained separately. Q1 has no player camera
 selector. Existing focused bartending is retained, returning to Q1 afterward.
 
-Current bounded-polish review: [comparison page](Validation/review-q1-polish.html),
+Q1 and the bounded polish are now **owner approved**:
+[recorded ruling](Validation/Q1_OWNER_CONFIRMATION.md). Normal builds compile the
+accepted scene directly; historical spike reconstruction is an explicit utility.
+The ACT 1 integration adds a short nonblocking focus reveal and Q1 memory facing.
+Final Gate 2 package: [review page](Validation/review-gate2-q1.html),
+[technical report and evidence limits](Validation/GATE2_Q1_REVIEW.md).
+Use `Tools/run_gate2_q1.ps1 -Start New -Height 1080` for isolated interactive review;
+`First`, `Warmth`, `Clarity`, `QuietClarity`, `OpenMemory` and `QuietMemory` select earned checkpoints.
+ACT 2 remains stopped pending the one final Gate 2 owner approval.
+
+Preserved bounded-polish review: [comparison page](Validation/review-q1-polish.html),
 [report](Validation/Q1_POLISH_REVIEW.md), [plan](Validation/Q1_POLISH_PLAN.md).
 Use `Tools/run_q1_polish.ps1 -EvidenceName q1-owner-01 -Interactive` for a fresh
 isolated review save. Running the Production Player directly uses the existing

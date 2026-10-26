@@ -23,6 +23,16 @@ namespace Surlhwa.Editor
             for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++)
                 if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)
                     throw new InvalidOperationException("Unsaved scene; no owner scene replaced.");
+            CampaignBuilder.Sync();
+            if(!File.Exists(ScenePath)) throw new InvalidOperationException("Approved Q1 Production scene is missing; do not silently reconstruct it from historical evidence.");
+            BuildApprovedScene();
+        }
+        // Historical reproduction only. Normal Production builds never regenerate accepted art/scene.
+        public static void RebuildFromHistoricalSpike()
+        {
+            for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++)
+                if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)
+                    throw new InvalidOperationException("Unsaved scene; no owner scene replaced.");
             Directory.CreateDirectory(Root); CampaignBuilder.Sync(); AssetDatabase.Refresh();
             // The retained review scene supplies the accepted Q1 geometry. Never save over it.
             var scene=EditorSceneManager.OpenScene(QuarterViewBuilder.ScenePath,OpenSceneMode.Single);
@@ -56,10 +66,14 @@ namespace Surlhwa.Editor
             EditorSceneManager.SaveScene(scene,ScenePath);
             // Ordinary Unity Build/Build And Run uses the same owner-locked Production scene.
             EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene(ScenePath,true)};
+            BuildApprovedScene();
+        }
+        private static void BuildApprovedScene()
+        {
             string output=Path.GetFullPath("../Validation/Builds/Q1Production/SurlhwaQ1.exe");
             Directory.CreateDirectory(Path.GetDirectoryName(output));
             var report=BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=new[]{ScenePath},locationPathName=output,target=BuildTarget.StandaloneWindows64,options=BuildOptions.Development});
-            File.WriteAllText("../Validation/Manifests/q1-polish-build.json",JsonUtility.ToJson(new BuildRecord{result=report.summary.result.ToString(),errors=report.summary.totalErrors,warnings=report.summary.totalWarnings,bytes=report.summary.totalSize,seconds=report.summary.totalTime.TotalSeconds,scene=ScenePath},true));
+            File.WriteAllText("../Validation/Manifests/q1-production-build.json",JsonUtility.ToJson(new BuildRecord{result=report.summary.result.ToString(),errors=report.summary.totalErrors,warnings=report.summary.totalWarnings,bytes=report.summary.totalSize,seconds=report.summary.totalTime.TotalSeconds,scene=ScenePath},true));
             File.Copy("Assets/Surlhwa/SliceAssets/Noto-OFL.txt",Path.Combine(Path.GetDirectoryName(output),"Noto-OFL.txt"),true);
             if(report.summary.result!=BuildResult.Succeeded) throw new InvalidOperationException("Q1 build failed");
             Debug.Log("Q1_PRODUCTION_BUILD_SUCCEEDED");

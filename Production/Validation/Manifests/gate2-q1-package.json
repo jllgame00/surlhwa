@@ -1,0 +1,65 @@
+{
+  "status": "GATE2_Q1_ACT1_READY_FOR_OWNER_REVIEW",
+  "runs": [
+    {
+      "run": "gate2-q1-open-720-03",
+      "label": "Full ACT 1 / Open / 720p",
+      "checks": 173,
+      "captures": 54,
+      "process": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 649.5910077999999,
+        "maxWorkingSetBytes": 584937472
+      },
+      "tier": "Simulated production InputSystem in built Player; NOT native OS input"
+    },
+    {
+      "run": "gate2-q1-quiet-1080-05",
+      "label": "Warmth return through Quiet / 1080p",
+      "checks": 76,
+      "captures": 29,
+      "process": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 294.6837714,
+        "maxWorkingSetBytes": 614334464
+      },
+      "tier": "Simulated production InputSystem in built Player; NOT native OS input"
+    },
+    {
+      "run": "gate2-q1-continue-open-05",
+      "label": "Open completed-save Continue / 1080p",
+      "checks": 11,
+      "captures": 10,
+      "process": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 7.034725099999999,
+        "maxWorkingSetBytes": 564301824
+      },
+      "tier": "Simulated production InputSystem in built Player; NOT native OS input"
+    },
+    {
+      "run": "gate2-q1-continue-quiet-05",
+      "label": "Quiet completed-save Continue / 720p",
+      "checks": 11,
+      "captures": 10,
+      "process": {
+        "exitCode": 0,
+        "timedOut": false,
+        "seconds": 6.3753617,
+        "maxWorkingSetBytes": 545865728
+      },
+      "tier": "Simulated production InputSystem in built Player; NOT native OS input"
+    }
+  ],
+  "linksVerified": 150,
+  "evidenceClasses": [
+    "targeted automated tests",
+    "simulated production input with actual native-resolution renders/audio",
+    "pose-held bounded performance",
+    "historical native-input environment debt",
+    "pending owner subjective review"
+  ]
+}

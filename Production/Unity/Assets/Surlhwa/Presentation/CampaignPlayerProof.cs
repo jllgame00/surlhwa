@@ -16,11 +16,13 @@ namespace Surlhwa.Presentation
 {
     // Explicit simulated-input tier. Never invoked by the OS-native harness.
     // Every tested action goes through the same UI/InputSystem adapter as the player.
+    [DefaultExecutionOrder(1100)]
     public sealed class CampaignPlayerProof : MonoBehaviour
     {
         private CampaignController owner; private string output,fixture; private Keyboard keyboard; private Mouse mouse;
         private Vector2 pointer; private Key[] keys=Array.Empty<Key>(); private bool down,failed; private RenderTexture render;
         private bool stirInput; private Vector2 stirCenter; private float stirRadius,stirAngle;
+        private bool finePourInput; private ContainerRole fineRole; private decimal fineStart,fineTarget; private Key fineKey;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
         private string Arg(string key) { var args=Environment.GetCommandLineArgs(); int i=Array.IndexOf(args,key); return i<0 || i+1>=args.Length ? null : args[i+1]; }
@@ -54,12 +56,15 @@ namespace Surlhwa.Presentation
                 if(phase==CampaignPhase.Brewing)
                 {
                     if(!visited.Add(s.State.SlotIndex)) { Fail("Unexpected retry"); yield break; }
-                    if(s.State.SlotIndex==10 || s.State.SlotIndex==16) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
+                    if(s.State.SlotIndex==5 || s.State.SlotIndex==10 || s.State.SlotIndex==16) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==3 || s.State.SlotIndex==5) { yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),s.State.SlotIndex==3 ? "recipe_dry_martini" : "recipe_manwol"); yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial recipe page "+page); yield return Capture("codex-clues-"+s.State.SlotIndex); yield return Click("돌아가기  Esc"); }
                     yield return Prepare(plan[s.State.SlotIndex]); continue;
                 }
                 if(phase==CampaignPhase.Choice) { yield return Capture("prince-choice"); yield return Press(Key.Enter); Check(s.State.Phase==CampaignPhase.ChoiceResponse && s.State.PrinceChoice=="keep","keyboard choice exactly once through production focus"); continue; }
-                if(phase==CampaignPhase.Intro && s.CurrentEncounter.PrinceVisit.HasValue && s.State.LineIndex==0) yield return Capture("prince-intro-"+s.CurrentEncounter.PrinceVisit);
+                if(phase==CampaignPhase.Intro && s.CurrentEncounter.PrinceVisit.HasValue && s.State.LineIndex==0) {
+                    ArchiveCheckpoint("prince-intro-"+s.CurrentEncounter.PrinceVisit);
+                    yield return Capture("prince-intro-"+s.CurrentEncounter.PrinceVisit);
+                }
                 if(phase==CampaignPhase.Farewell && s.CurrentEncounter.PrinceVisit==PrinceVisit.Clarity) yield return Capture("prince-farewell-"+s.State.LineIndex);
                 if(media && s.CurrentText!=null) yield return new WaitForSecondsRealtime(1.5f);
                 yield return Click(phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter");
@@ -70,6 +75,18 @@ namespace Surlhwa.Presentation
             Check(owner.Session.State.Services.Count==17,"17 actual services"); Check(owner.Session.State.CompletedOccurrences.Count==17,"17 natural departures");
             Check(owner.Session.State.ActComplete && owner.Memory.Visible && owner.Memory.Glowing==(fixture!="quiet"),"earned memory variant after return-visit understanding");
             Check(owner.Session.Knowledge.KnownReceipts.Count==6,"six recipes learned by real services");
+            var q1=FindFirstObjectByType<Q1ProductionView>();
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Bar_Q1")
+                Check(q1!=null,"Q1 Production presentation root resolves separately from controller");
+            if(q1!=null) {
+                Check(!q1.Focused && Quaternion.Angle(owner.Camera.transform.rotation,Q1ProductionView.WorldAngle)<.001f,"Q1 restored after final service");
+                var star=owner.Memory.transform.Find("MEM-01 small star");
+                Check(star!=null && Quaternion.Angle(star.rotation,Q1ProductionView.WorldAngle)<.001f,"earned star follows Q1 facing");
+                int revealCount=q1.GetComponentsInChildren<Canvas>().Count(c=>c.name=="Q1 focus reveal");
+                Check(revealCount==(visited.Count>0 ? 1 : 0),"focus reveal is created once for services, absent on completed Continue");
+                Check(!q1.GetComponentsInChildren<Image>().Any(i=>i.name=="Warm charcoal" && i.enabled),"focus reveal cleaned up after service");
+                Check(FindObjectsByType<Renderer>(FindObjectsSortMode.None).Where(r=>r.enabled).All(r=>r.sharedMaterials.All(m=>m!=null && m.shader!=null && m.shader.name!="Hidden/InternalErrorShader")),"active renderers have materials and shaders");
+            }
             yield return Click("도감  Tab");
             foreach(var r in owner.Content.Catalog.Recipes.Values) { yield return Click(owner.Content.Catalog.Cocktails[r.CocktailId].Name); yield return Capture("codex-known-"+r.Method+"-"+r.Id); }
             yield return Click("돌아가기  Esc"); yield return Click("설정  Esc"); yield return Click("글자 크기 바꾸기"); yield return Capture("settings-large"); yield return Click("돌아가기  Esc");
@@ -103,13 +120,30 @@ namespace Surlhwa.Presentation
         { InputSystem.QueueStateEvent(keyboard,new KeyboardState(keys)); var state=new MouseState{position=pointer}.WithButton(MouseButton.Left,down); InputSystem.QueueStateEvent(mouse,state); }
         private void QueueStirForCurrentFrame()
         {
-            if(!stirInput || InputState.currentUpdateType!=InputUpdateType.Dynamic) return;
+            if(InputState.currentUpdateType!=InputUpdateType.Dynamic) return;
+            if(finePourInput) {
+                // Anticipate the real adapter step before submitting simulated keys. A PNG
+                // capture stall must not make this fixture overshoot; no liquid/time is injected.
+                decimal measured=owner.Session.Brew.Container(fineRole).TotalMl-fineStart;
+                decimal next=owner.Content.Tuning.FinePourRate*(decimal)Math.Min(Time.unscaledDeltaTime,.25f);
+                if(FinePourComplete(measured,fineTarget,next)) finePourInput=false;
+                keys=finePourInput && measured+next<=fineTarget+.12m ? new[]{fineKey,Key.LeftShift} : Array.Empty<Key>();
+                Queue();
+            }
+            if(!stirInput) return;
             // Capture can stall a frame. Deliver this frame's simulated motion before
             // input processing, using the same elapsed time as the production adapter.
             // No recipe, technique or gameplay time is injected or changed.
             stirAngle+=Mathf.Min(Time.unscaledDeltaTime,.25f)*150*Mathf.Deg2Rad;
             pointer=stirCenter+new Vector2(Mathf.Cos(stirAngle),Mathf.Sin(stirAngle))*stirRadius;
             Queue();
+        }
+        private static bool FinePourComplete(decimal measured,decimal target,decimal next)
+        {
+            // Do not wait forever between frame-sized increments once the unchanged
+            // aim is met and the next step would overshoot. Stay inside the existing
+            // .25 ml preparation tolerance (not merely the older .5 ml fixture check).
+            return measured>=target-.12m || (Math.Abs(measured-target)<.2m && measured+next>target+.12m);
         }
         private IEnumerator Idle()
         { float until=Time.realtimeSinceStartup+10; while(owner.Busy || owner.Session?.IsSaving==true) { if(Time.realtimeSinceStartup>until) { Fail("Save timeout"); yield break; } yield return null; } }
@@ -144,10 +178,12 @@ namespace Surlhwa.Presentation
             keys=new[]{key}; Queue();
             // Allow the production adapter's maximum 0.25 s step at 30 ml/s before switching to fine flow.
             while(owner.Session.Brew.Container(role).TotalMl-start<ml-8m) { if(Time.realtimeSinceStartup>until) { Fail("Pour stalled"); yield break; } yield return null; }
-            keys=Array.Empty<Key>(); Queue(); yield return null; keys=new[]{key,Key.LeftShift}; Queue();
-            while(owner.Session.Brew.Container(role).TotalMl-start<ml-.12m) { if(Time.realtimeSinceStartup>until) { Fail("Fine pour stalled"); yield break; } yield return null; }
-            keys=Array.Empty<Key>(); Queue(); yield return new WaitForSecondsRealtime(.08f);
-            Check(Math.Abs(owner.Session.Brew.Container(role).TotalMl-start-ml)<.5m,"measured "+id);
+            keys=Array.Empty<Key>(); Queue(); yield return null;
+            fineRole=role; fineStart=start; fineTarget=ml; fineKey=key; finePourInput=true;
+            while(finePourInput && owner.Session.Brew.Container(role).TotalMl-start<ml-.12m) { if(Time.realtimeSinceStartup>until) { Fail("Fine pour stalled"); yield break; } yield return null; }
+            finePourInput=false; keys=Array.Empty<Key>(); Queue(); yield return new WaitForSecondsRealtime(.08f);
+            decimal actual=owner.Session.Brew.Container(role).TotalMl-start;
+            Check(Math.Abs(actual-ml)<.25m,"measured "+id+" "+actual+" / "+ml+" ml");
         }
         private IEnumerator Prepare(string id)
         {

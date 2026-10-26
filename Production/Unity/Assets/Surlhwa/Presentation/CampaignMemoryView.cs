@@ -7,6 +7,12 @@ namespace Surlhwa.Presentation
     public sealed class CampaignMemoryView : MonoBehaviour
     {
         private GameObject star; private Material material; private Mesh mesh;
+        private Quaternion presentationFacing=Quaternion.Euler(28,0,0);
+        public void SetPresentationFacing(Quaternion facing)
+        {
+            presentationFacing=facing;
+            if(star!=null) star.transform.rotation=facing;
+        }
         public bool Visible=>star!=null && star.activeSelf; public bool Glowing { get; private set; }
         public void Refresh(CampaignCheckpoint state,Vector3 chair)
         {
@@ -22,7 +28,7 @@ namespace Surlhwa.Presentation
                 material=new Material(Shader.Find("Universal Render Pipeline/Unlit")); material.SetFloat("_Cull",0); star.AddComponent<MeshRenderer>().sharedMaterial=material;
             }
             star.SetActive(receipt!=null); Glowing=receipt?.Variant=="star_glowing";
-            star.transform.position=chair+new Vector3(.32f,.76f,-.06f); star.transform.rotation=Quaternion.Euler(28,0,0);
+            star.transform.position=chair+new Vector3(.32f,.76f,-.06f); star.transform.rotation=presentationFacing;
             float pulse=Glowing ? .94f+.06f*Mathf.Sin(Time.unscaledTime*1.4f) : 1;
             material.SetColor("_BaseColor",(Glowing ? new Color(1,.87f,.48f) : new Color(.53f,.51f,.42f))*pulse);
         }

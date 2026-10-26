@@ -1,0 +1,116 @@
+[
+  {
+    "outcome": "Open",
+    "phase": "Complete",
+    "services": 17,
+    "departures": 17,
+    "known": 6,
+    "memories": [
+      {
+        "id": "mem_01",
+        "variant": "star_glowing",
+        "occurrenceId": "3e96fa0b050a46e7937433fb8f97704f:16",
+        "sequence": 173
+      }
+    ],
+    "princeVisits": [
+      {
+        "slot": 5,
+        "outcome": {
+          "recognition": "Recognized",
+          "recipeId": "recipe_manwol",
+          "cocktailId": "cocktail_manwol",
+          "preparation": "Good",
+          "qualityGood": true,
+          "fits": true,
+          "reasons": []
+        },
+        "layers": 3
+      },
+      {
+        "slot": 10,
+        "outcome": {
+          "recognition": "Recognized",
+          "recipeId": "recipe_manhattan",
+          "cocktailId": "cocktail_manhattan",
+          "preparation": "Good",
+          "qualityGood": true,
+          "fits": true,
+          "reasons": []
+        },
+        "layers": 0
+      },
+      {
+        "slot": 16,
+        "outcome": {
+          "recognition": "Recognized",
+          "recipeId": "recipe_dry_martini",
+          "cocktailId": "cocktail_dry_martini",
+          "preparation": "Good",
+          "qualityGood": true,
+          "fits": true,
+          "reasons": []
+        },
+        "layers": 0
+      }
+    ]
+  },
+  {
+    "outcome": "Quiet",
+    "phase": "Complete",
+    "services": 17,
+    "departures": 17,
+    "known": 6,
+    "memories": [
+      {
+        "id": "mem_01",
+        "variant": "star_unlit",
+        "occurrenceId": "3e96fa0b050a46e7937433fb8f97704f:16",
+        "sequence": 172
+      }
+    ],
+    "princeVisits": [
+      {
+        "slot": 5,
+        "outcome": {
+          "recognition": "Recognized",
+          "recipeId": "recipe_manwol",
+          "cocktailId": "cocktail_manwol",
+          "preparation": "Good",
+          "qualityGood": true,
+          "fits": true,
+          "reasons": []
+        },
+        "layers": 3
+      },
+      {
+        "slot": 10,
+        "outcome": {
+          "recognition": "Recognized",
+          "recipeId": "recipe_dry_martini",
+          "cocktailId": "cocktail_dry_martini",
+          "preparation": "Good",
+          "qualityGood": true,
+          "fits": false,
+          "reasons": [
+            "request_mismatch"
+          ]
+        },
+        "layers": 0
+      },
+      {
+        "slot": 16,
+        "outcome": {
+          "recognition": "Recognized",
+          "recipeId": "recipe_dry_martini",
+          "cocktailId": "cocktail_dry_martini",
+          "preparation": "Good",
+          "qualityGood": true,
+          "fits": true,
+          "reasons": []
+        },
+        "layers": 0
+      }
+    ]
+  }
+]

@@ -13,6 +13,53 @@ namespace Surlhwa.SpatialTests
     public sealed class Q1ProductionTests
     {
         [OneTimeSetUp] public void EnsureAuthoredBundle() => Surlhwa.Editor.CampaignBuilder.Sync();
+        [Test] public void SimulatedFinePourDoesNotDeadlockBetweenFrameIncrementsOrLoosenTolerance()
+        {
+            var complete=typeof(CampaignPlayerProof).GetMethod("FinePourComplete",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic);
+            Assert.That((bool)complete.Invoke(null,new object[]{29.874m,30m,.25m}),Is.True,"50 ms frame previously waited forever despite .126 ml error");
+            Assert.That((bool)complete.Invoke(null,new object[]{29.5m,30m,1.25m}),Is.False,"an unacceptable measurement cannot finish");
+            Assert.That((bool)complete.Invoke(null,new object[]{14.727195m,15m,.35m}),Is.False,"captured late splash was below the existing 14.75 ml preparation minimum");
+            Assert.That((bool)complete.Invoke(null,new object[]{14.75m,15m,.35m}),Is.False,"fixture aims inside the strict .25 ml boundary");
+            Assert.That((bool)complete.Invoke(null,new object[]{29m,30m,1.25m}),Is.False,"a long capture frame must wait rather than forge acceptable volume");
+            Assert.That((bool)complete.Invoke(null,new object[]{29.6m,30m,.08m}),Is.False,"continue toward target while the next normal step fits");
+        }
+        [Test] public void FocusRevealSwitchesProjectionImmediatelyWithoutBlockingOrAccumulatingUi()
+        {
+            EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/Bar_Q1.unity");
+            var view=Object.FindFirstObjectByType<Q1ProductionView>();
+            var root=view.Owner.Bartender.transform.position;
+            try {
+                foreach(bool focus in new[]{true,false,true,false}) {
+                    view.SwitchFocus(focus);
+                    Assert.That(view.Owner.Camera.orthographicSize,Is.EqualTo(focus ? 3.7f : 4.85f));
+                    Assert.That(view.Focused,Is.EqualTo(focus));
+                    var canvases=view.GetComponentsInChildren<Canvas>().Where(c=>c.name=="Q1 focus reveal").ToArray();
+                    Assert.That(canvases.Length,Is.EqualTo(1));
+                    Assert.That(canvases[0].sortingOrder,Is.LessThan(100),"reading UI remains above the reveal");
+                    Assert.That(canvases[0].GetComponent<UnityEngine.UI.GraphicRaycaster>(),Is.Null);
+                    Assert.That(canvases[0].GetComponentInChildren<UnityEngine.UI.Image>().raycastTarget,Is.False);
+                    Assert.That(view.Owner.Bartender.transform.position,Is.EqualTo(root));
+                    Assert.That(Time.timeScale,Is.EqualTo(1));
+                    Assert.That(view.Owner.Session,Is.Null,"presentation cannot create progression");
+                }
+                typeof(Q1ProductionView).GetMethod("OnDisable",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(view,null);
+                Assert.That(view.GetComponentsInChildren<UnityEngine.UI.Image>().Single(i=>i.name=="Warm charcoal").enabled,Is.False);
+            } finally { EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single); }
+        }
+        [Test] public void MemoryFacingDoesNotInventReceiptOrMoveItsAuthoredChairOffset()
+        {
+            var go=new GameObject("Q1 memory facing test");
+            try {
+                var memory=go.AddComponent<CampaignMemoryView>(); var chair=new Vector3(1,0,2);
+                memory.Refresh(null,chair); memory.SetPresentationFacing(Q1ProductionView.WorldAngle);
+                Assert.That(memory.Visible,Is.False); Assert.That(memory.Glowing,Is.False);
+                var star=go.transform.Find("MEM-01 small star");
+                Assert.That(star.position,Is.EqualTo(chair+new Vector3(.32f,.76f,-.06f)));
+                Assert.That(Quaternion.Angle(star.rotation,Q1ProductionView.WorldAngle),Is.LessThan(.001f));
+                memory.Refresh(null,chair);
+                Assert.That(Quaternion.Angle(star.rotation,Q1ProductionView.WorldAngle),Is.LessThan(.001f));
+            } finally { Object.DestroyImmediate(go); }
+        }
         [Test] public void Q1BuildPreprocessRegeneratesMissingOrStaleBundleWithoutChangingItsGuid()
         {
             const string path="Assets/GeneratedContent/act1-content.json";

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Surlhwa.Domain;
 
 namespace Surlhwa.Presentation
@@ -16,8 +17,33 @@ namespace Surlhwa.Presentation
         public static readonly Quaternion WorldAngle=Quaternion.Euler(38,-28,0);
         public static readonly Quaternion FocusAngle=Quaternion.Euler(28,0,0);
         public bool Focused { get; private set; }
+        private Image focusVeil;
+        private float revealRemaining;
+        private const float RevealSeconds=.22f;
 
         private void Awake() { ApplyView(false); }
+        // Input projection changes immediately. This veil never gates input or progression.
+        public void SwitchFocus(bool focused)
+        {
+            if(focused==Focused) return;
+            ApplyView(focused);
+            if(focusVeil==null) {
+                var veilRoot=new GameObject("Q1 focus reveal",typeof(RectTransform),typeof(Canvas));
+                veilRoot.transform.SetParent(transform,false);
+                var canvas=veilRoot.GetComponent<Canvas>();
+                canvas.renderMode=RenderMode.ScreenSpaceCamera; canvas.worldCamera=Owner.Camera;
+                canvas.planeDistance=2; canvas.sortingOrder=50;
+                var surface=new GameObject("Warm charcoal",typeof(RectTransform),typeof(Image));
+                surface.transform.SetParent(veilRoot.transform,false);
+                focusVeil=surface.GetComponent<Image>(); focusVeil.raycastTarget=false;
+                var rect=focusVeil.rectTransform;
+                rect.anchorMin=Vector2.zero; rect.anchorMax=Vector2.one;
+                rect.offsetMin=rect.offsetMax=Vector2.zero;
+            }
+            revealRemaining=RevealSeconds;
+            focusVeil.color=new Color(.035f,.030f,.028f,.58f);
+            focusVeil.enabled=true;
+        }
         public void ApplyView(bool focused, string framing="Normal")
         {
             Focused=focused;
@@ -34,6 +60,7 @@ namespace Surlhwa.Presentation
             if(FacingProps!=null) foreach(var t in FacingProps) if(t!=null) t.rotation=camera.transform.rotation;
             ApplyActors();
             ApplyWorkbench();
+            if(Owner.Memory!=null) Owner.Memory.SetPresentationFacing(camera.transform.rotation);
         }
         public void ApplyActors()
         {
@@ -58,10 +85,18 @@ namespace Surlhwa.Presentation
         {
             if(CaptureOwnsPose) return;
             bool brewing=Owner.Session?.State.Phase==CampaignPhase.Brewing;
-            if(brewing!=Focused) ApplyView(brewing);
+            if(brewing!=Focused) SwitchFocus(brewing);
             ApplyActors();
             ApplyWorkbench();
+            if(Owner.Memory!=null) Owner.Memory.SetPresentationFacing(Owner.Camera.transform.rotation);
+            if(focusVeil!=null && focusVeil.enabled) {
+                revealRemaining=Mathf.Max(0,revealRemaining-Time.unscaledDeltaTime);
+                float t=revealRemaining/RevealSeconds;
+                focusVeil.color=new Color(.035f,.030f,.028f,.58f*t*t);
+                if(revealRemaining==0) focusVeil.enabled=false;
+            }
         }
+        private void OnDisable() { revealRemaining=0; if(focusVeil!=null) focusVeil.enabled=false; }
         private void ApplyWorkbench()
         {
             if(Owner.Workbench==null) return;
