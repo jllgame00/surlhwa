@@ -1,0 +1,22 @@
+{
+  "classification": "PRINCE_SEATED_POSE_OWNER_REVIEW",
+  "source": "SourceArt/PrinceSeatedCorrection/PrinceSeatedSource.png",
+  "sourceSha256": "d6d7acc265a28234dd4ccc42f0f3f6352b3e67f96bbc81f2a1f4d4d5fc17994a",
+  "alphaBounds": [
+    300,
+    207,
+    946,
+    1087
+  ],
+  "normalizedSize": [
+    56,
+    76
+  ],
+  "pasteAt": [
+    32,
+    9
+  ],
+  "target": "Unity/Assets/Surlhwa/Q1Polish/PrinceSideQuarter.png",
+  "sha256": "8cb8383a8f28bd90f017575bb23551a2860e535c25bfaa5a84a60013bcf2e60c",
+  "method": "Existing Q1 alpha crop and nearest-neighbor import; 76px height, 96x100 canvas, same center and bottom. No scene or mesh changes."
+}

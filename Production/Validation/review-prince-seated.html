@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Little Prince — seated pose correction</title>
+<style>
+body{margin:0;background:#191d20;color:#e6ded0;font:16px/1.6 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:32px}h1{font-size:26px}h2{font-size:19px}p{max-width:850px;color:#c9c3b8}section{display:grid;grid-template-columns:1fr 1fr;gap:24px}figure{margin:0;padding:20px;background:#292b2b;border-radius:8px}figcaption{margin-bottom:12px}img{max-width:100%;height:auto}.sprite{width:384px;image-rendering:pixelated;display:block;margin:auto}.native{display:block;width:100%}a{color:#dfc78e}.note{font-size:14px}@media(max-width:650px){section{grid-template-columns:1fr}}
+</style><main>
+<h1>Little Prince — seated pose correction</h1>
+<p>Quiet, thoughtful stool-perch: separate relaxed hands, a small stagger between knees and boots, and a less rigid shoulder line. Same character, costume and side-quarter direction.</p>
+<p class="note">Only the Q1 seated texture changes. Camera, character scale, stool, contact anchors, counter geometry and ACT 1 logic are retained. Final pose feel remains for owner review.</p>
+<section>
+<figure><figcaption>Before · original production sprite</figcaption><img class="sprite" src="../SourceArt/PrinceSeatedCorrection/Before.png" alt="Previous seated Prince with close knees and hands together"></figure>
+<figure><figcaption>After · corrected production sprite</figcaption><img class="sprite" src="../Unity/Assets/Surlhwa/Q1Polish/PrinceSideQuarter.png" alt="Prince seated with separate hands and staggered boots"></figure>
+</section>
+<p class="note">Sprites above are displayed at 4× with nearest-neighbor scaling. Both have the original 96×100 transparent frame and 76-pixel silhouette height.</p>
+<h2>Native Q1 grounding view · same camera and stool</h2>
+<section>
+<figure><figcaption>Before · retained Q1 evidence</figcaption><a href="Evidence/q1-final-prince-04/Q1_Prince_Grounding_1920.png"><img class="native" src="Evidence/q1-final-prince-04/Q1_Prince_Grounding_1920.png" alt="Previous Q1 seated pose at stool"></a></figure>
+<figure><figcaption>After · rebuilt Player</figcaption><a href="Evidence/q1-prince-seated-correction/Q1_Prince_Grounding_1920.png"><img class="native" src="Evidence/q1-prince-seated-correction/Q1_Prince_Grounding_1920.png" alt="Corrected Q1 seated pose at same stool"></a></figure>
+</section>
+<h2>Normal Q1 composition</h2>
+<a href="Evidence/q1-prince-seated-correction/Q1_Prince_Composition_1920.png"><img class="native" src="Evidence/q1-prince-seated-correction/Q1_Prince_Composition_1920.png" alt="Prince and bartender in the unchanged Q1 bar composition"></a>
+<p class="note">Native Player captures at 720p and 1080p were inspected. Unity build: zero errors/warnings. Existing Q1 tests: 7/7. Bounded Prince service/save/Continue checks: 16 passed. Click a native render to inspect the full-resolution image. This is pose review, not a new ACT 1 sign-off.</p>
+<p><a href="PRINCE_SEATED_CORRECTION.md">Validation and review notes</a> · <a href="../SourceArt/PrinceSeatedCorrection/PROVENANCE.md">Source and exact generation prompt</a></p>
+</main></html>

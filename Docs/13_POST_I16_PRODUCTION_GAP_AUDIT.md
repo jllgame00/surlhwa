@@ -2923,3 +2923,28 @@ Result: GATE2_Q1_ACT1_READY_FOR_OWNER_REVIEW.
 Review: [Q1 ACT 1 Gate 2](../Production/Validation/review-gate2-q1.html),
 [technical report](../Production/Validation/GATE2_Q1_REVIEW.md),
 [validation](../Production/Validation/Manifests/gate2-q1-validation.json).
+
+## Owner Prince seated-pose correction - 2026-10-27
+
+Bounded feedback supersedes only the prior Q1 seated pose's posture, not the
+approved camera/spatial direction. The Prince now has separate relaxed hands,
+modestly staggered knees/boots and a less rigid shoulder line. His identity,
+costume, youthful contemplative intent and bartender-facing quarter style remain.
+Only the existing Q1 seated PNG changes at runtime; original art/evidence is
+retained. Reproducible import preserves the 96x100 canvas, 76px silhouette height,
+top/bottom alignment and normalization center. No scene, prefab, mesh, material,
+camera, scale, stool, contact anchor, counter or ACT 1 logic changes.
+
+Validation: Unity 6000.3.7f1 build succeeded with zero errors/warnings; existing
+Q1 tests 7/7; rebuilt Player bounded Prince service/save/Continue run passed all
+16 checks with zero errors. Native 720p/1080p images were inspected; 12 matching
+captures retain exact camera, character mesh viewport and bar viewport values.
+Source/Player inventory remained unchanged during capture; import is reproducible;
+serialized scope and diff checks are clean. Initial sandbox Package Manager IPC
+failure was resolved by an unrestricted retry; no runtime debt remains for this
+bounded correction. Earlier campaign-wide validation limits are not superseded.
+
+HUMAN_SIGNOFF_REQUIRED: final pose naturalness and emotional reading. No further
+character, presentation or campaign scope is implied.
+Review: [Prince seated before/after](../Production/Validation/review-prince-seated.html),
+[validation notes](../Production/Validation/PRINCE_SEATED_CORRECTION.md).

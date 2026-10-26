@@ -1,0 +1,117 @@
+{
+  "status": "TECHNICAL_CHECKS_PASS_HUMAN_SIGNOFF_REQUIRED",
+  "baseline": "5e09b53",
+  "tests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "playerChecks": [
+    "ACT 1 scene loaded without startup error",
+    "ACT 1 starts in locked Q1 without a camera selector",
+    "Prince fixture uses an actual earned ACT 1 checkpoint copy",
+    "ACT 1 selects Little Prince",
+    "All three representative character/feet/seat bindings resolve",
+    "Existing Codex opens in Q1",
+    "Codex open/close preserves gameplay checkpoint",
+    "Camera, world plates and perf leave the ACT 1 checkpoint byte-identical",
+    "Active bartending retains its existing focused input projection",
+    "Focused view changes no gameplay checkpoint",
+    "Existing service recognition operates unchanged in spike scene",
+    "Actual liquid/technique preparation remains authoritative",
+    "Reaction returns to locked Q1 after focused bartending",
+    "Q1 reaction retains the actual served liquid while prep tools are hidden",
+    "Existing save reload succeeds after representative service/departure",
+    "Continue resumes the existing encoded checkpoint without presentation state"
+  ],
+  "errors": [],
+  "frameComparison": [
+    {
+      "file": "Q1_Prince_Seated_1280.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Seated_1920.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Composition_1280.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Composition_1920.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Wide_1280.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Wide_1920.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Grounding_1280.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_Grounding_1920.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_FocusedTools_1280.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_FocusedTools_1920.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_ReactionUI_1280.png",
+      "unchanged": true
+    },
+    {
+      "file": "Q1_Prince_ReactionUI_1920.png",
+      "unchanged": true
+    }
+  ],
+  "beforeAlphaBounds": [
+    33,
+    9,
+    86,
+    85
+  ],
+  "afterAlphaBounds": [
+    32,
+    9,
+    88,
+    85
+  ],
+  "canvas": [
+    96,
+    100
+  ],
+  "runtimeAssetChanges": [
+    "Production/Unity/Assets/Surlhwa/Q1Polish/PrinceSideQuarter.png"
+  ],
+  "importReproducible": true,
+  "textureSha256": "8cb8383a8f28bd90f017575bb23551a2860e535c25bfaa5a84a60013bcf2e60c",
+  "evidenceFiles": {
+    "Evidence/q1-prince-seated-correction/result.json": "c86989b0fa8eedcfb4880228d0dbab6fa00800aea1e9368b2b5ec3a073e48d92",
+    "Evidence/q1-prince-seated-correction/process.json": "feb8ae59c25efa6ddb6031d85836bf09f993edd406f02dadd1830febbf5c3907",
+    "Evidence/q1-prince-seated-correction/inventory.json": "5ea0501673374c53d810a8c819da963421a46dfe08d3b0509c5a1b29a487f58c",
+    "Evidence/prince-seated-correction-tests-retry.xml": "0758473b7c49e089de76b524c8b1cd908bdbf256690a88c7a741bfa07f2b252e",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Seated_1280.png": "44f405bad0a5fdb78e3b924402119ab1805d767e33782d1594d4f53b49aae9a2",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Seated_1920.png": "43a3fa830357d8f2360aafa003b54ebda0e48e17580bd55f9f70ec72af26cff5",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Composition_1280.png": "cb67cc2d26f6fae4886a6202c9fa84ac30171ba945e807c79a5914972a83a53a",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Composition_1920.png": "a7504a0bc31ded9676c0baff7580299e5cad584128c78703d0cebb48bb3834ac",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Wide_1280.png": "704ae5169397a599b898523c81f5e3505bd6b609c42eb060bbcb0ced3a713f95",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Wide_1920.png": "208e369e6330cbced9eef0217e2150e9e555f2c6330ca2fd2a6fc8d192a5a0f9",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Grounding_1280.png": "0c52d9bc9cc4f69edb8b1d39b0bc321741697166bb94dbc7a3e85f23256e46a7",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_Grounding_1920.png": "a21327e9047eda795ef8aa78f307510dc97c15f6878f43919e816a44527855d5",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_FocusedTools_1280.png": "0768088b220b05a493ebce2748eacaa61d9ca761c265e7fd62b71d377ff10ed4",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_FocusedTools_1920.png": "b7d388629feb5929c48103f9a6b3669d401826e597672a2a2319c7ce76c1305b",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_ReactionUI_1280.png": "5a08f83a07c9abba4e9a9f053df1d338b77fd8edd2a398333d5cef5fd40bb9e0",
+    "Evidence/q1-prince-seated-correction/Q1_Prince_ReactionUI_1920.png": "f3b81ed00874cdb1a8ea98c3e25ccf33d998e03f989302bda4dd1838e561c96b"
+  },
+  "scope": "Bounded Prince Q1 seated texture; no campaign-wide QA or subjective signoff claimed."
+}
