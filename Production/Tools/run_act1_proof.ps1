@@ -4,7 +4,7 @@ $productionPath=Split-Path $PSScriptRoot -Parent
 $outputPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName"
 if(Test-Path -LiteralPath $outputPath){throw "Preserve existing evidence: $outputPath"}
 New-Item -ItemType Directory -Path $outputPath | Out-Null
-$executablePath=Join-Path $productionPath 'Validation/Builds/Act1/SurlhwaAct1.exe'
+$executablePath=Join-Path $productionPath 'Validation/Builds/Q1Production/SurlhwaQ1.exe'
 $width=[int]($Height*16/9)
 $arguments=@('-batchmode','-force-d3d11','-screen-fullscreen','0','-screen-width',$width,'-screen-height',$Height,'-campaignEvidenceRoot',$outputPath,'-campaignProof',$Fixture,'-logFile',(Join-Path $outputPath 'Player.log'))
 if($SaveRoot){$arguments+=@('-campaignSaveRoot',$SaveRoot)}

@@ -1,4 +1,25 @@
-# SURLHWA Production — Pass 1
+# SURLHWA Production — active Q1 spatial direction
+
+Owner ruling: **Q1 — Soft Orthographic Quarter View is the active Production
+spatial baseline.** Q2 is REFERENCE_ONLY; C1 remains historical accepted evidence.
+Do not revert to C1 or explore Q2 without explicit owner direction. ACT 2 has not
+begun. Gameplay, Canon and architecture authorities remain unchanged.
+
+Open `Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity`. Normal Unity Build/Build And Run and
+`CampaignBuilder.BuildPlayer` / `BuildExistingPlayer` and `run_unity.ps1 -Operation Build`
+select Q1. Existing ACT 1 proof/native launchers now target that Player; their
+assertions and input protocols are unchanged. The build lives at
+`Validation/Builds/Q1Production/SurlhwaQ1.exe`; historical C1/ACT 1/QuarterView
+builds and review evidence are retained separately. Q1 has no player camera
+selector. Existing focused bartending is retained, returning to Q1 afterward.
+
+Current bounded-polish review: [comparison page](Validation/review-q1-polish.html),
+[report](Validation/Q1_POLISH_REVIEW.md), [plan](Validation/Q1_POLISH_PLAN.md).
+Use `Tools/run_q1_polish.ps1 -EvidenceName q1-owner-01 -Interactive` for a fresh
+isolated review save. Running the Production Player directly uses the existing
+ACT 1 save namespace/format; the polish introduces no migration.
+
+## Historical Pass 1 record
 
 Open **Production/Unity** with **Unity 6000.3.7f1**. The inherited repository-root Unity project is frozen reference history and is not the new project's build input.
 
@@ -18,7 +39,7 @@ Historical A/B reproduction from the repository root (REFERENCE_ONLY; local Edit
 python Production/Tools/prepare_reference_art.py
 pwsh -File Production/Tools/run_unity.ps1 -Operation Tests -EvidenceName final-unity-tests
 python Production/Tools/test_review_outcome.py
-pwsh -File Production/Tools/run_unity.ps1 -Operation Build
+pwsh -File Production/Tools/run_unity.ps1 -Operation Build -BuildMethod Surlhwa.Editor.SpatialProofAutomation.BuildPlayer
 python Production/Tools/record_build_identity.py
 $reviewName='captures-owner-001' # Use a fresh name for each run; existing evidence is preserved.
 pwsh -File Production/Tools/run_player_review.ps1 -EvidenceName $reviewName

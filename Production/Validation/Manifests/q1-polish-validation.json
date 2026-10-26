@@ -1,0 +1,49 @@
+{
+  "verdict": "Q1_BOUNDED_POLISH_READY_FOR_OWNER_REVIEW",
+  "activeSpatialBaseline": "Q1",
+  "q2": "REFERENCE_ONLY",
+  "c1": "HISTORICAL_ACCEPTED_EVIDENCE",
+  "protectedFiles": 3447,
+  "changedExistingAllowed": [
+    "Production/README.md",
+    "Production/Tools/act1_inventory.py",
+    "Production/Tools/run_act1_native.py",
+    "Production/Tools/run_act1_proof.ps1",
+    "Production/Tools/run_unity.ps1",
+    "Production/Unity/Assets/Surlhwa/Editor/CampaignBuilder.cs",
+    "Production/Unity/Assets/Surlhwa/Presentation/SliceWorkbenchView.cs",
+    "Production/Unity/ProjectSettings/EditorBuildSettings.asset"
+  ],
+  "frozenSnapshotUnchanged": true,
+  "specifications": 74,
+  "rc1Head": "93939bb6179e51504a1bf3b036abcbe2cbb895b3",
+  "preservedHistoricalNativeFiles": 687,
+  "tests": {
+    "id": "2",
+    "testcasecount": "11",
+    "result": "Passed",
+    "total": "11",
+    "passed": "11",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-26 13:51:59Z",
+    "end-time": "2026-10-26 13:52:00Z",
+    "duration": "0.9314087"
+  },
+  "build": {
+    "result": "Succeeded",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1.unity",
+    "errors": 0,
+    "warnings": 0,
+    "bytes": 175012771,
+    "seconds": 3.0998598
+  },
+  "stills": 26,
+  "clips": 4,
+  "linksChecked": 109,
+  "errors": []
+}

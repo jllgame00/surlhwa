@@ -26,6 +26,20 @@ namespace Surlhwa.Presentation
         private CampaignArtSet art; private GameObject rocksShell,cocktailShell; private Transform floatSpoon,strainer;
         private LineRenderer spoonRunoff;
         private MeshFilter servingIceArt;
+        private Renderer[] presentationRenderers;
+        private int presentationOwnedCount=-1;
+        // Q1 visibility only: the existing serving subtree still displays actual Brew/ServiceSnapshot data.
+        public void SetPresentationVisibility(bool focused,bool hasServed,Quaternion? servingFacing=null)
+        {
+            if(!initialized) return;
+            if(presentationOwnedCount!=owned.Count) {
+                presentationRenderers=GetComponentsInChildren<Renderer>(true);
+                presentationOwnedCount=owned.Count;
+            }
+            foreach(var renderer in presentationRenderers)
+                renderer.forceRenderingOff=!focused && (!hasServed || !renderer.transform.IsChildOf(serving));
+            serving.rotation=servingFacing ?? transform.rotation;
+        }
         public void ApplyArt(CampaignArtSet source)
         {
             if(!initialized || source==null || art!=null) return;

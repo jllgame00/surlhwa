@@ -1,0 +1,576 @@
+{
+  "originalBlocks": 1831,
+  "currentBlocks": 1901,
+  "addedBlocks": 72,
+  "removedBlocks": [
+    1353602159,
+    1353602160
+  ],
+  "changedBlocks": [
+    {
+      "id": 2857063,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 28567778,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 33045642,
+      "type": 4,
+      "name": "C_Quixote_Plane"
+    },
+    {
+      "id": 33045643,
+      "type": 23,
+      "name": "C_Quixote_Plane"
+    },
+    {
+      "id": 67177495,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 92336962,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 99359954,
+      "type": 4,
+      "name": "C_Ordinary_Contact"
+    },
+    {
+      "id": 99359955,
+      "type": 23,
+      "name": "C_Ordinary_Contact"
+    },
+    {
+      "id": 99359956,
+      "type": 33,
+      "name": "C_Ordinary_Contact"
+    },
+    {
+      "id": 165159481,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 199555277,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 251101229,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 255971385,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 265305338,
+      "type": 23,
+      "name": "C_SnowGround"
+    },
+    {
+      "id": 271938847,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 293881957,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 299334478,
+      "type": 4,
+      "name": "Ceramic pitcher and cups"
+    },
+    {
+      "id": 346317971,
+      "type": 4,
+      "name": "Distant west pine"
+    },
+    {
+      "id": 430211958,
+      "type": 23,
+      "name": "C_CounterReturn"
+    },
+    {
+      "id": 455720767,
+      "type": 4,
+      "name": "Notebook and candle"
+    },
+    {
+      "id": 503729627,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 516001728,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 527533202,
+      "type": 4,
+      "name": "C_Bartender_Contact"
+    },
+    {
+      "id": 527533203,
+      "type": 23,
+      "name": "C_Bartender_Contact"
+    },
+    {
+      "id": 527533204,
+      "type": 33,
+      "name": "C_Bartender_Contact"
+    },
+    {
+      "id": 576047741,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 583015439,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 608116955,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 622083577,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 701520064,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 711861784,
+      "type": 4,
+      "name": "C_Bartender_Plane"
+    },
+    {
+      "id": 717846433,
+      "type": 4,
+      "name": "West snow rocks"
+    },
+    {
+      "id": 745886099,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 756381889,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 787330550,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 805407382,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 807703361,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 838087142,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 886664786,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 893043996,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 900383704,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 902127109,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 914404340,
+      "type": 4,
+      "name": "East snow rocks"
+    },
+    {
+      "id": 923843299,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 955400472,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 959216696,
+      "type": 4,
+      "name": "Warm snow lantern"
+    },
+    {
+      "id": 966846773,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 991114428,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1007501325,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1007813710,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1011954128,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1026595555,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1056614231,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1066687307,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1086424326,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1102329323,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1176327673,
+      "type": 4,
+      "name": "West winter pine"
+    },
+    {
+      "id": 1178266220,
+      "type": 23,
+      "name": "C_CounterReturn"
+    },
+    {
+      "id": 1242006058,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1275478523,
+      "type": 23,
+      "name": "C_Quixote_Contact"
+    },
+    {
+      "id": 1275478524,
+      "type": 33,
+      "name": "C_Quixote_Contact"
+    },
+    {
+      "id": 1275478525,
+      "type": 4,
+      "name": "C_Quixote_Contact"
+    },
+    {
+      "id": 1275854923,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1277968568,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1283225015,
+      "type": 4,
+      "name": "East winter pine"
+    },
+    {
+      "id": 1327783046,
+      "type": 4,
+      "name": "Clean cloth and glasses"
+    },
+    {
+      "id": 1353602158,
+      "type": 1,
+      "name": "Quarter View disposable comparison"
+    },
+    {
+      "id": 1365204769,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1382161198,
+      "type": 20,
+      "name": "Camera_C_PixelCutaway"
+    },
+    {
+      "id": 1382161200,
+      "type": 4,
+      "name": "Camera_C_PixelCutaway"
+    },
+    {
+      "id": 1413208580,
+      "type": 4,
+      "name": "West snow bank"
+    },
+    {
+      "id": 1428034203,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1474879281,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1482596315,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1508234685,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1518884869,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1523639547,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1525757534,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1535329634,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1557856679,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1559331317,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1601557282,
+      "type": 1,
+      "name": "Quarter View dressing ONLY"
+    },
+    {
+      "id": 1666212680,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1717642112,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1732146134,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1763922324,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1770361360,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1794306173,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1802980220,
+      "type": 4,
+      "name": "C_Ordinary_Plane"
+    },
+    {
+      "id": 1802980221,
+      "type": 23,
+      "name": "C_Ordinary_Plane"
+    },
+    {
+      "id": 1821433373,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1855982262,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1865084580,
+      "type": 4,
+      "name": "Warm snow lantern"
+    },
+    {
+      "id": 1895657599,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1898859337,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1935679951,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1959803669,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 1966176740,
+      "type": 4,
+      "name": "Distant east pine"
+    },
+    {
+      "id": 1984738835,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2027975330,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2058326129,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2064607849,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2078773987,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2082783674,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2096768088,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2100029353,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2109264746,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2117999124,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 2125667340,
+      "type": 4,
+      "name": "East snow bank"
+    },
+    {
+      "id": 2139084245,
+      "type": 4,
+      "name": "C_SnowfallMark"
+    },
+    {
+      "id": 9223372036854775807,
+      "type": 1660057539,
+      "name": ""
+    }
+  ],
+  "types": {
+    "4": 96,
+    "23": 8,
+    "33": 3,
+    "1": 2,
+    "20": 1,
+    "1660057539": 1
+  },
+  "references": 131,
+  "missingReferences": []
+}

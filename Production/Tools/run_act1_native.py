@@ -21,7 +21,7 @@ import uuid
 ROOT = Path(__file__).resolve().parents[2]
 NAME = sys.argv[1]
 OUT = ROOT / 'Production/Validation/Evidence' / NAME
-EXE = ROOT / 'Production/Validation/Builds/Act1/SurlhwaAct1.exe'
+EXE = ROOT / 'Production/Validation/Builds/Q1Production/SurlhwaQ1.exe'
 SAVE = OUT / 'save'
 OUT.mkdir(exist_ok=False)
 if SAVE.exists():

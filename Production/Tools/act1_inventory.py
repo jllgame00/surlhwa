@@ -5,7 +5,7 @@ root=Path(__file__).resolve().parents[1]
 def digest(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def inventory():
     files=[]
-    for folder in ['Unity/Assets','Unity/Packages','Unity/ProjectSettings','Content/Campaign','Validation/Builds/Act1']:
+    for folder in ['Unity/Assets','Unity/Packages','Unity/ProjectSettings','Content/Campaign','Validation/Builds/Act1','Validation/Builds/Q1Production']:
         files += [p for p in (root/folder).rglob('*') if p.is_file()]
     return {str(p.relative_to(root)).replace('\\','/'):digest(p) for p in sorted(files)}
 mode,path=sys.argv[1:3]; path=Path(path)

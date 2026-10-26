@@ -2,7 +2,7 @@ param(
  [ValidateSet('Import','Tests','Build')][string]$Operation='Tests',
  [string]$EvidenceName='unity-tests',
  [string]$TestFilter='',
- [string]$BuildMethod='Surlhwa.Editor.SpatialProofAutomation.BuildPlayer'
+ [string]$BuildMethod='Surlhwa.Editor.CampaignBuilder.BuildExistingPlayer'
 )
 $ErrorActionPreference='Stop'
 $productionPath=Split-Path $PSScriptRoot -Parent

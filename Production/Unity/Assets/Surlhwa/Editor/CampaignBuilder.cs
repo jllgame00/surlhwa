@@ -24,7 +24,7 @@ namespace Surlhwa.Editor
             if(!File.Exists(BundlePath) || File.ReadAllText(BundlePath)!=json) File.WriteAllText(BundlePath,json,new System.Text.UTF8Encoding(false));
             AssetDatabase.ImportAsset(BundlePath,ImportAssetOptions.ForceSynchronousImport);
         }
-        [MenuItem("Surlhwa/Build ACT 1 campaign")]
+        [MenuItem("Surlhwa/Historical C1/Rebuild ACT 1 source scene")]
         public static void BuildScene()
         {
             Sync(); Directory.CreateDirectory(Root); AssetDatabase.Refresh();
@@ -54,8 +54,10 @@ namespace Surlhwa.Editor
             if(!font.TryAddCharacters(new string(corpus.Where(x=>!char.IsControl(x)).Distinct().ToArray()),out string missing)) throw new InvalidOperationException("Missing ACT 1 glyphs: "+missing);
             EditorUtility.SetDirty(font); AssetDatabase.SaveAssetIfDirty(font); return font;
         }
-        public static void BuildPlayer() { BuildScene(); BuildExistingPlayer(); }
-        public static void BuildExistingPlayer()
+        public static void BuildPlayer() { Q1ProductionBuilder.Build(); }
+        public static void BuildExistingPlayer() { Q1ProductionBuilder.Build(); }
+        // Explicit historical reproduction only. Default ACT 1 entry points build locked Q1.
+        public static void BuildHistoricalC1Player()
         {
             Sync(); string output=Path.GetFullPath("../Validation/Builds/Act1/SurlhwaAct1.exe"); Directory.CreateDirectory(Path.GetDirectoryName(output));
             var report=BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=new[]{ScenePath},locationPathName=output,target=BuildTarget.StandaloneWindows64,options=BuildOptions.Development});

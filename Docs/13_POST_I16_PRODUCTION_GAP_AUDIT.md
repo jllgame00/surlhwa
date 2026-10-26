@@ -2832,3 +2832,46 @@ Human comparison still owns warmth, pixel coherence, scale/contact impression,
 directional transitions, UI composition and overall emotional effect. New art is
 SPIKE_ONLY_UNAPPROVED. No baseline promotion is made. Package and reproducible
 launcher: Production/Validation/QUARTER_VIEW_REVIEW.md and review-quarter-view.html.
+
+## Q1 spatial direction lock and bounded polish - 2026-10-26
+
+Owner ruling supersedes the previous spike's no-promotion status: Q1 Soft
+Orthographic Quarter View is the active Production spatial baseline. Q2 is
+REFERENCE_ONLY; C1 is historical accepted evidence. Historical findings and
+review packages above remain unchanged. ACT 2 has not begun.
+
+One bounded polish keeps Q1's angle, orthographic size and exterior ratio. The
+three character planes grow 12% about their existing contacts; the Prince gains
+one side-quarter seated pose with a readable face. Accepted standing/walking art,
+ordinary anonymity, actor roots, seat ownership and movement clocks remain.
+Small pixel-art utility props and sparse approach/snow cues increase detail
+without enlarging the bar. A stepped contact patch replaces the exposed rectangle.
+New pose provenance and original output are retained in SourceArt/Q1Polish.
+
+Bar_Q1 is the default Unity/ACT 1 build scene and the existing launchers select
+its separate Player. Existing focused bartending remains and returns to Q1.
+Preparation renderer masking preserves the actual served glass/liquid/ice/garnish
+in reactions; the physical tool/input anchor never moves. This is presentation,
+not a new liquid or save authority. Build preprocessing validates/regenerates ACT 1
+content through the existing Sync authority, including clean-checkout recovery.
+
+Validation: successful Unity build; 11/11 focused Q1/input/art tests; actual
+Ordinary/Prince capture/service, Codex, checkpoint invariance, save reload and
+Continue checks. 26 native stills and four clips at 720p/1080p compare with the
+preserved previous Q1 package. Replay-only stale guest/visibility artifacts found
+during image inspection were corrected; prior attempts remain retained. A separate
+read-only review's content-generation and served-glass findings were corrected
+and tested. No broad campaign QA or new OS-input/audio certification is claimed.
+
+Final Canon/Architecture, ACT 1 JSON, domain/application, endings, recognition,
+discovery and persistence contracts remain unchanged. Frozen RC1's complete
+start-of-pass snapshot is unchanged. Original C1/Q evidence and the pre-existing
+review-slice.html edit remain preserved. Only the required build scene list changes
+in ProjectSettings; no unrelated settings, prefab or historical scene churn.
+
+Result: Q1_BOUNDED_POLISH_READY_FOR_OWNER_REVIEW. Remaining subjective spatial
+confirmation belongs to the owner. Directional transitions, pixel shimmer and
+focused-view hard cuts remain explicit presentation debt. See
+Production/Validation/Q1_POLISH_REVIEW.md, review-q1-polish.html and the associated
+q1-polish manifests for evidence, limits and reproducible commands. Do not begin
+ACT 2 or revert the direction to C1 without explicit owner instruction.

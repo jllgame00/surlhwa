@@ -1,0 +1,22 @@
+{
+  "classification": "Q1_BOUNDED_POLISH_OWNER_REVIEW",
+  "source": "SourceArt/Q1Polish/PrinceSideQuarterSource.png",
+  "sourceSha256": "6db34633f1e68fc2b9f425499aa57108936b444e945ce3de9c13058d877542bd",
+  "alphaBounds": [
+    315,
+    204,
+    907,
+    1049
+  ],
+  "normalizedSize": [
+    53,
+    76
+  ],
+  "pasteAt": [
+    33,
+    9
+  ],
+  "target": "Unity/Assets/Surlhwa/Q1Polish/PrinceSideQuarter.png",
+  "sha256": "abc9d5a22bb4d05419f45bbf319fc59f24db5aa563ff9e77cc8255f289871a5b",
+  "method": "Alpha bounds crop, nearest-neighbor import normalization only; accepted art retained."
+}
