@@ -129,6 +129,8 @@ namespace Surlhwa.Application
                 if(!State.Farewell.HasValue) throw new InvalidOperationException("Closing departure lacks a committed farewell.");
                 memories.Add(new MemoryReceipt("mem_01",State.Farewell==PrinceFarewell.Open ? "star_glowing" : "star_unlit",State.OccurrenceId,State.Sequence+1));
             }
+            else if(CurrentEncounter.MemoryId!=null)
+                memories.Add(new MemoryReceipt(CurrentEncounter.MemoryId,CurrentEncounter.MemoryVariant,State.OccurrenceId,State.Sequence+1));
             if(State.SlotIndex+1==Content.Slots.Count) return await Publish(Copy(CampaignPhase.Complete,completed:completed,memories:memories));
             int slot=State.SlotIndex+1; string selected=Select(Content.Slots[slot],Knowledge);
             return await Publish(Copy(Content.Encounters[selected].Night!=CurrentEncounter.Night ? CampaignPhase.NightEnd : CampaignPhase.Arriving,

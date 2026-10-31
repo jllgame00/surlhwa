@@ -14,6 +14,8 @@ namespace Surlhwa.Domain
     public sealed class CampaignEncounter
     {
         public string Id { get; } public string GuestId { get; } public string SummaryTextId { get; }
+        public IReadOnlyList<string> GuestIds { get; }
+        public string MemoryId { get; } public string MemoryVariant { get; }
         public DrinkRequest Request { get; } public string RequiredDiscovery { get; }
         public PrinceVisit? PrinceVisit { get; } public int Night { get; }
         public IReadOnlyList<CampaignLine> Intro { get; } public IReadOnlyList<string> Farewell { get; }
@@ -21,11 +23,19 @@ namespace Surlhwa.Domain
         public IReadOnlyDictionary<string,string[]> ChoiceIntros { get; }
         public CampaignEncounter(string id,string guest,int night,string summary,DrinkRequest request,IEnumerable<CampaignLine> intro,
             IEnumerable<string> farewell,IDictionary<string,string> responses,string requiredDiscovery=null,PrinceVisit? princeVisit=null,
-            IDictionary<string,string[]> choiceIntros=null)
+            IDictionary<string,string[]> choiceIntros=null,string companionGuestId=null,string memoryId=null,string memoryVariant=null)
         {
             _=new StableId<TextIdentity>(id); _=new StableId<GuestIdentity>(guest); _=new StableId<TextIdentity>(summary);
             if(night<1 || (princeVisit.HasValue && !Enum.IsDefined(typeof(PrinceVisit),princeVisit.Value))) throw new ArgumentException("Invalid encounter metadata.");
             Id=id; GuestId=guest; Night=night; SummaryTextId=summary; Request=request ?? throw new ArgumentNullException(nameof(request));
+            if(companionGuestId!=null) {
+                _=new StableId<GuestIdentity>(companionGuestId);
+                if(companionGuestId==guest || princeVisit.HasValue) throw new ArgumentException("Invalid paired encounter actors.");
+            }
+            GuestIds=Array.AsReadOnly(companionGuestId==null ? new[]{guest} : new[]{guest,companionGuestId});
+            if((memoryId==null)!=(memoryVariant==null) || (memoryId!=null && princeVisit.HasValue)) throw new ArgumentException("Invalid authored memory grant.");
+            if(memoryId!=null) { _=new StableId<TextIdentity>(memoryId); _=new StableId<TextIdentity>(memoryVariant); }
+            MemoryId=memoryId; MemoryVariant=memoryVariant;
             RequiredDiscovery=requiredDiscovery; PrinceVisit=princeVisit;
             Intro=Array.AsReadOnly(intro.ToArray()); Farewell=Array.AsReadOnly(farewell.ToArray());
             if(Intro.Count==0 || Farewell.Count==0) throw new ArgumentException("Encounter requires reading and departure.");
@@ -72,11 +82,20 @@ namespace Surlhwa.Domain
                 (!Encounters.ContainsKey(slot.FallbackId) || !Catalog.Recipes.ContainsKey(slot.WhenKnownRecipe)))) throw new ArgumentException("Invalid campaign selection.");
             foreach(var e in Encounters.Values)
             {
-                if(!Guests.ContainsKey(e.GuestId) || !Texts.ContainsKey(e.SummaryTextId) || e.Intro.Any(x=>!Texts.ContainsKey(x.TextId)) ||
+                if(e.GuestIds.Any(x=>!Guests.ContainsKey(x)) || !Texts.ContainsKey(e.SummaryTextId) || e.Intro.Any(x=>!Texts.ContainsKey(x.TextId)) ||
                     e.Farewell.Concat(e.Responses.Values).Concat(e.ChoiceIntros.Values.SelectMany(x=>x)).Any(x=>!Texts.ContainsKey(x))) throw new ArgumentException("Unresolved campaign text/guest.");
                 if(e.RequiredDiscovery!=null && (!Catalog.Recipes.ContainsKey(e.RequiredDiscovery) || e.PrinceVisit.HasValue)) throw new ArgumentException("Invalid discovery encounter.");
                 foreach(var line in e.Intro) foreach(var f in line.Facts) new RecipeKnowledge(Catalog).GrantFact(f.RecipeId,f.Fact);
             }
+            var memoryOwners=Encounters.Values.Select(x=>x.PrinceVisit==PrinceVisit.Clarity ? "mem_01" : x.MemoryId).Where(x=>x!=null).ToArray();
+            if(memoryOwners.Distinct(StringComparer.Ordinal).Count()!=memoryOwners.Length) throw new ArgumentException("Memory requires a unique encounter owner.");
+            var scheduledMemories=new HashSet<string>(StringComparer.Ordinal);
+            foreach(var slot in Slots)
+                foreach(var id in new[]{slot.EncounterId,slot.FallbackId}.Where(x=>x!=null).Distinct(StringComparer.Ordinal))
+                {
+                    var e=Encounters[id]; string memory=e.PrinceVisit==PrinceVisit.Clarity ? "mem_01" : e.MemoryId;
+                    if(memory!=null && !scheduledMemories.Add(memory)) throw new ArgumentException("Memory owner cannot recur in the campaign schedule.");
+                }
             if(!Texts.ContainsKey(ChoicePrompt) || PrinceChoices.Count!=2 || PrinceChoices.Keys.Any(x=>!PrinceResponses.ContainsKey(x) || !PrinceRecalls.ContainsKey(x)) ||
                 !PrinceRecalls.ContainsKey("none") || PrinceChoices.Values.Concat(PrinceResponses.Values).Concat(PrinceRecalls.Values).Concat(OpenFarewell).Concat(QuietFarewell).Any(x=>!Texts.ContainsKey(x))) throw new ArgumentException("Invalid Prince narrative branches.");
         }

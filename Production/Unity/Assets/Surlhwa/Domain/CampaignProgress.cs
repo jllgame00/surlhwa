@@ -11,7 +11,8 @@ namespace Surlhwa.Domain
         public string Id { get; } public string Variant { get; } public string OccurrenceId { get; } public long Sequence { get; }
         public MemoryReceipt(string id,string variant,string occurrence,long sequence)
         {
-            if(id!="mem_01" || (variant!="star_glowing" && variant!="star_unlit") || string.IsNullOrWhiteSpace(occurrence) || sequence<1) throw new ArgumentException("Invalid ACT 1 memory receipt.");
+            _=new StableId<TextIdentity>(id); _=new StableId<TextIdentity>(variant);
+            if(string.IsNullOrWhiteSpace(occurrence) || sequence<1) throw new ArgumentException("Invalid memory receipt.");
             Id=id; Variant=variant; OccurrenceId=occurrence; Sequence=sequence;
         }
     }

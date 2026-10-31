@@ -117,11 +117,17 @@ namespace Surlhwa.ContentIO
             var closing=s.SelectedEncounters.Select((id,n)=>new {Encounter=c.Encounters[id],Index=n}).SingleOrDefault(x=>x.Encounter.PrinceVisit==PrinceVisit.Clarity);
             bool closingServed=closing!=null && s.Services.Any(x=>x.OccurrenceId==s.RunId+":"+closing.Index);
             if(closingServed!=s.Farewell.HasValue) throw Invalid("Farewell selection lacks closing service.");
-            bool memoryEarned=closing!=null && closing.Index<completed;
-            if(s.Memories.Count!=(memoryEarned ? 1 : 0)) throw Invalid("Memory requires completed natural departure.");
-            if(memoryEarned)
+            var memoryOwners=s.SelectedEncounters.Take(completed).Select((id,n)=>new {Encounter=c.Encounters[id],Index=n})
+                .Where(x=>x.Encounter.PrinceVisit==PrinceVisit.Clarity || x.Encounter.MemoryId!=null).ToArray();
+            if(s.Memories.Count!=memoryOwners.Length) throw Invalid("Memory requires completed natural departure.");
+            for(int i=0;i<memoryOwners.Length;i++)
             {
-                var m=s.Memories[0]; if(m.OccurrenceId!=s.RunId+":"+closing.Index || m.Sequence>s.Sequence || m.Variant!=(s.Farewell==PrinceFarewell.Open ? "star_glowing" : "star_unlit")) throw Invalid("Memory receipt contradicts completed farewell.");
+                var owner=memoryOwners[i]; bool prince=owner.Encounter.PrinceVisit==PrinceVisit.Clarity;
+                string id=prince ? "mem_01" : owner.Encounter.MemoryId;
+                string memoryVariant=prince ? (s.Farewell==PrinceFarewell.Open ? "star_glowing" : "star_unlit") : owner.Encounter.MemoryVariant;
+                var m=s.Memories[i];
+                if(m.Id!=id || m.OccurrenceId!=s.RunId+":"+owner.Index || m.Sequence>s.Sequence || m.Variant!=memoryVariant)
+                    throw Invalid("Memory receipt contradicts completed farewell.");
             }
         }
     }
