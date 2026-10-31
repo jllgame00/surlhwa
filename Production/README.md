@@ -2,8 +2,9 @@
 
 Owner ruling: **Q1 — Soft Orthographic Quarter View is the active Production
 spatial baseline.** Q2 is REFERENCE_ONLY; C1 remains historical accepted evidence.
-Do not revert to C1 or explore Q2 without explicit owner direction. ACT 2 has not
-begun. Gameplay, Canon and architecture authorities remain unchanged.
+Do not revert to C1 or explore Q2 without explicit owner direction. Gate 2 is
+OWNER_APPROVED at `7c9c987`; ACTs 2–7 and the ending are authorized through Gate 3.
+Gameplay, Canon and architecture authorities remain unchanged.
 
 Open `Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity`. Normal Unity Build/Build And Run and
 `CampaignBuilder.BuildPlayer` / `BuildExistingPlayer` and `run_unity.ps1 -Operation Build`
@@ -21,7 +22,8 @@ Final Gate 2 package: [current review page](Validation/review-gate2-current.html
 [technical report and evidence limits](Validation/GATE2_ACCEPTED_BASELINE.md).
 Use `Tools/run_gate2_q1.ps1 -Start New -Height 1080` for isolated interactive review;
 `First`, `Warmth`, `Clarity`, `QuietClarity`, `OpenMemory` and `QuietMemory` select earned checkpoints.
-ACT 2 remains stopped pending the one final Gate 2 owner approval.
+See [formal Gate 2 closure](Validation/GATE2_OWNER_APPROVAL.md). The next mandatory
+owner stop is Gate 3; presentation and validation debt remain explicit.
 
 The Prince seated pose at `a19a84a` is owner-accepted (2026-10-31).
 Preserve it and the locked Q1 staging; further pose work requires a clear problem

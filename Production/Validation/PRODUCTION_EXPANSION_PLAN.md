@@ -2,7 +2,10 @@
 
 > For agentic workers: GATE 1 is OWNER_APPROVED at plan commit 6a6637e; see [approval record](GATE1_OWNER_APPROVAL.md). Now execute autonomously through GATE 2 (complete ACT 1), then after GATE 2 approval continue ACTs 2–7 through GATE 3 (final Release Candidate). Use the existing inline workflow and package-specific checklists without requesting per-package permission. Follow [OWNER_APPROVAL_POLICY.md](OWNER_APPROVAL_POLICY.md); this policy revision is not plan approval.
 
-**Status:** OWNER_APPROVED / EXECUTING_TO_GATE_2. 2026-10-14, Asia/Seoul.
+**Status:** OWNER_APPROVED / EXECUTING_TO_GATE_3. Gate 2 formally closed at
+`7c9c987`, 2026-10-31 Asia/Seoul; see [owner ruling](GATE2_OWNER_APPROVAL.md).
+Q1 supersedes this plan's historical C1 spatial references. Package definitions
+and historical baseline evidence below retain their original context.
 
 **Goal:** Expand the accepted Vertical Slice into the seven-ACT main campaign through small, playable, technically verified packages with three bundled owner gates while preserving actual bartending, readable knowledge progression and the bar's accumulated memories.
 

@@ -1,5 +1,13 @@
 # Production presentation debt
 
+2026-10-31 Gate 2 closure: [OWNER_APPROVED at 7c9c987](GATE2_OWNER_APPROVAL.md).
+The current ACT 1/Q1 direction is accepted for full Production expansion.
+PD01–PD11 and native-input certification remain open; no final asset approval
+is inferred. Directional transitions, pixel shimmer/oblique surfaces and focused
+bartending transitions remain in the final animation/environment/tactile work.
+The next bundled presentation ruling is Gate 3. Earlier entries below are
+historical checkpoints, not a renewed Gate 2 stop.
+
 2026-10-31 current baseline: Q1 Soft Orthographic Quarter View and bounded polish
 are approved; the Prince seated pose at `a19a84a` is now explicitly accepted.
 See [owner ruling](Q1_OWNER_CONFIRMATION.md). The earlier C1/art-candidate wording
