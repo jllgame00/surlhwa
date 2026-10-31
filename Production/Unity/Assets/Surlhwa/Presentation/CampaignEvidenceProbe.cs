@@ -29,10 +29,10 @@ namespace Surlhwa.Presentation
         [Serializable] public sealed class Observation
         {
             public string observedUtc,phase,modal,ingredient,target,recipe,recognition,preparation,saveError,textRole,textId,displayedSpeaker,tool,guest,scope,scene;
-            public int processId,foregroundProcessId,encounter,line,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners;
+            public int processId,foregroundProcessId,encounter,line,act,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners;
             public long sequence; public bool focused,nativeOwnershipEstablished,nativeInterrupted,saving,fits,quality,actComplete,shakerClosed,memoryVisible,memoryGlowing;
             public double jigger,mixing,shaker,serving,stirDegrees,frameMs,stirX,stirY,stirRadius,pointerX,pointerY;
-            public string[] visibleText,overflowText,guestIds,visibleActors,actorBindingIds,invalidRenderers; public bool loversMemoryVisible; public Control[] controls;
+            public string[] visibleText,overflowText,guestIds,visibleActors,actorBindingIds,invalidRenderers; public bool loversMemoryVisible,windmillMemoryVisible; public Control[] controls;
         }
         private Control Read(Button button)
         {
@@ -57,14 +57,14 @@ namespace Surlhwa.Presentation
             Vector2 point=owner.Camera.WorldToScreenPoint(owner.Workbench.MixingCenter),pointer=Mouse.current?.position.ReadValue() ?? Vector2.zero;
             var o=new Observation{observedUtc=DateTime.UtcNow.ToString("o"),phase=s?.State.Phase.ToString() ?? "menu",modal=s?.Modals.Top ?? owner.Ui.MenuModal,
                 processId=System.Diagnostics.Process.GetCurrentProcess().Id,foregroundProcessId=Foreground(),focused=UnityEngine.Application.isFocused,nativeOwnershipEstablished=armed,nativeInterrupted=interrupted,
-                scope=owner.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+                scope=owner.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,act=s==null ? 0 : owner.Content.ActAt(s.State.SlotIndex),
                 encounter=s?.State.SlotIndex ?? -1,line=s?.State.LineIndex ?? -1,services=s?.State.Services.Count ?? 0,known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=s?.State.Memories.Count ?? 0,sequence=s?.State.Sequence ?? 0,
                 saving=s?.IsSaving ?? owner.Busy,ingredient=owner.Input.SelectedIngredient,target=owner.Input.Target.ToString(),tool=owner.Input.ActiveTool,guest=s?.CurrentEncounter.GuestId,
                 recipe=outcome?.RecipeId,recognition=outcome?.Recognition.ToString(),preparation=outcome?.Preparation.ToString(),fits=outcome?.Fits ?? false,quality=outcome?.QualityGood ?? false,actComplete=s?.State.ActComplete ?? false,
                 jigger=(double)(s?.Brew?.Container(ContainerRole.Jigger).TotalMl ?? 0),mixing=(double)(s?.Brew?.Container(ContainerRole.Mixing).TotalMl ?? 0),shaker=(double)(s?.Brew?.Container(ContainerRole.Shaker).TotalMl ?? 0),serving=(double)(s?.Brew?.Container(ContainerRole.Serving).TotalMl ?? s?.State.CurrentService?.Snapshot.TotalMl ?? 0),
                 stirDegrees=s?.Brew?.StirAcceptedDegrees ?? 0,shakeReversals=s?.Brew?.ShakeReversals ?? 0,shakerClosed=s?.Brew?.ShakerClosed ?? false,layerCount=owner.Workbench.VisibleLayerCount,
                 stirX=point.x,stirY=Screen.height-point.y,stirRadius=Screen.height/(2*owner.Camera.orthographicSize)*.25f,pointerX=pointer.x,pointerY=Screen.height-pointer.y,
-                textRole=s?.CurrentText?.Role,textId=s?.CurrentText?.Id,displayedSpeaker=owner.Ui.DisplayedSpeaker,saveError=s?.SaveError ?? owner.StartupError,memoryVisible=owner.Memory.Visible,memoryGlowing=owner.Memory.Glowing,loversMemoryVisible=owner.Memory.LoversVisible,
+                textRole=s?.CurrentText?.Role,textId=s?.CurrentText?.Id,displayedSpeaker=owner.Ui.DisplayedSpeaker,saveError=s?.SaveError ?? owner.StartupError,memoryVisible=owner.Memory.Visible,memoryGlowing=owner.Memory.Glowing,loversMemoryVisible=owner.Memory.LoversVisible,windmillMemoryVisible=owner.Memory.WindmillVisible,
                 guestIds=s?.CurrentEncounter.GuestIds.ToArray() ?? Array.Empty<string>(),visibleActors=VisibleActors().Select(a=>PresentedGuestId(owner,a)).ToArray(),actorBindingIds=VisibleActors().Select(a=>a.GuestId).ToArray(),invalidRenderers=InvalidVisibleAssets(),
                 eventSystems=FindObjectsByType<UnityEngine.EventSystems.EventSystem>(FindObjectsSortMode.None).Length,audioListeners=FindObjectsByType<AudioListener>(FindObjectsSortMode.None).Count(x=>x.isActiveAndEnabled),
                 frameMs=Time.unscaledDeltaTime*1000,visibleText=texts.Select(x=>x.text).ToArray(),overflowText=texts.Where(x=>!string.IsNullOrWhiteSpace(x.text) && x.isTextOverflowing).Select(x=>x.text).ToArray(),

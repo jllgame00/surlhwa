@@ -173,5 +173,5 @@ early grants even with a recomputed checksum. Legacy ACT 1 decoding remains vali
   lesson attempt), 25 departures, seven Known, two memories, no runtime errors;
   source/Player inventory unchanged. Completed Continue preserves both saved
   generations byte for byte at both resolutions. P07b runtime work is internally
-  complete; append ACT 3 next. The actual ACT 2?3 transition is validated with
+  complete; append ACT 3 next. The actual ACT 2 to ACT 3 transition is validated with
   that next content boundary, not claimed from a 25-slot package. Nothing pushed.

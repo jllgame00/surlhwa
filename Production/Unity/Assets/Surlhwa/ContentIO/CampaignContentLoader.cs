@@ -24,12 +24,13 @@ namespace Surlhwa.ContentIO
         private static CampaignContent Read(string json)
         {
             var root=Parse(json);
-            int schema=Int(root,"schemaVersion"); bool actTwo=schema==2;
+            int schema=Int(root,"schemaVersion"); bool expanded=schema==2;
             string scope=String(root,"act");
             if(schema!=1 && schema!=2) throw Invalid("Unsupported campaign content schema.");
+            int act=scope=="act_01" ? 1 : scope=="through_act_02" ? 2 : scope=="through_act_03" ? 3 : 0;
             var rootFields=new[]{"schemaVersion","mode","act","contentRevision","sourceRegistrySha256","ingredients","cocktails","recipes","tuning","guests","texts","encounters","slots","supply","known","prince"};
-            Fields(root,actTwo ? rootFields.Concat(new[]{"supplyGrants"}).ToArray() : rootFields);
-            if(String(root,"mode")!="campaign" || scope!=(actTwo ? "through_act_02" : "act_01") || !IsHash(String(root,"sourceRegistrySha256"))) throw Invalid("Unsupported campaign scope/source manifest.");
+            Fields(root,expanded ? rootFields.Concat(new[]{"supplyGrants"}).ToArray() : rootFields);
+            if(String(root,"mode")!="campaign" || act==0 || (expanded ? act<2 : act!=1) || !IsHash(String(root,"sourceRegistrySha256"))) throw Invalid("Unsupported campaign scope/source manifest.");
             var names=new Dictionary<string,string>();
             foreach(var token in Array(root,"ingredients")) { var row=Object(token); Fields(row,"id","label"); names.Add(Id<IngredientIdentity>(row,"id"),String(row,"label")); }
             var cocktails=new List<CocktailDefinition>();
@@ -63,17 +64,18 @@ namespace Surlhwa.ContentIO
             foreach(var token in Array(root,"guests"))
             {
                 var row=Object(token); Fields(row,"id","kind","displayTextId","visualBindingId"); string id=Id<GuestIdentity>(row,"id"),kind=String(row,"kind"),label=Id<TextIdentity>(row,"displayTextId"),visual=Id<VisualIdentity>(row,"visualBindingId");
-                var specialVisuals=actTwo ? new[]{"visual_prince","visual_chunhyang","visual_mongryong"} : new[]{"visual_prince"};
+                var specialVisuals=act==3 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote"} : expanded ? new[]{"visual_prince","visual_chunhyang","visual_mongryong"} : new[]{"visual_prince"};
                 if((kind!="ordinary" && kind!="special") || !texts.ContainsKey(label) || texts[label].Role!="display" || (kind=="special" ? !specialVisuals.Contains(visual) : visual!="visual_ordinary")) throw Invalid("Unsupported campaign guest presentation.");
+                if(act==3 && id=="guest_quixote" && (kind!="special" || visual!="visual_quixote")) throw Invalid("Invalid Quixote presentation identity.");
                 guests.Add(id,new GuestDefinition(new StableId<GuestIdentity>(id),kind=="ordinary" ? GuestKind.Ordinary : GuestKind.Special,new StableId<TextIdentity>(label),new StableId<VisualIdentity>(visual)));
             }
             var encounters=new List<CampaignEncounter>(); var sourceRows=new Dictionary<string,string>();
             foreach(var token in Array(root,"encounters"))
             {
                 var row=Object(token); var encounterFields=new[]{"id","sourceRow","night","guestId","request","summaryTextId","requiredDiscovery","princeVisit","intro","farewell","responses","choiceIntros"};
-                Fields(row,actTwo ? encounterFields.Concat(new[]{"companionGuestId","memoryId","memoryVariant"}).ToArray() : encounterFields);
+                Fields(row,expanded ? encounterFields.Concat(new[]{"companionGuestId","memoryId","memoryVariant"}).ToArray() : encounterFields);
                 string id=Id<TextIdentity>(row,"id"),sourceRow=String(row,"sourceRow");
-                if(!Enumerable.Range(1,actTwo ? 25 : 17).Select(x=>"RC1-"+x.ToString("00")).Contains(sourceRow)) throw Invalid("Later ACT content is outside this milestone.");
+                if(!Enumerable.Range(1,act==3 ? 29 : expanded ? 25 : 17).Select(x=>"RC1-"+x.ToString("00")).Contains(sourceRow)) throw Invalid("Later ACT content is outside this milestone.");
                 sourceRows.Add(id,sourceRow); var request=Object(row["request"]); Fields(request,"cocktailId","anyTags","allTags","excludedTags");
                 string cocktail=NullableString(request,"cocktailId");
                 if(cocktail!=null && (!catalog.Cocktails.ContainsKey(cocktail) || Strings(request,"anyTags").Length+Strings(request,"allTags").Length+Strings(request,"excludedTags").Length!=0)) throw Invalid("Invalid Specific request.");
@@ -98,24 +100,31 @@ namespace Surlhwa.ContentIO
                 PrinceVisit? visit=row["princeVisit"].Type==JTokenType.Null ? (PrinceVisit?)null : CampaignJson.EnumValue<PrinceVisit>(row,"princeVisit");
                 encounters.Add(new CampaignEncounter(id,Id<GuestIdentity>(row,"guestId"),Int(row,"night"),Id<TextIdentity>(row,"summaryTextId"),drinkRequest,intro,Strings(row,"farewell"),
                     responses.Properties().ToDictionary(x=>x.Name,x=>String(responses,x.Name)),required,visit,variants,
-                    actTwo ? NullableString(row,"companionGuestId") : null,actTwo ? NullableString(row,"memoryId") : null,actTwo ? NullableString(row,"memoryVariant") : null));
+                    expanded ? NullableString(row,"companionGuestId") : null,expanded ? NullableString(row,"memoryId") : null,expanded ? NullableString(row,"memoryVariant") : null));
             }
             var slots=new List<CampaignSlot>();
             foreach(var token in Array(root,"slots")) { var row=Object(token); Fields(row,"encounterId","fallbackId","whenKnownRecipe"); slots.Add(new CampaignSlot(Id<TextIdentity>(row,"encounterId"),NullableString(row,"fallbackId"),NullableString(row,"whenKnownRecipe"))); }
-            int expectedSlots=actTwo ? 25 : 17;
+            int expectedSlots=act==3 ? 29 : expanded ? 25 : 17;
             if(slots.Count!=expectedSlots || slots.Select(x=>sourceRows[x.EncounterId]).Distinct().Count()!=expectedSlots) throw Invalid("Missing campaign source-row disposition.");
             var ordered=slots.Select(x=>encounters.Single(e=>e.Id==x.EncounterId)).ToArray();
             if(!ordered.Where(x=>x.PrinceVisit.HasValue).Select(x=>x.PrinceVisit.Value).SequenceEqual(new[]{PrinceVisit.First,PrinceVisit.Warmth,PrinceVisit.Clarity}) || ordered[16].PrinceVisit!=PrinceVisit.Clarity ||
                 ordered.Zip(ordered.Skip(1),(a,b)=>b.Night<a.Night).Any(x=>x)) throw Invalid("Invalid ACT 1 narrative order.");
-            if(actTwo)
+            if(expanded)
             {
-                if(!ordered.Skip(17).Select(x=>sourceRows[x.Id]).SequenceEqual(Enumerable.Range(18,8).Select(x=>"RC1-"+x))) throw Invalid("Invalid ACT 2 event order.");
+                if(!ordered.Skip(17).Select(x=>sourceRows[x.Id]).SequenceEqual(Enumerable.Range(18,expectedSlots-17).Select(x=>"RC1-"+x))) throw Invalid("Invalid expanded campaign event order.");
                 foreach(var e in encounters)
                 {
                     bool paired=sourceRows[e.Id]=="RC1-21" || sourceRows[e.Id]=="RC1-25";
                     if(paired ? !e.GuestIds.OrderBy(x=>x).SequenceEqual(new[]{"guest_chunhyang","guest_mongryong"}) : e.GuestIds.Count!=1) throw Invalid("Invalid ACT 2 actor ownership.");
                     bool reunion=sourceRows[e.Id]=="RC1-25";
-                    if(reunion ? e.MemoryId!="mem_02" || e.MemoryVariant!="swing_empty_place" : e.MemoryId!=null) throw Invalid("Invalid ACT 2 memory owner.");
+                    bool quixoteDeparture=act==3 && sourceRows[e.Id]=="RC1-28";
+                    if(reunion ? e.MemoryId!="mem_02" || e.MemoryVariant!="swing_empty_place" :
+                        quixoteDeparture ? e.MemoryId!="mem_03" || e.MemoryVariant!="windmill_fragment" : e.MemoryId!=null) throw Invalid("Invalid authored memory owner.");
+                    if(act==3 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-26")>=0) {
+                        string expectedGuest=sourceRows[e.Id]=="RC1-26" ? "guest_postman" : sourceRows[e.Id]=="RC1-29" ? "guest_snow_worker" : "guest_quixote";
+                        if(e.GuestId!=expectedGuest || e.RequiredDiscovery!=null || e.Request.CocktailId!=null || e.Intro.Any(line=>line.Facts.Count!=0))
+                            throw Invalid("Invalid ACT 3 encounter ownership.");
+                    }
                 }
             }
             foreach(var slot in slots.Where(x=>x.FallbackId!=null))
@@ -125,13 +134,13 @@ namespace Surlhwa.ContentIO
             }
             var supply=Strings(root,"supply"); if(supply.Distinct().Count()!=supply.Length || recipes.Any(r=>r.Amounts.Keys.Any(x=>!supply.Contains(x)))) throw Invalid("ACT 1 recipe is not physically reachable.");
             var supplyFromSlot=new Dictionary<string,int>();
-            if(actTwo) foreach(var token in Array(root,"supplyGrants")) {
+            if(expanded) foreach(var token in Array(root,"supplyGrants")) {
                 var grant=Object(token); Fields(grant,"beforeEncounter","ingredientIds");
                 int slot=slots.FindIndex(x=>x.EncounterId==String(grant,"beforeEncounter"));
                 if(slot<1) throw Invalid("Unresolved supply grant boundary.");
                 foreach(var ingredient in Strings(grant,"ingredientIds")) supplyFromSlot.Add(ingredient,slot);
             }
-            if(actTwo && supplyFromSlot.Keys.Any(x=>x!="london_dry_gin" && x!="fernet"))
+            if(expanded && supplyFromSlot.Keys.Any(x=>x!="london_dry_gin" && x!="fernet"))
                 throw Invalid("ACT 2 supply grants cannot delay accepted ACT 1 supply.");
             var known=new Dictionary<string,string>(); foreach(var token in Array(root,"known")) { var row=Object(token); Fields(row,"recipeId","provenance"); known.Add(Id<RecipeIdentity>(row,"recipeId"),String(row,"provenance")); }
             if(known.Count!=1 || !known.TryGetValue("recipe_test_stir",out var provenance) || provenance!="LEARN-SEOLYA") throw Invalid("ACT 1 must not inherit Slice fixture knowledge.");
@@ -140,7 +149,8 @@ namespace Surlhwa.ContentIO
             Dictionary<string,string> TextMap(string key,params string[] fields)
             { var map=Object(prince[key]); Fields(map,fields); return map.Properties().ToDictionary(x=>x.Name,x=>String(map,x.Name)); }
             return new CampaignContent(String(root,"contentRevision"),Hash(json),catalog,tuning,names,texts,guests,presentation,encounters,slots,supply,known,
-                Id<TextIdentity>(prince,"prompt"),TextMap("choices","keep","seek"),TextMap("responses","keep","seek"),TextMap("recalls","keep","seek","none"),Strings(prince,"openFarewell"),Strings(prince,"quietFarewell"),scope,supplyFromSlot);
+                Id<TextIdentity>(prince,"prompt"),TextMap("choices","keep","seek"),TextMap("responses","keep","seek"),TextMap("recalls","keep","seek","none"),Strings(prince,"openFarewell"),Strings(prince,"quietFarewell"),scope,supplyFromSlot,
+                act==3 ? new[]{0,17,25} : expanded ? new[]{0,17} : new[]{0});
         }
         private static BrewingTuning ReadTuning(JObject t)
         {

@@ -40,11 +40,21 @@ namespace Surlhwa.Presentation
                 phase==CampaignPhase.Welcome || phase==CampaignPhase.NightIntro || phase==CampaignPhase.NightEnd || phase==CampaignPhase.Complete)
             { Hide(); return; }
             Paired=encounter.GuestIds.Count>1;
+            // The Prince's second stool becomes MEM01. Existing stools to its right
+            // remain adjacent for the pair; every later solo uses the left stool.
+            Vector3 first=primarySeat,second=primarySeat+Vector3.right*1.7f;
+            if(owner.PrinceChairReserved) {
+                first=Paired ? primarySeat+Vector3.right*1.7f : owner.SoloGuestSeatPosition;
+                second=Paired ? primarySeat+Vector3.right*2.95f : owner.SoloGuestSeatPosition;
+            }
+            if(ChunhyangSeat!=null) ChunhyangSeat.position=first;
+            if(MongryongSeat!=null) MongryongSeat.position=second;
+            if(SharedCupAnchor!=null) SharedCupAnchor.position=new Vector3((first.x+second.x)*.5f+.1714286f,1.055f,-.65f);
             if(lastPhase!=phase) { lastPhase=phase; lastFoot=-1; }
             bool chunhyang=encounter.GuestIds.Contains("guest_chunhyang");
             bool mongryong=encounter.GuestIds.Contains("guest_mongryong");
-            Present(owner.Chunhyang,chunhyang,ChunhyangSeat!=null ? ChunhyangSeat.position : primarySeat,phase,poseClock,false);
-            Present(owner.Mongryong,mongryong,MongryongSeat!=null ? MongryongSeat.position : primarySeat+Vector3.right*1.7f,phase,poseClock,true);
+            Present(owner.Chunhyang,chunhyang,first,phase,poseClock,false);
+            Present(owner.Mongryong,mongryong,second,phase,poseClock,true);
             // Both paths arrive/leave within the authoritative 1.5-second logical stage.
             // Quiet listening is a still seated frame; silence never borrows another actor's loop.
             bool traveling=phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing;
@@ -55,8 +65,7 @@ namespace Surlhwa.Presentation
             if(owner.Workbench!=null) {
                 Vector3? at=null;
                 if(phase!=CampaignPhase.Brewing && owner.Session?.State.CurrentService?.Snapshot!=null) {
-                    Vector3 seat=chunhyang ? (ChunhyangSeat!=null ? ChunhyangSeat.position : primarySeat) :
-                        (MongryongSeat!=null ? MongryongSeat.position : primarySeat+Vector3.right*1.7f);
+                    Vector3 seat=chunhyang ? first : second;
                     at=Paired && SharedCupAnchor!=null ? SharedCupAnchor.position : new Vector3(seat.x+.1714286f,1.055f,-.65f);
                 }
                 owner.Workbench.SetServingPresentationPosition(at);

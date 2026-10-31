@@ -43,7 +43,7 @@ namespace Surlhwa.Presentation
             Text(welcome.transform,new Rect(36,108,512,104),"눈이 내리는 밤, 문을 열고.\n한 잔과 이야기를 기다립니다.",23,ink);
             var newGame=Button(welcome.transform,new Rect(36,34,242,48),"새로 시작",()=>owner.BeginNew());
             continueButton=Button(welcome.transform,new Rect(294,34,254,48),"이어 하기",()=>owner.ContinueRun());
-            dialogue=Panel(root,new Rect(216,24,848,176),paper);
+            dialogue=Panel(root,new Rect(216,24,848,176),paper,true);
             speaker=Text(dialogue.transform,new Rect(26,132,796,28),"",17,muted);
             body=Text(dialogue.transform,new Rect(26,48,796,82),"",21,ink);
             next=Button(dialogue.transform,new Rect(660,8,162,34),"계속  Enter",()=>owner.Advance());
@@ -88,16 +88,26 @@ namespace Surlhwa.Presentation
         }
         private void Cmd(Transform parent,float x,string label,string command)=>Button(parent,new Rect(x,29,124,38),label,()=>owner.Input.Command(command),15);
         private void SelectMethod(int index) { owner.Input.Stop(); method=index; for(int i=0;i<methodPanels.Count;i++) methodPanels[i].SetActive(i==index); for(int i=0;i<methodMarks.Count;i++) methodMarks[i].SetActive(i==index); }
-        private GameObject Panel(Transform parent,Rect rect,Color color)
+        private GameObject Panel(Transform parent,Rect rect,Color color,bool resizeRules=false)
         {
             var g=new GameObject("Panel",typeof(RectTransform),typeof(Image)); g.transform.SetParent(parent,false); Position((RectTransform)g.transform,rect); g.GetComponent<Image>().color=color;
             if(rect.width>160 && rect.height>60 && color.a>.9f) {
                 var edge=new Color(.40f,.31f,.21f,.8f);
-                Rule(g.transform,new Rect(1,rect.height-2,rect.width-2,1),edge);
-                Rule(g.transform,new Rect(1,1,rect.width-2,1),edge);
-                Rule(g.transform,new Rect(1,1,1,rect.height-2),edge);
-                Rule(g.transform,new Rect(rect.width-2,1,1,rect.height-2),edge);
-                foreach(float x in new[]{5f,rect.width-18f}) Rule(g.transform,new Rect(x,rect.height-6,13,2),gold);
+                var rules=new[]{
+                    Rule(g.transform,new Rect(1,rect.height-2,rect.width-2,1),edge),
+                    Rule(g.transform,new Rect(1,1,rect.width-2,1),edge),
+                    Rule(g.transform,new Rect(1,1,1,rect.height-2),edge),
+                    Rule(g.transform,new Rect(rect.width-2,1,1,rect.height-2),edge),
+                    Rule(g.transform,new Rect(5,rect.height-6,13,2),gold),
+                    Rule(g.transform,new Rect(rect.width-18,rect.height-6,13,2),gold)};
+                if(resizeRules) {
+                    AnchorRule(rules[0],Vector2.up,Vector2.one,new Vector2(1,-2),new Vector2(-1,-1));
+                    AnchorRule(rules[1],Vector2.zero,Vector2.right,new Vector2(1,1),new Vector2(-1,2));
+                    AnchorRule(rules[2],Vector2.zero,Vector2.up,new Vector2(1,1),new Vector2(2,-1));
+                    AnchorRule(rules[3],Vector2.right,Vector2.one,new Vector2(-2,1),new Vector2(-1,-1));
+                    AnchorRule(rules[4],Vector2.up,Vector2.up,new Vector2(5,-6),new Vector2(18,-4));
+                    AnchorRule(rules[5],Vector2.one,Vector2.one,new Vector2(-18,-6),new Vector2(-5,-4));
+                }
             }
             return g;
         }
@@ -105,6 +115,11 @@ namespace Surlhwa.Presentation
         {
             var g=new GameObject("Quiet brass rule",typeof(RectTransform),typeof(Image)); g.transform.SetParent(parent,false);
             Position((RectTransform)g.transform,rect); var image=g.GetComponent<Image>(); image.color=color; image.raycastTarget=false; return g;
+        }
+        private static void AnchorRule(GameObject rule,Vector2 anchorMin,Vector2 anchorMax,Vector2 offsetMin,Vector2 offsetMax)
+        {
+            var rect=(RectTransform)rule.transform; rect.anchorMin=anchorMin; rect.anchorMax=anchorMax;
+            rect.offsetMin=offsetMin; rect.offsetMax=offsetMax;
         }
         private static void Position(RectTransform t,Rect r) { t.anchorMin=t.anchorMax=Vector2.zero; t.pivot=Vector2.zero; t.anchoredPosition=r.position; t.sizeDelta=r.size; }
         private TextMeshProUGUI Text(Transform parent,Rect rect,string value,float size,Color color)
@@ -151,6 +166,11 @@ namespace Surlhwa.Presentation
         {
             var s=owner.Session; bool brew=s?.State.Phase==CampaignPhase.Brewing;
             bool expanded=s!=null && s.State.SlotIndex>=17 && owner.Content.Scope!="act_01";
+            bool paired=owner.PrinceChairReserved && s.CurrentEncounter.GuestIds.Count>1;
+            Position((RectTransform)dialogue.transform,paired ? new Rect(24,24,1232,144) : new Rect(216,24,848,176));
+            Position(speaker.rectTransform,paired ? new Rect(26,108,1180,28) : new Rect(26,132,796,28));
+            Position(body.rectTransform,paired ? new Rect(26,48,1180,60) : new Rect(26,48,796,82));
+            Position((RectTransform)next.transform,paired ? new Rect(1044,8,162,34) : new Rect(660,8,162,34));
             classicStir.SetActive(!expanded); expandedStir.SetActive(expanded);
             int shelfIndex=0; foreach(var item in shelf) {
                 item.Value.gameObject.SetActive(s?.Supply.Contains(item.Key)==true);
@@ -159,7 +179,8 @@ namespace Surlhwa.Presentation
             welcome.SetActive(s==null); dialogue.SetActive(s!=null && !brew); brewing.SetActive(brew); ingredients.SetActive(brew); requestPanel.SetActive(brew); choicePanel.SetActive(s?.State.Phase==CampaignPhase.Choice);
             continueButton.interactable=owner.Saved?.Checkpoint!=null && !owner.Busy;
             status.text=owner.Busy || s?.IsSaving==true ? "기록 중…" : owner.StartupError!=null ? "기록을 확인해 주세요: "+owner.StartupError : owner.Input.Feedback ?? "";
-            title.text="설화   /   "+(expanded ? "두 번째 이야기" : "첫 번째 이야기")+(s==null ? "" : "   ·   "+s.CurrentEncounter.Night+"번째 밤");
+            int act=s==null ? 1 : owner.Content.ActAt(s.State.SlotIndex);
+            title.text="설화   /   "+new[]{"첫 번째","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째"}[act-1]+" 이야기"+(s==null ? "" : "   ·   "+s.CurrentEncounter.Night+"번째 밤");
             if(s!=null)
             {
                 request.text=owner.Content.Texts[s.CurrentEncounter.SummaryTextId].Value;
@@ -169,7 +190,7 @@ namespace Surlhwa.Presentation
                 body.fontSize=owner.LargeText ? 23 : 21; body.color=owner.HighContrast ? Color.white : ink;
                 body.text=s.CurrentText?.Value ?? (phase==CampaignPhase.Welcome ? "작은 바의 불을 켭니다.\n오늘은 어떤 이야기가 이곳에 머물까요." : phase==CampaignPhase.NightIntro ? "눈이 내려앉은 문턱을 쓸고, 잔을 꺼냅니다." :
                     phase==CampaignPhase.NightEnd ? "마지막 잔을 닦습니다.\n창밖의 눈은 조금 더 쌓여 있습니다." : phase==CampaignPhase.Arriving ? "눈길 끝에서 발소리가 다가옵니다." : phase==CampaignPhase.Departing ? "잠시, 문밖의 겨울을 듣습니다." :
-                    phase==CampaignPhase.Complete ? (expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
+                    phase==CampaignPhase.Complete ? (act==3 ? owner.Content.Texts["text_rc1_0250"].Value : expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
                 next.gameObject.SetActive(phase!=CampaignPhase.Arriving && phase!=CampaignPhase.Departing && phase!=CampaignPhase.Choice && phase!=CampaignPhase.Complete);
                 next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter";
                 if(brew) measurement.text=owner.Content.IngredientNames[owner.Input.SelectedIngredient]+" → "+TargetName(owner.Input.Target)+"   |   지거 "+Ml(s.Brew.Container(ContainerRole.Jigger).TotalMl)+"   혼합 "+Ml(s.Brew.Container(ContainerRole.Mixing).TotalMl)+"   셰이커 "+Ml(s.Brew.Container(ContainerRole.Shaker).TotalMl)+"   서빙 "+Ml(s.Brew.Container(ContainerRole.Serving).TotalMl)+" ml"+(owner.Input.Fine ? " · 미세" : "")+(s.Brew.ShakerClosed ? " · 뚜껑 닫힘" : "");

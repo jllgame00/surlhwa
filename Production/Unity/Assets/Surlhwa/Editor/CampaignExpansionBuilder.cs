@@ -29,7 +29,7 @@ namespace Surlhwa.Editor
             CopyContent("../Content/Campaign/act1.json",CampaignBuilder.BundlePath);
             CopyContent("../Content/Campaign/act2.json",BundlePath);
         }
-        private static void CopyContent(string source,string destination)
+        internal static void CopyContent(string source,string destination)
         {
             CampaignContentLoader.Load(File.ReadAllText(source)); var bytes=File.ReadAllBytes(source);
             if(!File.Exists(destination) || !File.ReadAllBytes(destination).SequenceEqual(bytes)) File.WriteAllBytes(destination,bytes);
@@ -100,7 +100,7 @@ namespace Surlhwa.Editor
                 throw new InvalidOperationException("Missing ACT 2 glyphs: "+missing);
             EditorUtility.SetDirty(font); AssetDatabase.SaveAssetIfDirty(font); return font;
         }
-        private static CharacterView CreateActor(CampaignController owner,string name,string id,Vector3 position)
+        internal static CharacterView CreateActor(CampaignController owner,string name,string id,Vector3 position)
         {
             var actor=new GameObject("ACT 2 "+name).AddComponent<CharacterView>();
             actor.transform.SetParent(owner.Ordinary.transform.parent,false); actor.transform.position=position;

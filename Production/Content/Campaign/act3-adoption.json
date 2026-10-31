@@ -1,0 +1,688 @@
+{
+  "schemaVersion": 1,
+  "kind": "act_adoption_package",
+  "act": "act_03",
+  "status": "SOURCE_ADOPTED_RUNTIME_INTEGRATION_PENDING",
+  "acceptedAct2Sha256": "e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1",
+  "sourceRegistrySha256": "4313d6640f82800008b6adbc59c106965abe33b8349fa477d81e6ba81311b348",
+  "guests": [
+    {
+      "id": "guest_quixote",
+      "kind": "special",
+      "displayTextId": "text_rc1_0258",
+      "visualBindingId": "visual_quixote"
+    }
+  ],
+  "texts": [
+    {
+      "id": "text_rc1_0175",
+      "value": "우편 배달부",
+      "sourceText": "우편 배달부",
+      "sourceId": "SRC-RC1-0175",
+      "sourceHash": "ab078db4027fedf0129aa697eec62e5f3c76d42bca75064de6ef19a5ba6ac07e",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0176",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0176",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0177",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0177",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0178",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0178",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0179",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0179",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0180",
+      "value": "저 작은 그네, 전에는 없었죠. 누가 다녀갔나 봐요.",
+      "sourceText": "저 작은 그네, 전에는 없었죠. 누가 다녀갔나 봐요.",
+      "sourceId": "SRC-RC1-0180",
+      "sourceHash": "3c05671418c96e58216e011c024402d2cf3f5ff7675179d117f6ae56386fdc47",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0181",
+      "value": "편지를 전하고 나면 저는 늘 문 밖에 남아요. 오늘은 조금 따뜻하거나, 그 쓴맛을 알아주는 잔이면 좋겠어요.",
+      "sourceText": "편지를 전하고 나면 저는 늘 문 밖에 남아요. 오늘은 조금 따뜻하거나, 그 쓴맛을 알아주는 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0181",
+      "sourceHash": "23a756b9c20579624175b5c28c4b828dfaf30304e80030a3deeb8174f7d80347",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0182",
+      "value": "편지를 전하고 나면 저는 늘 문 밖에 남아요. 오늘은 조금 따뜻하거나, 그 쓴맛을 알아주는 잔이면 좋겠어요.",
+      "sourceText": "편지를 전하고 나면 저는 늘 문 밖에 남아요. 오늘은 조금 따뜻하거나, 그 쓴맛을 알아주는 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0182",
+      "sourceHash": "23a756b9c20579624175b5c28c4b828dfaf30304e80030a3deeb8174f7d80347",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0183",
+      "value": "제설 작업자",
+      "sourceText": "제설 작업자",
+      "sourceId": "SRC-RC1-0183",
+      "sourceHash": "a799836b95da25597472b760463fc0f29d3efb6b26d15ea25b973f5ddeaa31f8",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0184",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0184",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0185",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0185",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0186",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0186",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0187",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0187",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0188",
+      "value": "길을 다 치운 줄 알았는데 돌아보니 눈이 쌓여 있더군요.",
+      "sourceText": "길을 다 치운 줄 알았는데 돌아보니 눈이 쌓여 있더군요.",
+      "sourceId": "SRC-RC1-0188",
+      "sourceHash": "ff520d18ec3a06cce8167a56df44ce128744e2a3298072213a52edb807763af4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0189",
+      "value": "허탕이었다고 말하고 싶지는 않아요. 오늘은 씁쓸한 맛을 지우지 않는 잔을 주세요.",
+      "sourceText": "허탕이었다고 말하고 싶지는 않아요. 오늘은 씁쓸한 맛을 지우지 않는 잔을 주세요.",
+      "sourceId": "SRC-RC1-0189",
+      "sourceHash": "a5903047b8619456b740639f92a3361b44a619afa05fdc0f4905a46f540b8fc0",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0190",
+      "value": "허탕이었다고 말하고 싶지는 않아요. 오늘은 씁쓸한 맛을 지우지 않는 잔을 주세요.",
+      "sourceText": "허탕이었다고 말하고 싶지는 않아요. 오늘은 씁쓸한 맛을 지우지 않는 잔을 주세요.",
+      "sourceId": "SRC-RC1-0190",
+      "sourceHash": "a5903047b8619456b740639f92a3361b44a619afa05fdc0f4905a46f540b8fc0",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0247",
+      "value": "돈키호테",
+      "sourceText": "돈키호테",
+      "sourceId": "SRC-RC1-0247",
+      "sourceHash": "8fd85ab396aeecdb6f5c344277292bd6d0b0ffdc3568cf41e2df889e76f41bfc",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0248",
+      "value": "돈키호테: 그래도 저는 봤습니다.",
+      "sourceText": "돈키호테: 그래도 저는 봤습니다.",
+      "sourceId": "SRC-RC1-0248",
+      "sourceHash": "97aa36f15821e26615aa106e90ee63df177ddb6666ca653c327b0ab10a3f4ffb",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0249",
+      "value": "그는 더 설명하지 않는다. 문을 향하는 발걸음도 서두르지 않는다.",
+      "sourceText": "그는 더 설명하지 않는다. 문을 향하는 발걸음도 서두르지 않는다.",
+      "sourceId": "SRC-RC1-0249",
+      "sourceHash": "5f9f45ce377fdb8a254fd32f7d5501b37a7e7edf4f50961315636a7a95c18879",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0250",
+      "value": "선반 아래에 작은 풍차 조각이 남아 있다. 날개 하나는 기울었지만 떨어지지는 않았다.",
+      "sourceText": "선반 아래에 작은 풍차 조각이 남아 있다. 날개 하나는 기울었지만 떨어지지는 않았다.",
+      "sourceId": "SRC-RC1-0250",
+      "sourceHash": "6a3e1dede00b21a5bb4e1db35792cca69fb7f1f533701773c42e40778f3a0130",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0251",
+      "value": "돈키호테: 듣고 있었다는 건, 이 정도 맛으로도 알겠군요.",
+      "sourceText": "돈키호테: 듣고 있었다는 건, 이 정도 맛으로도 알겠군요.",
+      "sourceId": "SRC-RC1-0251",
+      "sourceHash": "7b774272fe8c5fb9a552fc3647db3a6b3b2d754d715df58058cd0e433de6c701",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0252",
+      "value": "돈키호테: 오늘의 제 마음과는 조금 어긋났소. 그래도 끝까지 앉아 주셨군요.",
+      "sourceText": "돈키호테: 오늘의 제 마음과는 조금 어긋났소. 그래도 끝까지 앉아 주셨군요.",
+      "sourceId": "SRC-RC1-0252",
+      "sourceHash": "212e52d0b64430fc3ea469cfe4f9f134a2a5a0eb8201f2e9b9e16e4ba6934600",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0253",
+      "value": "돈키호테: 오늘은 아무도 따라오지 않았습니다. 그러니 제 이야기도 좀 조용하겠군요.",
+      "sourceText": "돈키호테: 오늘은 아무도 따라오지 않았습니다. 그러니 제 이야기도 좀 조용하겠군요.",
+      "sourceId": "SRC-RC1-0253",
+      "sourceHash": "220f3a86fa265ae02a1984bddb845f4543a5623be24c549aba4ebbd1de1a8de4",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0254",
+      "value": "돈키호테: 부서진 것은 고칠 수 있소. 하지만 보았다는 말을 거두면, 무엇을 고쳐야 할지도 모르겠어요.",
+      "sourceText": "돈키호테: 부서진 것은 고칠 수 있소. 하지만 보았다는 말을 거두면, 무엇을 고쳐야 할지도 모르겠어요.",
+      "sourceId": "SRC-RC1-0254",
+      "sourceHash": "f380811130f0e7efca929cbacae83a71cfc9ef09f8b573f2b44f700640904edc",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0255",
+      "value": "그가 빈 옆자리 쪽으로 고개를 돌린다. 이번에는 웃음소리가 없다.",
+      "sourceText": "그가 빈 옆자리 쪽으로 고개를 돌린다. 이번에는 웃음소리가 없다.",
+      "sourceId": "SRC-RC1-0255",
+      "sourceHash": "05ca5af0973d8f976d6c63d30e5363f335e3eccae1c7b8e8f28e7355371a58b8",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0256",
+      "value": "돈키호테: 씁쓸함을 지우지 않는 잔도 좋겠소. 길 위에서 식은 손을 덥히는 잔도요.",
+      "sourceText": "돈키호테: 씁쓸함을 지우지 않는 잔도 좋겠소. 길 위에서 식은 손을 덥히는 잔도요.",
+      "sourceId": "SRC-RC1-0256",
+      "sourceHash": "c0ecfebd7214d262d453b13420cefa9a6555c2122cae06b78bff0a26500aade3",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0257",
+      "value": "돈키호테: 씁쓸함을 지우지 않는 잔도 좋겠소. 길 위에서 식은 손을 덥히는 잔도요.",
+      "sourceText": "돈키호테: 씁쓸함을 지우지 않는 잔도 좋겠소. 길 위에서 식은 손을 덥히는 잔도요.",
+      "sourceId": "SRC-RC1-0257",
+      "sourceHash": "c0ecfebd7214d262d453b13420cefa9a6555c2122cae06b78bff0a26500aade3",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0258",
+      "value": "돈키호테",
+      "sourceText": "돈키호테",
+      "sourceId": "SRC-RC1-0258",
+      "sourceHash": "8fd85ab396aeecdb6f5c344277292bd6d0b0ffdc3568cf41e2df889e76f41bfc",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0259",
+      "value": "돈키호테: 그 그림자 아래에 누군가 있었다면, 저는 다시 갔을 겁니다.",
+      "sourceText": "돈키호테: 그 그림자 아래에 누군가 있었다면, 저는 다시 갔을 겁니다.",
+      "sourceId": "SRC-RC1-0259",
+      "sourceHash": "b6c10a502173f91a09145ed2505ddc67a53a3a0c3788a57dbdc4207c34f1907c",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0260",
+      "value": "그는 잔을 내려놓고 구부러진 장갑을 편다. 목소리가 오히려 낮고 또렷해진다.",
+      "sourceText": "그는 잔을 내려놓고 구부러진 장갑을 편다. 목소리가 오히려 낮고 또렷해진다.",
+      "sourceId": "SRC-RC1-0260",
+      "sourceHash": "73b8afc19f7f91287fc788ed70769a3eb2468c2122fd2669fa5b2c445f939378",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0261",
+      "value": "돈키호테: 한 모금 마시니, 제가 무엇을 보았는지 더 분명해지는군요.",
+      "sourceText": "돈키호테: 한 모금 마시니, 제가 무엇을 보았는지 더 분명해지는군요.",
+      "sourceId": "SRC-RC1-0261",
+      "sourceHash": "425a36effb3e8f827e455401af0faf22a2f40051440be02383d91311b4af7c94",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0262",
+      "value": "돈키호테: 제게 익숙한 맛은 아니오. 그래도 오늘 이야기를 웃음으로 덮지는 않으셨군요.",
+      "sourceText": "돈키호테: 제게 익숙한 맛은 아니오. 그래도 오늘 이야기를 웃음으로 덮지는 않으셨군요.",
+      "sourceId": "SRC-RC1-0262",
+      "sourceHash": "10f1f3707592cd2690351ad40677a0cc7b7f74b188199131a4d926643c1a5c41",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0263",
+      "value": "돈키호테: 저건 거인이었습니다. 날개가 돌아갈 때마다 길 위의 그림자가 커졌지요.",
+      "sourceText": "돈키호테: 저건 거인이었습니다. 날개가 돌아갈 때마다 길 위의 그림자가 커졌지요.",
+      "sourceId": "SRC-RC1-0263",
+      "sourceHash": "de3f9b8e5961586a0c82093401b3522bc55247b8d37d6176b0c273da9a545bf1",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0264",
+      "value": "돈키호테: 여관에서는 다들 웃더군요. 제 갑옷보다 먼저 그 웃음이 문을 통과했습니다.",
+      "sourceText": "돈키호테: 여관에서는 다들 웃더군요. 제 갑옷보다 먼저 그 웃음이 문을 통과했습니다.",
+      "sourceId": "SRC-RC1-0264",
+      "sourceHash": "f051ec4799f4d3f59826083c0097cf429fdeb5447f7921f7792d01ad2ce936e1",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0265",
+      "value": "그가 웃음소리를 흉내 내려다가 그만둔다. 구부러진 손가락이 탁자 위에 가만히 놓인다.",
+      "sourceText": "그가 웃음소리를 흉내 내려다가 그만둔다. 구부러진 손가락이 탁자 위에 가만히 놓인다.",
+      "sourceId": "SRC-RC1-0265",
+      "sourceHash": "b287fa6e25b10e13f3c954d1107f56cce364976626c5a5cd9643eea2ba27d32c",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0266",
+      "value": "돈키호테: 다시 길에 설 수 있게 해 주는 잔을 부탁합니다. 몸을 덥혀 주어도, 눈을 깨워 주어도 좋겠소.",
+      "sourceText": "돈키호테: 다시 길에 설 수 있게 해 주는 잔을 부탁합니다. 몸을 덥혀 주어도, 눈을 깨워 주어도 좋겠소.",
+      "sourceId": "SRC-RC1-0266",
+      "sourceHash": "66eea0c48cff2169fb623f0e3984feea2d3b113bd6be4b87321e0f867cfe9a5c",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    },
+    {
+      "id": "text_rc1_0267",
+      "value": "돈키호테: 다시 길에 설 수 있게 해 주는 잔을 부탁합니다. 몸을 덥혀 주어도, 눈을 깨워 주어도 좋겠소.",
+      "sourceText": "돈키호테: 다시 길에 설 수 있게 해 주는 잔을 부탁합니다. 몸을 덥혀 주어도, 눈을 깨워 주어도 좋겠소.",
+      "sourceId": "SRC-RC1-0267",
+      "sourceHash": "66eea0c48cff2169fb623f0e3984feea2d3b113bd6be4b87321e0f867cfe9a5c",
+      "sourcePath": "53_DON_QUIXOTE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 3 adoption after stable ACT 2."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc_rc1_26",
+      "sourceRow": "RC1-26",
+      "night": 10,
+      "guestId": "guest_postman",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0182",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0180",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0181",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0176",
+        "text_rc1_0177"
+      ],
+      "responses": {
+        "good": "text_rc1_0178",
+        "weak": "text_rc1_0179",
+        "mismatch": "text_rc1_0179",
+        "bothWeak": "text_rc1_0179",
+        "unknown": "text_rc1_0179"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_27",
+      "sourceRow": "RC1-27",
+      "night": 10,
+      "guestId": "guest_quixote",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "awakening"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0267",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0263",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0264",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0265",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0266",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0259",
+        "text_rc1_0260"
+      ],
+      "responses": {
+        "good": "text_rc1_0261",
+        "weak": "text_rc1_0262",
+        "mismatch": "text_rc1_0262",
+        "bothWeak": "text_rc1_0262",
+        "unknown": "text_rc1_0262"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_28",
+      "sourceRow": "RC1-28",
+      "night": 11,
+      "guestId": "guest_quixote",
+      "companionGuestId": null,
+      "memoryId": "mem_03",
+      "memoryVariant": "windmill_fragment",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "bitterness",
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0257",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0253",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0254",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0255",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0256",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0248",
+        "text_rc1_0249",
+        "text_rc1_0250"
+      ],
+      "responses": {
+        "good": "text_rc1_0251",
+        "weak": "text_rc1_0252",
+        "mismatch": "text_rc1_0252",
+        "bothWeak": "text_rc1_0252",
+        "unknown": "text_rc1_0252"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_29",
+      "sourceRow": "RC1-29",
+      "night": 11,
+      "guestId": "guest_snow_worker",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0190",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0188",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0189",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0184",
+        "text_rc1_0185"
+      ],
+      "responses": {
+        "good": "text_rc1_0186",
+        "weak": "text_rc1_0187",
+        "mismatch": "text_rc1_0187",
+        "bothWeak": "text_rc1_0187",
+        "unknown": "text_rc1_0187"
+      },
+      "choiceIntros": {}
+    }
+  ],
+  "slots": [
+    {
+      "encounterId": "enc_rc1_26",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_27",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_28",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_29",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    }
+  ],
+  "sourceDispositions": [
+    {
+      "sourceId": "SRC-RC1-0175",
+      "disposition": "Existing guest_postman identity retained; visit-specific display source preserved."
+    },
+    {
+      "sourceId": "SRC-RC1-0183",
+      "disposition": "Existing accepted text record and guest_snow_worker identity reused unchanged."
+    },
+    {
+      "sourceId": "SRC-RC1-0247",
+      "disposition": "Same guest_quixote identity as declaration display SRC-RC1-0258; both source records preserved."
+    }
+  ]
+}

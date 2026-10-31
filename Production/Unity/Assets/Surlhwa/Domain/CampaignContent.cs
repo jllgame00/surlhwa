@@ -55,6 +55,12 @@ namespace Surlhwa.Domain
         public string Revision { get; } public string BundleHash { get; }
         public string Scope { get; }
         private readonly IReadOnlyDictionary<string,int> supplyFromSlot;
+        private readonly IReadOnlyList<int> actStartSlots;
+        public int ActAt(int slot)
+        {
+            if(slot<0 || slot>=Slots.Count) throw new ArgumentOutOfRangeException(nameof(slot));
+            return actStartSlots.Count(start=>start<=slot);
+        }
         public IReadOnlyCollection<string> AvailableSupplyAt(int slot) => Array.AsReadOnly(Supply.Where(x=>!supplyFromSlot.TryGetValue(x,out int start) || slot>=start).ToArray());
         public BartendingCatalog Catalog { get; } public BrewingTuning Tuning { get; }
         public IReadOnlyDictionary<string,string> IngredientNames { get; }
@@ -74,12 +80,15 @@ namespace Surlhwa.Domain
             IDictionary<string,RecipePresentation> presentation,IEnumerable<CampaignEncounter> encounters,IEnumerable<CampaignSlot> slots,
             IEnumerable<string> supply,IDictionary<string,string> known,string choicePrompt,IDictionary<string,string> choices,
             IDictionary<string,string> responses,IDictionary<string,string> recalls,IEnumerable<string> open,IEnumerable<string> quiet,
-            string scope="act_01",IDictionary<string,int> supplyFromSlot=null)
+            string scope="act_01",IDictionary<string,int> supplyFromSlot=null,IEnumerable<int> actStartSlots=null)
         {
             Revision=revision; BundleHash=hash; Catalog=catalog; Tuning=tuning; IngredientNames=Copy(names); Texts=Copy(texts); Guests=Copy(guests);
             RecipePresentation=Copy(presentation); Encounters=Copy(encounters.ToDictionary(x=>x.Id)); Slots=Array.AsReadOnly(slots.ToArray());
             Supply=Array.AsReadOnly(supply.ToArray()); KnownSeeds=Copy(known); ChoicePrompt=choicePrompt;
             _=new StableId<TextIdentity>(scope); Scope=scope;
+            this.actStartSlots=Array.AsReadOnly((actStartSlots ?? new[]{0}).ToArray());
+            if(this.actStartSlots.Count==0 || this.actStartSlots[0]!=0 || this.actStartSlots.Any(x=>x<0 || x>=Slots.Count) ||
+                this.actStartSlots.Zip(this.actStartSlots.Skip(1),(a,b)=>b<=a).Any(x=>x)) throw new ArgumentException("Invalid ACT boundaries.");
             this.supplyFromSlot=Copy(supplyFromSlot ?? new Dictionary<string,int>());
             if(this.supplyFromSlot.Any(x=>!Supply.Contains(x.Key) || x.Value<1 || x.Value>=Slots.Count)) throw new ArgumentException("Invalid supply grant boundary.");
             PrinceChoices=Copy(choices); PrinceResponses=Copy(responses); PrinceRecalls=Copy(recalls);

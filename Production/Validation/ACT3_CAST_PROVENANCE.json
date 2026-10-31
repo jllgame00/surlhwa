@@ -1,0 +1,235 @@
+{
+  "scope": "P07c representative ACT 3 cast and MEM-03",
+  "baseline": "184e1af",
+  "authority": "Final Canon 53 / MEM-03 / approved Architecture 11 / owner-authorized source-cleared RC1 reuse",
+  "status": "IMPLEMENTED_PENDING_UNITY_AND_PLAYER_VERIFICATION; final art and motion remain HUMAN_SIGNOFF_REQUIRED",
+  "preserved": {
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity": "82a7d6e8bb8658dec55a667a973e68d7d3d1f2434dc97f809da9530c01e58db6",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act2.unity": "ffa5052f69bfa5264c65650f1cf26f55f2d02d28fd54fe847f8f037f5a0b4d11",
+    "Production/Content/Campaign/act1.json": "0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4",
+    "Production/Content/Campaign/act2.json": "e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1"
+  },
+  "assets": [
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Chibi/DonQuixote.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act3Assets/QuixoteStanding.png",
+      "sha256": "3b6da7da87668ed1e99db516f7482d5cd23df81733dc3a46a2c19566f7a70626",
+      "dimensions": [
+        60,
+        88
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        60,
+        88
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or Prince/lovers reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Seated.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act3Assets/QuixoteSeated.png",
+      "sha256": "350bf887813acd3ffaeda87c9aea67eca87cefd40a4cb6a4cedf0679f6aa31e9",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        9,
+        5,
+        76,
+        85
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or Prince/lovers reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk0.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act3Assets/QuixoteWalk0.png",
+      "sha256": "5c776b41f904bebadf6bf9168e3748bed9c385bd14183cee53a597dfb89e3fb6",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        16,
+        12,
+        79,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or Prince/lovers reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk1.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act3Assets/QuixoteWalk1.png",
+      "sha256": "cd672403ccd79aceb8c5b7c168f382a0536b8114e52ccdfe187bb13c5a09b575",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        18,
+        12,
+        78,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or Prince/lovers reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk2.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act3Assets/QuixoteWalk2.png",
+      "sha256": "adf1a340ffa41031759ffa5c4d660443fb3b7c06f1c1a1d1d0490954f5ae0461",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        19,
+        12,
+        78,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or Prince/lovers reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/DonQuixote-Walk3.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act3Assets/QuixoteWalk3.png",
+      "sha256": "cd672403ccd79aceb8c5b7c168f382a0536b8114e52ccdfe187bb13c5a09b575",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        18,
+        12,
+        78,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or Prince/lovers reuse."
+    }
+  ],
+  "authoringDecisions": [
+    {
+      "id": "quixote-source-contact",
+      "pixelsPerUnit": 70,
+      "standingPivot": [
+        28.5,
+        0
+      ],
+      "walkPivot": [
+        46.5,
+        0
+      ],
+      "seatedPivot": [
+        34,
+        8
+      ],
+      "sourceSeatedPelvisBottomUp": [
+        46,
+        34
+      ],
+      "rationale": "The inspected armour/leg joint corresponds to the source derivation bent-leg seam at y = 34 bottom-up. The lowest opaque seated row is y = 15. The standing lowest sole spans source x = 25-32; its center 28.5 becomes 46.5 on the 96 px walking canvas. Existing seat offset (12,26)/70, physical root and accepted Q1 scale are retained. This contact is independently inspected rather than copied from the Prince or lovers.",
+      "sourceDerivationReference": "D:/univ/surlhwa/Surlhwa/Tools/prepare_character_motion.py lines 56-68, read-only provenance only; no RC1 runtime code adopted",
+      "normalQ1SeatedCameraRayOffsetMeters": 0.14,
+      "focusedOrStandingOffsetMeters": 0
+    },
+    {
+      "id": "mem03-below-shelf",
+      "origin": [
+        -2.15,
+        0.005,
+        2.8
+      ],
+      "wingTiltDegrees": -28,
+      "wingJoint": [
+        0,
+        0.29,
+        -0.003
+      ],
+      "rationale": "A resting windmill fragment on the existing floor below the left shelf. One tilted lattice wing remains attached to its hub with a 3 mm surface overlap. No flag, motion, click interaction or progression authority is introduced. The frame stays below the lower shelf and clear of opaque rear art.",
+      "retainedMemories": "MEM-01 and MEM-02 anchors, shapes and receipt behavior remain unchanged.",
+      "validation": "ActThreePresentationTests checks actual source pixels, floor and shelf support, wing attachment, and rendered visibility of all three memories plus the attached wing at 720p/1080p. Normal Player output remains required; automated visibility does not grant final art approval."
+    },
+    {
+      "id": "preserve-earned-empty-chair-during-later-visits",
+      "authority": "Canon10 MEM-R01 and MEM-01: the departed Prince's empty chair and star remain a readable trace. Approved Gate2 completed-Continue image retains the star on the second stool.",
+      "finding": "Actual ACT3 Player capture act3-player-prior-open-720-02/004-act3-intro-25-0.png shows the fixed star on the later ordinary guest's torso. Controller reused the original Prince seat for every solo, and ACT2 reused it for Chunhyang. This is an objective spatial memory defect, not final art debt.",
+      "routingGate": "An actual mem_01 receipt AND Content.ActAt(current slot) > 1. ACT1, including Complete with its newly earned memory and last serving glass, retains the accepted presentation.",
+      "fixedMemoryChairRoot": [
+        -0.7214286,
+        0,
+        -2.0043752
+      ],
+      "existingStoolCentersX": [
+        -2.2,
+        -0.55,
+        1.15,
+        2.4
+      ],
+      "laterSoloRoot": [
+        -2.3714286,
+        0,
+        -2.0043752
+      ],
+      "pairedRoots": [
+        [
+          0.9785714,
+          0,
+          -2.0043752
+        ],
+        [
+          2.2285714,
+          0,
+          -2.0043752
+        ]
+      ],
+      "soloServingAnchor": [
+        -2.2,
+        1.055,
+        -0.65
+      ],
+      "pairedServingAnchor": [
+        1.775,
+        1.055,
+        -0.65
+      ],
+      "servingPolicy": "Move only the existing serving-glass subtree after a committed snapshot. Preserve snapshot/liquid state, retain one cup, restore the existing home in Brewing/menu, and leave the tool/input root untouched.",
+      "pairedReadingRectAt720": [
+        24,
+        24,
+        1232,
+        144
+      ],
+      "pairedBodyRect": [
+        26,
+        48,
+        1180,
+        60
+      ],
+      "pairedTextSizes": [
+        21,
+        23
+      ],
+      "clearanceEvidence": "Independent opaque-source projection puts fourth-stool Mongryong's bottom near y537 at720; prior dialogue began at520. The paired-only wider reading panel begins at552 and retains font sizes. All20 authored paired lines, including the longest53-character lines, receive actual TMP overflow/line-count checks at720/1080 and both text sizes.",
+      "preservation": "Runtime routing only. No accepted scene, stool, camera, actor source texture/pivot/scale, MEM01/02/03 origin, progression, save format, or brewing input geometry is changed. Walking may briefly pass the memorial; subsequent seated visits leave its chair vacant.",
+      "testFirstEvidence": "CampaignMemoryChairTests: act3-chair-red-04.xml has five meaningful expected failures (solo contact1.400m, cup1.650m, paired contact1.450m, opaque/UI overlap16.465px720 and24.698px1080). Earlier fixture-ledger error and environment-blocked launches are retained separately and are not behavior RED evidence.",
+      "validationStatus": "Root-run act3-chair-green-01.xml passes 5/5: actual stool contacts and fixed star, one serving subtree with unchanged liquid snapshot and brewing/ACT1 Complete home, and opaque-source/UI clearance plus all paired text at 21/23 and 720/1080. Full Editor act3-full-editor-01.xml passes 338/338 before the bounded border correction below. Corrected actual Player/reload captures remain pending; passing prerequisites do not grant composition or final art/motion/dialogue-feel approval."
+    },
+    {
+      "id": "paired-dialogue-decoration-resize",
+      "finding": "Review after seat-routing GREEN found that the paired dialogue background resized while its six fixed-coordinate decorative rules did not. The top rule remained at local y174 instead of y142; the right edge also retained the old width. This is an objective UI defect.",
+      "correction": "Only the dialogue panel opts into edge/corner anchors for its four brass edge lines and two gold ticks. Existing offsets, thickness, colors, count and raycast behavior are retained. The 848x176 ACT1 geometry is identical; the six rules follow the 1232x144 paired panel. All other panels retain their original fixed layout.",
+      "testFirstEvidence": "CampaignMemoryChairTests.DialogueBorderFollowsPairedBoundsAndRestoresActOneWithoutChangingOtherPanels: act3-border-red-01.xml fails 1/1 as expected, top y173.999969 versus expected142. Actual child world corners are compared with parent-local bounds; ACT1 and Complete restoration and every other panel's decorations are also asserted.",
+      "validationStatus": "Root-run act3-final-ui-01.xml passes 30/30 affected UI/chair tests, including the border regression and 720/1080 text/source-alpha clearance. Corrected actual Player captures and reload checks remain pending. No accepted scene or art assets changed; source frozen for build03 and Player proofs."
+    }
+  ],
+  "finalPlayerVerification": {
+    "build": 3,
+    "record": "Evidence/act3-final-runtime-summary.json",
+    "normalMaterialInspection": [
+      "Paired farewell24 at720p/1080p: one cup, reserved star, fully visible feet, contained dialogue border.",
+      "Quixote introduction26 at720p/1080p: left stool and retained star are clear.",
+      "Earned memory after27 at720p/1080p: MEM03 is visible before the ordinary service; prior memories remain."
+    ],
+    "scope": "Objective contact, occlusion and readability correction only; final art, animation, UI and audio remain open for the scheduled production pass and owner Gate3."
+  }
+}

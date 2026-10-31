@@ -33,7 +33,7 @@ namespace Surlhwa.SpatialTests
                 Assert.That(File.Exists(Path.Combine(expanded,"settings.json")),Is.EqualTo(expandedExists),"Reading preferences does not publish or migrate files.");
             } finally { UnityEngine.Object.DestroyImmediate(go); Directory.Delete(folder,true); }
         }
-        [TestCase("Bar_Act1")][TestCase("Bar_Q1_Act2")] public void AllAuthoredRequestSummariesFitTheProductionReadingBox(string scene)
+        [TestCase("Bar_Act1")][TestCase("Bar_Q1_Act2")][TestCase("Bar_Q1_Act3")] public void AllAuthoredRequestSummariesFitTheProductionReadingBox(string scene)
         {
             UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/"+scene+".unity");
             var c=UnityEngine.Object.FindFirstObjectByType<CampaignController>();

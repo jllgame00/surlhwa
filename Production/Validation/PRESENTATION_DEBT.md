@@ -63,8 +63,18 @@ ACT 1 candidates now exist for the relevant rows: a paged knowledge-filtered Cod
 2026-10-31 ACT 2 runtime checkpoint: distinct lovers, one shared cup, and the
 receipt-driven swing/empty-place memory now have bounded Q1 presentation. Actual
 720p/1080p inspection corrected seated contact and an occluded memory location;
-these objective fixes do not close PD01?PD11 or approve the source poses as final.
+these objective fixes do not close PD01-PD11 or approve the source poses as final.
 The native paired-visit attempt timed out at app access before any native input;
 that certification remains VALIDATION_DEBT. Simulated production-input Player
 evidence and remaining scope are recorded in [ACT 2 runtime](ACT2_RUNTIME_CHECKPOINT.md).
 The scheduled campaign-wide presentation pass and Gate 3 remain outstanding.
+
+2026-10-31 ACT 3 integration: the Quixote cast and earned windmill fragment have
+bounded Q1 presentation. Actual render inspection exposed later guests occupying
+the Prince's remembered empty chair. The correction reserves that existing chair,
+uses existing unreserved stools, and moves the one actual served cup with its
+guest. Paired dialogue and its border now clear the right-hand guest. These are
+objective memory/readability fixes, not final character, memory-art or UI approval.
+All PD01-PD11 remain OPEN; native-input certification and the scheduled full
+campaign presentation/audio pass remain outstanding. Evidence and limitations:
+[ACT 3 runtime](ACT3_RUNTIME_CHECKPOINT.md).
