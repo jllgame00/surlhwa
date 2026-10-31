@@ -11,7 +11,8 @@ PROFILES={
     'through_act_02':dict(act=2,slots=25,known=7,memories=2,prefix='act2',scene='Bar_Q1_Act2'),
     'through_act_03':dict(act=3,slots=29,known=7,memories=3,prefix='act3',scene='Bar_Q1_Act3'),
     'through_act_04':dict(act=4,slots=33,known=8,memories=4,prefix='act4',scene='Bar_Q1_Act4'),
-    'through_act_05':dict(act=5,slots=37,known=8,memories=5,prefix='act5',scene='Bar_Q1_Act5')}
+    'through_act_05':dict(act=5,slots=37,known=8,memories=5,prefix='act5',scene='Bar_Q1_Act5'),
+    'through_act_06':dict(act=6,slots=43,known=9,memories=6,prefix='act6',scene='Bar_Q1_Act6')}
 
 
 def profile_for_act(act):
@@ -62,7 +63,7 @@ def validate_records(report,captures,checkpoints,expected_supply=None):
             if profile['act']==3: require(memory.get('services')==report.get('services',0)-1,'MEM-03 capture occurred after final ordinary service')
     if profile['act']>=4:
         require(final.get('hamletVisible'),'Missing final Hamlet memory visibility')
-        if 29 in report.get('visitedSlots',[]):
+        if profile['act']<=5 and 29 in report.get('visitedSlots',[]):
             supplied=set(report.get('suppliedIngredients',[]))
             if expected_supply is not None: require(supplied==set(expected_supply),'Reported physical supply differs from loaded content')
             pages=[c for c in captures if c['label'].startswith('act4-shelf-page-')]
@@ -74,6 +75,7 @@ def validate_records(report,captures,checkpoints,expected_supply=None):
             require({'french-retry','french-retry-read'}<=set(names) and any(c['phase']=='Retry' and c.get('textId')=='text_rc1_0039' for c in captures),'Missing authored French retry reading')
     if profile['act']>=5:
         require(final.get('faustVisible'),'Missing final Faust memory visibility')
+    if profile['act']==5:
         # A report cannot omit services to opt out of their evidence checks.
         # ACT5 recommendations accept one service; a post-service reload resumes
         # its reading/departure without serving that already committed cup again.
@@ -81,6 +83,20 @@ def validate_records(report,captures,checkpoints,expected_supply=None):
         first=max(33,report.get('startSlot',0)+(1 if after_service else 0))
         expected=[] if report.get('startPhase')=='Complete' else list(range(first,total))
         require(sorted(x for x in report.get('visitedSlots',[]) if x>=33)==expected,'Reported ACT 5 service visits do not match the resumed phase')
+    if profile['act']>=6:
+        require(final.get('simCheongVisible'),'Missing final SimCheong memory visibility')
+        if report.get('startDepartures',0)<42:
+            memory=next((c for c in captures if c['label']=='act6-earned-memory-after-41'),{})
+            require(memory.get('slot')==42 and memory.get('phase') in ('Arriving','NightEnd','NightIntro') and memory.get('departures')==42 and memory.get('memories')==6 and memory.get('simCheongVisible'),'Missing immediate MEM-06 after SimCheong departure')
+            require(memory.get('services')==report.get('services',0)-1,'MEM-06 capture occurred after final ordinary service')
+        if 40 in report.get('visitedSlots',[]):
+            supplied=set(report.get('suppliedIngredients',[]));pages=[c for c in captures if c['label'].startswith('act6-shelf-page-')]
+            if expected_supply is not None: require(supplied==set(expected_supply),'Reported physical supply differs from loaded content')
+            require(bool(supplied) and supplied==set(report.get('shelfSelections',[])),'Not every supplied ACT 6 ingredient was selected through visible controls')
+            require(len(pages)>=2 and supplied=={i for c in pages for i in c.get('visibleIngredients',[])},'Missing ACT 6 physical shelf page coverage')
+        if report.get('lastWordFailure'):require(report.get('lastWordRetryObserved') and 'failed-service-40' in names,'Missing actual Last Word failure/retry')
+        if report.get('lastWordRetryObserved'):
+            require({'last-word-retry','last-word-retry-read'}<=set(names) and any(c['phase']=='Retry' and c.get('textId')=='text_rc1_0059' for c in captures),'Missing authored Last Word retry reading')
     return errors
 
 
@@ -170,6 +186,119 @@ def validate_act5_progress(payload,report,source_payload=None):
     return errors
 
 
+def validate_last_word_snapshot(snapshot,finish='Strain'):
+    if finish not in ('Strain','PourFromContainer'):return False
+    keys={'gin','green_chartreuse','maraschino_luxardo','fresh_lime_juice'};amounts=snapshot.get('amounts',{});shake=snapshot.get('shake') or {}
+    transfers=[t for t in snapshot.get('trace',[]) if t.get('target')=='Serving' and t.get('acceptedMl',0)>0]
+    return (set(amounts)==keys and all(abs(amounts[k]-22.5)<.25 for k in keys) and snapshot.get('hasIce') is False and snapshot.get('garnish') is None and
+            shake.get('howGood') is True and shake.get('qualityGood') is True and set(shake.get('amounts',{}))==keys and
+            all(abs(shake['amounts'][k]-amounts[k])<.25 for k in keys) and bool(transfers) and
+            all(t.get('kind')==finish and t.get('source')=='shaker' for t in transfers) and
+            abs(sum(t['acceptedMl'] for t in transfers)-sum(amounts.values()))<.25 and
+            all(abs(sum(t.get('components',{}).get(k,0) for t in transfers)-amounts[k])<.25 for k in keys))
+
+
+def validate_last_word_retry(capture,authored):
+    errors=validate_authored_text(capture,authored)
+    if capture.get('textId')!='text_rc1_0059':errors.append('Wrong authored Last Word retry text')
+    return errors
+
+
+def validate_last_word_card(capture,content,state):
+    text='\n'.join(capture.get('recipeCardText',[]));errors=[]
+    def require(condition,message):
+        if not condition:errors.append(message+': '+capture['label'])
+    recipe=next(r for r in content['recipes'] if r['id']=='recipe_last_word')
+    name=next(c['name'] for c in content['cocktails'] if c['id']==recipe['cocktailId'])
+    labels={i['id']:i['label'] for i in content['ingredients']}
+    ingredients=[labels[a['ingredientId']] for a in recipe['amounts']]
+    if state!='known':require('칵테일 잔' not in text,'Untaught Last Word glassware leaked before Known')
+    if state=='unknown':
+        require(all(x in text for x in ('이름을 기다리는 한 잔','제조법 미상','아직 적어 둔 재료가 없습니다.','준비 순서는 아직 듣지 못했습니다.')),'Missing Unknown Last Word card')
+        require(not any(x in text for x in [name,'22.5','Shake','거르기']+ingredients),'Unknown Last Word information leaked')
+    else:
+        require(name in text and all(x in text for x in ingredients) and text.count('22.5 ml')==4,'Last Word names/amounts not rendered')
+        require(('만들어 본 기록' if state=='known' else '대화 속에서 들은 단서') in text,'Wrong Last Word knowledge label')
+        require(all(x in text for x in ('Shake','U로 거르기','서빙 얼음 없음','가니시 없음')) and 'Splash' not in text,'Wrong Last Word preparation rendering')
+    return errors
+
+
+def validate_act6_learning_captures(payload,captures,report,content,source_payload=None):
+    errors=[]
+    def require(condition,message):
+        if not condition:errors.append(message)
+    inherited=(source_payload or {}).get('services',[])
+    new_slots={int(s['occurrenceId'].rsplit(':',1)[1]) for s in payload.get('services',[])[len(inherited):]}
+    selected=payload.get('selectedEncounters',[]);early=len(selected)>40 and selected[40]=='enc_rc1_41_known'
+    expected=[]
+    if early and 39 in new_slots:expected += [('codex-last-word-unknown','unknown',39,'Brewing',8),('codex-last-word-early-known','known',39,'Reaction',9)]
+    if 40 in new_slots:expected += [('codex-last-word-fallback-known' if early else 'codex-last-word-clues','known' if early else 'partial',40,'Brewing',9 if early else 8)]
+    for label,state,slot,phase,known in expected:
+        capture=next((c for c in captures if c['label']==label),None)
+        require(capture is not None,'Missing Last Word learning capture: '+label)
+        if capture is not None:
+            require(capture.get('slot')==slot and capture.get('phase')==phase and capture.get('known')==known,'Wrong Last Word learning capture boundary: '+label)
+            errors.extend(validate_last_word_card(capture,content,state))
+    if early and 39 in new_slots or 40 in new_slots:
+        supplied=set(content['supply']);pages=[c for c in captures if c['label'].startswith('act6-shelf-page-')]
+        require(set(report.get('suppliedIngredients',[]))==supplied==set(report.get('shelfSelections',[])),'Last Word physical supply was not fully selected')
+        require(supplied=={i for c in pages for i in c.get('visibleIngredients',[])},'Last Word physical supply lacks visible page coverage')
+        if early and 39 in new_slots:
+            before_discovery=[c for c in pages if c.get('slot')==39 and c.get('phase')=='Brewing']
+            require(supplied=={i for c in before_discovery for i in c.get('visibleIngredients',[])},'All early Last Word supply must be shown before discovery')
+    return errors
+
+
+def validate_act6_progress(payload,report,source_payload=None):
+    errors=[]
+    def require(condition,message):
+        if not condition:errors.append(message)
+    services=payload.get('services',[]);completed=payload.get('completedOccurrences',[]);memories=payload.get('memories',[]);inherited=(source_payload or {}).get('services',[])
+    require(payload.get('phase')=='Complete' and len(completed)==43 and len(set(completed))==43,'Incomplete ACT 6 departures')
+    require(len(payload.get('knownReceipts',{}))==9 and len(memories)==6,'Wrong ACT 6 knowledge/memory count')
+    memory=[m for m in memories if m.get('id')=='mem_06']
+    require(len(memory)==1 and memory[0].get('variant')=='half_submerged_lotus_slow_ripples' and memory[0].get('occurrenceId','').endswith(':41') and memory[0].get('occurrenceId') in completed,'MEM-06 not earned by SimCheong natural departure')
+    require(services[:len(inherited)]==inherited,'Inherited service history changed during Continue')
+    selected=payload.get('selectedEncounters',[]);old_selected=(source_payload or {}).get('selectedEncounters',[])
+    require(selected[:len(old_selected)]==old_selected,'Inherited encounter selection changed during Continue')
+    require(len(selected)==43 and selected[40] in ('enc_rc1_41','enc_rc1_41_known'),'Wrong Last Word encounter selection')
+    early=len(selected)>40 and selected[40]=='enc_rc1_41_known'
+    new_slots=sorted({int(s['occurrenceId'].rsplit(':',1)[1]) for s in services[len(inherited):] if int(s['occurrenceId'].rsplit(':',1)[1])>=37})
+    require(sorted(x for x in report.get('visitedSlots',[]) if x>=37)==new_slots,'Reported ACT 6 service visits differ from actual newly committed services')
+    lesson=[s for s in services if s.get('occurrenceId','').endswith(':40')]
+    success=[s for s in lesson if s['outcome'].get('preparation')=='Good' and s['outcome'].get('qualityGood') is True]
+    failures=[s for s in lesson if s not in success]
+    if early:
+        discovery=[s for s in services if s.get('occurrenceId','').endswith(':39')]
+        require(len(discovery)==1 and discovery[0].get('discovered') is True and discovery[0]['outcome'].get('recipeId')=='recipe_last_word' and discovery[0]['outcome'].get('preparation')=='Good' and discovery[0]['outcome'].get('qualityGood') is True and discovery[0]['outcome'].get('fits') is False,'Early Last Word requires actual slot39 discovery independent of FIT')
+        require(len(discovery)==1 and payload.get('knownReceipts',{}).get('recipe_last_word')=='service:'+discovery[0]['occurrenceId'],'Early Last Word Known receipt does not come from the actual service')
+        require(len(lesson)==1 and lesson[0].get('discovered') is False and lesson[0]['outcome'].get('recipeId')=='recipe_negroni' and lesson[0]['outcome'].get('preparation')=='Good' and lesson[0]['outcome'].get('qualityGood') is True and lesson[0]['outcome'].get('fits') is True,'Known Last Word must use the authored Bitterness fallback')
+        require(not any(x.endswith(tuple(':text_rc1_'+n for n in ('0055','0056','0057','0059'))) for x in payload.get('consumedLines',[])),'Known Last Word fallback consumed discovery lesson/retry text')
+        require(not report.get('lastWordFailure') and not report.get('lastWordRetryObserved'),'Known Last Word fallback cannot run the discovery retry')
+    else:
+        require(len(success)==1 and success[0].get('discovered') is True and success[0]['outcome'].get('recipeId')=='recipe_last_word' and success[0]['outcome'].get('fits') is True,'Last Word discovery requires one successful actual service')
+        require(all(s.get('discovered') is False and s['outcome'].get('recipeId')=='recipe_last_word' and s['outcome'].get('preparation')=='Weak' and s['outcome'].get('fits') is True and s['outcome'].get('qualityGood') is True and validate_last_word_snapshot(s.get('snapshot',{}),'PourFromContainer') for s in failures),'Failed Last Word must isolate the wrong Pour finish with true FIT and good complete shaken batch')
+    if failures:require(any(x.endswith(':40:Retry:0:text_rc1_0059') for x in payload.get('consumedLines',[])),'Failed Last Word lacks consumed authored retry reading')
+    if report.get('lastWordFailure'):require(bool(failures),'Missing actual failed Last Word service')
+    for s in services:
+        if s['outcome'].get('preparation')!='Good':continue
+        if s['outcome'].get('recipeId')=='recipe_last_word':require(validate_last_word_snapshot(s.get('snapshot',{})),'Last Word lacks actual complete shaken batch and Shaker Strain')
+        if s['outcome'].get('recipeId')=='recipe_french_75':require(validate_french_snapshot(s.get('snapshot',{})),'French service lacks actual measured finish')
+    if report.get('earlyLastWordObserved'):require(early and 39 in new_slots,'Reported early Last Word was not newly served')
+    if report.get('lastWordFallbackObserved'):require(early and 40 in new_slots,'Reported Last Word fallback was not newly served')
+    recipes={37:'recipe_negroni',38:'recipe_dry_martini',39:'recipe_last_word' if early else 'recipe_manhattan',41:'recipe_french_75' if report.get('simCheongMismatchObserved') else 'recipe_last_word',42:'recipe_dry_martini'}
+    for slot,recipe in recipes.items():
+        rows=[s for s in services if s.get('occurrenceId','').endswith(':'+str(slot))]
+        require(len(rows)==1 and rows[0].get('discovered') is (early and slot==39),'ACT 6 recommendation has wrong discovery ownership: '+str(slot))
+        if slot not in new_slots:continue
+        mismatch=(slot==41 and report.get('simCheongMismatchObserved',False)) or (early and slot==39)
+        require(len(rows)==1 and rows[0]['outcome'].get('recipeId')==recipe and rows[0]['outcome'].get('preparation')=='Good' and rows[0]['outcome'].get('qualityGood') is True and rows[0]['outcome'].get('fits') is (not mismatch),f'Missing actual ACT 6 service at slot {slot}')
+    if report.get('simCheongMismatchObserved'):
+        final=[s for s in services if s.get('occurrenceId','').endswith(':41')]
+        require(len(final)==1 and final[0]['outcome'].get('recipeId')=='recipe_french_75' and final[0]['outcome'].get('fits') is False,'Missing actual SimCheong mismatch')
+    return errors
+
+
 def validate_act3_progress(payload,report,source_payload=None):
     errors=[]
     def require(condition,message):
@@ -250,13 +379,20 @@ def verify(folder,act=3):
         require(any(s['outcome']['preparation']!='Good' and s['snapshot']['garnish']!='orange_zest' for s in hanky),'Missing actual failed Hanky preparation')
     if act>=3:
         source_payload=read(folder/'origin/slot1/current.json')['payload'] if expected['start']!='New' else None
-        errors.extend({3:validate_act3_progress,4:validate_act4_progress,5:validate_act5_progress}[act](payload,report,source_payload))
+        errors.extend({3:validate_act3_progress,4:validate_act4_progress,5:validate_act5_progress,6:validate_act6_progress}[act](payload,report,source_payload))
+        if act==6:errors.extend(validate_act6_learning_captures(payload,captures,report,content,source_payload))
         if report['startDepartures']<28:
             after=read(folder/'checkpoints/after-departure-27/slot1/current.json')['payload']
             require(len(after['completedOccurrences'])==28 and not any(s['occurrenceId'].endswith(':28') for s in after['services']) and any(m['id']=='mem_03' and m['occurrenceId'].endswith(':27') for m in after['memories']),'After-departure-27 save does not prove memory before final ordinary service')
+        if act>=6 and report['startDepartures']<42:
+            after=read(folder/'checkpoints/after-departure-41/slot1/current.json')['payload']
+            require(len(after['completedOccurrences'])==42 and not any(s['occurrenceId'].endswith(':42') for s in after['services']) and any(m['id']=='mem_06' and m['occurrenceId'].endswith(':41') for m in after['memories']),'After-departure-41 save does not prove memory before final ordinary service')
     if 'quixote-mismatch' in expected['fixture']: require(report.get('quixoteMismatchObserved'),'Requested Quixote mismatch not observed')
     if 'hamlet-mismatch' in expected['fixture']: require(report.get('hamletMismatchObserved'),'Requested Hamlet mismatch not observed')
     if 'faust-mismatch' in expected['fixture']: require(report.get('faustMismatchObserved'),'Requested Faust mismatch not observed')
+    if 'simcheong-mismatch' in expected['fixture']: require(report.get('simCheongMismatchObserved'),'Requested SimCheong mismatch not observed')
+    if 'last-word-retry' in expected['fixture']: require(report.get('lastWordFailure') and report.get('lastWordRetryObserved'),'Requested Last Word failure/retry not observed')
+    if 'early-last-word' in expected['fixture']: require(report.get('earlyLastWordObserved') and report.get('lastWordFallbackObserved'),'Requested early Last Word discovery/fallback not observed')
     if 'french-retry' in expected['fixture']: require(report.get('frenchFailure') and report.get('frenchRetryObserved'),'Requested French failure/retry not observed')
     authored={t['id']:t for t in content['texts']};encounters={e['id']:e for e in content['encounters']}
     for c in captures:
@@ -271,9 +407,11 @@ def verify(folder,act=3):
             if act>=3 and c['slot']<=27: require(not c.get('windmillVisible'),'MEM-03 appeared before Quixote departure')
             if act>=4 and c['slot']<=32: require(not c.get('hamletVisible'),'MEM-04 appeared before Hamlet departure')
             if act>=5 and c['slot']<=36: require(not c.get('faustVisible'),'MEM-05 appeared before Faust departure')
+            if act>=6 and c['slot']<=41: require(not c.get('simCheongVisible'),'MEM-06 appeared before SimCheong departure')
         if act==4 and c['phase']=='Retry' and c['slot']==29:
             errors.extend(validate_authored_text(c,authored))
             require(c.get('textId')=='text_rc1_0039','Wrong authored French retry text')
+        if act>=6 and c['phase']=='Retry' and c['slot']==40:errors.extend(validate_last_word_retry(c,authored))
         if c['slot']>=17 and c['label'].startswith('prepared-'):
             encounter=encounters[payload['selectedEncounters'][c['slot']]]
             require(authored[encounter['summaryTextId']]['value'] in c['visibleText'],'Player request not visible while preparing: '+c['label'])
@@ -302,7 +440,7 @@ def verify(folder,act=3):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=('inventory','verify-inventory','verify'));p.add_argument('path',type=Path);p.add_argument('--act',type=int,choices=(2,3,4,5),default=3);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=('inventory','verify-inventory','verify'));p.add_argument('path',type=Path);p.add_argument('--act',type=int,choices=(2,3,4,5,6),default=3);args=p.parse_args()
     if args.mode=='inventory':
         args.path.write_text(json.dumps(dict(act=args.act,files=inventory(args.act)),indent=2),encoding='utf-8');print('CAMPAIGN_INVENTORY_WRITTEN');return
     errors=([] if read(args.path)['files']==inventory(args.act) else ['Source/Player inventory changed']) if args.mode=='verify-inventory' else verify(args.path,args.act)
@@ -321,6 +459,10 @@ def main():
             faust=inherited_service_evidence(payload,read(origin)['payload'] if origin.is_file() else None,36)
             print(json.dumps(dict(newFaustMismatchObserved=report.get('faustMismatchObserved',False),
                                   inheritedFaustServicePreserved=faust['servicePreserved'],inheritedFaustMismatchPreserved=faust['mismatchPreserved'])))
+        if args.act>=6:
+            sim=inherited_service_evidence(payload,read(origin)['payload'] if origin.is_file() else None,41)
+            print(json.dumps(dict(newSimCheongMismatchObserved=report.get('simCheongMismatchObserved',False),
+                                  inheritedSimCheongServicePreserved=sim['servicePreserved'],inheritedSimCheongMismatchPreserved=sim['mismatchPreserved'])))
     print('CAMPAIGN_PROOF_PASS' if args.mode=='verify' else 'CAMPAIGN_INVENTORY_UNCHANGED')
 
 

@@ -64,7 +64,7 @@ namespace Surlhwa.Presentation
         }
         public void ApplyActors()
         {
-            foreach(var actor in new[]{Owner.Bartender,Owner.Ordinary,Owner.Prince,Owner.Quixote,Owner.Hamlet,Owner.Faust}) {
+            foreach(var actor in new[]{Owner.Bartender,Owner.Ordinary,Owner.Prince,Owner.Quixote,Owner.Hamlet,Owner.Faust,Owner.SimCheong}) {
                 if(actor==null || actor.Plane==null || actor.SeatAnchor==null || actor.Renderer==null) continue;
                 var plane=actor.Plane.transform;
                 bool seated=actor!=Owner.Bartender && actor.Plane.sharedMesh==actor.SeatedMesh;
@@ -78,7 +78,7 @@ namespace Surlhwa.Presentation
                     var material=actor==Owner.Prince ? PrinceSideQuarter : actor.SeatedMaterial!=null && actor.SeatedMaterial.name.StartsWith("OrdinaryCoat") ? OrdinaryBackQuarter : null;
                     actor.Renderer.sharedMaterial=!Focused && material!=null ? material : actor.SeatedMaterial;
                     // Presentation surface thickness; pelvis/root/contact and gameplay path stay fixed.
-                    if(!Focused && (material!=null || actor==Owner.Quixote || actor==Owner.Hamlet || actor==Owner.Faust)) plane.localPosition-=Quaternion.Inverse(actor.transform.rotation)*Owner.Camera.transform.forward*.14f;
+                    if(!Focused && (material!=null || actor==Owner.Quixote || actor==Owner.Hamlet || actor==Owner.Faust || actor==Owner.SimCheong)) plane.localPosition-=Quaternion.Inverse(actor.transform.rotation)*Owner.Camera.transform.forward*.14f;
                 }
             }
             Owner.Cast?.ApplyView(Focused);

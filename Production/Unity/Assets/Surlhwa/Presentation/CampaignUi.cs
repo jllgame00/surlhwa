@@ -213,7 +213,7 @@ namespace Surlhwa.Presentation
                 body.fontSize=owner.LargeText ? 23 : 21; body.color=owner.HighContrast ? Color.white : ink;
                 body.text=s.CurrentText?.Value ?? (phase==CampaignPhase.Welcome ? "작은 바의 불을 켭니다.\n오늘은 어떤 이야기가 이곳에 머물까요." : phase==CampaignPhase.NightIntro ? "눈이 내려앉은 문턱을 쓸고, 잔을 꺼냅니다." :
                     phase==CampaignPhase.NightEnd ? "마지막 잔을 닦습니다.\n창밖의 눈은 조금 더 쌓여 있습니다." : phase==CampaignPhase.Arriving ? "눈길 끝에서 발소리가 다가옵니다." : phase==CampaignPhase.Departing ? "잠시, 문밖의 겨울을 듣습니다." :
-                    phase==CampaignPhase.Complete ? (act==5 ? owner.Content.Texts["text_rc1_0074"].Value : act==4 ? owner.Content.Texts["text_rc1_0096"].Value : act==3 ? owner.Content.Texts["text_rc1_0250"].Value : expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
+                    phase==CampaignPhase.Complete ? (act==6 ? owner.Content.Texts["text_rc1_0293"].Value : act==5 ? owner.Content.Texts["text_rc1_0074"].Value : act==4 ? owner.Content.Texts["text_rc1_0096"].Value : act==3 ? owner.Content.Texts["text_rc1_0250"].Value : expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
                 next.gameObject.SetActive(phase!=CampaignPhase.Arriving && phase!=CampaignPhase.Departing && phase!=CampaignPhase.Choice && phase!=CampaignPhase.Complete);
                 next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter";
                 if(brew) measurement.text=owner.Content.IngredientNames[owner.Input.SelectedIngredient]+" → "+TargetName(owner.Input.Target)+"   |   지거 "+Ml(s.Brew.Container(ContainerRole.Jigger).TotalMl)+"   혼합 "+Ml(s.Brew.Container(ContainerRole.Mixing).TotalMl)+"   셰이커 "+Ml(s.Brew.Container(ContainerRole.Shaker).TotalMl)+"   서빙 "+Ml(s.Brew.Container(ContainerRole.Serving).TotalMl)+" ml"+(owner.Input.Fine ? " · 미세" : "")+(s.Brew.ShakerClosed ? " · 뚜껑 닫힘" : "");
@@ -296,8 +296,10 @@ namespace Surlhwa.Presentation
             string preparation="준비 순서는 아직 듣지 못했습니다.";
             if(projection.PreparationVisible) preparation=recipe.Method=="stir" ? "혼합 잔에 얼음 · 재료를 담은 뒤 원을 그리며 젓기\n서빙 잔에 거르기" : recipe.Method=="build" ? "서빙 잔에 얼음과 재료 · 가볍게 젓기" : recipe.Method=="shake" ? "소다를 제외한 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어 잔에 옮기기\n소다는 마지막에 Splash · 서빙 얼음 없음" : "보드카 → 커피 리큐어 → 크림\n각 재료를 낮게, 천천히 층으로 쌓기 · 얼음 없음";
             if(projection.PreparationVisible && recipe.Method=="shake" && recipe.ShakeFinish==ShakeFinishPolicy.StrainThenPourAndGentleStir)
-                preparation="샴페인을 제외한 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어서 U로 거르기\n샴페인은 마지막에 양을 재어 따르고 G로 가볍게 젓기\n플루트 잔 · 서빙 얼음 없음";
-            if(projection.GarnishVisible) preparation+="\n"+(recipe.RequiredGarnish=="cherry" ? "체리 · 잔 안" : recipe.RequiredGarnish=="orange_slice" ? "오렌지 슬라이스 · 잔 가장자리" : recipe.RequiredGarnish=="orange_zest" ? "오렌지 제스트 · 잔 가장자리" : "가니시 생략 가능");
+                preparation="샴페인을 제외한 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어서 U로 거르기\n샴페인은 마지막에 양을 재어 따르고 G로 가볍게 젓기\n"+(projection.Known ? "플루트 잔 · " : "")+"서빙 얼음 없음";
+            if(projection.PreparationVisible && recipe.Method=="shake" && recipe.ShakeFinish==ShakeFinishPolicy.StrainOnly)
+                preparation="재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어서 U로 거르기\n"+(projection.Known ? "칵테일 잔 · " : "")+"서빙 얼음 없음";
+            if(projection.GarnishVisible) preparation+="\n"+(recipe.RequiredGarnish=="cherry" ? "체리 · 잔 안" : recipe.RequiredGarnish=="orange_slice" ? "오렌지 슬라이스 · 잔 가장자리" : recipe.RequiredGarnish=="orange_zest" ? "오렌지 제스트 · 잔 가장자리" : recipe.ShakeFinish==ShakeFinishPolicy.StrainOnly ? "가니시 없음" : "가니시 생략 가능");
             Text(card,new Rect(322,104,568,138),preparation,owner.LargeText ? 20 : 18,ink);
             Text(card,new Rect(30,26,650,30),"발견은 이름을 남깁니다. 단서는 그 전의 길을 비춥니다.",15,muted);
         }

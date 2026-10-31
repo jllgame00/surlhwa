@@ -1,5 +1,15 @@
 # Production presentation debt
 
+2026-10-31 ACT6 integration: three distinct SimCheong visits, LastWord preparation
+and the earned half-submerged lotus/slow ripples have bounded Q1 presentation.
+An actual depth failure behind the existing glasses prop was corrected by moving
+only the new memory along the same supported counter. A Canon audit also found
+and corrected untaught glassware in French75/LastWord Partial Codex cards; learned
+preparation remains visible, glassware waits for Known. These objective fixes do
+not close final art, Codex redesign, motion or audio debt. All PD01–PD11 stay OPEN
+for the scheduled full-campaign pass and named Gate3 ruling. Evidence and current
+runtime verification are recorded in [ACT6 runtime](ACT6_RUNTIME_CHECKPOINT.md).
+
 2026-10-31 Gate 2 closure: [OWNER_APPROVED at 7c9c987](GATE2_OWNER_APPROVAL.md).
 The current ACT 1/Q1 direction is accepted for full Production expansion.
 PD01–PD11 and native-input certification remain open; no final asset approval

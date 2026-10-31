@@ -1,0 +1,250 @@
+{
+  "scope": "P07d bounded ACT 6 cast and MEM-06",
+  "baseline": "2541b62",
+  "authority": "Final Canon56 / Canon10 MEM-06 / Canon11 / approved Architecture11 / owner-authorized exact RC1 source art reuse",
+  "status": "BOUNDED_ACT6_IMPLEMENTED_AND_EDITOR_GPU_VERIFIED_AFTER_OCCLUSION_CORRECTION; normal-material Player and human final visual/motion approval remain pending",
+  "preserved": {
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity": "82a7d6e8bb8658dec55a667a973e68d7d3d1f2434dc97f809da9530c01e58db6",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act2.unity": "ffa5052f69bfa5264c65650f1cf26f55f2d02d28fd54fe847f8f037f5a0b4d11",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act3.unity": "6c375a254e7fb00620425f00340de40c26285468709401d617641172b845d85d",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity": "3e88c3f88c9e4e9d344ce863e27e8f4ef20603fb71e39472c4e9a0ec754df902",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act5.unity": "8056e601d2af64d36a455e31d9ff7514fd862f6ed6ca92a20e71dcb9f60de4d6",
+    "Production/Content/Campaign/act1.json": "0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4",
+    "Production/Content/Campaign/act2.json": "e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1",
+    "Production/Content/Campaign/act3.json": "9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0",
+    "Production/Content/Campaign/act4.json": "fcc2aeb9c4269c2c9fd34018e4c82b79553ffc3645ad2b8be3970abd673ad6fe",
+    "Production/Content/Campaign/act5.json": "bc76a5546c7f30d6dfa417fd3754a81fe4c52f8040b15bc86b42c1a954f34339"
+  },
+  "assets": [
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Chibi/SimCheong.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act6Assets/SimCheongStanding.png",
+      "sha256": "cf0f27577f7ee673d084d29efc61faa5740a18af45d4d580aa2e2af90e377865",
+      "dimensions": [
+        51,
+        84
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        51,
+        84
+      ],
+      "treatment": "Six exact source PNGs inspected using view_image before adoption. Independent Production import/mesh/material metadata; no repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Seated.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act6Assets/SimCheongSeated.png",
+      "sha256": "db75b8fb4336f9627efdb4bb29a9105610bc8c42e6fad57c7dd89c65bb572d1c",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        13,
+        9,
+        71,
+        85
+      ],
+      "treatment": "Six exact source PNGs inspected using view_image before adoption. Independent Production import/mesh/material metadata; no repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk0.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act6Assets/SimCheongWalk0.png",
+      "sha256": "cda2125f0710ef80d994ae245f4312b406b074942d0dd730246e873a089f0bfa",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        20,
+        16,
+        75,
+        100
+      ],
+      "treatment": "Six exact source PNGs inspected using view_image before adoption. Independent Production import/mesh/material metadata; no repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk1.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act6Assets/SimCheongWalk1.png",
+      "sha256": "6d88374933c46ec3a0b2bd70e41a8b86be913ad1cb8e299867331efd83fa79aa",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        22,
+        16,
+        73,
+        100
+      ],
+      "treatment": "Six exact source PNGs inspected using view_image before adoption. Independent Production import/mesh/material metadata; no repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk2.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act6Assets/SimCheongWalk2.png",
+      "sha256": "5c0b3446835099ba2869dc52c2915e05e7c4c291e335b1ab1902d5e02b9ffc36",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        24,
+        16,
+        72,
+        99
+      ],
+      "treatment": "Six exact source PNGs inspected using view_image before adoption. Independent Production import/mesh/material metadata; no repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/SimCheong-Walk3.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act6Assets/SimCheongWalk3.png",
+      "sha256": "6d88374933c46ec3a0b2bd70e41a8b86be913ad1cb8e299867331efd83fa79aa",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        22,
+        16,
+        73,
+        100
+      ],
+      "treatment": "Six exact source PNGs inspected using view_image before adoption. Independent Production import/mesh/material metadata; no repaint, resampling or earlier actor reuse."
+    }
+  ],
+  "authoringDecisions": [
+    {
+      "id": "simcheong-independent-source-contact",
+      "pixelsPerUnit": 70,
+      "standingPivot": [
+        20,
+        0
+      ],
+      "walkPivot": [
+        42,
+        0
+      ],
+      "seatedPivot": [
+        30,
+        8
+      ],
+      "sourceSeatedPelvisBottomUp": [
+        42,
+        34
+      ],
+      "rationale": "SimCheong standing is51x84; lowest opaque sole row spans x16..23, whose pixel-center midpoint is20. The96px neutral walk canvas adds22, yielding42; actual neutral-walk lowest opaque row spans38..45. Source seated torso/skirt seam at42,34 bottom-up is opaque and the lowest opaque row is15. Seated pivot30,8 preserves the accepted physical seat offset12,26 at70ppu. These contacts are derived from her source, independently of Faust and earlier actors.",
+      "sourceDerivationReference": "D:/univ/surlhwa/Surlhwa/Tools/prepare_character_motion.py lines39-67, read-only provenance only; no RC1 runtime systems adopted",
+      "normalQ1SeatedCameraRayOffsetMeters": 0.14,
+      "focusedOrStandingOffsetMeters": 0
+    },
+    {
+      "id": "mem06-supported-small-waterline",
+      "intent": "Half-submerged lotus and very slow restrained ripples, confined to a small supported memory patch near her unreserved left place. No moat, global water/PBR effect, lighting, Collider, interaction or father-revisit full bloom.",
+      "retainedMemories": "MEM01..05 retain shapes, positions and receipt ownership. Prince remembered chair remains vacant for later visits.",
+      "validation": "First full Editor run exposed the real cloth/glasses prop occlusion (lotus3pixels720/7pixels1080). Moving only MEM06originx -2.95 to-1.65 clears that actual prop while preserving support, half-submersion, shape, slow ripples and every earlier memory/anchor. Affected regression32/32 PASS; lotus now89pixels720/208pixels1080 with unchanged visibility assertions. Normal-material Player inspection remains pending.",
+      "origin": [
+        -1.65,
+        0.995,
+        -0.65
+      ],
+      "facing": "Fixed world-XZ waterline/ripples and fixed world-XY lotus. Camera focus cannot move or tilt the supported patch.",
+      "physicalSupport": "Existing C_CounterTop top y.99 supports the small waterline at y.995. Final water bounds x-1.99..-1.31,z-.84..-.46 remain inside that counter beside the unreserved left place, clear of the existing Clean cloth and glasses sprite. Service cup atx-2.2 remains separate. The unchanged lotus silhouette spans y-.14..+.163 relative to the waterline, so46.2percent remains below the actual opaque surface; upper petals remain a compact bud.",
+      "ripple": "Two small pixel contours use one absolute-time sinusoidal2.5percent scale variation with approximately18second period. Only ripple scale changes; water and lotus never move, and no campaign state is read beyond the earned receipt."
+    }
+  ],
+  "integration": {
+    "builder": "Surlhwa.Editor.ActSixExpansionBuilder.PrepareScene",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1_Act6.unity",
+    "bundle": "Assets/GeneratedContent/act6-content.json",
+    "sourceHistory": [
+      "through_act_05",
+      "through_act_04",
+      "through_act_03",
+      "through_act_02",
+      "act_01"
+    ],
+    "font": "Assets/Surlhwa/Act6Assets/Act6Korean.asset",
+    "controllerField": "SimCheong",
+    "memoryProjection": [
+      "SimCheongVisible",
+      "SimCheongLotus",
+      "SimCheongWater",
+      "SimCheongRipples"
+    ],
+    "acceptance": "ActSixPresentationTests verifies independent source contact/focus, supported physical waterline and half-submersion, receipt identity/variant, prior-memory preservation, slow bounded ripple movement, actual routing/unreserved stool/hiding, exact scene/history/art, and real GPU depth at720p/1080p. Natural grant before slot42 is separately proved by campaign/Player evidence."
+  },
+  "verificationEvidence": {
+    "red": "Evidence/act6-presentation-red-01.xml",
+    "redResult": "All seven presentation cases failed before implementation: hip offset .1021327m, explicit special actor selection null, separate scene absent, receipt projection false, missing slow-ripple update, and missing new GPU parts at both resolutions. Two unrelated UI supply tests already passed; the root-owned remaining UI fixture was corrected for a separate focused RED.",
+    "scope": "Observed Editor contact/support/receipt/routing and real GPU depth prerequisites, with original failed evidence retained. Normal-material Player and human final art/motion/atmosphere approval remain separate.",
+    "firstGreenAttempt": "Evidence/act6-editor-full-01.xml",
+    "firstGreenAttemptResult": "598/601 passed. Two GPU failures exposed actual lotus occlusion; one root-owned UI fixture failure is separate. This run is not a full PASS.",
+    "occlusionDiagnosis": "Evidence/act6-lotus-occlusion-diagnosis.json",
+    "green": "Evidence/act6-editor-affected-02.xml",
+    "greenResult": "Affected regression32/32 PASS after the one-coordinate lotus correction and root UI fixture repair. All seven ACT6 presentation cases pass. This follows the full598/601 run; it is not a fresh601/601 execution on final source bytes.",
+    "finalPlayer": {
+      "status": "PASS_OBJECTIVE_RENDER_AND_REFERENCE_CHECKS",
+      "build": "Manifests/act6-production-build.json",
+      "summary": "Evidence/act6-final-runtime-summary.json",
+      "runs": 8,
+      "inventorySha256": "c0f7254495a7d7588772299457b205d231fa17c14e6316245e87d935e0737fd3",
+      "normalMaterialInspections": [
+        "act6-player-open-720-02/047-act6-earned-memory-after-41.png",
+        "act6-player-quiet-retry-mismatch-1080-02/050-act6-earned-memory-after-41.png"
+      ],
+      "limits": "Simulated production InputSystem, not native OS input; source poses/art/animation/emotional impact remain HUMAN_SIGNOFF_REQUIRED after scheduled production polish. First build/proofs superseded for later-discovered Partial glassware UI leak; build02 fixes it."
+    }
+  },
+  "diagnosticMemoryPixels": {
+    "1280x720": [
+      56,
+      804,
+      96,
+      240,
+      78,
+      131,
+      111,
+      180,
+      229,
+      44,
+      4,
+      89,
+      634,
+      46
+    ],
+    "1920x1080": [
+      126,
+      1835,
+      245,
+      496,
+      175,
+      287,
+      234,
+      422,
+      520,
+      93,
+      5,
+      208,
+      1403,
+      119
+    ],
+    "order": [
+      "star",
+      "swing",
+      "empty_place",
+      "windmill_fragment",
+      "wing",
+      "hamlet_stage",
+      "hamlet_skull",
+      "hamlet_shadow",
+      "faust_circle",
+      "faust_glass",
+      "faust_glow",
+      "simcheong_lotus",
+      "simcheong_water",
+      "simcheong_ripples"
+    ],
+    "meaning": "Actual room depth and all other memory geometry remain present. Per-part white/dark captures isolate visible pixels. Earlier11 part counts are unchanged; no assertion was weakened and no sorting override added."
+  }
+}

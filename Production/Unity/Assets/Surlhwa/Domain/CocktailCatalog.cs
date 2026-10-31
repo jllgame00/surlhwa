@@ -22,7 +22,7 @@ namespace Surlhwa.Domain
             foreach(var tag in Tags) _=new StableId<TextIdentity>(tag);
         }
     }
-    public enum ShakeFinishPolicy { PourThenSplash, StrainThenPourAndGentleStir }
+    public enum ShakeFinishPolicy { PourThenSplash, StrainThenPourAndGentleStir, StrainOnly }
     public sealed class StirRecipe
     {
         public StableId<RecipeIdentity> Key { get; }
@@ -48,7 +48,8 @@ namespace Surlhwa.Domain
             if(method!="stir" && method!="build" && method!="shake" && method!="float") throw new ArgumentException("Unsupported recipe method.");
             if(lateIngredient!=null && (method!="shake" || !amounts.ContainsKey(lateIngredient))) throw new ArgumentException("Invalid late addition.");
             if(!Enum.IsDefined(typeof(ShakeFinishPolicy),shakeFinish) ||
-                (shakeFinish==ShakeFinishPolicy.StrainThenPourAndGentleStir && (method!="shake" || lateIngredient==null))) throw new ArgumentException("Invalid Shake finish policy.");
+                (shakeFinish==ShakeFinishPolicy.StrainThenPourAndGentleStir && (method!="shake" || lateIngredient==null)) ||
+                (shakeFinish==ShakeFinishPolicy.StrainOnly && (method!="shake" || lateIngredient!=null))) throw new ArgumentException("Invalid Shake finish policy.");
             if(requiredGarnish!=null && !GarnishRules.Valid(requiredGarnish,garnishPosition)) throw new ArgumentException("Unsupported garnish.");
             Amounts=new ReadOnlyDictionary<string,decimal>(new Dictionary<string,decimal>(amounts,StringComparer.Ordinal));
             DashIngredient=dashIngredient; RequiredGarnish=requiredGarnish;

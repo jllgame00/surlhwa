@@ -15,6 +15,7 @@ namespace Surlhwa.ContentIO
             ["shake"]=new[]{"shaker_ice","closed_shake","pour_from_shaker","late_soda_splash","no_serving_ice"},
             ["float"]=new[]{"vodka_base","coffee_layer","cream_layer","no_ice"} };
         private static readonly string[] StrainedShakePreparation={"shaker_ice","closed_shake","strain_from_shaker","late_measured_pour","gentle_stir","no_serving_ice"};
+        private static readonly string[] StrainOnlyPreparation={"shaker_ice","closed_shake","strain_from_shaker","no_serving_ice"};
         public static CampaignContent Load(string json)
         {
             try { return Read(json); }
@@ -28,7 +29,7 @@ namespace Surlhwa.ContentIO
             int schema=Int(root,"schemaVersion"); bool expanded=schema==2;
             string scope=String(root,"act");
             if(schema!=1 && schema!=2) throw Invalid("Unsupported campaign content schema.");
-            int act=scope=="act_01" ? 1 : scope=="through_act_02" ? 2 : scope=="through_act_03" ? 3 : scope=="through_act_04" ? 4 : scope=="through_act_05" ? 5 : 0;
+            int act=scope=="act_01" ? 1 : scope=="through_act_02" ? 2 : scope=="through_act_03" ? 3 : scope=="through_act_04" ? 4 : scope=="through_act_05" ? 5 : scope=="through_act_06" ? 6 : 0;
             var rootFields=new[]{"schemaVersion","mode","act","contentRevision","sourceRegistrySha256","ingredients","cocktails","recipes","tuning","guests","texts","encounters","slots","supply","known","prince"};
             Fields(root,expanded ? rootFields.Concat(new[]{"supplyGrants"}).ToArray() : rootFields);
             if(String(root,"mode")!="campaign" || act==0 || (expanded ? act<2 : act!=1) || !IsHash(String(root,"sourceRegistrySha256"))) throw Invalid("Unsupported campaign scope/source manifest.");
@@ -42,7 +43,8 @@ namespace Surlhwa.ContentIO
                 var row=Object(token); Fields(row,"id","cocktailId","method","amounts","dashIngredient","requiredGarnish","glassware","optionalGarnish","preparation","garnishPosition","lateIngredient","layerOrder");
                 string method=String(row,"method"); var preparation=Strings(row,"preparation");
                 bool strainedShake=act>=4 && method=="shake" && preparation.SequenceEqual(StrainedShakePreparation);
-                if(!Preparation.TryGetValue(method,out var expected) || (!preparation.SequenceEqual(expected) && !strainedShake)) throw Invalid("Unsupported method/preparation.");
+                bool strainOnly=act>=6 && method=="shake" && preparation.SequenceEqual(StrainOnlyPreparation);
+                if(!Preparation.TryGetValue(method,out var expected) || (!preparation.SequenceEqual(expected) && !strainedShake && !strainOnly)) throw Invalid("Unsupported method/preparation.");
                 var amounts=new Dictionary<string,decimal>();
                 foreach(var item in Array(row,"amounts")) { var a=Object(item); Fields(a,"ingredientId","ml"); amounts.Add(Id<IngredientIdentity>(a,"ingredientId"),Number(a,"ml")); }
                 string id=Id<RecipeIdentity>(row,"id"),glass=String(row,"glassware");
@@ -50,7 +52,7 @@ namespace Surlhwa.ContentIO
                 var layers=Strings(row,"layerOrder"); if(method!="float" && layers.Length!=0) throw Invalid("Unexpected layer policy.");
                 recipes.Add(new StirRecipe(id,Id<CocktailIdentity>(row,"cocktailId"),amounts,NullableString(row,"dashIngredient"),NullableString(row,"requiredGarnish"),
                     method,String(row,"garnishPosition"),NullableString(row,"lateIngredient"),layers,
-                    strainedShake ? ShakeFinishPolicy.StrainThenPourAndGentleStir : ShakeFinishPolicy.PourThenSplash));
+                    strainOnly ? ShakeFinishPolicy.StrainOnly : strainedShake ? ShakeFinishPolicy.StrainThenPourAndGentleStir : ShakeFinishPolicy.PourThenSplash));
                 presentation.Add(id,new RecipePresentation(glass,Bool(row,"optionalGarnish")));
             }
             var catalog=new BartendingCatalog(names.Keys,cocktails,recipes); var tuning=ReadTuning(Object(root["tuning"]));
@@ -68,11 +70,12 @@ namespace Surlhwa.ContentIO
             foreach(var token in Array(root,"guests"))
             {
                 var row=Object(token); Fields(row,"id","kind","displayTextId","visualBindingId"); string id=Id<GuestIdentity>(row,"id"),kind=String(row,"kind"),label=Id<TextIdentity>(row,"displayTextId"),visual=Id<VisualIdentity>(row,"visualBindingId");
-                var specialVisuals=act>=5 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet","visual_faust"} : act==4 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet"} : act==3 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote"} : expanded ? new[]{"visual_prince","visual_chunhyang","visual_mongryong"} : new[]{"visual_prince"};
+                var specialVisuals=act>=6 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet","visual_faust","visual_simcheong"} : act==5 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet","visual_faust"} : act==4 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet"} : act==3 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote"} : expanded ? new[]{"visual_prince","visual_chunhyang","visual_mongryong"} : new[]{"visual_prince"};
                 if((kind!="ordinary" && kind!="special") || !texts.ContainsKey(label) || texts[label].Role!="display" || (kind=="special" ? !specialVisuals.Contains(visual) : visual!="visual_ordinary")) throw Invalid("Unsupported campaign guest presentation.");
                 if(act>=3 && id=="guest_quixote" && (kind!="special" || visual!="visual_quixote")) throw Invalid("Invalid Quixote presentation identity.");
                 if(act>=4 && id=="guest_hamlet" && (kind!="special" || visual!="visual_hamlet")) throw Invalid("Invalid Hamlet presentation identity.");
                 if(act>=5 && id=="guest_faust" && (kind!="special" || visual!="visual_faust" || label!="text_rc1_0060")) throw Invalid("Invalid Faust presentation identity.");
+                if(act>=6 && id=="guest_simcheong" && (kind!="special" || visual!="visual_simcheong" || label!="text_rc1_0268")) throw Invalid("Invalid SimCheong presentation identity.");
                 guests.Add(id,new GuestDefinition(new StableId<GuestIdentity>(id),kind=="ordinary" ? GuestKind.Ordinary : GuestKind.Special,new StableId<TextIdentity>(label),new StableId<VisualIdentity>(visual)));
             }
             var encounters=new List<CampaignEncounter>(); var sourceRows=new Dictionary<string,string>();
@@ -83,7 +86,7 @@ namespace Surlhwa.ContentIO
                 if(row.Property("discoveryRetryTextId")!=null) permittedFields=permittedFields.Concat(new[]{"discoveryRetryTextId"}).ToArray();
                 Fields(row,permittedFields);
                 string id=Id<TextIdentity>(row,"id"),sourceRow=String(row,"sourceRow");
-                if(!Enumerable.Range(1,act>=5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17).Select(x=>"RC1-"+x.ToString("00")).Contains(sourceRow)) throw Invalid("Later ACT content is outside this milestone.");
+                if(!Enumerable.Range(1,act>=6 ? 43 : act==5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17).Select(x=>"RC1-"+x.ToString("00")).Contains(sourceRow)) throw Invalid("Later ACT content is outside this milestone.");
                 sourceRows.Add(id,sourceRow); var request=Object(row["request"]); Fields(request,"cocktailId","anyTags","allTags","excludedTags");
                 string cocktail=NullableString(request,"cocktailId");
                 if(cocktail!=null && (!catalog.Cocktails.ContainsKey(cocktail) || Strings(request,"anyTags").Length+Strings(request,"allTags").Length+Strings(request,"excludedTags").Length!=0)) throw Invalid("Invalid Specific request.");
@@ -115,7 +118,7 @@ namespace Surlhwa.ContentIO
             }
             var slots=new List<CampaignSlot>();
             foreach(var token in Array(root,"slots")) { var row=Object(token); Fields(row,"encounterId","fallbackId","whenKnownRecipe"); slots.Add(new CampaignSlot(Id<TextIdentity>(row,"encounterId"),NullableString(row,"fallbackId"),NullableString(row,"whenKnownRecipe"))); }
-            int expectedSlots=act>=5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17;
+            int expectedSlots=act>=6 ? 43 : act==5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17;
             if(slots.Count!=expectedSlots || slots.Select(x=>sourceRows[x.EncounterId]).Distinct().Count()!=expectedSlots) throw Invalid("Missing campaign source-row disposition.");
             var ordered=slots.Select(x=>encounters.Single(e=>e.Id==x.EncounterId)).ToArray();
             if(!ordered.Where(x=>x.PrinceVisit.HasValue).Select(x=>x.PrinceVisit.Value).SequenceEqual(new[]{PrinceVisit.First,PrinceVisit.Warmth,PrinceVisit.Clarity}) || ordered[16].PrinceVisit!=PrinceVisit.Clarity ||
@@ -131,10 +134,12 @@ namespace Surlhwa.ContentIO
                     bool quixoteDeparture=act>=3 && sourceRows[e.Id]=="RC1-28";
                     bool hamletDeparture=act>=4 && sourceRows[e.Id]=="RC1-33";
                     bool faustDeparture=act>=5 && sourceRows[e.Id]=="RC1-37";
+                    bool simCheongDeparture=act>=6 && sourceRows[e.Id]=="RC1-42";
                     if(reunion ? e.MemoryId!="mem_02" || e.MemoryVariant!="swing_empty_place" :
                         quixoteDeparture ? e.MemoryId!="mem_03" || e.MemoryVariant!="windmill_fragment" :
                         hamletDeparture ? e.MemoryId!="mem_04" || e.MemoryVariant!="stage_skull_shadow" :
-                        faustDeparture ? e.MemoryId!="mem_05" || e.MemoryVariant!="faint_circle_broken_glass_red_light" : e.MemoryId!=null) throw Invalid("Invalid authored memory owner.");
+                        faustDeparture ? e.MemoryId!="mem_05" || e.MemoryVariant!="faint_circle_broken_glass_red_light" :
+                        simCheongDeparture ? e.MemoryId!="mem_06" || e.MemoryVariant!="half_submerged_lotus_slow_ripples" : e.MemoryId!=null) throw Invalid("Invalid authored memory owner.");
                     if(act>=3 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-26")>=0 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-29")<=0) {
                         string expectedGuest=sourceRows[e.Id]=="RC1-26" ? "guest_postman" : sourceRows[e.Id]=="RC1-29" ? "guest_snow_worker" : "guest_quixote";
                         if(e.GuestId!=expectedGuest || e.RequiredDiscovery!=null || e.Request.CocktailId!=null || e.Intro.Any(line=>line.Facts.Count!=0))
@@ -147,9 +152,12 @@ namespace Surlhwa.ContentIO
                         else if(e.RequiredDiscovery!=null || e.DiscoveryRetryTextId!=null || e.Request.CocktailId!=null || e.Intro.Any(line=>line.Facts.Count!=0))
                             throw Invalid("Invalid ACT 4 ordinary/recommendation ownership.");
                     }
-                    if(act>=5 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-34")>=0) ValidateActFiveEncounter(e,sourceRows[e.Id]);
+                    if(act>=5 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-34")>=0 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-37")<=0) ValidateActFiveEncounter(e,sourceRows[e.Id]);
+                    if(act>=6 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-38")>=0) ValidateActSixEncounter(e,sourceRows[e.Id],texts);
                 }
-                if(act>=5 && slots.Skip(33).Any(x=>x.FallbackId!=null || x.WhenKnownRecipe!=null)) throw Invalid("ACT 5 recommendations cannot be conditional.");
+                if(act>=5 && slots.Skip(33).Take(4).Any(x=>x.FallbackId!=null || x.WhenKnownRecipe!=null)) throw Invalid("ACT 5 recommendations cannot be conditional.");
+                if(act>=6 && slots.Skip(37).Any(x=>x.EncounterId=="enc_rc1_41" ? x.FallbackId!="enc_rc1_41_known" || x.WhenKnownRecipe!="recipe_last_word" : x.FallbackId!=null || x.WhenKnownRecipe!=null))
+                    throw Invalid("Invalid ACT6 lesson/fallback selection.");
             }
             foreach(var slot in slots.Where(x=>x.FallbackId!=null))
             {
@@ -164,10 +172,13 @@ namespace Surlhwa.ContentIO
                 if(slot<1) throw Invalid("Unresolved supply grant boundary.");
                 foreach(var ingredient in Strings(grant,"ingredientIds")) supplyFromSlot.Add(ingredient,slot);
             }
-            if(expanded && supplyFromSlot.Keys.Any(x=>x!="london_dry_gin" && x!="fernet" && !(act>=4 && (x=="fresh_lemon_juice" || x=="champagne"))))
+            if(expanded && supplyFromSlot.Keys.Any(x=>x!="london_dry_gin" && x!="fernet" && !(act>=4 && (x=="fresh_lemon_juice" || x=="champagne")) &&
+                !(act>=6 && (x=="green_chartreuse" || x=="maraschino_luxardo" || x=="fresh_lime_juice"))))
                 throw Invalid("ACT 2 supply grants cannot delay accepted ACT 1 supply.");
             if(act>=4 && (!supplyFromSlot.TryGetValue("fresh_lemon_juice",out var lemonSlot) || lemonSlot!=29 ||
                 !supplyFromSlot.TryGetValue("champagne",out var champagneSlot) || champagneSlot!=29)) throw Invalid("ACT 4 supply must begin with French 75 discovery.");
+            if(act>=6 && new[]{"green_chartreuse","maraschino_luxardo","fresh_lime_juice"}.Any(x=>!supplyFromSlot.TryGetValue(x,out int start) || start!=39))
+                throw Invalid("ACT6 supply must begin with source night15 before the Last Word lesson.");
             var known=new Dictionary<string,string>(); foreach(var token in Array(root,"known")) { var row=Object(token); Fields(row,"recipeId","provenance"); known.Add(Id<RecipeIdentity>(row,"recipeId"),String(row,"provenance")); }
             if(known.Count!=1 || !known.TryGetValue("recipe_test_stir",out var provenance) || provenance!="LEARN-SEOLYA") throw Invalid("ACT 1 must not inherit Slice fixture knowledge.");
             var prince=Object(root["prince"]); Fields(prince,"prompt","choices","responses","recalls","openFarewell","quietFarewell","policyRevision");
@@ -176,7 +187,35 @@ namespace Surlhwa.ContentIO
             { var map=Object(prince[key]); Fields(map,fields); return map.Properties().ToDictionary(x=>x.Name,x=>String(map,x.Name)); }
             return new CampaignContent(String(root,"contentRevision"),Hash(json),catalog,tuning,names,texts,guests,presentation,encounters,slots,supply,known,
                 Id<TextIdentity>(prince,"prompt"),TextMap("choices","keep","seek"),TextMap("responses","keep","seek"),TextMap("recalls","keep","seek","none"),Strings(prince,"openFarewell"),Strings(prince,"quietFarewell"),scope,supplyFromSlot,
-                act>=5 ? new[]{0,17,25,29,33} : act==4 ? new[]{0,17,25,29} : act==3 ? new[]{0,17,25} : expanded ? new[]{0,17} : new[]{0});
+                act>=6 ? new[]{0,17,25,29,33,37} : act==5 ? new[]{0,17,25,29,33} : act==4 ? new[]{0,17,25,29} : act==3 ? new[]{0,17,25} : expanded ? new[]{0,17} : new[]{0});
+        }
+        private static void ValidateActSixEncounter(CampaignEncounter e,string sourceRow,IDictionary<string,SourcedText> texts)
+        {
+            int index=int.Parse(sourceRow.Substring(4))-38;
+            bool fallback=e.Id=="enc_rc1_41_known";
+            if(fallback && sourceRow!="RC1-41") throw Invalid("Invalid Last Word fallback owner.");
+            var guests=new[]{"guest_repairer","guest_simcheong","guest_simcheong","guest_snow_worker","guest_simcheong","guest_snow_worker"};
+            var intros=new[]{new[]{220,221},new[]{274,275,276,277},new[]{285,286,287,288},new[]{55,56,57},new[]{296,297,298,299},new[]{228,229}};
+            var farewells=new[]{new[]{216,217},new[]{269,270,271},new[]{280,281,282},new[]{51,52},new[]{291,292,293},new[]{224,225}};
+            var summaries=new[]{222,278,289,58,300,230}; var good=new[]{218,272,283,53,294,226}; var other=new[]{219,273,284,54,295,227};
+            var tags=new[]{new[]{"bitterness","warmth"},new[]{"warmth","clarity"},new[]{"warmth","bitterness"},System.Array.Empty<string>(),new[]{"warmth","clarity"},new[]{"clarity"}};
+            string TextId(int value) => "text_rc1_"+value.ToString("0000");
+            if((!fallback && e.Id!="enc_rc1_"+(index+38)) || e.GuestId!=guests[index] || e.Night!=16+index/2 || e.PrinceVisit.HasValue || e.ChoiceIntros.Count!=0)
+                throw Invalid("Invalid ACT6 encounter ownership.");
+            bool lesson=index==3 && !fallback;
+            if(e.RequiredDiscovery!=(lesson ? "recipe_last_word" : null) || e.DiscoveryRetryTextId!=(lesson ? "text_rc1_0059" : null) ||
+                e.Request.CocktailId!=(lesson ? "cocktail_last_word" : null) || !e.Request.AnyTags.SequenceEqual(fallback ? new[]{"bitterness"} : tags[index]) ||
+                e.Request.AllTags.Count!=0 || e.Request.ExcludedTags.Count!=0 || (!lesson && e.Intro.Any(x=>x.Facts.Count!=0))) throw Invalid("Invalid ACT6 request/learning ownership.");
+            if(e.SummaryTextId!=TextId(fallback ? 190 : summaries[index]) || !e.Intro.Select(x=>x.TextId).SequenceEqual((fallback ? new[]{188,189} : intros[index]).Select(TextId)) ||
+                !e.Farewell.SequenceEqual((fallback ? new[]{184,185} : farewells[index]).Select(TextId)) ||
+                e.Responses.Any(x=>x.Value!=TextId(x.Key=="good" ? fallback ? 186 : good[index] : fallback ? 187 : other[index]))) throw Invalid("Invalid ACT6 authored reading.");
+            if(lesson) {
+                var facts=new[]{new[]{"identity"},new[]{"amount:gin","amount:green_chartreuse","amount:maraschino_luxardo","amount:fresh_lime_juice"},new[]{"method","preparation","garnish"}};
+                for(int i=0;i<facts.Length;i++)
+                    if(!e.Intro[i].Facts.Select(x=>x.Fact).SequenceEqual(facts[i]) || e.Intro[i].Facts.Any(x=>x.RecipeId!="recipe_last_word" ||
+                        !x.SourceIds.SequenceEqual(new[]{texts[e.Intro[i].TextId].SourceId}))) throw Invalid("Invalid Last Word fact provenance.");
+                if(texts[e.DiscoveryRetryTextId].SourceId!="SRC-RC1-0059") throw Invalid("Invalid Last Word retry provenance.");
+            }
         }
         private static void ValidateActFiveEncounter(CampaignEncounter e,string sourceRow)
         {

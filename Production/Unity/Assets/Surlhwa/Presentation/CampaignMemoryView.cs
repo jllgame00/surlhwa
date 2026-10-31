@@ -11,6 +11,7 @@ namespace Surlhwa.Presentation
         private GameObject windmill;
         private GameObject hamlet;
         private GameObject faust;
+        private GameObject simcheong;
         private readonly System.Collections.Generic.List<Object> loversOwned=new System.Collections.Generic.List<Object>();
         public bool LoversVisible=>lovers!=null && lovers.activeSelf;
         public Transform LoversSwing { get; private set; }
@@ -26,6 +27,10 @@ namespace Surlhwa.Presentation
         public Transform FaustCircle { get; private set; }
         public Transform FaustGlass { get; private set; }
         public Transform FaustGlow { get; private set; }
+        public bool SimCheongVisible=>simcheong!=null && simcheong.activeSelf;
+        public Transform SimCheongLotus { get; private set; }
+        public Transform SimCheongWater { get; private set; }
+        public Transform SimCheongRipples { get; private set; }
         private Quaternion presentationFacing=Quaternion.Euler(28,0,0);
         public void SetPresentationFacing(Quaternion facing)
         {
@@ -67,6 +72,9 @@ namespace Surlhwa.Presentation
             var cost=state?.Memories.FirstOrDefault(x=>x.Id=="mem_05" && x.Variant=="faint_circle_broken_glass_red_light");
             if(cost!=null && faust==null) CreateFaustMemory();
             if(faust!=null) faust.SetActive(cost!=null);
+            var lotus=state?.Memories.FirstOrDefault(x=>x.Id=="mem_06" && x.Variant=="half_submerged_lotus_slow_ripples");
+            if(lotus!=null && simcheong==null) CreateSimCheongMemory();
+            if(simcheong!=null) { simcheong.SetActive(lotus!=null); if(lotus!=null) AnimateSimCheongRipples(Time.unscaledTime); }
         }
         private void CreateLoversMemory()
         {
@@ -134,6 +142,36 @@ namespace Surlhwa.Presentation
                 new Rect(.115f,0,.058f,.016f),new Rect(.130f,.016f,.030f,.018f)});
             FaustGlow=Part(faust.transform,"MEM05_","Tiny contained red point",new Vector3(.004f,.105f,-.004f),new Color(.57f,.105f,.085f),new[]{
                 new Rect(-.014f,-.014f,.028f,.028f)});
+        }
+        private void CreateSimCheongMemory()
+        {
+            // A small remembered waterline rests on the existing counter near her
+            // unreserved place. The opaque horizontal surface crosses half the bud;
+            // its lower silhouette stays submerged, without making the bar a pool.
+            simcheong=new GameObject("MEM-06 half submerged lotus and slow ripples"); simcheong.transform.SetParent(transform,false);
+            simcheong.transform.position=new Vector3(-1.65f,.995f,-.65f); simcheong.transform.rotation=Quaternion.identity;
+            SimCheongWater=Part(simcheong.transform,"MEM06_","Small supported waterline",Vector3.zero,new Color(.19f,.31f,.32f),new[]{
+                new Rect(-.23f,-.19f,.46f,.38f),new Rect(-.30f,-.14f,.60f,.28f),new Rect(-.34f,-.08f,.68f,.16f)});
+            SimCheongWater.localRotation=Quaternion.Euler(90,0,0);
+            SimCheongLotus=Part(simcheong.transform,"MEM06_","Half submerged lotus",Vector3.zero,new Color(.63f,.48f,.51f),new[]{
+                new Rect(-.08f,-.14f,.16f,.14f),new Rect(-.09f,0,.18f,.045f),
+                new Rect(-.12f,.03f,.07f,.065f),new Rect(.05f,.03f,.07f,.065f),
+                new Rect(-.075f,.06f,.15f,.04f),new Rect(-.035f,.09f,.07f,.055f),new Rect(-.015f,.145f,.03f,.018f)});
+            var ripples=new System.Collections.Generic.List<Rect>();
+            foreach(float radius in new[]{1f,.72f}) for(int i=0;i<32;i++) {
+                float angle=i*Mathf.PI/16;
+                ripples.Add(new Rect(Mathf.Cos(angle)*.24f*radius-.013f,Mathf.Sin(angle)*.13f*radius-.006f,.026f,.012f));
+            }
+            SimCheongRipples=Part(simcheong.transform,"MEM06_","Very slow small ripples",new Vector3(0,.002f,0),new Color(.37f,.47f,.46f),ripples.ToArray());
+            SimCheongRipples.localRotation=Quaternion.Euler(90,0,0);
+        }
+        private void AnimateSimCheongRipples(float time)
+        {
+            // Absolute presentation time avoids drift. Neither the water support nor
+            // lotus moves, and this subtle eighteen-second cycle owns no progress.
+            if(SimCheongRipples==null) return;
+            float scale=1+.025f*Mathf.Sin(time*.35f);
+            SimCheongRipples.localScale=new Vector3(scale,scale,1);
         }
         private Transform Part(string name,Vector3 at,Color color,Rect[] rectangles)
         { return Part(lovers.transform,"MEM02_",name,at,color,rectangles); }

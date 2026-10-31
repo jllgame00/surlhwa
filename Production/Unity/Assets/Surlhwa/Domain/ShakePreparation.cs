@@ -13,6 +13,16 @@ namespace Surlhwa.Domain
             var proof=s.Shake;
             if(proof==null || !proof.HowGood || !CoversCurrentBatch(recipe,tuning,s)) reasons.Add("shake_batch_missing");
             var transfers=s.Trace.Where(x=>x.Target==ContainerRole.Serving && x.Source=="shaker" && x.AcceptedMl>0).ToArray();
+            if(recipe.ShakeFinish==ShakeFinishPolicy.StrainOnly)
+            {
+                // Every accepted serving addition must come through the actual Shaker Strain action.
+                // A final Strained flag or valid shake stamp cannot stand in for transfer provenance.
+                if(transfers.Length==0 || transfers.Any(x=>x.Kind!=BrewAction.Strain) ||
+                    s.Trace.Any(x=>x.Target==ContainerRole.Serving && x.AcceptedMl>0 &&
+                        (x.Source!="shaker" || x.Kind!=BrewAction.Strain))) reasons.Add("shaker_strain_missing");
+                if(s.HasIce) reasons.Add("serving_ice_unexpected");
+                return;
+            }
             if(recipe.ShakeFinish==ShakeFinishPolicy.StrainThenPourAndGentleStir)
             {
                 if(s.HasIce) reasons.Add("serving_ice_unexpected");

@@ -25,7 +25,7 @@ namespace Surlhwa.Presentation
         private bool finePourInput; private ContainerRole fineRole; private decimal fineStart,fineTarget; private Key fineKey;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
-        private bool expanded,act3,act4,act5,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved;
+        private bool expanded,act3,act4,act5,act6,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved,lastWordFailure,lastWordRetryObserved,simCheongMismatchObserved,memorySixCaptured,earlyLastWordRequested,earlyLastWordObserved,lastWordFallbackObserved;
         private int expectedServices,startSlot,startDepartures,lastDepartures,totalSlots,expectedMemories;
         private string[] suppliedIngredients=Array.Empty<string>(); private readonly HashSet<string> shelfSelections=new HashSet<string>();
         private string startPhase,proofPrefix; private readonly HashSet<string> archived=new HashSet<string>(); private readonly HashSet<int> visited=new HashSet<int>();
@@ -36,8 +36,9 @@ namespace Surlhwa.Presentation
             output=Path.GetFullPath(Arg("-campaignEvidenceRoot")); Directory.CreateDirectory(output); owner=GetComponent<CampaignController>();
             UnityEngine.Application.logMessageReceived+=Log; float until=Time.realtimeSinceStartup+40;
             while(owner.Ui==null || owner.Busy) { if(Time.realtimeSinceStartup>until) { Fail("Initialization timeout"); yield break; } yield return null; }
-            act5=owner.Content.Scope=="through_act_05"; act4=act5 || owner.Content.Scope=="through_act_04"; act3=act4 || owner.Content.Scope=="through_act_03"; expanded=act3 || owner.Content.Scope=="through_act_02";
-            totalSlots=owner.Content.Slots.Count; expectedMemories=owner.Content.ActAt(totalSlots-1); proofPrefix=act5 ? "act5" : act4 ? "act4" : act3 ? "act3" : "act2";
+            act6=owner.Content.Scope=="through_act_06"; act5=act6 || owner.Content.Scope=="through_act_05"; act4=act5 || owner.Content.Scope=="through_act_04"; act3=act4 || owner.Content.Scope=="through_act_03"; expanded=act3 || owner.Content.Scope=="through_act_02";
+            earlyLastWordRequested=fixture.Contains("early-last-word");
+            totalSlots=owner.Content.Slots.Count; expectedMemories=owner.Content.ActAt(totalSlots-1); proofPrefix=act6 ? "act6" : act5 ? "act5" : act4 ? "act4" : act3 ? "act3" : "act2";
             keyboard=InputSystem.AddDevice<Keyboard>(); mouse=InputSystem.AddDevice<Mouse>();
             InputSystem.onBeforeUpdate+=QueueStirForCurrentFrame;
             render=new RenderTexture(Screen.width,Screen.height,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB); render.Create();
@@ -57,6 +58,7 @@ namespace Surlhwa.Presentation
                 if(act3) plan=plan.Concat(new[]{"recipe_manhattan","recipe_gin_fizz",fixture.Contains("quixote-mismatch") ? "recipe_dry_martini" : "recipe_hanky_panky","recipe_negroni"}).ToArray();
                 if(act4) plan=plan.Concat(new[]{"recipe_french_75","recipe_dry_martini","recipe_dry_martini",fixture.Contains("hamlet-mismatch") ? "recipe_french_75" : "recipe_dry_martini"}).ToArray();
                 if(act5) plan=plan.Concat(new[]{"recipe_dry_martini","recipe_gin_fizz","recipe_manhattan",fixture.Contains("faust-mismatch") ? "recipe_french_75" : "recipe_negroni"}).ToArray();
+                if(act6) plan=plan.Concat(new[]{"recipe_negroni","recipe_dry_martini",earlyLastWordRequested ? "recipe_last_word" : "recipe_manhattan","recipe_last_word",fixture.Contains("simcheong-mismatch") ? "recipe_french_75" : "recipe_last_word","recipe_dry_martini"}).ToArray();
                 var initial=owner.Session; startSlot=initial.State.SlotIndex; startPhase=initial.State.Phase.ToString(); startDepartures=lastDepartures=initial.State.CompletedOccurrences.Count;
                 bool pendingAccepted=initial.State.CurrentService!=null && !initial.State.CompletedOccurrences.Contains(initial.State.OccurrenceId) &&
                     (initial.CurrentEncounter.RequiredDiscovery==null || initial.Knowledge.Project(initial.CurrentEncounter.RequiredDiscovery).Known);
@@ -67,7 +69,12 @@ namespace Surlhwa.Presentation
                 if(fixture.Contains("french-retry")) Check(act4 && startSlot<=29 && !initial.Knowledge.Project("recipe_french_75").Known,"required French failure begins before earned discovery");
                 if(fixture.Contains("hamlet-mismatch")) Check(act4 && (startSlot<32 || (startSlot==32 && initial.State.CurrentService==null)),"Hamlet mismatch begins before the actual slot 32 service");
                 if(fixture.Contains("faust-mismatch")) Check(act5 && (startSlot<36 || (startSlot==36 && initial.State.CurrentService==null)),"Faust mismatch begins before the actual slot 36 service");
+                if(fixture.Contains("last-word-retry")) Check(act6 && startSlot<=40 && !initial.Knowledge.Project("recipe_last_word").Known,"required Last Word failure begins before earned discovery");
+                if(fixture.Contains("simcheong-mismatch")) Check(act6 && (startSlot<41 || (startSlot==41 && initial.State.CurrentService==null)),"SimCheong mismatch begins before the actual slot 41 service");
+                if(earlyLastWordRequested) Check(act6 && startSlot<=39 && !initial.Knowledge.Project("recipe_last_word").Known &&
+                    (startSlot<39 || initial.State.CurrentService==null) && !fixture.Contains("retry") && !fixture.Contains("mismatch"),"early Last Word begins unknown before the actual slot 39 service");
                 memoryThreeCaptured=initial.State.Memories.Any(x=>x.Id=="mem_03");
+                memorySixCaptured=initial.State.Memories.Any(x=>x.Id=="mem_06");
                 ArchiveCheckpoint(proofPrefix+"-start"); yield return Capture(proofPrefix+"-start");
             }
             while(!failed && owner.Session?.State.Phase!=CampaignPhase.Complete)
@@ -80,12 +87,17 @@ namespace Surlhwa.Presentation
                     Check(s.State.CompletedOccurrences.Count==28 && s.State.SlotIndex==28 && s.State.CurrentService==null,"MEM-03 earned after Quixote departure before final ordinary service");
                     ArchiveCheckpoint("act3-memory-after-27"); yield return Capture("act3-earned-memory-after-27");
                 }
+                if(act6 && !memorySixCaptured && s.State.Memories.Any(x=>x.Id=="mem_06")) {
+                    memorySixCaptured=true;
+                    Check(s.State.CompletedOccurrences.Count==42 && s.State.SlotIndex==42 && s.State.CurrentService==null,"MEM-06 earned after SimCheong departure before final ordinary service");
+                    ArchiveCheckpoint("act6-memory-after-41"); yield return Capture("act6-earned-memory-after-41");
+                }
                 var phase=s.State.Phase; if(phase==CampaignPhase.Complete) break;
                 if(phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing) { yield return null; continue; }
                 if(phase==CampaignPhase.Brewing)
                 {
                     bool firstAttempt=visited.Add(s.State.SlotIndex);
-                    if(!firstAttempt && !(expanded && s.State.SlotIndex==21 && deliberateFailure && retryObserved) && !(act4 && s.State.SlotIndex==29 && frenchFailure && frenchRetryObserved)) { Fail("Unexpected retry"); yield break; }
+                    if(!firstAttempt && !(expanded && s.State.SlotIndex==21 && deliberateFailure && retryObserved) && !(act4 && s.State.SlotIndex==29 && frenchFailure && frenchRetryObserved) && !(act6 && s.State.SlotIndex==40 && lastWordFailure && lastWordRetryObserved)) { Fail("Unexpected retry"); yield break; }
                     if(expanded && s.State.SlotIndex>=17 && firstAttempt) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==5 || s.State.SlotIndex==10 || s.State.SlotIndex==16) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==3 || s.State.SlotIndex==5) { yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),s.State.SlotIndex==3 ? "recipe_dry_martini" : "recipe_manwol"); yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial recipe page "+page); yield return Capture("codex-clues-"+s.State.SlotIndex); yield return Click("돌아가기  Esc"); }
@@ -100,15 +112,48 @@ namespace Surlhwa.Presentation
                         yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial French 75 recipe page");
                         yield return Capture("codex-french-clues"); yield return Click("돌아가기  Esc");
                     }
+                    if(act6 && s.State.SlotIndex==39 && firstAttempt && earlyLastWordRequested) {
+                        Check(s.Supply.Count==22,"all 22 physical ingredients supplied before Last Word disclosure");
+                        yield return InspectSupplyPages(); yield return InspectLastWordPage("codex-last-word-unknown",false,true);
+                    }
+                    if(act6 && s.State.SlotIndex==40 && firstAttempt) {
+                        if(!earlyLastWordObserved) yield return InspectSupplyPages();
+                        bool fallback=s.CurrentEncounter.Id=="enc_rc1_41_known";
+                        if(fallback) {
+                            Check(s.Knowledge.Project("recipe_last_word").Known && s.CurrentEncounter.RequiredDiscovery==null &&
+                                s.CurrentEncounter.Request.AnyTags.SequenceEqual(new[]{"bitterness"}) &&
+                                !s.State.ConsumedLines.Any(x=>x.Contains(":40:Intro:") && new[]{"0055","0056","0057"}.Any(n=>x.EndsWith("text_rc1_"+n,StringComparison.Ordinal))),"earned Last Word selects authored ordinary fallback without consuming the lesson");
+                            lastWordFallbackObserved=true; plan[40]="recipe_negroni";
+                            yield return Capture("act6-last-word-known-fallback");
+                        }
+                        yield return InspectLastWordPage(fallback ? "codex-last-word-fallback-known" : "codex-last-word-clues",fallback);
+                    }
                     bool omitZest=expanded && s.State.SlotIndex==21 && fixture.Contains("hanky-retry") && !deliberateFailure;
                     bool omitGentle=act4 && s.State.SlotIndex==29 && fixture.Contains("french-retry") && !frenchFailure;
+                    bool omitStrain=act6 && s.State.SlotIndex==40 && fixture.Contains("last-word-retry") && !lastWordFailure;
                     if(omitZest) { deliberateFailure=true; expectedServices++; }
                     if(omitGentle) { frenchFailure=true; expectedServices++; }
-                    yield return Prepare(plan[s.State.SlotIndex],omitZest,omitGentle);
-                    if(expanded && s.State.SlotIndex>=17) ArchiveCheckpoint((omitZest || omitGentle ? "failed-service-" : "after-service-")+s.State.SlotIndex);
+                    if(omitStrain) { lastWordFailure=true; expectedServices++; }
+                    yield return Prepare(plan[s.State.SlotIndex],omitZest,omitGentle,omitStrain);
+                    if(expanded && s.State.SlotIndex>=17) ArchiveCheckpoint((omitZest || omitGentle || omitStrain ? "failed-service-" : "after-service-")+s.State.SlotIndex);
+                    if(act6 && s.State.SlotIndex==39 && earlyLastWordRequested) {
+                        earlyLastWordObserved=s.State.CurrentService.Discovered && s.State.CurrentService.Outcome.RecipeId=="recipe_last_word" &&
+                            s.State.CurrentService.Outcome.Preparation==PreparationResult.Good && s.State.CurrentService.Outcome.QualityGood && !s.State.CurrentService.Outcome.Fits &&
+                            s.Knowledge.KnownReceipts.TryGetValue("recipe_last_word",out var receipt) && receipt=="service:"+s.State.OccurrenceId;
+                        Check(earlyLastWordObserved,"actual slot 39 service earns Last Word independently of FIT");
+                        yield return InspectLastWordPage("codex-last-word-early-known",true);
+                    }
                     continue;
                 }
                 if(expanded && phase==CampaignPhase.Retry) {
+                    if(act6 && s.State.SlotIndex==40) {
+                        Check(!s.Knowledge.Project("recipe_last_word").Known && !s.State.CompletedOccurrences.Contains(s.State.OccurrenceId) && s.CurrentText?.Id=="text_rc1_0059","Last Word retry retains discovery and authored feedback");
+                        lastWordRetryObserved=true; ArchiveCheckpoint("last-word-retry"); yield return Capture("last-word-required-retry");
+                        if(media) yield return new WaitForSecondsRealtime(1.5f);
+                        yield return Click("계속  Enter"); yield return Idle();
+                        Check(s.State.Phase==CampaignPhase.Brewing && s.State.ConsumedLines.Any(x=>x.EndsWith(":40:Retry:0:text_rc1_0059",StringComparison.Ordinal)),"Last Word retry reading consumed before fresh attempt");
+                        ArchiveCheckpoint("last-word-retry-read"); continue;
+                    }
                     if(act4 && s.State.SlotIndex==29) {
                         Check(!s.Knowledge.Project("recipe_french_75").Known && !s.State.CompletedOccurrences.Contains(s.State.OccurrenceId) && s.CurrentText?.Id=="text_rc1_0039","French retry retains discovery and authored feedback");
                         frenchRetryObserved=true; ArchiveCheckpoint("french-retry"); yield return Capture("french-required-retry");
@@ -141,7 +186,7 @@ namespace Surlhwa.Presentation
                 Check(owner.Session.State.Services.Count==expectedServices,expectedServices+" actual services");
                 Check(owner.Session.State.CompletedOccurrences.Count==totalSlots,totalSlots+" natural departures");
                 Check(owner.Session.State.Services.Select(x=>x.OccurrenceId).Distinct().Count()==totalSlots,"one service occurrence per scheduled encounter");
-                Check(owner.Session.Knowledge.KnownReceipts.Count==(act4 ? 8 : 7),(act4 ? "eight" : "seven")+" recipes learned by real services");
+                Check(owner.Session.Knowledge.KnownReceipts.Count==(act6 ? 9 : act4 ? 8 : 7),(act6 ? "nine" : act4 ? "eight" : "seven")+" recipes learned by real services");
                 Check(owner.Session.State.ActComplete && owner.Session.State.Memories.Count==expectedMemories && owner.Memory.Visible && owner.Memory.LoversVisible,
                     expectedMemories+" earned memories after natural departure");
                 Check(owner.Memory.Glowing==(owner.Session.State.Memories.Single(x=>x.Id=="mem_01").Variant=="star_glowing"),"preserved ACT 1 memory variant");
@@ -162,6 +207,13 @@ namespace Surlhwa.Presentation
                     Check(owner.Memory.FaustVisible && owner.Memory.FaustCircle!=null && owner.Memory.FaustGlass!=null && owner.Memory.FaustGlow!=null,"MEM-05 faint circle broken glass and small red light resolve");
                     Check(owner.Session.State.Memories.Count(x=>x.Id=="mem_05" && x.Variant=="faint_circle_broken_glass_red_light")==1,"one canonical MEM-05 receipt");
                     if(fixture.Contains("faust-mismatch")) Check(faustMismatchObserved,"mismatching Faust drink still reaches natural memory departure");
+                }
+                if(act6) {
+                    Check(owner.Memory.SimCheongVisible && owner.Memory.SimCheongLotus!=null && owner.Memory.SimCheongWater!=null && owner.Memory.SimCheongRipples!=null,"MEM-06 half-submerged lotus waterline and slow ripples resolve");
+                    Check(owner.Session.State.Memories.Count(x=>x.Id=="mem_06" && x.Variant=="half_submerged_lotus_slow_ripples")==1,"one canonical MEM-06 receipt");
+                    if(fixture.Contains("last-word-retry")) Check(lastWordFailure && lastWordRetryObserved,"required Last Word failure and successful retry observed");
+                    if(fixture.Contains("simcheong-mismatch")) Check(simCheongMismatchObserved,"mismatching SimCheong drink still reaches natural memory departure");
+                    if(earlyLastWordRequested) Check(earlyLastWordObserved && lastWordFallbackObserved,"early Last Word service reaches its authored Known fallback");
                 }
             } else {
                 Check(owner.Session.State.Services.Count==17,"17 actual services"); Check(owner.Session.State.CompletedOccurrences.Count==17,"17 natural departures");
@@ -285,13 +337,39 @@ namespace Surlhwa.Presentation
         }
         private Button PageButton(string label) => owner.Ui.GetComponentsInChildren<Button>().SingleOrDefault(x=>x.isActiveAndEnabled && x.IsInteractable() && x.GetComponentInChildren<TextMeshProUGUI>()?.text==label);
         private string[] VisibleIngredients() => owner.Session?.Supply.Where(id=>IngredientButton(id)!=null).ToArray() ?? Array.Empty<string>();
+        private string[] LastWordCardText()
+        {
+            if(owner.Ui.VisibleModal!="codex") return Array.Empty<string>();
+            int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),"recipe_last_word");
+            var button=owner.Ui.GetComponentsInChildren<Button>().SingleOrDefault(x=>x.name=="Recipe page "+page);
+            if(button==null) return Array.Empty<string>(); var card=button.transform.parent;
+            return card.GetComponentsInChildren<TextMeshProUGUI>().Where(x=>x.transform.parent==card && x.rectTransform.anchoredPosition.x>=300).Select(x=>x.text).ToArray();
+        }
+        private IEnumerator InspectLastWordPage(string label,bool known,bool unknown=false)
+        {
+            var projection=owner.Session.Knowledge.Project("recipe_last_word");
+            Check(projection.Known==known,"Last Word knowledge state before "+label);
+            if(unknown) Check(projection.Name==null && projection.Method==null && projection.Ingredients.Count==0 && projection.Amounts.Count==0 && !projection.PreparationVisible && !projection.GarnishVisible,"physical supply does not disclose Last Word");
+            else Check(projection.Name!=null && projection.Method=="Shake" && projection.Ingredients.Count==4 && projection.Amounts.Count==4 && projection.PreparationVisible && projection.GarnishVisible,"earned Last Word facts are available");
+            yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),"recipe_last_word");
+            yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"Last Word recipe page");
+            string text=string.Join("\n",LastWordCardText()); var recipe=owner.Content.Catalog.Recipes["recipe_last_word"];
+            if(unknown) Check(text.Contains("이름을 기다리는 한 잔") && text.Contains("제조법 미상") && text.Contains("아직 적어 둔 재료가 없습니다.") &&
+                !text.Contains(owner.Content.Catalog.Cocktails[recipe.CocktailId].Name) && !text.Contains("22.5") && !text.Contains("Shake") && !text.Contains("거르기") &&
+                recipe.Amounts.Keys.All(id=>!text.Contains(owner.Content.IngredientNames[id])),"Unknown Last Word card hides name ingredients amounts and preparation");
+            else Check(text.Contains(owner.Content.Catalog.Cocktails[recipe.CocktailId].Name) && text.Contains(known ? "만들어 본 기록" : "대화 속에서 들은 단서") &&
+                text.Contains("Shake") && text.Contains("U로 거르기") && text.Contains("가니시 없음") && !text.Contains("Splash") &&
+                text.Split(new[]{"22.5 ml"},StringSplitOptions.None).Length-1==4 && recipe.Amounts.Keys.All(id=>text.Contains(owner.Content.IngredientNames[id])),"Last Word card renders exact learned amounts and its own finish");
+            Check(text.Contains("칵테일 잔")==known,"Last Word glassware is disclosed only after earned Known");
+            yield return Capture(label); yield return Click("돌아가기  Esc");
+        }
         private IEnumerator InspectSupplyPages()
         {
             suppliedIngredients=owner.Session.Supply.OrderBy(x=>x,StringComparer.Ordinal).ToArray();
             for(int n=0;n<5 && PageButton("이전 재료")!=null;n++) yield return Click("이전 재료");
             Check(PageButton("이전 재료")==null,"physical shelf begins at first page");
             for(int page=1;page<=5;page++) {
-                yield return Capture("act4-shelf-page-"+page);
+                yield return Capture((owner.Content.ActAt(owner.Session.State.SlotIndex)>=6 ? "act6" : "act4")+"-shelf-page-"+page);
                 if(PageButton("다음 재료")==null) break;
                 yield return Click("다음 재료");
             }
@@ -322,7 +400,7 @@ namespace Surlhwa.Presentation
             decimal actual=owner.Session.Brew.Container(role).TotalMl-start;
             Check(Math.Abs(actual-ml)<.25m,"measured "+id+" "+actual+" / "+ml+" ml");
         }
-        private IEnumerator Prepare(string id,bool omitZest=false,bool omitGentle=false)
+        private IEnumerator Prepare(string id,bool omitZest=false,bool omitGentle=false,bool omitStrain=false)
         {
             var recipe=owner.Content.Catalog.Recipes[id]; yield return Click(char.ToUpperInvariant(recipe.Method[0])+recipe.Method.Substring(1));
             if(recipe.Method=="stir")
@@ -352,6 +430,9 @@ namespace Surlhwa.Presentation
                     yield return Press(Key.U,4); yield return Target(ContainerRole.Serving);
                     yield return Pour(recipe.LateIngredient,recipe.Amounts[recipe.LateIngredient],ContainerRole.Serving);
                     if(!omitGentle) yield return Press(Key.G);
+                } else if(recipe.ShakeFinish==ShakeFinishPolicy.StrainOnly) {
+                    Check(owner.Input.ShakerStrainAvailable,"production Shaker Strain is available for Last Word");
+                    yield return Press(omitStrain ? Key.T : Key.U,4); yield return Target(ContainerRole.Serving);
                 } else {
                     yield return Press(Key.T,4); yield return Target(ContainerRole.Serving); yield return Pour(recipe.LateIngredient,recipe.Amounts[recipe.LateIngredient],ContainerRole.Serving,Key.X);
                 }
@@ -366,21 +447,31 @@ namespace Surlhwa.Presentation
                     keys=Array.Empty<Key>(); Queue(); yield return null;
                 }
             }
-            string failureSuffix=omitZest ? "-missing-zest" : omitGentle ? "-missing-gentle" : "";
+            string failureSuffix=omitZest ? "-missing-zest" : omitGentle ? "-missing-gentle" : omitStrain ? "-wrong-pour" : "";
             yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method+failureSuffix); yield return Click("손님께 내기"); yield return Idle();
             var result=owner.Session.State.CurrentService?.Outcome;
             if(omitZest) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required Hanky missing-zest preparation fails without discovery");
             else if(omitGentle) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required French missing-GentleStir preparation fails without discovery");
+            else if(omitStrain) {
+                var snapshot=owner.Session.State.CurrentService?.Snapshot;
+                Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && result.Fits && result.QualityGood &&
+                    snapshot?.Shake!=null && snapshot.Shake.HowGood && snapshot.Shake.QualityGood && snapshot.Amounts.Count==recipe.Amounts.Count && snapshot.Shake.Amounts.Count==recipe.Amounts.Count &&
+                    recipe.Amounts.All(a=>snapshot.Amounts.TryGetValue(a.Key,out var poured) && Math.Abs(poured-a.Value)<.25m && snapshot.Shake.Amounts.TryGetValue(a.Key,out var shaken) && Math.Abs(shaken-a.Value)<.25m) &&
+                    !snapshot.HasIce && snapshot.Garnish==null && !owner.Session.Knowledge.Project(id).Known,"required Last Word wrong-Pour fails HOW with true FIT and good complete shaken batch");
+            }
             else Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation==PreparationResult.Good && result.QualityGood,"service "+owner.Session.State.SlotIndex+" "+id);
-            if(expanded && owner.Session.State.SlotIndex>=17 && !omitZest && !omitGentle) {
+            if(expanded && owner.Session.State.SlotIndex>=17 && !omitZest && !omitGentle && !omitStrain) {
                 bool quixoteMismatch=act3 && owner.Session.State.SlotIndex==27 && fixture.Contains("quixote-mismatch");
                 bool hamletMismatch=act4 && owner.Session.State.SlotIndex==32 && fixture.Contains("hamlet-mismatch");
                 bool faustMismatch=act5 && owner.Session.State.SlotIndex==36 && fixture.Contains("faust-mismatch");
-                bool mismatch=quixoteMismatch || hamletMismatch || faustMismatch;
+                bool simMismatch=act6 && owner.Session.State.SlotIndex==41 && fixture.Contains("simcheong-mismatch");
+                bool earlyMismatch=act6 && owner.Session.State.SlotIndex==39 && earlyLastWordRequested;
+                bool mismatch=quixoteMismatch || hamletMismatch || faustMismatch || simMismatch || earlyMismatch;
                 Check(result?.Fits==!mismatch,"actual ACT "+owner.Content.ActAt(owner.Session.State.SlotIndex)+" request "+(mismatch ? "mismatch " : "fit ")+owner.Session.State.SlotIndex);
                 if(quixoteMismatch) quixoteMismatchObserved=result?.Fits==false;
                 if(hamletMismatch) hamletMismatchObserved=result?.Fits==false;
                 if(faustMismatch) faustMismatchObserved=result?.Fits==false;
+                if(simMismatch) simCheongMismatchObserved=result?.Fits==false;
             }
             yield return Capture("reaction-"+owner.Session.State.SlotIndex+failureSuffix);
         }
@@ -412,21 +503,23 @@ namespace Surlhwa.Presentation
                 if(act3 && !state.Memories.Any(x=>x.Id=="mem_03")) Check(!owner.Memory.WindmillVisible,"MEM-03 absent before earned departure "+label);
                 if(act4 && !state.Memories.Any(x=>x.Id=="mem_04")) Check(!owner.Memory.HamletVisible,"MEM-04 absent before earned departure "+label);
                 if(act5 && !state.Memories.Any(x=>x.Id=="mem_05")) Check(!owner.Memory.FaustVisible,"MEM-05 absent before earned departure "+label);
+                if(act6 && !state.Memories.Any(x=>x.Id=="mem_06")) Check(!owner.Memory.SimCheongVisible,"MEM-06 absent before earned departure "+label);
             }
             File.AppendAllText(Path.Combine(output,"captures.jsonl"),JsonUtility.ToJson(new CaptureEvidence{label=label,image=image,
                 slot=state?.SlotIndex ?? -1,line=state?.LineIndex ?? -1,phase=state?.Phase.ToString() ?? "menu",textId=text?.Id,textRole=text?.Role,
                 displayedSpeaker=owner.Ui.DisplayedSpeaker,guestIds=s?.CurrentEncounter.GuestIds.ToArray() ?? Array.Empty<string>(),
                 visibleActors=actors.Select(a=>CampaignEvidenceProbe.PresentedGuestId(owner,a)).ToArray(),actorBindingIds=actors.Select(a=>a.GuestId).ToArray(),
                 visibleText=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(t=>t.isActiveAndEnabled).Select(t=>t.text).ToArray(),
+                recipeCardText=act6 ? LastWordCardText() : Array.Empty<string>(),
                 overflow=overflow,invalidRenderers=invalidRenderers,services=state?.Services.Count ?? 0,departures=state?.CompletedOccurrences.Count ?? 0,
-                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,hamletVisible=owner.Memory.HamletVisible,faustVisible=owner.Memory.FaustVisible,
+                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,hamletVisible=owner.Memory.HamletVisible,faustVisible=owner.Memory.FaustVisible,simCheongVisible=owner.Memory.SimCheongVisible,
                 visibleIngredients=act4 ? VisibleIngredients() : Array.Empty<string>(),
                 act=state==null ? 0 : owner.Content.ActAt(state.SlotIndex),servingVessels=serving.Length})+"\n");
         }
         [Serializable] private sealed class CaptureEvidence
         {
-            public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,overflow,invalidRenderers,visibleIngredients;
-            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible,hamletVisible,faustVisible;
+            public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,recipeCardText,overflow,invalidRenderers,visibleIngredients;
+            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible,hamletVisible,faustVisible,simCheongVisible;
         }
         private void SavePixels(string path)
         { var prior=RenderTexture.active; RenderTexture.active=render; var texture=new Texture2D(render.width,render.height,TextureFormat.RGB24,false); texture.ReadPixels(new Rect(0,0,render.width,render.height),0,0); texture.Apply(); RenderTexture.active=prior; File.WriteAllBytes(path,texture.EncodeToPNG()); Destroy(texture); }
@@ -439,10 +532,12 @@ namespace Surlhwa.Presentation
                 scope=owner?.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,fixture=fixture,services=owner.Session?.State.Services.Count ?? 0,
                 departures=owner.Session?.State.CompletedOccurrences.Count ?? 0,known=owner.Session?.Knowledge.KnownReceipts.Count ?? 0,memories=owner.Session?.State.Memories.Count ?? 0,
                 expectedServices=expectedServices,startSlot=startSlot,startDepartures=startDepartures,startPhase=startPhase,visitedSlots=visited.OrderBy(x=>x).ToArray(),deliberateFailure=deliberateFailure,retryObserved=retryObserved,quixoteMismatchObserved=quixoteMismatchObserved,
-                frenchFailure=frenchFailure,frenchRetryObserved=frenchRetryObserved,hamletMismatchObserved=hamletMismatchObserved,faustMismatchObserved=faustMismatchObserved,suppliedIngredients=suppliedIngredients,shelfSelections=shelfSelections.OrderBy(x=>x,StringComparer.Ordinal).ToArray()},true));
+                frenchFailure=frenchFailure,frenchRetryObserved=frenchRetryObserved,hamletMismatchObserved=hamletMismatchObserved,faustMismatchObserved=faustMismatchObserved,
+                lastWordFailure=lastWordFailure,lastWordRetryObserved=lastWordRetryObserved,simCheongMismatchObserved=simCheongMismatchObserved,earlyLastWordObserved=earlyLastWordObserved,lastWordFallbackObserved=lastWordFallbackObserved,
+                suppliedIngredients=suppliedIngredients,shelfSelections=shelfSelections.OrderBy(x=>x,StringComparer.Ordinal).ToArray()},true));
             UnityEngine.Application.Quit(errors.Count==0 ? 0 : 2);
         }
-        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved; }
+        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved,lastWordFailure,lastWordRetryObserved,simCheongMismatchObserved,earlyLastWordObserved,lastWordFallbackObserved; }
         private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; InputSystem.onBeforeUpdate-=QueueStirForCurrentFrame; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
     }
 }
