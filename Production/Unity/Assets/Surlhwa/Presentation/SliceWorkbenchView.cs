@@ -186,19 +186,20 @@ namespace Surlhwa.Presentation
             string tool=adapter?.ActiveTool; bottle.localRotation=Quaternion.Euler(0,0,tool=="pour" || tool=="splash" ? -45 : 0);
             if(art!=null) {
                 rocksShell.SetActive(!CocktailGlass); cocktailShell.SetActive(CocktailGlass);
-                floatSpoon.gameObject.SetActive(tool=="float"); strainer.gameObject.SetActive(tool=="strain");
+                floatSpoon.gameObject.SetActive(tool=="float"); strainer.gameObject.SetActive(tool=="strain" || tool=="shaker_strain");
+                strainer.SetParent(tool=="shaker_strain" ? shaker : mixing,false); strainer.localPosition=new Vector3(0,.53f,-.05f);
                 floatSpoon.localPosition=new Vector3(1.5f,.51f+(adapter?.FloatHeight ?? 0)*.25f,-.06f);
                 // Put the tilted source mouth just above the supported spoon. The adapter
                 // still owns height/flow; visual placement never delivers any liquid.
                 jigger.localPosition=tool=="float" ? floatSpoon.localPosition+new Vector3(-.319f,-.144f,-.02f) : Vector3.zero;
             }
             jigger.localRotation=Quaternion.Euler(0,0,tool=="transfer" || tool=="float" ? -55 : 0); mixing.localRotation=Quaternion.Euler(0,0,tool=="strain" ? -55 : 0);
-            if(shaker!=null) { shaker.localRotation=Quaternion.Euler(0,0,tool=="shake" ? adapter.ShakePosition*25 : tool=="shaker_transfer" ? -55 : 0); shaker.localPosition=new Vector3(2.2f+(tool=="shake" ? adapter.ShakePosition*.12f : 0),0,0); }
+            if(shaker!=null) { shaker.localRotation=Quaternion.Euler(0,0,tool=="shake" ? adapter.ShakePosition*25 : tool=="shaker_transfer" || tool=="shaker_strain" ? -55 : 0); shaker.localPosition=new Vector3(2.2f+(tool=="shake" ? adapter.ShakePosition*.12f : 0),0,0); }
             spoon.localRotation=Quaternion.Euler(0,0,adapter?.SpoonAngle ?? 0); spoon.gameObject.SetActive(tool=="stir"); hand.gameObject.SetActive(tool!=null);
-            Transform grip=tool=="pour" || tool=="splash" ? bottle : tool=="transfer" || tool=="float" ? jigger : tool=="strain" ? mixing : tool=="shake" || tool=="shaker_transfer" ? shaker : spoon;
+            Transform grip=tool=="pour" || tool=="splash" ? bottle : tool=="transfer" || tool=="float" ? jigger : tool=="strain" ? mixing : tool=="shake" || tool=="shaker_transfer" || tool=="shaker_strain" ? shaker : spoon;
             if(tool!=null) { hand.position=grip.TransformPoint(tool=="stir" ? new Vector3(art!=null ? 0 : .12f,.32f,-.05f) : new Vector3(.08f,.27f,-.05f)); hand.rotation=grip.rotation; }
             stream.enabled=adapter!=null && adapter.AcceptedLiquidThisStep;
-            if(stream.enabled) { float mouth=tool=="pour" || tool=="splash" ? .67f : tool=="transfer" || tool=="float" ? .39f : .55f; stream.SetPosition(0,transform.InverseTransformPoint(grip.TransformPoint(new Vector3(0,mouth,-.02f)))); Transform target=tool=="strain" || tool=="float" || tool=="shaker_transfer" ? serving : tool=="transfer" && (!ExtendedTools || adapter.Target==ContainerRole.Jigger) ? mixing : adapter.Target==ContainerRole.Jigger ? jigger : adapter.Target==ContainerRole.Mixing ? mixing : adapter.Target==ContainerRole.Shaker ? shaker : serving; stream.SetPosition(1,target.localPosition+new Vector3(0,.26f,-.02f)); }
+            if(stream.enabled) { float mouth=tool=="pour" || tool=="splash" ? .67f : tool=="transfer" || tool=="float" ? .39f : .55f; stream.SetPosition(0,transform.InverseTransformPoint(grip.TransformPoint(new Vector3(0,mouth,-.02f)))); Transform target=tool=="strain" || tool=="float" || tool=="shaker_transfer" || tool=="shaker_strain" ? serving : tool=="transfer" && (!ExtendedTools || adapter.Target==ContainerRole.Jigger) ? mixing : adapter.Target==ContainerRole.Jigger ? jigger : adapter.Target==ContainerRole.Mixing ? mixing : adapter.Target==ContainerRole.Shaker ? shaker : serving; stream.SetPosition(1,target.localPosition+new Vector3(0,.26f,-.02f)); }
             if(spoonRunoff!=null) {
                 spoonRunoff.enabled=stream.enabled && tool=="float";
                 if(spoonRunoff.enabled) {

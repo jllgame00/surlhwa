@@ -1,0 +1,910 @@
+{
+  "schemaVersion": 1,
+  "kind": "act_adoption_package",
+  "act": "act_04",
+  "status": "SOURCE_ADOPTED_RUNTIME_INTEGRATION_PENDING",
+  "acceptedAct3Sha256": "9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0",
+  "sourceRegistrySha256": "4313d6640f82800008b6adbc59c106965abe33b8349fa477d81e6ba81311b348",
+  "ingredients": [
+    {
+      "id": "fresh_lemon_juice",
+      "label": "프레시 레몬 주스"
+    },
+    {
+      "id": "champagne",
+      "label": "샴페인"
+    }
+  ],
+  "cocktails": [
+    {
+      "id": "cocktail_french_75",
+      "name": "프렌치 75",
+      "tags": [
+        "awakening"
+      ]
+    }
+  ],
+  "recipes": [
+    {
+      "id": "recipe_french_75",
+      "cocktailId": "cocktail_french_75",
+      "method": "shake",
+      "amounts": [
+        {
+          "ingredientId": "gin",
+          "ml": 30
+        },
+        {
+          "ingredientId": "fresh_lemon_juice",
+          "ml": 15
+        },
+        {
+          "ingredientId": "simple_syrup",
+          "ml": 15
+        },
+        {
+          "ingredientId": "champagne",
+          "ml": 60
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "glassware": "flute",
+      "optionalGarnish": false,
+      "preparation": [
+        "shaker_ice",
+        "closed_shake",
+        "strain_from_shaker",
+        "late_measured_pour",
+        "gentle_stir",
+        "no_serving_ice"
+      ],
+      "garnishPosition": "rim",
+      "lateIngredient": "champagne",
+      "layerOrder": []
+    }
+  ],
+  "supply": [
+    "fresh_lemon_juice",
+    "champagne"
+  ],
+  "supplyGrants": [
+    {
+      "beforeEncounter": "enc_rc1_30",
+      "ingredientIds": [
+        "fresh_lemon_juice",
+        "champagne"
+      ]
+    }
+  ],
+  "guests": [
+    {
+      "id": "guest_hamlet",
+      "kind": "special",
+      "displayTextId": "text_rc1_0082",
+      "visualBindingId": "visual_hamlet"
+    }
+  ],
+  "texts": [
+    {
+      "id": "text_rc1_0030",
+      "value": "야간 역무원",
+      "sourceText": "야간 역무원",
+      "sourceId": "SRC-RC1-0030",
+      "sourceHash": "3b7e60e7ed16dcc403b18ef362de92df7df7e4e55fe2bceb52b639f06f3c51cf",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0031",
+      "value": "기억하던 맛을 이렇게 다시 만나네요.",
+      "sourceText": "기억하던 맛을 이렇게 다시 만나네요.",
+      "sourceId": "SRC-RC1-0031",
+      "sourceHash": "be8e5695d74316db7a179a644f1ae669e18af79ccb19983609ecb683382f1b98",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0032",
+      "value": "손님은 빈 잔을 한 번 바라보고 자리를 뜬다.",
+      "sourceText": "손님은 빈 잔을 한 번 바라보고 자리를 뜬다.",
+      "sourceId": "SRC-RC1-0032",
+      "sourceHash": "a8794ac67a9fd94c2f428df7ac51fe20eb193ef75f69932bb6bf09f8e927b230",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0033",
+      "value": "천천히 같이 만들어 주셔서 고마워요.",
+      "sourceText": "천천히 같이 만들어 주셔서 고마워요.",
+      "sourceId": "SRC-RC1-0033",
+      "sourceHash": "a839d3c8435f218768ce4303d524e67d1489cd7217953ab726209f8d90c21107",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0034",
+      "value": "다음번에는 조금 달라지겠죠.",
+      "sourceText": "다음번에는 조금 달라지겠죠.",
+      "sourceId": "SRC-RC1-0034",
+      "sourceHash": "14b498d22ed8b1f59727e02237466703564527e4a59d73923391d28577e94ba4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0035",
+      "value": "야간 근무를 함께하던 사람이 낮 근무로 옮겼어요. 거창하지 않게 축하하고 싶네요. 프렌치 75로요.",
+      "sourceText": "야간 근무를 함께하던 사람이 낮 근무로 옮겼어요. 거창하지 않게 축하하고 싶네요. 프렌치 75로요.",
+      "sourceId": "SRC-RC1-0035",
+      "sourceHash": "dbda4f2e627a2368d4002f2e1ac42a0bbc851ae169057b43dde7b283b8c4245c",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0036",
+      "value": "진 30 ml, 프레시 레몬 주스 15 ml, 심플 시럽 15 ml를 셰이커에 넣고 얼음과 Shake 해 주세요.",
+      "sourceText": "진 30 ml, 프레시 레몬 주스 15 ml, 심플 시럽 15 ml를 셰이커에 넣고 얼음과 Shake 해 주세요.",
+      "sourceId": "SRC-RC1-0036",
+      "sourceHash": "49e96be5ca4bce0a814111fe77e5f554919e98539784cad9ca276a580ab94df7",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0037",
+      "value": "Strain으로 잔에 옮긴 뒤 샴페인 60 ml를 더하고 Gentle Stir로 가볍게 저어요. 가니시는 없어도 됩니다.",
+      "sourceText": "Strain으로 잔에 옮긴 뒤 샴페인 60 ml를 더하고 Gentle Stir로 가볍게 저어요. 가니시는 없어도 됩니다.",
+      "sourceId": "SRC-RC1-0037",
+      "sourceHash": "e703a9ca331f5cfe3e475f7c539e33ab8f276c4f6e5c24be2256fdb250dc3408",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0038",
+      "value": "야간 근무를 함께하던 사람이 낮 근무로 옮겼어요. 거창하지 않게 축하하고 싶네요. 프렌치 75로요.",
+      "sourceText": "야간 근무를 함께하던 사람이 낮 근무로 옮겼어요. 거창하지 않게 축하하고 싶네요. 프렌치 75로요.",
+      "sourceId": "SRC-RC1-0038",
+      "sourceHash": "dbda4f2e627a2368d4002f2e1ac42a0bbc851ae169057b43dde7b283b8c4245c",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0039",
+      "value": "서두르지 않아도 돼요. 도감에 적힌 양과 순서를 보며 다시 만들어 볼까요?",
+      "sourceText": "서두르지 않아도 돼요. 도감에 적힌 양과 순서를 보며 다시 만들어 볼까요?",
+      "sourceId": "SRC-RC1-0039",
+      "sourceHash": "0bd8a74552d67f3b105865479ba2e501d6030c17d5b2c110189e7d12d88e12d4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "discoveryRetryFeedback",
+      "sourceOrder": "None",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0082",
+      "value": "햄릿",
+      "sourceText": "햄릿",
+      "sourceId": "SRC-RC1-0082",
+      "sourceHash": "18bfaa7a359340f889f8424762b73d50301c848d48331b47217af34aa1258281",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0083",
+      "value": "햄릿이 잔을 든다. 입술에 닿기 전에 다시 내려놓는다.",
+      "sourceText": "햄릿이 잔을 든다. 입술에 닿기 전에 다시 내려놓는다.",
+      "sourceId": "SRC-RC1-0083",
+      "sourceHash": "7c94e9fe01a9caa7c78c10dada6faaf713a855144d732b6fb7ca7ef6fb92494e",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0084",
+      "value": "햄릿: 지금 나가면 늦지 않을 텐데.",
+      "sourceText": "햄릿: 지금 나가면 늦지 않을 텐데.",
+      "sourceId": "SRC-RC1-0084",
+      "sourceHash": "4c523b4b8ded6f66c05f959c4b4b555646b1f24fbefac10f7bb26ca640a307f4",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0085",
+      "value": "그는 잠시 더 앉아 있다가 아무 말 없이 문을 연다.",
+      "sourceText": "그는 잠시 더 앉아 있다가 아무 말 없이 문을 연다.",
+      "sourceId": "SRC-RC1-0085",
+      "sourceHash": "841c108c7d5c3a5184ed2424090e07ef2b40fbf81d41a707b304bc46a8bf2594",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0086",
+      "value": "햄릿: 잔 안은 고요하군요.",
+      "sourceText": "햄릿: 잔 안은 고요하군요.",
+      "sourceId": "SRC-RC1-0086",
+      "sourceHash": "de553ad62a82c9ae5c22fee4a31baae1a9214510c6366b9494d5ebec029ac484",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0087",
+      "value": "햄릿: 생각과 다른 맛입니다. 그것만큼은 지금 알겠군요.",
+      "sourceText": "햄릿: 생각과 다른 맛입니다. 그것만큼은 지금 알겠군요.",
+      "sourceId": "SRC-RC1-0087",
+      "sourceHash": "868ef17cc645f109debbcdcc426eb57bc9463f7207cea80affdf13e30f58bf8e",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0088",
+      "value": "햄릿: 시간이 멈춘 것 같군요.",
+      "sourceText": "햄릿: 시간이 멈춘 것 같군요.",
+      "sourceId": "SRC-RC1-0088",
+      "sourceHash": "a6dd2ba5639009c84beed2d0c9fcf25481d096446b901edb3b0a8765ce18270c",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0089",
+      "value": "햄릿 앞의 빛만 차갑게 남는다. 그는 빈 잔 받침을 한 번 돌리고 원래대로 놓는다.",
+      "sourceText": "햄릿 앞의 빛만 차갑게 남는다. 그는 빈 잔 받침을 한 번 돌리고 원래대로 놓는다.",
+      "sourceId": "SRC-RC1-0089",
+      "sourceHash": "5d1ab7b3a465d7abe685a5e43c564cf9521bc44ae72fbe7d50f403b443b98ee4",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0090",
+      "value": "햄릿: 해야 할까요? 입 밖에 내면 쉬울 줄 알았는데, 질문에 자리가 생겼을 뿐이군요.",
+      "sourceText": "햄릿: 해야 할까요? 입 밖에 내면 쉬울 줄 알았는데, 질문에 자리가 생겼을 뿐이군요.",
+      "sourceId": "SRC-RC1-0090",
+      "sourceHash": "d463131674979535d7a2eba45a2b7b7c70a597e2b1fb3179e545e09ff60ee861",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0091",
+      "value": "햄릿: 생각을 잠시 가라앉힐 잔을 주시겠습니까. 맑아져도 좋고, 쓴 채로 남아도 좋습니다.",
+      "sourceText": "햄릿: 생각을 잠시 가라앉힐 잔을 주시겠습니까. 맑아져도 좋고, 쓴 채로 남아도 좋습니다.",
+      "sourceId": "SRC-RC1-0091",
+      "sourceHash": "72f86d92ca01e667ff02d1b822dce9085a0aba9d9b5c447db4b35c716b03b76b",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0092",
+      "value": "햄릿: 생각을 잠시 가라앉힐 잔을 주시겠습니까. 맑아져도 좋고, 쓴 채로 남아도 좋습니다.",
+      "sourceText": "햄릿: 생각을 잠시 가라앉힐 잔을 주시겠습니까. 맑아져도 좋고, 쓴 채로 남아도 좋습니다.",
+      "sourceId": "SRC-RC1-0092",
+      "sourceHash": "72f86d92ca01e667ff02d1b822dce9085a0aba9d9b5c447db4b35c716b03b76b",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0093",
+      "value": "햄릿",
+      "sourceText": "햄릿",
+      "sourceId": "SRC-RC1-0093",
+      "sourceHash": "18bfaa7a359340f889f8424762b73d50301c848d48331b47217af34aa1258281",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0094",
+      "value": "손이 잔 위에서 멈춘다. 조금 전의 말을 고칠 듯 입술이 움직인다.",
+      "sourceText": "손이 잔 위에서 멈춘다. 조금 전의 말을 고칠 듯 입술이 움직인다.",
+      "sourceId": "SRC-RC1-0094",
+      "sourceHash": "08f5bcd5a5da802c5608d6ee0fb59e36b21f44493b1657dcf49a36f9f45d890c",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0095",
+      "value": "햄릿: 결국 아무것도 하지 않았습니다.",
+      "sourceText": "햄릿: 결국 아무것도 하지 않았습니다.",
+      "sourceId": "SRC-RC1-0095",
+      "sourceHash": "85fc7128e29cd6c7f4a10a105e4c4beadb9abb7e062a24370fdf7074836a5ee5",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0096",
+      "value": "문이 닫힌다. 작은 무대 조각 위의 해골과 그 뒤로 길어진 그림자가 남는다.",
+      "sourceText": "문이 닫힌다. 작은 무대 조각 위의 해골과 그 뒤로 길어진 그림자가 남는다.",
+      "sourceId": "SRC-RC1-0096",
+      "sourceHash": "8b111f4da4648dbafaef96ea0284442c44997489a3d0ff86658bd487a372865a",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0097",
+      "value": "햄릿: 덕분에 여기 앉아 있는 일은 어렵지 않았습니다.",
+      "sourceText": "햄릿: 덕분에 여기 앉아 있는 일은 어렵지 않았습니다.",
+      "sourceId": "SRC-RC1-0097",
+      "sourceHash": "2d35df0122a3d0d03943bb6ac68460c5617baae401c48c8e221e389ec2097480",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0098",
+      "value": "햄릿: 오늘은 마저 마시지 못하겠군요. 당신 탓만은 아닙니다.",
+      "sourceText": "햄릿: 오늘은 마저 마시지 못하겠군요. 당신 탓만은 아닙니다.",
+      "sourceId": "SRC-RC1-0098",
+      "sourceHash": "9eb89de2a6ecf1476b7135822844fdf6cf1c9ece155d0dfc75180818afaa2da8",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0099",
+      "value": "햄릿: 어제 돌아간 뒤에도 같은 자리에 서 있었습니다.",
+      "sourceText": "햄릿: 어제 돌아간 뒤에도 같은 자리에 서 있었습니다.",
+      "sourceId": "SRC-RC1-0099",
+      "sourceHash": "da8a62ed1f6aca74d0fd96d2e252b00ad4274f1895e5c17bceee583340c8e731",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0100",
+      "value": "햄릿: 아무것도 하지 않는 것도 선택이라 말하면, 조금 견딜 만할 줄 알았지요.",
+      "sourceText": "햄릿: 아무것도 하지 않는 것도 선택이라 말하면, 조금 견딜 만할 줄 알았지요.",
+      "sourceId": "SRC-RC1-0100",
+      "sourceHash": "7162ec3569afb008027343e9cc676c4cc96ba8d4cd47c58a58b99a2857d56b76",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0101",
+      "value": "햄릿: 그런데 기다리는 사람에게는 그저 아무도 오지 않은 밤이었겠군요.",
+      "sourceText": "햄릿: 그런데 기다리는 사람에게는 그저 아무도 오지 않은 밤이었겠군요.",
+      "sourceId": "SRC-RC1-0101",
+      "sourceHash": "b4e48bdc891a68a96d79dc7ac0ffec0a521cbfd16b5a71d80fb638401921d641",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0102",
+      "value": "햄릿: 답을 주실 필요는 없습니다. 곁에 놓아 둘 수 있는, 맑거나 따뜻한 잔이면 됩니다.",
+      "sourceText": "햄릿: 답을 주실 필요는 없습니다. 곁에 놓아 둘 수 있는, 맑거나 따뜻한 잔이면 됩니다.",
+      "sourceId": "SRC-RC1-0102",
+      "sourceHash": "24555d787fbe49078c13050a6ed48cbaea5078debc28c355c8d7030342336571",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0103",
+      "value": "햄릿: 답을 주실 필요는 없습니다. 곁에 놓아 둘 수 있는, 맑거나 따뜻한 잔이면 됩니다.",
+      "sourceText": "햄릿: 답을 주실 필요는 없습니다. 곁에 놓아 둘 수 있는, 맑거나 따뜻한 잔이면 됩니다.",
+      "sourceId": "SRC-RC1-0103",
+      "sourceHash": "24555d787fbe49078c13050a6ed48cbaea5078debc28c355c8d7030342336571",
+      "sourcePath": "54_HAMLET.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0191",
+      "value": "수선공",
+      "sourceText": "수선공",
+      "sourceId": "SRC-RC1-0191",
+      "sourceHash": "0e7aa3faa6d74360f78d9344e73f3cb3fee0834e66da6457a1fd7bbd9dbf334f",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0192",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0192",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0193",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0193",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0194",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0194",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0195",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0195",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0196",
+      "value": "선반 아래 풍차 날개가 기울었네요. 고쳐도 되냐고 물으려다 그만뒀어요.",
+      "sourceText": "선반 아래 풍차 날개가 기울었네요. 고쳐도 되냐고 물으려다 그만뒀어요.",
+      "sourceId": "SRC-RC1-0196",
+      "sourceHash": "6df7e1fc272dd357858cfee85138209d2dabde08c567ee8f08fe279203c4ab54",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0197",
+      "value": "어떤 것은 그대로 두는 편이 낫겠죠. 손을 쉬게 할 따뜻한 잔이나 고요한 잔을 부탁해요.",
+      "sourceText": "어떤 것은 그대로 두는 편이 낫겠죠. 손을 쉬게 할 따뜻한 잔이나 고요한 잔을 부탁해요.",
+      "sourceId": "SRC-RC1-0197",
+      "sourceHash": "18b5ac4bd1ad9011af30d2cf638c52ae475b8a2e357c8bf898aab48c635d20db",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    },
+    {
+      "id": "text_rc1_0198",
+      "value": "어떤 것은 그대로 두는 편이 낫겠죠. 손을 쉬게 할 따뜻한 잔이나 고요한 잔을 부탁해요.",
+      "sourceText": "어떤 것은 그대로 두는 편이 낫겠죠. 손을 쉬게 할 따뜻한 잔이나 고요한 잔을 부탁해요.",
+      "sourceId": "SRC-RC1-0198",
+      "sourceHash": "18b5ac4bd1ad9011af30d2cf638c52ae475b8a2e357c8bf898aab48c635d20db",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 4 adoption after stable ACT 3."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc_rc1_30",
+      "sourceRow": "RC1-30",
+      "night": 12,
+      "guestId": "guest_station_worker",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": "cocktail_french_75",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0038",
+      "requiredDiscovery": "recipe_french_75",
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0035",
+          "facts": [
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0035"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0036",
+          "facts": [
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0036"
+              ]
+            },
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "amount:gin",
+              "sourceIds": [
+                "SRC-RC1-0036"
+              ]
+            },
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "amount:fresh_lemon_juice",
+              "sourceIds": [
+                "SRC-RC1-0036"
+              ]
+            },
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "amount:simple_syrup",
+              "sourceIds": [
+                "SRC-RC1-0036"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0037",
+          "facts": [
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "amount:champagne",
+              "sourceIds": [
+                "SRC-RC1-0037"
+              ]
+            },
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0037"
+              ]
+            },
+            {
+              "recipeId": "recipe_french_75",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0037"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_rc1_0031",
+        "text_rc1_0032"
+      ],
+      "responses": {
+        "good": "text_rc1_0033",
+        "weak": "text_rc1_0034",
+        "mismatch": "text_rc1_0034",
+        "bothWeak": "text_rc1_0034",
+        "unknown": "text_rc1_0034"
+      },
+      "choiceIntros": {},
+      "discoveryRetryTextId": "text_rc1_0039"
+    },
+    {
+      "id": "enc_rc1_31",
+      "sourceRow": "RC1-31",
+      "night": 12,
+      "guestId": "guest_hamlet",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity",
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0092",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0088",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0089",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0090",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0091",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0083",
+        "text_rc1_0084",
+        "text_rc1_0085"
+      ],
+      "responses": {
+        "good": "text_rc1_0086",
+        "weak": "text_rc1_0087",
+        "mismatch": "text_rc1_0087",
+        "bothWeak": "text_rc1_0087",
+        "unknown": "text_rc1_0087"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_32",
+      "sourceRow": "RC1-32",
+      "night": 13,
+      "guestId": "guest_repairer",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity",
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0198",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0196",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0197",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0192",
+        "text_rc1_0193"
+      ],
+      "responses": {
+        "good": "text_rc1_0194",
+        "weak": "text_rc1_0195",
+        "mismatch": "text_rc1_0195",
+        "bothWeak": "text_rc1_0195",
+        "unknown": "text_rc1_0195"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_33",
+      "sourceRow": "RC1-33",
+      "night": 13,
+      "guestId": "guest_hamlet",
+      "companionGuestId": null,
+      "memoryId": "mem_04",
+      "memoryVariant": "stage_skull_shadow",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity",
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0103",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0099",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0100",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0101",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0102",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0094",
+        "text_rc1_0095",
+        "text_rc1_0096"
+      ],
+      "responses": {
+        "good": "text_rc1_0097",
+        "weak": "text_rc1_0098",
+        "mismatch": "text_rc1_0098",
+        "bothWeak": "text_rc1_0098",
+        "unknown": "text_rc1_0098"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_30_known",
+      "sourceRow": "RC1-30",
+      "night": 12,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    }
+  ],
+  "slots": [
+    {
+      "encounterId": "enc_rc1_30",
+      "fallbackId": "enc_rc1_30_known",
+      "whenKnownRecipe": "recipe_french_75"
+    },
+    {
+      "encounterId": "enc_rc1_31",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_32",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_33",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    }
+  ],
+  "sourceDispositions": [
+    {
+      "sourceId": "SRC-RC1-0030",
+      "disposition": "Existing guest_station_worker identity retained; visit-specific display source preserved."
+    },
+    {
+      "sourceId": "SRC-RC1-0039",
+      "disposition": "Runtime Retry reading after failed required discovery; advancing consumes its existing reading receipt."
+    },
+    {
+      "sourceId": "SRC-RC1-0093",
+      "disposition": "Same guest_hamlet identity as question display SRC-RC1-0082; both display records preserved."
+    },
+    {
+      "sourceId": "SRC-RC1-0191",
+      "disposition": "Existing guest_repairer identity retained; visit-specific display source preserved."
+    },
+    {
+      "sourceId": "PRODUCTION-KNOWN-FRENCH75-FALLBACK",
+      "disposition": "Copy accepted enc_rc1_14_known ordinary station-worker request; remap only id/sourceRow/night for RC1-30. No altered earlier definition, repeated lesson or invented dialogue."
+    }
+  ],
+  "recipeAdoption": {
+    "source": "SURLHWA_CANON/31_CURRENT_AND_ORIGINAL_COCKTAILS.md#drink-08",
+    "officialUrl": "https://iba-world.com/iba-cocktail/french-75/",
+    "reverifiedOn": "2026-10-31",
+    "disposition": "Nominal 30/15/15/60 ml replace source oz-rounding artifacts. Canon Simple Syrup expresses Sugar Syrup; Champagne remains measured Pour after Strain, then GentleStir. Flute is metadata; no garnish."
+  }
+}

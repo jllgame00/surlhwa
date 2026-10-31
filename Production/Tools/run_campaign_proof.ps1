@@ -1,17 +1,21 @@
 param(
  [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.-]+$')][string]$EvidenceName,
  [ValidateSet(720,1080)][int]$Height=720,
- [ValidateSet(2,3)][int]$Act=3,
+ [ValidateSet(2,3,4)][int]$Act=3,
  [ValidateSet('New','Prior','Legacy','Checkpoint')][string]$Start='New',
  [string]$CheckpointRoot='',
  [switch]$FailHanky,
  [switch]$QuixoteMismatch,
+ [switch]$FailFrench,
+ [switch]$HamletMismatch,
  [switch]$Media,
  [ValidateRange(60,7200)][int]$TimeoutSeconds=1800
 )
 $ErrorActionPreference='Stop'
 if($Act -eq 2 -and ($Start -eq 'Prior' -or $QuixoteMismatch)){throw 'ACT 2 uses Legacy or Checkpoint; Quixote is ACT 3 only.'}
 if($FailHanky -and $QuixoteMismatch){throw 'Use separate runs for required discovery retry and Quixote mismatch.'}
+if(($FailFrench -or $HamletMismatch) -and $Act -ne 4){throw 'French discovery and Hamlet mismatch require ACT 4.'}
+if(($FailFrench -or $HamletMismatch) -and ($FailHanky -or $QuixoteMismatch)){throw 'Keep ACT 4 fixtures separate from earlier ACT fixtures.'}
 $productionPath=Split-Path $PSScriptRoot -Parent
 $outputPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName"
 $executablePath=Join-Path $productionPath "Validation/Builds/Act${Act}Production/SurlhwaAct${Act}.exe"
@@ -29,9 +33,12 @@ $savePath=Join-Path $outputPath 'save'
 New-Item -ItemType Directory -Path $savePath | Out-Null
 $historyPath=Join-Path $outputPath 'history'
 $legacyPath=Join-Path $historyPath 'campaign-act1'
-$priorPath=Join-Path $historyPath 'campaign-through-act-02'
+$priorNamespace='campaign-through-act-{0:D2}' -f ($Act-1)
+$priorPath=Join-Path $historyPath $priorNamespace
 New-Item -ItemType Directory -Path $legacyPath | Out-Null
-New-Item -ItemType Directory -Path $priorPath | Out-Null
+foreach($historyAct in 2..([Math]::Max(2,$Act-1))){
+ New-Item -ItemType Directory -Path (Join-Path $historyPath ('campaign-through-act-{0:D2}' -f $historyAct)) | Out-Null
+}
 if($Start -ne 'New'){
  $originPath=Join-Path $outputPath 'origin'
  $originSlot=Join-Path $originPath 'slot1'
@@ -59,6 +66,8 @@ if($Start -eq 'Prior' -or $Start -eq 'Legacy'){
 $fixture=if($Start -eq 'New'){'open'}else{'continue'}
 if($FailHanky){$fixture=if($Start -eq 'New'){'hanky-retry'}else{'continue-hanky-retry'}}
 if($QuixoteMismatch){$fixture=if($Start -eq 'New'){'quixote-mismatch'}else{'continue-quixote-mismatch'}}
+if($FailFrench){$fixture+='-french-retry'}
+if($HamletMismatch){$fixture+='-hamlet-mismatch'}
 $width=[int]($Height*16/9)
 $arguments=@('-batchmode','-force-d3d11','-screen-fullscreen','0','-screen-width',[string]$width,'-screen-height',[string]$Height,
  '-campaignEvidenceRoot',$outputPath,'-campaignSaveRoot',$savePath,'-campaignProof',$fixture,'-logFile',(Join-Path $outputPath 'Player.log'))

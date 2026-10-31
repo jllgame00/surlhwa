@@ -1,0 +1,12 @@
+{
+    "result": "Succeeded",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity",
+    "output": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Builds\\Act4Production\\SurlhwaAct4.exe",
+    "unity": "6000.3.7f1",
+    "scope": "through_act_04",
+    "messages": [],
+    "errors": 0,
+    "warnings": 0,
+    "bytes": 176454640,
+    "seconds": 35.8449467
+}

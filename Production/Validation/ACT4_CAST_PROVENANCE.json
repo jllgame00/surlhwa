@@ -1,0 +1,219 @@
+{
+  "scope": "P07d representative ACT 4 cast and MEM-04",
+  "baseline": "4790c33",
+  "authority": "Final Canon54 / MEM-04 / approved Architecture11 / owner-authorized source-cleared RC1 reuse",
+  "status": "BOUNDED_ACT4_IMPLEMENTED_AND_OBJECTIVELY_VERIFIED; final art and motion remain HUMAN_SIGNOFF_REQUIRED",
+  "preserved": {
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity": "82a7d6e8bb8658dec55a667a973e68d7d3d1f2434dc97f809da9530c01e58db6",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act2.unity": "ffa5052f69bfa5264c65650f1cf26f55f2d02d28fd54fe847f8f037f5a0b4d11",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act3.unity": "6c375a254e7fb00620425f00340de40c26285468709401d617641172b845d85d",
+    "Production/Content/Campaign/act1.json": "0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4",
+    "Production/Content/Campaign/act2.json": "e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1",
+    "Production/Content/Campaign/act3.json": "9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0"
+  },
+  "assets": [
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Chibi/Hamlet.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act4Assets/HamletStanding.png",
+      "sha256": "c2bd0405c1464a28e8be7103454861be2010636a4e1b6c257c1c79da70f2c982",
+      "dimensions": [
+        54,
+        84
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        54,
+        84
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Seated.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act4Assets/HamletSeated.png",
+      "sha256": "dbd31d227c4fc168fbd1cdd91867d9b694c7d1aeb420f0b6407f959866c508e4",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        9,
+        68,
+        85
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk0.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act4Assets/HamletWalk0.png",
+      "sha256": "735a5863683e93f1cdc96a0acb19afd93ee76c0d9d392303f8d53814ed9a3084",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        21,
+        16,
+        77,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk1.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act4Assets/HamletWalk1.png",
+      "sha256": "b0988e103fdf5af1e5d322a7eaee700d1509624e04b60274ac288219182b9aeb",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        21,
+        16,
+        75,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk2.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act4Assets/HamletWalk2.png",
+      "sha256": "7d298f8d43e71e17d3fb7afaa4d56993812ff5d12c078618b94a7360057336bf",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        21,
+        16,
+        74,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or earlier actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Hamlet-Walk3.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act4Assets/HamletWalk3.png",
+      "sha256": "b0988e103fdf5af1e5d322a7eaee700d1509624e04b60274ac288219182b9aeb",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        21,
+        16,
+        75,
+        100
+      ],
+      "treatment": "Exact source bytes; independent Production mesh/material/import metadata. No repaint, resampling or earlier actor reuse."
+    }
+  ],
+  "authoringDecisions": [
+    {
+      "id": "hamlet-source-contact",
+      "pixelsPerUnit": 70,
+      "standingPivot": [
+        25,
+        0
+      ],
+      "walkPivot": [
+        46,
+        0
+      ],
+      "seatedPivot": [
+        34,
+        8
+      ],
+      "sourceSeatedPelvisBottomUp": [
+        46,
+        34
+      ],
+      "rationale": "Independent source inspection:54x84 standing lowest sole spans x17-19 and27-33, centered25; the centered96px canvas adds21, yielding walk neutral sole center46. The actual96x100 seated source has opaque contact pixel46,34 bottom-up at the bent-leg seam and lowest opaque row15. Seated pivot34,8 therefore retains accepted Q1 local seat offset12,26 at70ppu. No physical root, chair or scale changes.",
+      "sourceDerivationReference": "D:/univ/surlhwa/Surlhwa/Tools/prepare_character_motion.py lines39-67, read-only source provenance; no RC1 runtime code adopted",
+      "normalQ1SeatedCameraRayOffsetMeters": 0.14,
+      "focusedOrStandingOffsetMeters": 0
+    },
+    {
+      "id": "mem04-supported-central-shelf",
+      "origin": [
+        0,
+        1.087,
+        2.92
+      ],
+      "facing": "Fixed world-XY physical shelf plane; earlier memory facing remains unchanged.",
+      "rationale": "Accepted C_MemoryShelf is centered0,1.04,3.13 with size1.45,.09,.45: top1.085 and frontz2.905. The new local stage base sits2mm above that shelf, before the opaque Empty memory niche atz3.05. Avoid camera-billboard rotation, which would rotate base corners outside the narrow shelf and tall pixels behind the niche. Stage/skull/restrained shadow remain bounded authored shapes; no room-wide darkness, camera change, interaction or progress authority.",
+      "retainedMemories": "MEM01/02/03 shapes, origins and receipt ownership remain unchanged; later seating preserves the Prince memorial chair.",
+      "validation": "Root-run Q1 contact PASS; actual GPU all8 memory parts PASS at720/1080. The first support fixture captured old child positions before a legitimate facing change; fixture corrected to compare the same facing, without changing product code or assertions. Separate scene has not yet been prepared; actual scene/Player verification remains pending."
+    }
+  ],
+  "integration": {
+    "builder": "Surlhwa.Editor.ActFourExpansionBuilder.PrepareScene",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity",
+    "bundle": "Assets/GeneratedContent/act4-content.json",
+    "sourceHistory": [
+      "through_act_03",
+      "through_act_02",
+      "act_01"
+    ],
+    "font": "Assets/Surlhwa/Act4Assets/Act4Korean.asset",
+    "controllerField": "Hamlet",
+    "memoryProjection": [
+      "HamletVisible",
+      "HamletStage",
+      "HamletSkull",
+      "HamletShadow"
+    ],
+    "acceptance": "ActFourPresentationTests validates source contact through focus, physical shelf support, no earlier memory displacement, exact scene/history/art bindings, and all memory parts through actual Q1 depth at720/1080. These prerequisites do not replace human visual or motion approval."
+  },
+  "diagnosticMemoryPixels": {
+    "1280x720": [
+      56,
+      804,
+      96,
+      240,
+      78,
+      131,
+      111,
+      180
+    ],
+    "1920x1080": [
+      126,
+      1835,
+      245,
+      496,
+      175,
+      287,
+      234,
+      422
+    ],
+    "order": [
+      "star",
+      "swing",
+      "empty_place",
+      "windmill_fragment",
+      "wing",
+      "hamlet_stage",
+      "hamlet_skull",
+      "hamlet_shadow"
+    ],
+    "meaning": "Root-run GPU depth prerequisites only; rendered art and overall atmosphere still require human review."
+  },
+  "verificationEvidence": {
+    "red": "Evidence/act4-presentation-red-01.xml",
+    "partialGreen": "Evidence/act4-presentation-green-codex-red-01.xml",
+    "partialGreenResult": "3/5 presentation cases passed: source contact and both actual GPU checks. Support fixture facing comparison corrected; new scene preparation still pending at this checkpoint.",
+    "scope": "Observed Editor/GPU prerequisite evidence, not Player or human final visual approval."
+  },
+  "finalEvidence": {
+    "runtime": "ACT4_RUNTIME_CHECKPOINT.md",
+    "summary": "Evidence/act4-final-runtime-summary.json",
+    "editorFull": "436/437 before final modal-release fix; all5 presentation cases passed",
+    "affectedInputAfterFix": "19/19 PASS",
+    "normalPlayerInspection": [
+      "720p Hamlet seat, partialFrench, physicalshelf, allfourmemories",
+      "1080p physicalshelf, sourcedretry, allfourmemories"
+    ],
+    "sourceArtFinalApproval": false
+  }
+}

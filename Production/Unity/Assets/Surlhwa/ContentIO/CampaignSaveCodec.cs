@@ -69,18 +69,27 @@ namespace Surlhwa.ContentIO
                 var parts=occurrence.Split(':'); if(parts.Length!=2 || parts[0]!=s.RunId || !int.TryParse(parts[1],out var n) || n<0 || n>s.SlotIndex || parts[1]!=n.ToString()) throw Invalid("Invalid occurrence identity."); return n;
             }
             var knowledge=c.CreateKnowledge(); int last=-1;
+            var failedDiscoveries=new HashSet<int>(); var retryReadOccurrences=new HashSet<int>();
             foreach(var service in s.Services)
             {
                 int n=Index(service.OccurrenceId); if(n<last) throw Invalid("Out-of-order service."); last=n;
                 var encounter=c.Encounters[s.SelectedEncounters[n]];
                 bool discovered=encounter.RequiredDiscovery==null ? knowledge.Discover(service.Outcome,service.OccurrenceId) : knowledge.DiscoverRequired(service.Outcome,service.OccurrenceId,encounter.RequiredDiscovery);
                 if(discovered!=service.Discovered) throw Invalid("Unearned discovery receipt.");
+                if(encounter.RequiredDiscovery!=null && !knowledge.Project(encounter.RequiredDiscovery).Known) failedDiscoveries.Add(n);
             }
             for(int n=0;n<=s.SlotIndex;n++)
             {
                 var e=c.Encounters[s.SelectedEncounters[n]]; var records=s.Services.Where(x=>x.OccurrenceId==s.RunId+":"+n).ToArray();
                 if(e.RequiredDiscovery==null && records.Length>1) throw Invalid("Ordinary/Prince visit cannot rewrite service.");
                 if(n<completed && (records.Length==0 || (e.RequiredDiscovery!=null && !knowledge.Project(e.RequiredDiscovery).Known))) throw Invalid("Departure lacks committed service/discovery.");
+                // A first failed service still waits in Reaction/Result/Retry. Leaving Retry
+                // consumes its optional reading before another attempt or departure can exist.
+                if(e.DiscoveryRetryTextId!=null && failedDiscoveries.Contains(n) &&
+                    (n<completed || records.Length>1 || (n==s.SlotIndex && s.Phase==CampaignPhase.Brewing))) {
+                    retryReadOccurrences.Add(n);
+                    if(!s.ConsumedLines.Contains(s.RunId+":"+n+":Retry:0:"+e.DiscoveryRetryTextId)) throw Invalid("Discovery retry lacks consumed reading.");
+                }
                 var departureLines=e.PrinceVisit==PrinceVisit.Clarity && s.Farewell.HasValue ? new[]{c.PrinceRecalls[s.PrinceChoice ?? "none"]}.Concat(s.Farewell==PrinceFarewell.Open ? c.OpenFarewell : c.QuietFarewell).ToArray() : e.Farewell.ToArray();
                 int requiredRead=n<completed || (n==s.SlotIndex && s.Phase==CampaignPhase.Departing) ? departureLines.Length :
                     n==s.SlotIndex && s.Phase==CampaignPhase.Farewell ? s.LineIndex : 0;
@@ -107,7 +116,7 @@ namespace Surlhwa.ContentIO
                 {
                     allowed=parts[2]=="Request" ? new[]{e.SummaryTextId} : parts[2]=="Choice" && e.PrinceVisit==PrinceVisit.First ? new[]{c.ChoicePrompt} :
                         parts[2]=="ChoiceResponse" && s.PrinceChoice!=null && e.PrinceVisit==PrinceVisit.First ? new[]{c.PrinceResponses[s.PrinceChoice]} :
-                        parts[2]=="Reaction" ? e.Responses.Values.ToArray() : parts[2]=="Farewell" ?
+                        parts[2]=="Reaction" ? e.Responses.Values.ToArray() : parts[2]=="Retry" && retryReadOccurrences.Contains(n) ? new[]{e.DiscoveryRetryTextId} : parts[2]=="Farewell" ?
                         (e.PrinceVisit==PrinceVisit.Clarity && s.Farewell.HasValue ? new[]{c.PrinceRecalls[s.PrinceChoice ?? "none"]}.Concat(s.Farewell==PrinceFarewell.Open ? c.OpenFarewell : c.QuietFarewell).ToArray() : e.Farewell.ToArray()) : System.Array.Empty<string>();
                     if(!allowed.Contains(parts[4]) || (parts[2]!="Reaction" && (cursor>=allowed.Length || allowed[cursor]!=parts[4]))) throw Invalid("Unowned consumed reading.");
                 }

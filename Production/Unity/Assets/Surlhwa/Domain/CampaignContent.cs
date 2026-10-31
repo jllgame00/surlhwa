@@ -17,13 +17,14 @@ namespace Surlhwa.Domain
         public IReadOnlyList<string> GuestIds { get; }
         public string MemoryId { get; } public string MemoryVariant { get; }
         public DrinkRequest Request { get; } public string RequiredDiscovery { get; }
+        public string DiscoveryRetryTextId { get; }
         public PrinceVisit? PrinceVisit { get; } public int Night { get; }
         public IReadOnlyList<CampaignLine> Intro { get; } public IReadOnlyList<string> Farewell { get; }
         public IReadOnlyDictionary<string,string> Responses { get; }
         public IReadOnlyDictionary<string,string[]> ChoiceIntros { get; }
         public CampaignEncounter(string id,string guest,int night,string summary,DrinkRequest request,IEnumerable<CampaignLine> intro,
             IEnumerable<string> farewell,IDictionary<string,string> responses,string requiredDiscovery=null,PrinceVisit? princeVisit=null,
-            IDictionary<string,string[]> choiceIntros=null,string companionGuestId=null,string memoryId=null,string memoryVariant=null)
+            IDictionary<string,string[]> choiceIntros=null,string companionGuestId=null,string memoryId=null,string memoryVariant=null,string discoveryRetryTextId=null)
         {
             _=new StableId<TextIdentity>(id); _=new StableId<GuestIdentity>(guest); _=new StableId<TextIdentity>(summary);
             if(night<1 || (princeVisit.HasValue && !Enum.IsDefined(typeof(PrinceVisit),princeVisit.Value))) throw new ArgumentException("Invalid encounter metadata.");
@@ -37,6 +38,11 @@ namespace Surlhwa.Domain
             if(memoryId!=null) { _=new StableId<TextIdentity>(memoryId); _=new StableId<TextIdentity>(memoryVariant); }
             MemoryId=memoryId; MemoryVariant=memoryVariant;
             RequiredDiscovery=requiredDiscovery; PrinceVisit=princeVisit;
+            if(discoveryRetryTextId!=null) {
+                _=new StableId<TextIdentity>(discoveryRetryTextId);
+                if(requiredDiscovery==null) throw new ArgumentException("Retry reading requires an authored discovery.");
+            }
+            DiscoveryRetryTextId=discoveryRetryTextId;
             Intro=Array.AsReadOnly(intro.ToArray()); Farewell=Array.AsReadOnly(farewell.ToArray());
             if(Intro.Count==0 || Farewell.Count==0) throw new ArgumentException("Encounter requires reading and departure.");
             Responses=new ReadOnlyDictionary<string,string>(new Dictionary<string,string>(responses));
@@ -99,7 +105,8 @@ namespace Surlhwa.Domain
             foreach(var e in Encounters.Values)
             {
                 if(e.GuestIds.Any(x=>!Guests.ContainsKey(x)) || !Texts.ContainsKey(e.SummaryTextId) || e.Intro.Any(x=>!Texts.ContainsKey(x.TextId)) ||
-                    e.Farewell.Concat(e.Responses.Values).Concat(e.ChoiceIntros.Values.SelectMany(x=>x)).Any(x=>!Texts.ContainsKey(x))) throw new ArgumentException("Unresolved campaign text/guest.");
+                    e.Farewell.Concat(e.Responses.Values).Concat(e.ChoiceIntros.Values.SelectMany(x=>x)).Any(x=>!Texts.ContainsKey(x)) ||
+                    (e.DiscoveryRetryTextId!=null && !Texts.ContainsKey(e.DiscoveryRetryTextId))) throw new ArgumentException("Unresolved campaign text/guest.");
                 if(e.RequiredDiscovery!=null && (!Catalog.Recipes.ContainsKey(e.RequiredDiscovery) || e.PrinceVisit.HasValue)) throw new ArgumentException("Invalid discovery encounter.");
                 foreach(var line in e.Intro) foreach(var f in line.Facts) new RecipeKnowledge(Catalog).GrantFact(f.RecipeId,f.Fact);
             }

@@ -7,23 +7,25 @@ using static Surlhwa.ContentIO.StrictJson;
 
 namespace Surlhwa.ContentIO
 {
-    /// <summary>Source-preserving continuation from accepted ACT 1 and ACT 2 packages.</summary>
+    /// <summary>Source-preserving continuation from accepted ACT 1, ACT 2 and ACT 3 packages.</summary>
     public sealed class CampaignContinuation
     {
         public const string AcceptedActOneHash="0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4";
         public const string AcceptedActTwoHash="e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1";
+        public const string AcceptedActThreeHash="9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0";
         public CampaignContent SourceContent { get; }
         public CampaignContent ExpandedContent { get; }
 
         public CampaignContinuation(string acceptedSourceJson,string expandedJson)
         {
             string sourceHash=acceptedSourceJson==null ? null : Hash(acceptedSourceJson);
-            if(sourceHash!=AcceptedActOneHash && sourceHash!=AcceptedActTwoHash)
+            if(sourceHash!=AcceptedActOneHash && sourceHash!=AcceptedActTwoHash && sourceHash!=AcceptedActThreeHash)
                 throw Invalid("Continuation requires exact accepted source campaign definitions.");
             SourceContent=CampaignContentLoader.Load(acceptedSourceJson);
             ExpandedContent=CampaignContentLoader.Load(expandedJson);
-            bool supported=SourceContent.Scope=="act_01" && (ExpandedContent.Scope=="through_act_02" || ExpandedContent.Scope=="through_act_03") ||
-                SourceContent.Scope=="through_act_02" && ExpandedContent.Scope=="through_act_03";
+            bool supported=SourceContent.Scope=="act_01" && (ExpandedContent.Scope=="through_act_02" || ExpandedContent.Scope=="through_act_03" || ExpandedContent.Scope=="through_act_04") ||
+                SourceContent.Scope=="through_act_02" && (ExpandedContent.Scope=="through_act_03" || ExpandedContent.Scope=="through_act_04") ||
+                SourceContent.Scope=="through_act_03" && ExpandedContent.Scope=="through_act_04";
             if(!supported || ExpandedContent.Slots.Count<=SourceContent.Slots.Count)
                 throw Invalid("Unsupported campaign continuation boundary.");
             ValidatePrefix(Parse(acceptedSourceJson),Parse(expandedJson));
@@ -48,10 +50,10 @@ namespace Surlhwa.ContentIO
                         if(key=="encounters")
                         {
                             var encounter=(JObject)candidate;
-                            foreach(string field in new[]{"companionGuestId","memoryId","memoryVariant"})
+                            foreach(string field in new[]{"companionGuestId","memoryId","memoryVariant","discoveryRetryTextId"})
                             {
                                 if(((JObject)oldRows[index]).Property(field)!=null) continue;
-                                if(encounter[field]?.Type!=JTokenType.Null) throw Invalid("Continuation changes accepted encounter ownership.");
+                                if(encounter.Property(field)!=null && encounter[field].Type!=JTokenType.Null) throw Invalid("Continuation changes accepted encounter ownership.");
                                 encounter.Remove(field);
                             }
                         }

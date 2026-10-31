@@ -45,6 +45,8 @@ namespace Surlhwa.Domain
         internal readonly Dictionary<string,decimal> DashAmounts=new Dictionary<string,decimal>(StringComparer.Ordinal);
         internal readonly Dictionary<string,decimal> ShakenAmounts=new Dictionary<string,decimal>(StringComparer.Ordinal);
         internal ShakeStamp Shake;
+        // Live provenance only. Submitted evidence remains Shake amounts plus the existing action trace.
+        internal bool ShakerStrainedBatch;
         internal FloatLayers Layers;
         internal decimal Total => Amounts.Values.Sum();
         internal bool Ice,Strained; internal int Revision; internal StirStamp Stamp;
@@ -159,7 +161,7 @@ namespace Surlhwa.Domain
                 BrewContainer.Add(c.Amounts,ingredient,accepted);
                 if(kind==BrewAction.Dash) BrewContainer.Add(c.DashAmounts,ingredient,accepted);
                 c.Revision++; c.Stamp=null; c.Strained=false;
-                if(target!=ContainerRole.Serving) { c.Shake=null; c.ShakenAmounts.Clear(); }
+                if(target!=ContainerRole.Serving) { c.Shake=null; c.ShakenAmounts.Clear(); c.ShakerStrainedBatch=false; }
                 if(c.Layers!=null) c.Layers=new FloatLayers(c.Amounts);
             }
             var received=new Dictionary<string,decimal> { [ingredient]=accepted };
@@ -172,7 +174,7 @@ namespace Surlhwa.Domain
             CheckOpen(source); CheckOpen(target);
             if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer && kind!=BrewAction.Float)) throw new ArgumentException("Invalid container transfer.");
             if(kind==BrewAction.Float && (source!=ContainerRole.Jigger || target!=ContainerRole.Serving)) throw new ArgumentException("Float transfers jigger to serving.");
-            if(kind==BrewAction.Strain && (source!=ContainerRole.Mixing || target!=ContainerRole.Serving)) throw new ArgumentException("Strain is mixing to serving.");
+            if(kind==BrewAction.Strain && ((source!=ContainerRole.Mixing && source!=ContainerRole.Shaker) || target!=ContainerRole.Serving)) throw new ArgumentException("Strain is mixing or shaker to serving.");
             decimal moved=Math.Min(ml,from.Total); if(moved==0) return LiquidMovement.Empty();
             decimal accepted=Math.Min(moved,to.Capacity-to.Total),spill=moved-accepted;
             Dictionary<string,decimal> extracted,received;
@@ -186,6 +188,11 @@ namespace Surlhwa.Domain
             decimal before=from.Total,targetBefore=to.Total; var stamp=from.Stamp;
             var shakeStamp=from.Shake;
             bool combineShake=targetBefore==0 || (to.Shake!=null && shakeStamp!=null && to.Shake.Id==shakeStamp.Id);
+            // A measured addition does not unshake an actually strained base, nor does it become shaken.
+            // Keep the accepted Gin Fizz PourFromContainer path's existing evidence rules.
+            bool preserveStrainedShake=source==ContainerRole.Jigger && target==ContainerRole.Serving && kind==BrewAction.PourFromContainer &&
+                shakeStamp==null && to.Shake!=null && to.ShakerStrainedBatch;
+            bool incomingStrainedShake=source==ContainerRole.Shaker && target==ContainerRole.Serving && kind==BrewAction.Strain && shakeStamp!=null;
             foreach(var item in extracted)
             {
                 decimal got=received.TryGetValue(item.Key,out decimal value) ? value : 0;
@@ -202,14 +209,15 @@ namespace Surlhwa.Domain
                 if(combineShake) BrewContainer.Add(to.ShakenAmounts,item.Key,acceptedShaken);
             }
             from.Revision++;
-            if(from.Total==0) { from.Stamp=null; from.Strained=false; from.Shake=null; from.ShakenAmounts.Clear(); }
+            if(from.Total==0) { from.Stamp=null; from.Strained=false; from.Shake=null; from.ShakenAmounts.Clear(); from.ShakerStrainedBatch=false; }
             if(accepted>0)
             {
                 to.Revision++;
                 to.Stamp=targetBefore==0 || (to.Stamp!=null && stamp!=null && to.Stamp.Id==stamp.Id) ? stamp : null;
                 to.Strained=kind==BrewAction.Strain && (targetBefore==0 || to.Strained);
-                to.Shake=combineShake ? shakeStamp : null;
-                if(!combineShake) to.ShakenAmounts.Clear();
+                to.ShakerStrainedBatch=preserveStrainedShake || (combineShake && incomingStrainedShake && (targetBefore==0 || to.ShakerStrainedBatch));
+                to.Shake=preserveStrainedShake ? to.Shake : combineShake ? shakeStamp : null;
+                if(!combineShake && !preserveStrainedShake) to.ShakenAmounts.Clear();
                 if(kind==BrewAction.Float) to.Layers.Add(received,stableFloat);
                 else if(to.Layers!=null) to.Layers=new FloatLayers(to.Amounts);
             }
@@ -218,7 +226,7 @@ namespace Surlhwa.Domain
             return new LiquidMovement(received,spill);
         }
         public void AddIce(ContainerRole target)
-        { CheckOpen(target); var c=Get(target); if(c.Ice) return; c.Ice=true; c.Revision++; c.Stamp=null; c.Shake=null; c.ShakenAmounts.Clear(); Record(BrewAction.AddIce,"ice",target); }
+        { CheckOpen(target); var c=Get(target); if(c.Ice) return; c.Ice=true; c.Revision++; c.Stamp=null; c.Shake=null; c.ShakenAmounts.Clear(); c.ShakerStrainedBatch=false; Record(BrewAction.AddIce,"ice",target); }
         public void GentleStir()
         {
             if(flow || motion!=null || shakeMotion!=null) throw new InvalidOperationException("Another tool action is active.");
@@ -266,7 +274,7 @@ namespace Surlhwa.Domain
             Get(source); Get(target);
             CheckOpen(source); CheckOpen(target);
             if(source==target || (kind!=BrewAction.Strain && kind!=BrewAction.PourFromContainer && kind!=BrewAction.Float) ||
-                (kind==BrewAction.Strain && (source!=ContainerRole.Mixing || target!=ContainerRole.Serving)) ||
+                (kind==BrewAction.Strain && ((source!=ContainerRole.Mixing && source!=ContainerRole.Shaker) || target!=ContainerRole.Serving)) ||
                 (kind==BrewAction.Float && (source!=ContainerRole.Jigger || target!=ContainerRole.Serving))) throw new ArgumentException("Invalid transfer binding.");
             StartFlow(); flowSource=source; flowIngredient=null; flowTarget=target; flowKind=kind;
         }

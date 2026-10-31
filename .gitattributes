@@ -3,6 +3,10 @@
 *.cs text eol=lf
 *.asmdef text eol=lf
 *.json text eol=lf
+# These accepted packages predate the LF policy; their exact CRLF bytes own
+# existing save content hashes and continuation pins. Preserve them on checkout.
+Production/Content/Campaign/act1.json text eol=crlf
+Production/Content/Campaign/act2.json text eol=crlf
 *.md text eol=lf
 *.txt text eol=lf
 

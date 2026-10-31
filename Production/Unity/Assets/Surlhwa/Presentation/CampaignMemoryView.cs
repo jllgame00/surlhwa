@@ -9,6 +9,7 @@ namespace Surlhwa.Presentation
         private GameObject star; private Material material; private Mesh mesh;
         private GameObject lovers;
         private GameObject windmill;
+        private GameObject hamlet;
         private readonly System.Collections.Generic.List<Object> loversOwned=new System.Collections.Generic.List<Object>();
         public bool LoversVisible=>lovers!=null && lovers.activeSelf;
         public Transform LoversSwing { get; private set; }
@@ -16,6 +17,10 @@ namespace Surlhwa.Presentation
         public bool WindmillVisible=>windmill!=null && windmill.activeSelf;
         public Transform WindmillFragment { get; private set; }
         public Transform WindmillWing { get; private set; }
+        public bool HamletVisible=>hamlet!=null && hamlet.activeSelf;
+        public Transform HamletStage { get; private set; }
+        public Transform HamletSkull { get; private set; }
+        public Transform HamletShadow { get; private set; }
         private Quaternion presentationFacing=Quaternion.Euler(28,0,0);
         public void SetPresentationFacing(Quaternion facing)
         {
@@ -51,6 +56,9 @@ namespace Surlhwa.Presentation
             var fragment=state?.Memories.FirstOrDefault(x=>x.Id=="mem_03" && x.Variant=="windmill_fragment");
             if(fragment!=null && windmill==null) CreateWindmillMemory();
             if(windmill!=null) { windmill.SetActive(fragment!=null); windmill.transform.rotation=presentationFacing; }
+            var stage=state?.Memories.FirstOrDefault(x=>x.Id=="mem_04" && x.Variant=="stage_skull_shadow");
+            if(stage!=null && hamlet==null) CreateHamletMemory();
+            if(hamlet!=null) hamlet.SetActive(stage!=null);
         }
         private void CreateLoversMemory()
         {
@@ -78,6 +86,22 @@ namespace Surlhwa.Presentation
             WindmillWing=Part(WindmillFragment,"MEM03_","Tilted attached wing",new Vector3(0,.29f,-.003f),new Color(.68f,.55f,.36f),new[]{
                 new Rect(-.025f,0,.05f,.235f),new Rect(-.065f,.07f,.13f,.028f),new Rect(-.065f,.14f,.13f,.028f),new Rect(-.065f,.207f,.13f,.028f)});
             WindmillWing.localRotation=Quaternion.Euler(0,0,-28);
+        }
+        private void CreateHamletMemory()
+        {
+            // This small physical shelf piece stays in world XY: rotating its base to
+            // face the camera would leave the shelf and put the skull behind the niche.
+            hamlet=new GameObject("MEM-04 stage skull and shadow"); hamlet.transform.SetParent(transform,false);
+            hamlet.transform.position=new Vector3(0,1.087f,2.92f); hamlet.transform.rotation=Quaternion.identity;
+            HamletStage=Part(hamlet.transform,"MEM04_","Small stage fragment",Vector3.zero,new Color(.46f,.34f,.23f),new[]{
+                new Rect(-.29f,0,.58f,.028f),new Rect(-.26f,.028f,.52f,.026f),new Rect(-.22f,.054f,.39f,.012f)});
+            HamletSkull=Part(hamlet.transform,"MEM04_","Quiet skull",new Vector3(-.10f,.066f,-.008f),new Color(.78f,.74f,.61f),new[]{
+                new Rect(-.060f,0,.12f,.035f),new Rect(-.075f,.035f,.15f,.035f),
+                new Rect(-.090f,.070f,.035f,.070f),new Rect(-.020f,.070f,.040f,.070f),new Rect(.055f,.070f,.035f,.070f),
+                new Rect(-.090f,.140f,.18f,.045f),new Rect(-.060f,.185f,.12f,.025f)});
+            HamletShadow=Part(hamlet.transform,"MEM04_","Restrained stage shadow",new Vector3(.07f,.066f,.006f),new Color(.19f,.17f,.18f),new[]{
+                new Rect(-.05f,0,.13f,.05f),new Rect(-.025f,.05f,.13f,.06f),new Rect(0,.11f,.13f,.08f),
+                new Rect(.025f,.19f,.16f,.12f),new Rect(.05f,.31f,.12f,.035f)});
         }
         private Transform Part(string name,Vector3 at,Color color,Rect[] rectangles)
         { return Part(lovers.transform,"MEM02_",name,at,color,rectangles); }

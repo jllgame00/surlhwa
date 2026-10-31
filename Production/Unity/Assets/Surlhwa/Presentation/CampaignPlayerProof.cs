@@ -25,7 +25,9 @@ namespace Surlhwa.Presentation
         private bool finePourInput; private ContainerRole fineRole; private decimal fineStart,fineTarget; private Key fineKey;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
-        private bool expanded,act3,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured; private int expectedServices,startSlot,startDepartures,lastDepartures,totalSlots,expectedMemories;
+        private bool expanded,act3,act4,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured,frenchFailure,frenchRetryObserved,hamletMismatchObserved;
+        private int expectedServices,startSlot,startDepartures,lastDepartures,totalSlots,expectedMemories;
+        private string[] suppliedIngredients=Array.Empty<string>(); private readonly HashSet<string> shelfSelections=new HashSet<string>();
         private string startPhase,proofPrefix; private readonly HashSet<string> archived=new HashSet<string>(); private readonly HashSet<int> visited=new HashSet<int>();
         private string Arg(string key) { var args=Environment.GetCommandLineArgs(); int i=Array.IndexOf(args,key); return i<0 || i+1>=args.Length ? null : args[i+1]; }
         private IEnumerator Start()
@@ -34,8 +36,8 @@ namespace Surlhwa.Presentation
             output=Path.GetFullPath(Arg("-campaignEvidenceRoot")); Directory.CreateDirectory(output); owner=GetComponent<CampaignController>();
             UnityEngine.Application.logMessageReceived+=Log; float until=Time.realtimeSinceStartup+40;
             while(owner.Ui==null || owner.Busy) { if(Time.realtimeSinceStartup>until) { Fail("Initialization timeout"); yield break; } yield return null; }
-            act3=owner.Content.Scope=="through_act_03"; expanded=act3 || owner.Content.Scope=="through_act_02";
-            totalSlots=owner.Content.Slots.Count; expectedMemories=owner.Content.ActAt(totalSlots-1); proofPrefix=act3 ? "act3" : "act2";
+            act4=owner.Content.Scope=="through_act_04"; act3=act4 || owner.Content.Scope=="through_act_03"; expanded=act3 || owner.Content.Scope=="through_act_02";
+            totalSlots=owner.Content.Slots.Count; expectedMemories=owner.Content.ActAt(totalSlots-1); proofPrefix=act4 ? "act4" : act3 ? "act3" : "act2";
             keyboard=InputSystem.AddDevice<Keyboard>(); mouse=InputSystem.AddDevice<Mouse>();
             InputSystem.onBeforeUpdate+=QueueStirForCurrentFrame;
             render=new RenderTexture(Screen.width,Screen.height,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB); render.Create();
@@ -53,13 +55,16 @@ namespace Surlhwa.Presentation
             if(expanded) {
                 plan=plan.Concat(new[]{"recipe_manwol","recipe_test_stir","recipe_dry_martini","recipe_manhattan","recipe_hanky_panky","recipe_test_stir","recipe_gin_fizz","recipe_dry_martini"}).ToArray();
                 if(act3) plan=plan.Concat(new[]{"recipe_manhattan","recipe_gin_fizz",fixture.Contains("quixote-mismatch") ? "recipe_dry_martini" : "recipe_hanky_panky","recipe_negroni"}).ToArray();
+                if(act4) plan=plan.Concat(new[]{"recipe_french_75","recipe_dry_martini","recipe_dry_martini",fixture.Contains("hamlet-mismatch") ? "recipe_french_75" : "recipe_dry_martini"}).ToArray();
                 var initial=owner.Session; startSlot=initial.State.SlotIndex; startPhase=initial.State.Phase.ToString(); startDepartures=lastDepartures=initial.State.CompletedOccurrences.Count;
                 bool pendingAccepted=initial.State.CurrentService!=null && !initial.State.CompletedOccurrences.Contains(initial.State.OccurrenceId) &&
                     (initial.CurrentEncounter.RequiredDiscovery==null || initial.Knowledge.Project(initial.CurrentEncounter.RequiredDiscovery).Known);
                 expectedServices=initial.State.Services.Count+totalSlots-startDepartures-(pendingAccepted ? 1 : 0);
-                Check(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name==(act3 ? "Bar_Q1_Act3" : "Bar_Q1_Act2"),"ACT "+expectedMemories+" dedicated production scene");
+                Check(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Bar_Q1_Act"+expectedMemories,"ACT "+expectedMemories+" dedicated production scene");
                 if(fixture.Contains("hanky-retry")) Check(startSlot<=21 && !initial.Knowledge.Project("recipe_hanky_panky").Known,"required Hanky failure begins before earned discovery");
                 if(fixture.Contains("quixote-mismatch")) Check(act3 && (startSlot<27 || (startSlot==27 && initial.State.CurrentService==null)),"Quixote mismatch begins before the actual slot 27 service");
+                if(fixture.Contains("french-retry")) Check(act4 && startSlot<=29 && !initial.Knowledge.Project("recipe_french_75").Known,"required French failure begins before earned discovery");
+                if(fixture.Contains("hamlet-mismatch")) Check(act4 && (startSlot<32 || (startSlot==32 && initial.State.CurrentService==null)),"Hamlet mismatch begins before the actual slot 32 service");
                 memoryThreeCaptured=initial.State.Memories.Any(x=>x.Id=="mem_03");
                 ArchiveCheckpoint(proofPrefix+"-start"); yield return Capture(proofPrefix+"-start");
             }
@@ -78,7 +83,7 @@ namespace Surlhwa.Presentation
                 if(phase==CampaignPhase.Brewing)
                 {
                     bool firstAttempt=visited.Add(s.State.SlotIndex);
-                    if(!firstAttempt && !(expanded && s.State.SlotIndex==21 && deliberateFailure && retryObserved)) { Fail("Unexpected retry"); yield break; }
+                    if(!firstAttempt && !(expanded && s.State.SlotIndex==21 && deliberateFailure && retryObserved) && !(act4 && s.State.SlotIndex==29 && frenchFailure && frenchRetryObserved)) { Fail("Unexpected retry"); yield break; }
                     if(expanded && s.State.SlotIndex>=17 && firstAttempt) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==5 || s.State.SlotIndex==10 || s.State.SlotIndex==16) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==3 || s.State.SlotIndex==5) { yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),s.State.SlotIndex==3 ? "recipe_dry_martini" : "recipe_manwol"); yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial recipe page "+page); yield return Capture("codex-clues-"+s.State.SlotIndex); yield return Click("돌아가기  Esc"); }
@@ -87,13 +92,29 @@ namespace Surlhwa.Presentation
                         yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial Hanky recipe page");
                         yield return Capture("codex-hanky-clues"); yield return Click("돌아가기  Esc");
                     }
+                    if(act4 && s.State.SlotIndex==29 && firstAttempt) {
+                        yield return InspectSupplyPages();
+                        yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),"recipe_french_75");
+                        yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial French 75 recipe page");
+                        yield return Capture("codex-french-clues"); yield return Click("돌아가기  Esc");
+                    }
                     bool omitZest=expanded && s.State.SlotIndex==21 && fixture.Contains("hanky-retry") && !deliberateFailure;
+                    bool omitGentle=act4 && s.State.SlotIndex==29 && fixture.Contains("french-retry") && !frenchFailure;
                     if(omitZest) { deliberateFailure=true; expectedServices++; }
-                    yield return Prepare(plan[s.State.SlotIndex],omitZest);
-                    if(expanded && s.State.SlotIndex>=17) ArchiveCheckpoint((omitZest ? "failed-service-" : "after-service-")+s.State.SlotIndex);
+                    if(omitGentle) { frenchFailure=true; expectedServices++; }
+                    yield return Prepare(plan[s.State.SlotIndex],omitZest,omitGentle);
+                    if(expanded && s.State.SlotIndex>=17) ArchiveCheckpoint((omitZest || omitGentle ? "failed-service-" : "after-service-")+s.State.SlotIndex);
                     continue;
                 }
                 if(expanded && phase==CampaignPhase.Retry) {
+                    if(act4 && s.State.SlotIndex==29) {
+                        Check(!s.Knowledge.Project("recipe_french_75").Known && !s.State.CompletedOccurrences.Contains(s.State.OccurrenceId) && s.CurrentText?.Id=="text_rc1_0039","French retry retains discovery and authored feedback");
+                        frenchRetryObserved=true; ArchiveCheckpoint("french-retry"); yield return Capture("french-required-retry");
+                        if(media) yield return new WaitForSecondsRealtime(1.5f);
+                        yield return Click("계속  Enter"); yield return Idle();
+                        Check(s.State.Phase==CampaignPhase.Brewing && s.State.ConsumedLines.Any(x=>x.EndsWith(":29:Retry:0:text_rc1_0039",StringComparison.Ordinal)),"French retry reading consumed before fresh attempt");
+                        ArchiveCheckpoint("french-retry-read"); continue;
+                    }
                     Check(s.State.SlotIndex==21 && !s.Knowledge.Project("recipe_hanky_panky").Known && !s.State.CompletedOccurrences.Contains(s.State.OccurrenceId),"required Hanky failure retains encounter and unknown recipe");
                     retryObserved=true; ArchiveCheckpoint("hanky-retry"); yield return Capture("hanky-required-retry");
                 }
@@ -118,9 +139,9 @@ namespace Surlhwa.Presentation
                 Check(owner.Session.State.Services.Count==expectedServices,expectedServices+" actual services");
                 Check(owner.Session.State.CompletedOccurrences.Count==totalSlots,totalSlots+" natural departures");
                 Check(owner.Session.State.Services.Select(x=>x.OccurrenceId).Distinct().Count()==totalSlots,"one service occurrence per scheduled encounter");
-                Check(owner.Session.Knowledge.KnownReceipts.Count==7,"seven recipes learned by real services");
+                Check(owner.Session.Knowledge.KnownReceipts.Count==(act4 ? 8 : 7),(act4 ? "eight" : "seven")+" recipes learned by real services");
                 Check(owner.Session.State.ActComplete && owner.Session.State.Memories.Count==expectedMemories && owner.Memory.Visible && owner.Memory.LoversVisible,
-                    act3 ? "three earned memories after natural departure" : "two earned memories after natural departure");
+                    expectedMemories+" earned memories after natural departure");
                 Check(owner.Memory.Glowing==(owner.Session.State.Memories.Single(x=>x.Id=="mem_01").Variant=="star_glowing"),"preserved ACT 1 memory variant");
                 Check(owner.Memory.LoversSwing!=null && owner.Memory.LoversEmptyPlace!=null,"MEM-02 swing and adjacent empty place resolve");
                 if(fixture.Contains("hanky-retry")) Check(deliberateFailure && retryObserved,"required Hanky failure and successful retry observed");
@@ -128,6 +149,12 @@ namespace Surlhwa.Presentation
                     Check(owner.Memory.WindmillVisible && owner.Memory.WindmillFragment!=null && owner.Memory.WindmillWing!=null,"MEM-03 windmill fragment and attached wing resolve");
                     Check(owner.Session.State.Memories.Count(x=>x.Id=="mem_03" && x.Variant=="windmill_fragment")==1,"one canonical MEM-03 receipt");
                     if(fixture.Contains("quixote-mismatch")) Check(quixoteMismatchObserved,"mismatching Quixote drink still reaches natural memory departure");
+                }
+                if(act4) {
+                    Check(owner.Memory.HamletVisible && owner.Memory.HamletStage!=null && owner.Memory.HamletSkull!=null && owner.Memory.HamletShadow!=null,"MEM-04 stage skull and shadow resolve");
+                    Check(owner.Session.State.Memories.Count(x=>x.Id=="mem_04" && x.Variant=="stage_skull_shadow")==1,"one canonical MEM-04 receipt");
+                    if(fixture.Contains("french-retry")) Check(frenchFailure && frenchRetryObserved,"required French failure and successful retry observed");
+                    if(fixture.Contains("hamlet-mismatch")) Check(hamletMismatchObserved,"mismatching Hamlet drink still reaches natural memory departure");
                 }
             } else {
                 Check(owner.Session.State.Services.Count==17,"17 actual services"); Check(owner.Session.State.CompletedOccurrences.Count==17,"17 natural departures");
@@ -243,10 +270,37 @@ namespace Surlhwa.Presentation
         { keys=new[]{key}; Queue(); yield return new WaitForSecondsRealtime(seconds); keys=Array.Empty<Key>(); Queue(); yield return new WaitForSecondsRealtime(.08f); yield return Idle(); }
         private IEnumerator Target(ContainerRole role)
         { for(int n=0;n<4 && owner.Input.Target!=role;n++) yield return Press(Key.J); Check(owner.Input.Target==role,"target "+role); }
+        private Button IngredientButton(string id)
+        {
+            string name=owner.Content.IngredientNames[id];
+            return owner.Ui.GetComponentsInChildren<Button>().SingleOrDefault(x=>x.isActiveAndEnabled && x.IsInteractable() &&
+                (x.GetComponentInChildren<TextMeshProUGUI>()?.text==name || (x.GetComponentInChildren<TextMeshProUGUI>()?.text.EndsWith("  "+name,StringComparison.Ordinal) ?? false)));
+        }
+        private Button PageButton(string label) => owner.Ui.GetComponentsInChildren<Button>().SingleOrDefault(x=>x.isActiveAndEnabled && x.IsInteractable() && x.GetComponentInChildren<TextMeshProUGUI>()?.text==label);
+        private string[] VisibleIngredients() => owner.Session?.Supply.Where(id=>IngredientButton(id)!=null).ToArray() ?? Array.Empty<string>();
+        private IEnumerator InspectSupplyPages()
+        {
+            suppliedIngredients=owner.Session.Supply.OrderBy(x=>x,StringComparer.Ordinal).ToArray();
+            for(int n=0;n<5 && PageButton("이전 재료")!=null;n++) yield return Click("이전 재료");
+            Check(PageButton("이전 재료")==null,"physical shelf begins at first page");
+            for(int page=1;page<=5;page++) {
+                yield return Capture("act4-shelf-page-"+page);
+                if(PageButton("다음 재료")==null) break;
+                yield return Click("다음 재료");
+            }
+            foreach(string id in suppliedIngredients) { yield return SelectIngredient(id); shelfSelections.Add(id); }
+            Check(shelfSelections.SetEquals(suppliedIngredients),"every supplied ingredient selected through visible shelf controls");
+        }
         private IEnumerator SelectIngredient(string id)
         {
-            string name=owner.Content.IngredientNames[id]; string label=owner.Ui.GetComponentsInChildren<Button>().Select(x=>x.GetComponentInChildren<TextMeshProUGUI>()?.text).Single(x=>x==name || (x?.EndsWith("  "+name) ?? false));
-            yield return Click(label); Check(owner.Input.SelectedIngredient==id,"ingredient "+id);
+            Button button=IngredientButton(id);
+            for(int n=0;button==null && n<5;n++) {
+                string page=PageButton("다음 재료")!=null ? "다음 재료" : PageButton("이전 재료")!=null ? "이전 재료" : null;
+                if(page==null) break;
+                yield return Click(page); button=IngredientButton(id);
+            }
+            if(button==null) { Fail("No visible supplied ingredient control: "+id); yield break; }
+            yield return ClickButton(button,button.GetComponentInChildren<TextMeshProUGUI>().text); Check(owner.Input.SelectedIngredient==id,"ingredient "+id);
         }
         private IEnumerator Pour(string id,decimal ml,ContainerRole role,Key key=Key.Q)
         {
@@ -261,7 +315,7 @@ namespace Surlhwa.Presentation
             decimal actual=owner.Session.Brew.Container(role).TotalMl-start;
             Check(Math.Abs(actual-ml)<.25m,"measured "+id+" "+actual+" / "+ml+" ml");
         }
-        private IEnumerator Prepare(string id,bool omitZest=false)
+        private IEnumerator Prepare(string id,bool omitZest=false,bool omitGentle=false)
         {
             var recipe=owner.Content.Catalog.Recipes[id]; yield return Click(char.ToUpperInvariant(recipe.Method[0])+recipe.Method.Substring(1));
             if(recipe.Method=="stir")
@@ -285,7 +339,15 @@ namespace Surlhwa.Presentation
                 yield return Press(Key.I); yield return Press(Key.L); pointer=new Vector2(Screen.width*.4f,Screen.height*.5f); Queue(); yield return null;
                 keys=new[]{Key.K}; Queue(); float start=Time.realtimeSinceStartup;
                 while(Time.realtimeSinceStartup-start<7) { float t=Time.realtimeSinceStartup-start; pointer=new Vector2(Screen.width*(.5f-.1f*Mathf.Cos(2*Mathf.PI*t)),Screen.height*.5f); Queue(); yield return null; }
-                keys=Array.Empty<Key>(); Queue(); yield return null; yield return Press(Key.L); yield return Press(Key.T,4); yield return Target(ContainerRole.Serving); yield return Pour(recipe.LateIngredient,recipe.Amounts[recipe.LateIngredient],ContainerRole.Serving,Key.X);
+                keys=Array.Empty<Key>(); Queue(); yield return null; yield return Press(Key.L);
+                if(recipe.ShakeFinish==ShakeFinishPolicy.StrainThenPourAndGentleStir) {
+                    Check(owner.Input.ShakerStrainAvailable,"production Shaker Strain is available for ACT 4");
+                    yield return Press(Key.U,4); yield return Target(ContainerRole.Serving);
+                    yield return Pour(recipe.LateIngredient,recipe.Amounts[recipe.LateIngredient],ContainerRole.Serving);
+                    if(!omitGentle) yield return Press(Key.G);
+                } else {
+                    yield return Press(Key.T,4); yield return Target(ContainerRole.Serving); yield return Pour(recipe.LateIngredient,recipe.Amounts[recipe.LateIngredient],ContainerRole.Serving,Key.X);
+                }
             }
             else
             {
@@ -297,16 +359,21 @@ namespace Surlhwa.Presentation
                     keys=Array.Empty<Key>(); Queue(); yield return null;
                 }
             }
-            yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method+(omitZest ? "-missing-zest" : "")); yield return Click("손님께 내기"); yield return Idle();
+            string failureSuffix=omitZest ? "-missing-zest" : omitGentle ? "-missing-gentle" : "";
+            yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method+failureSuffix); yield return Click("손님께 내기"); yield return Idle();
             var result=owner.Session.State.CurrentService?.Outcome;
             if(omitZest) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required Hanky missing-zest preparation fails without discovery");
+            else if(omitGentle) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required French missing-GentleStir preparation fails without discovery");
             else Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation==PreparationResult.Good && result.QualityGood,"service "+owner.Session.State.SlotIndex+" "+id);
-            if(expanded && owner.Session.State.SlotIndex>=17 && !omitZest) {
-                bool mismatch=act3 && owner.Session.State.SlotIndex==27 && fixture.Contains("quixote-mismatch");
+            if(expanded && owner.Session.State.SlotIndex>=17 && !omitZest && !omitGentle) {
+                bool quixoteMismatch=act3 && owner.Session.State.SlotIndex==27 && fixture.Contains("quixote-mismatch");
+                bool hamletMismatch=act4 && owner.Session.State.SlotIndex==32 && fixture.Contains("hamlet-mismatch");
+                bool mismatch=quixoteMismatch || hamletMismatch;
                 Check(result?.Fits==!mismatch,"actual ACT "+owner.Content.ActAt(owner.Session.State.SlotIndex)+" request "+(mismatch ? "mismatch " : "fit ")+owner.Session.State.SlotIndex);
-                if(mismatch) quixoteMismatchObserved=result?.Fits==false;
+                if(quixoteMismatch) quixoteMismatchObserved=result?.Fits==false;
+                if(hamletMismatch) hamletMismatchObserved=result?.Fits==false;
             }
-            yield return Capture("reaction-"+owner.Session.State.SlotIndex+(omitZest ? "-missing-zest" : ""));
+            yield return Capture("reaction-"+owner.Session.State.SlotIndex+failureSuffix);
         }
         private IEnumerator Capture(string label)
         {
@@ -334,6 +401,7 @@ namespace Surlhwa.Presentation
                 if(text?.Role=="narration") Check(string.IsNullOrEmpty(owner.Ui.DisplayedSpeaker),"narration retains silence "+label);
                 if(!state.Memories.Any(x=>x.Id=="mem_02")) Check(!owner.Memory.LoversVisible,"MEM-02 absent before earned departure "+label);
                 if(act3 && !state.Memories.Any(x=>x.Id=="mem_03")) Check(!owner.Memory.WindmillVisible,"MEM-03 absent before earned departure "+label);
+                if(act4 && !state.Memories.Any(x=>x.Id=="mem_04")) Check(!owner.Memory.HamletVisible,"MEM-04 absent before earned departure "+label);
             }
             File.AppendAllText(Path.Combine(output,"captures.jsonl"),JsonUtility.ToJson(new CaptureEvidence{label=label,image=image,
                 slot=state?.SlotIndex ?? -1,line=state?.LineIndex ?? -1,phase=state?.Phase.ToString() ?? "menu",textId=text?.Id,textRole=text?.Role,
@@ -341,13 +409,14 @@ namespace Surlhwa.Presentation
                 visibleActors=actors.Select(a=>CampaignEvidenceProbe.PresentedGuestId(owner,a)).ToArray(),actorBindingIds=actors.Select(a=>a.GuestId).ToArray(),
                 visibleText=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(t=>t.isActiveAndEnabled).Select(t=>t.text).ToArray(),
                 overflow=overflow,invalidRenderers=invalidRenderers,services=state?.Services.Count ?? 0,departures=state?.CompletedOccurrences.Count ?? 0,
-                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,
+                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,hamletVisible=owner.Memory.HamletVisible,
+                visibleIngredients=act4 ? VisibleIngredients() : Array.Empty<string>(),
                 act=state==null ? 0 : owner.Content.ActAt(state.SlotIndex),servingVessels=serving.Length})+"\n");
         }
         [Serializable] private sealed class CaptureEvidence
         {
-            public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,overflow,invalidRenderers;
-            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible;
+            public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,overflow,invalidRenderers,visibleIngredients;
+            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible,hamletVisible;
         }
         private void SavePixels(string path)
         { var prior=RenderTexture.active; RenderTexture.active=render; var texture=new Texture2D(render.width,render.height,TextureFormat.RGB24,false); texture.ReadPixels(new Rect(0,0,render.width,render.height),0,0); texture.Apply(); RenderTexture.active=prior; File.WriteAllBytes(path,texture.EncodeToPNG()); Destroy(texture); }
@@ -359,10 +428,11 @@ namespace Surlhwa.Presentation
             File.WriteAllText(Path.Combine(output,"player-result.json"),JsonUtility.ToJson(new Result{status=errors.Count==0 ? "PASS" : "FAIL",tier="Simulated production InputSystem in built Player; NOT native OS input",checks=checks.ToArray(),errors=errors.ToArray(),frames=frames.ToArray(),captures=captures,
                 scope=owner?.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,fixture=fixture,services=owner.Session?.State.Services.Count ?? 0,
                 departures=owner.Session?.State.CompletedOccurrences.Count ?? 0,known=owner.Session?.Knowledge.KnownReceipts.Count ?? 0,memories=owner.Session?.State.Memories.Count ?? 0,
-                expectedServices=expectedServices,startSlot=startSlot,startDepartures=startDepartures,startPhase=startPhase,visitedSlots=visited.OrderBy(x=>x).ToArray(),deliberateFailure=deliberateFailure,retryObserved=retryObserved,quixoteMismatchObserved=quixoteMismatchObserved},true));
+                expectedServices=expectedServices,startSlot=startSlot,startDepartures=startDepartures,startPhase=startPhase,visitedSlots=visited.OrderBy(x=>x).ToArray(),deliberateFailure=deliberateFailure,retryObserved=retryObserved,quixoteMismatchObserved=quixoteMismatchObserved,
+                frenchFailure=frenchFailure,frenchRetryObserved=frenchRetryObserved,hamletMismatchObserved=hamletMismatchObserved,suppliedIngredients=suppliedIngredients,shelfSelections=shelfSelections.OrderBy(x=>x,StringComparer.Ordinal).ToArray()},true));
             UnityEngine.Application.Quit(errors.Count==0 ? 0 : 2);
         }
-        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved; }
+        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved; }
         private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; InputSystem.onBeforeUpdate-=QueueStirForCurrentFrame; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
     }
 }

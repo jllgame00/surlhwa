@@ -16,6 +16,7 @@ namespace Surlhwa.Presentation
         public ContainerRole Target { get; private set; }=ContainerRole.Jigger;
         public string ActiveTool => held; public bool Fine { get; set; }
         public bool ZestAvailable { get; set; }
+        public bool ShakerStrainAvailable { get; set; }
         public bool AcceptedLiquidThisStep { get; private set; } public bool AcceptedStirThisStep { get; private set; }
         public float SpoonAngle { get; private set; } public string Feedback { get; private set; }
         public float ShakePosition { get; private set; } public float FloatHeight { get; private set; } public float FloatIntensity { get; private set; }
@@ -31,6 +32,7 @@ namespace Surlhwa.Presentation
             if(actions.Count>0) return;
             ActionKey("pour","q",true); ActionKey("transfer","e",true); ActionKey("strain","r",true); ActionKey("stir","s",true);
             ActionKey("shake","k",true); ActionKey("float","f",true); ActionKey("shaker_transfer","t",true); ActionKey("splash","x",true);
+            ActionKey("shaker_strain","u",true);
             ActionKey("lid","l",false); ActionKey("gentle","g",false); ActionKey("orange","o",false);
             ActionKey("zest","z",false);
             ActionKey("ice","i",false); ActionKey("cherry","c",false); ActionKey("dash","d",false);
@@ -43,7 +45,11 @@ namespace Surlhwa.Presentation
         {
             var a=new InputAction(command,InputActionType.Button,"<Keyboard>/"+key);
             a.performed+=_=> { if(continuous) Begin(command); else Command(command); };
-            if(continuous) a.canceled+=_=>Release(); a.Enable(); actions.Add(a);
+            if(continuous) a.canceled+=_=> {
+                // An unavailable U cannot cancel another tool. An available U still
+                // releases the input latch after a modal/focus stop cleared its tool.
+                if(command!="shaker_strain" || held==command || (ShakerStrainAvailable && held==null)) Release();
+            }; a.Enable(); actions.Add(a);
         }
         public void SelectIngredient(string id)
         { if(session==null || !session.CanInteract || !session.Supply.Contains(id)) return; Stop(); SelectedIngredient=id; Feedback=null; }
@@ -75,6 +81,7 @@ namespace Surlhwa.Presentation
         public void Begin(string tool)
         {
             if(session==null || held!=null || !session.CanInteract) return;
+            if(tool=="shaker_strain" && !ShakerStrainAvailable) return;
             if(!session.ExtendedMethods && tool!="pour" && tool!="transfer" && tool!="strain" && tool!="stir") return;
             try
             {
@@ -86,6 +93,7 @@ namespace Surlhwa.Presentation
                     else if(tool=="stir") { var p=StirPoint(); b.BeginStir(p.x,p.y); }
                     else if(tool=="shake") b.BeginShake(ReadShake());
                     else if(tool=="shaker_transfer") b.BeginTransfer(ContainerRole.Shaker,ContainerRole.Serving,BrewAction.PourFromContainer);
+                    else if(tool=="shaker_strain") b.BeginTransfer(ContainerRole.Shaker,ContainerRole.Serving,BrewAction.Strain);
                     else if(tool=="float") b.BeginFloat();
                 });
                 if(accepted && (session.Brew.FlowActive || session.Brew.StirActive || session.Brew.ShakeActive)) { held=tool; previousPointer=Mouse.current?.position.ReadValue() ?? Vector2.zero; Feedback=null; }
@@ -114,7 +122,7 @@ namespace Surlhwa.Presentation
             AcceptedLiquidThisStep=false; AcceptedStirThisStep=false;
             if(session==null || !session.CanInteract || session.Brew==null) { Stop(); return; }
             var keyboard=Keyboard.current;
-            if(held==null && !(Mouse.current?.leftButton.isPressed ?? false) && (keyboard==null || (!keyboard.qKey.isPressed && !keyboard.eKey.isPressed && !keyboard.rKey.isPressed && !keyboard.sKey.isPressed && !keyboard.kKey.isPressed && !keyboard.fKey.isPressed && !keyboard.tKey.isPressed && !keyboard.xKey.isPressed))) session.ReleaseHeldInput();
+            if(held==null && !(Mouse.current?.leftButton.isPressed ?? false) && (keyboard==null || (!keyboard.qKey.isPressed && !keyboard.eKey.isPressed && !keyboard.rKey.isPressed && !keyboard.sKey.isPressed && !keyboard.kKey.isPressed && !keyboard.fKey.isPressed && !keyboard.tKey.isPressed && !keyboard.xKey.isPressed && (!ShakerStrainAvailable || !keyboard.uKey.isPressed)))) session.ReleaseHeldInput();
             if(held==null || seconds<=0) return;
             long micros=(long)Math.Round(Math.Min(seconds,.25)*1000000); // Hitches pause excess time rather than delivering an unseen surge.
             bool fine=Fine || (Keyboard.current?.leftShiftKey.isPressed ?? false) || (Keyboard.current?.rightShiftKey.isPressed ?? false);

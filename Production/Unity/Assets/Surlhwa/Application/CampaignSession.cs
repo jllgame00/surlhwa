@@ -34,7 +34,8 @@ namespace Surlhwa.Application
             {
                 string id=State.Phase==CampaignPhase.Intro ? Intro[State.LineIndex].TextId : State.Phase==CampaignPhase.Request ? CurrentEncounter.SummaryTextId :
                     State.Phase==CampaignPhase.Choice ? Content.ChoicePrompt : State.Phase==CampaignPhase.ChoiceResponse ? Content.PrinceResponses[State.PrinceChoice] :
-                    State.Phase==CampaignPhase.Reaction ? CurrentEncounter.Responses[State.CurrentService.ResponseKey] : State.Phase==CampaignPhase.Farewell ? FarewellLines[State.LineIndex] : null;
+                    State.Phase==CampaignPhase.Reaction ? CurrentEncounter.Responses[State.CurrentService.ResponseKey] : State.Phase==CampaignPhase.Farewell ? FarewellLines[State.LineIndex] :
+                    State.Phase==CampaignPhase.Retry ? CurrentEncounter.DiscoveryRetryTextId : null;
                 return id==null ? null : Content.Texts[id];
             }
         }
@@ -105,7 +106,7 @@ namespace Surlhwa.Application
                     if(CurrentEncounter.RequiredDiscovery!=null && !Knowledge.Project(CurrentEncounter.RequiredDiscovery).Known) return await Publish(Copy(CampaignPhase.Retry));
                     return await Publish(Copy(State.CurrentService.Discovered ? CampaignPhase.Discovery : CampaignPhase.Farewell));
                 case CampaignPhase.Discovery: return await Publish(Copy(CampaignPhase.Farewell));
-                case CampaignPhase.Retry: input.Release(); return await Publish(Copy(CampaignPhase.Brewing));
+                case CampaignPhase.Retry: input.Release(); return await Publish(Copy(CampaignPhase.Brewing,consumed:consumed));
                 case CampaignPhase.Farewell:
                     bool next=State.LineIndex+1<FarewellLines.Count;
                     return await Publish(Copy(next ? CampaignPhase.Farewell : CampaignPhase.Departing,line:next ? State.LineIndex+1 : 0,consumed:consumed));

@@ -26,7 +26,7 @@ namespace Surlhwa.Presentation
             float target=active && phase==CampaignPhase.Complete ? master*.12f : 0;
             music.volume=Mathf.MoveTowards(music.volume,target,Time.unscaledDeltaTime*.08f);
             if(session==null || !session.Focused || session.Modals.Count>0) { music.Stop(); music.volume=0; }
-            AudioClip clip=active && input.AcceptedStirThisStep ? owner.Stir : active && input.AcceptedLiquidThisStep ? (input.ActiveTool=="strain" ? owner.Strain : owner.Pour) : null;
+            AudioClip clip=active && input.AcceptedStirThisStep ? owner.Stir : active && input.AcceptedLiquidThisStep ? (input.ActiveTool=="strain" || input.ActiveTool=="shaker_strain" ? owner.Strain : owner.Pour) : null;
             if(clip==null) { physical.Stop(); physical.clip=null; }
             else if(physical.clip!=clip || !physical.isPlaying) { physical.Stop(); physical.clip=clip; physical.Play(); }
         }

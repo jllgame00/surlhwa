@@ -17,7 +17,8 @@ namespace Surlhwa.Presentation
         private Button next,continueButton; private readonly Stack<GameObject> focus=new Stack<GameObject>();
         private readonly List<GameObject> methodPanels=new List<GameObject>(); private int method,recipePage;
         private readonly List<GameObject> methodMarks=new List<GameObject>();
-        private GameObject classicStir,expandedStir;
+        private GameObject classicStir,expandedStir,classicShake,expandedShake;
+        private TextMeshProUGUI shelfTitle; private Button previousShelf,nextShelf; private int shelfPage;
         private readonly Dictionary<string,Button> shelf=new Dictionary<string,Button>();
         private string shownModal; public string MenuModal; public string VisibleModal=>shownModal;
         public string DisplayedSpeaker=>speaker.text;
@@ -74,19 +75,32 @@ namespace Surlhwa.Presentation
             Hold(methodPanels[1].transform,new Rect(6,29,174,38),"따르기 Q","pour"); Hold(methodPanels[1].transform,new Rect(188,29,174,38),"지거 이동 E","transfer");
             Cmd(methodPanels[1].transform,370,"얼음 I","ice"); Cmd(methodPanels[1].transform,502,"가볍게 젓기 G","gentle"); Cmd(methodPanels[1].transform,634,"오렌지 O","orange");
             Text(methodPanels[1].transform,new Rect(6,0,990,25),"서빙 잔에 직접 담고 가볍게 섞습니다. 지거를 쓸 때는 이동할 대상을 먼저 고릅니다.",14,muted);
-            Hold(methodPanels[2].transform,new Rect(6,29,124,38),"따르기 Q","pour"); Cmd(methodPanels[2].transform,138,"얼음 I","ice"); Cmd(methodPanels[2].transform,270,"뚜껑 L","lid");
-            Hold(methodPanels[2].transform,new Rect(402,29,144,38),"흔들기 K","shake"); Hold(methodPanels[2].transform,new Rect(554,29,144,38),"잔에 옮기기 T","shaker_transfer"); Hold(methodPanels[2].transform,new Rect(706,29,144,38),"Splash X","splash");
-            Text(methodPanels[2].transform,new Rect(6,0,990,25),"뚜껑을 닫고 K를 누른 채 화면 중앙에서 좌우로 흔듭니다. 뚜껑을 열고 T로 잔에 옮깁니다.",14,muted);
-            Text(methodPanels[2].transform,new Rect(862,29,124,38),"←  K  →",18,ink).alignment=TextAlignmentOptions.Center;
+            classicShake=Panel(methodPanels[2].transform,new Rect(0,0,1008,76),Color.clear);
+            Hold(classicShake.transform,new Rect(6,29,124,38),"따르기 Q","pour"); Cmd(classicShake.transform,138,"얼음 I","ice"); Cmd(classicShake.transform,270,"뚜껑 L","lid");
+            Hold(classicShake.transform,new Rect(402,29,144,38),"흔들기 K","shake"); Hold(classicShake.transform,new Rect(554,29,144,38),"잔에 옮기기 T","shaker_transfer"); Hold(classicShake.transform,new Rect(706,29,144,38),"Splash X","splash");
+            Text(classicShake.transform,new Rect(6,0,990,25),"뚜껑을 닫고 K를 누른 채 화면 중앙에서 좌우로 흔듭니다. 뚜껑을 열고 T로 잔에 옮깁니다.",14,muted);
+            Text(classicShake.transform,new Rect(862,29,124,38),"←  K  →",18,ink).alignment=TextAlignmentOptions.Center;
+            expandedShake=Panel(methodPanels[2].transform,new Rect(0,0,1008,76),Color.clear);
+            string[] shakeLabels={"따르기 Q","지거 이동 E","얼음 I","뚜껑 L","흔들기 K","잔에 옮기기 T","거르기 U","Splash X","가볍게 G"};
+            string[] shakeCommands={"pour","transfer","ice","lid","shake","shaker_transfer","shaker_strain","splash","gentle"};
+            for(int n=0;n<shakeLabels.Length;n++) {
+                string command=shakeCommands[n]; var rect=new Rect(6+n*110,29,102,38);
+                if(command=="ice" || command=="lid" || command=="gentle") Button(expandedShake.transform,rect,shakeLabels[n],()=>owner.Input.Command(command),14);
+                else Hold(expandedShake.transform,rect,shakeLabels[n],command,14);
+            }
+            Text(expandedShake.transform,new Rect(6,0,990,25),"L로 닫고 K와 좌우 움직임으로 흔듭니다. 열어서 T로 옮기거나 U로 거릅니다. G는 서빙 잔을 가볍게 젓습니다.",14,muted);
             Hold(methodPanels[3].transform,new Rect(6,29,174,38),"지거에 따르기 Q","pour"); Hold(methodPanels[3].transform,new Rect(188,29,190,38),"층 쌓기 F","float");
             Text(methodPanels[3].transform,new Rect(6,0,990,25),"지거로 양을 재고 F를 누릅니다. 낮게, 천천히 — 오른쪽은 유량, 위쪽은 높이입니다.",14,muted);
             Text(methodPanels[3].transform,new Rect(402,29,584,38),"F · 화면 중앙 아래에서 낮게, 천천히   |   높이 ↑   유량 →",16,ink).alignment=TextAlignmentOptions.Center;
-            ingredients=Panel(root,new Rect(24,188,180,464),paper); Text(ingredients.transform,new Rect(12,430,156,28),"재료 선반",17,ink);
+            ingredients=Panel(root,new Rect(24,188,180,464),paper); shelfTitle=Text(ingredients.transform,new Rect(12,430,156,28),"재료 선반",17,ink);
             int i=0; foreach(var id in owner.Content.Supply) { string ingredient=id; shelf[id]=Button(ingredients.transform,new Rect(10,402-i*25,160,24),(i<9 ? (i+1)+"  " : "")+owner.Content.IngredientNames[id],()=>owner.Input.SelectIngredient(ingredient),14); i++; }
+            previousShelf=Button(ingredients.transform,new Rect(10,42,78,22),"이전 재료",()=>ChangeShelfPage(-1),13);
+            nextShelf=Button(ingredients.transform,new Rect(92,42,78,22),"다음 재료",()=>ChangeShelfPage(1),13);
             Button(ingredients.transform,new Rect(10,8,160,30),"현재 잔 비우기",()=>owner.DiscardDrink(),14);
             SelectMethod(0); Refresh(); EventSystem.current.SetSelectedGameObject(newGame.gameObject);
         }
         private void Cmd(Transform parent,float x,string label,string command)=>Button(parent,new Rect(x,29,124,38),label,()=>owner.Input.Command(command),15);
+        private void ChangeShelfPage(int delta) { owner.Input.Stop(); shelfPage+=delta; Refresh(); }
         private void SelectMethod(int index) { owner.Input.Stop(); method=index; for(int i=0;i<methodPanels.Count;i++) methodPanels[i].SetActive(i==index); for(int i=0;i<methodMarks.Count;i++) methodMarks[i].SetActive(i==index); }
         private GameObject Panel(Transform parent,Rect rect,Color color,bool resizeRules=false)
         {
@@ -134,8 +148,8 @@ namespace Surlhwa.Presentation
             var text=Text(panel.transform,new Rect(5,1,rect.width-10,rect.height-2),label,size,ink); text.alignment=TextAlignmentOptions.Center;
             panel.AddComponent<SliceFocusOutline>().Initialize(b); b.onClick.AddListener(()=>click()); return b;
         }
-        private void Hold(Transform parent,Rect rect,string label,string tool)
-        { var b=Button(parent,rect,label,()=>{},15); var h=b.gameObject.AddComponent<SliceHoldButton>(); h.Down=()=>owner.Input.Begin(tool); h.Up=()=>owner.Input.Release(); }
+        private void Hold(Transform parent,Rect rect,string label,string tool,float size=15)
+        { var b=Button(parent,rect,label,()=>{},size); var h=b.gameObject.AddComponent<SliceHoldButton>(); h.Down=()=>owner.Input.Begin(tool); h.Up=()=>owner.Input.Release(); }
         public void RememberFocus()=>focus.Push(EventSystem.current?.currentSelectedGameObject);
         private static bool Available(GameObject target)
         { var selectable=target!=null ? target.GetComponent<Selectable>() : null; return selectable!=null && selectable.isActiveAndEnabled && selectable.IsInteractable(); }
@@ -172,10 +186,19 @@ namespace Surlhwa.Presentation
             Position(body.rectTransform,paired ? new Rect(26,48,1180,60) : new Rect(26,48,796,82));
             Position((RectTransform)next.transform,paired ? new Rect(1044,8,162,34) : new Rect(660,8,162,34));
             classicStir.SetActive(!expanded); expandedStir.SetActive(expanded);
-            int shelfIndex=0; foreach(var item in shelf) {
-                item.Value.gameObject.SetActive(s?.Supply.Contains(item.Key)==true);
-                Position((RectTransform)item.Value.transform,new Rect(10,402-shelfIndex*(expanded ? 22.5f : 25),160,expanded ? 22 : 24)); shelfIndex++;
+            bool expandedFinish=s!=null && owner.Content.ActAt(s.State.SlotIndex)>=4;
+            classicShake.SetActive(!expandedFinish); expandedShake.SetActive(expandedFinish);
+            int supplied=s?.Supply.Count ?? 0; bool paged=supplied>17; int pages=paged ? (supplied+14)/15 : 1;
+            shelfPage=Mathf.Clamp(shelfPage,0,pages-1); int physicalIndex=0,shelfIndex=0;
+            foreach(var item in shelf) {
+                bool available=s?.Supply.Contains(item.Key)==true;
+                item.Value.gameObject.SetActive(available && (!paged || physicalIndex/15==shelfPage));
+                Position((RectTransform)item.Value.transform,paged ? new Rect(10,402-(physicalIndex%15)*24,160,24) : new Rect(10,402-shelfIndex*(expanded ? 22.5f : 25),160,expanded ? 22 : 24));
+                if(available) physicalIndex++; shelfIndex++;
             }
+            shelfTitle.text="재료 선반"+(paged ? "  "+(shelfPage+1)+"/"+pages : "");
+            previousShelf.gameObject.SetActive(paged); nextShelf.gameObject.SetActive(paged);
+            previousShelf.interactable=shelfPage>0; nextShelf.interactable=shelfPage+1<pages;
             welcome.SetActive(s==null); dialogue.SetActive(s!=null && !brew); brewing.SetActive(brew); ingredients.SetActive(brew); requestPanel.SetActive(brew); choicePanel.SetActive(s?.State.Phase==CampaignPhase.Choice);
             continueButton.interactable=owner.Saved?.Checkpoint!=null && !owner.Busy;
             status.text=owner.Busy || s?.IsSaving==true ? "기록 중…" : owner.StartupError!=null ? "기록을 확인해 주세요: "+owner.StartupError : owner.Input.Feedback ?? "";
@@ -190,7 +213,7 @@ namespace Surlhwa.Presentation
                 body.fontSize=owner.LargeText ? 23 : 21; body.color=owner.HighContrast ? Color.white : ink;
                 body.text=s.CurrentText?.Value ?? (phase==CampaignPhase.Welcome ? "작은 바의 불을 켭니다.\n오늘은 어떤 이야기가 이곳에 머물까요." : phase==CampaignPhase.NightIntro ? "눈이 내려앉은 문턱을 쓸고, 잔을 꺼냅니다." :
                     phase==CampaignPhase.NightEnd ? "마지막 잔을 닦습니다.\n창밖의 눈은 조금 더 쌓여 있습니다." : phase==CampaignPhase.Arriving ? "눈길 끝에서 발소리가 다가옵니다." : phase==CampaignPhase.Departing ? "잠시, 문밖의 겨울을 듣습니다." :
-                    phase==CampaignPhase.Complete ? (act==3 ? owner.Content.Texts["text_rc1_0250"].Value : expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
+                    phase==CampaignPhase.Complete ? (act==4 ? owner.Content.Texts["text_rc1_0096"].Value : act==3 ? owner.Content.Texts["text_rc1_0250"].Value : expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
                 next.gameObject.SetActive(phase!=CampaignPhase.Arriving && phase!=CampaignPhase.Departing && phase!=CampaignPhase.Choice && phase!=CampaignPhase.Complete);
                 next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter";
                 if(brew) measurement.text=owner.Content.IngredientNames[owner.Input.SelectedIngredient]+" → "+TargetName(owner.Input.Target)+"   |   지거 "+Ml(s.Brew.Container(ContainerRole.Jigger).TotalMl)+"   혼합 "+Ml(s.Brew.Container(ContainerRole.Mixing).TotalMl)+"   셰이커 "+Ml(s.Brew.Container(ContainerRole.Shaker).TotalMl)+"   서빙 "+Ml(s.Brew.Container(ContainerRole.Serving).TotalMl)+" ml"+(owner.Input.Fine ? " · 미세" : "")+(s.Brew.ShakerClosed ? " · 뚜껑 닫힘" : "");
@@ -216,8 +239,14 @@ namespace Surlhwa.Presentation
             var card=Panel(modal.transform,new Rect(174,54,932,604),new Color(paper.r,paper.g,paper.b,1)); Panel(card.transform,new Rect(28,524,876,2),gold);
             Text(card.transform,new Rect(30,540,800,40),kind=="codex" ? "한 잔의 기록" : kind=="guide" ? "손에 익히는 일" : kind=="settings" ? "소리와 읽기" : kind=="reset" ? "새로운 밤을 시작할까요?" : kind=="recovery" ? "이전 기록에서 이어 하기" : "기록을 저장하지 못했습니다",27,ink);
             if(kind=="codex") Book(card.transform);
-            else if(kind=="guide") Text(card.transform,new Rect(36,106,860,390),
-                "따르기 · Q를 누르는 동안 실제 양이 늘어납니다. Shift 또는 미세 따르기로 속도를 낮춥니다. 지거로 잰 뒤 대상을 고르고 E로 옮깁니다.\n\nStir · 혼합 잔에 얼음과 재료를 담고 S를 누른 채 잔 둘레를 돕니다. R로 거릅니다.\n\nBuild · 서빙 잔에서 얼음과 재료를 가볍게 섞습니다. G로 젓고 필요한 가니시를 놓습니다.\n\nShake · 셰이커에 재료와 얼음을 담고 L로 닫습니다. K와 좌우 움직임으로 흔든 뒤 열고 T로 옮깁니다. X로 선택한 재료를 조금씩 더할 수 있습니다.\n\nFloat · 재료마다 지거로 양을 잽니다. F를 누른 채 화면 중앙 아래에서 천천히 붓습니다. 오른쪽으로 갈수록 빠르고 위로 갈수록 높습니다.",19,ink);
+            else if(kind=="guide") {
+                string guide=
+                "따르기 · Q를 누르는 동안 실제 양이 늘어납니다. Shift 또는 미세 따르기로 속도를 낮춥니다. 지거로 잰 뒤 대상을 고르고 E로 옮깁니다.\n\nStir · 혼합 잔에 얼음과 재료를 담고 S를 누른 채 잔 둘레를 돕니다. R로 거릅니다.\n\nBuild · 서빙 잔에서 얼음과 재료를 가볍게 섞습니다. G로 젓고 필요한 가니시를 놓습니다.\n\nShake · 셰이커에 재료와 얼음을 담고 L로 닫습니다. K와 좌우 움직임으로 흔든 뒤 열고 T로 옮깁니다. X로 선택한 재료를 조금씩 더할 수 있습니다.\n\nFloat · 재료마다 지거로 양을 잽니다. F를 누른 채 화면 중앙 아래에서 천천히 붓습니다. 오른쪽으로 갈수록 빠르고 위로 갈수록 높습니다.";
+                if(owner.Input.ShakerStrainAvailable) guide=guide.Replace(
+                    "K와 좌우 움직임으로 흔든 뒤 열고 T로 옮깁니다. X로 선택한 재료를 조금씩 더할 수 있습니다.",
+                    "K와 좌우 움직임으로 흔든 뒤 열어 T로 옮기거나 U로 거릅니다. X로 재료를 조금씩 더하고, G로 서빙 잔을 가볍게 저을 수 있습니다.");
+                Text(card.transform,new Rect(36,106,860,390),guide,19,ink);
+            }
             else if(kind=="settings")
             {
                 Text(card.transform,new Rect(36,438,860,50),"소리와 글자 설정은 새로운 기록에서도 유지됩니다.",20,muted);
@@ -254,8 +283,10 @@ namespace Surlhwa.Presentation
         private void Book(Transform card)
         {
             var knowledge=owner.Session?.Knowledge ?? owner.Content.CreateKnowledge(); var ids=owner.Content.Catalog.Recipes.Keys.ToArray(); recipePage=Mathf.Clamp(recipePage,0,ids.Length-1);
+            float pageHeight=ids.Length<=7 ? 48 : (396f-(ids.Length-1)*8)/ids.Length;
+            float pageStep=ids.Length<=7 ? 58 : pageHeight+8;
             int index=0; foreach(string id in ids) { int page=index; var p=knowledge.Project(id); string label=p.Name ?? (p.Ingredients.Count>0 ? "들었던 한 잔" : "아직 빈 페이지");
-                Button(card,new Rect(30,446-index*58,242,48),label,()=>{recipePage=page; BuildModal("codex");},18).name="Recipe page "+index; index++; }
+                Button(card,new Rect(30,494-pageHeight-index*pageStep,242,pageHeight),label,()=>{recipePage=page; BuildModal("codex");},18).name="Recipe page "+index; index++; }
             Panel(card,new Rect(294,94,2,408),gold);
             var projection=knowledge.Project(ids[recipePage]); var recipe=owner.Content.Catalog.Recipes[ids[recipePage]];
             Text(card,new Rect(322,454,568,50),projection.Name ?? "이름을 기다리는 한 잔",28,ink);
@@ -264,6 +295,8 @@ namespace Surlhwa.Presentation
             Text(card,new Rect(322,254,568,150),amounts,owner.LargeText ? 22 : 20,ink);
             string preparation="준비 순서는 아직 듣지 못했습니다.";
             if(projection.PreparationVisible) preparation=recipe.Method=="stir" ? "혼합 잔에 얼음 · 재료를 담은 뒤 원을 그리며 젓기\n서빙 잔에 거르기" : recipe.Method=="build" ? "서빙 잔에 얼음과 재료 · 가볍게 젓기" : recipe.Method=="shake" ? "소다를 제외한 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어 잔에 옮기기\n소다는 마지막에 Splash · 서빙 얼음 없음" : "보드카 → 커피 리큐어 → 크림\n각 재료를 낮게, 천천히 층으로 쌓기 · 얼음 없음";
+            if(projection.PreparationVisible && recipe.Method=="shake" && recipe.ShakeFinish==ShakeFinishPolicy.StrainThenPourAndGentleStir)
+                preparation="샴페인을 제외한 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어서 U로 거르기\n샴페인은 마지막에 양을 재어 따르고 G로 가볍게 젓기\n플루트 잔 · 서빙 얼음 없음";
             if(projection.GarnishVisible) preparation+="\n"+(recipe.RequiredGarnish=="cherry" ? "체리 · 잔 안" : recipe.RequiredGarnish=="orange_slice" ? "오렌지 슬라이스 · 잔 가장자리" : recipe.RequiredGarnish=="orange_zest" ? "오렌지 제스트 · 잔 가장자리" : "가니시 생략 가능");
             Text(card,new Rect(322,104,568,138),preparation,owner.LargeText ? 20 : 18,ink);
             Text(card,new Rect(30,26,650,30),"발견은 이름을 남깁니다. 단서는 그 전의 길을 비춥니다.",15,muted);

@@ -78,3 +78,14 @@ objective memory/readability fixes, not final character, memory-art or UI approv
 All PD01-PD11 remain OPEN; native-input certification and the scheduled full
 campaign presentation/audio pass remain outstanding. Evidence and limitations:
 [ACT 3 runtime](ACT3_RUNTIME_CHECKPOINT.md).
+
+2026-10-31 ACT 4 integration: Hamlet's independently adopted source poses and
+receipt-driven stage/skull/shadow now have bounded Q1 presentation. Physical
+supply paging, French preparation disclosure and expanded Shake controls are
+usable at720p/1080p; the new eighth Codex entry no longer overlaps its footer.
+These objective fixes do not close the Codex/UI redesign, glass/tool variants,
+character/environment consistency, memory-art, animation, mix or music work.
+All PD01-PD11 remain OPEN. Native-input certification and dedicated performance
+validation remain separately scheduled; six actual simulated-input Player runs
+are documented in [ACT 4 runtime](ACT4_RUNTIME_CHECKPOINT.md). No final
+presentation approval is inferred from this checkpoint.
