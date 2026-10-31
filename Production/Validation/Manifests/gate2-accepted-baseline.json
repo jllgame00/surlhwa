@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "baseline": "a19a84a",
+  "ownerPoseAccepted": "2026-10-31",
+  "gate2": "HUMAN_SIGNOFF_REQUIRED",
+  "act2": "OUT_OF_SCOPE",
+  "acceptedInventoryFilesVerified": 1271,
+  "currentInventoryFilesVerified": 1555,
+  "textureSha256": "8cb8383a8f28bd90f017575bb23551a2860e535c25bfaa5a84a60013bcf2e60c",
+  "runtimeChanges": [],
+  "standaloneTests": 149,
+  "preservation": {
+    "specificationFiles": 74,
+    "specificationsUnchanged": true,
+    "frozenRc1Unchanged": true
+  },
+  "runs": [
+    {
+      "run": "gate2-accepted-open-20261031-retry",
+      "label": "Complete Open ACT 1",
+      "checks": 173,
+      "captures": 54,
+      "height": 720
+    },
+    {
+      "run": "gate2-accepted-quiet-20261031",
+      "label": "Earned Warmth checkpoint through Quiet",
+      "checks": 76,
+      "captures": 29,
+      "height": 1080
+    },
+    {
+      "run": "gate2-accepted-continue-open-20261031",
+      "label": "Completed Open Continue",
+      "checks": 11,
+      "captures": 10,
+      "height": 1080
+    },
+    {
+      "run": "gate2-accepted-continue-quiet-20261031",
+      "label": "Completed Quiet Continue",
+      "checks": 11,
+      "captures": 10,
+      "height": 720
+    }
+  ],
+  "outcomes": [
+    {
+      "outcome": "open",
+      "services": 17,
+      "departures": 17,
+      "knownRecipes": 6,
+      "completedContinueByteIdentical": true
+    },
+    {
+      "outcome": "quiet",
+      "services": 17,
+      "departures": 17,
+      "knownRecipes": 6,
+      "completedContinueByteIdentical": true
+    }
+  ],
+  "evidenceSha256": {
+    "Evidence/gate2-accepted-open-20261031-retry/player-result.json": "7971d6d0f3031c05aadf8bfb1744c32b07c671298f9ebdbc611a8594a0539ee6",
+    "Evidence/gate2-accepted-open-20261031-retry/process.json": "099b71e1e864063580b6345be4084d30a2610ee66785623f9d27cc645d493d86",
+    "Evidence/gate2-accepted-open-20261031-retry/expected-run.json": "135e432907e3a068780acc2c9e21c0327ca725b04a678aa678e611e6dbb2b0bc",
+    "Evidence/gate2-accepted-open-20261031-retry/inventory.json": "20450832ac915986082d413670437bec693b0b86827b46e147e38a66cc0235c7",
+    "Evidence/gate2-accepted-quiet-20261031/player-result.json": "02dd3646cb4ec97f23b40ca77bc2e6de1d864c953254119939006f7235eae3c7",
+    "Evidence/gate2-accepted-quiet-20261031/process.json": "ec354ee2967639c82acfdc38d436b3a90328693b757fafe92dc80b8172a57125",
+    "Evidence/gate2-accepted-quiet-20261031/expected-run.json": "045972d823e7fde7609e4cca8fe04167bb84ba03655a3d4b9070ed5184478f81",
+    "Evidence/gate2-accepted-quiet-20261031/inventory.json": "6a49fe4f6f153fb058701c3ed363c4687cec32b32450e9462b886d904530f086",
+    "Evidence/gate2-accepted-continue-open-20261031/player-result.json": "9398c36a42dc624c8161b989f67119d71f668a44b540548fccba1ab10ee64273",
+    "Evidence/gate2-accepted-continue-open-20261031/process.json": "7858a67134dbcf81e347b3b808cb60bc929a0ea677a7a9dc0862b40716357713",
+    "Evidence/gate2-accepted-continue-open-20261031/expected-run.json": "a5d048f4253ea9c6881b6c2f185606cff4ac288622bad8038fc6f2fc5b48bb0b",
+    "Evidence/gate2-accepted-continue-open-20261031/inventory.json": "0bb2b0937c46d63e0cc418fe99b126f8306d97fbb18d75a130dcd29888574be1",
+    "Evidence/gate2-accepted-continue-quiet-20261031/player-result.json": "d148437d6e033951e0f8139c1f8541710971164b560967a8e7feaae47372f59d",
+    "Evidence/gate2-accepted-continue-quiet-20261031/process.json": "c84f626426237c7063d88f9b50eb5223e31a30e57b60ff6ca9aa1543680a532d",
+    "Evidence/gate2-accepted-continue-quiet-20261031/expected-run.json": "cb2a13787256703c48a66585fb0aab0e33bd9ceff7f395da3c7e917f658e2180",
+    "Evidence/gate2-accepted-continue-quiet-20261031/inventory.json": "ae5371a5dcffc029e67e028831d4778d7bca3f26aac0192073c9835cf0bf09ea"
+  },
+  "foundationLogSha256": "c29f7c8202ab94c912fd84a343270ad83284d64ba1f600519292d096d03fa3f3",
+  "limitations": [
+    "simulated input, not OS-native",
+    "historical media shows previous seated pose",
+    "audio synchronization and minimum hardware remain validation debt"
+  ]
+}

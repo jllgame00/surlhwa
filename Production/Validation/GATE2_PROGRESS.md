@@ -137,3 +137,17 @@ Current milestone disposition: independent ACT 1 implementation, one fresh code 
 Fresh gate2-native-act1-04 stopped ENVIRONMENT_INTERRUPTED at 2026-10-14 23:21:43 KST: verified menu/Codex control, issued normal native click and observed Codex open; untagged mouse movement message 512/flags 0/tag 0 at desktop (2154,401), client (1074,30), was then detected. Player PID 47464/HWND 5638512 remained foreground, client region (1080,371,1280,720). No new service completed in this attempt. First missing boundary is continued normal ACT 1 progression and full native completion. Exact owned Player was stopped by cleanup; inventory 966 unchanged. No silent refocus or retry after environment interruption. Owner availability must be established again before another attempt. Native closure remains pending; previous partial services and interrupted attempts remain separate.
 
 2026-10-14 23:56:29 KST: owner authorized ONE final clean-environment native attempt with physical pointer devices removed/disabled. gate2-native-act1-05 stopped ENVIRONMENT_INTERRUPTED before arming or issuing any native input. Intended Player PID 31688/HWND 1246122; actual foreground PID 26404/HWND 5900588 also covered the target point. Client region (1080,371,1280,720), intended client point (640,360), desktop (1720,731), hitRoot 5900588, activeGesture null. Recorded events: initial_window_acquisition and ownership_lost only; zero SendInput, zero keyboard/mouse hook events, therefore no untagged device event can be claimed for this attempt. Exact owned Player cleaned up; inventory 966 unchanged. NATIVE_CLOSURE_ENVIRONMENT_BLOCKED. No refocus/continuation/retry and no completed offscreen/Continue/Unity/standalone suites rerun. Preserve all existing evidence and stop for environment diagnosis.
+
+
+## 2026-10-31 — accepted Prince baseline / current Gate 2 package
+
+Owner accepts a19a84a; no additional pose polishing. Q1 staging and ACT 1 logic
+remain unchanged. The prior integration plan is complete; its accepted-baseline
+verification/package follow-through is now complete too. Open 173 checks,
+Quiet 76, both completed Continue 11 each; 103 current native stills; both save
+generations unchanged. Standalone contracts 149/149 and package regressions 5/5.
+Two code-review verifier findings fixed; final package validation passes.
+Initial sandbox access-denied runs retained; unrestricted reruns resolved them.
+No runtime or serialized edits. Historical evidence and owner-local edit preserved.
+Current [single Gate 2 entry](review-gate2-current.html), [details](GATE2_ACCEPTED_BASELINE.md).
+Formal Gate 2 remains HUMAN_SIGNOFF_REQUIRED; ACT 2 is NOT_STARTED.

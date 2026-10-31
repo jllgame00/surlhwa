@@ -17,11 +17,16 @@ Q1 and the bounded polish are now **owner approved**:
 [recorded ruling](Validation/Q1_OWNER_CONFIRMATION.md). Normal builds compile the
 accepted scene directly; historical spike reconstruction is an explicit utility.
 The ACT 1 integration adds a short nonblocking focus reveal and Q1 memory facing.
-Final Gate 2 package: [review page](Validation/review-gate2-q1.html),
-[technical report and evidence limits](Validation/GATE2_Q1_REVIEW.md).
+Final Gate 2 package: [current review page](Validation/review-gate2-current.html),
+[technical report and evidence limits](Validation/GATE2_ACCEPTED_BASELINE.md).
 Use `Tools/run_gate2_q1.ps1 -Start New -Height 1080` for isolated interactive review;
 `First`, `Warmth`, `Clarity`, `QuietClarity`, `OpenMemory` and `QuietMemory` select earned checkpoints.
 ACT 2 remains stopped pending the one final Gate 2 owner approval.
+
+The Prince seated pose at `a19a84a` is owner-accepted (2026-10-31).
+Preserve it and the locked Q1 staging; further pose work requires a clear problem
+found in a later full-scene review. Final cast-wide art/animation polish remains
+eligible. [Acceptance and scope](Validation/Q1_OWNER_CONFIRMATION.md).
 
 Preserved bounded-polish review: [comparison page](Validation/review-q1-polish.html),
 [report](Validation/Q1_POLISH_REVIEW.md), [plan](Validation/Q1_POLISH_PLAN.md).

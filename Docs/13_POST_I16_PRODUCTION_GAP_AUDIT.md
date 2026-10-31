@@ -2948,3 +2948,50 @@ HUMAN_SIGNOFF_REQUIRED: final pose naturalness and emotional reading. No further
 character, presentation or campaign scope is implied.
 Review: [Prince seated before/after](../Production/Validation/review-prince-seated.html),
 [validation notes](../Production/Validation/PRINCE_SEATED_CORRECTION.md).
+
+
+## Accepted Prince baseline / Gate 2 package follow-through — 2026-10-31
+
+Owner accepts the revised Little Prince seated pose at `a19a84a` as the current
+Production baseline. Its stool-perched reading is sufficient. No further pose
+polish unless a later full-scene review exposes a clear problem; final cast-wide
+animation/art polish remains eligible. Preserve Q1, current scale, stool,
+grounding, counter occlusion, bartender-facing orientation and ACT 1 logic.
+This supersedes only the preceding correction record's pending pose acceptance.
+It does not formally close Gate 2. ACT 2 has not begun.
+
+Continued the existing Gate 2 integration plan with fresh accepted-Player
+verification and an additive consolidated package. No runtime source, content,
+assets, scenes, prefabs or ProjectSettings changed. All 1,271 accepted correction
+source/Player hashes match; all four current runs have matching 1,555-file
+inventories including the historical ACT 1 Player. The 74 Canon/Architecture files,
+frozen RC1 snapshot and pre-existing owner-local review-slice.html remain unchanged.
+
+Fresh evidence: standalone .NET compilation/contracts 149/149; current full Open
+720p 173 checks / 54 stills; Quiet from an earned Warmth checkpoint at 1080p
+76 / 29; completed Open and Quiet Continue 11 / 10 each. Processes exit 0 with
+no reported errors. Both outcomes retain 17 actual services/departures, six
+learned recipes, actual three-layer first-visit Manwol and one correct memory.
+Both save generations remain byte-identical after completed Continue. All six
+Q1 postconditions pass. Input is simulated production InputSystem, not OS-native.
+No new Unity build or Editor test execution is claimed for unchanged inputs.
+
+Initial sandbox Player/evidence publication and standalone save checks encountered
+access-denied atomic file replacement. Unrestricted reruns of unchanged commands
+passed; original failed attempts remain retained. No assertions, thresholds or
+save behavior were weakened. Fresh code review found two packaging-verifier gaps
+(save-path binding and inventory additions); both corrected with five passing
+regressions. Actual final package validation passes.
+
+Ruling: keep earlier audiovisual recordings intact and label their previous pose;
+current stills/live Player supply accepted art. All twelve subjective areas remain
+in one bundled Gate 2 review. No routine pose/prop/animation/UI/audio approvals
+are requested. PASS: scoped technical evidence and owner-accepted pose.
+VALIDATION_DEBT: historical native-input completion, audiovisual synchronization
+and minimum-hardware profiling. DEFERRED_PRESENTATION: existing final cast motion,
+environment/tools, UI/Codex and audio/music polish. HUMAN_SIGNOFF_REQUIRED: overall
+ACT 1/Gate 2 judgment. OUT_OF_SCOPE: ACT 2–7 until formal Gate 2 closure.
+
+Current package: [accepted-baseline Gate 2](../Production/Validation/review-gate2-current.html),
+[verification and limits](../Production/Validation/GATE2_ACCEPTED_BASELINE.md),
+[manifest](../Production/Validation/Manifests/gate2-accepted-baseline.json).

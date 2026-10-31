@@ -39,3 +39,28 @@ return/closing records, both completed Continue checks, two bounded performance
 samples, native inspection, source/specification/evidence preservation and final
 review packaging. Capture-only corrections and exact recorded/current Player
 identities are documented in GATE2_Q1_REVIEW.md. No ACT 2 or gameplay expansion.
+
+## Accepted-baseline package follow-through — 2026-10-31
+
+Owner accepts Prince seated correction `a19a84a`; no further pose polish.
+The completed integration tasks above are not reopened. Continue their evidence
+and packaging obligation against the accepted Player:
+
+1. Verify the correction inventory and preserve all prior evidence and local edits.
+2. Run current Player Open ACT 1, Quiet from an earned Warmth checkpoint, and
+   completed-save Continue for both outcomes; keep actual source/build identities.
+3. Add a current package entry with accepted-pose stills, current run results,
+   links to retained full audiovisual evidence and all twelve review areas.
+4. Record exact validation limits and the owner ruling, inspect diffs and commit.
+
+Ruling: retain historical audiovisual recordings with explicit previous-pose labels
+instead of treating them as current art. Current stills and the isolated live
+Player show the accepted pose; previous audio-sync/native-input/minimum-PC limits
+remain open. No runtime, narrative, save, scene, asset or camera edits are planned.
+Gate 2 remains owner-owned and ACT 2 is blocked until formal closure.
+
+Completed: all four steps. Current Open 173/54, Quiet 76/29, completed Continue
+11/10 each (checks/stills); 149 standalone contracts and five package regressions
+pass. Both review findings fixed; additive package validation passes. Initial
+sandbox access-denied attempts are retained and resolved by unrestricted reruns.
+No runtime/asset/serialized changes. [Final record](GATE2_ACCEPTED_BASELINE.md).

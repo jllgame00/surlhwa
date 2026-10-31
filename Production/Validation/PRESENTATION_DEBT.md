@@ -1,5 +1,13 @@
 # Production presentation debt
 
+2026-10-31 current baseline: Q1 Soft Orthographic Quarter View and bounded polish
+are approved; the Prince seated pose at `a19a84a` is now explicitly accepted.
+See [owner ruling](Q1_OWNER_CONFIRMATION.md). The earlier C1/art-candidate wording
+below is historical. PD05/PD06 remain open for final cast-wide motion/art polish,
+but the accepted pose is not a pending defect or separate approval gate. Reopen
+it only for a clear problem in a later full-scene review. All remaining subjective
+ACT 1 decisions belong to the single [Gate 2 package](review-gate2-current.html).
+
 2026-10-25 licensed integration: the prepared ACT 1 candidates are now imported,
 wired into Bar_Act1 and built in the actual Player. See
 [the current Gate 2 art package](ACT1_ART_GATE2_REVIEW.md) for rendered evidence,
