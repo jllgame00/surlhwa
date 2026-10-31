@@ -1,0 +1,4070 @@
+{
+  "schemaVersion": 2,
+  "mode": "campaign",
+  "act": "through_act_02",
+  "contentRevision": "campaign_through_act2_v1",
+  "sourceRegistrySha256": "4313d6640f82800008b6adbc59c106965abe33b8349fa477d81e6ba81311b348",
+  "ingredients": [
+    {
+      "id": "whiskey",
+      "label": "위스키"
+    },
+    {
+      "id": "vermouth",
+      "label": "버무스"
+    },
+    {
+      "id": "water",
+      "label": "물"
+    },
+    {
+      "id": "rye_whiskey",
+      "label": "라이 위스키"
+    },
+    {
+      "id": "sweet_red_vermouth",
+      "label": "스위트 레드 버무스"
+    },
+    {
+      "id": "angostura_bitters",
+      "label": "앙고스투라 비터스"
+    },
+    {
+      "id": "gin",
+      "label": "진"
+    },
+    {
+      "id": "dry_vermouth",
+      "label": "드라이 버무스"
+    },
+    {
+      "id": "vodka",
+      "label": "보드카"
+    },
+    {
+      "id": "coffee_liqueur",
+      "label": "커피 리큐르"
+    },
+    {
+      "id": "cream",
+      "label": "크림"
+    },
+    {
+      "id": "campari",
+      "label": "캄파리"
+    },
+    {
+      "id": "lemon_juice",
+      "label": "레몬 주스"
+    },
+    {
+      "id": "simple_syrup",
+      "label": "심플 시럽"
+    },
+    {
+      "id": "soda_water",
+      "label": "소다 워터"
+    },
+    {
+      "id": "london_dry_gin",
+      "label": "런던 드라이 진"
+    },
+    {
+      "id": "fernet",
+      "label": "페르네"
+    }
+  ],
+  "cocktails": [
+    {
+      "id": "cocktail_seolya",
+      "name": "설야",
+      "tags": [
+        "softness",
+        "warmth"
+      ]
+    },
+    {
+      "id": "cocktail_manhattan",
+      "name": "Manhattan",
+      "tags": [
+        "warmth",
+        "bitterness"
+      ]
+    },
+    {
+      "id": "cocktail_dry_martini",
+      "name": "Dry Martini",
+      "tags": [
+        "clarity"
+      ]
+    },
+    {
+      "id": "cocktail_negroni",
+      "name": "Negroni",
+      "tags": [
+        "bitterness"
+      ]
+    },
+    {
+      "id": "cocktail_gin_fizz",
+      "name": "Gin Fizz",
+      "tags": [
+        "awakening",
+        "clarity"
+      ]
+    },
+    {
+      "id": "cocktail_manwol",
+      "name": "만월",
+      "tags": [
+        "longing",
+        "clarity"
+      ]
+    },
+    {
+      "id": "cocktail_hanky_panky",
+      "name": "Hanky Panky",
+      "tags": [
+        "bitterness"
+      ]
+    }
+  ],
+  "recipes": [
+    {
+      "id": "recipe_test_stir",
+      "cocktailId": "cocktail_seolya",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "whiskey",
+          "ml": 59.14706
+        },
+        {
+          "ingredientId": "vermouth",
+          "ml": 29.57353
+        },
+        {
+          "ingredientId": "water",
+          "ml": 29.57353
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "glassware": "old_fashioned",
+      "optionalGarnish": false,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ],
+      "garnishPosition": "in_glass",
+      "lateIngredient": null,
+      "layerOrder": []
+    },
+    {
+      "id": "recipe_manhattan",
+      "cocktailId": "cocktail_manhattan",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "rye_whiskey",
+          "ml": 50
+        },
+        {
+          "ingredientId": "sweet_red_vermouth",
+          "ml": 20
+        },
+        {
+          "ingredientId": "angostura_bitters",
+          "ml": 1
+        }
+      ],
+      "dashIngredient": "angostura_bitters",
+      "requiredGarnish": "cherry",
+      "glassware": "cocktail",
+      "optionalGarnish": false,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ],
+      "garnishPosition": "in_glass",
+      "lateIngredient": null,
+      "layerOrder": []
+    },
+    {
+      "id": "recipe_dry_martini",
+      "cocktailId": "cocktail_dry_martini",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "gin",
+          "ml": 60
+        },
+        {
+          "ingredientId": "dry_vermouth",
+          "ml": 10
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "glassware": "cocktail",
+      "optionalGarnish": true,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ],
+      "garnishPosition": "in_glass",
+      "lateIngredient": null,
+      "layerOrder": []
+    },
+    {
+      "id": "recipe_negroni",
+      "cocktailId": "cocktail_negroni",
+      "method": "build",
+      "amounts": [
+        {
+          "ingredientId": "gin",
+          "ml": 30
+        },
+        {
+          "ingredientId": "campari",
+          "ml": 30
+        },
+        {
+          "ingredientId": "sweet_red_vermouth",
+          "ml": 30
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": "orange_slice",
+      "garnishPosition": "rim",
+      "glassware": "old_fashioned",
+      "optionalGarnish": false,
+      "preparation": [
+        "direct_serving",
+        "serving_ice",
+        "gentle_stir",
+        "orange_slice_rim"
+      ],
+      "lateIngredient": null,
+      "layerOrder": []
+    },
+    {
+      "id": "recipe_gin_fizz",
+      "cocktailId": "cocktail_gin_fizz",
+      "method": "shake",
+      "amounts": [
+        {
+          "ingredientId": "gin",
+          "ml": 45
+        },
+        {
+          "ingredientId": "lemon_juice",
+          "ml": 30
+        },
+        {
+          "ingredientId": "simple_syrup",
+          "ml": 10
+        },
+        {
+          "ingredientId": "soda_water",
+          "ml": 15
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "garnishPosition": "rim",
+      "glassware": "tumbler",
+      "optionalGarnish": true,
+      "preparation": [
+        "shaker_ice",
+        "closed_shake",
+        "pour_from_shaker",
+        "late_soda_splash",
+        "no_serving_ice"
+      ],
+      "lateIngredient": "soda_water",
+      "layerOrder": []
+    },
+    {
+      "id": "recipe_manwol",
+      "cocktailId": "cocktail_manwol",
+      "method": "float",
+      "amounts": [
+        {
+          "ingredientId": "vodka",
+          "ml": 59.14706
+        },
+        {
+          "ingredientId": "coffee_liqueur",
+          "ml": 29.57353
+        },
+        {
+          "ingredientId": "cream",
+          "ml": 29.57353
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": null,
+      "garnishPosition": "rim",
+      "glassware": "old_fashioned",
+      "optionalGarnish": false,
+      "preparation": [
+        "vodka_base",
+        "coffee_layer",
+        "cream_layer",
+        "no_ice"
+      ],
+      "lateIngredient": null,
+      "layerOrder": [
+        "vodka",
+        "coffee_liqueur",
+        "cream"
+      ]
+    },
+    {
+      "id": "recipe_hanky_panky",
+      "cocktailId": "cocktail_hanky_panky",
+      "method": "stir",
+      "amounts": [
+        {
+          "ingredientId": "london_dry_gin",
+          "ml": 45
+        },
+        {
+          "ingredientId": "sweet_red_vermouth",
+          "ml": 45
+        },
+        {
+          "ingredientId": "fernet",
+          "ml": 7.5
+        }
+      ],
+      "dashIngredient": null,
+      "requiredGarnish": "orange_zest",
+      "garnishPosition": "rim",
+      "glassware": "cocktail",
+      "optionalGarnish": false,
+      "preparation": [
+        "mixing_ice",
+        "stir_after_ingredients",
+        "strain_to_serving"
+      ],
+      "lateIngredient": null,
+      "layerOrder": []
+    }
+  ],
+  "tuning": {
+    "id": "campaign_act1_v1",
+    "liquidUnit": "ml",
+    "precision": 6,
+    "capacity": {
+      "jigger": 60,
+      "mixing": 300,
+      "serving": 180
+    },
+    "flow": {
+      "pour": 30,
+      "finePour": 5,
+      "transfer": 40,
+      "fineTransfer": 8,
+      "dash": 1
+    },
+    "technique": {
+      "howDegrees": 360,
+      "qualityDegrees": 1080,
+      "minSpeed": 60,
+      "maxSpeed": 300,
+      "stableFraction": 0.75
+    },
+    "recognition": {
+      "relative": 0.05,
+      "ingredientMl": 0.25,
+      "extraMl": 0.01
+    },
+    "shake": {
+      "revision": "shake_v1",
+      "howReversals": 4,
+      "qualityReversals": 8,
+      "endpoint": 0.7,
+      "minInterval": 250000,
+      "maxInterval": 1000000,
+      "stableFraction": 0.75
+    },
+    "float": {
+      "revision": "float_v1",
+      "maxStableRate": 12,
+      "maxHeight": 0.25,
+      "maxHeightSpeed": 0.5
+    }
+  },
+  "guests": [
+    {
+      "id": "guest_postman",
+      "kind": "ordinary",
+      "displayTextId": "text_rc1_0159",
+      "visualBindingId": "visual_ordinary"
+    },
+    {
+      "id": "guest_repairer",
+      "kind": "ordinary",
+      "displayTextId": "text_rc1_0167",
+      "visualBindingId": "visual_ordinary"
+    },
+    {
+      "id": "guest_snow_worker",
+      "kind": "ordinary",
+      "displayTextId": "text_rc1_0183",
+      "visualBindingId": "visual_ordinary"
+    },
+    {
+      "id": "guest_station_worker",
+      "kind": "ordinary",
+      "displayTextId": "text_rc1_0199",
+      "visualBindingId": "visual_ordinary"
+    },
+    {
+      "id": "guest_little_prince",
+      "kind": "special",
+      "displayTextId": "text_prince_name",
+      "visualBindingId": "visual_prince"
+    },
+    {
+      "id": "guest_chunhyang",
+      "kind": "special",
+      "displayTextId": "text_rc1_0009",
+      "visualBindingId": "visual_chunhyang"
+    },
+    {
+      "id": "guest_mongryong",
+      "kind": "special",
+      "displayTextId": "text_rc1_0126",
+      "visualBindingId": "visual_mongryong"
+    }
+  ],
+  "texts": [
+    {
+      "id": "text_rc1_0159",
+      "value": "우편 배달부",
+      "sourceText": "우편 배달부",
+      "sourceId": "SRC-RC1-0159",
+      "sourceHash": "ab078db4027fedf0129aa697eec62e5f3c76d42bca75064de6ef19a5ba6ac07e",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0167",
+      "value": "수선공",
+      "sourceText": "수선공",
+      "sourceId": "SRC-RC1-0167",
+      "sourceHash": "0e7aa3faa6d74360f78d9344e73f3cb3fee0834e66da6457a1fd7bbd9dbf334f",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0183",
+      "value": "제설 작업자",
+      "sourceText": "제설 작업자",
+      "sourceId": "SRC-RC1-0183",
+      "sourceHash": "a799836b95da25597472b760463fc0f29d3efb6b26d15ea25b973f5ddeaa31f8",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0199",
+      "value": "야간 역무원",
+      "sourceText": "야간 역무원",
+      "sourceId": "SRC-RC1-0199",
+      "sourceHash": "3b7e60e7ed16dcc403b18ef362de92df7df7e4e55fe2bceb52b639f06f3c51cf",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_prince_name",
+      "value": "어린왕자",
+      "sourceText": "어린왕자",
+      "sourceId": "PRODUCTION-text_prince_name",
+      "sourceHash": "4c3d4d94fc5db2bb2ab1783031f48705fab2d6359585eba5042536ac82e0a25a",
+      "sourcePath": "SURLHWA_CANON/51_LITTLE_PRINCE.md",
+      "sourceField": "production_authored",
+      "sourceOrder": "0",
+      "role": "display",
+      "adoption": "Canonical title; display only."
+    },
+    {
+      "id": "text_ordinary_departure",
+      "value": "손님은 빈 잔을 내려놓고, 다시 눈길로 나섭니다.",
+      "sourceText": "손님은 빈 잔을 내려놓고, 다시 눈길로 나섭니다.",
+      "sourceId": "PRODUCTION-text_ordinary_departure",
+      "sourceHash": "08cd5c8ec2460c07c91b7a2478745899243131077ba50f814308fcf8dce32edb",
+      "sourcePath": "SURLHWA_CANON/60_ORDINARY_GUESTS.md",
+      "sourceField": "production_authored",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Production transition; no identity, memory or emotional outcome invented."
+    },
+    {
+      "id": "text_rc1_0424",
+      "value": "조용한 한 잔",
+      "sourceText": "조용한 한 잔",
+      "sourceId": "SRC-RC1-0424",
+      "sourceHash": "4730a946d32e078b60f0aee8c1aa2da0511dae2e5b7dfba20d132b92bb2bdc25",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0426",
+      "value": "맑은 한 잔",
+      "sourceText": "맑은 한 잔",
+      "sourceId": "SRC-RC1-0426",
+      "sourceHash": "a7852830da63cf57550779181d227e6c5bcbd466d1d44693978d2d9f1f6f86e2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0418",
+      "value": "오늘 있었던 일을 억지로 좋은 기억으로 만들고 싶지는 않아요. 조금 씁쓸해도 오래 곁에 둘 수 있는 맛이면 좋겠어요.",
+      "sourceText": "오늘 있었던 일을 억지로 좋은 기억으로 만들고 싶지는 않아요. 조금 씁쓸해도 오래 곁에 둘 수 있는 맛이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0418",
+      "sourceHash": "846b694138b7c4da9088e1c9a9ef2876f36f6e2738209d62e96f119a7167496f",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0415",
+      "value": "내일은 한동안 미뤄 둔 길을 걸어 보려고요. 처음 문을 열 때처럼 산뜻하게 시작할 수 있는 맛이 있을까요?",
+      "sourceText": "내일은 한동안 미뤄 둔 길을 걸어 보려고요. 처음 문을 열 때처럼 산뜻하게 시작할 수 있는 맛이 있을까요?",
+      "sourceId": "SRC-RC1-0415",
+      "sourceHash": "ce04324d77dcc83ca2d437fc1892ed426d3882fe2202cbf22b63810943860000",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0404",
+      "value": "길에서 오래 걸었더니 아는 집의 불빛이 자꾸 생각났어요. 잠시 마음을 놓고 머물 수 있는 한 잔이면 좋겠어요.",
+      "sourceText": "길에서 오래 걸었더니 아는 집의 불빛이 자꾸 생각났어요. 잠시 마음을 놓고 머물 수 있는 한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0404",
+      "sourceHash": "420a05a0492e5580ce0ffe06286474682d610c3cbffab8d7da9b1d6cbc2f4774",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0307",
+      "value": "머릿속에서 같은 말이 빙빙 돌았어요. 잠깐 거리를 두고 내 생각을 들을 수 있는 한 잔이면 좋겠어요.",
+      "sourceText": "머릿속에서 같은 말이 빙빙 돌았어요. 잠깐 거리를 두고 내 생각을 들을 수 있는 한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0307",
+      "sourceHash": "ffd16b636bfc8e22b3582d5fd711f635d7bc59f5e122ed61fd5067939e804879",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0304",
+      "value": "오늘 있었던 일을 억지로 좋은 기억으로 만들고 싶지는 않아요. 조금 씁쓸해도 오래 곁에 둘 수 있는 맛이면 좋겠어요.",
+      "sourceText": "오늘 있었던 일을 억지로 좋은 기억으로 만들고 싶지는 않아요. 조금 씁쓸해도 오래 곁에 둘 수 있는 맛이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0304",
+      "sourceHash": "846b694138b7c4da9088e1c9a9ef2876f36f6e2738209d62e96f119a7167496f",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0301",
+      "value": "내일은 한동안 미뤄 둔 길을 걸어 보려고요. 처음 문을 열 때처럼 산뜻하게 시작할 수 있는 맛이 있을까요?",
+      "sourceText": "내일은 한동안 미뤄 둔 길을 걸어 보려고요. 처음 문을 열 때처럼 산뜻하게 시작할 수 있는 맛이 있을까요?",
+      "sourceId": "SRC-RC1-0301",
+      "sourceHash": "ce04324d77dcc83ca2d437fc1892ed426d3882fe2202cbf22b63810943860000",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0325",
+      "value": "오늘 원했던 방향에, 잔도 잘 만들어졌네요.",
+      "sourceText": "오늘 원했던 방향에, 잔도 잘 만들어졌네요.",
+      "sourceId": "SRC-RC1-0325",
+      "sourceHash": "ecc8d340bffc9fc73c735b5981b582fc2a8f043aaa2b6e3247af3b0ed3737d44",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[0].text",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0326",
+      "value": "고른 방향은 좋았어요. 다만 오늘은 조금 거칠게 느껴지네요.",
+      "sourceText": "고른 방향은 좋았어요. 다만 오늘은 조금 거칠게 느껴지네요.",
+      "sourceId": "SRC-RC1-0326",
+      "sourceHash": "2268adc56bd1f1a1db4a0e189e5abef0c4a08474aad864197cb7f28357fe9911",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[1].text",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0327",
+      "value": "잘 만든 잔인 건 알겠어요. 하지만 오늘 원한 쪽은 아니었어요.",
+      "sourceText": "잘 만든 잔인 건 알겠어요. 하지만 오늘 원한 쪽은 아니었어요.",
+      "sourceId": "SRC-RC1-0327",
+      "sourceHash": "19c7bf6546884ba616b2eda206b8f1942ba667f4abaea30b8aa4879ae3c7dfb8",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[2].text",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0328",
+      "value": "오늘 제게는 맞지 않았고, 잔도 조금 아쉬웠네요.",
+      "sourceText": "오늘 제게는 맞지 않았고, 잔도 조금 아쉬웠네요.",
+      "sourceId": "SRC-RC1-0328",
+      "sourceHash": "3e394f4f1d489b504f9de078db7fce17764d2d0d90867f7e893af9caaea1d0ec",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[3].text",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0334",
+      "value": "조금 다르네요.",
+      "sourceText": "조금 다르네요.",
+      "sourceId": "SRC-RC1-0334",
+      "sourceHash": "b33e2e8caf857fa9ec42d2fc1349145e75552733fe51a816ad267dc6b113191f",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "lines[1].text",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0329",
+      "value": "말로 다 못한 쪽까지 들어 준 기분이에요. 천천히 마시고 싶네요.",
+      "sourceText": "말로 다 못한 쪽까지 들어 준 기분이에요. 천천히 마시고 싶네요.",
+      "sourceId": "SRC-RC1-0329",
+      "sourceHash": "dcc110137630dfcd14445038e2f2f6e77cca6e685678c18b7c2eee4f5b63b612",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[4].text",
+      "sourceOrder": "4",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0330",
+      "value": "지금 제 마음에는 어울려요. 조금만 더 차분하게 만들어졌다면 편히 마실 수 있었겠어요.",
+      "sourceText": "지금 제 마음에는 어울려요. 조금만 더 차분하게 만들어졌다면 편히 마실 수 있었겠어요.",
+      "sourceId": "SRC-RC1-0330",
+      "sourceHash": "c0f79f298563a5a38e326a991d935f43ce221a6f43e0a3246fcb7ae79b695d86",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[5].text",
+      "sourceOrder": "5",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0331",
+      "value": "정성 들여 만든 건 느껴져요. 다만 오늘 제 마음이 머무는 곳과는 조금 다르네요.",
+      "sourceText": "정성 들여 만든 건 느껴져요. 다만 오늘 제 마음이 머무는 곳과는 조금 다르네요.",
+      "sourceId": "SRC-RC1-0331",
+      "sourceHash": "3020a2ba79cb09738e9ffaa28a16d781f959ef172b3711efba5d83beda67b911",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[6].text",
+      "sourceOrder": "6",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0332",
+      "value": "제 이야기가 잘 닿지 않은 것 같아요. 맛도 조금 어수선하게 남네요.",
+      "sourceText": "제 이야기가 잘 닿지 않은 것 같아요. 맛도 조금 어수선하게 남네요.",
+      "sourceId": "SRC-RC1-0332",
+      "sourceHash": "9e2c27c5675e739a0329938871917cb72948b108562544f6444a603726fcc3b4",
+      "sourcePath": "62_SERVICE_REACTION_CORPUS.md",
+      "sourceField": "guestFitLines[7].text",
+      "sourceOrder": "7",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0323_act1_edit",
+      "value": "다음에 떠올려 볼 잔은, 얼음으로 차갑게 만들고 천천히 젓는다고 해요.",
+      "sourceText": "얼음으로 차갑게 만들고, 천천히 저어 주세요.",
+      "sourceId": "SRC-RC1-0323",
+      "sourceHash": "7cb12c2d64d647c0a29e3cea9fb855f859b7f00a1e06cb96876b31dc056fbfe2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Opening clue now refers to a future recipe; the current achievable request remains a known warm drink."
+    },
+    {
+      "id": "text_rc1_0322_act1_edit",
+      "value": "그 잔의 베이스는 진이에요.",
+      "sourceText": "이 잔의 베이스는 진이에요.",
+      "sourceId": "SRC-RC1-0322",
+      "sourceHash": "799dbb46d4fdb4497957b731a223ad38983b676a1a00af7c8903fce76f3bccc2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Refers back to the previous clue rather than falsely identifying the current served drink."
+    },
+    {
+      "id": "text_rc1_0324",
+      "value": "드라이 베르무트가 진의 가지를 정리해 줘요.",
+      "sourceText": "드라이 베르무트가 진의 가지를 정리해 줘요.",
+      "sourceId": "SRC-RC1-0324",
+      "sourceHash": "ff51b199f1c77712d7600823353e44dc9539d774a065f215e0f12117fe4da63f",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0320",
+      "value": "앞서 들은 재료를 함께 써 볼까요. 믹싱 글라스에 진 60 ml, 드라이 베르무트 10 ml를 차례로 담아 주세요.",
+      "sourceText": "앞서 들은 재료를 함께 써 볼까요. 믹싱 글라스에 진 60 ml, 드라이 베르무트 10 ml를 차례로 담아 주세요.",
+      "sourceId": "SRC-RC1-0320",
+      "sourceHash": "9fd45b4b55b8c896795176e666c832c3e89f4631cbfde6f60c872508dae63766",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0321",
+      "value": "얼음을 넣고 바 스푼으로 저은 뒤, 얼음은 남겨 두고 잔에 따라 주세요. 레몬 껍질이나 올리브 장식은 더해도, 생략해도 괜찮아요.",
+      "sourceText": "얼음을 넣고 바 스푼으로 저은 뒤, 얼음은 남겨 두고 잔에 따라 주세요. 레몬 껍질이나 올리브 장식은 더해도, 생략해도 괜찮아요.",
+      "sourceId": "SRC-RC1-0321",
+      "sourceHash": "d00fd1d89c1a65b640e09eedcb11cf718bc640bf4fb348f894014c0a8536a499",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0428",
+      "value": "드라이한 한 잔",
+      "sourceText": "드라이한 한 잔",
+      "sourceId": "SRC-RC1-0428",
+      "sourceHash": "6ff5df934a55f4af922de0c4c48a5ceef361055baf7647e606b343a800c47b3a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0381",
+      "value": "문이 열리자, 눈보라 사이로 아주 작은 별빛이 흘러들어왔다.",
+      "sourceText": "문이 열리자, 눈보라 사이로 아주 작은 별빛이 흘러들어왔다.",
+      "sourceId": "SRC-RC1-0381",
+      "sourceHash": "54992bd9aef098a26f07f1d585fe0b4a25611b8d2c2d0d1184aee2f15ede2382",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0382",
+      "value": "어른들은 왜 중요한 걸 몰라요?",
+      "sourceText": "어른들은 왜 중요한 걸 몰라요?",
+      "sourceId": "SRC-RC1-0382",
+      "sourceHash": "96951bd71326f87fecb5d5b9021babee2aeaaec1eaa518aaa4a8e4d3f356bfb7",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0383",
+      "value": "숫자는 잘 기억하면서, 별빛이 얼마나 오래 남는지는 묻지 않아요.",
+      "sourceText": "숫자는 잘 기억하면서, 별빛이 얼마나 오래 남는지는 묻지 않아요.",
+      "sourceId": "SRC-RC1-0383",
+      "sourceHash": "8ff8ff80d208b3f8eebf2e2f7ef3a626c743acc0aab2a53918e1fb5e2d291549",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0384",
+      "value": "제게... 잊히지 않는 맛을 줄 수 있나요?",
+      "sourceText": "제게... 잊히지 않는 맛을 줄 수 있나요?",
+      "sourceId": "SRC-RC1-0384",
+      "sourceHash": "ec75796cd6ade0536de449566833b4412887a726aa9c0f0b7a3cddeecb6bd889",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0385",
+      "value": "만월은 이렇게 만든대요. 보드카를 두고, 커피 리큐르를 하나 먼저 담아요. 크림 하나는 맨 위에 천천히 올려 주세요.",
+      "sourceText": "만월은 이렇게 만든대요. 보드카를 두고, 커피 리큐르를 하나 먼저 담아요. 크림 하나는 맨 위에 천천히 올려 주세요.",
+      "sourceId": "SRC-RC1-0385",
+      "sourceHash": "05ab67b3086a5468399ba6639ce98663f56682485bb9374e69630b90487aa3cb",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[4]",
+      "sourceOrder": "4",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0386",
+      "value": "층이 섞이지 않게 조심하면, 달빛이 잔 위에 남는 것처럼 보일 거예요.",
+      "sourceText": "층이 섞이지 않게 조심하면, 달빛이 잔 위에 남는 것처럼 보일 거예요.",
+      "sourceId": "SRC-RC1-0386",
+      "sourceHash": "0085f8722842b59e0661bffa9dea4ee1f0fd11541ba90d684e2dcdcdf08e1faf",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[5]",
+      "sourceOrder": "5",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0432",
+      "value": "만월",
+      "sourceText": "만월",
+      "sourceId": "SRC-RC1-0432",
+      "sourceHash": "33793e98b2e9e57bf5d81dd5481317378b86728aac8317b2addba04971461582",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0395",
+      "value": "오늘은 이만 돌아갈게요. 이곳에서 잠시 쉬었다는 건 기억할 거예요.",
+      "sourceText": "오늘은 이만 돌아갈게요. 이곳에서 잠시 쉬었다는 건 기억할 거예요.",
+      "sourceId": "SRC-RC1-0395",
+      "sourceHash": "c94ac722e7f29803020ae470d49b525897df66e696671e3ab17356acfcb62224",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0402",
+      "value": "네그로니로 부탁할게요. 잔에 진, 캄파리, 스위트 레드 베르무트를 이 순서로 각각 30 ml씩 넣어 주세요.",
+      "sourceText": "네그로니로 부탁할게요. 잔에 진, 캄파리, 스위트 레드 베르무트를 이 순서로 각각 30 ml씩 넣어 주세요.",
+      "sourceId": "SRC-RC1-0402",
+      "sourceHash": "b8fc6170edd5af80dcec0dcbaf3cbafc0b58c0cac5abfc1400caa90e7f1c25a2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0403",
+      "value": "얼음을 넣고 가볍게 저은 뒤, 오렌지 한 조각으로 마무리해 주세요.",
+      "sourceText": "얼음을 넣고 가볍게 저은 뒤, 오렌지 한 조각으로 마무리해 주세요.",
+      "sourceId": "SRC-RC1-0403",
+      "sourceHash": "020f35475720e93e99594e75287b203f59ae3e0c1bd215e35a459ee701f3bb67",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_order_recipe_negroni",
+      "value": "Negroni",
+      "sourceText": "Negroni",
+      "sourceId": "PRODUCTION-text_order_recipe_negroni",
+      "sourceHash": "47c472a7d7f48e5defa15d0130e5ac6cf985ceeac3e7f9e01241e73ff4d17c8b",
+      "sourcePath": "SURLHWA_CANON/31_CURRENT_AND_ORIGINAL_COCKTAILS.md",
+      "sourceField": "production_authored",
+      "sourceOrder": "0",
+      "role": "request_summary",
+      "adoption": "Selected canonical recipe title."
+    },
+    {
+      "id": "text_rc1_0400",
+      "value": "만월을 한 번 만들어 볼까요. 잔에 보드카 둘, 커피 리큐르 하나, 크림 하나의 비율로 차례로 층을 올려 주세요.",
+      "sourceText": "만월을 한 번 만들어 볼까요. 잔에 보드카 둘, 커피 리큐르 하나, 크림 하나의 비율로 차례로 층을 올려 주세요.",
+      "sourceId": "SRC-RC1-0400",
+      "sourceHash": "ea2bb239dddc2d86a124f73dc786e95c2721bd99c324cf1f9abef0314b3385c0",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0401",
+      "value": "크림은 맨 위에 천천히 올리고, 층이 섞이지 않게 해 주세요. 조주법은 배운 내용을 도감에서 다시 볼 수 있어요.",
+      "sourceText": "크림은 맨 위에 천천히 올리고, 층이 섞이지 않게 해 주세요. 조주법은 배운 내용을 도감에서 다시 볼 수 있어요.",
+      "sourceId": "SRC-RC1-0401",
+      "sourceHash": "a32bb1d455e03c3df35a197a9f16555ebd5a601029d179036963d9593b5832ac",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_order_recipe_manwol",
+      "value": "만월",
+      "sourceText": "만월",
+      "sourceId": "PRODUCTION-text_order_recipe_manwol",
+      "sourceHash": "33793e98b2e9e57bf5d81dd5481317378b86728aac8317b2addba04971461582",
+      "sourcePath": "SURLHWA_CANON/31_CURRENT_AND_ORIGINAL_COCKTAILS.md",
+      "sourceField": "production_authored",
+      "sourceOrder": "0",
+      "role": "request_summary",
+      "adoption": "Selected canonical recipe title."
+    },
+    {
+      "id": "text_rc1_0398",
+      "value": "맨해튼으로 부탁해요. 믹싱 글라스에 라이 위스키와 스위트 레드 베르무트를 넣고, 앙고스투라 비터스는 한 대시만요.",
+      "sourceText": "맨해튼으로 부탁해요. 믹싱 글라스에 라이 위스키와 스위트 레드 베르무트를 넣고, 앙고스투라 비터스는 한 대시만요.",
+      "sourceId": "SRC-RC1-0398",
+      "sourceHash": "1aca56e384ec32783619b9284c6885867a23f65e7ec9747e4e3641b42f090c1b",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0399",
+      "value": "얼음과 함께 저은 뒤 걸러서, 체리로 마무리해 주세요.",
+      "sourceText": "얼음과 함께 저은 뒤 걸러서, 체리로 마무리해 주세요.",
+      "sourceId": "SRC-RC1-0399",
+      "sourceHash": "3f889e941fd2d6e24378c111b5ca067d370e700e71385bb6d3e5e21f795c7262",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_order_recipe_manhattan",
+      "value": "Manhattan",
+      "sourceText": "Manhattan",
+      "sourceId": "PRODUCTION-text_order_recipe_manhattan",
+      "sourceHash": "b519d05a7c6caa5dc247154a14e4f247652bb6c000e0f4c203a2efd4984c2696",
+      "sourcePath": "SURLHWA_CANON/31_CURRENT_AND_ORIGINAL_COCKTAILS.md",
+      "sourceField": "production_authored",
+      "sourceOrder": "0",
+      "role": "request_summary",
+      "adoption": "Selected canonical recipe title."
+    },
+    {
+      "id": "text_rc1_0387",
+      "value": "지난번에 작은 빛을 지켜 주겠다고 했지요. 오늘도 그 말이 별처럼 남아 있어요.",
+      "sourceText": "지난번에 작은 빛을 지켜 주겠다고 했지요. 오늘도 그 말이 별처럼 남아 있어요.",
+      "sourceId": "SRC-RC1-0387",
+      "sourceHash": "f89c3aab40b162b0cff5c281d65606f419c53f659e7e87cd3b667583e2fb6902",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0388",
+      "value": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceText": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0388",
+      "sourceHash": "ae2dc724d36698549de89725896a0580af67d14c9061c62f25ac15f16f0fd98d",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0396",
+      "value": "지난번에 함께 별을 찾겠다고 했지요. 그래서 오늘도 길을 살피며 왔어요.",
+      "sourceText": "지난번에 함께 별을 찾겠다고 했지요. 그래서 오늘도 길을 살피며 왔어요.",
+      "sourceId": "SRC-RC1-0396",
+      "sourceHash": "bd106d73ff0befb3eee747aebc1152ab90f93112b1bd134fdc15fea438233871",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0397",
+      "value": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceText": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0397",
+      "sourceHash": "ae2dc724d36698549de89725896a0580af67d14c9061c62f25ac15f16f0fd98d",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0389",
+      "value": "지난번의 대답은 듣지 못했지만, 오늘은 조용히 앉아 있을게요.",
+      "sourceText": "지난번의 대답은 듣지 못했지만, 오늘은 조용히 앉아 있을게요.",
+      "sourceId": "SRC-RC1-0389",
+      "sourceHash": "d1277c278758a28356a2d3c1bb35d19a8145df71a14f62e5d0d9646704f3d69c",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0390",
+      "value": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceText": "오늘은 별을 찾는 일도 잠시 쉬고 싶어요. 익숙한 불빛 곁에서 마음을 놓을 수 있는 한 잔이면 좋겠어요.",
+      "sourceId": "SRC-RC1-0390",
+      "sourceHash": "ae2dc724d36698549de89725896a0580af67d14c9061c62f25ac15f16f0fd98d",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0433",
+      "value": "익숙한 불빛 곁에서 마음을 놓고 쉴 수 있는 한 잔",
+      "sourceText": "익숙한 불빛 곁에서 마음을 놓고 쉴 수 있는 한 잔",
+      "sourceId": "SRC-RC1-0433",
+      "sourceHash": "ae133f6a1b1bd3347ab7de16fd533115d50b49866a605a0f2d2c42c3a313dfba",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0405",
+      "value": "오늘은 누가 잘했느냐는 이야기 없이 쉬고 싶어요. 천천히 마시며 긴장을 풀 수 있는 잔을 부탁해요.",
+      "sourceText": "오늘은 누가 잘했느냐는 이야기 없이 쉬고 싶어요. 천천히 마시며 긴장을 풀 수 있는 잔을 부탁해요.",
+      "sourceId": "SRC-RC1-0405",
+      "sourceHash": "0893a718dcb5873f79ab528e60b6099a39b7581bffad988780e18d787cea2fb7",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0305",
+      "value": "끝난 이야기를 자꾸 고쳐 쓰게 되네요. 달게 덮어 주기보다는 남은 여운을 함께 마실 수 있는 잔이 필요해요.",
+      "sourceText": "끝난 이야기를 자꾸 고쳐 쓰게 되네요. 달게 덮어 주기보다는 남은 여운을 함께 마실 수 있는 잔이 필요해요.",
+      "sourceId": "SRC-RC1-0305",
+      "sourceHash": "c08efd71930f30e038102155f7010a30c853156294b3d09bf5225c1f388880d5",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0377",
+      "value": "진 피즈로 부탁해요. 셰이커에 진, 레몬 주스, 심플 시럽을 넣고 얼음과 함께 잘 흔들어 주세요.",
+      "sourceText": "진 피즈로 부탁해요. 셰이커에 진, 레몬 주스, 심플 시럽을 넣고 얼음과 함께 잘 흔들어 주세요.",
+      "sourceId": "SRC-RC1-0377",
+      "sourceHash": "8509e5450363eeac3e33086a80af375300af55c315649e2aafe5c011a0ec9805",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0378",
+      "value": "잔으로 옮긴 다음 소다 워터를 한 번 스플래시로 더해 주세요. 레몬은 원하시면 올려도 괜찮아요.",
+      "sourceText": "잔으로 옮긴 다음 소다 워터를 한 번 스플래시로 더해 주세요. 레몬은 원하시면 올려도 괜찮아요.",
+      "sourceId": "SRC-RC1-0378",
+      "sourceHash": "4f9412b5d535fd743b0a579c62cd2f8f814923e21ae66c0760e3b5899a9b0548",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_order_recipe_gin_fizz",
+      "value": "Gin Fizz",
+      "sourceText": "Gin Fizz",
+      "sourceId": "PRODUCTION-text_order_recipe_gin_fizz",
+      "sourceHash": "049a51f35e26ef605cec94708e4c9555d69f33935bc002050329a2947b6d5c66",
+      "sourcePath": "SURLHWA_CANON/31_CURRENT_AND_ORIGINAL_COCKTAILS.md",
+      "sourceField": "production_authored",
+      "sourceOrder": "0",
+      "role": "request_summary",
+      "adoption": "Selected canonical recipe title."
+    },
+    {
+      "id": "text_rc1_0308",
+      "value": "눈길을 걷는 동안 생각이 뒤섞였어요. 여기 앉아서 하나씩 정리해 보고 싶네요.",
+      "sourceText": "눈길을 걷는 동안 생각이 뒤섞였어요. 여기 앉아서 하나씩 정리해 보고 싶네요.",
+      "sourceId": "SRC-RC1-0308",
+      "sourceHash": "8a353d2beb9673412200ef1e472835a1e18ee23a6b9b5ed92879d478df72428b",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0379",
+      "value": "오늘은 제 별로 돌아가려고 해요.",
+      "sourceText": "오늘은 제 별로 돌아가려고 해요.",
+      "sourceId": "SRC-RC1-0379",
+      "sourceHash": "7464c2bdb0bd001ee6f7493f16f73862bfade7d57f6df059d9f4a3236fc85a6d",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0380",
+      "value": "길이 멀어도, 돌아갈 곳을 잊고 싶지는 않아요. 눈앞의 길을 또렷이 바라볼 수 있는 한 잔을 부탁해요.",
+      "sourceText": "길이 멀어도, 돌아갈 곳을 잊고 싶지는 않아요. 눈앞의 길을 또렷이 바라볼 수 있는 한 잔을 부탁해요.",
+      "sourceId": "SRC-RC1-0380",
+      "sourceHash": "0a75addd3239e6bbd2bff54f0a246ce520bf6ef32cb4adb39de40168a97237ed",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0431",
+      "value": "돌아갈 길을 또렷이 바라볼 수 있는 한 잔",
+      "sourceText": "돌아갈 길을 또렷이 바라볼 수 있는 한 잔",
+      "sourceId": "SRC-RC1-0431",
+      "sourceHash": "80faf3ae19dba6f62812d06466fab95bd2877f2988c6dc3a0c6f6cc7ba5ef3f9",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0407",
+      "value": "그 아이의 물음에, 어떻게 대답할까요?",
+      "sourceText": "그 아이의 물음에, 어떻게 대답할까요?",
+      "sourceId": "SRC-RC1-0407",
+      "sourceHash": "75c4016f4bbb445355501a3b71e633febec9d9b43b19d126e6e75aa94c9b19e4",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "choicePrompt",
+      "sourceOrder": "None",
+      "role": "narration",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0408",
+      "value": "작은 빛을 지켜 줄게요.",
+      "sourceText": "작은 빛을 지켜 줄게요.",
+      "sourceId": "SRC-RC1-0408",
+      "sourceHash": "b5eaf9e8685f7662ffc9c2b867979b3e2d108c58da68cc6eb8c155f4a67c0ef5",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "keepTheLightLabel",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0409",
+      "value": "함께 별을 찾을게요.",
+      "sourceText": "함께 별을 찾을게요.",
+      "sourceId": "SRC-RC1-0409",
+      "sourceHash": "5452128e4221ead1883a3ab3df7ea66c6f7f6095271aa3b4124115b2d11a1466",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "seekTheStarLabel",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0410",
+      "value": "그럼 별이 멀어져도, 그 빛은 남겠네요.",
+      "sourceText": "그럼 별이 멀어져도, 그 빛은 남겠네요.",
+      "sourceId": "SRC-RC1-0410",
+      "sourceHash": "9413459faa9aab3cea083817275610d1e79aa40c1517dd7cad04c810d2636654",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "keepTheLightImmediateResponse",
+      "sourceOrder": "None",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0411",
+      "value": "그럼 길을 잃어도, 다시 찾을 수 있겠네요.",
+      "sourceText": "그럼 길을 잃어도, 다시 찾을 수 있겠네요.",
+      "sourceId": "SRC-RC1-0411",
+      "sourceHash": "5bdae08f01347ee24012b8cccbc87ac7fd86e8ce5bb48595d030d8b64be01701",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "seekTheStarImmediateResponse",
+      "sourceOrder": "None",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0412",
+      "value": "작은 빛을 지켜 주겠다는 말, 기억하고 있어요.",
+      "sourceText": "작은 빛을 지켜 주겠다는 말, 기억하고 있어요.",
+      "sourceId": "SRC-RC1-0412",
+      "sourceHash": "8b212027cc2889c43a238023c4083d829b7ca707c8afa7bce6ca939faa63a6df",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "keepTheLightClosingRecall",
+      "sourceOrder": "None",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0413",
+      "value": "함께 별을 찾겠다는 말, 기억하고 있어요.",
+      "sourceText": "함께 별을 찾겠다는 말, 기억하고 있어요.",
+      "sourceId": "SRC-RC1-0413",
+      "sourceHash": "cbf82e982488c9f0e644a394db9eeaae3af3b179c4abe307696ae160863a4842",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "seekTheStarClosingRecall",
+      "sourceOrder": "None",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0414",
+      "value": "이 창가에 앉아 있던 밤들이 생각나요.",
+      "sourceText": "이 창가에 앉아 있던 밤들이 생각나요.",
+      "sourceId": "SRC-RC1-0414",
+      "sourceHash": "d1d6bddeae62a0651417a973e805591ad839fe5756797bf23c9c93500e619fa5",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "legacyClosingRecall",
+      "sourceOrder": "None",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0391",
+      "value": "여기서 받은 세 잔을 기억할게요. 서로 다른 밤인데도, 제 이야기가 이어져 있었어요.",
+      "sourceText": "여기서 받은 세 잔을 기억할게요. 서로 다른 밤인데도, 제 이야기가 이어져 있었어요.",
+      "sourceId": "SRC-RC1-0391",
+      "sourceHash": "8bad86fe178414c626417dcb0a5cf2a8ee45a9a0c33412cb42ce80ccb8ed45a0",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0392",
+      "value": "멀리 가도 이곳의 불빛은 알아볼 수 있을 것 같아요.",
+      "sourceText": "멀리 가도 이곳의 불빛은 알아볼 수 있을 것 같아요.",
+      "sourceId": "SRC-RC1-0392",
+      "sourceHash": "353c8bc8fe3dbed7fc59df201a53f45bf834a91957eb2cc616604d5c936322fb",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0393",
+      "value": "다음에 별을 바라볼 때, 저도 이 창문을 생각하고 있을게요.",
+      "sourceText": "다음에 별을 바라볼 때, 저도 이 창문을 생각하고 있을게요.",
+      "sourceId": "SRC-RC1-0393",
+      "sourceHash": "a8ef31e58f76cc49acf23a83dd807994cbf807146b8d1bbb66320a3912165fdf",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0394",
+      "value": "모든 마음이 잔에 그대로 담기지는 않나 봐요. 그래도 제 이야기를 들어 줘서 고마워요.",
+      "sourceText": "모든 마음이 잔에 그대로 담기지는 않나 봐요. 그래도 제 이야기를 들어 줘서 고마워요.",
+      "sourceId": "SRC-RC1-0394",
+      "sourceHash": "843db2e2a88e42d8baf1f6444410a6bb260046f88e2f0c42334c54c19a871b3f",
+      "sourcePath": "51_LITTLE_PRINCE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field, original role retained; selected ACT 1 adoption."
+    },
+    {
+      "id": "text_rc1_0018",
+      "value": "춘향: 그날처럼 오래 품고 싶은 잔이면 좋겠어요. 따뜻해도, 조금 그리워져도요.",
+      "sourceText": "춘향: 그날처럼 오래 품고 싶은 잔이면 좋겠어요. 따뜻해도, 조금 그리워져도요.",
+      "sourceId": "SRC-RC1-0018",
+      "sourceHash": "57234030803c85d67eb47003c14938e3959d19d89a585ecdec669b92e289407c",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0014",
+      "value": "춘향: 그네를 타고 있었죠. 올라갈 때마다 담장 너머가 조금씩 보였어요.",
+      "sourceText": "춘향: 그네를 타고 있었죠. 올라갈 때마다 담장 너머가 조금씩 보였어요.",
+      "sourceId": "SRC-RC1-0014",
+      "sourceHash": "37c89e9628b5cf1aa20c626585a9bed255f99d44cc8832e1bf298adfb6c06c5c",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0015",
+      "value": "춘향: 아래를 보니 한 사람이 고개를 들고 있었어요. 내려올 때까지도요.",
+      "sourceText": "춘향: 아래를 보니 한 사람이 고개를 들고 있었어요. 내려올 때까지도요.",
+      "sourceId": "SRC-RC1-0015",
+      "sourceHash": "dc6fbe80aca9db1998cfbfe5b97615f3033285f7ae00a3c9e64bfdfebd3bb1bf",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0016",
+      "value": "춘향: 무슨 말을 했는지는 흐릿한데, 다음에 또 오르기를 기다렸던 건 기억나요.",
+      "sourceText": "춘향: 무슨 말을 했는지는 흐릿한데, 다음에 또 오르기를 기다렸던 건 기억나요.",
+      "sourceId": "SRC-RC1-0016",
+      "sourceHash": "2ddb4913f88eb5b053f6a4d22e60372304836aa9b81621ec242716c52b9e0f63",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0017",
+      "value": "춘향: 그날처럼 오래 품고 싶은 잔이면 좋겠어요. 따뜻해도, 조금 그리워져도요.",
+      "sourceText": "춘향: 그날처럼 오래 품고 싶은 잔이면 좋겠어요. 따뜻해도, 조금 그리워져도요.",
+      "sourceId": "SRC-RC1-0017",
+      "sourceHash": "57234030803c85d67eb47003c14938e3959d19d89a585ecdec669b92e289407c",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0010",
+      "value": "춘향: 누가 먼저 봤는지는 모르겠어요. 저는 위에 있었으니까요.",
+      "sourceText": "춘향: 누가 먼저 봤는지는 모르겠어요. 저는 위에 있었으니까요.",
+      "sourceId": "SRC-RC1-0010",
+      "sourceHash": "c7842199e7703871a64b985199ecd8eca400f3718f9cc845302c051735542049",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0011",
+      "value": "그녀가 나간 뒤에도 문 쪽을 한 번 더 보게 된다.",
+      "sourceText": "그녀가 나간 뒤에도 문 쪽을 한 번 더 보게 된다.",
+      "sourceId": "SRC-RC1-0011",
+      "sourceHash": "9d6159ef452a551021938df1fb0eb295699e36281f592cf561ca4009abe69ab7",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0012",
+      "value": "춘향: 잔을 놓아도 온기가 남네요.",
+      "sourceText": "춘향: 잔을 놓아도 온기가 남네요.",
+      "sourceId": "SRC-RC1-0012",
+      "sourceHash": "906887445e6b550f2968782ca04e12bdebc6e6350c93dc239613b0dda5f29d1a",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0013",
+      "value": "춘향: 생각했던 맛은 아니지만, 그날 이야기를 꺼내 놓으니 조금 가까워졌어요.",
+      "sourceText": "춘향: 생각했던 맛은 아니지만, 그날 이야기를 꺼내 놓으니 조금 가까워졌어요.",
+      "sourceId": "SRC-RC1-0013",
+      "sourceHash": "916b8aecdb2f18d529e9810bb3bf076e1350e31a45f16c75aea123340242d208",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0166",
+      "value": "오늘은 제 이야기도 조금 놓고 가고 싶네요. 손이 풀리는 따뜻한 잔을 주세요.",
+      "sourceText": "오늘은 제 이야기도 조금 놓고 가고 싶네요. 손이 풀리는 따뜻한 잔을 주세요.",
+      "sourceId": "SRC-RC1-0166",
+      "sourceHash": "9674182d06d4b26699d3c997a793eb8ef82ffe7b0c1dba204d632d23ae2213d4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0164",
+      "value": "어젯밤 문 앞에 잠깐 섰어요. 안에서 작별 인사가 들려서요.",
+      "sourceText": "어젯밤 문 앞에 잠깐 섰어요. 안에서 작별 인사가 들려서요.",
+      "sourceId": "SRC-RC1-0164",
+      "sourceHash": "61de891ced657432d55fd0e6d577482cd8cee4a5f521c3fd2a0616ff1b5de6b7",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0165",
+      "value": "오늘은 제 이야기도 조금 놓고 가고 싶네요. 손이 풀리는 따뜻한 잔을 주세요.",
+      "sourceText": "오늘은 제 이야기도 조금 놓고 가고 싶네요. 손이 풀리는 따뜻한 잔을 주세요.",
+      "sourceId": "SRC-RC1-0165",
+      "sourceHash": "9674182d06d4b26699d3c997a793eb8ef82ffe7b0c1dba204d632d23ae2213d4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0160",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0160",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0161",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0161",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0162",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0162",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0163",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0163",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0135",
+      "value": "몽룡: 마음이 조금 놓이는 잔을 부탁드려요. 아니면, 할 말을 맑게 떠올릴 수 있는 잔을요.",
+      "sourceText": "몽룡: 마음이 조금 놓이는 잔을 부탁드려요. 아니면, 할 말을 맑게 떠올릴 수 있는 잔을요.",
+      "sourceId": "SRC-RC1-0135",
+      "sourceHash": "8c268172b51bfa744fe6acd2b751aaa61220ac69306d9e7e5ac4e4fc2f40d7b1",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0131",
+      "value": "몽룡: 이 길로 온 분을 혹시 보셨나요? 아, 먼저 제 이야기부터 해야겠군요.",
+      "sourceText": "몽룡: 이 길로 온 분을 혹시 보셨나요? 아, 먼저 제 이야기부터 해야겠군요.",
+      "sourceId": "SRC-RC1-0131",
+      "sourceHash": "c42ef4b5771770b9bd44622aba9ba65cdefd0d25e6c7e96511c955a95961a337",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0132",
+      "value": "몽룡: 저는 아래에 있었어요. 올려다보면 하늘과 그 사람이 번갈아 보였죠.",
+      "sourceText": "몽룡: 저는 아래에 있었어요. 올려다보면 하늘과 그 사람이 번갈아 보였죠.",
+      "sourceId": "SRC-RC1-0132",
+      "sourceHash": "0948de6fd72c953809e00452d9bb818a199ef7ed099be0e3fb11a3f20a453e6a",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0133",
+      "value": "몽룡: 첫눈에 반한 사람은 처음이었어요. 그 말도 아직 전하지 못했고요.",
+      "sourceText": "몽룡: 첫눈에 반한 사람은 처음이었어요. 그 말도 아직 전하지 못했고요.",
+      "sourceId": "SRC-RC1-0133",
+      "sourceHash": "9234fcff7be5d91a40f3a3deafd19ec091c650df9ec398bcb4c9fe1180c397f8",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0134",
+      "value": "몽룡: 마음이 조금 놓이는 잔을 부탁드려요. 아니면, 할 말을 맑게 떠올릴 수 있는 잔을요.",
+      "sourceText": "몽룡: 마음이 조금 놓이는 잔을 부탁드려요. 아니면, 할 말을 맑게 떠올릴 수 있는 잔을요.",
+      "sourceId": "SRC-RC1-0134",
+      "sourceHash": "8c268172b51bfa744fe6acd2b751aaa61220ac69306d9e7e5ac4e4fc2f40d7b1",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0127",
+      "value": "몽룡: 다음에는 바라보기만 하지 않으려고요.",
+      "sourceText": "몽룡: 다음에는 바라보기만 하지 않으려고요.",
+      "sourceId": "SRC-RC1-0127",
+      "sourceHash": "a5ce61380cc7aebeaf62acdaa29278f2f10fd2f5b920d7236a0355106fcf6986",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0128",
+      "value": "손님은 빈 옆자리를 돌아보고 문을 연다.",
+      "sourceText": "손님은 빈 옆자리를 돌아보고 문을 연다.",
+      "sourceId": "SRC-RC1-0128",
+      "sourceHash": "822de7d769d028322d7d5dbbf62d5b4bd343881a566067b7599de93c6703cf35",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0129",
+      "value": "몽룡: 너무 많은 말을 준비할 필요는 없겠네요.",
+      "sourceText": "몽룡: 너무 많은 말을 준비할 필요는 없겠네요.",
+      "sourceId": "SRC-RC1-0129",
+      "sourceHash": "f82dc4d39a95bb190ca2ef20df57d67cc906aa6b4de6bbb9525a55652db8ae4e",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0130",
+      "value": "몽룡: 입에 익지는 않네요. 그래도 여기 앉아 있으니 서두르지 않게 됩니다.",
+      "sourceText": "몽룡: 입에 익지는 않네요. 그래도 여기 앉아 있으니 서두르지 않게 됩니다.",
+      "sourceId": "SRC-RC1-0130",
+      "sourceHash": "da6d92231fa197ec523b03db36f8eb0eba2e2efccf5274889db18af4232fc6de",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0113",
+      "value": "몽룡: 오늘은 달래 주어도 좋고, 이 씁쓸함을 그대로 두어도 좋아요. 한 잔 부탁합니다.",
+      "sourceText": "몽룡: 오늘은 달래 주어도 좋고, 이 씁쓸함을 그대로 두어도 좋아요. 한 잔 부탁합니다.",
+      "sourceId": "SRC-RC1-0113",
+      "sourceHash": "b10b05f58e091e13a64ced471c9d3269a796ca2975ceb6579cc1cfe9a44561a6",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0109",
+      "value": "몽룡: 떠나야 해요. 오래 걸리지는 않을 겁니다. 일이 끝나면, 길이 열리면…",
+      "sourceText": "몽룡: 떠나야 해요. 오래 걸리지는 않을 겁니다. 일이 끝나면, 길이 열리면…",
+      "sourceId": "SRC-RC1-0109",
+      "sourceHash": "6f4e48f7f8cd833937d10697f01ac3bb66e6421ce973e1ceb1f2026778db656a",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0110",
+      "value": "춘향은 손끝으로 잔 받침의 가장자리를 누른다. 아무 말도 하지 않는다.",
+      "sourceText": "춘향은 손끝으로 잔 받침의 가장자리를 누른다. 아무 말도 하지 않는다.",
+      "sourceId": "SRC-RC1-0110",
+      "sourceHash": "67aac4f943f717a375a32185140dba5aee1673dfefe591bb41f691a672c149f7",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0111",
+      "value": "몽룡: 제가 자꾸 설명만 하는군요. 당신이 무슨 말을 하려는지도 듣지 않고.",
+      "sourceText": "몽룡: 제가 자꾸 설명만 하는군요. 당신이 무슨 말을 하려는지도 듣지 않고.",
+      "sourceId": "SRC-RC1-0111",
+      "sourceHash": "337aa00192596006e5e376c4eb48064c2b495b9bfc6c641685c4bf7f5930ef6f",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0112",
+      "value": "몽룡: 오늘은 달래 주어도 좋고, 이 씁쓸함을 그대로 두어도 좋아요. 한 잔 부탁합니다.",
+      "sourceText": "몽룡: 오늘은 달래 주어도 좋고, 이 씁쓸함을 그대로 두어도 좋아요. 한 잔 부탁합니다.",
+      "sourceId": "SRC-RC1-0112",
+      "sourceHash": "b10b05f58e091e13a64ced471c9d3269a796ca2975ceb6579cc1cfe9a44561a6",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0105",
+      "value": "춘향: 돌아오겠다는 말은 들었어요.",
+      "sourceText": "춘향: 돌아오겠다는 말은 들었어요.",
+      "sourceId": "SRC-RC1-0105",
+      "sourceHash": "d161b04e0bc79d13167d1a21172c27da0880b298b8442ac305eb35218adc5e87",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0106",
+      "value": "몽룡의 입이 다시 열렸다가 닫힌다. 춘향은 끝내 날짜를 묻지 않는다.",
+      "sourceText": "몽룡의 입이 다시 열렸다가 닫힌다. 춘향은 끝내 날짜를 묻지 않는다.",
+      "sourceId": "SRC-RC1-0106",
+      "sourceHash": "94d72d08130a3ca658e02deb401aba70c856dd8fc1796b4296ce67db90c9badd",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0107",
+      "value": "몽룡: 이 맛은 기억할 것 같아요.",
+      "sourceText": "몽룡: 이 맛은 기억할 것 같아요.",
+      "sourceId": "SRC-RC1-0107",
+      "sourceHash": "aafa3b5a6beea42d9385d6eaf04b29289d1b2e42d79d067208048a92fa9ece8d",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0108",
+      "value": "몽룡: 예상과 다르네요. 그래도 말을 더 보태지는 않을게요.",
+      "sourceText": "몽룡: 예상과 다르네요. 그래도 말을 더 보태지는 않을게요.",
+      "sourceId": "SRC-RC1-0108",
+      "sourceHash": "dfc0be68e0acfa9e313bbb26a75b5cdf9002eeb035d71afcf5ed8ae1c5ba3594",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0048",
+      "value": "오늘은 익숙한 쓴맛에 작은 변화를 주고 싶어요. 행키 팽키를 같이 만들어 볼까요?",
+      "sourceText": "오늘은 익숙한 쓴맛에 작은 변화를 주고 싶어요. 행키 팽키를 같이 만들어 볼까요?",
+      "sourceId": "SRC-RC1-0048",
+      "sourceHash": "d2d7ff3b67b5a5931d04e88cdf81243e1ff0c485896830687ee55e57ebc38d55",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0045",
+      "value": "오늘은 익숙한 쓴맛에 작은 변화를 주고 싶어요. 행키 팽키를 같이 만들어 볼까요?",
+      "sourceText": "오늘은 익숙한 쓴맛에 작은 변화를 주고 싶어요. 행키 팽키를 같이 만들어 볼까요?",
+      "sourceId": "SRC-RC1-0045",
+      "sourceHash": "d2d7ff3b67b5a5931d04e88cdf81243e1ff0c485896830687ee55e57ebc38d55",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0046",
+      "value": "런던 드라이 진 45 ml, 스위트 레드 베르무트 45 ml, 페르네 7.5 ml를 믹싱 글라스에 넣어요.",
+      "sourceText": "런던 드라이 진 45 ml, 스위트 레드 베르무트 45 ml, 페르네 7.5 ml를 믹싱 글라스에 넣어요.",
+      "sourceId": "SRC-RC1-0046",
+      "sourceHash": "8c848143e2e76899a5c6d4e6a5cbee821b1b3f6a48175a6ebb26b0debcbe1a59",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0047",
+      "value": "얼음과 함께 Stir로 젓고 잔에 Strain 해 주세요. 오렌지 제스트를 얹으면 됩니다.",
+      "sourceText": "얼음과 함께 Stir로 젓고 잔에 Strain 해 주세요. 오렌지 제스트를 얹으면 됩니다.",
+      "sourceId": "SRC-RC1-0047",
+      "sourceHash": "001ebcf4fd606659d897f1d066d0091f2820bb9313ede06b0f8ec39ad0cb8d00",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0041",
+      "value": "기억하던 맛을 이렇게 다시 만나네요.",
+      "sourceText": "기억하던 맛을 이렇게 다시 만나네요.",
+      "sourceId": "SRC-RC1-0041",
+      "sourceHash": "be8e5695d74316db7a179a644f1ae669e18af79ccb19983609ecb683382f1b98",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0042",
+      "value": "손님은 빈 잔을 한 번 바라보고 자리를 뜬다.",
+      "sourceText": "손님은 빈 잔을 한 번 바라보고 자리를 뜬다.",
+      "sourceId": "SRC-RC1-0042",
+      "sourceHash": "a8794ac67a9fd94c2f428df7ac51fe20eb193ef75f69932bb6bf09f8e927b230",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0043",
+      "value": "천천히 같이 만들어 주셔서 고마워요.",
+      "sourceText": "천천히 같이 만들어 주셔서 고마워요.",
+      "sourceId": "SRC-RC1-0043",
+      "sourceHash": "a839d3c8435f218768ce4303d524e67d1489cd7217953ab726209f8d90c21107",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0044",
+      "value": "다음번에는 조금 달라지겠죠.",
+      "sourceText": "다음번에는 조금 달라지겠죠.",
+      "sourceId": "SRC-RC1-0044",
+      "sourceHash": "14b498d22ed8b1f59727e02237466703564527e4a59d73923391d28577e94ba4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0029",
+      "value": "춘향: 오늘은 묻지 않아 주셨으면 해요. 목을 세우지 않아도 넘길 수 있는, 부드럽고 따뜻한 잔을요.",
+      "sourceText": "춘향: 오늘은 묻지 않아 주셨으면 해요. 목을 세우지 않아도 넘길 수 있는, 부드럽고 따뜻한 잔을요.",
+      "sourceId": "SRC-RC1-0029",
+      "sourceHash": "7510768624ff51b85d761b782fa4e09c1377852caed6236ba6231483ba608f46",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0025",
+      "value": "문이 닫힌다. 춘향의 옷자락에는 마른 눈이 붙어 있다.",
+      "sourceText": "문이 닫힌다. 춘향의 옷자락에는 마른 눈이 붙어 있다.",
+      "sourceId": "SRC-RC1-0025",
+      "sourceHash": "6075219b2e1da40258e246ff8eb8bd9c1533275bf770dcdd9c445dfd57144103",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0026",
+      "value": "그녀는 자리에 앉지만 고개를 들지 않는다. 손목을 감싸던 소매만 천천히 풀린다.",
+      "sourceText": "그녀는 자리에 앉지만 고개를 들지 않는다. 손목을 감싸던 소매만 천천히 풀린다.",
+      "sourceId": "SRC-RC1-0026",
+      "sourceHash": "b8e9449c7b5afb05d08aedec47fd9095e7fe9e7cebfecdaa1568e41526cbd570",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0027",
+      "value": "한참 뒤, 춘향이 빈 잔 받침을 바텐더 쪽으로 민다.",
+      "sourceText": "한참 뒤, 춘향이 빈 잔 받침을 바텐더 쪽으로 민다.",
+      "sourceId": "SRC-RC1-0027",
+      "sourceHash": "5d9cd2a189c7ee9531b330ea89015fa5a5e77beee1b145e9447b945a096692e9",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0028",
+      "value": "춘향: 오늘은 묻지 않아 주셨으면 해요. 목을 세우지 않아도 넘길 수 있는, 부드럽고 따뜻한 잔을요.",
+      "sourceText": "춘향: 오늘은 묻지 않아 주셨으면 해요. 목을 세우지 않아도 넘길 수 있는, 부드럽고 따뜻한 잔을요.",
+      "sourceId": "SRC-RC1-0028",
+      "sourceHash": "7510768624ff51b85d761b782fa4e09c1377852caed6236ba6231483ba608f46",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0020",
+      "value": "춘향은 두 손 사이에 잔을 둔다. 대답을 재촉하는 사람은 없다.",
+      "sourceText": "춘향은 두 손 사이에 잔을 둔다. 대답을 재촉하는 사람은 없다.",
+      "sourceId": "SRC-RC1-0020",
+      "sourceHash": "d1812f18cfcc3a1d0fe513973949fb80cff331c31d4a4c3c3c16329c4b4c1007",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0021",
+      "value": "춘향: 제 이름은 제가 기억하고 있어요.",
+      "sourceText": "춘향: 제 이름은 제가 기억하고 있어요.",
+      "sourceId": "SRC-RC1-0021",
+      "sourceHash": "7e73284b96230776c35e90c7b9269ffc20deef77eb059600da3471fdbe560f3b",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0022",
+      "value": "그녀가 일어난 자리에는 접힌 잔 받침만 남아 있다.",
+      "sourceText": "그녀가 일어난 자리에는 접힌 잔 받침만 남아 있다.",
+      "sourceId": "SRC-RC1-0022",
+      "sourceHash": "0830acd1a36dbae8240c0f799894d84458c37957158782c242b58862cede1fe1",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0023",
+      "value": "춘향: …고마워요.",
+      "sourceText": "춘향: …고마워요.",
+      "sourceId": "SRC-RC1-0023",
+      "sourceHash": "be48ad8cb61a924fcdafdfe1963beaeea6af15c94c698fa56707c47922bd0f68",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0024",
+      "value": "춘향은 잠시 잔을 내려놓는다. 바텐더는 조용히 물을 곁에 둔다.",
+      "sourceText": "춘향은 잠시 잔을 내려놓는다. 바텐더는 조용히 물을 곁에 둔다.",
+      "sourceId": "SRC-RC1-0024",
+      "sourceHash": "dfc87050e705b8fb061ec2c9ff3cea22b6e4d623ecd7e9bd384c3eb0b04e162a",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0174",
+      "value": "오늘은 말끔하게 정리하지 않아도 되는 밤이면 좋겠어요. 생각이 맑아지는 잔을 부탁해요.",
+      "sourceText": "오늘은 말끔하게 정리하지 않아도 되는 밤이면 좋겠어요. 생각이 맑아지는 잔을 부탁해요.",
+      "sourceId": "SRC-RC1-0174",
+      "sourceHash": "e5d64f12f33dcc24f47abbd7ba623591b411f522a3c6aebc6736d79f17fe08c8",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0172",
+      "value": "일감을 놓고 왔는데도 손이 자꾸 매듭을 찾네요.",
+      "sourceText": "일감을 놓고 왔는데도 손이 자꾸 매듭을 찾네요.",
+      "sourceId": "SRC-RC1-0172",
+      "sourceHash": "dc197477d9ca6f80b5d4a0bf9b7c31a639d03eabd0f8a9eb1be28c390d20db1c",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0173",
+      "value": "오늘은 말끔하게 정리하지 않아도 되는 밤이면 좋겠어요. 생각이 맑아지는 잔을 부탁해요.",
+      "sourceText": "오늘은 말끔하게 정리하지 않아도 되는 밤이면 좋겠어요. 생각이 맑아지는 잔을 부탁해요.",
+      "sourceId": "SRC-RC1-0173",
+      "sourceHash": "e5d64f12f33dcc24f47abbd7ba623591b411f522a3c6aebc6736d79f17fe08c8",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0168",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0168",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0169",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0169",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0170",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0170",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0171",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0171",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0125",
+      "value": "춘향: 잔은 하나면 돼요. 둘이 나눌 거예요. 서로의 얼굴이 잘 보이는, 마음 놓이는 잔으로요.",
+      "sourceText": "춘향: 잔은 하나면 돼요. 둘이 나눌 거예요. 서로의 얼굴이 잘 보이는, 마음 놓이는 잔으로요.",
+      "sourceId": "SRC-RC1-0125",
+      "sourceHash": "b4edaaa2aa326dcc280c4f02a83e7f07db1b71f1f41895b003461b930153d6ab",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0121",
+      "value": "오늘은 문이 한 번 열리고, 두 사람이 들어온다.",
+      "sourceText": "오늘은 문이 한 번 열리고, 두 사람이 들어온다.",
+      "sourceId": "SRC-RC1-0121",
+      "sourceHash": "5bddcb4f389c1e3f6f9a73ecf128c2e7276cdcb8b465325464b02b80cda51325",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0122",
+      "value": "몽룡: 무슨 말부터 해야 할지, 오는 내내 생각했어요.",
+      "sourceText": "몽룡: 무슨 말부터 해야 할지, 오는 내내 생각했어요.",
+      "sourceId": "SRC-RC1-0122",
+      "sourceHash": "08fb54ad01ab287b9cbb6cbbf335c6f1b19eebf6bfbeee9e13576501420d6687",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0123",
+      "value": "춘향: 오늘은 여기 앉아요. 같은 높이에서 얼굴부터 보게.",
+      "sourceText": "춘향: 오늘은 여기 앉아요. 같은 높이에서 얼굴부터 보게.",
+      "sourceId": "SRC-RC1-0123",
+      "sourceHash": "617d4b71ec6d53a2721355c2f70bbd91644a787169b9f566b0e861b97fdcd358",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0124",
+      "value": "춘향: 잔은 하나면 돼요. 둘이 나눌 거예요. 서로의 얼굴이 잘 보이는, 마음 놓이는 잔으로요.",
+      "sourceText": "춘향: 잔은 하나면 돼요. 둘이 나눌 거예요. 서로의 얼굴이 잘 보이는, 마음 놓이는 잔으로요.",
+      "sourceId": "SRC-RC1-0124",
+      "sourceHash": "b4edaaa2aa326dcc280c4f02a83e7f07db1b71f1f41895b003461b930153d6ab",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0115",
+      "value": "춘향이 먼저 잔을 들고, 같은 잔을 몽룡 쪽으로 밀어 준다.",
+      "sourceText": "춘향이 먼저 잔을 들고, 같은 잔을 몽룡 쪽으로 밀어 준다.",
+      "sourceId": "SRC-RC1-0115",
+      "sourceHash": "e4f464eee7581f6f217397ab190826085426c22ec3084435a60ee2381e66dec9",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0116",
+      "value": "몽룡: 위도 아래도 아니네요.",
+      "sourceText": "몽룡: 위도 아래도 아니네요.",
+      "sourceId": "SRC-RC1-0116",
+      "sourceHash": "0ec78b4b955931f601f0c9158dc0b5cb7df80c44cddb71a24f260d9392e3dc56",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0117",
+      "value": "춘향: 네. 오늘은 여기예요.",
+      "sourceText": "춘향: 네. 오늘은 여기예요.",
+      "sourceId": "SRC-RC1-0117",
+      "sourceHash": "3d269da4ad3773b81db292549aa26891e13dea9b95a7ca820766a738c7fae49e",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0118",
+      "value": "두 사람이 나간 뒤, 창가에 작은 그네가 남는다. 그 옆은 비어 있다.",
+      "sourceText": "두 사람이 나간 뒤, 창가에 작은 그네가 남는다. 그 옆은 비어 있다.",
+      "sourceId": "SRC-RC1-0118",
+      "sourceHash": "54a962adc63c75c9e5a0841b4495f0a49cb97a26355572ee06f87b1c3a8bf108",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0119",
+      "value": "춘향: 서두르지 말고 마셔요. 오늘은 같이 있으니까.",
+      "sourceText": "춘향: 서두르지 말고 마셔요. 오늘은 같이 있으니까.",
+      "sourceId": "SRC-RC1-0119",
+      "sourceHash": "cb266cd2f1392b001fe14d5487823524faafaed594a1c507296eae03b3b7dc2f",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0120",
+      "value": "춘향: 우리 생각과는 조금 다르네요. 그래도 같은 잔에서 시작해요.",
+      "sourceText": "춘향: 우리 생각과는 조금 다르네요. 그래도 같은 잔에서 시작해요.",
+      "sourceId": "SRC-RC1-0120",
+      "sourceHash": "a8ec660c74a337b589612efe2466c52af361b18a6850950e9aee30f2e4472311",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0009",
+      "value": "춘향",
+      "sourceText": "춘향",
+      "sourceId": "SRC-RC1-0009",
+      "sourceHash": "13095bef539eef65dca2751e3ca17608f78b21d1e60a24322b102893d349d8af",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    },
+    {
+      "id": "text_rc1_0126",
+      "value": "몽룡",
+      "sourceText": "몽룡",
+      "sourceId": "SRC-RC1-0126",
+      "sourceHash": "50cf3d9f8b6288cb1b0184bb3690d58e7959afabd2d7b59fd0d0c4eaaf620902",
+      "sourcePath": "52_CHUNHYANG_MONGRYONG.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT 2 adoption after Gate 2."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc_rc1_01",
+      "sourceRow": "RC1-01",
+      "night": 1,
+      "guestId": "guest_postman",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0323_act1_edit",
+          "facts": [
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0323"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_02",
+      "sourceRow": "RC1-02",
+      "night": 1,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0322_act1_edit",
+          "facts": [
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "ingredient:gin",
+              "sourceIds": [
+                "SRC-RC1-0322"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_03",
+      "sourceRow": "RC1-03",
+      "night": 1,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0324",
+          "facts": [
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "ingredient:dry_vermouth",
+              "sourceIds": [
+                "SRC-RC1-0324"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_04",
+      "sourceRow": "RC1-04",
+      "night": 2,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": "cocktail_dry_martini",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0428",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0320",
+          "facts": [
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "amount:gin",
+              "sourceIds": [
+                "SRC-RC1-0320"
+              ]
+            },
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "amount:dry_vermouth",
+              "sourceIds": [
+                "SRC-RC1-0320"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0321",
+          "facts": [
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0321"
+              ]
+            },
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0321"
+              ]
+            },
+            {
+              "recipeId": "recipe_dry_martini",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0321"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_05",
+      "sourceRow": "RC1-05",
+      "night": 2,
+      "guestId": "guest_postman",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_05_clarity",
+      "sourceRow": "RC1-05",
+      "night": 2,
+      "guestId": "guest_postman",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0426",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0307",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_06",
+      "sourceRow": "RC1-06",
+      "night": 2,
+      "guestId": "guest_little_prince",
+      "request": {
+        "cocktailId": "cocktail_manwol",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0432",
+      "requiredDiscovery": null,
+      "princeVisit": "First",
+      "intro": [
+        {
+          "textId": "text_rc1_0381",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0382",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0383",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0384",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0385",
+          "facts": [
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "amount:vodka",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "amount:coffee_liqueur",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "amount:cream",
+              "sourceIds": [
+                "SRC-RC1-0385"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0386",
+          "facts": [
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0386"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_rc1_0395"
+      ],
+      "responses": {
+        "good": "text_rc1_0329",
+        "weak": "text_rc1_0330",
+        "mismatch": "text_rc1_0331",
+        "bothWeak": "text_rc1_0332",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_07",
+      "sourceRow": "RC1-07",
+      "night": 3,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": "cocktail_negroni",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_order_recipe_negroni",
+      "requiredDiscovery": "recipe_negroni",
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0402",
+          "facts": [
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0402"
+              ]
+            },
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0402"
+              ]
+            },
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "amount:gin",
+              "sourceIds": [
+                "SRC-RC1-0402"
+              ]
+            },
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "amount:campari",
+              "sourceIds": [
+                "SRC-RC1-0402"
+              ]
+            },
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "amount:sweet_red_vermouth",
+              "sourceIds": [
+                "SRC-RC1-0402"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0403",
+          "facts": [
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0403"
+              ]
+            },
+            {
+              "recipeId": "recipe_negroni",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0403"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_07_known",
+      "sourceRow": "RC1-07",
+      "night": 3,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_08",
+      "sourceRow": "RC1-08",
+      "night": 3,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": "cocktail_manwol",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_order_recipe_manwol",
+      "requiredDiscovery": "recipe_manwol",
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0400",
+          "facts": [
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0400"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0400"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "amount:vodka",
+              "sourceIds": [
+                "SRC-RC1-0400"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "amount:coffee_liqueur",
+              "sourceIds": [
+                "SRC-RC1-0400"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "amount:cream",
+              "sourceIds": [
+                "SRC-RC1-0400"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0401",
+          "facts": [
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0401"
+              ]
+            },
+            {
+              "recipeId": "recipe_manwol",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0401"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_08_known",
+      "sourceRow": "RC1-08",
+      "night": 3,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_09",
+      "sourceRow": "RC1-09",
+      "night": 3,
+      "guestId": "guest_snow_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0418",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0304",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_11",
+      "sourceRow": "RC1-11",
+      "night": 4,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": "cocktail_manhattan",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_order_recipe_manhattan",
+      "requiredDiscovery": "recipe_manhattan",
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0398",
+          "facts": [
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0398"
+              ]
+            },
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "amount:rye_whiskey",
+              "sourceIds": [
+                "SRC-RC1-0398"
+              ]
+            },
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "amount:sweet_red_vermouth",
+              "sourceIds": [
+                "SRC-RC1-0398"
+              ]
+            },
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "amount:angostura_bitters",
+              "sourceIds": [
+                "SRC-RC1-0398"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0399",
+          "facts": [
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0399"
+              ]
+            },
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0399"
+              ]
+            },
+            {
+              "recipeId": "recipe_manhattan",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0399"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_11_known",
+      "sourceRow": "RC1-11",
+      "night": 4,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_10",
+      "sourceRow": "RC1-10",
+      "night": 4,
+      "guestId": "guest_little_prince",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0433",
+      "requiredDiscovery": null,
+      "princeVisit": "Warmth",
+      "intro": [
+        {
+          "textId": "text_rc1_0389",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0390",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0395"
+      ],
+      "responses": {
+        "good": "text_rc1_0329",
+        "weak": "text_rc1_0330",
+        "mismatch": "text_rc1_0331",
+        "bothWeak": "text_rc1_0332",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {
+        "keep": [
+          "text_rc1_0387",
+          "text_rc1_0388"
+        ],
+        "seek": [
+          "text_rc1_0396",
+          "text_rc1_0397"
+        ],
+        "none": [
+          "text_rc1_0389",
+          "text_rc1_0390"
+        ]
+      },
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_12",
+      "sourceRow": "RC1-12",
+      "night": 4,
+      "guestId": "guest_postman",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0405",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_13",
+      "sourceRow": "RC1-13",
+      "night": 5,
+      "guestId": "guest_snow_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0418",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0305",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_14",
+      "sourceRow": "RC1-14",
+      "night": 5,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": "cocktail_gin_fizz",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_order_recipe_gin_fizz",
+      "requiredDiscovery": "recipe_gin_fizz",
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0377",
+          "facts": [
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0377"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0377"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "amount:gin",
+              "sourceIds": [
+                "SRC-RC1-0377"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "amount:lemon_juice",
+              "sourceIds": [
+                "SRC-RC1-0377"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "amount:simple_syrup",
+              "sourceIds": [
+                "SRC-RC1-0377"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0378",
+          "facts": [
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0378"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0378"
+              ]
+            },
+            {
+              "recipeId": "recipe_gin_fizz",
+              "fact": "amount:soda_water",
+              "sourceIds": [
+                "SRC-RC1-0378"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_14_known",
+      "sourceRow": "RC1-14",
+      "night": 5,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0424",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0404",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_15",
+      "sourceRow": "RC1-15",
+      "night": 5,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0426",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0308",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_16",
+      "sourceRow": "RC1-16",
+      "night": 5,
+      "guestId": "guest_station_worker",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "awakening"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0415",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0301",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_17",
+      "sourceRow": "RC1-17",
+      "night": 6,
+      "guestId": "guest_little_prince",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0431",
+      "requiredDiscovery": null,
+      "princeVisit": "Clarity",
+      "intro": [
+        {
+          "textId": "text_rc1_0379",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0380",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0395"
+      ],
+      "responses": {
+        "good": "text_rc1_0329",
+        "weak": "text_rc1_0330",
+        "mismatch": "text_rc1_0331",
+        "bothWeak": "text_rc1_0332",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    },
+    {
+      "id": "enc_rc1_18",
+      "sourceRow": "RC1-18",
+      "night": 7,
+      "guestId": "guest_chunhyang",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "longing"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0018",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0014",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0015",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0016",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0017",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0010",
+        "text_rc1_0011"
+      ],
+      "responses": {
+        "good": "text_rc1_0012",
+        "weak": "text_rc1_0013",
+        "mismatch": "text_rc1_0013",
+        "bothWeak": "text_rc1_0013",
+        "unknown": "text_rc1_0013"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_19",
+      "sourceRow": "RC1-19",
+      "night": 7,
+      "guestId": "guest_postman",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0166",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0164",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0165",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0160",
+        "text_rc1_0161"
+      ],
+      "responses": {
+        "good": "text_rc1_0162",
+        "weak": "text_rc1_0163",
+        "mismatch": "text_rc1_0163",
+        "bothWeak": "text_rc1_0163",
+        "unknown": "text_rc1_0163"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_20",
+      "sourceRow": "RC1-20",
+      "night": 7,
+      "guestId": "guest_mongryong",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0135",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0131",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0132",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0133",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0134",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0127",
+        "text_rc1_0128"
+      ],
+      "responses": {
+        "good": "text_rc1_0129",
+        "weak": "text_rc1_0130",
+        "mismatch": "text_rc1_0130",
+        "bothWeak": "text_rc1_0130",
+        "unknown": "text_rc1_0130"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_21",
+      "sourceRow": "RC1-21",
+      "night": 8,
+      "guestId": "guest_mongryong",
+      "companionGuestId": "guest_chunhyang",
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0113",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0109",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0110",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0111",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0112",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0105",
+        "text_rc1_0106"
+      ],
+      "responses": {
+        "good": "text_rc1_0107",
+        "weak": "text_rc1_0108",
+        "mismatch": "text_rc1_0108",
+        "bothWeak": "text_rc1_0108",
+        "unknown": "text_rc1_0108"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_22",
+      "sourceRow": "RC1-22",
+      "night": 8,
+      "guestId": "guest_repairer",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": "cocktail_hanky_panky",
+        "anyTags": [],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0048",
+      "requiredDiscovery": "recipe_hanky_panky",
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0045",
+          "facts": [
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "identity",
+              "sourceIds": [
+                "SRC-RC1-0045"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0046",
+          "facts": [
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "amount:london_dry_gin",
+              "sourceIds": [
+                "SRC-RC1-0046"
+              ]
+            },
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "amount:sweet_red_vermouth",
+              "sourceIds": [
+                "SRC-RC1-0046"
+              ]
+            },
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "amount:fernet",
+              "sourceIds": [
+                "SRC-RC1-0046"
+              ]
+            }
+          ]
+        },
+        {
+          "textId": "text_rc1_0047",
+          "facts": [
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "method",
+              "sourceIds": [
+                "SRC-RC1-0047"
+              ]
+            },
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "preparation",
+              "sourceIds": [
+                "SRC-RC1-0047"
+              ]
+            },
+            {
+              "recipeId": "recipe_hanky_panky",
+              "fact": "garnish",
+              "sourceIds": [
+                "SRC-RC1-0047"
+              ]
+            }
+          ]
+        }
+      ],
+      "farewell": [
+        "text_rc1_0041",
+        "text_rc1_0042"
+      ],
+      "responses": {
+        "good": "text_rc1_0043",
+        "weak": "text_rc1_0044",
+        "mismatch": "text_rc1_0044",
+        "bothWeak": "text_rc1_0044",
+        "unknown": "text_rc1_0044"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_23",
+      "sourceRow": "RC1-23",
+      "night": 9,
+      "guestId": "guest_chunhyang",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "softness",
+          "warmth"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0029",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0025",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0026",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0027",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0028",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0020",
+        "text_rc1_0021",
+        "text_rc1_0022"
+      ],
+      "responses": {
+        "good": "text_rc1_0023",
+        "weak": "text_rc1_0024",
+        "mismatch": "text_rc1_0024",
+        "bothWeak": "text_rc1_0024",
+        "unknown": "text_rc1_0024"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_24",
+      "sourceRow": "RC1-24",
+      "night": 9,
+      "guestId": "guest_repairer",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0174",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0172",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0173",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0168",
+        "text_rc1_0169"
+      ],
+      "responses": {
+        "good": "text_rc1_0170",
+        "weak": "text_rc1_0171",
+        "mismatch": "text_rc1_0171",
+        "bothWeak": "text_rc1_0171",
+        "unknown": "text_rc1_0171"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_25",
+      "sourceRow": "RC1-25",
+      "night": 9,
+      "guestId": "guest_chunhyang",
+      "companionGuestId": "guest_mongryong",
+      "memoryId": "mem_02",
+      "memoryVariant": "swing_empty_place",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0125",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0121",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0122",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0123",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0124",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0115",
+        "text_rc1_0116",
+        "text_rc1_0117",
+        "text_rc1_0118"
+      ],
+      "responses": {
+        "good": "text_rc1_0119",
+        "weak": "text_rc1_0120",
+        "mismatch": "text_rc1_0120",
+        "bothWeak": "text_rc1_0120",
+        "unknown": "text_rc1_0120"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_22_known",
+      "sourceRow": "RC1-22",
+      "night": 8,
+      "guestId": "guest_repairer",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0418",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0305",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_ordinary_departure"
+      ],
+      "responses": {
+        "good": "text_rc1_0325",
+        "weak": "text_rc1_0326",
+        "mismatch": "text_rc1_0327",
+        "bothWeak": "text_rc1_0328",
+        "unknown": "text_rc1_0334"
+      },
+      "choiceIntros": {},
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null
+    }
+  ],
+  "slots": [
+    {
+      "encounterId": "enc_rc1_01",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_02",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_03",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_04",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_05",
+      "fallbackId": "enc_rc1_05_clarity",
+      "whenKnownRecipe": "recipe_dry_martini"
+    },
+    {
+      "encounterId": "enc_rc1_06",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_07",
+      "fallbackId": "enc_rc1_07_known",
+      "whenKnownRecipe": "recipe_negroni"
+    },
+    {
+      "encounterId": "enc_rc1_08",
+      "fallbackId": "enc_rc1_08_known",
+      "whenKnownRecipe": "recipe_manwol"
+    },
+    {
+      "encounterId": "enc_rc1_09",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_11",
+      "fallbackId": "enc_rc1_11_known",
+      "whenKnownRecipe": "recipe_manhattan"
+    },
+    {
+      "encounterId": "enc_rc1_10",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_12",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_13",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_14",
+      "fallbackId": "enc_rc1_14_known",
+      "whenKnownRecipe": "recipe_gin_fizz"
+    },
+    {
+      "encounterId": "enc_rc1_15",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_16",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_17",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_18",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_19",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_20",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_21",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_22",
+      "fallbackId": "enc_rc1_22_known",
+      "whenKnownRecipe": "recipe_hanky_panky"
+    },
+    {
+      "encounterId": "enc_rc1_23",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_24",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_25",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    }
+  ],
+  "supply": [
+    "whiskey",
+    "vermouth",
+    "water",
+    "rye_whiskey",
+    "sweet_red_vermouth",
+    "angostura_bitters",
+    "gin",
+    "dry_vermouth",
+    "vodka",
+    "coffee_liqueur",
+    "cream",
+    "campari",
+    "lemon_juice",
+    "simple_syrup",
+    "soda_water",
+    "london_dry_gin",
+    "fernet"
+  ],
+  "known": [
+    {
+      "recipeId": "recipe_test_stir",
+      "provenance": "LEARN-SEOLYA"
+    }
+  ],
+  "prince": {
+    "prompt": "text_rc1_0407",
+    "choices": {
+      "keep": "text_rc1_0408",
+      "seek": "text_rc1_0409"
+    },
+    "responses": {
+      "keep": "text_rc1_0410",
+      "seek": "text_rc1_0411"
+    },
+    "recalls": {
+      "keep": "text_rc1_0412",
+      "seek": "text_rc1_0413",
+      "none": "text_rc1_0414"
+    },
+    "openFarewell": [
+      "text_rc1_0391",
+      "text_rc1_0392",
+      "text_rc1_0393"
+    ],
+    "quietFarewell": [
+      "text_rc1_0394",
+      "text_rc1_0395"
+    ],
+    "policyRevision": "prince_return_understanding_v1"
+  },
+  "supplyGrants": [
+    {
+      "beforeEncounter": "enc_rc1_22",
+      "ingredientIds": [
+        "london_dry_gin",
+        "fernet"
+      ]
+    }
+  ]
+}

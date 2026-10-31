@@ -53,6 +53,9 @@ namespace Surlhwa.Domain
     public sealed class CampaignContent
     {
         public string Revision { get; } public string BundleHash { get; }
+        public string Scope { get; }
+        private readonly IReadOnlyDictionary<string,int> supplyFromSlot;
+        public IReadOnlyCollection<string> AvailableSupplyAt(int slot) => Array.AsReadOnly(Supply.Where(x=>!supplyFromSlot.TryGetValue(x,out int start) || slot>=start).ToArray());
         public BartendingCatalog Catalog { get; } public BrewingTuning Tuning { get; }
         public IReadOnlyDictionary<string,string> IngredientNames { get; }
         public IReadOnlyDictionary<string,SourcedText> Texts { get; }
@@ -70,11 +73,15 @@ namespace Surlhwa.Domain
             IDictionary<string,string> names,IDictionary<string,SourcedText> texts,IDictionary<string,GuestDefinition> guests,
             IDictionary<string,RecipePresentation> presentation,IEnumerable<CampaignEncounter> encounters,IEnumerable<CampaignSlot> slots,
             IEnumerable<string> supply,IDictionary<string,string> known,string choicePrompt,IDictionary<string,string> choices,
-            IDictionary<string,string> responses,IDictionary<string,string> recalls,IEnumerable<string> open,IEnumerable<string> quiet)
+            IDictionary<string,string> responses,IDictionary<string,string> recalls,IEnumerable<string> open,IEnumerable<string> quiet,
+            string scope="act_01",IDictionary<string,int> supplyFromSlot=null)
         {
             Revision=revision; BundleHash=hash; Catalog=catalog; Tuning=tuning; IngredientNames=Copy(names); Texts=Copy(texts); Guests=Copy(guests);
             RecipePresentation=Copy(presentation); Encounters=Copy(encounters.ToDictionary(x=>x.Id)); Slots=Array.AsReadOnly(slots.ToArray());
             Supply=Array.AsReadOnly(supply.ToArray()); KnownSeeds=Copy(known); ChoicePrompt=choicePrompt;
+            _=new StableId<TextIdentity>(scope); Scope=scope;
+            this.supplyFromSlot=Copy(supplyFromSlot ?? new Dictionary<string,int>());
+            if(this.supplyFromSlot.Any(x=>!Supply.Contains(x.Key) || x.Value<1 || x.Value>=Slots.Count)) throw new ArgumentException("Invalid supply grant boundary.");
             PrinceChoices=Copy(choices); PrinceResponses=Copy(responses); PrinceRecalls=Copy(recalls);
             OpenFarewell=Array.AsReadOnly(open.ToArray()); QuietFarewell=Array.AsReadOnly(quiet.ToArray());
             if(Slots.Count==0 || Supply.Any(x=>!Catalog.Ingredients.Contains(x)) || KnownSeeds.Keys.Any(x=>!Catalog.Recipes.ContainsKey(x))) throw new ArgumentException("Invalid campaign profile.");
@@ -90,12 +97,17 @@ namespace Surlhwa.Domain
             var memoryOwners=Encounters.Values.Select(x=>x.PrinceVisit==PrinceVisit.Clarity ? "mem_01" : x.MemoryId).Where(x=>x!=null).ToArray();
             if(memoryOwners.Distinct(StringComparer.Ordinal).Count()!=memoryOwners.Length) throw new ArgumentException("Memory requires a unique encounter owner.");
             var scheduledMemories=new HashSet<string>(StringComparer.Ordinal);
-            foreach(var slot in Slots)
+            for(int slotIndex=0;slotIndex<Slots.Count;slotIndex++)
+            {
+                var slot=Slots[slotIndex]; var available=AvailableSupplyAt(slotIndex);
                 foreach(var id in new[]{slot.EncounterId,slot.FallbackId}.Where(x=>x!=null).Distinct(StringComparer.Ordinal))
                 {
                     var e=Encounters[id]; string memory=e.PrinceVisit==PrinceVisit.Clarity ? "mem_01" : e.MemoryId;
                     if(memory!=null && !scheduledMemories.Add(memory)) throw new ArgumentException("Memory owner cannot recur in the campaign schedule.");
+                    if(e.RequiredDiscovery!=null && Catalog.Recipes[e.RequiredDiscovery].Amounts.Keys.Any(x=>!available.Contains(x)))
+                        throw new ArgumentException("Required discovery precedes physical supply.");
                 }
+            }
             if(!Texts.ContainsKey(ChoicePrompt) || PrinceChoices.Count!=2 || PrinceChoices.Keys.Any(x=>!PrinceResponses.ContainsKey(x) || !PrinceRecalls.ContainsKey(x)) ||
                 !PrinceRecalls.ContainsKey("none") || PrinceChoices.Values.Concat(PrinceResponses.Values).Concat(PrinceRecalls.Values).Concat(OpenFarewell).Concat(QuietFarewell).Any(x=>!Texts.ContainsKey(x))) throw new ArgumentException("Invalid Prince narrative branches.");
         }

@@ -12,7 +12,7 @@ namespace Surlhwa.Application
         private readonly ICampaignSaveStore store; private readonly InputGate input=new InputGate();
         private CampaignCheckpoint pending; private double stageElapsed; private bool disposed;
         public CampaignContent Content { get; }
-        public IReadOnlyCollection<string> Supply => Content.Supply;
+        public IReadOnlyCollection<string> Supply { get; private set; }
         public BrewingTuning Tuning => Content.Tuning;
         public bool ExtendedMethods => true;
         public CampaignCheckpoint State { get; private set; }
@@ -50,8 +50,8 @@ namespace Surlhwa.Application
         public static CampaignSession Continue(CampaignContent c,ICampaignSaveStore store,CampaignCheckpoint state) => new CampaignSession(c,store,state);
         private void Apply(CampaignCheckpoint state)
         {
-            State=state; Knowledge=RestoreKnowledge(); stageElapsed=0;
-            Brew=state.Phase==CampaignPhase.Brewing ? new BrewingSession(Content.Catalog,Content.Tuning,Content.Supply) : null;
+            State=state; Knowledge=RestoreKnowledge(); Supply=Content.AvailableSupplyAt(state.SlotIndex); stageElapsed=0;
+            Brew=state.Phase==CampaignPhase.Brewing ? new BrewingSession(Content.Catalog,Content.Tuning,Supply) : null;
         }
         private RecipeKnowledge RestoreKnowledge()
         {
@@ -158,7 +158,7 @@ namespace Surlhwa.Application
         public bool UpdateBrew(long micros,bool fine)
         { if(!CanInteract || input.HeldBlocked || State.Phase!=CampaignPhase.Brewing) { Brew?.CancelInput(); return false; } Brew.UpdateFlow(micros,1m,fine); return true; }
         public bool DiscardBrew(long id)
-        { if(!input.Consume(id) || !CanInteract || State.Phase!=CampaignPhase.Brewing) return false; CancelHeld(); Brew=new BrewingSession(Content.Catalog,Content.Tuning,Content.Supply); return true; }
+        { if(!input.Consume(id) || !CanInteract || State.Phase!=CampaignPhase.Brewing) return false; CancelHeld(); Brew=new BrewingSession(Content.Catalog,Content.Tuning,Supply); return true; }
         public void CancelHeld() { Brew?.CancelInput(); input.CancelHeld(); }
         public void ReleaseHeldInput() { Brew?.CancelInput(); input.Release(); }
         public void SetFocus(bool value) { Focused=value; CancelHeld(); }

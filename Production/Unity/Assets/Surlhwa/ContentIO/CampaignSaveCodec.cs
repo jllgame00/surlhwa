@@ -18,7 +18,7 @@ namespace Surlhwa.ContentIO
                 ["completedOccurrences"]=new JArray(state.CompletedOccurrences),["knownReceipts"]=Map(state.KnownReceipts),["facts"]=Map(state.Facts),
                 ["services"]=new JArray(state.Services.Select(x=>Parse(ServiceEvidenceCodec.Write(x)))),
                 ["memories"]=new JArray(state.Memories.Select(x=>new JObject {["id"]=x.Id,["variant"]=x.Variant,["occurrenceId"]=x.OccurrenceId,["sequence"]=x.Sequence})) };
-            var envelope=new JObject { ["format"]="surlhwa-production-save",["schemaVersion"]=1,["mode"]="campaign",["act"]="act_01",
+            var envelope=new JObject { ["format"]="surlhwa-production-save",["schemaVersion"]=1,["mode"]="campaign",["act"]=content.Scope,
                 ["sequence"]=state.Sequence,["runId"]=state.RunId,["contentRevision"]=content.Revision,["contentHash"]=content.BundleHash,
                 ["tuningRevision"]=content.Tuning.Revision,["farewellPolicyRevision"]=PrinceFarewellPolicy.Revision,
                 ["payload"]=p,["payloadSha256"]=Hash(p.ToString(Formatting.None)) };
@@ -37,7 +37,7 @@ namespace Surlhwa.ContentIO
             int schema=Int(root,"schemaVersion"); if(schema>1) throw new UnsupportedSaveVersionException("Campaign save uses a newer schema; it has not been overwritten.");
             if(schema!=1) throw Invalid("Unsupported campaign save schema.");
             Fields(root,"format","schemaVersion","mode","act","sequence","runId","contentRevision","contentHash","tuningRevision","farewellPolicyRevision","payload","payloadSha256");
-            if(String(root,"format")!="surlhwa-production-save" || String(root,"mode")!="campaign" || String(root,"act")!="act_01") throw Invalid("Incompatible campaign namespace.");
+            if(String(root,"format")!="surlhwa-production-save" || String(root,"mode")!="campaign" || String(root,"act")!=c.Scope) throw Invalid("Incompatible campaign namespace.");
             if(String(root,"contentRevision")!=c.Revision || String(root,"contentHash")!=c.BundleHash || String(root,"tuningRevision")!=c.Tuning.Revision ||
                 String(root,"farewellPolicyRevision")!=PrinceFarewellPolicy.Revision) throw Invalid("Campaign definitions differ; explicit migration is required.");
             var p=Object(root["payload"]); if(Hash(p.ToString(Formatting.None))!=String(root,"payloadSha256")) throw Invalid("Campaign checksum mismatch.");

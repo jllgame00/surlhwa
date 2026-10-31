@@ -56,7 +56,7 @@ namespace Surlhwa.Domain
     internal static class GarnishRules
     {
         internal static bool Valid(string id,string placement) =>
-            (id=="cherry" && placement=="in_glass") || (id=="orange_slice" && placement=="rim");
+            (id=="cherry" && placement=="in_glass") || ((id=="orange_slice" || id=="orange_zest") && placement=="rim");
     }
     public sealed class BartendingCatalog
     {

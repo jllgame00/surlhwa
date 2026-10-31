@@ -85,3 +85,25 @@ early grants even with a recomputed checksum. Legacy ACT 1 decoding remains vali
 - P07b.2 underway: separate source-adoption package for RC1-18–25; it deliberately
   cannot load as a campaign. Runtime schema, scoped supply, OrangeZest control,
   save continuation and paired presentation remain subsequent implementation.
+- P07b.2 domain/content checkpoint: authored ACT 2 source package plus separate
+  schema-2 composed candidate now load and traverse all 25 encounters through
+  actual domain preparation, consumption, service, retry, departure and codec
+  round trips. New ingredient supply is projected from the durable selected-slot
+  cursor; no second knowledge authority or save format is introduced. Unknown
+  content scope remains rejected. The accepted ACT 1 default build is unchanged.
+- Fresh-context content review: fixed RC1-22 Known fallback retaining the wrong
+  ordinary actor (failing Python regression before correction); added explicit
+  multiple Known/supplied/prepared answers at each ACT 2 Recommendation. Added
+  failing-then-passing rejection of discovery before supply and delays to accepted
+  ACT 1 physical supply. No deferred minor review findings.
+- Final standalone evidence: `Evidence/act2-content-final-02.log`, 168 PASS /
+  0 FAIL. Python source/composition tests: 6 PASS. Normal Editor affected suite
+  initially 47/47 PASS; final post-guard run **48/48 PASS** in
+  `Evidence/act2-content-editor-final.xml`, with corresponding compilation log.
+  No new Player/native/visual evidence is claimed. Editor-generated project
+  settings were inspected and excluded again; accepted scenes/prefabs untouched.
+- Ruling: the composed `act2.json` is a separate, generator-verified candidate.
+  Keep the accepted ACT 1 bundle/build selected until reversible save continuation,
+  new ingredient/garnish controls and paired presentation are integrated. Cost:
+  two candidate scopes coexist temporarily; no premature Player readiness claim.
+  [Content checkpoint and remaining dependencies](ACT2_CONTENT_CHECKPOINT.md).
