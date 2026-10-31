@@ -15,7 +15,7 @@ namespace Surlhwa.Presentation
         public TextAsset Bundle,LegacyBundle; public TMP_FontAsset Font; public Texture2D Grip;
         public TextAsset[] PriorBundles=Array.Empty<TextAsset>();
         public CampaignArtSet Art;
-        public Camera Camera; public CharacterView Bartender,Ordinary,Prince,Chunhyang,Mongryong,Quixote,Hamlet;
+        public Camera Camera; public CharacterView Bartender,Ordinary,Prince,Chunhyang,Mongryong,Quixote,Hamlet,Faust;
         public AudioClip Room,Winter,Pour,Stir,Strain,Ice,Glass,Seat,Entrance,Foot,Music;
         public CampaignContent Content { get; private set; } public CampaignSession Session { get; private set; }
         public SliceInputAdapter Input { get; private set; } public SliceWorkbenchView Workbench { get; private set; }
@@ -59,7 +59,7 @@ namespace Surlhwa.Presentation
                 Ui=gameObject.AddComponent<CampaignUi>(); Ui.Initialize(this,Font); Memory=gameObject.AddComponent<CampaignMemoryView>();
                 seatPosition=Ordinary!=null ? Ordinary.transform.position : new Vector3(-.72f,0,-2);
                 Cast=GetComponent<CampaignCastView>() ?? gameObject.AddComponent<CampaignCastView>(); Cast.Initialize(this,seatPosition); Cast.Hide();
-                if(CanShow(Bartender)) Bartender.Show(true,false); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true);
+                if(CanShow(Bartender)) Bartender.Show(true,false); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true); if(CanShow(Faust)) Faust.Show(false,true);
                 Busy=true; await LoadSavedAsync();
             }
             catch(Exception e) { StartupError=e.Message; Debug.LogError("CAMPAIGN_STARTUP: "+e.Message); }
@@ -161,7 +161,7 @@ namespace Surlhwa.Presentation
         {
             if(Busy || Session?.IsSaving==true) return;
             Busy=true; Input.Stop(); Session?.Dispose(); Session=null; Saved=null; Ui.CloseMenu(); Audio.Refresh(Input,false);
-            if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true);
+            if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true); if(CanShow(Faust)) Faust.Show(false,true);
             Cast?.Hide();
             try { await LoadSavedAsync(); StartupError=null; } catch(Exception e) { StartupError=e.Message; }
             finally { Busy=false; }
@@ -185,7 +185,7 @@ namespace Surlhwa.Presentation
             if(lastPhase!=phase || lastEncounter!=encounter) { poseClock=0; lastFoot=-1; lastPhase=phase; lastEncounter=encounter; if(phase==CampaignPhase.Arriving) Audio.Cue("entrance"); if(phase==CampaignPhase.Intro) Audio.Cue("seat"); }
             if(Session.CanInteract) poseClock+=Time.unscaledDeltaTime;
             if(CampaignCastView.OwnsGuest(Session.CurrentEncounter.GuestId)) {
-                if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true);
+                if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true); if(CanShow(Faust)) Faust.Show(false,true);
                 Cast.Refresh(phase,poseClock,seatPosition); return;
             }
             Cast?.Hide();
@@ -193,7 +193,7 @@ namespace Surlhwa.Presentation
             if(PrinceChairReserved && phase!=CampaignPhase.Brewing && Session.State.CurrentService?.Snapshot!=null)
                 Workbench?.SetServingPresentationPosition(new Vector3(activeSeat.x+.1714286f,1.055f,-.65f));
             CharacterView actor=SelectGuestActor(Session.CurrentEncounter.GuestId);
-            foreach(var other in new[]{Ordinary,Prince,Quixote,Hamlet}) if(other!=actor && CanShow(other)) other.Show(false,true);
+            foreach(var other in new[]{Ordinary,Prince,Quixote,Hamlet,Faust}) if(other!=actor && CanShow(other)) other.Show(false,true);
             if(!CanShow(actor)) return; // Logical stage clock does not depend on a renderer or clip.
             bool traveling=phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing;
             if(phase==CampaignPhase.Welcome || phase==CampaignPhase.Complete || phase==CampaignPhase.NightIntro || phase==CampaignPhase.NightEnd) { actor.Show(false,true); return; }
@@ -219,7 +219,7 @@ namespace Surlhwa.Presentation
         private CharacterView SelectGuestActor(string guestId)
         {
             if(Content.Guests[guestId].Kind==GuestKind.Ordinary) return Ordinary;
-            return guestId=="guest_little_prince" ? Prince : guestId=="guest_quixote" ? Quixote : guestId=="guest_hamlet" ? Hamlet : null;
+            return guestId=="guest_little_prince" ? Prince : guestId=="guest_quixote" ? Quixote : guestId=="guest_hamlet" ? Hamlet : guestId=="guest_faust" ? Faust : null;
         }
         [Serializable] private sealed class Settings { public int schemaVersion=1; public float master=.65f; public bool largeText,highContrast; }
         private void LoadSettings()

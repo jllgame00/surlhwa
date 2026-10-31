@@ -10,6 +10,7 @@ namespace Surlhwa.Presentation
         private GameObject lovers;
         private GameObject windmill;
         private GameObject hamlet;
+        private GameObject faust;
         private readonly System.Collections.Generic.List<Object> loversOwned=new System.Collections.Generic.List<Object>();
         public bool LoversVisible=>lovers!=null && lovers.activeSelf;
         public Transform LoversSwing { get; private set; }
@@ -21,6 +22,10 @@ namespace Surlhwa.Presentation
         public Transform HamletStage { get; private set; }
         public Transform HamletSkull { get; private set; }
         public Transform HamletShadow { get; private set; }
+        public bool FaustVisible=>faust!=null && faust.activeSelf;
+        public Transform FaustCircle { get; private set; }
+        public Transform FaustGlass { get; private set; }
+        public Transform FaustGlow { get; private set; }
         private Quaternion presentationFacing=Quaternion.Euler(28,0,0);
         public void SetPresentationFacing(Quaternion facing)
         {
@@ -59,6 +64,9 @@ namespace Surlhwa.Presentation
             var stage=state?.Memories.FirstOrDefault(x=>x.Id=="mem_04" && x.Variant=="stage_skull_shadow");
             if(stage!=null && hamlet==null) CreateHamletMemory();
             if(hamlet!=null) hamlet.SetActive(stage!=null);
+            var cost=state?.Memories.FirstOrDefault(x=>x.Id=="mem_05" && x.Variant=="faint_circle_broken_glass_red_light");
+            if(cost!=null && faust==null) CreateFaustMemory();
+            if(faust!=null) faust.SetActive(cost!=null);
         }
         private void CreateLoversMemory()
         {
@@ -102,6 +110,30 @@ namespace Surlhwa.Presentation
             HamletShadow=Part(hamlet.transform,"MEM04_","Restrained stage shadow",new Vector3(.07f,.066f,.006f),new Color(.19f,.17f,.18f),new[]{
                 new Rect(-.05f,0,.13f,.05f),new Rect(-.025f,.05f,.13f,.06f),new Rect(0,.11f,.13f,.08f),
                 new Rect(.025f,.19f,.16f,.12f),new Rect(.05f,.31f,.12f,.035f)});
+        }
+        private void CreateFaustMemory()
+        {
+            // Canon MEM-05 rests on the floor. Its circle is physically horizontal;
+            // glass and tiny contained red point stay in world XY through focus.
+            // These are earned traces only, with no light, collider or interaction.
+            faust=new GameObject("MEM-05 faint circle broken glass and red light"); faust.transform.SetParent(transform,false);
+            faust.transform.position=new Vector3(1.65f,.005f,2.50f); faust.transform.rotation=Quaternion.identity;
+            var circle=new System.Collections.Generic.List<Rect>();
+            for(int y=-7;y<=7;y++) for(int x=-7;x<=7;x++) {
+                float radius=Mathf.Sqrt(x*x+y*y);
+                if(radius>=6.2f && radius<=7.3f) circle.Add(new Rect(x*.035f-.0175f,y*.035f-.0175f,.035f,.035f));
+            }
+            FaustCircle=Part(faust.transform,"MEM05_","Faint floor circle",Vector3.zero,new Color(.32f,.27f,.24f),circle.ToArray());
+            FaustCircle.localRotation=Quaternion.Euler(90,0,0);
+            // An interrupted bowl with unequal jagged edges and a fallen shard,
+            // rather than an intact cup silhouette with a painted crack.
+            FaustGlass=Part(faust.transform,"MEM05_","Broken glass",Vector3.zero,new Color(.52f,.54f,.53f),new[]{
+                new Rect(-.070f,0,.140f,.018f),new Rect(-.012f,.018f,.024f,.055f),new Rect(-.048f,.073f,.096f,.017f),
+                new Rect(-.065f,.085f,.018f,.074f),new Rect(-.081f,.146f,.018f,.039f),new Rect(-.081f,.185f,.032f,.018f),
+                new Rect(.045f,.085f,.018f,.045f),new Rect(.060f,.118f,.018f,.035f),new Rect(.060f,.153f,.029f,.018f),
+                new Rect(.115f,0,.058f,.016f),new Rect(.130f,.016f,.030f,.018f)});
+            FaustGlow=Part(faust.transform,"MEM05_","Tiny contained red point",new Vector3(.004f,.105f,-.004f),new Color(.57f,.105f,.085f),new[]{
+                new Rect(-.014f,-.014f,.028f,.028f)});
         }
         private Transform Part(string name,Vector3 at,Color color,Rect[] rectangles)
         { return Part(lovers.transform,"MEM02_",name,at,color,rectangles); }

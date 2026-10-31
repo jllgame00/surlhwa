@@ -25,7 +25,7 @@ namespace Surlhwa.Presentation
         private bool finePourInput; private ContainerRole fineRole; private decimal fineStart,fineTarget; private Key fineKey;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
-        private bool expanded,act3,act4,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured,frenchFailure,frenchRetryObserved,hamletMismatchObserved;
+        private bool expanded,act3,act4,act5,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved;
         private int expectedServices,startSlot,startDepartures,lastDepartures,totalSlots,expectedMemories;
         private string[] suppliedIngredients=Array.Empty<string>(); private readonly HashSet<string> shelfSelections=new HashSet<string>();
         private string startPhase,proofPrefix; private readonly HashSet<string> archived=new HashSet<string>(); private readonly HashSet<int> visited=new HashSet<int>();
@@ -36,8 +36,8 @@ namespace Surlhwa.Presentation
             output=Path.GetFullPath(Arg("-campaignEvidenceRoot")); Directory.CreateDirectory(output); owner=GetComponent<CampaignController>();
             UnityEngine.Application.logMessageReceived+=Log; float until=Time.realtimeSinceStartup+40;
             while(owner.Ui==null || owner.Busy) { if(Time.realtimeSinceStartup>until) { Fail("Initialization timeout"); yield break; } yield return null; }
-            act4=owner.Content.Scope=="through_act_04"; act3=act4 || owner.Content.Scope=="through_act_03"; expanded=act3 || owner.Content.Scope=="through_act_02";
-            totalSlots=owner.Content.Slots.Count; expectedMemories=owner.Content.ActAt(totalSlots-1); proofPrefix=act4 ? "act4" : act3 ? "act3" : "act2";
+            act5=owner.Content.Scope=="through_act_05"; act4=act5 || owner.Content.Scope=="through_act_04"; act3=act4 || owner.Content.Scope=="through_act_03"; expanded=act3 || owner.Content.Scope=="through_act_02";
+            totalSlots=owner.Content.Slots.Count; expectedMemories=owner.Content.ActAt(totalSlots-1); proofPrefix=act5 ? "act5" : act4 ? "act4" : act3 ? "act3" : "act2";
             keyboard=InputSystem.AddDevice<Keyboard>(); mouse=InputSystem.AddDevice<Mouse>();
             InputSystem.onBeforeUpdate+=QueueStirForCurrentFrame;
             render=new RenderTexture(Screen.width,Screen.height,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB); render.Create();
@@ -56,6 +56,7 @@ namespace Surlhwa.Presentation
                 plan=plan.Concat(new[]{"recipe_manwol","recipe_test_stir","recipe_dry_martini","recipe_manhattan","recipe_hanky_panky","recipe_test_stir","recipe_gin_fizz","recipe_dry_martini"}).ToArray();
                 if(act3) plan=plan.Concat(new[]{"recipe_manhattan","recipe_gin_fizz",fixture.Contains("quixote-mismatch") ? "recipe_dry_martini" : "recipe_hanky_panky","recipe_negroni"}).ToArray();
                 if(act4) plan=plan.Concat(new[]{"recipe_french_75","recipe_dry_martini","recipe_dry_martini",fixture.Contains("hamlet-mismatch") ? "recipe_french_75" : "recipe_dry_martini"}).ToArray();
+                if(act5) plan=plan.Concat(new[]{"recipe_dry_martini","recipe_gin_fizz","recipe_manhattan",fixture.Contains("faust-mismatch") ? "recipe_french_75" : "recipe_negroni"}).ToArray();
                 var initial=owner.Session; startSlot=initial.State.SlotIndex; startPhase=initial.State.Phase.ToString(); startDepartures=lastDepartures=initial.State.CompletedOccurrences.Count;
                 bool pendingAccepted=initial.State.CurrentService!=null && !initial.State.CompletedOccurrences.Contains(initial.State.OccurrenceId) &&
                     (initial.CurrentEncounter.RequiredDiscovery==null || initial.Knowledge.Project(initial.CurrentEncounter.RequiredDiscovery).Known);
@@ -65,6 +66,7 @@ namespace Surlhwa.Presentation
                 if(fixture.Contains("quixote-mismatch")) Check(act3 && (startSlot<27 || (startSlot==27 && initial.State.CurrentService==null)),"Quixote mismatch begins before the actual slot 27 service");
                 if(fixture.Contains("french-retry")) Check(act4 && startSlot<=29 && !initial.Knowledge.Project("recipe_french_75").Known,"required French failure begins before earned discovery");
                 if(fixture.Contains("hamlet-mismatch")) Check(act4 && (startSlot<32 || (startSlot==32 && initial.State.CurrentService==null)),"Hamlet mismatch begins before the actual slot 32 service");
+                if(fixture.Contains("faust-mismatch")) Check(act5 && (startSlot<36 || (startSlot==36 && initial.State.CurrentService==null)),"Faust mismatch begins before the actual slot 36 service");
                 memoryThreeCaptured=initial.State.Memories.Any(x=>x.Id=="mem_03");
                 ArchiveCheckpoint(proofPrefix+"-start"); yield return Capture(proofPrefix+"-start");
             }
@@ -155,6 +157,11 @@ namespace Surlhwa.Presentation
                     Check(owner.Session.State.Memories.Count(x=>x.Id=="mem_04" && x.Variant=="stage_skull_shadow")==1,"one canonical MEM-04 receipt");
                     if(fixture.Contains("french-retry")) Check(frenchFailure && frenchRetryObserved,"required French failure and successful retry observed");
                     if(fixture.Contains("hamlet-mismatch")) Check(hamletMismatchObserved,"mismatching Hamlet drink still reaches natural memory departure");
+                }
+                if(act5) {
+                    Check(owner.Memory.FaustVisible && owner.Memory.FaustCircle!=null && owner.Memory.FaustGlass!=null && owner.Memory.FaustGlow!=null,"MEM-05 faint circle broken glass and small red light resolve");
+                    Check(owner.Session.State.Memories.Count(x=>x.Id=="mem_05" && x.Variant=="faint_circle_broken_glass_red_light")==1,"one canonical MEM-05 receipt");
+                    if(fixture.Contains("faust-mismatch")) Check(faustMismatchObserved,"mismatching Faust drink still reaches natural memory departure");
                 }
             } else {
                 Check(owner.Session.State.Services.Count==17,"17 actual services"); Check(owner.Session.State.CompletedOccurrences.Count==17,"17 natural departures");
@@ -368,10 +375,12 @@ namespace Surlhwa.Presentation
             if(expanded && owner.Session.State.SlotIndex>=17 && !omitZest && !omitGentle) {
                 bool quixoteMismatch=act3 && owner.Session.State.SlotIndex==27 && fixture.Contains("quixote-mismatch");
                 bool hamletMismatch=act4 && owner.Session.State.SlotIndex==32 && fixture.Contains("hamlet-mismatch");
-                bool mismatch=quixoteMismatch || hamletMismatch;
+                bool faustMismatch=act5 && owner.Session.State.SlotIndex==36 && fixture.Contains("faust-mismatch");
+                bool mismatch=quixoteMismatch || hamletMismatch || faustMismatch;
                 Check(result?.Fits==!mismatch,"actual ACT "+owner.Content.ActAt(owner.Session.State.SlotIndex)+" request "+(mismatch ? "mismatch " : "fit ")+owner.Session.State.SlotIndex);
                 if(quixoteMismatch) quixoteMismatchObserved=result?.Fits==false;
                 if(hamletMismatch) hamletMismatchObserved=result?.Fits==false;
+                if(faustMismatch) faustMismatchObserved=result?.Fits==false;
             }
             yield return Capture("reaction-"+owner.Session.State.SlotIndex+failureSuffix);
         }
@@ -402,6 +411,7 @@ namespace Surlhwa.Presentation
                 if(!state.Memories.Any(x=>x.Id=="mem_02")) Check(!owner.Memory.LoversVisible,"MEM-02 absent before earned departure "+label);
                 if(act3 && !state.Memories.Any(x=>x.Id=="mem_03")) Check(!owner.Memory.WindmillVisible,"MEM-03 absent before earned departure "+label);
                 if(act4 && !state.Memories.Any(x=>x.Id=="mem_04")) Check(!owner.Memory.HamletVisible,"MEM-04 absent before earned departure "+label);
+                if(act5 && !state.Memories.Any(x=>x.Id=="mem_05")) Check(!owner.Memory.FaustVisible,"MEM-05 absent before earned departure "+label);
             }
             File.AppendAllText(Path.Combine(output,"captures.jsonl"),JsonUtility.ToJson(new CaptureEvidence{label=label,image=image,
                 slot=state?.SlotIndex ?? -1,line=state?.LineIndex ?? -1,phase=state?.Phase.ToString() ?? "menu",textId=text?.Id,textRole=text?.Role,
@@ -409,14 +419,14 @@ namespace Surlhwa.Presentation
                 visibleActors=actors.Select(a=>CampaignEvidenceProbe.PresentedGuestId(owner,a)).ToArray(),actorBindingIds=actors.Select(a=>a.GuestId).ToArray(),
                 visibleText=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(t=>t.isActiveAndEnabled).Select(t=>t.text).ToArray(),
                 overflow=overflow,invalidRenderers=invalidRenderers,services=state?.Services.Count ?? 0,departures=state?.CompletedOccurrences.Count ?? 0,
-                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,hamletVisible=owner.Memory.HamletVisible,
+                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,hamletVisible=owner.Memory.HamletVisible,faustVisible=owner.Memory.FaustVisible,
                 visibleIngredients=act4 ? VisibleIngredients() : Array.Empty<string>(),
                 act=state==null ? 0 : owner.Content.ActAt(state.SlotIndex),servingVessels=serving.Length})+"\n");
         }
         [Serializable] private sealed class CaptureEvidence
         {
             public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,overflow,invalidRenderers,visibleIngredients;
-            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible,hamletVisible;
+            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible,hamletVisible,faustVisible;
         }
         private void SavePixels(string path)
         { var prior=RenderTexture.active; RenderTexture.active=render; var texture=new Texture2D(render.width,render.height,TextureFormat.RGB24,false); texture.ReadPixels(new Rect(0,0,render.width,render.height),0,0); texture.Apply(); RenderTexture.active=prior; File.WriteAllBytes(path,texture.EncodeToPNG()); Destroy(texture); }
@@ -429,10 +439,10 @@ namespace Surlhwa.Presentation
                 scope=owner?.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,fixture=fixture,services=owner.Session?.State.Services.Count ?? 0,
                 departures=owner.Session?.State.CompletedOccurrences.Count ?? 0,known=owner.Session?.Knowledge.KnownReceipts.Count ?? 0,memories=owner.Session?.State.Memories.Count ?? 0,
                 expectedServices=expectedServices,startSlot=startSlot,startDepartures=startDepartures,startPhase=startPhase,visitedSlots=visited.OrderBy(x=>x).ToArray(),deliberateFailure=deliberateFailure,retryObserved=retryObserved,quixoteMismatchObserved=quixoteMismatchObserved,
-                frenchFailure=frenchFailure,frenchRetryObserved=frenchRetryObserved,hamletMismatchObserved=hamletMismatchObserved,suppliedIngredients=suppliedIngredients,shelfSelections=shelfSelections.OrderBy(x=>x,StringComparer.Ordinal).ToArray()},true));
+                frenchFailure=frenchFailure,frenchRetryObserved=frenchRetryObserved,hamletMismatchObserved=hamletMismatchObserved,faustMismatchObserved=faustMismatchObserved,suppliedIngredients=suppliedIngredients,shelfSelections=shelfSelections.OrderBy(x=>x,StringComparer.Ordinal).ToArray()},true));
             UnityEngine.Application.Quit(errors.Count==0 ? 0 : 2);
         }
-        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved; }
+        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved; }
         private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; InputSystem.onBeforeUpdate-=QueueStirForCurrentFrame; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
     }
 }

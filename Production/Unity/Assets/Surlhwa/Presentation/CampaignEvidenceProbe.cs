@@ -32,7 +32,7 @@ namespace Surlhwa.Presentation
             public int processId,foregroundProcessId,encounter,line,act,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners;
             public long sequence; public bool focused,nativeOwnershipEstablished,nativeInterrupted,saving,fits,quality,actComplete,shakerClosed,memoryVisible,memoryGlowing;
             public double jigger,mixing,shaker,serving,stirDegrees,frameMs,stirX,stirY,stirRadius,pointerX,pointerY;
-            public string[] visibleText,overflowText,guestIds,visibleActors,actorBindingIds,invalidRenderers; public bool loversMemoryVisible,windmillMemoryVisible,hamletMemoryVisible; public Control[] controls;
+            public string[] visibleText,overflowText,guestIds,visibleActors,actorBindingIds,invalidRenderers; public bool loversMemoryVisible,windmillMemoryVisible,hamletMemoryVisible,faustMemoryVisible; public Control[] controls;
         }
         private Control Read(Button button)
         {
@@ -64,7 +64,7 @@ namespace Surlhwa.Presentation
                 jigger=(double)(s?.Brew?.Container(ContainerRole.Jigger).TotalMl ?? 0),mixing=(double)(s?.Brew?.Container(ContainerRole.Mixing).TotalMl ?? 0),shaker=(double)(s?.Brew?.Container(ContainerRole.Shaker).TotalMl ?? 0),serving=(double)(s?.Brew?.Container(ContainerRole.Serving).TotalMl ?? s?.State.CurrentService?.Snapshot.TotalMl ?? 0),
                 stirDegrees=s?.Brew?.StirAcceptedDegrees ?? 0,shakeReversals=s?.Brew?.ShakeReversals ?? 0,shakerClosed=s?.Brew?.ShakerClosed ?? false,layerCount=owner.Workbench.VisibleLayerCount,
                 stirX=point.x,stirY=Screen.height-point.y,stirRadius=Screen.height/(2*owner.Camera.orthographicSize)*.25f,pointerX=pointer.x,pointerY=Screen.height-pointer.y,
-                textRole=s?.CurrentText?.Role,textId=s?.CurrentText?.Id,displayedSpeaker=owner.Ui.DisplayedSpeaker,saveError=s?.SaveError ?? owner.StartupError,memoryVisible=owner.Memory.Visible,memoryGlowing=owner.Memory.Glowing,loversMemoryVisible=owner.Memory.LoversVisible,windmillMemoryVisible=owner.Memory.WindmillVisible,hamletMemoryVisible=owner.Memory.HamletVisible,
+                textRole=s?.CurrentText?.Role,textId=s?.CurrentText?.Id,displayedSpeaker=owner.Ui.DisplayedSpeaker,saveError=s?.SaveError ?? owner.StartupError,memoryVisible=owner.Memory.Visible,memoryGlowing=owner.Memory.Glowing,loversMemoryVisible=owner.Memory.LoversVisible,windmillMemoryVisible=owner.Memory.WindmillVisible,hamletMemoryVisible=owner.Memory.HamletVisible,faustMemoryVisible=owner.Memory.FaustVisible,
                 guestIds=s?.CurrentEncounter.GuestIds.ToArray() ?? Array.Empty<string>(),visibleActors=VisibleActors().Select(a=>PresentedGuestId(owner,a)).ToArray(),actorBindingIds=VisibleActors().Select(a=>a.GuestId).ToArray(),invalidRenderers=InvalidVisibleAssets(),
                 eventSystems=FindObjectsByType<UnityEngine.EventSystems.EventSystem>(FindObjectsSortMode.None).Length,audioListeners=FindObjectsByType<AudioListener>(FindObjectsSortMode.None).Count(x=>x.isActiveAndEnabled),
                 frameMs=Time.unscaledDeltaTime*1000,visibleText=texts.Select(x=>x.text).ToArray(),overflowText=texts.Where(x=>!string.IsNullOrWhiteSpace(x.text) && x.isTextOverflowing).Select(x=>x.text).ToArray(),

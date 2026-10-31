@@ -1,13 +1,14 @@
 param(
  [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.-]+$')][string]$EvidenceName,
  [ValidateSet(720,1080)][int]$Height=720,
- [ValidateSet(2,3,4)][int]$Act=3,
+ [ValidateSet(2,3,4,5)][int]$Act=3,
  [ValidateSet('New','Prior','Legacy','Checkpoint')][string]$Start='New',
  [string]$CheckpointRoot='',
  [switch]$FailHanky,
  [switch]$QuixoteMismatch,
  [switch]$FailFrench,
  [switch]$HamletMismatch,
+ [switch]$FaustMismatch,
  [switch]$Media,
  [ValidateRange(60,7200)][int]$TimeoutSeconds=1800
 )
@@ -16,6 +17,7 @@ if($Act -eq 2 -and ($Start -eq 'Prior' -or $QuixoteMismatch)){throw 'ACT 2 uses 
 if($FailHanky -and $QuixoteMismatch){throw 'Use separate runs for required discovery retry and Quixote mismatch.'}
 if(($FailFrench -or $HamletMismatch) -and $Act -ne 4){throw 'French discovery and Hamlet mismatch require ACT 4.'}
 if(($FailFrench -or $HamletMismatch) -and ($FailHanky -or $QuixoteMismatch)){throw 'Keep ACT 4 fixtures separate from earlier ACT fixtures.'}
+if($FaustMismatch -and ($Act -ne 5 -or $FailFrench -or $HamletMismatch -or $FailHanky -or $QuixoteMismatch)){throw 'Faust mismatch is a separate ACT 5 fixture.'}
 $productionPath=Split-Path $PSScriptRoot -Parent
 $outputPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName"
 $executablePath=Join-Path $productionPath "Validation/Builds/Act${Act}Production/SurlhwaAct${Act}.exe"
@@ -68,6 +70,7 @@ if($FailHanky){$fixture=if($Start -eq 'New'){'hanky-retry'}else{'continue-hanky-
 if($QuixoteMismatch){$fixture=if($Start -eq 'New'){'quixote-mismatch'}else{'continue-quixote-mismatch'}}
 if($FailFrench){$fixture+='-french-retry'}
 if($HamletMismatch){$fixture+='-hamlet-mismatch'}
+if($FaustMismatch){$fixture+='-faust-mismatch'}
 $width=[int]($Height*16/9)
 $arguments=@('-batchmode','-force-d3d11','-screen-fullscreen','0','-screen-width',[string]$width,'-screen-height',[string]$Height,
  '-campaignEvidenceRoot',$outputPath,'-campaignSaveRoot',$savePath,'-campaignProof',$fixture,'-logFile',(Join-Path $outputPath 'Player.log'))

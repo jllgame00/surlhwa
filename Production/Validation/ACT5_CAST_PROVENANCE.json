@@ -1,0 +1,339 @@
+{
+  "scope": "P07d representative ACT 5 cast and MEM-05",
+  "baseline": "33de7c7",
+  "authority": "Final Canon55 / Canon10 MEM-05 / approved Architecture11 / owner-authorized exact RC1 source art reuse",
+  "status": "BOUNDED_ACT5_IMPLEMENTED_AND_OBJECTIVELY_VERIFIED; final art, motion and atmosphere remain HUMAN_SIGNOFF_REQUIRED; presentation debt remains open",
+  "preserved": {
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity": "82a7d6e8bb8658dec55a667a973e68d7d3d1f2434dc97f809da9530c01e58db6",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act2.unity": "ffa5052f69bfa5264c65650f1cf26f55f2d02d28fd54fe847f8f037f5a0b4d11",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act3.unity": "6c375a254e7fb00620425f00340de40c26285468709401d617641172b845d85d",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity": "3e88c3f88c9e4e9d344ce863e27e8f4ef20603fb71e39472c4e9a0ec754df902",
+    "Production/Content/Campaign/act1.json": "0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4",
+    "Production/Content/Campaign/act2.json": "e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1",
+    "Production/Content/Campaign/act3.json": "9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0",
+    "Production/Content/Campaign/act4.json": "fcc2aeb9c4269c2c9fd34018e4c82b79553ffc3645ad2b8be3970abd673ad6fe"
+  },
+  "assets": [
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Chibi/Faust.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act5Assets/FaustStanding.png",
+      "sha256": "199f1afada80b723d178c77c18ed3a88dec743378832c4dd2d6ce7b88cdadd4f",
+      "dimensions": [
+        44,
+        84
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        44,
+        84
+      ],
+      "treatment": "Exact source bytes inspected with view_image before adoption; independent Production mesh/material/import metadata. No repaint, resampling, or previous actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Faust-Seated.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act5Assets/FaustSeated.png",
+      "sha256": "c4431e7b358106e98489850db9730c235740a4ef85cfba7999101bf95281a737",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        19,
+        9,
+        70,
+        85
+      ],
+      "treatment": "Exact source bytes inspected with view_image before adoption; independent Production mesh/material/import metadata. No repaint, resampling, or previous actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk0.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act5Assets/FaustWalk0.png",
+      "sha256": "b5909c904d175cf413f2603cced441dcd8aa53ab4d9152484736acf8d0960ebf",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        26,
+        16,
+        71,
+        99
+      ],
+      "treatment": "Exact source bytes inspected with view_image before adoption; independent Production mesh/material/import metadata. No repaint, resampling, or previous actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk1.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act5Assets/FaustWalk1.png",
+      "sha256": "abf4cae450796f53d8b90b8eba8c5e2373dc0723c3bc5845cc0264b6aadac5d2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        26,
+        16,
+        70,
+        100
+      ],
+      "treatment": "Exact source bytes inspected with view_image before adoption; independent Production mesh/material/import metadata. No repaint, resampling, or previous actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk2.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act5Assets/FaustWalk2.png",
+      "sha256": "5ca81eb23c73dc159422fdf70a695e4dcf1637db9593b4358dc018171fcb95d6",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        26,
+        16,
+        70,
+        100
+      ],
+      "treatment": "Exact source bytes inspected with view_image before adoption; independent Production mesh/material/import metadata. No repaint, resampling, or previous actor reuse."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Faust-Walk3.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act5Assets/FaustWalk3.png",
+      "sha256": "abf4cae450796f53d8b90b8eba8c5e2373dc0723c3bc5845cc0264b6aadac5d2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        26,
+        16,
+        70,
+        100
+      ],
+      "treatment": "Exact source bytes inspected with view_image before adoption; independent Production mesh/material/import metadata. No repaint, resampling, or previous actor reuse."
+    }
+  ],
+  "authoringDecisions": [
+    {
+      "id": "faust-source-contact",
+      "pixelsPerUnit": 70,
+      "standingPivot": [
+        20,
+        0
+      ],
+      "walkPivot": [
+        46,
+        0
+      ],
+      "seatedPivot": [
+        34,
+        8
+      ],
+      "sourceSeatedPelvisBottomUp": [
+        46,
+        34
+      ],
+      "rationale": "Independent six-image inspection: Faust standing is44x84. The near-floor left sole is x9..15 on bottom-up row1; right sole is x24..31 on row0 (x24..32 on row1). The midpoint between the two sole clusters is20. The96px neutral walk canvas adds26 horizontally, giving46. The seated source is96x100, with opaque bent-leg contact46,34 bottom-up and lowest opaque row15. Its pivot34,8 retains the accepted Q1 local seat offset12,26 at70ppu without moving roots, seat anchors or scale. The coincidence of seated/walk x46 with earlier actors is derived from this source, not copied from their pivots.",
+      "sourceDerivationReference": "D:/univ/surlhwa/Surlhwa/Tools/prepare_character_motion.py lines39-67, read-only provenance only; no RC1 runtime code adopted",
+      "normalQ1SeatedCameraRayOffsetMeters": 0.14,
+      "focusedOrStandingOffsetMeters": 0
+    },
+    {
+      "id": "mem05-supported-floor-trace",
+      "intent": "One faint floor circle containing visibly broken glass and a tiny red point. All geometry keeps actual support/depth; no global horror, lighting changes, interaction, or trigger authority.",
+      "retainedMemories": "MEM01..04 keep existing shapes, origins and receipt ownership. Later solo actor routing preserves the Prince memorial chair.",
+      "validation": "Root-run source contact, physical support and confined point, receipt ownership/variant, preserved earlier memories, controller routing and actual GPU depth PASS at720p/1080p. Root also inspected actual normal-material Player images at720p/1080p and confirmed visible supported MEM05 plus all four earlier memories. This does not close final subjective visual/motion or scheduled presentation review.",
+      "origin": [
+        1.65,
+        0.005,
+        2.5
+      ],
+      "facing": "Circle lies in world XZ on the floor; broken glass and the confined red point remain world XY. Focus changes do not rotate any MEM05 part.",
+      "physicalSupport": "C_Floor top y0 supports the circle/glass at y.005. Circle x1.3875..1.9125,z2.2375..2.7625 lies within the actual floor. Glass height .203m; tiny point size .028m; no Light or Collider components."
+    }
+  ],
+  "integration": {
+    "builder": "Surlhwa.Editor.ActFiveExpansionBuilder.PrepareScene",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1_Act5.unity",
+    "bundle": "Assets/GeneratedContent/act5-content.json",
+    "sourceHistory": [
+      "through_act_04",
+      "through_act_03",
+      "through_act_02",
+      "act_01"
+    ],
+    "font": "Assets/Surlhwa/Act5Assets/Act5Korean.asset",
+    "controllerField": "Faust",
+    "memoryProjection": [
+      "FaustVisible",
+      "FaustCircle",
+      "FaustGlass",
+      "FaustGlow"
+    ],
+    "acceptance": "ActFivePresentationTests: source contact/focus, physical floor support and confined glow, receipt identity/variant, prior memory preservation, actual controller routing/unreserved stool/hiding, separate scene/history/art, GPU depth at720p/1080p. Human final visual/motion approval remains separate."
+  },
+  "verificationEvidence": {
+    "red": "Evidence/act5-presentation-red-01.xml",
+    "redResult": "Six cases failed before implementation: source hip error .1021327m, missing separate scene, false MEM05 visibility, null new memory parts at both GPU resolutions, and routing blocked by ACT5 content-loader RED. Routing must run after content integration.",
+    "scope": "Observed Editor, actual GPU depth and normal-material Player prerequisites. Root inspected the listed actual Player images. Simulated InputSystem proof does not close OS-native input, dedicated performance, broader presentation debt or human final visual/motion approval.",
+    "green": "Evidence/act5-editor-full-01.xml",
+    "greenResult": "Full Editor495/495 PASS with natural exit0. All6 ACT5 presentation cases PASS, including exact source hip, supported receipt-only floor memory, confined red point, explicit runtime routing/unreserved seat/other visits/menu hiding, separate scene exact history/art, and GPU at720p/1080p."
+  },
+  "sceneAudit": {
+    "source": "Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity",
+    "sourceObjectCount": 1968,
+    "act5ObjectCount": 1983,
+    "addedObjects": 15,
+    "removedObjects": 0,
+    "existingSemanticChanges": [
+      "Controller bundle/font/history/Faust binding",
+      "Character parent child list"
+    ],
+    "preserved": "All earlier physical transforms, camera, actors and anchors have unchanged values. New serialized whitespace was normalized after the Player build and before proof inventories; the recorded37 files retain identical non-whitespace tokens. Earlier scene/source bytes remain preserved."
+  },
+  "diagnosticMemoryPixels": {
+    "1280x720": [
+      56,
+      804,
+      96,
+      240,
+      78,
+      131,
+      111,
+      180,
+      229,
+      44,
+      4
+    ],
+    "1920x1080": [
+      126,
+      1835,
+      245,
+      496,
+      175,
+      287,
+      234,
+      422,
+      520,
+      93,
+      5
+    ],
+    "order": [
+      "star",
+      "swing",
+      "empty_place",
+      "windmill_fragment",
+      "wing",
+      "hamlet_stage",
+      "hamlet_skull",
+      "hamlet_shadow",
+      "faust_circle",
+      "faust_glass",
+      "faust_glow"
+    ],
+    "meaning": "Per-part actual white/dark color captures isolate pixel visibility with all real geometry, opaque room depth and other memory occlusion retained. No sorting override. This proves depth prerequisites, not final art/atmosphere."
+  },
+  "finalEvidence": {
+    "summary": "Evidence/act5-final-runtime-summary.json",
+    "playerResult": "Five actual Player proof runs PASS with natural exit0, zero text overflow and zero invalid visible assets. Both four-service continuation routes, mid-farewell reload, and completed Continue at720p/1080p are covered.",
+    "runs": [
+      {
+        "run": "act5-player-complete-1080-01",
+        "services": 39,
+        "departures": 37,
+        "known": 8,
+        "memories": 5,
+        "visitedSlots": [],
+        "faustMismatchObserved": false
+      },
+      {
+        "run": "act5-player-complete-720-01",
+        "services": 37,
+        "departures": 37,
+        "known": 8,
+        "memories": 5,
+        "visitedSlots": [],
+        "faustMismatchObserved": false
+      },
+      {
+        "run": "act5-player-farewell-reload-720-01",
+        "services": 39,
+        "departures": 37,
+        "known": 8,
+        "memories": 5,
+        "visitedSlots": [],
+        "faustMismatchObserved": false
+      },
+      {
+        "run": "act5-player-open-720-01",
+        "services": 37,
+        "departures": 37,
+        "known": 8,
+        "memories": 5,
+        "visitedSlots": [
+          33,
+          34,
+          35,
+          36
+        ],
+        "faustMismatchObserved": false
+      },
+      {
+        "run": "act5-player-quiet-mismatch-1080-01",
+        "services": 39,
+        "departures": 37,
+        "known": 8,
+        "memories": 5,
+        "visitedSlots": [
+          33,
+          34,
+          35,
+          36
+        ],
+        "faustMismatchObserved": true
+      }
+    ],
+    "inventorySha256": "69bd4aede8314a47153d08f7f04aefcd4ae5053b9d3fd02d7ff4bbd509747131",
+    "inventoryMeaning": "All five runs retained the same source/Player inventory recorded before their execution.",
+    "normalMaterialPlayerInspection": {
+      "inspectedBy": "root agent",
+      "images": [
+        {
+          "path": "Evidence/act5-player-open-720-01/004-act5-intro-33-0.png",
+          "inspection": "Faust seated with source hip contact and the Prince remembered chair vacant; authored text readable at720p."
+        },
+        {
+          "path": "Evidence/act5-player-quiet-mismatch-1080-01/006-act5-intro-33-2.png",
+          "inspection": "Faust seated, Prince remembered chair vacant and authored narration readable at1080p."
+        },
+        {
+          "path": "Evidence/act5-player-open-720-01/034-earned-memory.png",
+          "inspection": "All five earned memories visible with actual normal materials at720p, including the supported floor circle, broken glass and confined tiny red point."
+        },
+        {
+          "path": "Evidence/act5-player-quiet-mismatch-1080-01/034-earned-memory.png",
+          "inspection": "All five earned memories visible with actual normal materials at1080p after a correctly prepared non-fitting Faust service and natural departure."
+        }
+      ],
+      "scope": "Objective contact, empty-chair preservation, text readability, retained memories and normal-material visibility checks only."
+    },
+    "serializationQualification": {
+      "manifest": "Evidence/act5-preproof-normalization.json",
+      "normalizedFiles": 37,
+      "timing": "After Player build, before raw Player proof inventory",
+      "change": "Whitespace only in new serialized files; non-whitespace tokens unchanged. Build-source and normalized-source hashes remain separately recorded; the Player executable was not rebuilt solely for formatting."
+    },
+    "sourceArtFinalApproval": false,
+    "humanSignoffRequired": [
+      "Final art quality and composition",
+      "Animation and bartending feel",
+      "Dialogue tone and pacing",
+      "Audio/music and overall emotional impact"
+    ],
+    "presentationDebtClosed": false
+  },
+  "postProofMetadataWhitespace": {
+    "evidence": "Evidence/act5-postproof-meta-whitespace.json",
+    "onlyCurrentInventoryDifference": "Unity/Assets/GeneratedContent/act5-content.json.meta",
+    "nonWhitespaceTokensUnchanged": true,
+    "rawProofInventoriesPreserved": true
+  }
+}

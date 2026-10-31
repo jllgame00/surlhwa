@@ -10,7 +10,8 @@ ROOT=Path(__file__).resolve().parents[1]
 PROFILES={
     'through_act_02':dict(act=2,slots=25,known=7,memories=2,prefix='act2',scene='Bar_Q1_Act2'),
     'through_act_03':dict(act=3,slots=29,known=7,memories=3,prefix='act3',scene='Bar_Q1_Act3'),
-    'through_act_04':dict(act=4,slots=33,known=8,memories=4,prefix='act4',scene='Bar_Q1_Act4')}
+    'through_act_04':dict(act=4,slots=33,known=8,memories=4,prefix='act4',scene='Bar_Q1_Act4'),
+    'through_act_05':dict(act=5,slots=37,known=8,memories=5,prefix='act5',scene='Bar_Q1_Act5')}
 
 
 def profile_for_act(act):
@@ -59,7 +60,7 @@ def validate_records(report,captures,checkpoints,expected_supply=None):
             # Inherited failed attempts can make services exceed departures, so bind the
             # intermediate count to the final total minus exactly the ordinary service.
             if profile['act']==3: require(memory.get('services')==report.get('services',0)-1,'MEM-03 capture occurred after final ordinary service')
-    if profile['act']==4:
+    if profile['act']>=4:
         require(final.get('hamletVisible'),'Missing final Hamlet memory visibility')
         if 29 in report.get('visitedSlots',[]):
             supplied=set(report.get('suppliedIngredients',[]))
@@ -71,6 +72,15 @@ def validate_records(report,captures,checkpoints,expected_supply=None):
             require(report.get('frenchRetryObserved') and 'failed-service-29' in names,'Missing actual French failure/retry')
         if report.get('frenchRetryObserved'):
             require({'french-retry','french-retry-read'}<=set(names) and any(c['phase']=='Retry' and c.get('textId')=='text_rc1_0039' for c in captures),'Missing authored French retry reading')
+    if profile['act']>=5:
+        require(final.get('faustVisible'),'Missing final Faust memory visibility')
+        # A report cannot omit services to opt out of their evidence checks.
+        # ACT5 recommendations accept one service; a post-service reload resumes
+        # its reading/departure without serving that already committed cup again.
+        after_service=report.get('startPhase') in ('Reaction','Result','Discovery','Farewell','Departing')
+        first=max(33,report.get('startSlot',0)+(1 if after_service else 0))
+        expected=[] if report.get('startPhase')=='Complete' else list(range(first,total))
+        require(sorted(x for x in report.get('visitedSlots',[]) if x>=33)==expected,'Reported ACT 5 service visits do not match the resumed phase')
     return errors
 
 
@@ -133,6 +143,33 @@ def validate_act4_progress(payload,report,source_payload=None):
     return errors
 
 
+def validate_act5_progress(payload,report,source_payload=None):
+    errors=[]
+    def require(condition,message):
+        if not condition: errors.append(message)
+    services=payload.get('services',[]);completed=payload.get('completedOccurrences',[]);memories=payload.get('memories',[])
+    require(payload.get('phase')=='Complete' and len(completed)==37 and len(set(completed))==37,'Incomplete ACT 5 departures')
+    require(len(payload.get('knownReceipts',{}))==8 and len(memories)==5,'Wrong ACT 5 knowledge/memory count')
+    memory=[m for m in memories if m.get('id')=='mem_05']
+    require(len(memory)==1 and memory[0].get('variant')=='faint_circle_broken_glass_red_light' and memory[0].get('occurrenceId','').endswith(':36') and memory[0].get('occurrenceId') in completed,'MEM-05 not earned by Faust natural departure')
+    inherited=(source_payload or {}).get('services',[])
+    require(services[:len(inherited)]==inherited,'Inherited service history changed during Continue')
+    for s in services:
+        if s['outcome'].get('recipeId')=='recipe_french_75' and s['outcome'].get('preparation')=='Good':
+            require(validate_french_snapshot(s.get('snapshot',{})),'French service lacks actual Shaker Strain / measured Champagne / fresh GentleStir')
+    recipes={33:'recipe_dry_martini',34:'recipe_gin_fizz',35:'recipe_manhattan',36:'recipe_french_75' if report.get('faustMismatchObserved') else 'recipe_negroni'}
+    for slot in range(33,37):
+        rows=[s for s in services if s.get('occurrenceId','').endswith(':'+str(slot))]
+        require(len(rows)==1 and rows[0].get('discovered') is not True,'ACT 5 visit must have one service without a new discovery: '+str(slot))
+        if any(s.get('occurrenceId','').endswith(':'+str(slot)) for s in inherited): continue
+        mismatch=slot==36 and report.get('faustMismatchObserved',False)
+        require(len(rows)==1 and rows[0]['outcome'].get('recipeId')==recipes[slot] and rows[0]['outcome'].get('preparation')=='Good' and rows[0]['outcome'].get('qualityGood') is True and rows[0]['outcome'].get('fits') is (not mismatch),f'Missing actual ACT 5 service at slot {slot}')
+    if report.get('faustMismatchObserved'):
+        final=[s for s in services if s.get('occurrenceId','').endswith(':36')]
+        require(len(final)==1 and final[0]['outcome'].get('recipeId')=='recipe_french_75' and final[0]['outcome'].get('fits') is False,'Missing actual Faust mismatch')
+    return errors
+
+
 def validate_act3_progress(payload,report,source_payload=None):
     errors=[]
     def require(condition,message):
@@ -173,7 +210,7 @@ def inventory(act):
 def verify(folder,act=3):
     report=read(folder/'player-result.json');captures=lines(folder/'captures.jsonl');checkpoints=lines(folder/'checkpoints.jsonl')
     content=read(ROOT/f'Content/Campaign/act{act}.json')
-    errors=validate_records(report,captures,checkpoints,content['supply'] if act==4 else None);profile=profile_for_act(act);total=profile['slots']
+    errors=validate_records(report,captures,checkpoints,content['supply'] if act>=4 else None);profile=profile_for_act(act);total=profile['slots']
     def require(condition,message):
         if not condition: errors.append(message)
     expected=read(folder/'expected-run.json');process=read(folder/'process.json')
@@ -213,12 +250,13 @@ def verify(folder,act=3):
         require(any(s['outcome']['preparation']!='Good' and s['snapshot']['garnish']!='orange_zest' for s in hanky),'Missing actual failed Hanky preparation')
     if act>=3:
         source_payload=read(folder/'origin/slot1/current.json')['payload'] if expected['start']!='New' else None
-        errors.extend((validate_act4_progress if act==4 else validate_act3_progress)(payload,report,source_payload))
+        errors.extend({3:validate_act3_progress,4:validate_act4_progress,5:validate_act5_progress}[act](payload,report,source_payload))
         if report['startDepartures']<28:
             after=read(folder/'checkpoints/after-departure-27/slot1/current.json')['payload']
             require(len(after['completedOccurrences'])==28 and not any(s['occurrenceId'].endswith(':28') for s in after['services']) and any(m['id']=='mem_03' and m['occurrenceId'].endswith(':27') for m in after['memories']),'After-departure-27 save does not prove memory before final ordinary service')
     if 'quixote-mismatch' in expected['fixture']: require(report.get('quixoteMismatchObserved'),'Requested Quixote mismatch not observed')
     if 'hamlet-mismatch' in expected['fixture']: require(report.get('hamletMismatchObserved'),'Requested Hamlet mismatch not observed')
+    if 'faust-mismatch' in expected['fixture']: require(report.get('faustMismatchObserved'),'Requested Faust mismatch not observed')
     if 'french-retry' in expected['fixture']: require(report.get('frenchFailure') and report.get('frenchRetryObserved'),'Requested French failure/retry not observed')
     authored={t['id']:t for t in content['texts']};encounters={e['id']:e for e in content['encounters']}
     for c in captures:
@@ -231,7 +269,8 @@ def verify(folder,act=3):
             if len(c['guestIds'])==2: require(c['servingVessels']==1,'Paired encounter must retain one serving vessel')
             if c['memories']<2: require(not c['loversVisible'],'MEM-02 appeared before earned departure')
             if act>=3 and c['slot']<=27: require(not c.get('windmillVisible'),'MEM-03 appeared before Quixote departure')
-            if act==4 and c['slot']<=32: require(not c.get('hamletVisible'),'MEM-04 appeared before Hamlet departure')
+            if act>=4 and c['slot']<=32: require(not c.get('hamletVisible'),'MEM-04 appeared before Hamlet departure')
+            if act>=5 and c['slot']<=36: require(not c.get('faustVisible'),'MEM-05 appeared before Faust departure')
         if act==4 and c['phase']=='Retry' and c['slot']==29:
             errors.extend(validate_authored_text(c,authored))
             require(c.get('textId')=='text_rc1_0039','Wrong authored French retry text')
@@ -263,7 +302,7 @@ def verify(folder,act=3):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=('inventory','verify-inventory','verify'));p.add_argument('path',type=Path);p.add_argument('--act',type=int,choices=(2,3,4),default=3);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=('inventory','verify-inventory','verify'));p.add_argument('path',type=Path);p.add_argument('--act',type=int,choices=(2,3,4,5),default=3);args=p.parse_args()
     if args.mode=='inventory':
         args.path.write_text(json.dumps(dict(act=args.act,files=inventory(args.act)),indent=2),encoding='utf-8');print('CAMPAIGN_INVENTORY_WRITTEN');return
     errors=([] if read(args.path)['files']==inventory(args.act) else ['Source/Player inventory changed']) if args.mode=='verify-inventory' else verify(args.path,args.act)
@@ -274,10 +313,14 @@ def main():
         print(json.dumps(dict(newQuixoteMismatchObserved=report.get('quixoteMismatchObserved',False),
                               inheritedQuixoteServicePreserved=inherited['servicePreserved'],
                               inheritedQuixoteMismatchPreserved=inherited['mismatchPreserved'])))
-        if args.act==4:
+        if args.act>=4:
             hamlet=inherited_service_evidence(payload,read(origin)['payload'] if origin.is_file() else None,32)
             print(json.dumps(dict(newHamletMismatchObserved=report.get('hamletMismatchObserved',False),
                                   inheritedHamletServicePreserved=hamlet['servicePreserved'],inheritedHamletMismatchPreserved=hamlet['mismatchPreserved'])))
+        if args.act>=5:
+            faust=inherited_service_evidence(payload,read(origin)['payload'] if origin.is_file() else None,36)
+            print(json.dumps(dict(newFaustMismatchObserved=report.get('faustMismatchObserved',False),
+                                  inheritedFaustServicePreserved=faust['servicePreserved'],inheritedFaustMismatchPreserved=faust['mismatchPreserved'])))
     print('CAMPAIGN_PROOF_PASS' if args.mode=='verify' else 'CAMPAIGN_INVENTORY_UNCHANGED')
 
 

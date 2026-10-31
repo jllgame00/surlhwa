@@ -89,3 +89,14 @@ All PD01-PD11 remain OPEN. Native-input certification and dedicated performance
 validation remain separately scheduled; six actual simulated-input Player runs
 are documented in [ACT 4 runtime](ACT4_RUNTIME_CHECKPOINT.md). No final
 presentation approval is inferred from this checkpoint.
+
+2026-10-31 ACT5 integration: Faust's source poses and receipt-driven floor circle,
+broken glass and tiny contained red point now have bounded Q1 presentation.
+Normal-material720p/1080p Player images and full Editor depth/contact checks
+confirm visibility and retained prior memories. No room-wide horror/lighting
+change or interaction was introduced. All PD01-PD11 remain OPEN, including
+character/environment consistency, final memory art, motion, UI, mix and music.
+Native and performance certification remain scheduled. Five actual Player runs
+and the explicit simulated-input tier are recorded in
+[ACT5 runtime](ACT5_RUNTIME_CHECKPOINT.md); this checkpoint does not grant final
+presentation approval.
