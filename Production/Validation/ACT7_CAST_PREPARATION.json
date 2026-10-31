@@ -1,0 +1,301 @@
+{
+  "status": "READ_ONLY_ACT7_CAST_PREPARATION; no production asset/code/content/scene writes or Unity execution",
+  "authority": [
+    "ACT7_ENDING_IMPLEMENTATION_PLAN.md",
+    "Final Canon57 OD01-03",
+    "Final Canon10 MEM07",
+    "Architecture11"
+  ],
+  "inspectedScene": "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act6.unity",
+  "inspectedSceneSha256": "c6ce6a62e94e166302d0bffc22d5b30cc95cc66031134fc6d8dafcce26c09860",
+  "fullSixMemoryImage": "Evidence/act6-player-open-720-01/054-earned-memory.png",
+  "sourceAssets": [
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+      "sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+      "dimensions": [
+        62,
+        88
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        62,
+        88
+      ],
+      "inspection": "Exact source inspected with view_image. Read-only; not yet adopted."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Seated.png",
+      "sha256": "1ef2a9a91fd247cd964232bc781a68d981d8d9649c34ac9382f9a3a70b97072e",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        13,
+        5,
+        78,
+        85
+      ],
+      "inspection": "Exact source inspected with view_image. Read-only; not yet adopted."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk0.png",
+      "sha256": "6e571523891bcae58632053a5cd2099420e9977f78df60b6b3f82715d821c5b2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        16,
+        12,
+        80,
+        100
+      ],
+      "inspection": "Exact source inspected with view_image. Read-only; not yet adopted."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk1.png",
+      "sha256": "f436a2c6cb7169c42b6326831ab3867bff961f4e06c3d599513af348012ea8a2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        12,
+        79,
+        100
+      ],
+      "inspection": "Exact source inspected with view_image. Read-only; not yet adopted."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk2.png",
+      "sha256": "9e2db87915b1aa214d90f21113dbcea46f21f2bfc933711a6f63fc0c16a642d3",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        12,
+        79,
+        100
+      ],
+      "inspection": "Exact source inspected with view_image. Read-only; not yet adopted."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk3.png",
+      "sha256": "f436a2c6cb7169c42b6326831ab3867bff961f4e06c3d599513af348012ea8a2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        12,
+        79,
+        100
+      ],
+      "inspection": "Exact source inspected with view_image. Read-only; not yet adopted."
+    }
+  ],
+  "proposedContacts": {
+    "pixelsPerUnit": 70,
+    "standingPivot": [
+      24,
+      0
+    ],
+    "walkPivot": [
+      41,
+      0
+    ],
+    "seatedPivot": [
+      29,
+      8
+    ],
+    "seatedHipBottomUp": [
+      41,
+      34
+    ],
+    "lowestSeatedOpaqueRowBottomUp": 15,
+    "derivation": "Standing62x88: left near-floor solex9..15 atbottom-up1 and rightsolex30..38 atrow0 have pixel-center midpoints12.5/34.5, averaging23.5; nearest common integer-pixel contact24. Neutral96px walk adds17 =>41, with actual soles26..32 and47..55. Seated torso/bent-leg seam41,34 bottom-up is opaque; pivot29,8 retains accepted local seatcontact12,26. The wider cloak/canvas center31 is not the foot pivot.",
+    "sourceGenerationReference": "Read-only RC1 Tools/prepare_character_motion.py: sourceh88 yields hip61/canvasY12; seatedlift7 retains the torso/leg seam atbottom-up34. No RC1 runtime systems are proposed for reuse.",
+    "scale": "Preserve common70ppu and Q1 CharacterScale1.12; do not shrink this88px source to match84px-tall actors.",
+    "q1Thickness": "Accepted.14m seated normal camera-ray offset, zero focused/standing offset. Keep physical actor and seat anchors unchanged."
+  },
+  "memoryPlan": {
+    "id": "mem_07",
+    "variant": "anchor_ship_fragment",
+    "grant": "Natural departure46 independent ofFIT, before explicit ending reading. Receipt projection owns no ending transition.",
+    "proposedOrigin": [
+      0.65,
+      0.005,
+      3.1
+    ],
+    "support": "Existing C_Floor topy0. Fixed world-XY contours5mm above the floor; groupbounds x[.33,.97],y[.005,.345],z3.10 remain inside actual floorx[-4.8,4.8],z[-2.65,3.45]. Every base corner supported; no billboard. The anchor is below the central shelf/niche, not behind its opaque upper surfaces.",
+    "composition": "Small weathered anchor(~.22mwide/.34mhigh) atleft; low broken hull/plank fragment(~.35mwide/.15mhigh) atright. Groupwidth<=.64m. Open broken edge and missing hull structure keep it a fragment. No mast/sail, completed ship, fixed-anchor victory pose, pedestal, trophy UI, Light, Collider, trigger or ending authority.",
+    "suggestedReadOnlyApis": [
+      "OdysseusVisible",
+      "OdysseusAnchor",
+      "OdysseusShipFragment"
+    ],
+    "normalQ1CandidatePixelBounds720": [
+      747.004,
+      277.29,
+      788.948,
+      310.908
+    ],
+    "projectedClearances": [
+      {
+        "name": "Clean cloth and glasses",
+        "pixelBounds720": [
+          381.528,
+          294.432,
+          444.62,
+          326.35
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 302.384
+      },
+      {
+        "name": "Ceramic pitcher and cups",
+        "pixelBounds720": [
+          861.649,
+          345.498,
+          907.67,
+          381.869
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 80.51
+      },
+      {
+        "name": "Notebook and candle",
+        "pixelBounds720": [
+          412.988,
+          199.548,
+          462.72,
+          231.466
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 287.954
+      },
+      {
+        "name": "Folded service cloth",
+        "pixelBounds720": [
+          817.378,
+          414.472,
+          861.172,
+          435.255
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 107.395
+      },
+      {
+        "name": "Quiet shelf notebook",
+        "pixelBounds720": [
+          829.899,
+          287.745,
+          861.817,
+          308.528
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 40.951
+      },
+      {
+        "name": "Actual bartender full standing quad at Q1scale1.12",
+        "pixelBounds720": [
+          572.884,
+          263.278,
+          726.362,
+          397.572
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 20.642
+      },
+      {
+        "name": "MEM01 star",
+        "pixelBounds720": [
+          514.277,
+          436.054,
+          523.927,
+          445.703
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 255.783
+      },
+      {
+        "name": "MEM02 swing and empty place",
+        "pixelBounds720": [
+          890.719,
+          279.895,
+          969.4,
+          334.452
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 101.771
+      },
+      {
+        "name": "MEM03 fragment and wing conservative envelope",
+        "pixelBounds720": [
+          557.684,
+          215.251,
+          590.344,
+          256.075
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 158.09
+      },
+      {
+        "name": "MEM04 stage skull and shadow",
+        "pixelBounds720": [
+          700.097,
+          203.81,
+          738.11,
+          240.294
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 38.05
+      },
+      {
+        "name": "MEM05 circle glass and glow",
+        "pixelBounds720": [
+          786.255,
+          321.609,
+          838.957,
+          365.93
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 10.701
+      },
+      {
+        "name": "MEM06 lotus water and ripples",
+        "pixelBounds720": [
+          457.656,
+          323.607,
+          515.464,
+          371.251
+        ],
+        "overlapsCandidate": false,
+        "rectangleSeparationPixels720": 231.888
+      }
+    ],
+    "placementReason": "Normal-material full-six-memory reference image and actual accepted Q1 geometry expose a clear rear-floor interval right of the bartender and below the Hamlet shelf, above/left of the Faust trace. Conservative projected bounds clear five major counter/shelf props, the entire bartender quad and all six earlier memories. Nearest tested rectangle gap exceeds10pixels at720p; no existing object moves.",
+    "rejectedInitialCandidate": "Origin(.25,.005,2.7) overlapped the full bartender quad in static projection and was rejected before adoption/implementation. Intermediate(.7,.005,2.95) had only3.6pixels vertical clearance from the conservative Faust envelope. Final(.65,.005,3.10) improves that gap above10pixels while retaining floor support and clearing all other tested envelopes.",
+    "validationRequired": "Static support/separation is not rendered PASS. Write source-contact/support/receipt/depth tests before implementation; root must verify anchor and fragment pixels through real room depth at720p/1080p, preserve earlier thresholds and inspect normal-material ending images.",
+    "futureExcluded": "Completed ship and fixed anchor remain canonical future revisit content."
+  },
+  "integrationPlan": "After ACT6 checkpoint, adopt exact source bytes with fresh metadata; use explicit Odysseus actor and existing unreserved stool; separate ActSevenExpansionBuilder/scene/font/history6/5/4/3/2+legacy1. Preserve the Prince chair. Root owns controller/UI/proof and Unity. All departed actors hide during ending phases.",
+  "humanApproval": false,
+  "sceneHashQualification": "The inspected ACT6 hash was observed before root Build02. Root confirmed PrepareScene then regenerated new ACT6 scene serialization with no Player active. This draft makes no current source-preservation/inventory claim. C_Floor, bartender, cloth/glasses, memory shelf and notebook geometry were rechecked unchanged during Build02; root will normalize before final inventories.",
+  "fullSixMemoryImageQualification": "ACT6 Build01 normal-material reference inspected only for existing composition/geometry. Root explicitly superseded Build01/proofs after an independent Partial-knowledge glassware leak repair; this image is not final ACT6 acceptance evidence.",
+  "scopeVerification": {
+    "productionWrites": false,
+    "sourceCopiesMade": false,
+    "unityLaunched": false,
+    "draftLocation": "Production/Validation/ACT7_CAST_PREPARATION.json",
+    "currentSceneHashClaimed": false,
+    "exactSourcePNGHashesRechecked": true
+  }
+}
