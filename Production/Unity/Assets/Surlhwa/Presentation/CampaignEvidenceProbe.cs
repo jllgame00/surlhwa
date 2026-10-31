@@ -28,11 +28,11 @@ namespace Surlhwa.Presentation
         [Serializable] public sealed class Control { public string label; public float x,y,width,height; public bool enabled; }
         [Serializable] public sealed class Observation
         {
-            public string observedUtc,phase,modal,ingredient,target,recipe,recognition,preparation,saveError,textRole,displayedSpeaker,tool,guest;
-            public int processId,foregroundProcessId,encounter,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners;
+            public string observedUtc,phase,modal,ingredient,target,recipe,recognition,preparation,saveError,textRole,textId,displayedSpeaker,tool,guest,scope,scene;
+            public int processId,foregroundProcessId,encounter,line,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners;
             public long sequence; public bool focused,nativeOwnershipEstablished,nativeInterrupted,saving,fits,quality,actComplete,shakerClosed,memoryVisible,memoryGlowing;
             public double jigger,mixing,shaker,serving,stirDegrees,frameMs,stirX,stirY,stirRadius,pointerX,pointerY;
-            public string[] visibleText,overflowText; public Control[] controls;
+            public string[] visibleText,overflowText,guestIds,visibleActors,actorBindingIds,invalidRenderers; public bool loversMemoryVisible; public Control[] controls;
         }
         private Control Read(Button button)
         {
@@ -57,19 +57,37 @@ namespace Surlhwa.Presentation
             Vector2 point=owner.Camera.WorldToScreenPoint(owner.Workbench.MixingCenter),pointer=Mouse.current?.position.ReadValue() ?? Vector2.zero;
             var o=new Observation{observedUtc=DateTime.UtcNow.ToString("o"),phase=s?.State.Phase.ToString() ?? "menu",modal=s?.Modals.Top ?? owner.Ui.MenuModal,
                 processId=System.Diagnostics.Process.GetCurrentProcess().Id,foregroundProcessId=Foreground(),focused=UnityEngine.Application.isFocused,nativeOwnershipEstablished=armed,nativeInterrupted=interrupted,
-                encounter=s?.State.SlotIndex ?? -1,services=s?.State.Services.Count ?? 0,known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=s?.State.Memories.Count ?? 0,sequence=s?.State.Sequence ?? 0,
+                scope=owner.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+                encounter=s?.State.SlotIndex ?? -1,line=s?.State.LineIndex ?? -1,services=s?.State.Services.Count ?? 0,known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=s?.State.Memories.Count ?? 0,sequence=s?.State.Sequence ?? 0,
                 saving=s?.IsSaving ?? owner.Busy,ingredient=owner.Input.SelectedIngredient,target=owner.Input.Target.ToString(),tool=owner.Input.ActiveTool,guest=s?.CurrentEncounter.GuestId,
                 recipe=outcome?.RecipeId,recognition=outcome?.Recognition.ToString(),preparation=outcome?.Preparation.ToString(),fits=outcome?.Fits ?? false,quality=outcome?.QualityGood ?? false,actComplete=s?.State.ActComplete ?? false,
                 jigger=(double)(s?.Brew?.Container(ContainerRole.Jigger).TotalMl ?? 0),mixing=(double)(s?.Brew?.Container(ContainerRole.Mixing).TotalMl ?? 0),shaker=(double)(s?.Brew?.Container(ContainerRole.Shaker).TotalMl ?? 0),serving=(double)(s?.Brew?.Container(ContainerRole.Serving).TotalMl ?? s?.State.CurrentService?.Snapshot.TotalMl ?? 0),
                 stirDegrees=s?.Brew?.StirAcceptedDegrees ?? 0,shakeReversals=s?.Brew?.ShakeReversals ?? 0,shakerClosed=s?.Brew?.ShakerClosed ?? false,layerCount=owner.Workbench.VisibleLayerCount,
                 stirX=point.x,stirY=Screen.height-point.y,stirRadius=Screen.height/(2*owner.Camera.orthographicSize)*.25f,pointerX=pointer.x,pointerY=Screen.height-pointer.y,
-                textRole=s?.CurrentText?.Role,displayedSpeaker=owner.Ui.DisplayedSpeaker,saveError=s?.SaveError ?? owner.StartupError,memoryVisible=owner.Memory.Visible,memoryGlowing=owner.Memory.Glowing,
+                textRole=s?.CurrentText?.Role,textId=s?.CurrentText?.Id,displayedSpeaker=owner.Ui.DisplayedSpeaker,saveError=s?.SaveError ?? owner.StartupError,memoryVisible=owner.Memory.Visible,memoryGlowing=owner.Memory.Glowing,loversMemoryVisible=owner.Memory.LoversVisible,
+                guestIds=s?.CurrentEncounter.GuestIds.ToArray() ?? Array.Empty<string>(),visibleActors=VisibleActors().Select(a=>PresentedGuestId(owner,a)).ToArray(),actorBindingIds=VisibleActors().Select(a=>a.GuestId).ToArray(),invalidRenderers=InvalidVisibleAssets(),
                 eventSystems=FindObjectsByType<UnityEngine.EventSystems.EventSystem>(FindObjectsSortMode.None).Length,audioListeners=FindObjectsByType<AudioListener>(FindObjectsSortMode.None).Count(x=>x.isActiveAndEnabled),
                 frameMs=Time.unscaledDeltaTime*1000,visibleText=texts.Select(x=>x.text).ToArray(),overflowText=texts.Where(x=>!string.IsNullOrWhiteSpace(x.text) && x.isTextOverflowing).Select(x=>x.text).ToArray(),
                 controls=owner.Ui.GetComponentsInChildren<Button>().Where(x=>x.isActiveAndEnabled).Select(Read).ToArray()};
             string json=JsonUtility.ToJson(o,true),path=Path.Combine(output,"observation.json");
             TryPublish(path,json); // An external reader may briefly deny replacement; the next observation retries.
             if(sequence!=o.sequence) { sequence=o.sequence; File.AppendAllText(Path.Combine(output,"transitions.jsonl"),JsonUtility.ToJson(o)+"\n"); }
+        }
+        internal static string[] InvalidVisibleAssets()
+        {
+            var invalid=FindObjectsByType<Renderer>(FindObjectsSortMode.None).Where(r=>r.enabled && !r.forceRenderingOff && r.gameObject.activeInHierarchy &&
+                (r.sharedMaterials.Length==0 || r.sharedMaterials.Any(m=>m==null || m.shader==null || m.shader.name=="Hidden/InternalErrorShader"))).Select(r=>r.name+": material/shader");
+            var actors=FindObjectsByType<CharacterView>(FindObjectsSortMode.None).Where(a=>a.Renderer!=null && a.Renderer.enabled && a.gameObject.activeInHierarchy &&
+                (a.Plane==null || a.Plane.sharedMesh==null || a.Renderer.sharedMaterial==null || a.Renderer.sharedMaterial.mainTexture==null)).Select(a=>a.name+": mesh/texture");
+            return invalid.Concat(actors).ToArray();
+        }
+        internal static CharacterView[] VisibleActors() => FindObjectsByType<CharacterView>(FindObjectsSortMode.None).Where(a=>a.Renderer!=null && a.Renderer.enabled && a.gameObject.activeInHierarchy).ToArray();
+        internal static string PresentedGuestId(CampaignController controller,CharacterView actor)
+        {
+            // The accepted ordinary view is shared by authored ordinary encounters.
+            // Preserve its raw binding separately; lovers retain their distinct actor IDs.
+            var encounter=controller.Session?.CurrentEncounter;
+            return actor==controller.Ordinary && encounter!=null && controller.Content.Guests[encounter.GuestId].Kind==GuestKind.Ordinary ? encounter.GuestId : actor.GuestId;
         }
         private static bool TryPublish(string path,string json)
         {

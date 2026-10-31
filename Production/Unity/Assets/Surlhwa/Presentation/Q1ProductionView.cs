@@ -65,6 +65,7 @@ namespace Surlhwa.Presentation
         public void ApplyActors()
         {
             foreach(var actor in new[]{Owner.Bartender,Owner.Ordinary,Owner.Prince}) {
+                if(actor==null || actor.Plane==null || actor.SeatAnchor==null || actor.Renderer==null) continue;
                 var plane=actor.Plane.transform;
                 bool seated=actor!=Owner.Bartender && actor.Plane.sharedMesh==actor.SeatedMesh;
                 float scale=Focused ? 1 : CharacterScale;
@@ -74,12 +75,13 @@ namespace Surlhwa.Presentation
                 Vector3 hip=Quaternion.Inverse(FocusAngle)*actor.SeatAnchor.localPosition;
                 plane.localPosition=seated ? actor.SeatAnchor.localPosition-plane.localRotation*(hip*scale) : Vector3.zero;
                 if(seated) {
-                    var material=actor==Owner.Prince ? PrinceSideQuarter : actor.SeatedMaterial.name.StartsWith("OrdinaryCoat") ? OrdinaryBackQuarter : null;
+                    var material=actor==Owner.Prince ? PrinceSideQuarter : actor.SeatedMaterial!=null && actor.SeatedMaterial.name.StartsWith("OrdinaryCoat") ? OrdinaryBackQuarter : null;
                     actor.Renderer.sharedMaterial=!Focused && material!=null ? material : actor.SeatedMaterial;
                     // Presentation surface thickness; pelvis/root/contact and gameplay path stay fixed.
                     if(!Focused && material!=null) plane.localPosition-=Quaternion.Inverse(actor.transform.rotation)*Owner.Camera.transform.forward*.14f;
                 }
             }
+            Owner.Cast?.ApplyView(Focused);
         }
         private void LateUpdate()
         {

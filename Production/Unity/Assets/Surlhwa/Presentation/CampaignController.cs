@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -11,20 +12,23 @@ namespace Surlhwa.Presentation
 {
     public sealed class CampaignController : MonoBehaviour
     {
-        public TextAsset Bundle; public TMP_FontAsset Font; public Texture2D Grip;
+        public TextAsset Bundle,LegacyBundle; public TMP_FontAsset Font; public Texture2D Grip;
         public CampaignArtSet Art;
-        public Camera Camera; public CharacterView Bartender,Ordinary,Prince;
+        public Camera Camera; public CharacterView Bartender,Ordinary,Prince,Chunhyang,Mongryong;
         public AudioClip Room,Winter,Pour,Stir,Strain,Ice,Glass,Seat,Entrance,Foot,Music;
         public CampaignContent Content { get; private set; } public CampaignSession Session { get; private set; }
         public SliceInputAdapter Input { get; private set; } public SliceWorkbenchView Workbench { get; private set; }
         public CampaignUi Ui { get; private set; } public CampaignAudio Audio { get; private set; }
         public CampaignMemoryView Memory { get; private set; }
+        public CampaignCastView Cast { get; private set; }
+        public bool LegacyContinuationPending { get; private set; }
         public CampaignLoadResult Saved { get; private set; } public bool Busy { get; private set; }
         public string StartupError { get; private set; } public string StorageRoot { get; private set; }
         
         
         internal CampaignSaveStore EvidenceStore => store;
         private CampaignSaveStore store; private Vector3 seatPosition; private CampaignPhase lastPhase=(CampaignPhase)(-1); private int lastEncounter=-1,lastFoot=-1; private float poseClock; private int lastCommandFrame=-1;
+        private CampaignContinuation continuation; private string legacyRoot;
         public float MasterVolume { get; private set; }=.65f; public bool LargeText { get; private set; } public bool HighContrast { get; private set; }
         private readonly System.Collections.Generic.HashSet<CharacterView> missingActors=new System.Collections.Generic.HashSet<CharacterView>();
         private bool CanShow(CharacterView actor)
@@ -40,10 +44,13 @@ namespace Surlhwa.Presentation
             {
                 Content=CampaignContentLoader.Load(Bundle.text);
                 UnityEngine.Application.targetFrameRate=60;
-                StorageRoot=Path.Combine(UnityEngine.Application.persistentDataPath,"SurlhwaProduction","v1","campaign-act1");
+                legacyRoot=Path.Combine(UnityEngine.Application.persistentDataPath,"SurlhwaProduction","v1","campaign-act1");
+                StorageRoot=Content.Scope=="act_01" ? legacyRoot : Path.Combine(UnityEngine.Application.persistentDataPath,"SurlhwaProduction","v1","campaign-through-act-02");
                 string[] args=Environment.GetCommandLineArgs(); int slot=System.Array.IndexOf(args,"-campaignEvidenceRoot");
                 if(slot>=0 && slot+1<args.Length) StorageRoot=Path.GetFullPath(args[slot+1]);
                 int saveSlot=System.Array.IndexOf(args,"-campaignSaveRoot"); if(saveSlot>=0 && saveSlot+1<args.Length) StorageRoot=Path.GetFullPath(args[saveSlot+1]);
+                int legacySlot=System.Array.IndexOf(args,"-campaignLegacySaveRoot"); if(legacySlot>=0 && legacySlot+1<args.Length) legacyRoot=Path.GetFullPath(args[legacySlot+1]);
+                if(Content.Scope!="act_01") continuation=new CampaignContinuation(LegacyBundle!=null ? LegacyBundle.text : null,Bundle.text);
                 LoadSettings(); store=new CampaignSaveStore(Path.Combine(StorageRoot,"slot1"),Content);
                 Input=gameObject.AddComponent<SliceInputAdapter>(); Input.UiCommand=HandleCommand; Input.Configure(Content.Supply);
                 var work=new GameObject("Resident ACT 1 workbench"); work.transform.position=new Vector3(.80f,1.055f,-.65f);
@@ -52,10 +59,11 @@ namespace Surlhwa.Presentation
                 Audio=gameObject.AddComponent<CampaignAudio>(); Audio.Initialize(this); Input.AcceptedCue+=Audio.Cue;
                 Ui=gameObject.AddComponent<CampaignUi>(); Ui.Initialize(this,Font); Memory=gameObject.AddComponent<CampaignMemoryView>();
                 seatPosition=Ordinary!=null ? Ordinary.transform.position : new Vector3(-.72f,0,-2);
+                Cast=GetComponent<CampaignCastView>() ?? gameObject.AddComponent<CampaignCastView>(); Cast.Initialize(this,seatPosition); Cast.Hide();
                 if(CanShow(Bartender)) Bartender.Show(true,false); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true);
-                Busy=true; Saved=await Task.Run(()=>store.Load());
+                Busy=true; await LoadSavedAsync();
             }
-            catch(Exception e) { StartupError=e.Message; Debug.LogError("ACT1_STARTUP: "+e.Message); }
+            catch(Exception e) { StartupError=e.Message; Debug.LogError("CAMPAIGN_STARTUP: "+e.Message); }
             finally { Busy=false; }
         }
         public void HandleCommand(string command)
@@ -79,13 +87,33 @@ namespace Surlhwa.Presentation
             if(Busy || Session?.IsSaving==true) return;
             if(!confirmed && (Saved?.Checkpoint!=null || Session!=null)) { OpenModal("reset"); return; }
             Busy=true; Input.Stop(); Session?.Dispose();
-            Session=await CampaignSession.StartAsync(Content,store); Input.Bind(Session,Camera,Workbench.MixingCenter); Ui.CloseMenu(); Busy=false;
+            Session=await CampaignSession.StartAsync(Content,store); LegacyContinuationPending=false; StartupError=null; Input.Bind(Session,Camera,Workbench.MixingCenter); Ui.CloseMenu(); Busy=false;
         }
-        public void ContinueRun(bool confirmed=false)
+        private async Task LoadSavedAsync()
+        {
+            LegacyContinuationPending=false;
+            Saved=await Task.Run(()=>store.Load());
+            if(continuation!=null && !store.HasHistory)
+            {
+                Saved=await Task.Run(()=>continuation.LoadSource(Path.Combine(legacyRoot,"slot1")));
+                LegacyContinuationPending=Saved.Checkpoint!=null;
+            }
+        }
+        public async void ContinueRun(bool confirmed=false)
         {
             if(Busy || Saved?.Checkpoint==null) return;
             if(Saved.RecoveryRequired && !confirmed) { Ui.MenuModal="recovery"; return; }
-            Session?.Dispose(); Session=CampaignSession.Continue(Content,store,Saved.Checkpoint); Input.Bind(Session,Camera,Workbench.MixingCenter); Ui.CloseMenu();
+            Busy=true; Input.Stop();
+            try {
+                if(LegacyContinuationPending) {
+                    Saved=await continuation.LoadOrImportAsync(Path.Combine(legacyRoot,"slot1"),store,confirmed);
+                    if(Saved.Checkpoint==null) { StartupError=Saved.Message; return; }
+                    if(Saved.RecoveryRequired && !confirmed) { Ui.MenuModal="recovery"; return; }
+                    LegacyContinuationPending=false;
+                }
+                Session?.Dispose(); Session=CampaignSession.Continue(Content,store,Saved.Checkpoint); Input.Bind(Session,Camera,Workbench.MixingCenter); Ui.CloseMenu(); StartupError=null;
+            } catch(Exception e) { StartupError="기록을 이어오지 못했습니다: "+e.Message; }
+            finally { Busy=false; }
         }
         public async void Advance()
         {
@@ -102,7 +130,8 @@ namespace Surlhwa.Presentation
             if(Busy || Session?.IsSaving==true) return;
             Busy=true; Input.Stop(); Session?.Dispose(); Session=null; Saved=null; Ui.CloseMenu(); Audio.Refresh(Input,false);
             if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true);
-            try { Saved=await Task.Run(()=>store.Load()); StartupError=null; } catch(Exception e) { StartupError=e.Message; }
+            Cast?.Hide();
+            try { await LoadSavedAsync(); StartupError=null; } catch(Exception e) { StartupError=e.Message; }
             finally { Busy=false; }
         }
         private async void Update()
@@ -110,17 +139,23 @@ namespace Surlhwa.Presentation
             if(Content==null || Ui==null) return;
             if(Session!=null)
             {
+                Input.ZestAvailable=Session.State.SlotIndex>=17 && Content.Catalog.Recipes.Values.Any(r=>r.RequiredGarnish=="orange_zest");
                 Input.Step(Time.unscaledDeltaTime); AnimateGuest();
                 Workbench.Refresh(Session.Brew,Input,Time.unscaledDeltaTime,Session.State.CurrentService?.Snapshot); Audio.Refresh(Input,Session.CanInteract);
                 Ui.Refresh(); Memory.Refresh(Session.State,seatPosition); await Session.TickAsync(Math.Min(Time.unscaledDeltaTime,.25f));
             }
-            else { Workbench.Refresh(null,null,0); Memory.Refresh(null,seatPosition); Ui.Refresh(); }
+            else { Cast?.Hide(); Workbench.Refresh(null,null,0); Memory.Refresh(null,seatPosition); Ui.Refresh(); }
         }
         private void AnimateGuest()
         {
             var phase=Session.State.Phase; int encounter=Session.State.SlotIndex;
             if(lastPhase!=phase || lastEncounter!=encounter) { poseClock=0; lastFoot=-1; lastPhase=phase; lastEncounter=encounter; if(phase==CampaignPhase.Arriving) Audio.Cue("entrance"); if(phase==CampaignPhase.Intro) Audio.Cue("seat"); }
             if(Session.CanInteract) poseClock+=Time.unscaledDeltaTime;
+            if(CampaignCastView.OwnsGuest(Session.CurrentEncounter.GuestId)) {
+                if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Ordinary)) Ordinary.Show(false,true);
+                Cast.Refresh(phase,poseClock,seatPosition); return;
+            }
+            Cast?.Hide();
             bool special=Content.Guests[Session.CurrentEncounter.GuestId].Kind==GuestKind.Special;
             CharacterView actor=special ? Prince : Ordinary,other=special ? Ordinary : Prince;
             if(CanShow(other)) other.Show(false,true);
@@ -149,7 +184,9 @@ namespace Surlhwa.Presentation
         [Serializable] private sealed class Settings { public int schemaVersion=1; public float master=.65f; public bool largeText,highContrast; }
         private void LoadSettings()
         {
-            var p=Path.Combine(StorageRoot,"settings.json"); if(!File.Exists(p)) return;
+            var p=Path.Combine(StorageRoot,"settings.json");
+            if(!File.Exists(p) && Content?.Scope!="act_01" && legacyRoot!=null) p=Path.Combine(legacyRoot,"settings.json");
+            if(!File.Exists(p)) return;
             try { var s=JsonUtility.FromJson<Settings>(File.ReadAllText(p)); if(s.schemaVersion!=1 || float.IsNaN(s.master) || s.master<0 || s.master>1) return; MasterVolume=s.master; LargeText=s.largeText; HighContrast=s.highContrast; }
             catch(Exception e) { Debug.LogWarning("Settings were not loaded: "+e.Message); }
         }

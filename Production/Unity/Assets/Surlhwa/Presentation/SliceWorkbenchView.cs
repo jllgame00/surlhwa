@@ -21,13 +21,21 @@ namespace Surlhwa.Presentation
         private Transform bottle,jigger,mixing,serving,spoon,hand; private MeshFilter jiggerFill,mixingFill,servingFill;
         private GameObject mixingIce,servingIce,cherry; private LineRenderer servingOutline,servingRim,stream; private Material liquid;
         private bool initialized; private int lastRevision=-1; private bool lastGlass;
-        private Transform shaker; private MeshFilter shakerFill; private GameObject shakerIce,shakerLid,orange;
+        private Transform shaker; private MeshFilter shakerFill; private GameObject shakerIce,shakerLid,orange,zest;
+        private Vector3 servingHome;
         private readonly List<MeshFilter> layerFills=new List<MeshFilter>();
         private CampaignArtSet art; private GameObject rocksShell,cocktailShell; private Transform floatSpoon,strainer;
         private LineRenderer spoonRunoff;
         private MeshFilter servingIceArt;
         private Renderer[] presentationRenderers;
         private int presentationOwnedCount=-1;
+        public void SetServingPresentationPosition(Vector3? worldPosition)
+        {
+            // Scene teardown may destroy this child before CampaignCastView.OnDisable.
+            if(!initialized || serving==null) return;
+            if(worldPosition.HasValue) serving.position=worldPosition.Value;
+            else serving.localPosition=servingHome;
+        }
         // Q1 visibility only: the existing serving subtree still displays actual Brew/ServiceSnapshot data.
         public void SetPresentationVisibility(bool focused,bool hasServed,Quaternion? servingFacing=null)
         {
@@ -87,6 +95,7 @@ namespace Surlhwa.Presentation
             Quad(bottle,"Bottle glass",new Rect(-.12f,.04f,.24f,.35f),Mat(new Color(.19f,.3f,.24f)),.02f);
             Quad(bottle,"Label",new Rect(-.1f,.17f,.2f,.15f),Mat(new Color(.74f,.65f,.45f)),-.02f);
             jigger=Node("Jigger 60 ml",Vector3.zero); mixing=Node("Mixing glass 300 ml",new Vector3(.75f,0,0)); serving=Node("Serving glass 180 ml",new Vector3(1.5f,0,0));
+            servingHome=serving.localPosition;
             Outline(jigger,new[]{new Vector3(-.16f,.39f,0),new Vector3(-.07f,.2f,0),new Vector3(-.12f,0,0),new Vector3(.12f,0,0),new Vector3(.07f,.2f,0),new Vector3(.16f,.39f,0)},iron,true);
             Outline(mixing,new[]{new Vector3(-.23f,.55f,0),new Vector3(-.19f,0,0),new Vector3(.19f,0,0),new Vector3(.23f,.55f,0)},edge,false);
             servingOutline=Outline(serving,new Vector3[4],edge,false);
@@ -208,6 +217,7 @@ namespace Surlhwa.Presentation
             shakerFill=Quad(shaker,"Actual shaker liquid",new Rect(0,0,0,0),Mat(Color.white),.015f); shakerIce=Ice(shaker);
             shakerLid=Quad(shaker,"Closed lid",new Rect(-.22f,.56f,.44f,.10f),iron,-.02f).gameObject;
             orange=Quad(serving,"Orange slice at rim",new Rect(.14f,.42f,.12f,.13f),Mat(new Color(.91f,.46f,.13f)),-.035f).gameObject;
+            zest=Quad(serving,"Orange zest at rim",new Rect(.15f,.45f,.09f,.025f),Mat(new Color(.95f,.56f,.17f)),-.04f).gameObject;
         }
         private void RefreshExtended(BrewingSession brew,ServiceSnapshot served)
         {
@@ -216,6 +226,7 @@ namespace Surlhwa.Presentation
             if(brew!=null) shakerFill.GetComponent<Renderer>().sharedMaterial.SetColor("_BaseColor",Tint(brew.Container(ContainerRole.Shaker)));
             shakerIce.SetActive(brew?.Container(ContainerRole.Shaker).HasIce ?? false); shakerLid.SetActive(brew?.ShakerClosed ?? false);
             orange.SetActive((brew?.GarnishId ?? served?.Garnish)=="orange_slice");
+            zest.SetActive((brew?.GarnishId ?? served?.Garnish)=="orange_zest");
             var layers=(brew?.Freeze() ?? served)?.Layers; VisibleLayerCount=layers?.Count ?? 0;
             for(int i=0;i<VisibleLayerCount;i++) if(layerFills.Count<=i) layerFills.Add(Quad(serving,"Actual Float layer "+i,new Rect(0,0,0,0),Mat(Color.white),-.005f));
             decimal accumulated=0; for(int i=0;i<layerFills.Count;i++)

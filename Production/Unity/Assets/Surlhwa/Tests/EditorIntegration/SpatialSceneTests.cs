@@ -148,7 +148,7 @@ namespace Surlhwa.Spatial.Tests
                 ReplaceAuthoredBytes(authored, new System.Text.UTF8Encoding(false).GetBytes(changed));
                 if (invalid) {
                     string previous = System.IO.File.ReadAllText(generated);
-                    Assert.Throws<BuildFailedException>(() => callbacks.Single().OnPreprocessBuild(null));
+                    Assert.Throws<BuildFailedException>(() => { foreach(var callback in callbacks.OrderBy(x=>x.callbackOrder)) callback.OnPreprocessBuild(null); });
                     Assert.That(System.IO.File.ReadAllText(generated), Is.EqualTo(previous));
                 } else {
                     foreach (var callback in callbacks) callback.OnPreprocessBuild(null);

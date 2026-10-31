@@ -7,11 +7,17 @@ namespace Surlhwa.Presentation
     public sealed class CampaignMemoryView : MonoBehaviour
     {
         private GameObject star; private Material material; private Mesh mesh;
+        private GameObject lovers;
+        private readonly System.Collections.Generic.List<Object> loversOwned=new System.Collections.Generic.List<Object>();
+        public bool LoversVisible=>lovers!=null && lovers.activeSelf;
+        public Transform LoversSwing { get; private set; }
+        public Transform LoversEmptyPlace { get; private set; }
         private Quaternion presentationFacing=Quaternion.Euler(28,0,0);
         public void SetPresentationFacing(Quaternion facing)
         {
             presentationFacing=facing;
             if(star!=null) star.transform.rotation=facing;
+            if(lovers!=null) lovers.transform.rotation=facing;
         }
         public bool Visible=>star!=null && star.activeSelf; public bool Glowing { get; private set; }
         public void Refresh(CampaignCheckpoint state,Vector3 chair)
@@ -31,7 +37,47 @@ namespace Surlhwa.Presentation
             star.transform.position=chair+new Vector3(.32f,.76f,-.06f); star.transform.rotation=presentationFacing;
             float pulse=Glowing ? .94f+.06f*Mathf.Sin(Time.unscaledTime*1.4f) : 1;
             material.SetColor("_BaseColor",(Glowing ? new Color(1,.87f,.48f) : new Color(.53f,.51f,.42f))*pulse);
+            var shared=state?.Memories.FirstOrDefault(x=>x.Id=="mem_02" && x.Variant=="swing_empty_place");
+            if(shared!=null && lovers==null) CreateLoversMemory();
+            if(lovers!=null) {
+                lovers.SetActive(shared!=null);
+                lovers.transform.rotation=presentationFacing;
+            }
         }
-        private void OnDestroy() { if(material!=null) Destroy(material); if(mesh!=null) Destroy(mesh); }
+        private void CreateLoversMemory()
+        {
+            // One quiet trace on the existing right counter beside the window. It has no interaction, award,
+            // camera override or future-revisit animation; the adjacent place stays empty.
+            lovers=new GameObject("MEM-02 swing and empty place"); lovers.transform.SetParent(transform,false);
+            lovers.transform.position=new Vector3(3.45f,.995f,2.40f); lovers.transform.rotation=presentationFacing;
+            LoversSwing=Part("Swing",new Vector3(-.18f,0,0),new Color(.52f,.34f,.19f),new[]{
+                new Rect(-.27f,0,.055f,.72f),new Rect(.215f,0,.055f,.72f),new Rect(-.29f,.68f,.58f,.055f),
+                new Rect(-.17f,.24f,.34f,.045f),new Rect(-.15f,.28f,.018f,.39f),new Rect(.132f,.28f,.018f,.39f),
+                new Rect(-.31f,0,.62f,.028f)});
+            LoversEmptyPlace=Part("Adjacent empty place",new Vector3(.40f,0,0),new Color(.38f,.31f,.23f),new[]{
+                new Rect(-.17f,0,.34f,.022f),new Rect(-.17f,.12f,.34f,.022f),
+                new Rect(-.17f,.022f,.022f,.10f),new Rect(.148f,.022f,.022f,.10f)});
+        }
+        private Transform Part(string name,Vector3 at,Color color,Rect[] rectangles)
+        {
+            var go=new GameObject(name); go.transform.SetParent(lovers.transform,false); go.transform.localPosition=at;
+            var vertices=new System.Collections.Generic.List<Vector3>(); var triangles=new System.Collections.Generic.List<int>();
+            foreach(var rect in rectangles) {
+                int n=vertices.Count; vertices.Add(new Vector3(rect.xMin,rect.yMin,0)); vertices.Add(new Vector3(rect.xMin,rect.yMax,0));
+                vertices.Add(new Vector3(rect.xMax,rect.yMax,0)); vertices.Add(new Vector3(rect.xMax,rect.yMin,0));
+                triangles.AddRange(new[]{n,n+1,n+2,n,n+2,n+3});
+            }
+            var shape=new Mesh{vertices=vertices.ToArray(),triangles=triangles.ToArray(),name="MEM02_"+name}; shape.RecalculateBounds();
+            var tint=new Material(Shader.Find("Universal Render Pipeline/Unlit")); tint.SetColor("_BaseColor",color); tint.SetFloat("_Cull",0);
+            go.AddComponent<MeshFilter>().sharedMesh=shape; var renderer=go.AddComponent<MeshRenderer>(); renderer.sharedMaterial=tint;
+            renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off; renderer.receiveShadows=false;
+            loversOwned.Add(shape); loversOwned.Add(tint); return go.transform;
+        }
+        private void OnDestroy()
+        {
+            if(material!=null) Release(material); if(mesh!=null) Release(mesh);
+            foreach(var item in loversOwned) if(item!=null) Release(item);
+        }
+        private static void Release(Object item) { if(UnityEngine.Application.isPlaying) Destroy(item); else DestroyImmediate(item); }
     }
 }

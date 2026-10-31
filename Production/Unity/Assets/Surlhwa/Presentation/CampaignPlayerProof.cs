@@ -25,6 +25,8 @@ namespace Surlhwa.Presentation
         private bool finePourInput; private ContainerRole fineRole; private decimal fineStart,fineTarget; private Key fineKey;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
+        private bool act2,deliberateFailure,retryObserved; private int expectedServices,startSlot,startDepartures,lastDepartures;
+        private string startPhase; private readonly HashSet<string> archived=new HashSet<string>(); private readonly HashSet<int> visited=new HashSet<int>();
         private string Arg(string key) { var args=Environment.GetCommandLineArgs(); int i=Array.IndexOf(args,key); return i<0 || i+1>=args.Length ? null : args[i+1]; }
         private IEnumerator Start()
         {
@@ -32,6 +34,7 @@ namespace Surlhwa.Presentation
             output=Path.GetFullPath(Arg("-campaignEvidenceRoot")); Directory.CreateDirectory(output); owner=GetComponent<CampaignController>();
             UnityEngine.Application.logMessageReceived+=Log; float until=Time.realtimeSinceStartup+40;
             while(owner.Ui==null || owner.Busy) { if(Time.realtimeSinceStartup>until) { Fail("Initialization timeout"); yield break; } yield return null; }
+            act2=owner.Content.Scope=="through_act_02";
             keyboard=InputSystem.AddDevice<Keyboard>(); mouse=InputSystem.AddDevice<Mouse>();
             InputSystem.onBeforeUpdate+=QueueStirForCurrentFrame;
             render=new RenderTexture(Screen.width,Screen.height,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB); render.Create();
@@ -43,22 +46,51 @@ namespace Surlhwa.Presentation
                 audio.Write(System.Text.Encoding.ASCII.GetBytes("RIFF")); audio.Write(0); audio.Write(System.Text.Encoding.ASCII.GetBytes("WAVEfmt ")); audio.Write(16); audio.Write((short)1); audio.Write((short)audioChannels); audio.Write(rate); audio.Write(rate*audioChannels*2); audio.Write((short)(audioChannels*2)); audio.Write((short)16); audio.Write(System.Text.Encoding.ASCII.GetBytes("data")); audio.Write(0); mediaStart=Time.realtimeSinceStartup;
             }
             yield return Capture("menu"); yield return Click("도감  Tab"); yield return Capture("codex-initial"); yield return Click("돌아가기  Esc");
-            yield return Click(fixture=="continue" || fixture=="quiet" ? "이어 하기" : "새로 시작"); yield return Idle();
+            yield return Click(fixture=="continue" || fixture=="quiet" || fixture=="continue-hanky-retry" ? "이어 하기" : "새로 시작"); yield return Idle();
             string[] plan={"recipe_test_stir","recipe_test_stir","recipe_test_stir","recipe_dry_martini","recipe_dry_martini","recipe_manwol","recipe_negroni","recipe_test_stir","recipe_negroni","recipe_manhattan","recipe_manhattan","recipe_test_stir","recipe_negroni","recipe_gin_fizz","recipe_dry_martini","recipe_gin_fizz","recipe_dry_martini"};
             if(fixture=="quiet") plan[10]="recipe_dry_martini";
-            var visited=new HashSet<int>();
+            if(act2) {
+                plan=plan.Concat(new[]{"recipe_manwol","recipe_test_stir","recipe_dry_martini","recipe_manhattan","recipe_hanky_panky","recipe_test_stir","recipe_gin_fizz","recipe_dry_martini"}).ToArray();
+                var initial=owner.Session; startSlot=initial.State.SlotIndex; startPhase=initial.State.Phase.ToString(); startDepartures=lastDepartures=initial.State.CompletedOccurrences.Count;
+                bool pendingAccepted=initial.State.CurrentService!=null && !initial.State.CompletedOccurrences.Contains(initial.State.OccurrenceId) &&
+                    (initial.CurrentEncounter.RequiredDiscovery==null || initial.Knowledge.Project(initial.CurrentEncounter.RequiredDiscovery).Known);
+                expectedServices=initial.State.Services.Count+25-startDepartures-(pendingAccepted ? 1 : 0);
+                Check(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Bar_Q1_Act2","ACT 2 dedicated production scene");
+                if(fixture.Contains("hanky-retry")) Check(startSlot<=21 && !initial.Knowledge.Project("recipe_hanky_panky").Known,"required Hanky failure begins before earned discovery");
+                ArchiveCheckpoint("act2-start"); yield return Capture("act2-start");
+            }
             while(!failed && owner.Session?.State.Phase!=CampaignPhase.Complete)
             {
                 yield return Idle(); var s=owner.Session; if(s==null) { Fail("Campaign not started"); yield break; }
                 if(s.SaveError!=null) { Fail(s.SaveError); yield break; }
+                if(act2) ArchiveDepartures();
                 var phase=s.State.Phase; if(phase==CampaignPhase.Complete) break;
                 if(phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing) { yield return null; continue; }
                 if(phase==CampaignPhase.Brewing)
                 {
-                    if(!visited.Add(s.State.SlotIndex)) { Fail("Unexpected retry"); yield break; }
+                    bool firstAttempt=visited.Add(s.State.SlotIndex);
+                    if(!firstAttempt && !(act2 && s.State.SlotIndex==21 && deliberateFailure && retryObserved)) { Fail("Unexpected retry"); yield break; }
+                    if(act2 && s.State.SlotIndex>=17 && firstAttempt) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==5 || s.State.SlotIndex==10 || s.State.SlotIndex==16) ArchiveCheckpoint("before-service-"+s.State.SlotIndex);
                     if(s.State.SlotIndex==3 || s.State.SlotIndex==5) { yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),s.State.SlotIndex==3 ? "recipe_dry_martini" : "recipe_manwol"); yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial recipe page "+page); yield return Capture("codex-clues-"+s.State.SlotIndex); yield return Click("돌아가기  Esc"); }
-                    yield return Prepare(plan[s.State.SlotIndex]); continue;
+                    if(act2 && s.State.SlotIndex==21 && firstAttempt) {
+                        yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),"recipe_hanky_panky");
+                        yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial Hanky recipe page");
+                        yield return Capture("codex-hanky-clues"); yield return Click("돌아가기  Esc");
+                    }
+                    bool omitZest=act2 && s.State.SlotIndex==21 && fixture.Contains("hanky-retry") && !deliberateFailure;
+                    if(omitZest) { deliberateFailure=true; expectedServices++; }
+                    yield return Prepare(plan[s.State.SlotIndex],omitZest);
+                    if(act2 && s.State.SlotIndex>=17) ArchiveCheckpoint((omitZest ? "failed-service-" : "after-service-")+s.State.SlotIndex);
+                    continue;
+                }
+                if(act2 && phase==CampaignPhase.Retry) {
+                    Check(s.State.SlotIndex==21 && !s.Knowledge.Project("recipe_hanky_panky").Known && !s.State.CompletedOccurrences.Contains(s.State.OccurrenceId),"required Hanky failure retains encounter and unknown recipe");
+                    retryObserved=true; ArchiveCheckpoint("hanky-retry"); yield return Capture("hanky-required-retry");
+                }
+                if(act2 && s.State.SlotIndex>=17 && (phase==CampaignPhase.Intro || phase==CampaignPhase.Farewell)) {
+                    string label="act2-"+phase.ToString().ToLowerInvariant()+"-"+s.State.SlotIndex+"-"+s.State.LineIndex;
+                    ArchiveCheckpoint(label); yield return Capture(label);
                 }
                 if(phase==CampaignPhase.Choice) { yield return Capture("prince-choice"); yield return Press(Key.Enter); Check(s.State.Phase==CampaignPhase.ChoiceResponse && s.State.PrinceChoice=="keep","keyboard choice exactly once through production focus"); continue; }
                 if(phase==CampaignPhase.Intro && s.CurrentEncounter.PrinceVisit.HasValue && s.State.LineIndex==0) {
@@ -70,11 +102,23 @@ namespace Surlhwa.Presentation
                 yield return Click(phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter");
             }
             if(failed) yield break;
+            if(act2) { ArchiveDepartures(); ArchiveCheckpoint("act2-complete"); }
             yield return new WaitForSecondsRealtime(.4f); yield return Capture("earned-memory");
             if(media) yield return new WaitForSecondsRealtime(23f);
-            Check(owner.Session.State.Services.Count==17,"17 actual services"); Check(owner.Session.State.CompletedOccurrences.Count==17,"17 natural departures");
-            Check(owner.Session.State.ActComplete && owner.Memory.Visible && owner.Memory.Glowing==(fixture!="quiet"),"earned memory variant after return-visit understanding");
-            Check(owner.Session.Knowledge.KnownReceipts.Count==6,"six recipes learned by real services");
+            if(act2) {
+                Check(owner.Session.State.Services.Count==expectedServices,expectedServices+" actual services");
+                Check(owner.Session.State.CompletedOccurrences.Count==25,"25 natural departures");
+                Check(owner.Session.State.Services.Select(x=>x.OccurrenceId).Distinct().Count()==25,"one service occurrence per scheduled encounter");
+                Check(owner.Session.Knowledge.KnownReceipts.Count==7,"seven recipes learned by real services");
+                Check(owner.Session.State.ActComplete && owner.Session.State.Memories.Count==2 && owner.Memory.Visible && owner.Memory.LoversVisible,"two earned memories after natural departure");
+                Check(owner.Memory.Glowing==(owner.Session.State.Memories.Single(x=>x.Id=="mem_01").Variant=="star_glowing"),"preserved ACT 1 memory variant");
+                Check(owner.Memory.LoversSwing!=null && owner.Memory.LoversEmptyPlace!=null,"MEM-02 swing and adjacent empty place resolve");
+                if(fixture.Contains("hanky-retry")) Check(deliberateFailure && retryObserved,"required Hanky failure and successful retry observed");
+            } else {
+                Check(owner.Session.State.Services.Count==17,"17 actual services"); Check(owner.Session.State.CompletedOccurrences.Count==17,"17 natural departures");
+                Check(owner.Session.State.ActComplete && owner.Memory.Visible && owner.Memory.Glowing==(fixture!="quiet"),"earned memory variant after return-visit understanding");
+                Check(owner.Session.Knowledge.KnownReceipts.Count==6,"six recipes learned by real services");
+            }
             var q1=FindFirstObjectByType<Q1ProductionView>();
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Bar_Q1")
                 Check(q1!=null,"Q1 Production presentation root resolves separately from controller");
@@ -96,10 +140,27 @@ namespace Surlhwa.Presentation
         private void Log(string text,string stack,LogType type) { if(type==LogType.Error || type==LogType.Exception || type==LogType.Assert) { errors.Add(text); failed=true; Finish(); } }
         private void ArchiveCheckpoint(string name)
         {
+            if(act2 && !archived.Add(name)) return;
             string destination=Path.Combine(output,"checkpoints",name,"slot1"); Directory.CreateDirectory(destination);
             // Copy actual published generations for later Continue coverage; never construct or alter a save.
             foreach(string file in new[]{"current.json","previous.json"}) { string source=Path.Combine(owner.StorageRoot,"slot1",file); if(File.Exists(source)) File.Copy(source,Path.Combine(destination,file),true); }
+            if(act2) {
+                string current=Path.Combine(destination,"current.json"),previous=Path.Combine(destination,"previous.json");
+                Check(File.Exists(current),"actual published checkpoint "+name);
+                File.AppendAllText(Path.Combine(output,"checkpoints.jsonl"),JsonUtility.ToJson(new CheckpointEvidence{name=name,slot=owner.Session.State.SlotIndex,
+                    phase=owner.Session.State.Phase.ToString(),services=owner.Session.State.Services.Count,departures=owner.Session.State.CompletedOccurrences.Count,
+                    sequence=owner.Session.State.Sequence,currentHash=Hash(current),previousHash=File.Exists(previous) ? Hash(previous) : null})+"\n");
+            }
         }
+        private void ArchiveDepartures()
+        {
+            int count=owner.Session.State.CompletedOccurrences.Count;
+            for(int slot=Math.Max(17,lastDepartures);slot<count;slot++) ArchiveCheckpoint("after-departure-"+slot);
+            lastDepartures=count;
+        }
+        private static string Hash(string path)
+        { using(var sha=System.Security.Cryptography.SHA256.Create()) return BitConverter.ToString(sha.ComputeHash(File.ReadAllBytes(path))).Replace("-","").ToLowerInvariant(); }
+        [Serializable] private sealed class CheckpointEvidence { public string name,phase,currentHash,previousHash; public int slot,services,departures; public long sequence; }
         private void LateUpdate()
         {
             if(render==null || owner.Ui==null) return; Canvas.ForceUpdateCanvases(); RenderPipeline.SubmitRenderRequest(owner.Camera,new UniversalRenderPipeline.SingleCameraRequest{destination=render}); frames.Add(Time.unscaledDeltaTime*1000);
@@ -185,7 +246,7 @@ namespace Surlhwa.Presentation
             decimal actual=owner.Session.Brew.Container(role).TotalMl-start;
             Check(Math.Abs(actual-ml)<.25m,"measured "+id+" "+actual+" / "+ml+" ml");
         }
-        private IEnumerator Prepare(string id)
+        private IEnumerator Prepare(string id,bool omitZest=false)
         {
             var recipe=owner.Content.Catalog.Recipes[id]; yield return Click(char.ToUpperInvariant(recipe.Method[0])+recipe.Method.Substring(1));
             if(recipe.Method=="stir")
@@ -199,6 +260,7 @@ namespace Surlhwa.Presentation
                 while(owner.Session.Brew.StirAcceptedDegrees<1080) { if(Time.realtimeSinceStartup>until) { stirInput=false; Fail("Stir stalled"); yield break; } yield return null; }
                 stirInput=false;
                 keys=Array.Empty<Key>(); Queue(); yield return null; yield return Press(Key.R,4); if(recipe.RequiredGarnish=="cherry") yield return Press(Key.C);
+                if(recipe.RequiredGarnish=="orange_zest" && !omitZest) yield return Click("제스트 Z");
             }
             else if(recipe.Method=="build")
             { yield return Target(ContainerRole.Serving); yield return Press(Key.I); foreach(var a in recipe.Amounts) yield return Pour(a.Key,a.Value,ContainerRole.Serving); yield return Press(Key.G); yield return Press(Key.O); }
@@ -220,17 +282,51 @@ namespace Surlhwa.Presentation
                     keys=Array.Empty<Key>(); Queue(); yield return null;
                 }
             }
-            yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method); yield return Click("손님께 내기"); yield return Idle();
+            yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method+(omitZest ? "-missing-zest" : "")); yield return Click("손님께 내기"); yield return Idle();
             var result=owner.Session.State.CurrentService?.Outcome;
-            Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation==PreparationResult.Good && result.QualityGood,"service "+owner.Session.State.SlotIndex+" "+id);
-            yield return Capture("reaction-"+owner.Session.State.SlotIndex);
+            if(omitZest) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required Hanky missing-zest preparation fails without discovery");
+            else Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation==PreparationResult.Good && result.QualityGood,"service "+owner.Session.State.SlotIndex+" "+id);
+            if(act2 && owner.Session.State.SlotIndex>=17 && !omitZest) Check(result?.Fits==true,"actual ACT 2 request fit "+owner.Session.State.SlotIndex);
+            yield return Capture("reaction-"+owner.Session.State.SlotIndex+(omitZest ? "-missing-zest" : ""));
         }
         private IEnumerator Capture(string label)
         {
             yield return null; Canvas.ForceUpdateCanvases(); var texts=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(x=>x.isActiveAndEnabled && !string.IsNullOrWhiteSpace(x.text)).ToArray();
             var overflow=texts.Where(x=>x.isTextOverflowing).Select(x=>x.text).ToArray(); if(overflow.Length>0) errors.Add("Text overflow "+label+": "+string.Join(" | ",overflow));
-            SavePixels(Path.Combine(output,(++captures).ToString("D3")+"-"+label+".png"));
+            string image=(++captures).ToString("D3")+"-"+label+".png"; SavePixels(Path.Combine(output,image));
+            if(act2) RecordCapture(label,image,overflow);
             File.AppendAllText(Path.Combine(output,"capture-times.csv"),captures+","+label+","+(Time.realtimeSinceStartup-mediaStart).ToString(System.Globalization.CultureInfo.InvariantCulture)+"\n");
+        }
+        private void RecordCapture(string label,string image,string[] overflow)
+        {
+            var s=owner.Session; var state=s?.State; var text=s?.CurrentText;
+            var actors=CampaignEvidenceProbe.VisibleActors();
+            var invalidRenderers=CampaignEvidenceProbe.InvalidVisibleAssets();
+            Check(invalidRenderers.Length==0,"visible assets and materials "+label);
+            var serving=owner.Workbench.GetComponentsInChildren<Transform>(true).Where(x=>x.name=="Serving glass 180 ml").ToArray();
+            if(state!=null && state.SlotIndex>=17 && (state.Phase==CampaignPhase.Intro || state.Phase==CampaignPhase.Farewell)) {
+                Check(s.CurrentEncounter.GuestIds.All(id=>actors.Any(a=>CampaignEvidenceProbe.PresentedGuestId(owner,a)==id)),"visible authored actors "+label);
+                Check(actors.Where(a=>s.CurrentEncounter.GuestIds.Contains(CampaignEvidenceProbe.PresentedGuestId(owner,a))).All(a=>Mathf.Abs(a.transform.position.y)<.001f),"grounded authored actors "+label);
+                if(s.CurrentEncounter.GuestIds.Count==2) {
+                    Check(owner.Chunhyang!=owner.Mongryong && owner.Chunhyang.SeatAnchor!=owner.Mongryong.SeatAnchor && Vector3.Distance(owner.Chunhyang.transform.position,owner.Mongryong.transform.position)>.25f,"separate paired seats "+label);
+                    Check(owner.Cast!=null && owner.Cast.Paired && serving.Length==1,"one shared serving vessel "+label);
+                    if(state.Phase==CampaignPhase.Farewell) Check(Vector3.Distance(serving[0].position,owner.Cast.SharedCupAnchor.position)<.001f,"served cup at shared anchor "+label);
+                }
+                if(text?.Role=="narration") Check(string.IsNullOrEmpty(owner.Ui.DisplayedSpeaker),"narration retains silence "+label);
+                if(!state.Memories.Any(x=>x.Id=="mem_02")) Check(!owner.Memory.LoversVisible,"MEM-02 absent before earned departure "+label);
+            }
+            File.AppendAllText(Path.Combine(output,"captures.jsonl"),JsonUtility.ToJson(new CaptureEvidence{label=label,image=image,
+                slot=state?.SlotIndex ?? -1,line=state?.LineIndex ?? -1,phase=state?.Phase.ToString() ?? "menu",textId=text?.Id,textRole=text?.Role,
+                displayedSpeaker=owner.Ui.DisplayedSpeaker,guestIds=s?.CurrentEncounter.GuestIds.ToArray() ?? Array.Empty<string>(),
+                visibleActors=actors.Select(a=>CampaignEvidenceProbe.PresentedGuestId(owner,a)).ToArray(),actorBindingIds=actors.Select(a=>a.GuestId).ToArray(),
+                visibleText=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(t=>t.isActiveAndEnabled).Select(t=>t.text).ToArray(),
+                overflow=overflow,invalidRenderers=invalidRenderers,services=state?.Services.Count ?? 0,departures=state?.CompletedOccurrences.Count ?? 0,
+                known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,servingVessels=serving.Length})+"\n");
+        }
+        [Serializable] private sealed class CaptureEvidence
+        {
+            public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,overflow,invalidRenderers;
+            public int slot,line,services,departures,known,memories,servingVessels; public bool loversVisible;
         }
         private void SavePixels(string path)
         { var prior=RenderTexture.active; RenderTexture.active=render; var texture=new Texture2D(render.width,render.height,TextureFormat.RGB24,false); texture.ReadPixels(new Rect(0,0,render.width,render.height),0,0); texture.Apply(); RenderTexture.active=prior; File.WriteAllBytes(path,texture.EncodeToPNG()); Destroy(texture); }
@@ -239,10 +335,13 @@ namespace Surlhwa.Presentation
         private void Finish()
         {
             if(audioRecording) { AudioRenderer.Stop(); audioRecording=false; audio.BaseStream.Position=4; audio.Write(36+audioBytes); audio.BaseStream.Position=40; audio.Write(audioBytes); audio.Dispose(); audio=null; } media=false;
-            File.WriteAllText(Path.Combine(output,"player-result.json"),JsonUtility.ToJson(new Result{status=errors.Count==0 ? "PASS" : "FAIL",tier="Simulated production InputSystem in built Player; NOT native OS input",checks=checks.ToArray(),errors=errors.ToArray(),frames=frames.ToArray(),captures=captures},true));
+            File.WriteAllText(Path.Combine(output,"player-result.json"),JsonUtility.ToJson(new Result{status=errors.Count==0 ? "PASS" : "FAIL",tier="Simulated production InputSystem in built Player; NOT native OS input",checks=checks.ToArray(),errors=errors.ToArray(),frames=frames.ToArray(),captures=captures,
+                scope=owner?.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,fixture=fixture,services=owner.Session?.State.Services.Count ?? 0,
+                departures=owner.Session?.State.CompletedOccurrences.Count ?? 0,known=owner.Session?.Knowledge.KnownReceipts.Count ?? 0,memories=owner.Session?.State.Memories.Count ?? 0,
+                expectedServices=expectedServices,startSlot=startSlot,startDepartures=startDepartures,startPhase=startPhase,visitedSlots=visited.OrderBy(x=>x).ToArray(),deliberateFailure=deliberateFailure,retryObserved=retryObserved},true));
             UnityEngine.Application.Quit(errors.Count==0 ? 0 : 2);
         }
-        [Serializable] private sealed class Result { public string status,tier; public string[] checks,errors; public float[] frames; public int captures; }
+        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved; }
         private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; InputSystem.onBeforeUpdate-=QueueStirForCurrentFrame; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
     }
 }

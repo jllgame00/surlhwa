@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine;
@@ -31,6 +32,43 @@ namespace Surlhwa.SpatialTests
         private void Tap(Key key) { Down(key); Up(); }
         private void Move(float x,float y) { InputSystem.QueueStateEvent(mouse,new MouseState{position=new Vector2(Screen.width*x,Screen.height*y)}); InputSystem.Update(); }
         private void Flow(Key key,decimal seconds) { Down(key); while(seconds>0) { decimal dt=Math.Min(.1m,seconds); input.Step((double)dt); seconds-=dt; } Up(); }
+        [Test] public void ExpandedZestControlUsesActualGarnishAndRespectsModalInput()
+        {
+            input.SelectTarget(ContainerRole.Serving); Flow(Key.Q,1);
+            Tap(Key.Z); Assert.That(session.Brew.GarnishId,Is.Null,"The accepted ACT 1 controls remain unchanged.");
+            input.ZestAvailable=true; Tap(Key.Z);
+            Assert.That(session.Brew.Freeze().Garnish,Is.EqualTo("orange_zest"));
+            Assert.That(session.Brew.Freeze().GarnishPosition,Is.EqualTo("rim"));
+            Tap(Key.C); session.OpenModal("codex"); Tap(Key.Z);
+            Assert.That(session.Brew.GarnishId,Is.EqualTo("cherry"),"A modal cannot garnish the underlying drink.");
+        }
+        [Test] public void SharedCupAnchorMovesOnlyTheExistingServingPresentation()
+        {
+            var work=new GameObject("Shared cup presentation");
+            try {
+                var view=work.AddComponent<SliceWorkbenchView>(); view.Initialize(null);
+                input.SelectTarget(ContainerRole.Serving); Flow(Key.Q,1); view.Refresh(session.Brew,input,0);
+                var cup=work.transform.Find("Serving glass 180 ml"); var original=cup.localPosition;
+                var before=session.Brew.Freeze(); var anchor=new Vector3(.3f,1.055f,-.65f);
+                view.SetServingPresentationPosition(anchor);
+                Assert.That(Vector3.Distance(cup.position,anchor),Is.LessThan(.001f));
+                Assert.That(view.ServingFillMl,Is.EqualTo(before.TotalMl));
+                Assert.That(session.Brew.Freeze().TotalMl,Is.EqualTo(before.TotalMl));
+                view.SetServingPresentationPosition(null);
+                Assert.That(cup.localPosition,Is.EqualTo(original));
+                Assert.That(work.GetComponentsInChildren<Transform>().Count(t=>t.name=="Serving glass 180 ml"),Is.EqualTo(1));
+            } finally { UnityEngine.Object.DestroyImmediate(work); }
+        }
+        [Test] public void SharedCupResetToleratesServingChildDestroyedBeforeCastShutdown()
+        {
+            var work=new GameObject("Shared cup shutdown order");
+            try {
+                var view=work.AddComponent<SliceWorkbenchView>(); view.Initialize(null);
+                UnityEngine.Object.DestroyImmediate(work.transform.Find("Serving glass 180 ml").gameObject);
+                Assert.DoesNotThrow(()=>view.SetServingPresentationPosition(null),"Cast.OnDisable may run after the serving child is destroyed.");
+                Assert.DoesNotThrow(()=>view.SetServingPresentationPosition(Vector3.zero));
+            } finally { UnityEngine.Object.DestroyImmediate(work); }
+        }
         [Test] public void BuildThroughSharedControlsUsesServingIceGentleStirAndOrange()
         {
             input.SelectTarget(ContainerRole.Serving); Tap(Key.I);

@@ -1,0 +1,153 @@
+{
+  "scope": "P07b representative ACT 2 cast",
+  "authority": "Canon 52 / Architecture 11 / owner-authorized source-cleared RC1 reuse",
+  "status": "Representative source reuse; final pose/art polish remains HUMAN_SIGNOFF_REQUIRED",
+  "acceptedScene": "Assets/Surlhwa/Scenes/Bar_Q1.unity",
+  "acceptedSceneSha256": "82a7d6e8bb8658dec55a667a973e68d7d3d1f2434dc97f809da9530c01e58db6",
+  "assets": [
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Chibi\\Chunhyang.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/ChunhyangStanding.png",
+      "sha256": "5956b8048d7436b4d1062c93a881d561375a67499482df628274ace7e9833c5f",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Chunhyang-Seated.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/ChunhyangSeated.png",
+      "sha256": "3698f4ca9beb66a476b1ebb37b2fdec86a24b0c4606cf9c75f8097e256c91ff6",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Chunhyang-Walk0.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/ChunhyangWalk0.png",
+      "sha256": "e1cc0f898c7d9290ac5974586221f23289a25e02f21d525ee6e9760a3e0074a6",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Chunhyang-Walk1.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/ChunhyangWalk1.png",
+      "sha256": "071f4773b0593f070676b66d64f79c71de0d88aedf078fb4769dc5d78bbd44fd",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Chunhyang-Walk2.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/ChunhyangWalk2.png",
+      "sha256": "d990840011352c0ab1bb025baf33d8750af553f30e3f9377285d098166d391b0",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Chunhyang-Walk3.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/ChunhyangWalk3.png",
+      "sha256": "071f4773b0593f070676b66d64f79c71de0d88aedf078fb4769dc5d78bbd44fd",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Chibi\\Mongryong.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/MongryongStanding.png",
+      "sha256": "f98dc39ac5d017a527aef1172a549d13b9d0626e0c5e481960477671ea67e22d",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Mongryong-Seated.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/MongryongSeated.png",
+      "sha256": "aaf772d2c3c34c56cf45799ba9663565d1e061432e46cc45bfc131f4451115ab",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Mongryong-Walk0.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/MongryongWalk0.png",
+      "sha256": "269c9721840339e54731d78110005ef0fc96e8415429a9d82b5287644682c559",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Mongryong-Walk1.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/MongryongWalk1.png",
+      "sha256": "882e1a80f8e2fbc25a74276ba5fa3b1b5707032b59a8e186235d6c1241c8f7bf",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Mongryong-Walk2.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/MongryongWalk2.png",
+      "sha256": "f105b3fed23d2c42ccff15829f6c05a5a8122d972d959b46de0891b8eac346ef",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    },
+    {
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Characters\\Motion\\Mongryong-Walk3.png",
+      "destination": "Production/Unity/Assets/Surlhwa/Act2Assets/MongryongWalk3.png",
+      "sha256": "882e1a80f8e2fbc25a74276ba5fa3b1b5707032b59a8e186235d6c1241c8f7bf",
+      "treatment": "Exact source bytes; point filtering and authored 70 PPU contact pivots at import; no texture repaint or Prince reuse."
+    }
+  ],
+  "authoringDecisions": [
+    {
+      "id": "act2-seated-pivot-initial",
+      "state": "SUPERSEDED_OBJECTIVE_DEFECT",
+      "pixelsPerUnit": 70,
+      "chunhyangPivot": [
+        32,
+        19
+      ],
+      "mongryongPivot": [
+        35,
+        19
+      ],
+      "sourceContactBottomUpY": 45,
+      "finding": "The initial source contact was at the waist. Source alpha geometry extends below the floor: Chunhyang -0.050293m, Mongryong -0.037685m. Actual diagnostic Player captures show stool wood crossing both torsos and Mongryong below the dialogue safe area.",
+      "evidence": [
+        "Evidence/act2-player-legacy-retry-1080-01/004-act2-intro-17-0.png",
+        "Evidence/act2-player-legacy-retry-1080-01/018-act2-intro-19-0.png",
+        "Evidence/act2-player-legacy-retry-1080-01/027-act2-intro-20-1.png"
+      ]
+    },
+    {
+      "id": "act2-seated-pelvis-correction",
+      "state": "IMPLEMENTED_PENDING_REBUILD_AND_RENDER_VERIFICATION",
+      "pixelsPerUnit": 70,
+      "chunhyangPivot": [
+        32,
+        3
+      ],
+      "mongryongPivot": [
+        35,
+        3
+      ],
+      "sourcePelvisChunhyangBottomUp": [
+        44,
+        29
+      ],
+      "sourcePelvisMongryongBottomUp": [
+        47,
+        29
+      ],
+      "normalQ1SeatedCameraRayOffsetMeters": 0.14,
+      "focusedOrStandingCameraRayOffsetMeters": 0,
+      "rationale": "Bind the source lower seated pelvis to the existing seat contact, lifting the source image 16 pixels without changing scale or physical roots. Apply the existing Q1 surface-thickness treatment only along the normal seated camera ray. No accepted ACT1 pose, camera, stool, contact anchor, source texture or UI geometry is altered.",
+      "limits": "This corrects measured contact and occlusion defects. Borrowed seated-pose style and final art remain presentation debt; actual corrected 720p/1080p output still requires inspection."
+    },
+    {
+      "id": "mem02-rear-niche-initial",
+      "state": "SUPERSEDED_OBJECTIVE_DEFECT",
+      "origin": [
+        -0.12,
+        1.1,
+        2.96
+      ],
+      "finding": "The Q1-facing swing extends behind the opaque rear niche plane at z = 3.05, hiding its frame and ropes despite an earned receipt and active GameObject. The location also fails the adopted farewell text locating the small swing beside the window.",
+      "evidence": [
+        "Evidence/act2-player-retry-reload-720-02/035-earned-memory.png"
+      ]
+    },
+    {
+      "id": "mem02-window-counter-correction",
+      "state": "IMPLEMENTED_PENDING_RENDER_VERIFICATION",
+      "origin": [
+        3.45,
+        0.995,
+        2.4
+      ],
+      "rationale": "The existing window-side right counter supports the whole base at top Y = 0.99 plus 0.005 m clearance. Q1 base footprint x = 3.017-3.953, z = 2.170-2.667 lies within counter x = 2.90-4.00, z = -0.85-2.85. The upper frame stays ahead of shelf art, with existing ceramics, window, camera and ACT1 star anchoring unchanged.",
+      "regression": "CampaignMemoryRenderTests checks actual counter support and window proximity, then renders normal Q1 with temporary diagnostic colors at 1280x720 and 1920x1080 and requires visible pixels from both the swing and its adjacent empty place. All scene material references are restored; these diagnostic renders are not normal-play or final art approval.",
+      "limits": "Unmodified-material Player completion captures still require inspection; final memory art remains presentation debt."
+    }
+  ]
+}

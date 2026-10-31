@@ -12,11 +12,34 @@ namespace Surlhwa.SpatialTests
 {
     public sealed class CampaignPresentationTests
     {
-        [Test] public void AllAuthoredRequestSummariesFitTheProductionReadingBox()
+        [TestCase(false)][TestCase(true)] public void ExpandedSettingsRetainLegacyPreferencesUnlessAlreadyChanged(bool expandedExists)
         {
-            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/Bar_Act1.unity");
+            string folder=Path.GetFullPath("../Validation/Evidence/settings-continuation-"+Guid.NewGuid().ToString("N"));
+            string legacy=Path.Combine(folder,"legacy"),expanded=Path.Combine(folder,"expanded");
+            Directory.CreateDirectory(legacy); Directory.CreateDirectory(expanded);
+            string source="{\"schemaVersion\":1,\"master\":0.3,\"largeText\":true,\"highContrast\":true}";
+            File.WriteAllText(Path.Combine(legacy,"settings.json"),source);
+            if(expandedExists) File.WriteAllText(Path.Combine(expanded,"settings.json"),"{\"schemaVersion\":1,\"master\":0.4,\"largeText\":false,\"highContrast\":false}");
+            var go=new GameObject("Settings continuation fixture");
+            try {
+                var c=go.AddComponent<CampaignController>();
+                typeof(CampaignController).GetProperty("Content").SetValue(c,CampaignContentLoader.Load(File.ReadAllText("../Content/Campaign/act2.json")));
+                typeof(CampaignController).GetProperty("StorageRoot").SetValue(c,expanded);
+                typeof(CampaignController).GetField("legacyRoot",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).SetValue(c,legacy);
+                typeof(CampaignController).GetMethod("LoadSettings",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(c,null);
+                Assert.That(c.MasterVolume,Is.EqualTo(expandedExists ? .4f : .3f));
+                Assert.That(c.LargeText,Is.EqualTo(!expandedExists)); Assert.That(c.HighContrast,Is.EqualTo(!expandedExists));
+                Assert.That(File.ReadAllText(Path.Combine(legacy,"settings.json")),Is.EqualTo(source));
+                Assert.That(File.Exists(Path.Combine(expanded,"settings.json")),Is.EqualTo(expandedExists),"Reading preferences does not publish or migrate files.");
+            } finally { UnityEngine.Object.DestroyImmediate(go); Directory.Delete(folder,true); }
+        }
+        [TestCase("Bar_Act1")][TestCase("Bar_Q1_Act2")] public void AllAuthoredRequestSummariesFitTheProductionReadingBox(string scene)
+        {
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Surlhwa/Scenes/"+scene+".unity");
             var c=UnityEngine.Object.FindFirstObjectByType<CampaignController>();
             var content=CampaignContentLoader.Load(c.Bundle.text);
+            // EditMode scene reloads do not dispatch InputSystem SubsystemRegistration.
+            typeof(UnityEngine.InputSystem.UI.InputSystemUIInputModule).GetField("defaultActions",System.Reflection.BindingFlags.Static|System.Reflection.BindingFlags.NonPublic).SetValue(null,null);
             typeof(CampaignController).GetProperty("Content").SetValue(c,content);
             typeof(CampaignController).GetProperty("Input").SetValue(c,c.gameObject.AddComponent<SliceInputAdapter>());
             var ui=c.gameObject.AddComponent<CampaignUi>();

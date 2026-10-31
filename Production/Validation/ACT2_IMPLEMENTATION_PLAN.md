@@ -1,6 +1,7 @@
 # P07b ACT 2 implementation plan
 
-Execution: inline under superpowers:executing-plans, without routine owner gates.
+Execution: inline integration plus bounded independent implementation under
+superpowers:dispatching-parallel-agents, without routine owner gates.
 Spec: approved PRODUCTION_EXPANSION_PLAN.md P07b/P08, Final Canon 52 and MEM-02,
 Production Architecture 03/04/05. Gate 2 closed at 7c9c987.
 
@@ -26,21 +27,21 @@ two-cup service, future revisits, or reclassification of presentation debt.
   reunion still grants one memory; failed publication/Continue never duplicates;
   unknown/duplicate actors and forged/early/wrong-variant memories fail. Run
   run_foundation_checks.ps1 RED then GREEN, inspect diff, commit bounded foundation.
-- [ ] P07b.2 Source adoption and reachable lessons. Read exact Canon registry
+- [x] P07b.2 Source adoption and reachable lessons. Read exact Canon registry
   records for RC1-18–25, record original field/order/hash and displayed role.
   Adopt Hanky Panky with verified official source and exact ingredient identities;
   preserve failed required-discovery retry and Known fallback. Extend the content
   schema explicitly, keeping the ACT 1 loader and fixtures valid. Test source
   coverage, supply, multiple reachable Recommendation choices and complete flow.
-- [ ] P07b.3 Additive campaign continuity. Retain validated legacy campaign bytes
+- [x] P07b.3 Additive campaign continuity. Retain validated legacy campaign bytes
   and exact accepted definition. Specify and test reversible continuation from
   every accepted ACT 1 checkpoint into the expanded content, preserving original
   results and both generations. Never silently accept arbitrary content hashes.
-- [ ] P07b.4 Q1 presentation. Bind distinct lovers to two grounded anchors, show
+- [x] P07b.4 Q1 presentation. Bind distinct lovers to two grounded anchors, show
   one shared cup, preserve source speakers and silence; add MEM-02's swing and
   adjacent empty place. Missing actor/clip cannot block logical departure.
   Inspect actual 720p/1080p output, retain provenance and presentation debt.
-- [ ] P07b.5 Validate/commit integrated ACT 2. Compile Production, strict content
+- [x] P07b.5 Validate/commit integrated ACT 2. Compile Production, strict content
   checks, full domain regressions, affected Unity tests, Player fresh/Continue and
   failed-service/discovery evidence; native input where practical. Update ledger
   and next-package context; proceed to P07c without asking routine approval.
@@ -54,6 +55,45 @@ same receipt. Receipt validation must reject forged identity, variant, owner and
 early grants even with a recomputed checksum. Legacy ACT 1 decoding remains valid.
 
 ## Execution ledger
+
+- Runtime continuation from 2277ef0: three independent file scopes cover
+  source-preserving save continuation, paired Q1 staging/build assets, and actual
+  Player input/evidence automation. Root integrates controller, UI, zest input
+  and the existing shared serving-glass presentation. Only root runs Unity.
+  The owner-local review-slice.html edit remains outside the implementation.
+  ACT 2 completion is an implementation checkpoint, never an owner gate.
+- Runtime integration: ACT 2 has an additive `Bar_Q1_Act2` scene and separate
+  Player/save namespace. Continue validates the exact accepted ACT 1 package and
+  every preserved receipt, then publishes a create-only copy. Legacy current and
+  previous generations remain unchanged. Existing expanded history takes
+  precedence, including invalid/future-format evidence; no silent rollback.
+  Completed ACT 1 maps to the next authored slot at NightEnd. Incomplete phases,
+  original results, consumed lines, recipe knowledge and memory variants survive.
+- Fresh-context runtime review found two implementation defects: inherited
+  accessibility/audio preferences were not read from the legacy namespace, and
+  real process termination could leave a pending file that blocked first import.
+  Both were reproduced and fixed. Legacy preferences now supply a read-only
+  fallback when no expanded settings exist. Exact matching interrupted-import
+  byte prefixes with strict pending filenames are retained while a new file is
+  published create-only; foreign or unrelated entries remain rejected. Reviewer
+  recheck closed both findings with no new findings.
+- Standalone final: 204/204 PASS, `Evidence/act2-continuation-orphan-final.log`.
+  Full normal Unity Editor regression: 289/289 PASS,
+  `Evidence/act2-runtime-tests-02.xml`. Initial full run was 278/281, retaining
+  the preferences RED case plus an obsolete single-build-callback assumption
+  and InputSystem EditMode fixture-isolation failure. Assertions were preserved;
+  the harness now invokes the ordered callbacks and resets its test-only static
+  input fixture between scenes. Python tooling: 62/62 PASS.
+- Full historical spatial tests regenerate Bar_C/Bar_C1 and serialize unrelated
+  material defaults. Both runs' complete churn diffs are retained in
+  `Evidence/act2-editor-generated-churn-01.diff` and `-02.diff`; only the 67
+  previously clean generated changes were restored. Accepted Bar_Q1, ACT 1 JSON,
+  RC1 and all 74 Canon/Architecture files remain unchanged. Evidence:
+  `Evidence/act2-runtime-preservation.json`.
+- First additive Player build succeeded with zero errors/warnings. The corrected
+  Player is rebuilding; actual Player route, restart and rendered validation
+  remain pending. These compile/test results do not close presentation debt or
+  imply final human signoff.
 
 - Baseline: 32a0e52; only pre-existing review-slice.html is dirty. Canon/Architecture
   are read-only. Existing linked worktree is used; no new worktree or push.
@@ -107,3 +147,31 @@ early grants even with a recomputed checksum. Legacy ACT 1 decoding remains vali
   new ingredient/garnish controls and paired presentation are integrated. Cost:
   two candidate scopes coexist temporarily; no premature Player readiness claim.
   [Content checkpoint and remaining dependencies](ACT2_CONTENT_CHECKPOINT.md).
+
+- Final runtime corrections: the actual Player exposed seated clipping, an
+  occluded MEM-02 despite an active object, and an intermittent serving-child
+  shutdown exception. Corrected source-pelvis contact, moved the memory to the
+  existing window-side counter, and guarded the destroyed presentation child.
+  The teardown regression reproduced before the fix. Affected normal Editor
+  tests are 23/23 PASS (`Evidence/act2-runtime-correction-tests.xml`), including
+  real URP pixel visibility for both memory parts at 720p/1080p. Build 04 has zero
+  errors/warnings. Final farewell/departure and completed-Continue Player runs
+  pass at both resolutions; normal rendered images were inspected. The final
+  lesson Retry reload is tracked in [the runtime checkpoint](ACT2_RUNTIME_CHECKPOINT.md).
+  Final bounded code review reports no findings. Native app access timed out
+  before any native action; no native certification or final aesthetic approval
+  is claimed. All existing presentation debt stays open.
+- Final serialized inspection: the additive scene adds 37 objects and changes
+  only four existing blocks (bundle/font/cast/component/anchor references); no
+  accepted object or transform is removed or moved. URP import normalized 28
+  previously clean material defaults and two project settings; the complete
+  diff is retained as `act2-editor-generated-churn-03.diff` and those own changes
+  were excluded. Canon/Architecture (74 files), frozen RC1, accepted ACT 1 JSON
+  and approved Q1 scene hashes remain unchanged.
+
+- Final Build 04 Retry reload: PASS, 26 services (including the original failed
+  lesson attempt), 25 departures, seven Known, two memories, no runtime errors;
+  source/Player inventory unchanged. Completed Continue preserves both saved
+  generations byte for byte at both resolutions. P07b runtime work is internally
+  complete; append ACT 3 next. The actual ACT 2?3 transition is validated with
+  that next content boundary, not claimed from a 25-slot package. Nothing pushed.

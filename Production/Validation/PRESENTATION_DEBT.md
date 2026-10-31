@@ -59,3 +59,12 @@ HG07 also permits later editorial and pacing polish. This permission does not er
 Separate technical follow-up: the inherited component-only Button disable defect is corrected in the ACT 1 integration (`isActiveAndEnabled`), with a failing-then-passing focused regression and retained Slice integration checks. This objective fix does not close PD01/PD02 or grant visual approval. Destroyed-focus/modal transitions remain part of the final integration review.
 
 ACT 1 candidates now exist for the relevant rows: a paged knowledge-filtered Codex and expanded four-method controls; code-native winter-ground material and restrained grounded counter props; ordinary-coat tint and entry/seat/stand timing; actual shaker/layer tool projections; an original heavier footstep draft and sparse earned-memory motif. See [ACT 1 review preparation](ACT1_REVIEW.md), [audio cue map](ACT1_AUDIO_CUE_MAP.md) and the [art disposition inventory](Manifests/act1-art-inventory.json). These are **current milestone candidates**, not final accepted assets. Reference character sprites, bespoke listening/reaction animation, final snow/wood/detail/lighting, palette consistency, tool art, tactile timing, footstep mix and full compositions remain explicit later work. All PD01–PD11 remain OPEN pending a named bundled owner ruling.
+
+2026-10-31 ACT 2 runtime checkpoint: distinct lovers, one shared cup, and the
+receipt-driven swing/empty-place memory now have bounded Q1 presentation. Actual
+720p/1080p inspection corrected seated contact and an occluded memory location;
+these objective fixes do not close PD01?PD11 or approve the source poses as final.
+The native paired-visit attempt timed out at app access before any native input;
+that certification remains VALIDATION_DEBT. Simulated production-input Player
+evidence and remaining scope are recorded in [ACT 2 runtime](ACT2_RUNTIME_CHECKPOINT.md).
+The scheduled campaign-wide presentation pass and Gate 3 remain outstanding.

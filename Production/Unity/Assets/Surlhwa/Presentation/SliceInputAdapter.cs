@@ -15,6 +15,7 @@ namespace Surlhwa.Presentation
         public string SelectedIngredient { get; private set; }="whiskey";
         public ContainerRole Target { get; private set; }=ContainerRole.Jigger;
         public string ActiveTool => held; public bool Fine { get; set; }
+        public bool ZestAvailable { get; set; }
         public bool AcceptedLiquidThisStep { get; private set; } public bool AcceptedStirThisStep { get; private set; }
         public float SpoonAngle { get; private set; } public string Feedback { get; private set; }
         public float ShakePosition { get; private set; } public float FloatHeight { get; private set; } public float FloatIntensity { get; private set; }
@@ -31,6 +32,7 @@ namespace Surlhwa.Presentation
             ActionKey("pour","q",true); ActionKey("transfer","e",true); ActionKey("strain","r",true); ActionKey("stir","s",true);
             ActionKey("shake","k",true); ActionKey("float","f",true); ActionKey("shaker_transfer","t",true); ActionKey("splash","x",true);
             ActionKey("lid","l",false); ActionKey("gentle","g",false); ActionKey("orange","o",false);
+            ActionKey("zest","z",false);
             ActionKey("ice","i",false); ActionKey("cherry","c",false); ActionKey("dash","d",false);
             ActionKey("target","j",false); ActionKey("glass","v",false); ActionKey("guide","b",false);
             ActionKey("codex","tab",false); ActionKey("back","escape",false); ActionKey("advance","enter",false);
@@ -52,6 +54,7 @@ namespace Surlhwa.Presentation
             if(session==null) return;
             if(command=="target") { SelectTarget((ContainerRole)(((int)Target+1)%(session.ExtendedMethods ? 4 : 3))); return; }
             if(!session.CanInteract) return;
+            if(command=="zest" && (!ZestAvailable || !session.ExtendedMethods)) return;
             if(!session.ExtendedMethods && (command=="lid" || command=="gentle" || command=="orange")) return;
             try
             {
@@ -59,6 +62,7 @@ namespace Surlhwa.Presentation
                     if(command=="ice") b.AddIce(Target);
                     else if(command=="cherry") b.Garnish("cherry","in_glass");
                     else if(command=="orange") b.Garnish("orange_slice","rim");
+                    else if(command=="zest") b.Garnish("orange_zest","rim");
                     else if(command=="gentle") b.GentleStir();
                     else if(command=="lid") b.SetShakerClosed(!b.ShakerClosed);
                     else if(command=="dash") b.Pour(SelectedIngredient,Target,session.Tuning.DashMl,BrewAction.Dash);

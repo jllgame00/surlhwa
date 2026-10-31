@@ -1,5 +1,6 @@
 using System.IO;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace Surlhwa.ContentIO
     {
         private readonly string folder; private readonly CampaignContent content; private readonly SemaphoreSlim writer=new SemaphoreSlim(1,1);
         public string CurrentPath => Path.Combine(folder,"current.json"); public string PreviousPath => Path.Combine(folder,"previous.json");
+        public bool HasHistory => File.Exists(CurrentPath) || File.Exists(PreviousPath);
+        internal CampaignContent Content => content;
         public Action<string> Fault { get; set; }
         public CampaignSaveStore(string folder,CampaignContent content) { this.folder=Path.GetFullPath(folder); this.content=content; }
         private CampaignCheckpoint Read(string path)
@@ -37,9 +40,25 @@ namespace Surlhwa.ContentIO
             await writer.WaitAsync().ConfigureAwait(false);
             try { await Task.Run(()=>Write(state)).ConfigureAwait(false); } finally { writer.Release(); }
         }
-        private void Write(CampaignCheckpoint state)
+        public async Task ImportAsync(CampaignCheckpoint state)
+        {
+            await writer.WaitAsync().ConfigureAwait(false);
+            try { await Task.Run(()=>Write(state,true)).ConfigureAwait(false); } finally { writer.Release(); }
+        }
+        private void Write(CampaignCheckpoint state,bool importOnly=false)
         {
             string json=CampaignSaveCodec.Encode(state,content); Directory.CreateDirectory(folder); bool valid=false;
+            byte[] bytes=new UTF8Encoding(false).GetBytes(json);
+            if(importOnly)
+            {
+                if(File.Exists(CurrentPath))
+                {
+                    Read(CurrentPath);
+                    if(File.ReadAllText(CurrentPath,Encoding.UTF8)==json) return;
+                }
+                if(Directory.EnumerateFileSystemEntries(folder).Any(path=>!IsInterruptedImport(path,bytes)))
+                    throw new InvalidOperationException("Refusing to import over existing campaign files.");
+            }
             if(File.Exists(CurrentPath))
             {
                 try
@@ -56,11 +75,12 @@ namespace Surlhwa.ContentIO
             string temp=Path.Combine(folder,"pending-"+Guid.NewGuid().ToString("N")+".json");
             try
             {
-                Fault?.Invoke("before_write"); byte[] bytes=new UTF8Encoding(false).GetBytes(json);
+                Fault?.Invoke("before_write");
                 using(var stream=new FileStream(temp,FileMode.CreateNew,FileAccess.Write,FileShare.None))
                 { stream.Write(bytes,0,bytes.Length); Fault?.Invoke("after_write"); stream.Flush(true); Fault?.Invoke("after_flush"); }
                 Read(temp); Fault?.Invoke("after_validate");
-                if(File.Exists(CurrentPath))
+                if(importOnly) File.Move(temp,CurrentPath);
+                else if(File.Exists(CurrentPath))
                 {
                     if(!valid) File.Copy(CurrentPath,Path.Combine(folder,"corrupt-"+Guid.NewGuid().ToString("N")+".json"));
                     File.Replace(temp,CurrentPath,valid ? PreviousPath : null);
@@ -71,6 +91,18 @@ namespace Surlhwa.ContentIO
                 Fault?.Invoke("after_final_read");
             }
             finally { if(File.Exists(temp)) File.Delete(temp); }
+        }
+        private static bool IsInterruptedImport(string path,byte[] expected)
+        {
+            string name=Path.GetFileName(path);
+            if(name.Length!=45 || !Guid.TryParseExact(name.Substring(8,32),"N",out var id) ||
+                name!="pending-"+id.ToString("N")+".json" ||
+                (File.GetAttributes(path)&(FileAttributes.Directory|FileAttributes.ReparsePoint))!=0 ||
+                new FileInfo(path).Length>expected.Length) return false;
+            // Process termination can leave a complete, partial or empty write. Keep its
+            // bytes as evidence; only a prefix of this exact validated import is safe to retry.
+            byte[] pending=File.ReadAllBytes(path);
+            return expected.Take(pending.Length).SequenceEqual(pending);
         }
     }
 }

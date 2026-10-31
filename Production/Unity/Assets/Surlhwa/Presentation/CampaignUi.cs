@@ -17,6 +17,8 @@ namespace Surlhwa.Presentation
         private Button next,continueButton; private readonly Stack<GameObject> focus=new Stack<GameObject>();
         private readonly List<GameObject> methodPanels=new List<GameObject>(); private int method,recipePage;
         private readonly List<GameObject> methodMarks=new List<GameObject>();
+        private GameObject classicStir,expandedStir;
+        private readonly Dictionary<string,Button> shelf=new Dictionary<string,Button>();
         private string shownModal; public string MenuModal; public string VisibleModal=>shownModal;
         public string DisplayedSpeaker=>speaker.text;
         public bool ModalOwnsFocus=>modal!=null && EventSystem.current?.currentSelectedGameObject!=null && EventSystem.current.currentSelectedGameObject.transform.IsChildOf(modal.transform);
@@ -59,9 +61,15 @@ namespace Surlhwa.Presentation
             Button(brewing.transform,new Rect(764,92,112,34),"잔 바꾸기 V",()=>owner.HandleCommand("glass"),15);
             Button(brewing.transform,new Rect(884,92,130,34),"손님께 내기",()=>owner.Advance(),16);
             for(int n=0;n<4;n++) methodPanels.Add(Panel(brewing.transform,new Rect(12,8,1008,76),Color.clear));
-            Hold(methodPanels[0].transform,new Rect(6,29,140,38),"따르기 Q","pour"); Hold(methodPanels[0].transform,new Rect(154,29,140,38),"지거 이동 E","transfer");
-            Hold(methodPanels[0].transform,new Rect(302,29,140,38),"원 그리기 S","stir"); Hold(methodPanels[0].transform,new Rect(450,29,140,38),"거르기 R","strain");
-            Cmd(methodPanels[0].transform,598,"얼음 I","ice"); Cmd(methodPanels[0].transform,730,"Dash D","dash"); Cmd(methodPanels[0].transform,862,"체리 C","cherry");
+            classicStir=Panel(methodPanels[0].transform,new Rect(0,0,1008,76),Color.clear);
+            Hold(classicStir.transform,new Rect(6,29,140,38),"따르기 Q","pour"); Hold(classicStir.transform,new Rect(154,29,140,38),"지거 이동 E","transfer");
+            Hold(classicStir.transform,new Rect(302,29,140,38),"원 그리기 S","stir"); Hold(classicStir.transform,new Rect(450,29,140,38),"거르기 R","strain");
+            Cmd(classicStir.transform,598,"얼음 I","ice"); Cmd(classicStir.transform,730,"Dash D","dash"); Cmd(classicStir.transform,862,"체리 C","cherry");
+            expandedStir=Panel(methodPanels[0].transform,new Rect(0,0,1008,76),Color.clear);
+            Hold(expandedStir.transform,new Rect(6,29,116,38),"따르기 Q","pour"); Hold(expandedStir.transform,new Rect(130,29,116,38),"지거 이동 E","transfer");
+            Hold(expandedStir.transform,new Rect(254,29,116,38),"원 그리기 S","stir"); Hold(expandedStir.transform,new Rect(378,29,116,38),"거르기 R","strain");
+            string[] garnishLabels={"얼음 I","Dash D","체리 C","제스트 Z"},garnishCommands={"ice","dash","cherry","zest"};
+            for(int n=0;n<4;n++) { string command=garnishCommands[n]; Button(expandedStir.transform,new Rect(502+n*124,29,116,38),garnishLabels[n],()=>owner.Input.Command(command),15); }
             Text(methodPanels[0].transform,new Rect(6,0,990,25),"S를 누르고 혼합 잔 둘레를 천천히 돕니다. 혼합 잔에 얼음이 필요합니다.",14,muted);
             Hold(methodPanels[1].transform,new Rect(6,29,174,38),"따르기 Q","pour"); Hold(methodPanels[1].transform,new Rect(188,29,174,38),"지거 이동 E","transfer");
             Cmd(methodPanels[1].transform,370,"얼음 I","ice"); Cmd(methodPanels[1].transform,502,"가볍게 젓기 G","gentle"); Cmd(methodPanels[1].transform,634,"오렌지 O","orange");
@@ -74,7 +82,7 @@ namespace Surlhwa.Presentation
             Text(methodPanels[3].transform,new Rect(6,0,990,25),"지거로 양을 재고 F를 누릅니다. 낮게, 천천히 — 오른쪽은 유량, 위쪽은 높이입니다.",14,muted);
             Text(methodPanels[3].transform,new Rect(402,29,584,38),"F · 화면 중앙 아래에서 낮게, 천천히   |   높이 ↑   유량 →",16,ink).alignment=TextAlignmentOptions.Center;
             ingredients=Panel(root,new Rect(24,188,180,464),paper); Text(ingredients.transform,new Rect(12,430,156,28),"재료 선반",17,ink);
-            int i=0; foreach(var id in owner.Content.Supply) { string ingredient=id; Button(ingredients.transform,new Rect(10,402-i*25,160,24),(i<9 ? (i+1)+"  " : "")+owner.Content.IngredientNames[id],()=>owner.Input.SelectIngredient(ingredient),14); i++; }
+            int i=0; foreach(var id in owner.Content.Supply) { string ingredient=id; shelf[id]=Button(ingredients.transform,new Rect(10,402-i*25,160,24),(i<9 ? (i+1)+"  " : "")+owner.Content.IngredientNames[id],()=>owner.Input.SelectIngredient(ingredient),14); i++; }
             Button(ingredients.transform,new Rect(10,8,160,30),"현재 잔 비우기",()=>owner.DiscardDrink(),14);
             SelectMethod(0); Refresh(); EventSystem.current.SetSelectedGameObject(newGame.gameObject);
         }
@@ -142,19 +150,26 @@ namespace Surlhwa.Presentation
         public void Refresh()
         {
             var s=owner.Session; bool brew=s?.State.Phase==CampaignPhase.Brewing;
+            bool expanded=s!=null && s.State.SlotIndex>=17 && owner.Content.Scope!="act_01";
+            classicStir.SetActive(!expanded); expandedStir.SetActive(expanded);
+            int shelfIndex=0; foreach(var item in shelf) {
+                item.Value.gameObject.SetActive(s?.Supply.Contains(item.Key)==true);
+                Position((RectTransform)item.Value.transform,new Rect(10,402-shelfIndex*(expanded ? 22.5f : 25),160,expanded ? 22 : 24)); shelfIndex++;
+            }
             welcome.SetActive(s==null); dialogue.SetActive(s!=null && !brew); brewing.SetActive(brew); ingredients.SetActive(brew); requestPanel.SetActive(brew); choicePanel.SetActive(s?.State.Phase==CampaignPhase.Choice);
             continueButton.interactable=owner.Saved?.Checkpoint!=null && !owner.Busy;
             status.text=owner.Busy || s?.IsSaving==true ? "기록 중…" : owner.StartupError!=null ? "기록을 확인해 주세요: "+owner.StartupError : owner.Input.Feedback ?? "";
-            title.text="설화   /   첫 번째 이야기"+(s==null ? "" : "   ·   "+s.CurrentEncounter.Night+"번째 밤");
+            title.text="설화   /   "+(expanded ? "두 번째 이야기" : "첫 번째 이야기")+(s==null ? "" : "   ·   "+s.CurrentEncounter.Night+"번째 밤");
             if(s!=null)
             {
                 request.text=owner.Content.Texts[s.CurrentEncounter.SummaryTextId].Value;
                 var phase=s.State.Phase; string name=owner.Content.Texts[owner.Content.Guests[s.CurrentEncounter.GuestId].DisplayTextId.Value].Value;
+                if(s.CurrentEncounter.GuestIds.Count>1) name=string.Join(" · ",s.CurrentEncounter.GuestIds.Select(id=>owner.Content.Texts[owner.Content.Guests[id].DisplayTextId.Value].Value));
                 speaker.text=s.CurrentText?.Role=="spoken" ? name : s.CurrentText?.Role=="request_summary" ? "손님이 바라는 한 잔" : phase==CampaignPhase.Result || phase==CampaignPhase.Discovery ? "내어드린 한 잔" : "";
                 body.fontSize=owner.LargeText ? 23 : 21; body.color=owner.HighContrast ? Color.white : ink;
                 body.text=s.CurrentText?.Value ?? (phase==CampaignPhase.Welcome ? "작은 바의 불을 켭니다.\n오늘은 어떤 이야기가 이곳에 머물까요." : phase==CampaignPhase.NightIntro ? "눈이 내려앉은 문턱을 쓸고, 잔을 꺼냅니다." :
                     phase==CampaignPhase.NightEnd ? "마지막 잔을 닦습니다.\n창밖의 눈은 조금 더 쌓여 있습니다." : phase==CampaignPhase.Arriving ? "눈길 끝에서 발소리가 다가옵니다." : phase==CampaignPhase.Departing ? "잠시, 문밖의 겨울을 듣습니다." :
-                    phase==CampaignPhase.Complete ? (s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
+                    phase==CampaignPhase.Complete ? (expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
                 next.gameObject.SetActive(phase!=CampaignPhase.Arriving && phase!=CampaignPhase.Departing && phase!=CampaignPhase.Choice && phase!=CampaignPhase.Complete);
                 next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter";
                 if(brew) measurement.text=owner.Content.IngredientNames[owner.Input.SelectedIngredient]+" → "+TargetName(owner.Input.Target)+"   |   지거 "+Ml(s.Brew.Container(ContainerRole.Jigger).TotalMl)+"   혼합 "+Ml(s.Brew.Container(ContainerRole.Mixing).TotalMl)+"   셰이커 "+Ml(s.Brew.Container(ContainerRole.Shaker).TotalMl)+"   서빙 "+Ml(s.Brew.Container(ContainerRole.Serving).TotalMl)+" ml"+(owner.Input.Fine ? " · 미세" : "")+(s.Brew.ShakerClosed ? " · 뚜껑 닫힘" : "");
@@ -228,7 +243,7 @@ namespace Surlhwa.Presentation
             Text(card,new Rect(322,254,568,150),amounts,owner.LargeText ? 22 : 20,ink);
             string preparation="준비 순서는 아직 듣지 못했습니다.";
             if(projection.PreparationVisible) preparation=recipe.Method=="stir" ? "혼합 잔에 얼음 · 재료를 담은 뒤 원을 그리며 젓기\n서빙 잔에 거르기" : recipe.Method=="build" ? "서빙 잔에 얼음과 재료 · 가볍게 젓기" : recipe.Method=="shake" ? "소다를 제외한 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어 잔에 옮기기\n소다는 마지막에 Splash · 서빙 얼음 없음" : "보드카 → 커피 리큐어 → 크림\n각 재료를 낮게, 천천히 층으로 쌓기 · 얼음 없음";
-            if(projection.GarnishVisible) preparation+="\n"+(recipe.RequiredGarnish=="cherry" ? "체리 · 잔 안" : recipe.RequiredGarnish=="orange_slice" ? "오렌지 슬라이스 · 잔 가장자리" : "가니시 생략 가능");
+            if(projection.GarnishVisible) preparation+="\n"+(recipe.RequiredGarnish=="cherry" ? "체리 · 잔 안" : recipe.RequiredGarnish=="orange_slice" ? "오렌지 슬라이스 · 잔 가장자리" : recipe.RequiredGarnish=="orange_zest" ? "오렌지 제스트 · 잔 가장자리" : "가니시 생략 가능");
             Text(card,new Rect(322,104,568,138),preparation,owner.LargeText ? 20 : 18,ink);
             Text(card,new Rect(30,26,650,30),"발견은 이름을 남깁니다. 단서는 그 전의 길을 비춥니다.",15,muted);
         }
