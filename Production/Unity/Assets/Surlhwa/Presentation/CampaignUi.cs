@@ -203,19 +203,20 @@ namespace Surlhwa.Presentation
             continueButton.interactable=owner.Saved?.Checkpoint!=null && !owner.Busy;
             status.text=owner.Busy || s?.IsSaving==true ? "기록 중…" : owner.StartupError!=null ? "기록을 확인해 주세요: "+owner.StartupError : owner.Input.Feedback ?? "";
             int act=s==null ? 1 : owner.Content.ActAt(s.State.SlotIndex);
-            title.text="설화   /   "+new[]{"첫 번째","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째"}[act-1]+" 이야기"+(s==null ? "" : "   ·   "+s.CurrentEncounter.Night+"번째 밤");
+            bool ending=s!=null && owner.Content.Ending!=null && (s.State.Phase>=CampaignPhase.EndingReady || s.State.Phase==CampaignPhase.Complete);
+            title.text=ending ? "설화   /   남아 있는 이야기" : "설화   /   "+new[]{"첫 번째","두 번째","세 번째","네 번째","다섯 번째","여섯 번째","일곱 번째"}[act-1]+" 이야기"+(s==null ? "" : "   ·   "+s.CurrentEncounter.Night+"번째 밤");
             if(s!=null)
             {
                 request.text=owner.Content.Texts[s.CurrentEncounter.SummaryTextId].Value;
                 var phase=s.State.Phase; string name=owner.Content.Texts[owner.Content.Guests[s.CurrentEncounter.GuestId].DisplayTextId.Value].Value;
                 if(s.CurrentEncounter.GuestIds.Count>1) name=string.Join(" · ",s.CurrentEncounter.GuestIds.Select(id=>owner.Content.Texts[owner.Content.Guests[id].DisplayTextId.Value].Value));
-                speaker.text=s.CurrentText?.Role=="spoken" ? name : s.CurrentText?.Role=="request_summary" ? "손님이 바라는 한 잔" : phase==CampaignPhase.Result || phase==CampaignPhase.Discovery ? "내어드린 한 잔" : "";
+                speaker.text=s.CurrentText?.Role=="spoken" ? (ending ? "기억 속 어린왕자" : name) : s.CurrentText?.Role=="request_summary" ? "손님이 바라는 한 잔" : phase==CampaignPhase.Result || phase==CampaignPhase.Discovery ? "내어드린 한 잔" : "";
                 body.fontSize=owner.LargeText ? 23 : 21; body.color=owner.HighContrast ? Color.white : ink;
-                body.text=s.CurrentText?.Value ?? (phase==CampaignPhase.Welcome ? "작은 바의 불을 켭니다.\n오늘은 어떤 이야기가 이곳에 머물까요." : phase==CampaignPhase.NightIntro ? "눈이 내려앉은 문턱을 쓸고, 잔을 꺼냅니다." :
+                body.text=s.CurrentText?.Value ?? (phase==CampaignPhase.EndingReady ? "마지막 손님이 떠난 자리를 돌아봅니다." : phase==CampaignPhase.Welcome ? "작은 바의 불을 켭니다.\n오늘은 어떤 이야기가 이곳에 머물까요." : phase==CampaignPhase.NightIntro ? "눈이 내려앉은 문턱을 쓸고, 잔을 꺼냅니다." :
                     phase==CampaignPhase.NightEnd ? "마지막 잔을 닦습니다.\n창밖의 눈은 조금 더 쌓여 있습니다." : phase==CampaignPhase.Arriving ? "눈길 끝에서 발소리가 다가옵니다." : phase==CampaignPhase.Departing ? "잠시, 문밖의 겨울을 듣습니다." :
                     phase==CampaignPhase.Complete ? (act==6 ? owner.Content.Texts["text_rc1_0293"].Value : act==5 ? owner.Content.Texts["text_rc1_0074"].Value : act==4 ? owner.Content.Texts["text_rc1_0096"].Value : act==3 ? owner.Content.Texts["text_rc1_0250"].Value : expanded ? "작은 그네 곁에 빈자리가 남아 있습니다.\n두 사람이 머물던 밤을 이곳에 남겨 둡니다." : s.State.Farewell==PrinceFarewell.Open ? "빈 의자 곁에 작은 별이 빛납니다.\n그가 머물던 밤을 이곳에 남겨 둡니다." : "빈 의자 곁에 작은 별이 놓여 있습니다.\n말하지 못한 것들도 이곳에 남겨 둡니다.") : phase==CampaignPhase.Retry ? "들었던 이야기를 도감에서 다시 살펴봅니다.\n새 잔으로 천천히 이어갈 수 있습니다." : ResultText());
                 next.gameObject.SetActive(phase!=CampaignPhase.Arriving && phase!=CampaignPhase.Departing && phase!=CampaignPhase.Choice && phase!=CampaignPhase.Complete);
-                next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : "계속  Enter";
+                next.interactable=s.CanInteract; next.GetComponentInChildren<TextMeshProUGUI>().text=phase==CampaignPhase.Request ? "한 잔 준비하기" : phase==CampaignPhase.EndingReady ? "밤을 정리하기" : "계속  Enter";
                 if(brew) measurement.text=owner.Content.IngredientNames[owner.Input.SelectedIngredient]+" → "+TargetName(owner.Input.Target)+"   |   지거 "+Ml(s.Brew.Container(ContainerRole.Jigger).TotalMl)+"   혼합 "+Ml(s.Brew.Container(ContainerRole.Mixing).TotalMl)+"   셰이커 "+Ml(s.Brew.Container(ContainerRole.Shaker).TotalMl)+"   서빙 "+Ml(s.Brew.Container(ContainerRole.Serving).TotalMl)+" ml"+(owner.Input.Fine ? " · 미세" : "")+(s.Brew.ShakerClosed ? " · 뚜껑 닫힘" : "");
             }
             string requested=s?.SaveError!=null ? "save_error" : s?.Modals.Top ?? MenuModal;

@@ -77,7 +77,7 @@ namespace Surlhwa.Tests
         {
             var continuation=new CampaignContinuation(Json(sourceAct),Json(3));
             var checkpoints=Checkpoints(continuation.SourceContent);
-            Assert.That(checkpoints.Select(x=>x.Phase).Distinct(),Is.EquivalentTo(Enum.GetValues(typeof(CampaignPhase)).Cast<CampaignPhase>()));
+            Assert.That(checkpoints.Select(x=>x.Phase).Distinct(),Is.EquivalentTo(Enum.GetValues(typeof(CampaignPhase)).Cast<CampaignPhase>().Where(x=>x<=CampaignPhase.Complete)));
             foreach(var before in checkpoints) {
                 var after=continuation.Convert(CampaignSaveCodec.Encode(before,continuation.SourceContent));
                 Preserved(before,after,continuation);

@@ -1,0 +1,834 @@
+{
+  "schemaVersion": 1,
+  "kind": "act_adoption_package",
+  "act": "act_07",
+  "status": "SOURCE_ADOPTED_RUNTIME_INTEGRATION_PENDING",
+  "acceptedAct6Sha256": "e6bb7131fc5424186bc2cf4b1b15160b8cead275bcf7c9824ee1ccd1bfb5dfcf",
+  "sourceRegistrySha256": "4313d6640f82800008b6adbc59c106965abe33b8349fa477d81e6ba81311b348",
+  "guests": [
+    {
+      "id": "guest_odysseus",
+      "kind": "special",
+      "displayTextId": "text_rc1_0136",
+      "visualBindingId": "visual_odysseus"
+    }
+  ],
+  "texts": [
+    {
+      "id": "text_rc1_0136",
+      "value": "오디세우스",
+      "sourceText": "오디세우스",
+      "sourceId": "SRC-RC1-0136",
+      "sourceHash": "52da278c1a20504618860a4e4ec5d0b30b275fe8d120171dbcddb931f060a334",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0137",
+      "value": "오디세우스는 연꽃 곁에 번지는 물결을 한동안 바라본다.",
+      "sourceText": "오디세우스는 연꽃 곁에 번지는 물결을 한동안 바라본다.",
+      "sourceId": "SRC-RC1-0137",
+      "sourceHash": "5c3d5db67632b2cc13002c9e595ec7acc6af1b9ef7357ac0a5ec773c4cbcdd1a",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0138",
+      "value": "오디세우스: 돌아온 자리에서 잠시 멈추어도 되는군요.",
+      "sourceText": "오디세우스: 돌아온 자리에서 잠시 멈추어도 되는군요.",
+      "sourceId": "SRC-RC1-0138",
+      "sourceHash": "a3dc7e889a6231608aefc0fba2f121bdaea328ce540a396db8b94f0190008f21",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0139",
+      "value": "그는 일어서다가 의자를 한 번 돌아본다.",
+      "sourceText": "그는 일어서다가 의자를 한 번 돌아본다.",
+      "sourceId": "SRC-RC1-0139",
+      "sourceHash": "a551d5bf9240b01652f1c96c93cab67b6393b506e3ae876907ceec95e419a816",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0140",
+      "value": "오디세우스: 길에서는 이렇게 천천히 마실 수 없었지요.",
+      "sourceText": "오디세우스: 길에서는 이렇게 천천히 마실 수 없었지요.",
+      "sourceId": "SRC-RC1-0140",
+      "sourceHash": "aa48f71777ab6a5c8c442de95a782811b9f2faee921372130da8460825638a08",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0141",
+      "value": "오디세우스: 제가 떠올린 맛과는 다릅니다. 떠나기 전의 입맛만 기억하고 있었나 봅니다.",
+      "sourceText": "오디세우스: 제가 떠올린 맛과는 다릅니다. 떠나기 전의 입맛만 기억하고 있었나 봅니다.",
+      "sourceId": "SRC-RC1-0141",
+      "sourceHash": "4dea83d5134438b181baae2988e74b56575bd84879583b85688363d5c5f88da7",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0142",
+      "value": "문 앞의 남자가 눈을 턴다. 입을 열 때까지 바텐더도 잔을 서두르지 않는다.",
+      "sourceText": "문 앞의 남자가 눈을 턴다. 입을 열 때까지 바텐더도 잔을 서두르지 않는다.",
+      "sourceId": "SRC-RC1-0142",
+      "sourceHash": "ba4150de7c7ffe0c22d1c30b52d51c4c5c7d76b75b2f06737d7fb8b642ebd6d3",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0143",
+      "value": "오디세우스: …돌아오긴 했습니다.",
+      "sourceText": "오디세우스: …돌아오긴 했습니다.",
+      "sourceId": "SRC-RC1-0143",
+      "sourceHash": "02711f8bda206e4bb8e8092b6e2bc67cb5167b6d3b68951804e91bad1fccea70",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0144",
+      "value": "오디세우스: 문은 기억하던 자리에 있었죠. 그런데 손잡이를 잡은 손은 낯설었습니다.",
+      "sourceText": "오디세우스: 문은 기억하던 자리에 있었죠. 그런데 손잡이를 잡은 손은 낯설었습니다.",
+      "sourceId": "SRC-RC1-0144",
+      "sourceHash": "d2175962d2a8cfc015ad181c4b884236773dfe49bd0c2125c69afed726e65320",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0145",
+      "value": "오디세우스: 오래 걸어온 사람에게 내어 주는 잔이면 됩니다. 따뜻함도, 남은 쓴맛도 피하지 않겠습니다.",
+      "sourceText": "오디세우스: 오래 걸어온 사람에게 내어 주는 잔이면 됩니다. 따뜻함도, 남은 쓴맛도 피하지 않겠습니다.",
+      "sourceId": "SRC-RC1-0145",
+      "sourceHash": "6a6605089ab0c1df4bf3ee3964bff2d9b3f43167f4e75153a16a1b880fcc6553",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0146",
+      "value": "오디세우스: 오래 걸어온 사람에게 내어 주는 잔이면 됩니다. 따뜻함도, 남은 쓴맛도 피하지 않겠습니다.",
+      "sourceText": "오디세우스: 오래 걸어온 사람에게 내어 주는 잔이면 됩니다. 따뜻함도, 남은 쓴맛도 피하지 않겠습니다.",
+      "sourceId": "SRC-RC1-0146",
+      "sourceHash": "6a6605089ab0c1df4bf3ee3964bff2d9b3f43167f4e75153a16a1b880fcc6553",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0147",
+      "value": "오디세우스",
+      "sourceText": "오디세우스",
+      "sourceId": "SRC-RC1-0147",
+      "sourceHash": "52da278c1a20504618860a4e4ec5d0b30b275fe8d120171dbcddb931f060a334",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0148",
+      "value": "잔이 비어도 오디세우스는 일어나지 않는다. 잠시 아무 말도 오가지 않는다.",
+      "sourceText": "잔이 비어도 오디세우스는 일어나지 않는다. 잠시 아무 말도 오가지 않는다.",
+      "sourceId": "SRC-RC1-0148",
+      "sourceHash": "29ee1802103dec765d00225421a3f8a40bbbc7cbe2752f3fd49251155f6e2297",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0149",
+      "value": "오디세우스: 돌아온 뒤에도 어디론가 가야 하는 줄 알았습니다.",
+      "sourceText": "오디세우스: 돌아온 뒤에도 어디론가 가야 하는 줄 알았습니다.",
+      "sourceId": "SRC-RC1-0149",
+      "sourceHash": "43d2b7ed8737f0602927b74e75daa814c28dcecd34b4ce24524cb531a4009246",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0150",
+      "value": "오디세우스: 오늘은 여기에 좀 더 앉아 있겠습니다.",
+      "sourceText": "오디세우스: 오늘은 여기에 좀 더 앉아 있겠습니다.",
+      "sourceId": "SRC-RC1-0150",
+      "sourceHash": "7847c08c906e0e438590c1c9cf0305b94b978c8886d793ed4c4a76950d4107dd",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0151",
+      "value": "한참 뒤 그가 외투를 챙긴다. 바 가까이에 작은 닻과 배 조각이 남는다.",
+      "sourceText": "한참 뒤 그가 외투를 챙긴다. 바 가까이에 작은 닻과 배 조각이 남는다.",
+      "sourceId": "SRC-RC1-0151",
+      "sourceHash": "20f87a43f01e0f997e316b7107c8b73f19fd09975b8f110a46899ae2f87d2e61",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0152",
+      "value": "오디세우스: 이 잔이 비는 속도를 처음으로 알고 마셨군요.",
+      "sourceText": "오디세우스: 이 잔이 비는 속도를 처음으로 알고 마셨군요.",
+      "sourceId": "SRC-RC1-0152",
+      "sourceHash": "f832ee97954fa63191bcf9c9282274767659d47927f5df246aff7abc36bb25fa",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0153",
+      "value": "오디세우스: 오늘 잔은 조금 낯설었지만, 이 자리는 그렇지 않군요.",
+      "sourceText": "오디세우스: 오늘 잔은 조금 낯설었지만, 이 자리는 그렇지 않군요.",
+      "sourceId": "SRC-RC1-0153",
+      "sourceHash": "5fb7bc6905b66a1e8134530681d50c87d6d392cba999bd282f8aa6e7f23854b9",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0154",
+      "value": "오디세우스는 이번에는 망토를 벗어 의자에 건다.",
+      "sourceText": "오디세우스는 이번에는 망토를 벗어 의자에 건다.",
+      "sourceId": "SRC-RC1-0154",
+      "sourceHash": "1d966e8ad8eed25be3cf2f2f770d073600fe2898a21775752ee0c83e13ef8cbb",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0155",
+      "value": "오디세우스: 오늘은 길을 묻지 않으려고 합니다.",
+      "sourceText": "오디세우스: 오늘은 길을 묻지 않으려고 합니다.",
+      "sourceId": "SRC-RC1-0155",
+      "sourceHash": "32fd55dff47eb2b150347bfc1796e4291a7f66bba24b7d5eba8ce4458c777a8e",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0156",
+      "value": "그가 바 안의 작은 흔적들을 둘러본다. 이름을 묻는 대신 다시 자리에 앉는다.",
+      "sourceText": "그가 바 안의 작은 흔적들을 둘러본다. 이름을 묻는 대신 다시 자리에 앉는다.",
+      "sourceId": "SRC-RC1-0156",
+      "sourceHash": "0fa1c46d194db7ab25cd42c46d3e39cea4255020e55a728cae066335cc8f1a41",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0157",
+      "value": "오디세우스: 마지막 한 잔을 천천히 마시고 싶군요. 마음 놓이는 잔도, 고요하게 맑아지는 잔도 좋습니다.",
+      "sourceText": "오디세우스: 마지막 한 잔을 천천히 마시고 싶군요. 마음 놓이는 잔도, 고요하게 맑아지는 잔도 좋습니다.",
+      "sourceId": "SRC-RC1-0157",
+      "sourceHash": "b6bea313be23ab62b40754a70d71dd53881f79109d7910d8c114dd78372e77ca",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0158",
+      "value": "오디세우스: 마지막 한 잔을 천천히 마시고 싶군요. 마음 놓이는 잔도, 고요하게 맑아지는 잔도 좋습니다.",
+      "sourceText": "오디세우스: 마지막 한 잔을 천천히 마시고 싶군요. 마음 놓이는 잔도, 고요하게 맑아지는 잔도 좋습니다.",
+      "sourceId": "SRC-RC1-0158",
+      "sourceHash": "b6bea313be23ab62b40754a70d71dd53881f79109d7910d8c114dd78372e77ca",
+      "sourcePath": "57_ODYSSEUS.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0231",
+      "value": "야간 역무원",
+      "sourceText": "야간 역무원",
+      "sourceId": "SRC-RC1-0231",
+      "sourceHash": "3b7e60e7ed16dcc403b18ef362de92df7df7e4e55fe2bceb52b639f06f3c51cf",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0232",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0232",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0233",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0233",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0234",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0234",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0235",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0235",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0236",
+      "value": "종착역까지 간다고 다들 집에 도착하는 건 아니더군요.",
+      "sourceText": "종착역까지 간다고 다들 집에 도착하는 건 아니더군요.",
+      "sourceId": "SRC-RC1-0236",
+      "sourceHash": "82bef62efee2327fab830601b680238ec51997ad621564b388d00b48b13794d8",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0237",
+      "value": "여기 불이 보여서 들렀어요. 먼 길의 쓴맛이 남아도 좋고, 몸이 풀리는 잔도 좋아요.",
+      "sourceText": "여기 불이 보여서 들렀어요. 먼 길의 쓴맛이 남아도 좋고, 몸이 풀리는 잔도 좋아요.",
+      "sourceId": "SRC-RC1-0237",
+      "sourceHash": "d68368bed47b216546d8124f4a4162c66c339ecd0134510ec6e69f10e19e30b2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0238",
+      "value": "여기 불이 보여서 들렀어요. 먼 길의 쓴맛이 남아도 좋고, 몸이 풀리는 잔도 좋아요.",
+      "sourceText": "여기 불이 보여서 들렀어요. 먼 길의 쓴맛이 남아도 좋고, 몸이 풀리는 잔도 좋아요.",
+      "sourceId": "SRC-RC1-0238",
+      "sourceHash": "d68368bed47b216546d8124f4a4162c66c339ecd0134510ec6e69f10e19e30b2",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0239",
+      "value": "우편 배달부",
+      "sourceText": "우편 배달부",
+      "sourceId": "SRC-RC1-0239",
+      "sourceHash": "ab078db4027fedf0129aa697eec62e5f3c76d42bca75064de6ef19a5ba6ac07e",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "guestName",
+      "sourceOrder": "None",
+      "role": "display",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0240",
+      "value": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceText": "손님은 잔 곁에 두었던 장갑을 챙긴다.",
+      "sourceId": "SRC-RC1-0240",
+      "sourceHash": "14b50ca25e6bc9079f7f7e586c37221cdf89270d6017fe2d13e99005798c6c39",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0241",
+      "value": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceText": "다시 올게요. 문이 닫힌 뒤에도 인사가 잠시 남는다.",
+      "sourceId": "SRC-RC1-0241",
+      "sourceHash": "36956a186a94f0a7a8909b66a1e60fa2b13cccca8bd20b816f731b629e2b19b4",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "mixed",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0242",
+      "value": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceText": "오늘 제 이야기를 잘 들어 주셨네요.",
+      "sourceId": "SRC-RC1-0242",
+      "sourceHash": "cdbd94b7b04e1bbf61d62d187c882eae5c01651fb79405281801d4b58f356f6a",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onSuccessLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0243",
+      "value": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceText": "제 생각과는 조금 다른 맛이에요. 그래도 잠깐 쉬어 갑니다.",
+      "sourceId": "SRC-RC1-0243",
+      "sourceHash": "2dc27df3d9bce18ebe073ae54ef48303dd588d3731bc3a33eae28b7d5de8c218",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onFailLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0244",
+      "value": "처음 왔던 날보다 물건이 조금 늘었네요. 이상하게 자리도 더 넓어진 것 같고요.",
+      "sourceText": "처음 왔던 날보다 물건이 조금 늘었네요. 이상하게 자리도 더 넓어진 것 같고요.",
+      "sourceId": "SRC-RC1-0244",
+      "sourceHash": "2d20a4a1e8f9c4f74c1a30b52bc1b96af6839be06c001b890dffc0b74c564b59",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0245",
+      "value": "오늘은 이름을 말하지 않아도 되겠죠. 여기 앉아 천천히 마실 수 있는, 편안하거나 고요한 잔을 주세요.",
+      "sourceText": "오늘은 이름을 말하지 않아도 되겠죠. 여기 앉아 천천히 마실 수 있는, 편안하거나 고요한 잔을 주세요.",
+      "sourceId": "SRC-RC1-0245",
+      "sourceHash": "c92eb2d3a8fa0564876cbaebbd864fc788a2deb223d64bc898c9ea932a813d15",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "spoken",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0246",
+      "value": "오늘은 이름을 말하지 않아도 되겠죠. 여기 앉아 천천히 마실 수 있는, 편안하거나 고요한 잔을 주세요.",
+      "sourceText": "오늘은 이름을 말하지 않아도 되겠죠. 여기 앉아 천천히 마실 수 있는, 편안하거나 고요한 잔을 주세요.",
+      "sourceId": "SRC-RC1-0246",
+      "sourceHash": "c92eb2d3a8fa0564876cbaebbd864fc788a2deb223d64bc898c9ea932a813d15",
+      "sourcePath": "61_ORDINARY_REQUEST_DIALOGUE.md",
+      "sourceField": "orderName",
+      "sourceOrder": "None",
+      "role": "request_summary",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0001",
+      "value": "문이 닫힌 뒤에도, 마지막 손님이 앉아 있던 자리는 따뜻하다.",
+      "sourceText": "문이 닫힌 뒤에도, 마지막 손님이 앉아 있던 자리는 따뜻하다.",
+      "sourceId": "SRC-RC1-0001",
+      "sourceHash": "d05b494f93b33b6a2c3071b7097fe47d147d1f7d80968a936c5bb18c40198ba3",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[0]",
+      "sourceOrder": "0",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0002",
+      "value": "빈 의자와 작은 그네. 기울어진 풍차 날개를 지나 천을 접는다.",
+      "sourceText": "빈 의자와 작은 그네. 기울어진 풍차 날개를 지나 천을 접는다.",
+      "sourceId": "SRC-RC1-0002",
+      "sourceHash": "995ad94ed23267b55a9078b1e712a7707d00bcde04959f935d783dc806f233ec",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[1]",
+      "sourceOrder": "1",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0003",
+      "value": "무대 위의 그림자와 금이 간 잔은 그대로 둔다.",
+      "sourceText": "무대 위의 그림자와 금이 간 잔은 그대로 둔다.",
+      "sourceId": "SRC-RC1-0003",
+      "sourceHash": "ae2e415212787077b55070877fd53f17f01252e8387a9905c0cac132bf95cb13",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[2]",
+      "sourceOrder": "2",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0004",
+      "value": "연꽃 곁의 물결이 잦아든다. 닻 옆에는 아직 작은 배 조각이 놓여 있다.",
+      "sourceText": "연꽃 곁의 물결이 잦아든다. 닻 옆에는 아직 작은 배 조각이 놓여 있다.",
+      "sourceId": "SRC-RC1-0004",
+      "sourceHash": "fa138d9fd030e3728b147a526fe35ee6af5e574e0312520636ec60a14eabd99f",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[3]",
+      "sourceOrder": "3",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0005",
+      "value": "누군가는 답을 찾지 못했고, 누군가는 하려던 말을 끝내지 못했다.",
+      "sourceText": "누군가는 답을 찾지 못했고, 누군가는 하려던 말을 끝내지 못했다.",
+      "sourceId": "SRC-RC1-0005",
+      "sourceHash": "1b6d6b0ce844018a00cae13c741fb01b64b78832c6cf5f1a94912edcffefd718",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[4]",
+      "sourceOrder": "4",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0006",
+      "value": "처음에는 어떤 술을 만들어야 할지 몰랐다. 이제는 잔을 들기 전에 조금 더 듣는다.",
+      "sourceText": "처음에는 어떤 술을 만들어야 할지 몰랐다. 이제는 잔을 들기 전에 조금 더 듣는다.",
+      "sourceId": "SRC-RC1-0006",
+      "sourceHash": "501e7ce5abf342dd90fe1ab87191aec36ea07bfe72dc94e1d926c58cbf53d46d",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[5]",
+      "sourceOrder": "5",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0007",
+      "value": "오늘의 마지막 잔을 닦아 제자리에 놓는다.",
+      "sourceText": "오늘의 마지막 잔을 닦아 제자리에 놓는다.",
+      "sourceId": "SRC-RC1-0007",
+      "sourceHash": "665d2cd7ee6ad1441cf9750b1ccfe1b381b96bddf53ff16c312766c87538977b",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[6]",
+      "sourceOrder": "6",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    },
+    {
+      "id": "text_rc1_0008",
+      "value": "문 옆의 불빛 하나는 남겨 둔다. 이곳을 찾아올 사람이 길을 볼 수 있도록.",
+      "sourceText": "문 옆의 불빛 하나는 남겨 둔다. 이곳을 찾아올 사람이 길을 볼 수 있도록.",
+      "sourceId": "SRC-RC1-0008",
+      "sourceHash": "a1d22d07763ea65f29548c469e9e63570bc6065e8976ec865ac8dad117026c69",
+      "sourcePath": "40_CAMPAIGN_AND_ENDING.md",
+      "sourceField": "onEnterLines[7]",
+      "sourceOrder": "7",
+      "role": "narration",
+      "adoption": "Verbatim field and original order; bounded ACT7 and common ending adoption after stable ACT6."
+    }
+  ],
+  "encounters": [
+    {
+      "id": "enc_rc1_44",
+      "sourceRow": "RC1-44",
+      "night": 19,
+      "guestId": "guest_station_worker",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0238",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0236",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0237",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0232",
+        "text_rc1_0233"
+      ],
+      "responses": {
+        "good": "text_rc1_0234",
+        "weak": "text_rc1_0235",
+        "mismatch": "text_rc1_0235",
+        "bothWeak": "text_rc1_0235",
+        "unknown": "text_rc1_0235"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_45",
+      "sourceRow": "RC1-45",
+      "night": 19,
+      "guestId": "guest_odysseus",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "bitterness"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0146",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0142",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0143",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0144",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0145",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0137",
+        "text_rc1_0138",
+        "text_rc1_0139"
+      ],
+      "responses": {
+        "good": "text_rc1_0140",
+        "weak": "text_rc1_0141",
+        "mismatch": "text_rc1_0141",
+        "bothWeak": "text_rc1_0141",
+        "unknown": "text_rc1_0141"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_46",
+      "sourceRow": "RC1-46",
+      "night": 20,
+      "guestId": "guest_postman",
+      "companionGuestId": null,
+      "memoryId": null,
+      "memoryVariant": null,
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0246",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0244",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0245",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0240",
+        "text_rc1_0241"
+      ],
+      "responses": {
+        "good": "text_rc1_0242",
+        "weak": "text_rc1_0243",
+        "mismatch": "text_rc1_0243",
+        "bothWeak": "text_rc1_0243",
+        "unknown": "text_rc1_0243"
+      },
+      "choiceIntros": {}
+    },
+    {
+      "id": "enc_rc1_47",
+      "sourceRow": "RC1-47",
+      "night": 20,
+      "guestId": "guest_odysseus",
+      "companionGuestId": null,
+      "memoryId": "mem_07",
+      "memoryVariant": "anchor_ship_fragment",
+      "request": {
+        "cocktailId": null,
+        "anyTags": [
+          "warmth",
+          "clarity"
+        ],
+        "allTags": [],
+        "excludedTags": []
+      },
+      "summaryTextId": "text_rc1_0158",
+      "requiredDiscovery": null,
+      "princeVisit": null,
+      "intro": [
+        {
+          "textId": "text_rc1_0154",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0155",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0156",
+          "facts": []
+        },
+        {
+          "textId": "text_rc1_0157",
+          "facts": []
+        }
+      ],
+      "farewell": [
+        "text_rc1_0148",
+        "text_rc1_0149",
+        "text_rc1_0150",
+        "text_rc1_0151"
+      ],
+      "responses": {
+        "good": "text_rc1_0152",
+        "weak": "text_rc1_0153",
+        "mismatch": "text_rc1_0153",
+        "bothWeak": "text_rc1_0153",
+        "unknown": "text_rc1_0153"
+      },
+      "choiceIntros": {}
+    }
+  ],
+  "slots": [
+    {
+      "encounterId": "enc_rc1_44",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_45",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_46",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    },
+    {
+      "encounterId": "enc_rc1_47",
+      "fallbackId": null,
+      "whenKnownRecipe": null
+    }
+  ],
+  "ending": {
+    "lines": [
+      "text_rc1_0001",
+      "text_rc1_0002",
+      "text_rc1_0003",
+      "text_rc1_0004",
+      "text_rc1_0005",
+      "text_rc1_0006",
+      "text_rc1_0007",
+      "text_rc1_0008"
+    ],
+    "recallAfterLine": 1,
+    "recallByChoice": {
+      "keep": "text_rc1_0412",
+      "seek": "text_rc1_0413",
+      "none": "text_rc1_0414"
+    },
+    "codaTextId": "text_rc1_0008"
+  },
+  "sourceDispositions": [
+    {
+      "sourceId": "SRC-RC1-0147",
+      "disposition": "Same guest_odysseus identity as Return display SRC-RC1-0136; both original display fields remain."
+    },
+    {
+      "sourceId": "SRC-RC1-0231",
+      "disposition": "Existing guest_station_worker display/identity retained; visit-specific display preserved."
+    },
+    {
+      "sourceId": "SRC-RC1-0239",
+      "disposition": "Existing guest_postman display/identity retained; visit-specific display preserved."
+    },
+    {
+      "sourceId": "PRODUCTION-ENDING-PRINCE-RECALL",
+      "disposition": "Explicit new placement after common ending line SRC-RC1-0002 of previously adopted SRC-RC1-0412/0413/0414 for saved keep/seek/none choice. Present as remembered Prince, not a returning guest or a claimed RC1 ending callback. No choice, farewell variant, star or success history is synthesized; all eight common source lines remain in order."
+    }
+  ]
+}

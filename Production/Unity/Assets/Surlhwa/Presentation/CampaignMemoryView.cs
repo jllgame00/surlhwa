@@ -12,6 +12,7 @@ namespace Surlhwa.Presentation
         private GameObject hamlet;
         private GameObject faust;
         private GameObject simcheong;
+        private GameObject odysseus;
         private readonly System.Collections.Generic.List<Object> loversOwned=new System.Collections.Generic.List<Object>();
         public bool LoversVisible=>lovers!=null && lovers.activeSelf;
         public Transform LoversSwing { get; private set; }
@@ -31,6 +32,9 @@ namespace Surlhwa.Presentation
         public Transform SimCheongLotus { get; private set; }
         public Transform SimCheongWater { get; private set; }
         public Transform SimCheongRipples { get; private set; }
+        public bool OdysseusVisible=>odysseus!=null && odysseus.activeSelf;
+        public Transform OdysseusAnchor { get; private set; }
+        public Transform OdysseusShipFragment { get; private set; }
         private Quaternion presentationFacing=Quaternion.Euler(28,0,0);
         public void SetPresentationFacing(Quaternion facing)
         {
@@ -75,6 +79,9 @@ namespace Surlhwa.Presentation
             var lotus=state?.Memories.FirstOrDefault(x=>x.Id=="mem_06" && x.Variant=="half_submerged_lotus_slow_ripples");
             if(lotus!=null && simcheong==null) CreateSimCheongMemory();
             if(simcheong!=null) { simcheong.SetActive(lotus!=null); if(lotus!=null) AnimateSimCheongRipples(Time.unscaledTime); }
+            var voyage=state?.Memories.FirstOrDefault(x=>x.Id=="mem_07" && x.Variant=="anchor_ship_fragment");
+            if(voyage!=null && odysseus==null) CreateOdysseusMemory();
+            if(odysseus!=null) odysseus.SetActive(voyage!=null);
         }
         private void CreateLoversMemory()
         {
@@ -172,6 +179,23 @@ namespace Surlhwa.Presentation
             if(SimCheongRipples==null) return;
             float scale=1+.025f*Mathf.Sin(time*.35f);
             SimCheongRipples.localScale=new Vector3(scale,scale,1);
+        }
+        private void CreateOdysseusMemory()
+        {
+            // Both fragments rest on the existing floor; fixed world XY keeps their
+            // bases supported through focus without completing the future ship.
+            odysseus=new GameObject("MEM-07 anchor and ship fragment"); odysseus.transform.SetParent(transform,false);
+            odysseus.transform.position=new Vector3(.65f,.005f,3.10f); odysseus.transform.rotation=Quaternion.identity;
+            OdysseusAnchor=Part(odysseus.transform,"MEM07_","Small weathered anchor",new Vector3(-.21f,0,0),new Color(.43f,.47f,.44f),new[]{
+                new Rect(-.013f,.015f,.026f,.265f),new Rect(-.075f,.23f,.15f,.022f),
+                new Rect(-.03f,.28f,.016f,.044f),new Rect(.014f,.28f,.016f,.044f),new Rect(-.03f,.324f,.06f,.016f),new Rect(-.03f,.264f,.06f,.016f),
+                new Rect(-.035f,0,.07f,.02f),new Rect(-.07f,.015f,.045f,.02f),new Rect(.025f,.015f,.045f,.02f),
+                new Rect(-.10f,.03f,.035f,.03f),new Rect(.065f,.03f,.035f,.03f),new Rect(-.11f,.06f,.025f,.04f),new Rect(.085f,.06f,.025f,.04f),
+                new Rect(-.11f,.095f,.05f,.02f),new Rect(.06f,.095f,.05f,.02f)});
+            OdysseusShipFragment=Part(odysseus.transform,"MEM07_","Incomplete ship fragment",new Vector3(.145f,0,0),new Color(.56f,.40f,.25f),new[]{
+                new Rect(-.11f,0,.19f,.022f),new Rect(-.15f,.022f,.27f,.024f),new Rect(-.175f,.046f,.32f,.026f),
+                new Rect(-.175f,.072f,.07f,.025f),new Rect(-.145f,.097f,.035f,.018f),
+                new Rect(.11f,.072f,.065f,.028f),new Rect(.14f,.10f,.035f,.04f)});
         }
         private Transform Part(string name,Vector3 at,Color color,Rect[] rectangles)
         { return Part(lovers.transform,"MEM02_",name,at,color,rectangles); }

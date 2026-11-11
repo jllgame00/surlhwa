@@ -110,3 +110,15 @@ Native and performance certification remain scheduled. Five actual Player runs
 and the explicit simulated-input tier are recorded in
 [ACT5 runtime](ACT5_RUNTIME_CHECKPOINT.md); this checkpoint does not grant final
 presentation approval.
+
+2026-11-11 ACT6/ACT7 and common-ending integration: the earned lotus/ripples and
+anchor/incomplete hull have bounded Q1 presentation, independently adopted guest
+contacts, actual720p/1080p Player evidence and seven-memory GPU visibility checks.
+The ending clears departed actors and the visible final serving while retaining
+historical service state. Nine ACT7 actual simulated-input runs cover Open/Quiet,
+final FIT failure and ending/farewell/completed reloads. See
+[ACT6 runtime](ACT6_RUNTIME_CHECKPOINT.md) and [ACT7 runtime](ACT7_RUNTIME_CHECKPOINT.md).
+These are campaign-functionality prerequisites, not closure of any presentation
+row. All PD01-PD11 remain OPEN. The dedicated P09-P12 finishing plans now exist;
+their implementation, actual motion/audio review evidence, practical native-input
+checks and P13 performance/regression work follow this checkpoint before Gate3.

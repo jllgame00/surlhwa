@@ -56,6 +56,29 @@ namespace Surlhwa.Domain
         public CampaignSlot(string encounter,string fallback=null,string whenKnown=null)
         { EncounterId=encounter; FallbackId=fallback; WhenKnownRecipe=whenKnown; if((fallback==null)!=(whenKnown==null)) throw new ArgumentException("Incomplete fallback."); }
     }
+    public sealed class CampaignEnding
+    {
+        public IReadOnlyList<string> Lines { get; }
+        public int RecallAfterLine { get; }
+        public IReadOnlyDictionary<string,string> RecallByChoice { get; }
+        public string CodaTextId { get; }
+        public CampaignEnding(IEnumerable<string> lines,int recallAfterLine,IDictionary<string,string> recallByChoice,string codaTextId)
+        {
+            Lines=Array.AsReadOnly((lines ?? throw new ArgumentNullException(nameof(lines))).ToArray());
+            RecallByChoice=new ReadOnlyDictionary<string,string>(new Dictionary<string,string>(recallByChoice ?? throw new ArgumentNullException(nameof(recallByChoice)),StringComparer.Ordinal));
+            if(Lines.Count!=8 || Lines.Distinct().Count()!=8 || recallAfterLine!=1 ||
+                !RecallByChoice.Keys.OrderBy(x=>x,StringComparer.Ordinal).SequenceEqual(new[]{"keep","none","seek"}) ||
+                RecallByChoice.Values.Distinct().Count()!=3 || RecallByChoice.Values.Any(Lines.Contains) || codaTextId!=Lines.Last())
+                throw new ArgumentException("Invalid bounded campaign ending.");
+            foreach(string id in Lines.Concat(RecallByChoice.Values)) _=new StableId<TextIdentity>(id);
+            RecallAfterLine=recallAfterLine; CodaTextId=codaTextId;
+        }
+        public IReadOnlyList<string> ResolveLines(string choice)
+        {
+            if(!RecallByChoice.TryGetValue(choice ?? "none",out var recall)) throw new ArgumentException("Unknown remembered choice.");
+            return Array.AsReadOnly(Lines.Take(RecallAfterLine+1).Concat(new[]{recall}).Concat(Lines.Skip(RecallAfterLine+1)).ToArray());
+        }
+    }
     public sealed class CampaignContent
     {
         public string Revision { get; } public string BundleHash { get; }
@@ -81,12 +104,13 @@ namespace Surlhwa.Domain
         public IReadOnlyDictionary<string,string> PrinceRecalls { get; }
         public IReadOnlyList<string> OpenFarewell { get; } public IReadOnlyList<string> QuietFarewell { get; }
         public string ChoicePrompt { get; }
+        public CampaignEnding Ending { get; }
         public CampaignContent(string revision,string hash,BartendingCatalog catalog,BrewingTuning tuning,
             IDictionary<string,string> names,IDictionary<string,SourcedText> texts,IDictionary<string,GuestDefinition> guests,
             IDictionary<string,RecipePresentation> presentation,IEnumerable<CampaignEncounter> encounters,IEnumerable<CampaignSlot> slots,
             IEnumerable<string> supply,IDictionary<string,string> known,string choicePrompt,IDictionary<string,string> choices,
             IDictionary<string,string> responses,IDictionary<string,string> recalls,IEnumerable<string> open,IEnumerable<string> quiet,
-            string scope="act_01",IDictionary<string,int> supplyFromSlot=null,IEnumerable<int> actStartSlots=null)
+            string scope="act_01",IDictionary<string,int> supplyFromSlot=null,IEnumerable<int> actStartSlots=null,CampaignEnding ending=null)
         {
             Revision=revision; BundleHash=hash; Catalog=catalog; Tuning=tuning; IngredientNames=Copy(names); Texts=Copy(texts); Guests=Copy(guests);
             RecipePresentation=Copy(presentation); Encounters=Copy(encounters.ToDictionary(x=>x.Id)); Slots=Array.AsReadOnly(slots.ToArray());
@@ -99,6 +123,8 @@ namespace Surlhwa.Domain
             if(this.supplyFromSlot.Any(x=>!Supply.Contains(x.Key) || x.Value<1 || x.Value>=Slots.Count)) throw new ArgumentException("Invalid supply grant boundary.");
             PrinceChoices=Copy(choices); PrinceResponses=Copy(responses); PrinceRecalls=Copy(recalls);
             OpenFarewell=Array.AsReadOnly(open.ToArray()); QuietFarewell=Array.AsReadOnly(quiet.ToArray());
+            Ending=ending;
+            if(Ending!=null && Ending.Lines.Concat(Ending.RecallByChoice.Values).Any(x=>!Texts.ContainsKey(x))) throw new ArgumentException("Unresolved ending reading.");
             if(Slots.Count==0 || Supply.Any(x=>!Catalog.Ingredients.Contains(x)) || KnownSeeds.Keys.Any(x=>!Catalog.Recipes.ContainsKey(x))) throw new ArgumentException("Invalid campaign profile.");
             foreach(var slot in Slots) if(!Encounters.ContainsKey(slot.EncounterId) || (slot.FallbackId!=null &&
                 (!Encounters.ContainsKey(slot.FallbackId) || !Catalog.Recipes.ContainsKey(slot.WhenKnownRecipe)))) throw new ArgumentException("Invalid campaign selection.");

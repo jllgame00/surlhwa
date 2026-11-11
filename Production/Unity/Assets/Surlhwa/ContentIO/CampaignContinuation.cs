@@ -7,7 +7,7 @@ using static Surlhwa.ContentIO.StrictJson;
 
 namespace Surlhwa.ContentIO
 {
-    /// <summary>Source-preserving continuation from accepted ACT 1 through ACT 5 packages.</summary>
+    /// <summary>Source-preserving continuation from accepted ACT 1 through ACT 6 packages.</summary>
     public sealed class CampaignContinuation
     {
         public const string AcceptedActOneHash="0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4";
@@ -15,21 +15,23 @@ namespace Surlhwa.ContentIO
         public const string AcceptedActThreeHash="9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0";
         public const string AcceptedActFourHash="fcc2aeb9c4269c2c9fd34018e4c82b79553ffc3645ad2b8be3970abd673ad6fe";
         public const string AcceptedActFiveHash="bc76a5546c7f30d6dfa417fd3754a81fe4c52f8040b15bc86b42c1a954f34339";
+        public const string AcceptedActSixHash="e6bb7131fc5424186bc2cf4b1b15160b8cead275bcf7c9824ee1ccd1bfb5dfcf";
         public CampaignContent SourceContent { get; }
         public CampaignContent ExpandedContent { get; }
 
         public CampaignContinuation(string acceptedSourceJson,string expandedJson)
         {
             string sourceHash=acceptedSourceJson==null ? null : Hash(acceptedSourceJson);
-            if(sourceHash!=AcceptedActOneHash && sourceHash!=AcceptedActTwoHash && sourceHash!=AcceptedActThreeHash && sourceHash!=AcceptedActFourHash && sourceHash!=AcceptedActFiveHash)
+            if(sourceHash!=AcceptedActOneHash && sourceHash!=AcceptedActTwoHash && sourceHash!=AcceptedActThreeHash && sourceHash!=AcceptedActFourHash && sourceHash!=AcceptedActFiveHash && sourceHash!=AcceptedActSixHash)
                 throw Invalid("Continuation requires exact accepted source campaign definitions.");
             SourceContent=CampaignContentLoader.Load(acceptedSourceJson);
             ExpandedContent=CampaignContentLoader.Load(expandedJson);
-            bool supported=SourceContent.Scope=="act_01" && (ExpandedContent.Scope=="through_act_02" || ExpandedContent.Scope=="through_act_03" || ExpandedContent.Scope=="through_act_04" || ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06") ||
-                SourceContent.Scope=="through_act_02" && (ExpandedContent.Scope=="through_act_03" || ExpandedContent.Scope=="through_act_04" || ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06") ||
-                SourceContent.Scope=="through_act_03" && (ExpandedContent.Scope=="through_act_04" || ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06") ||
-                SourceContent.Scope=="through_act_04" && (ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06") ||
-                SourceContent.Scope=="through_act_05" && ExpandedContent.Scope=="through_act_06";
+            bool supported=SourceContent.Scope=="act_01" && (ExpandedContent.Scope=="through_act_02" || ExpandedContent.Scope=="through_act_03" || ExpandedContent.Scope=="through_act_04" || ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06" || ExpandedContent.Scope=="through_act_07") ||
+                SourceContent.Scope=="through_act_02" && (ExpandedContent.Scope=="through_act_03" || ExpandedContent.Scope=="through_act_04" || ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06" || ExpandedContent.Scope=="through_act_07") ||
+                SourceContent.Scope=="through_act_03" && (ExpandedContent.Scope=="through_act_04" || ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06" || ExpandedContent.Scope=="through_act_07") ||
+                SourceContent.Scope=="through_act_04" && (ExpandedContent.Scope=="through_act_05" || ExpandedContent.Scope=="through_act_06" || ExpandedContent.Scope=="through_act_07") ||
+                SourceContent.Scope=="through_act_05" && (ExpandedContent.Scope=="through_act_06" || ExpandedContent.Scope=="through_act_07") ||
+                SourceContent.Scope=="through_act_06" && ExpandedContent.Scope=="through_act_07";
             if(!supported || ExpandedContent.Slots.Count<=SourceContent.Slots.Count)
                 throw Invalid("Unsupported campaign continuation boundary.");
             ValidatePrefix(Parse(acceptedSourceJson),Parse(expandedJson));

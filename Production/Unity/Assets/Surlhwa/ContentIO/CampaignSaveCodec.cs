@@ -53,17 +53,21 @@ namespace Surlhwa.ContentIO
         private static void Validate(CampaignCheckpoint s,CampaignContent c)
         {
             if(s.SlotIndex>=c.Slots.Count || (s.PrinceChoice!=null && !c.PrinceChoices.ContainsKey(s.PrinceChoice))) throw Invalid("Unknown campaign cursor/choice.");
+            bool endingPhase=s.Phase==CampaignPhase.EndingReady || s.Phase==CampaignPhase.EndingEntered || s.Phase==CampaignPhase.EndingReading;
+            if(endingPhase && c.Ending==null) throw Invalid("Ending phase requires authored ending content.");
+            var ending=c.Ending?.ResolveLines(s.PrinceChoice);
             for(int i=0;i<s.SelectedEncounters.Count;i++)
                 if(s.SelectedEncounters[i]!=c.Slots[i].EncounterId && s.SelectedEncounters[i]!=c.Slots[i].FallbackId) throw Invalid("Unowned selected encounter.");
             var current=c.Encounters[s.SelectedEncounters[s.SlotIndex]];
             var intro=current.ChoiceIntros.TryGetValue(s.PrinceChoice ?? "none",out var variant) ? variant : current.Intro.Select(x=>x.TextId).ToArray();
             var farewell=current.PrinceVisit==PrinceVisit.Clarity && s.Farewell.HasValue ? new[]{c.PrinceRecalls[s.PrinceChoice ?? "none"]}.Concat(s.Farewell==PrinceFarewell.Open ? c.OpenFarewell : c.QuietFarewell).ToArray() : current.Farewell.ToArray();
-            int lineCount=s.Phase==CampaignPhase.Intro ? intro.Length : s.Phase==CampaignPhase.Farewell ? farewell.Length : 1;
+            int lineCount=s.Phase==CampaignPhase.Intro ? intro.Length : s.Phase==CampaignPhase.Farewell ? farewell.Length : s.Phase==CampaignPhase.EndingReading ? ending.Count : 1;
             if(s.LineIndex>=lineCount || (s.Phase==CampaignPhase.ChoiceResponse && s.PrinceChoice==null) ||
+                (s.Phase==CampaignPhase.EndingReading && s.LineIndex==0) ||
                 (s.Phase==CampaignPhase.Choice && (current.PrinceVisit!=PrinceVisit.First || s.PrinceChoice!=null))) throw Invalid("Invalid campaign reading cursor.");
-            int completed=s.Phase==CampaignPhase.Complete ? c.Slots.Count : s.SlotIndex;
+            int completed=s.Phase==CampaignPhase.Complete || endingPhase ? c.Slots.Count : s.SlotIndex;
             if(!s.CompletedOccurrences.SequenceEqual(Enumerable.Range(0,completed).Select(x=>s.RunId+":"+x)) ||
-                (s.Phase==CampaignPhase.Complete && s.SlotIndex!=c.Slots.Count-1)) throw Invalid("Invalid encounter completion ledger.");
+                ((s.Phase==CampaignPhase.Complete || endingPhase) && s.SlotIndex!=c.Slots.Count-1)) throw Invalid("Invalid encounter completion ledger.");
             int Index(string occurrence)
             {
                 var parts=occurrence.Split(':'); if(parts.Length!=2 || parts[0]!=s.RunId || !int.TryParse(parts[1],out var n) || n<0 || n>s.SlotIndex || parts[1]!=n.ToString()) throw Invalid("Invalid occurrence identity."); return n;
@@ -96,17 +100,24 @@ namespace Surlhwa.ContentIO
                 for(int j=0;j<requiredRead;j++)
                     if(!s.ConsumedLines.Contains(s.RunId+":"+n+":Farewell:"+j+":"+departureLines[j])) throw Invalid("Departure lacks consumed farewell reading.");
             }
-            bool post=s.Phase==CampaignPhase.Reaction || s.Phase==CampaignPhase.Result || s.Phase==CampaignPhase.Discovery || s.Phase==CampaignPhase.Retry || s.Phase==CampaignPhase.Farewell || s.Phase==CampaignPhase.Departing || s.Phase==CampaignPhase.Complete;
+            bool post=s.Phase==CampaignPhase.Reaction || s.Phase==CampaignPhase.Result || s.Phase==CampaignPhase.Discovery || s.Phase==CampaignPhase.Retry || s.Phase==CampaignPhase.Farewell || s.Phase==CampaignPhase.Departing || s.Phase==CampaignPhase.Complete || endingPhase;
             if(post && s.CurrentService==null) throw Invalid("Reading lacks a committed service.");
             if(s.Phase==CampaignPhase.Discovery && !s.CurrentService.Discovered) throw Invalid("Discovery screen lacks a grant.");
             if(s.Phase==CampaignPhase.Retry && (current.RequiredDiscovery==null || knowledge.Project(current.RequiredDiscovery).Known)) throw Invalid("Invalid discovery retry.");
+            var consumedEnding=new List<string>();
             foreach(var receipt in s.ConsumedLines)
             {
                 var parts=receipt.Split(':'); if(parts.Length!=5) throw Invalid("Invalid consumed line.");
                 int n=Index(parts[0]+":"+parts[1]); var e=c.Encounters[s.SelectedEncounters[n]];
                 if(!int.TryParse(parts[3],out int cursor) || cursor<0 || !c.Texts.ContainsKey(parts[4])) throw Invalid("Unknown consumed line.");
                 string[] allowed;
-                if(parts[2]=="Intro")
+                if(parts[2]=="EndingEntered" || parts[2]=="EndingReading")
+                {
+                    if(ending==null || (!endingPhase && s.Phase!=CampaignPhase.Complete) || n!=c.Slots.Count-1)
+                        throw Invalid("Unowned ending reading.");
+                    consumedEnding.Add(receipt);
+                }
+                else if(parts[2]=="Intro")
                 {
                     allowed=e.ChoiceIntros.TryGetValue(s.PrinceChoice ?? "none",out var branch) ? branch : e.Intro.Select(x=>x.TextId).ToArray();
                     if(cursor>=allowed.Length || allowed[cursor]!=parts[4]) throw Invalid("Unowned intro line.");
@@ -121,6 +132,10 @@ namespace Surlhwa.ContentIO
                     if(!allowed.Contains(parts[4]) || (parts[2]!="Reaction" && (cursor>=allowed.Length || allowed[cursor]!=parts[4]))) throw Invalid("Unowned consumed reading.");
                 }
             }
+            int endingRead=ending==null ? 0 : s.Phase==CampaignPhase.Complete ? ending.Count : s.Phase==CampaignPhase.EndingReading ? s.LineIndex : 0;
+            var expectedEnding=Enumerable.Range(0,endingRead).Select(i=>s.OccurrenceId+":"+(i==0 ? "EndingEntered" : "EndingReading")+":"+i+":"+ending[i]).ToArray();
+            if(!consumedEnding.SequenceEqual(expectedEnding) || !s.ConsumedLines.Skip(s.ConsumedLines.Count-endingRead).SequenceEqual(expectedEnding))
+                throw Invalid("Ending reading must be the exact consumed prefix before the next unread cursor.");
             if(s.KnownReceipts.Count!=knowledge.KnownReceipts.Count || s.KnownReceipts.Any(x=>!knowledge.KnownReceipts.TryGetValue(x.Key,out var value) || value!=x.Value) ||
                 s.Facts.Count!=knowledge.Facts.Count || s.Facts.Any(x=>!knowledge.Facts.TryGetValue(x.Key,out var values) || !x.Value.OrderBy(v=>v).SequenceEqual(values.OrderBy(v=>v)))) throw Invalid("Unearned campaign knowledge.");
             var closing=s.SelectedEncounters.Select((id,n)=>new {Encounter=c.Encounters[id],Index=n}).SingleOrDefault(x=>x.Encounter.PrinceVisit==PrinceVisit.Clarity);

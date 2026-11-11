@@ -116,26 +116,26 @@ Agreed narrow seams for parallel execution after ACT6 commit:
   A full campaign's Complete is invalid without its complete reading prefix.
   Earlier scopes retain their original Complete contract and reject new phases.
 
-- [ ] Content: adoption tool/data/provenance and strict loader scope7/boundary43,
+- [x] Content: adoption tool/data/provenance and strict loader scope7/boundary43,
   immutable optional ending definition, bounded source validation; full routes
   with actual service failures and unchanged nine recipes/twenty-two ingredients.
-- [ ] Runtime/save: session ending transitions and text projection, appended
+- [x] Runtime/save: session ending transitions and text projection, appended
   phases, exact codec reading ownership, source1–6 continuation pinning and strict
   prefix/destination precedence. Tests first for every ending boundary, each
   line resume, callbacks, publication failure and completed coda. Freeze old
   tests' pre-ending phase expectations rather than assigning new phases to old
   campaigns. Preserve historical service outcomes without reevaluation.
-- [ ] Cast: independently inspect exact Odysseus standing/seated/walk source art,
+- [x] Cast: independently inspect exact Odysseus standing/seated/walk source art,
   supported Q1 contact and depth, separate ACT7 scene/font/history6..2+legacy1.
   Receipt-only anchor and ship fragment on an unobscured physical support; no
   completed-ship revisit art or trophy UI. Preserve reserved Prince chair.
-- [ ] Root UI/proof: all departed actors hidden during ending; restrained Ready,
+- [x] Root UI/proof: all departed actors hidden during ending; restrained Ready,
   remembered-speaker and narration presentation; persistent coda/bar re-entry.
   Real input proofs for ACT6 completion→43..46→ending, FIT failure, Open/Quiet,
   Ready/Entered/mid-reading/last-line/Complete resumes and exactly-once MEM07.
   No source save fabricated for runtime evidence. Both720p/1080p and all seven
   memories visible with actual materials, no missing reference or overflow.
-- [ ] Run focused RED/GREEN, aggregate .NET/Tools/Unity regression, separate
+- [x] Run focused RED/GREEN, aggregate .NET/Tools/Unity regression, separate
   Player build and actual proofs, independent review, source/asset preservation,
   minimal serialized diff audit. Root alone launches Unity/build/Players; freeze
   C# for Editor and inventories for Player. Record objective evidence separately

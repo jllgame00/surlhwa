@@ -94,7 +94,7 @@ namespace Surlhwa.Tests
         {
             var continuation=new CampaignContinuation(Json(act),Json(5)); var states=Checkpoints(act);
             var selected=states.GroupBy(x=>x.Phase).Select(x=>x.Last()).Concat(act==4 ? states.Where(x=>x.SlotIndex>=29) : Array.Empty<CampaignCheckpoint>()).Distinct().ToArray();
-            Assert.That(selected.Select(x=>x.Phase).Distinct(),Is.EquivalentTo(Enum.GetValues(typeof(CampaignPhase)).Cast<CampaignPhase>()));
+            Assert.That(selected.Select(x=>x.Phase).Distinct(),Is.EquivalentTo(Enum.GetValues(typeof(CampaignPhase)).Cast<CampaignPhase>().Where(x=>x<=CampaignPhase.Complete)));
             foreach(var before in selected) {
                 var after=continuation.Convert(CampaignSaveCodec.Encode(before,continuation.SourceContent)); Preserved(before,after,continuation);
                 using(var resumed=CampaignSession.Continue(continuation.ExpandedContent,new CaptureStore(),after)) {

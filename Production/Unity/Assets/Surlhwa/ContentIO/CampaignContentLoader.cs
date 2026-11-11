@@ -29,8 +29,9 @@ namespace Surlhwa.ContentIO
             int schema=Int(root,"schemaVersion"); bool expanded=schema==2;
             string scope=String(root,"act");
             if(schema!=1 && schema!=2) throw Invalid("Unsupported campaign content schema.");
-            int act=scope=="act_01" ? 1 : scope=="through_act_02" ? 2 : scope=="through_act_03" ? 3 : scope=="through_act_04" ? 4 : scope=="through_act_05" ? 5 : scope=="through_act_06" ? 6 : 0;
+            int act=scope=="act_01" ? 1 : scope=="through_act_02" ? 2 : scope=="through_act_03" ? 3 : scope=="through_act_04" ? 4 : scope=="through_act_05" ? 5 : scope=="through_act_06" ? 6 : scope=="through_act_07" ? 7 : 0;
             var rootFields=new[]{"schemaVersion","mode","act","contentRevision","sourceRegistrySha256","ingredients","cocktails","recipes","tuning","guests","texts","encounters","slots","supply","known","prince"};
+            if(act==7) rootFields=rootFields.Concat(new[]{"ending"}).ToArray();
             Fields(root,expanded ? rootFields.Concat(new[]{"supplyGrants"}).ToArray() : rootFields);
             if(String(root,"mode")!="campaign" || act==0 || (expanded ? act<2 : act!=1) || !IsHash(String(root,"sourceRegistrySha256"))) throw Invalid("Unsupported campaign scope/source manifest.");
             var names=new Dictionary<string,string>();
@@ -71,11 +72,13 @@ namespace Surlhwa.ContentIO
             {
                 var row=Object(token); Fields(row,"id","kind","displayTextId","visualBindingId"); string id=Id<GuestIdentity>(row,"id"),kind=String(row,"kind"),label=Id<TextIdentity>(row,"displayTextId"),visual=Id<VisualIdentity>(row,"visualBindingId");
                 var specialVisuals=act>=6 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet","visual_faust","visual_simcheong"} : act==5 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet","visual_faust"} : act==4 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote","visual_hamlet"} : act==3 ? new[]{"visual_prince","visual_chunhyang","visual_mongryong","visual_quixote"} : expanded ? new[]{"visual_prince","visual_chunhyang","visual_mongryong"} : new[]{"visual_prince"};
+                if(act==7) specialVisuals=specialVisuals.Concat(new[]{"visual_odysseus"}).ToArray();
                 if((kind!="ordinary" && kind!="special") || !texts.ContainsKey(label) || texts[label].Role!="display" || (kind=="special" ? !specialVisuals.Contains(visual) : visual!="visual_ordinary")) throw Invalid("Unsupported campaign guest presentation.");
                 if(act>=3 && id=="guest_quixote" && (kind!="special" || visual!="visual_quixote")) throw Invalid("Invalid Quixote presentation identity.");
                 if(act>=4 && id=="guest_hamlet" && (kind!="special" || visual!="visual_hamlet")) throw Invalid("Invalid Hamlet presentation identity.");
                 if(act>=5 && id=="guest_faust" && (kind!="special" || visual!="visual_faust" || label!="text_rc1_0060")) throw Invalid("Invalid Faust presentation identity.");
                 if(act>=6 && id=="guest_simcheong" && (kind!="special" || visual!="visual_simcheong" || label!="text_rc1_0268")) throw Invalid("Invalid SimCheong presentation identity.");
+                if(act==7 && id=="guest_odysseus" && (kind!="special" || visual!="visual_odysseus" || label!="text_rc1_0136")) throw Invalid("Invalid Odysseus presentation identity.");
                 guests.Add(id,new GuestDefinition(new StableId<GuestIdentity>(id),kind=="ordinary" ? GuestKind.Ordinary : GuestKind.Special,new StableId<TextIdentity>(label),new StableId<VisualIdentity>(visual)));
             }
             var encounters=new List<CampaignEncounter>(); var sourceRows=new Dictionary<string,string>();
@@ -86,7 +89,7 @@ namespace Surlhwa.ContentIO
                 if(row.Property("discoveryRetryTextId")!=null) permittedFields=permittedFields.Concat(new[]{"discoveryRetryTextId"}).ToArray();
                 Fields(row,permittedFields);
                 string id=Id<TextIdentity>(row,"id"),sourceRow=String(row,"sourceRow");
-                if(!Enumerable.Range(1,act>=6 ? 43 : act==5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17).Select(x=>"RC1-"+x.ToString("00")).Contains(sourceRow)) throw Invalid("Later ACT content is outside this milestone.");
+                if(!Enumerable.Range(1,act==7 ? 47 : act==6 ? 43 : act==5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17).Select(x=>"RC1-"+x.ToString("00")).Contains(sourceRow)) throw Invalid("Later ACT content is outside this milestone.");
                 sourceRows.Add(id,sourceRow); var request=Object(row["request"]); Fields(request,"cocktailId","anyTags","allTags","excludedTags");
                 string cocktail=NullableString(request,"cocktailId");
                 if(cocktail!=null && (!catalog.Cocktails.ContainsKey(cocktail) || Strings(request,"anyTags").Length+Strings(request,"allTags").Length+Strings(request,"excludedTags").Length!=0)) throw Invalid("Invalid Specific request.");
@@ -118,7 +121,7 @@ namespace Surlhwa.ContentIO
             }
             var slots=new List<CampaignSlot>();
             foreach(var token in Array(root,"slots")) { var row=Object(token); Fields(row,"encounterId","fallbackId","whenKnownRecipe"); slots.Add(new CampaignSlot(Id<TextIdentity>(row,"encounterId"),NullableString(row,"fallbackId"),NullableString(row,"whenKnownRecipe"))); }
-            int expectedSlots=act>=6 ? 43 : act==5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17;
+            int expectedSlots=act==7 ? 47 : act==6 ? 43 : act==5 ? 37 : act==4 ? 33 : act==3 ? 29 : expanded ? 25 : 17;
             if(slots.Count!=expectedSlots || slots.Select(x=>sourceRows[x.EncounterId]).Distinct().Count()!=expectedSlots) throw Invalid("Missing campaign source-row disposition.");
             var ordered=slots.Select(x=>encounters.Single(e=>e.Id==x.EncounterId)).ToArray();
             if(!ordered.Where(x=>x.PrinceVisit.HasValue).Select(x=>x.PrinceVisit.Value).SequenceEqual(new[]{PrinceVisit.First,PrinceVisit.Warmth,PrinceVisit.Clarity}) || ordered[16].PrinceVisit!=PrinceVisit.Clarity ||
@@ -135,11 +138,13 @@ namespace Surlhwa.ContentIO
                     bool hamletDeparture=act>=4 && sourceRows[e.Id]=="RC1-33";
                     bool faustDeparture=act>=5 && sourceRows[e.Id]=="RC1-37";
                     bool simCheongDeparture=act>=6 && sourceRows[e.Id]=="RC1-42";
+                    bool odysseusDeparture=act==7 && sourceRows[e.Id]=="RC1-47";
                     if(reunion ? e.MemoryId!="mem_02" || e.MemoryVariant!="swing_empty_place" :
                         quixoteDeparture ? e.MemoryId!="mem_03" || e.MemoryVariant!="windmill_fragment" :
                         hamletDeparture ? e.MemoryId!="mem_04" || e.MemoryVariant!="stage_skull_shadow" :
                         faustDeparture ? e.MemoryId!="mem_05" || e.MemoryVariant!="faint_circle_broken_glass_red_light" :
-                        simCheongDeparture ? e.MemoryId!="mem_06" || e.MemoryVariant!="half_submerged_lotus_slow_ripples" : e.MemoryId!=null) throw Invalid("Invalid authored memory owner.");
+                        simCheongDeparture ? e.MemoryId!="mem_06" || e.MemoryVariant!="half_submerged_lotus_slow_ripples" :
+                        odysseusDeparture ? e.MemoryId!="mem_07" || e.MemoryVariant!="anchor_ship_fragment" : e.MemoryId!=null) throw Invalid("Invalid authored memory owner.");
                     if(act>=3 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-26")>=0 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-29")<=0) {
                         string expectedGuest=sourceRows[e.Id]=="RC1-26" ? "guest_postman" : sourceRows[e.Id]=="RC1-29" ? "guest_snow_worker" : "guest_quixote";
                         if(e.GuestId!=expectedGuest || e.RequiredDiscovery!=null || e.Request.CocktailId!=null || e.Intro.Any(line=>line.Facts.Count!=0))
@@ -153,7 +158,8 @@ namespace Surlhwa.ContentIO
                             throw Invalid("Invalid ACT 4 ordinary/recommendation ownership.");
                     }
                     if(act>=5 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-34")>=0 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-37")<=0) ValidateActFiveEncounter(e,sourceRows[e.Id]);
-                    if(act>=6 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-38")>=0) ValidateActSixEncounter(e,sourceRows[e.Id],texts);
+                    if(act>=6 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-38")>=0 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-43")<=0) ValidateActSixEncounter(e,sourceRows[e.Id],texts);
+                    if(act==7 && StringComparer.Ordinal.Compare(sourceRows[e.Id],"RC1-44")>=0) ValidateActSevenEncounter(e,sourceRows[e.Id],texts);
                 }
                 if(act>=5 && slots.Skip(33).Take(4).Any(x=>x.FallbackId!=null || x.WhenKnownRecipe!=null)) throw Invalid("ACT 5 recommendations cannot be conditional.");
                 if(act>=6 && slots.Skip(37).Any(x=>x.EncounterId=="enc_rc1_41" ? x.FallbackId!="enc_rc1_41_known" || x.WhenKnownRecipe!="recipe_last_word" : x.FallbackId!=null || x.WhenKnownRecipe!=null))
@@ -185,9 +191,55 @@ namespace Surlhwa.ContentIO
             if(String(prince,"policyRevision")!=PrinceFarewellPolicy.Revision) throw Invalid("Unapproved farewell policy.");
             Dictionary<string,string> TextMap(string key,params string[] fields)
             { var map=Object(prince[key]); Fields(map,fields); return map.Properties().ToDictionary(x=>x.Name,x=>String(map,x.Name)); }
+            CampaignEnding ending=null;
+            if(act==7) {
+                var row=Object(root["ending"]); Fields(row,"lines","recallAfterLine","recallByChoice","codaTextId");
+                var recalls=Object(row["recallByChoice"]); Fields(recalls,"keep","seek","none");
+                ending=new CampaignEnding(Strings(row,"lines"),Int(row,"recallAfterLine"),recalls.Properties().ToDictionary(x=>x.Name,x=>String(recalls,x.Name)),Id<TextIdentity>(row,"codaTextId"));
+                if(!ending.Lines.SequenceEqual(Enumerable.Range(1,8).Select(x=>"text_rc1_"+x.ToString("0000")))) throw Invalid("Invalid common ending order.");
+                for(int i=0;i<ending.Lines.Count;i++) ValidateActSevenSource(texts,ending.Lines[i],"40_CAMPAIGN_AND_ENDING.md","onEnterLines["+i+"]",i.ToString(),"narration");
+                var keys=new[]{"keep","seek","none"}; var fields=new[]{"keepTheLightClosingRecall","seekTheStarClosingRecall","legacyClosingRecall"};
+                for(int i=0;i<keys.Length;i++) {
+                    string id="text_rc1_0"+(412+i);
+                    if(ending.RecallByChoice[keys[i]]!=id || String(Object(prince["recalls"]),keys[i])!=id) throw Invalid("Ending recall must read the saved Prince choice.");
+                    ValidateActSevenSource(texts,id,"51_LITTLE_PRINCE.md",fields[i],"None","spoken");
+                }
+            }
             return new CampaignContent(String(root,"contentRevision"),Hash(json),catalog,tuning,names,texts,guests,presentation,encounters,slots,supply,known,
                 Id<TextIdentity>(prince,"prompt"),TextMap("choices","keep","seek"),TextMap("responses","keep","seek"),TextMap("recalls","keep","seek","none"),Strings(prince,"openFarewell"),Strings(prince,"quietFarewell"),scope,supplyFromSlot,
-                act>=6 ? new[]{0,17,25,29,33,37} : act==5 ? new[]{0,17,25,29,33} : act==4 ? new[]{0,17,25,29} : act==3 ? new[]{0,17,25} : expanded ? new[]{0,17} : new[]{0});
+                act==7 ? new[]{0,17,25,29,33,37,43} : act==6 ? new[]{0,17,25,29,33,37} : act==5 ? new[]{0,17,25,29,33} : act==4 ? new[]{0,17,25,29} : act==3 ? new[]{0,17,25} : expanded ? new[]{0,17} : new[]{0},ending);
+        }
+        private static void ValidateActSevenSource(IDictionary<string,SourcedText> texts,string id,string path,string field,string order,string role)
+        {
+            if(!texts.TryGetValue(id,out var text) || text.SourceId!="SRC-RC1-"+id.Substring(9) || text.SourcePath!=path ||
+                text.SourceField!=field || text.SourceOrder!=order || text.Role!=role || Hash(text.Value)!=text.SourceHash)
+                throw Invalid("Invalid ACT7 source ownership: "+id);
+        }
+        private static void ValidateActSevenEncounter(CampaignEncounter e,string sourceRow,IDictionary<string,SourcedText> texts)
+        {
+            int index=int.Parse(sourceRow.Substring(4))-44;
+            var guests=new[]{"guest_station_worker","guest_odysseus","guest_postman","guest_odysseus"};
+            var intros=new[]{new[]{236,237},new[]{142,143,144,145},new[]{244,245},new[]{154,155,156,157}};
+            var farewells=new[]{new[]{232,233},new[]{137,138,139},new[]{240,241},new[]{148,149,150,151}};
+            var displays=new[]{231,136,239,147}; var summaries=new[]{238,146,246,158}; var good=new[]{234,140,242,152}; var other=new[]{235,141,243,153};
+            string TextId(int value)=>"text_rc1_"+value.ToString("0000");
+            if(e.Id!="enc_rc1_"+(index+44) || e.GuestId!=guests[index] || e.Night!=19+index/2 || e.PrinceVisit.HasValue || e.ChoiceIntros.Count!=0 ||
+                e.RequiredDiscovery!=null || e.DiscoveryRetryTextId!=null || e.Intro.Any(line=>line.Facts.Count!=0) || e.Request.CocktailId!=null ||
+                !e.Request.AnyTags.SequenceEqual(index<2 ? new[]{"warmth","bitterness"} : new[]{"warmth","clarity"}) || e.Request.AllTags.Count!=0 || e.Request.ExcludedTags.Count!=0)
+                throw Invalid("Invalid ACT7 encounter ownership.");
+            if(e.SummaryTextId!=TextId(summaries[index]) || !e.Intro.Select(x=>x.TextId).SequenceEqual(intros[index].Select(TextId)) ||
+                !e.Farewell.SequenceEqual(farewells[index].Select(TextId)) || e.Responses.Any(x=>x.Value!=TextId(x.Key=="good" ? good[index] : other[index])))
+                throw Invalid("Invalid ACT7 authored reading.");
+            string path=index%2==0 ? "61_ORDINARY_REQUEST_DIALOGUE.md" : "57_ODYSSEUS.md";
+            ValidateActSevenSource(texts,TextId(displays[index]),path,"guestName","None","display");
+            ValidateActSevenSource(texts,e.SummaryTextId,path,"orderName","None","request_summary");
+            ValidateActSevenSource(texts,TextId(good[index]),path,"onSuccessLines[0]","0","spoken");
+            ValidateActSevenSource(texts,TextId(other[index]),path,"onFailLines[0]","0","spoken");
+            foreach(var lines in new[]{intros[index],farewells[index]}) for(int i=0;i<lines.Length;i++) {
+                int number=lines[i];
+                string role=new[]{137,139,142,148,151,154,156,232,240}.Contains(number) ? "narration" : number==233 || number==241 ? "mixed" : "spoken";
+                ValidateActSevenSource(texts,TextId(number),path,"onEnterLines["+i+"]",i.ToString(),role);
+            }
         }
         private static void ValidateActSixEncounter(CampaignEncounter e,string sourceRow,IDictionary<string,SourcedText> texts)
         {

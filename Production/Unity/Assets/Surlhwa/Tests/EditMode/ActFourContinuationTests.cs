@@ -120,7 +120,7 @@ namespace Surlhwa.Tests
         public void ActFourContinuationPreservesEverySourcePhaseAndReceipt(int act,int nextSlot)
         {
             var continuation=new CampaignContinuation(Json(act),Json(4)); var states=Checkpoints(act);
-            Assert.That(states.Select(x=>x.Phase).Distinct(),Is.EquivalentTo(Enum.GetValues(typeof(CampaignPhase)).Cast<CampaignPhase>()));
+            Assert.That(states.Select(x=>x.Phase).Distinct(),Is.EquivalentTo(Enum.GetValues(typeof(CampaignPhase)).Cast<CampaignPhase>().Where(x=>x<=CampaignPhase.Complete)));
             foreach(var before in states) {
                 var after=continuation.Convert(CampaignSaveCodec.Encode(before,continuation.SourceContent)); Preserved(before,after,continuation);
                 if(before.Phase==CampaignPhase.Brewing || before.Phase==CampaignPhase.Reaction)

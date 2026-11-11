@@ -35,7 +35,9 @@ namespace Surlhwa.Application
                 string id=State.Phase==CampaignPhase.Intro ? Intro[State.LineIndex].TextId : State.Phase==CampaignPhase.Request ? CurrentEncounter.SummaryTextId :
                     State.Phase==CampaignPhase.Choice ? Content.ChoicePrompt : State.Phase==CampaignPhase.ChoiceResponse ? Content.PrinceResponses[State.PrinceChoice] :
                     State.Phase==CampaignPhase.Reaction ? CurrentEncounter.Responses[State.CurrentService.ResponseKey] : State.Phase==CampaignPhase.Farewell ? FarewellLines[State.LineIndex] :
-                    State.Phase==CampaignPhase.Retry ? CurrentEncounter.DiscoveryRetryTextId : null;
+                    State.Phase==CampaignPhase.Retry ? CurrentEncounter.DiscoveryRetryTextId :
+                    State.Phase==CampaignPhase.EndingEntered || State.Phase==CampaignPhase.EndingReading ? Content.Ending.ResolveLines(State.PrinceChoice)[State.LineIndex] :
+                    State.Phase==CampaignPhase.Complete ? Content.Ending?.CodaTextId : null;
                 return id==null ? null : Content.Texts[id];
             }
         }
@@ -74,6 +76,12 @@ namespace Surlhwa.Application
                 case CampaignPhase.Welcome: return await Publish(Copy(CampaignPhase.NightIntro));
                 case CampaignPhase.NightIntro: return await Publish(Copy(CampaignPhase.Arriving));
                 case CampaignPhase.NightEnd: return await Publish(Copy(CampaignPhase.NightIntro));
+                case CampaignPhase.EndingReady: return await Publish(Copy(CampaignPhase.EndingEntered));
+                case CampaignPhase.EndingEntered:
+                case CampaignPhase.EndingReading:
+                    bool moreEnding=State.LineIndex+1<Content.Ending.ResolveLines(State.PrinceChoice).Count;
+                    return await Publish(Copy(moreEnding ? CampaignPhase.EndingReading : CampaignPhase.Complete,
+                        line:moreEnding ? State.LineIndex+1 : 0,consumed:consumed));
                 case CampaignPhase.Intro:
                     var knowledge=RestoreKnowledge(); foreach(var f in Intro[State.LineIndex].Facts) knowledge.GrantFact(f.RecipeId,f.Fact);
                     bool more=State.LineIndex+1<Intro.Count;
@@ -132,7 +140,7 @@ namespace Surlhwa.Application
             }
             else if(CurrentEncounter.MemoryId!=null)
                 memories.Add(new MemoryReceipt(CurrentEncounter.MemoryId,CurrentEncounter.MemoryVariant,State.OccurrenceId,State.Sequence+1));
-            if(State.SlotIndex+1==Content.Slots.Count) return await Publish(Copy(CampaignPhase.Complete,completed:completed,memories:memories));
+            if(State.SlotIndex+1==Content.Slots.Count) return await Publish(Copy(Content.Ending==null ? CampaignPhase.Complete : CampaignPhase.EndingReady,completed:completed,memories:memories));
             int slot=State.SlotIndex+1; string selected=Select(Content.Slots[slot],Knowledge);
             return await Publish(Copy(Content.Encounters[selected].Night!=CurrentEncounter.Night ? CampaignPhase.NightEnd : CampaignPhase.Arriving,
                 slot:slot,selected:State.SelectedEncounters.Concat(new[]{selected}),completed:completed,memories:memories));

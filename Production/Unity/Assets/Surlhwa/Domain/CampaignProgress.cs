@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Surlhwa.Domain
 {
-    public enum CampaignPhase { Welcome, NightIntro, Arriving, Intro, Choice, ChoiceResponse, Request, Brewing, Reaction, Result, Discovery, Retry, Farewell, Departing, NightEnd, Complete }
+    public enum CampaignPhase { Welcome, NightIntro, Arriving, Intro, Choice, ChoiceResponse, Request, Brewing, Reaction, Result, Discovery, Retry, Farewell, Departing, NightEnd, Complete, EndingReady, EndingEntered, EndingReading }
     public sealed class MemoryReceipt
     {
         public string Id { get; } public string Variant { get; } public string OccurrenceId { get; } public long Sequence { get; }

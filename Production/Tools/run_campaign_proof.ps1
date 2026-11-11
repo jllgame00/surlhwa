@@ -1,7 +1,7 @@
 param(
  [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9][A-Za-z0-9_.-]+$')][string]$EvidenceName,
  [ValidateSet(720,1080)][int]$Height=720,
- [ValidateSet(2,3,4,5,6)][int]$Act=3,
+ [ValidateSet(2,3,4,5,6,7)][int]$Act=3,
  [ValidateSet('New','Prior','Legacy','Checkpoint')][string]$Start='New',
  [string]$CheckpointRoot='',
  [switch]$FailHanky,
@@ -12,6 +12,7 @@ param(
  [switch]$FailLastWord,
  [switch]$SimCheongMismatch,
  [switch]$EarlyLastWord,
+ [switch]$OdysseusMismatch,
  [switch]$Media,
  [ValidateRange(60,7200)][int]$TimeoutSeconds=1800
 )
@@ -23,6 +24,7 @@ if(($FailFrench -or $HamletMismatch) -and ($FailHanky -or $QuixoteMismatch)){thr
 if($FaustMismatch -and ($Act -ne 5 -or $FailFrench -or $HamletMismatch -or $FailHanky -or $QuixoteMismatch)){throw 'Faust mismatch is a separate ACT 5 fixture.'}
 if(($FailLastWord -or $SimCheongMismatch) -and ($Act -ne 6 -or $FailFrench -or $HamletMismatch -or $FailHanky -or $QuixoteMismatch -or $FaustMismatch)){throw 'Last Word retry and SimCheong mismatch require their ACT 6 fixture.'}
 if($EarlyLastWord -and ($Act -ne 6 -or $FailLastWord -or $SimCheongMismatch -or $FailFrench -or $HamletMismatch -or $FailHanky -or $QuixoteMismatch -or $FaustMismatch)){throw 'Early Last Word is an exclusive ACT 6 fixture.'}
+if($OdysseusMismatch -and ($Act -ne 7 -or $FailLastWord -or $SimCheongMismatch -or $EarlyLastWord -or $FailFrench -or $HamletMismatch -or $FailHanky -or $QuixoteMismatch -or $FaustMismatch)){throw 'Odysseus mismatch is an exclusive ACT 7 fixture.'}
 $productionPath=Split-Path $PSScriptRoot -Parent
 $outputPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName"
 $executablePath=Join-Path $productionPath "Validation/Builds/Act${Act}Production/SurlhwaAct${Act}.exe"
@@ -79,6 +81,7 @@ if($FaustMismatch){$fixture+='-faust-mismatch'}
 if($FailLastWord){$fixture+='-last-word-retry'}
 if($SimCheongMismatch){$fixture+='-simcheong-mismatch'}
 if($EarlyLastWord){$fixture+='-early-last-word'}
+if($OdysseusMismatch){$fixture+='-odysseus-mismatch'}
 $width=[int]($Height*16/9)
 $arguments=@('-batchmode','-force-d3d11','-screen-fullscreen','0','-screen-width',[string]$width,'-screen-height',[string]$Height,
  '-campaignEvidenceRoot',$outputPath,'-campaignSaveRoot',$savePath,'-campaignProof',$fixture,'-logFile',(Join-Path $outputPath 'Player.log'))

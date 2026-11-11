@@ -1,0 +1,745 @@
+{
+  "status": "BOUNDED_ACT7_IMPLEMENTED; licensed Editor and actual built-Player matrix verified; final art/motion/feel approval remains HUMAN_SIGNOFF_REQUIRED",
+  "baseline": "ac3aaf3 (ACT6 accepted checkpoint3c25ba0)",
+  "authority": [
+    "ACT7_ENDING_IMPLEMENTATION_PLAN.md",
+    "Final Canon57 OD01-03",
+    "Final Canon10 MEM07",
+    "Architecture11"
+  ],
+  "sourceAssets": [
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Chibi/Odysseus.png",
+      "sha256": "f322b318a01d57da3a3916d951a4073569b3c5343f3381ad05fdb00545323480",
+      "dimensions": [
+        62,
+        88
+      ],
+      "alphaBounds": [
+        0,
+        0,
+        62,
+        88
+      ],
+      "destination": "Production/Unity/Assets/Surlhwa/Act7Assets/OdysseusStanding.png",
+      "treatment": "Exact PNG independently inspected before adoption; source bytes preserved. Fresh Production metadata and separately authored meshes/materials; no repaint or source-system clone."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Seated.png",
+      "sha256": "1ef2a9a91fd247cd964232bc781a68d981d8d9649c34ac9382f9a3a70b97072e",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        13,
+        5,
+        78,
+        85
+      ],
+      "destination": "Production/Unity/Assets/Surlhwa/Act7Assets/OdysseusSeated.png",
+      "treatment": "Exact PNG independently inspected before adoption; source bytes preserved. Fresh Production metadata and separately authored meshes/materials; no repaint or source-system clone."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk0.png",
+      "sha256": "6e571523891bcae58632053a5cd2099420e9977f78df60b6b3f82715d821c5b2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        16,
+        12,
+        80,
+        100
+      ],
+      "destination": "Production/Unity/Assets/Surlhwa/Act7Assets/OdysseusWalk0.png",
+      "treatment": "Exact PNG independently inspected before adoption; source bytes preserved. Fresh Production metadata and separately authored meshes/materials; no repaint or source-system clone."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk1.png",
+      "sha256": "f436a2c6cb7169c42b6326831ab3867bff961f4e06c3d599513af348012ea8a2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        12,
+        79,
+        100
+      ],
+      "destination": "Production/Unity/Assets/Surlhwa/Act7Assets/OdysseusWalk1.png",
+      "treatment": "Exact PNG independently inspected before adoption; source bytes preserved. Fresh Production metadata and separately authored meshes/materials; no repaint or source-system clone."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk2.png",
+      "sha256": "9e2db87915b1aa214d90f21113dbcea46f21f2bfc933711a6f63fc0c16a642d3",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        12,
+        79,
+        100
+      ],
+      "destination": "Production/Unity/Assets/Surlhwa/Act7Assets/OdysseusWalk2.png",
+      "treatment": "Exact PNG independently inspected before adoption; source bytes preserved. Fresh Production metadata and separately authored meshes/materials; no repaint or source-system clone."
+    },
+    {
+      "source": "D:/univ/surlhwa/Surlhwa/Assets/_SURLHWA/Art/Characters/Motion/Odysseus-Walk3.png",
+      "sha256": "f436a2c6cb7169c42b6326831ab3867bff961f4e06c3d599513af348012ea8a2",
+      "dimensions": [
+        96,
+        100
+      ],
+      "alphaBounds": [
+        17,
+        12,
+        79,
+        100
+      ],
+      "destination": "Production/Unity/Assets/Surlhwa/Act7Assets/OdysseusWalk3.png",
+      "treatment": "Exact PNG independently inspected before adoption; source bytes preserved. Fresh Production metadata and separately authored meshes/materials; no repaint or source-system clone."
+    }
+  ],
+  "authoringDecisions": [
+    {
+      "id": "odysseus-independent-source-contact",
+      "pixelsPerUnit": 70,
+      "standingPivot": [
+        24,
+        0
+      ],
+      "walkPivot": [
+        41,
+        0
+      ],
+      "seatedPivot": [
+        29,
+        8
+      ],
+      "seatedHipBottomUp": [
+        41,
+        34
+      ],
+      "lowestSeatedOpaqueRowBottomUp": 15,
+      "derivation": "Standing62x88: left near-floor solex9..15 atbottom-up1 and rightsolex30..38 atrow0 have pixel-center midpoints12.5/34.5, averaging23.5; nearest common integer-pixel contact24. Neutral96px walk adds17 =>41, with actual soles26..32 and47..55. Seated torso/bent-leg seam41,34 bottom-up is opaque; pivot29,8 retains accepted local seatcontact12,26. The wider cloak/canvas center31 is not the foot pivot.",
+      "sourceGenerationReference": "Read-only RC1 Tools/prepare_character_motion.py: sourceh88 yields hip61/canvasY12; seatedlift7 retains the torso/leg seam atbottom-up34. No RC1 runtime systems are proposed for reuse.",
+      "scale": "Preserve common70ppu and Q1 CharacterScale1.12; do not shrink this88px source to match84px-tall actors.",
+      "q1Thickness": "Accepted.14m seated normal camera-ray offset, zero focused/standing offset. Keep physical actor and seat anchors unchanged."
+    },
+    {
+      "id": "mem07-supported-incomplete-ship",
+      "intent": "Earned small anchor and incomplete ship fragment. No future completed ship/fixed-anchor revisit, trophy, light, collider, interaction or ending authority.",
+      "origin": [
+        0.65,
+        0.005,
+        3.1
+      ],
+      "facing": "Fixed world XY on existing C_Floor,5mm surface gap.",
+      "preservedMemories": "MEM01..06 geometry, placement and receipt ownership remain unchanged.",
+      "validation": "Real-depth diagnostic checks pass at 1280x720 and 1920x1080; actual normal-material built-Player farewell/ending/coda captures independently inspected at both resolutions. Geometry remains supported and incomplete; no final aesthetic or motion approval is inferred.",
+      "authoredBounds": {
+        "anchorWidth": 0.22,
+        "anchorHeight": 0.34,
+        "fragmentWidth": 0.35,
+        "fragmentHeight": 0.14,
+        "groupWidth": 0.64,
+        "worldMin": [
+          0.33,
+          0.005,
+          3.1
+        ],
+        "worldMax": [
+          0.97,
+          0.345,
+          3.1
+        ]
+      },
+      "historicalPlacementValidation": "Placement is a conservative static candidate until real GPU tests and normal-material Player inspection pass."
+    }
+  ],
+  "integration": {
+    "builder": "Surlhwa.Editor.ActSevenExpansionBuilder.PrepareScene",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1_Act7.unity",
+    "bundle": "Assets/GeneratedContent/act7-content.json",
+    "sourceHistory": [
+      "through_act_06",
+      "through_act_05",
+      "through_act_04",
+      "through_act_03",
+      "through_act_02",
+      "act_01"
+    ],
+    "font": "Assets/Surlhwa/Act7Assets/Act7Korean.asset",
+    "controllerField": "Odysseus",
+    "memoryProjection": [
+      "OdysseusVisible",
+      "OdysseusAnchor",
+      "OdysseusShipFragment"
+    ],
+    "sceneSha256": "700864c3d126d4e03d78f21f4ff8143522090ad1f0cdcc61975467125bb244a5",
+    "fontSha256": "4b523d5e6dbc79ee0a6a498e194d6a5132b3b970e9ea945aaa50884825afe5fa",
+    "bundleSha256": "7a82a84626f00830484a33c4ea00dde6d72a872a87ee3c5db5dee4f6894773ce"
+  },
+  "preservedBeforeEditor": {
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity": "82a7d6e8bb8658dec55a667a973e68d7d3d1f2434dc97f809da9530c01e58db6",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act2.unity": "ffa5052f69bfa5264c65650f1cf26f55f2d02d28fd54fe847f8f037f5a0b4d11",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act3.unity": "6c375a254e7fb00620425f00340de40c26285468709401d617641172b845d85d",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity": "3e88c3f88c9e4e9d344ce863e27e8f4ef20603fb71e39472c4e9a0ec754df902",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act5.unity": "8056e601d2af64d36a455e31d9ff7514fd862f6ed6ca92a20e71dcb9f60de4d6",
+    "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act6.unity": "c6ce6a62e94e166302d0bffc22d5b30cc95cc66031134fc6d8dafcce26c09860",
+    "Production/Content/Campaign/act1.json": "0d347e6976825ba61ab6a9fec39c73decc8f13ac10c5f0bf4d80558b1f33e3d4",
+    "Production/Content/Campaign/act2.json": "e38fe3dce7cdcb004dd0731df730925c2531562379fda7fde95d922c0d620fa1",
+    "Production/Content/Campaign/act3.json": "9db4998cd4f3dd8fc1c0371e8396504c07c0cce253e504caf39f48ec370555f0",
+    "Production/Content/Campaign/act4.json": "fcc2aeb9c4269c2c9fd34018e4c82b79553ffc3645ad2b8be3970abd673ad6fe",
+    "Production/Content/Campaign/act5.json": "bc76a5546c7f30d6dfa417fd3754a81fe4c52f8040b15bc86b42c1a954f34339",
+    "Production/Content/Campaign/act6.json": "e6bb7131fc5424186bc2cf4b1b15160b8cead275bcf7c9824ee1ccd1bfb5dfcf"
+  },
+  "verificationEvidence": {
+    "red": "Evidence/act7-presentation-red-01.xml: 0/6, missing contact/memory/scene as expected; routing case was fixture null Content, not meaningful routing evidence. Fixture now binds ACT7 content before its mapping assertion; a routing-only rerun is required.",
+    "green": {
+      "xml": "Evidence/act7-editor-full-resume-01.xml",
+      "xmlSha256": "57eafd907875226dd2a0478b642af27c78ca5bf821d36a4cd71c0cf4f234703c",
+      "log": "Evidence/act7-editor-full-resume-01.log",
+      "total": 726,
+      "passed": 726,
+      "failed": 0,
+      "skipped": 0,
+      "act7PresentationCases": [
+        {
+          "name": "AllSevenMemoriesRemainVisibleThroughActualRoomDepth(1280,720)",
+          "result": "Passed"
+        },
+        {
+          "name": "AllSevenMemoriesRemainVisibleThroughActualRoomDepth(1920,1080)",
+          "result": "Passed"
+        },
+        {
+          "name": "ExplicitOdysseusRoutingPreservesTheRememberedChairAndHidesOnOtherVisitsAndMenu",
+          "result": "Passed"
+        },
+        {
+          "name": "OdysseusReceiptAloneAddsSupportedAnchorAndIncompleteFragmentWithoutMovingEarlierMemories",
+          "result": "Passed"
+        },
+        {
+          "name": "OdysseusSourceHipStaysOnTheSeatThroughFocusWithoutMovingAnchorsOrBuryingFeet",
+          "result": "Passed"
+        },
+        {
+          "name": "SeparateSceneRetainsExactHistoryAndUsesOdysseusSourceArtWithIndependentSoleContact",
+          "result": "Passed"
+        }
+      ],
+      "classification": "Actual licensed Unity 6000.3.7f1 EditMode/EditorIntegration execution; final art approval not inferred"
+    },
+    "normalMaterialPlayer": {
+      "tier": "Simulated production InputSystem in actual built Player; NOT native OS input",
+      "matrix": [
+        {
+          "evidence": "Evidence/act7-player-open-720-01",
+          "status": "PASS",
+          "reportSha256": "ca746359f26034cff1482b703074d2132b6593f933ac67d46d7526076893b164",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1280,
+            720
+          ],
+          "startPhase": "NightEnd",
+          "startLine": 0,
+          "startSlot": 43,
+          "startDepartures": 43,
+          "captures": 55,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 47,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-quiet-mismatch-1080-01",
+          "status": "PASS",
+          "reportSha256": "48561939fe2e7e8bacf97f78db52bb418023218381437795e04c5912ac5747e6",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "startPhase": "NightEnd",
+          "startLine": 0,
+          "startSlot": 43,
+          "startDepartures": 43,
+          "captures": 55,
+          "newOdysseusMismatchObserved": true,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 50,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-ready-reload-720-01",
+          "status": "PASS",
+          "reportSha256": "d31cb83d943ff903060fbb5f9f6196ac567ffb8b32d6f37e630a0e18a2932df8",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1280,
+            720
+          ],
+          "startPhase": "EndingReady",
+          "startLine": 0,
+          "startSlot": 46,
+          "startDepartures": 47,
+          "captures": 24,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 47,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-entered-reload-1080-01",
+          "status": "PASS",
+          "reportSha256": "f857bd82d98af0775e69b9bd1f5da40229351d280b9695958b6aaf3da9db2bae",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "startPhase": "EndingEntered",
+          "startLine": 0,
+          "startSlot": 46,
+          "startDepartures": 47,
+          "captures": 23,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 47,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-recall-reload-720-01",
+          "status": "PASS",
+          "reportSha256": "a4dc9010ab207ff4be2030fbf449ca5c9bcbba90bdde8fd2b16b278160b01c43",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1280,
+            720
+          ],
+          "startPhase": "EndingReading",
+          "startLine": 2,
+          "startSlot": 46,
+          "startDepartures": 47,
+          "captures": 21,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 50,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-last-line-reload-1080-01",
+          "status": "PASS",
+          "reportSha256": "aca5d835870a1d2ceeb88f395acdd19b0038aa192f7dff3f98288e10b9b953e0",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "startPhase": "EndingReading",
+          "startLine": 8,
+          "startSlot": 46,
+          "startDepartures": 47,
+          "captures": 15,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 50,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-complete-720-01",
+          "status": "PASS",
+          "reportSha256": "6ee0d656988d2d9e712dbd12f5c60cb35b372182c0ee5e16660688cbf4eff6ff",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1280,
+            720
+          ],
+          "startPhase": "Complete",
+          "startLine": 0,
+          "startSlot": 46,
+          "startDepartures": 47,
+          "captures": 14,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 47,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-complete-1080-01",
+          "status": "PASS",
+          "reportSha256": "db3bea2796b1cd1a73dca7523b508a832a29ea3ce0f7056f515240208d952409",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "startPhase": "Complete",
+          "startLine": 0,
+          "startSlot": 46,
+          "startDepartures": 47,
+          "captures": 14,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 50,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        },
+        {
+          "evidence": "Evidence/act7-player-farewell-reload-1080-01",
+          "status": "PASS",
+          "reportSha256": "11b25e72546980f1ccb9df981a201249368230170ac0141b57370653669f415c",
+          "inventorySha256": "051d96cc6449289b72ad67e25b97d206cccf9fba40e7daa20d15d35050b3ef7f",
+          "resolution": [
+            1920,
+            1080
+          ],
+          "startPhase": "Farewell",
+          "startLine": 1,
+          "startSlot": 46,
+          "startDepartures": 46,
+          "captures": 27,
+          "newOdysseusMismatchObserved": false,
+          "finalPhase": "Complete",
+          "finalLine": 0,
+          "finalServices": 50,
+          "finalDepartures": 47,
+          "finalMemories": 7,
+          "finalVisibleActors": [
+            "guest_bartender"
+          ],
+          "finalVisibleServingMl": 0.0,
+          "processExitCode": 0,
+          "timedOut": false,
+          "inventoryEqualAcrossMatrix": true,
+          "readOnlyArtifactVerifierErrors": []
+        }
+      ],
+      "independentArtifactReview": "2026-11-11: verify_campaign_proof.verify(folder,7) rerun read-only for every listed run; all nine returned zero errors. All 1652 current source/build inventory entries matched every archived run. No Player relaunched by this audit.",
+      "sourceBuildInventoryFileCount": 1652,
+      "allInventoriesMatchCurrentAtAudit": true,
+      "serviceCountQualification": "Open routes finish with 47 services. Quiet mismatch and its continued checkpoints retain three historical retry services and therefore finish with 50 services; completed departures remain 47, known recipes 9 and memories 7. No history is truncated to force a 47-service total.",
+      "limits": "No real OS pointer/keyboard certification, motion-feel approval, hardware performance certification or Gate3 sign-off."
+    },
+    "scope": "Tests address independent source hip/floor contact, receipt identity/variant, supported geometry, retained six memories, actual routing/ending/menu visibility, separate scene/history/art and real GPU depth at720p/1080p. Natural transactional grant and durable ending belong to domain/Player evidence.",
+    "sourceBytes": "2026-11-11: all six original PNGs independently viewed again and SHA256 matched the inherited Production byte copies and recorded hashes.",
+    "static": "Owned Q1/Memory changes preserve earlier memory geometry/placement; scene semantic audit and source hashes rechecked after the actual Player matrix. Cast/provenance audit launched no Unity or Player.",
+    "sourceContactDimensions": {
+      "standing": [
+        62,
+        88
+      ],
+      "seated": [
+        96,
+        100
+      ],
+      "walk": [
+        96,
+        100
+      ],
+      "pixelsPerUnit": 70,
+      "normalScale": 1.12
+    },
+    "redResolution": {
+      "historicalInitialRedPreserved": "Evidence/act7-presentation-red-01.xml retained unchanged; original routing null-Content fixture was not a meaningful routing assertion.",
+      "compileBlockedAttempt": "Evidence/act7-presentation-ui-red-resume-01.log retained; test-only internal API access fixed before meaningful rerun.",
+      "meaningfulRed": "Evidence/act7-presentation-ui-red-resume-02.xml",
+      "meaningfulRedCounts": {
+        "total": 11,
+        "passed": 4,
+        "failed": 7
+      },
+      "result": "After the corrected fixture supplied real ACT7 content, missing routing/scene/UI failures were observed; full Editor green now resolves them. Initial red text remains historical above."
+    },
+    "diagnosticVisibility": {
+      "source": "Evidence/act7-editor-full-resume-01.xml",
+      "method": "ActSevenPresentationTests renders actual accepted ACT6 room depth with all seven earned memory parts, comparing per-part white/black material pixels. This diagnostic is distinct from normal-material actual ACT7 Player captures.",
+      "partOrder": [
+        "MEM01 star",
+        "MEM02 swing",
+        "MEM02 empty place",
+        "MEM03 fragment",
+        "MEM03 wing",
+        "MEM04 stage",
+        "MEM04 skull",
+        "MEM04 shadow",
+        "MEM05 circle",
+        "MEM05 broken glass",
+        "MEM05 red point",
+        "MEM06 lotus",
+        "MEM06 water",
+        "MEM06 ripples",
+        "MEM07 anchor",
+        "MEM07 incomplete hull"
+      ],
+      "changedPixels": {
+        "1280x720": [
+          56,
+          804,
+          96,
+          240,
+          78,
+          131,
+          111,
+          180,
+          229,
+          44,
+          4,
+          89,
+          634,
+          46,
+          87,
+          93
+        ],
+        "1920x1080": [
+          126,
+          1835,
+          245,
+          496,
+          175,
+          287,
+          234,
+          422,
+          520,
+          93,
+          5,
+          208,
+          1403,
+          119,
+          187,
+          210
+        ]
+      },
+      "retainedFirst14EqualAct6Diagnostic": true,
+      "limits": "Technical depth/visibility evidence only; no artistic approval, runtime state fabrication claim or native input certification."
+    },
+    "build": {
+      "manifest": "Manifests/act7-production-build.json",
+      "manifestSha256": "908e0fe112bd7bbcae6e9c025b155353f90e0fc595acfcce4bd7d5793ec12f6c",
+      "log": "Evidence/act7-build-resume-01.log",
+      "result": "Succeeded",
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 177984691,
+      "unity": "6000.3.7f1",
+      "executable": "Builds/Act7Production/SurlhwaAct7.exe",
+      "executableSha256": "87f775393ac5ef273e9e6d20c8b768f5d4c41b2fbf10d536b32dbfe961cac490",
+      "buildFileCount": 284,
+      "buildInventorySha256": "1a790203a9db837dd2ab067557b5753871fade8461124324fe0471b9551037c6",
+      "buildInventoryHashMethod": "SHA256 of UTF-8 json.dumps(build path-to-sha256 mapping, sort_keys=True, separators=(comma,colon)); all 284 build files are included. Exe hash alone is not the build identity.",
+      "presentationAssemblySha256": "1df760aab18c32010a44444afb23bdf791c02ec7a52a35301250b597c6b9a1bb",
+      "serializedLevelSha256": "1351b41e6a724095ddb125152441bfd2b85a1d527a7befe0abc4cb39d1538220"
+    },
+    "inspectedNormalMaterialCaptures": [
+      {
+        "path": "Evidence/act7-player-open-720-01/031-act7-farewell-46-0.png",
+        "sha256": "0694847d5f36c98d28066f299374d1c5db6a4c1a65b3a94ecaaa0c3e591c3681",
+        "inspection": "Opened with view_image; actual normal-material Player image.",
+        "observed": "Odysseus seated at unreserved place; remembered Prince chair remains empty."
+      },
+      {
+        "path": "Evidence/act7-player-open-720-01/035-act7-ending-ready.png",
+        "sha256": "91f7d061a0469f2b6bd4ae8873d2609163e6b5607a37165a80dc3eec5edd2f4b",
+        "inspection": "Opened with view_image; actual normal-material Player image.",
+        "observed": "Guest actors absent; seven memories retained, final anchor/hull visible; explicit ending-ready action."
+      },
+      {
+        "path": "Evidence/act7-player-open-720-01/045-earned-memory.png",
+        "sha256": "c01182305f7e3b8fb09a78e0ee171bd9ea18a27f653d1cb8e3a665f918c410f6",
+        "inspection": "Opened with view_image; actual normal-material Player image.",
+        "observed": "Final coda with bartender only; small separate anchor and incomplete hull visible; retained earlier memories."
+      },
+      {
+        "path": "Evidence/act7-player-quiet-mismatch-1080-01/031-act7-farewell-46-0.png",
+        "sha256": "7b542b414a70002cd0e52a43516f535b38c5e1b83cf128e91ea9944eb80caff2",
+        "inspection": "Opened with view_image; actual normal-material Player image.",
+        "observed": "Actual mismatch path still reaches authored final farewell with Odysseus seated; no new evident seat/foot penetration from this still."
+      },
+      {
+        "path": "Evidence/act7-player-quiet-mismatch-1080-01/038-act7-ending-2.png",
+        "sha256": "a3df8669579fb3a6877285e68f150297a627ca5805bad0e517c648780c5e94dc",
+        "inspection": "Opened with view_image; actual normal-material Player image.",
+        "observed": "Remembered Prince speaker label and authored saved-choice quotation; no Prince/other guest actor returns."
+      },
+      {
+        "path": "Evidence/act7-player-quiet-mismatch-1080-01/045-earned-memory.png",
+        "sha256": "04516155eb9959e12bd4bfe43974558e16f229e878f76feaac6cf89cd2329c08",
+        "inspection": "Opened with view_image; actual normal-material Player image.",
+        "observed": "Quiet-route coda retains subdued star, earlier memories and small anchor/incomplete hull; vessel visibly empty and guests absent."
+      }
+    ],
+    "preservationAfterPlayer": {
+      "all12AcceptedSceneContentHashesMatch": true,
+      "files": {
+        "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1.unity": true,
+        "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act2.unity": true,
+        "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act3.unity": true,
+        "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act4.unity": true,
+        "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act5.unity": true,
+        "Production/Unity/Assets/Surlhwa/Scenes/Bar_Q1_Act6.unity": true,
+        "Production/Content/Campaign/act1.json": true,
+        "Production/Content/Campaign/act2.json": true,
+        "Production/Content/Campaign/act3.json": true,
+        "Production/Content/Campaign/act4.json": true,
+        "Production/Content/Campaign/act5.json": true,
+        "Production/Content/Campaign/act6.json": true
+      },
+      "all6OriginalSourceAndDestinationPngHashesMatch": true,
+      "currentSceneHashRecorded": true,
+      "note": "Inherited pre-Editor records remain unchanged above; this is a fresh read-only after-Player comparison."
+    }
+  },
+  "humanApproval": false,
+  "preservedBeforeEditorQualification": "Inherited pre-Editor records retained as historical evidence; root owns the fresh 2026-11-11 preservation snapshot and all scene generation. This record does not replace that snapshot.",
+  "historicalPreparationStatus": "IMPLEMENTATION_READY_FOR_ROOT_COORDINATED_UNITY; scene/material/font generation and rendered validation pending",
+  "sceneSemanticAudit": {
+    "date": "2026-11-11",
+    "baseScene": "Assets/Surlhwa/Scenes/Bar_Q1_Act6.unity",
+    "baseSha256": "c6ce6a62e94e166302d0bffc22d5b30cc95cc66031134fc6d8dafcce26c09860",
+    "candidateScene": "Assets/Surlhwa/Scenes/Bar_Q1_Act7.unity",
+    "candidateSha256": "700864c3d126d4e03d78f21f4ff8143522090ad1f0cdcc61975467125bb244a5",
+    "method": "Compare Unity serialized object blocks by local fileID; strip line-ending/trailing whitespace only for semantic comparison. No scene opened or saved.",
+    "baseSerializedObjects": 1998,
+    "candidateSerializedObjects": 2013,
+    "addedSerializedObjectIds": [
+      "1237948243",
+      "1237948244",
+      "1237948245",
+      "1698423629",
+      "1698423630",
+      "1698423631",
+      "1698423632",
+      "1943151599",
+      "1943151600",
+      "2005201279",
+      "2005201280",
+      "238428681",
+      "238428682",
+      "238428683",
+      "238428684"
+    ],
+    "addedGameObjects": [
+      "ACT 7 Odysseus",
+      "Odysseus_Plane",
+      "Odysseus_Contact",
+      "FeetAnchor",
+      "SeatAnchor"
+    ],
+    "removedSerializedObjectIds": [],
+    "rawModifiedExistingObjectCount": 2,
+    "semanticModifiedExistingObjectIds": [
+      "1219253514",
+      "1781585494"
+    ],
+    "semanticChanges": {
+      "1219253514": "Existing parent Transform adds the Odysseus root child; position, rotation, scale and other child entries unchanged.",
+      "1781585494": "CampaignController selects ACT7 bundle/font, prepends ACT6 to history and binds Odysseus; legacy/history5..2 and all old actor/art/audio references unchanged."
+    },
+    "result": "15 serialized additions / 5 GameObjects; zero removals; exactly two existing object blocks change in both raw and whitespace-normalized comparison. No existing actor/camera/stool/room transform or art reference changes. No additional common-block serialization differences remain in the current candidate."
+  },
+  "presentationDebt": {
+    "status": "OPEN",
+    "items": [
+      "PD01",
+      "PD02",
+      "PD03",
+      "PD04",
+      "PD05",
+      "PD06",
+      "PD07",
+      "PD08",
+      "PD09",
+      "PD10",
+      "PD11"
+    ],
+    "technicalEvidenceDoesNotCloseDebt": true,
+    "finalApproval": "HUMAN_SIGNOFF_REQUIRED at Gate3; final art, animation, dialogue pacing, audio and feel remain owner judgments."
+  }
+}
