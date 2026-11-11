@@ -14,7 +14,9 @@ namespace Surlhwa.Presentation
         private CampaignController owner;
         private readonly HashSet<CharacterView> warned=new HashSet<CharacterView>();
         private CampaignPhase lastPhase=(CampaignPhase)(-1);
-        private int lastFoot=-1;
+        private object lastSession;
+        private string lastEncounter;
+        private CharacterView boundFirst,boundSecond;
         public static bool OwnsGuest(string id) => id=="guest_chunhyang" || id=="guest_mongryong";
 
         public void Initialize(CampaignController controller,Vector3 primarySeat)
@@ -36,8 +38,9 @@ namespace Surlhwa.Presentation
 
         public void Refresh(CampaignEncounter encounter,CampaignPhase phase,float poseClock,Vector3 primarySeat)
         {
+            SyncBindings();
             if(!isActiveAndEnabled || owner==null || encounter==null || !OwnsGuest(encounter.GuestId) ||
-                phase==CampaignPhase.Welcome || phase==CampaignPhase.NightIntro || phase==CampaignPhase.NightEnd || phase==CampaignPhase.Complete)
+                phase==CampaignPhase.Welcome || phase==CampaignPhase.NightIntro || phase==CampaignPhase.NightEnd || phase==CampaignPhase.Complete || phase>=CampaignPhase.EndingReady)
             { Hide(); return; }
             Paired=encounter.GuestIds.Count>1;
             // The Prince's second stool becomes MEM01. Existing stools to its right
@@ -50,18 +53,19 @@ namespace Surlhwa.Presentation
             if(ChunhyangSeat!=null) ChunhyangSeat.position=first;
             if(MongryongSeat!=null) MongryongSeat.position=second;
             if(SharedCupAnchor!=null) SharedCupAnchor.position=new Vector3((first.x+second.x)*.5f+.1714286f,1.055f,-.65f);
-            if(lastPhase!=phase) { lastPhase=phase; lastFoot=-1; }
+            if(lastPhase!=phase || lastSession!=owner.Session || lastEncounter!=encounter.Id) {
+                lastPhase=phase; lastSession=owner.Session; lastEncounter=encounter.Id;
+                owner.Chunhyang?.ResetMotion(); owner.Mongryong?.ResetMotion();
+            }
             bool chunhyang=encounter.GuestIds.Contains("guest_chunhyang");
             bool mongryong=encounter.GuestIds.Contains("guest_mongryong");
-            Present(owner.Chunhyang,chunhyang,first,phase,poseClock,false);
-            Present(owner.Mongryong,mongryong,second,phase,poseClock,true);
+            bool firstContact=Present(owner.Chunhyang,chunhyang,first,phase,poseClock,false);
+            bool secondContact=Present(owner.Mongryong,mongryong,second,phase,poseClock,true);
             // Both paths arrive/leave within the authoritative 1.5-second logical stage.
             // Quiet listening is a still seated frame; silence never borrows another actor's loop.
-            bool traveling=phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing;
-            int foot=(int)(Mathf.Max(0,poseClock-(phase==CampaignPhase.Departing ? .18f : 0))*3);
-            if(traveling && owner.Session?.CanInteract==true && foot!=lastFoot && poseClock<1.4f) {
-                lastFoot=foot; owner.Audio?.Cue("foot");
-            }
+            // Two independently observed contacts may coincide. Keep one quiet
+            // accent on the existing non-spatial source, not double gain.
+            if(firstContact || secondContact) owner.Audio?.Cue("foot");
             if(owner.Workbench!=null) {
                 Vector3? at=null;
                 if(phase!=CampaignPhase.Brewing && owner.Session?.State.CurrentService?.Snapshot!=null) {
@@ -79,49 +83,34 @@ namespace Surlhwa.Presentation
             if(!ready && warned.Add(actor)) Debug.LogWarning("Campaign cast presentation missing: "+actor.name+". Logical staging remains available; visual acceptance fails.");
             return ready;
         }
-        private void Present(CharacterView actor,bool present,Vector3 seat,CampaignPhase phase,float clock,bool second)
+        private bool Present(CharacterView actor,bool present,Vector3 seat,CampaignPhase phase,float clock,bool second)
         {
-            if(!present || !Ready(actor)) { HideActor(actor); return; }
-            bool departing=phase==CampaignPhase.Departing,arriving=phase==CampaignPhase.Arriving;
-            if(!departing && !arriving) { actor.transform.position=seat; actor.Show(true,true); return; }
-            float pause=departing ? (second ? .12f : .18f) : (second && Paired ? .10f : 0);
-            float duration=departing ? 1.30f : 1.25f;
-            float progress=Mathf.SmoothStep(0,1,Mathf.Max(0,clock-pause)/duration);
-            var entry=new Vector3(-4.25f,0,second ? -2.94f : -2.65f);
-            actor.transform.position=Vector3.Lerp(departing ? seat : entry,departing ? entry : seat,progress);
-            bool walking=clock>=pause && progress<1;
-            if(walking) {
-                int frame=(int)(Mathf.Max(0,clock-pause)*6);
-                bool walk=actor.WalkMeshes!=null && actor.WalkMaterials!=null && actor.WalkMeshes.Length>0 && actor.WalkMaterials.Length>0 &&
-                    actor.WalkMeshes[frame%actor.WalkMeshes.Length]!=null && actor.WalkMaterials[frame%actor.WalkMaterials.Length]!=null;
-                if(walk) actor.ShowWalkFrame(frame); else actor.Show(true,false);
-            }
-            else actor.Show(true,arriving ? progress>=1 : clock<pause*.5f);
+            if(!present || !Ready(actor)) { HideActor(actor); return false; }
+            var entry=new Vector3(-4.25f,seat.y,second ? -2.94f : -2.65f);
+            var sample=CharacterMotionSample.At(phase,clock,seat,entry,CharacterMotionSample.Exit(owner.Camera,entry),
+                second ? .12f : .18f,second && Paired ? .10f : 0);
+            actor.Present(sample);
+            return actor.ObserveFootContact(sample,owner.Session?.CanInteract==true);
         }
         public void ApplyView(bool focused)
         {
             if(owner==null) return;
             foreach(var actor in new[]{owner.Chunhyang,owner.Mongryong}) {
                 if(!Ready(actor)) continue;
-                var plane=actor.Plane.transform; bool seated=actor.Plane.sharedMesh==actor.SeatedMesh;
                 float scale=focused ? 1 : Q1ProductionView.CharacterScale;
-                plane.localScale=Vector3.one*scale;
-                plane.localRotation=focused ? Q1ProductionView.FocusAngle : Q1ProductionView.WorldAngle;
-                Vector3 hip=Quaternion.Inverse(Q1ProductionView.FocusAngle)*actor.SeatAnchor.localPosition;
-                plane.localPosition=seated ? actor.SeatAnchor.localPosition-plane.localRotation*(hip*scale) : Vector3.zero;
                 // Match Q1's seated cutout surface thickness, along the camera ray only.
                 // Physical root/seat and the projected pelvis stay fixed. Focused tools and
                 // standing/walking poses retain their exact existing plane placement.
-                if(seated && !focused) {
-                    Vector3 forward=owner.Camera!=null ? owner.Camera.transform.forward : Q1ProductionView.WorldAngle*Vector3.forward;
-                    plane.localPosition-=Quaternion.Inverse(actor.transform.rotation)*forward*.14f;
-                }
+                Vector3 forward=owner.Camera!=null ? owner.Camera.transform.forward : Q1ProductionView.WorldAngle*Vector3.forward;
+                actor.ComposePresentation(focused ? Q1ProductionView.FocusAngle : Q1ProductionView.WorldAngle,scale,
+                    focused ? Vector3.zero : Quaternion.Inverse(actor.transform.rotation)*forward*.14f);
             }
         }
         public void Hide()
         {
-            Paired=false; lastPhase=(CampaignPhase)(-1); lastFoot=-1;
+            Paired=false; lastPhase=(CampaignPhase)(-1); lastSession=null; lastEncounter=null;
             if(owner==null) return;
+            SyncBindings();
             HideActor(owner.Chunhyang); HideActor(owner.Mongryong);
             owner.Workbench?.SetServingPresentationPosition(null);
         }
@@ -130,6 +119,13 @@ namespace Surlhwa.Presentation
             if(actor==null) return;
             if(actor.Renderer!=null) actor.Renderer.enabled=false;
             if(actor.Contact!=null) actor.Contact.enabled=false;
+            actor.ResetMotion();
+        }
+        private void SyncBindings()
+        {
+            if(owner==null) return;
+            if(boundFirst!=owner.Chunhyang) { HideActor(boundFirst); boundFirst=owner.Chunhyang; boundFirst?.ResetMotion(); }
+            if(boundSecond!=owner.Mongryong) { HideActor(boundSecond); boundSecond=owner.Mongryong; boundSecond?.ResetMotion(); }
         }
         private void OnDisable() => Hide();
     }

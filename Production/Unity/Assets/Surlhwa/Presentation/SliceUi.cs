@@ -225,8 +225,15 @@ namespace Surlhwa.Presentation
     public sealed class SliceHoldButton : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
     {
         public Action Down,Up;
-        public void OnPointerDown(PointerEventData data) { if(data.button==PointerEventData.InputButton.Left) Down?.Invoke(); }
-        public void OnPointerUp(PointerEventData data) { if(data.button==PointerEventData.InputButton.Left) Up?.Invoke(); }
-        private void OnDisable() { Up?.Invoke(); }
+        private Button button; private bool pressed;
+        private bool Available()
+        { if(button==null) button=GetComponent<Button>(); return isActiveAndEnabled && button!=null && button.isActiveAndEnabled && button.IsInteractable(); }
+        public void OnPointerDown(PointerEventData data)
+        { if(data.button==PointerEventData.InputButton.Left && !pressed && Available()) { pressed=true; Down?.Invoke(); } }
+        public void OnPointerUp(PointerEventData data) { if(data.button==PointerEventData.InputButton.Left) Release(); }
+        // Disabling a sibling Button does not send OnDisable to this handler.
+        private void LateUpdate() { if(pressed && !Available()) Release(); }
+        private void Release() { pressed=false; Up?.Invoke(); }
+        private void OnDisable() { Release(); }
     }
 }

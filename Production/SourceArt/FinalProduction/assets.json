@@ -1,0 +1,57 @@
+{
+  "status": "Candidate; not final owner approval",
+  "baseline": "e558504",
+  "assets": [
+    {
+      "destination": "Production\\Unity\\Assets\\Surlhwa\\FinalArt\\OrangeSlice.png",
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Bartending\\Pixel\\Garnishes\\OrangeSlice.png",
+      "sha256": "e4a6b89c4df00f47581287d882a6d3698e0192df5ff260b60a9fcd706aefab86",
+      "method": "original deterministic pixel garnish"
+    },
+    {
+      "destination": "Production\\Unity\\Assets\\Surlhwa\\FinalArt\\OrangeZest.png",
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Bartending\\Pixel\\Garnishes\\OrangeZest.png",
+      "sha256": "62f88645c7cf4db5bc7e348ed8ba6d9d7dee868629bef8285fee52ca9ba736f7",
+      "method": "original deterministic pixel garnish"
+    },
+    {
+      "destination": "Production\\Unity\\Assets\\Surlhwa\\FinalArt\\TallGlass.png",
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Bartending\\Pixel\\Glassware\\TallGlass.png",
+      "sha256": "101d6e7013c8665ab3a82b2e297ea61a49edde14a9ab125b23c1917c482d1bc4",
+      "method": "original deterministic pixel geometry"
+    },
+    {
+      "destination": "Production\\Unity\\Assets\\Surlhwa\\FinalArt\\Flute.png",
+      "source": "D:\\univ\\surlhwa\\Surlhwa\\Assets\\_SURLHWA\\Art\\Bartending\\Pixel\\Glassware\\Flute.png",
+      "sha256": "efc48693abb2184089af1caf64769e74098ff2aa6f06f34421de5455a09ed6c7",
+      "method": "original deterministic pixel geometry"
+    },
+    {
+      "destination": "Production\\Unity\\Assets\\Surlhwa\\FinalArt\\ShakerSheet.png",
+      "source": "Production\\SourceArt\\FinalProduction\\Shaker-cutaway-source.png",
+      "sha256": "cb57c2c6f691a5c73b4226b3477bd4643340a089524a53bc7627b2a629e2675b",
+      "method": "Built-in imagegen; exact unmodified output; Unity UV/import only"
+    },
+    {
+      "destination": "Production\\Unity\\Assets\\Surlhwa\\FinalArt\\QuietSnow.png",
+      "source": "Production\\SourceArt\\FinalProduction\\QuietSnow-source.png",
+      "sha256": "7177e62a07034b45b9d0056ce817050a27e27163bac89e127f4a6238897a46e4",
+      "method": "Built-in imagegen; exact unmodified output; Unity UV/import only"
+    }
+  ],
+  "shakerSourceRectsTopLeft": {
+    "body": [
+      204,
+      318,
+      362,
+      502
+    ],
+    "lid": [
+      885,
+      474,
+      362,
+      222
+    ]
+  },
+  "discardedVariant": "Shaker-source.png lower body hid partial liquid; cutaway revision selected"
+}

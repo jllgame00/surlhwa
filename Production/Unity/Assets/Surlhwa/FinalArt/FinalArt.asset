@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126f8d56b5c85420a5bfe048dfbe6e93, type: 3}
+  m_Name: FinalArt
+  m_EditorClassIdentifier: Surlhwa.Presentation::Surlhwa.Presentation.CampaignArtSet
+  Bottle: {fileID: 2800000, guid: 7507f765c13c5b30bc89d978f4ec3740, type: 3}
+  Jigger: {fileID: 2800000, guid: b650608d2fda53e1983eaf6be1b0a37f, type: 3}
+  Mixing: {fileID: 2800000, guid: 32c0280cabbe54a685b34a5fe68ae124, type: 3}
+  Rocks: {fileID: 2800000, guid: e93a512d302355059f8fcba68530352a, type: 3}
+  Cocktail: {fileID: 2800000, guid: b4b2ea74258f5160984f07c62ac19a62, type: 3}
+  Spoon: {fileID: 2800000, guid: 9794a61aeefc5e47b5f5b26330e40d2c, type: 3}
+  FloatSpoon: {fileID: 2800000, guid: 37ca8a84bcfa52b49f0cefdfb75b2e39, type: 3}
+  Strainer: {fileID: 2800000, guid: 35d335fd9845504cb21e91a1745a3706, type: 3}
+  Ice: {fileID: 2800000, guid: 48132f3926155ef1aba92d7786aceade, type: 3}
+  Grip: {fileID: 2800000, guid: ef9ced8eff055b978b163bff440b5f57, type: 3}
+  TallGlass: {fileID: 2800000, guid: b9036da8fd5be334ab73e9578c9d709b, type: 3}
+  Flute: {fileID: 2800000, guid: 032052fc8fccc164d917817e29561c02, type: 3}
+  OrangeSlice: {fileID: 2800000, guid: 6265c0ae625d6064b85b0e2892dd2cf8, type: 3}
+  OrangeZest: {fileID: 2800000, guid: b4971d8aabb57454086a2865f9d767d6, type: 3}
+  ShakerSheet: {fileID: 2800000, guid: 11d367e5d88ddf84694a3b8870caad71, type: 3}
+  RefineMemorySurfaces: 1
+  RefineToolMotion: 1
+  BartenderIdle:
+  - {fileID: 2100000, guid: b514b82321853d340985cd88a3437988, type: 2}
+  - {fileID: 2100000, guid: 31a055ceea6640749a7192eccb9d6089, type: 2}
+  - {fileID: 2100000, guid: a6c427d91d88d944693d4eaaf44a8ff5, type: 2}
+  - {fileID: 2100000, guid: a62c82c6fb6ccde42b55e1bd0dbf08dc, type: 2}
+  OrdinaryCoat:
+  - {fileID: 2100000, guid: c9c9c72487f496a4c9a04d50abd78cfd, type: 2}
+  - {fileID: 2100000, guid: 855ea957f8ad2e44a8ac874f4d29d985, type: 2}
+  - {fileID: 2100000, guid: f4468cef4db660144a9c2b7e1ebe72b2, type: 2}
+  - {fileID: 2100000, guid: 206f256a1fd1ae943b4463b33c279bf6, type: 2}
+  OrdinaryBun:
+  - {fileID: 2100000, guid: 62ae0e9683befb344b8414e12ef82834, type: 2}
+  - {fileID: 2100000, guid: bf86dcfffebd91040bad81765aa036e9, type: 2}
+  - {fileID: 2100000, guid: f8add2f7d568f9840b4206ddf3b62b28, type: 2}
+  - {fileID: 2100000, guid: 32f37ff7198592c42b612cb0703d4975, type: 2}

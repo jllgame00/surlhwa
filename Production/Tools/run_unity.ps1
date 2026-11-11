@@ -9,7 +9,9 @@ $productionPath=Split-Path $PSScriptRoot -Parent
 $unityPath=Join-Path $productionPath 'Unity'
 $evidencePath=Join-Path $productionPath 'Validation/Evidence'
 New-Item -ItemType Directory -Path $evidencePath -Force | Out-Null
-$unityArguments=@('-batchmode','-nographics','-projectPath',$unityPath,'-logFile',(Join-Path $evidencePath "$EvidenceName.log"))
+$unityArguments=@('-projectPath',$unityPath,'-logFile',(Join-Path $evidencePath "$EvidenceName.log"))
+# The Editor suite includes real GPU depth and font-atlas checks.
+if($Operation -ne 'Tests'){$unityArguments=@('-batchmode')+$unityArguments}
 if($Operation -eq 'Tests'){
  $unityArguments+=@('-runTests','-testPlatform','EditMode','-testResults',(Join-Path $evidencePath "$EvidenceName.xml"))
  if($TestFilter){$unityArguments+=@('-testFilter',$TestFilter)}

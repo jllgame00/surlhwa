@@ -15,13 +15,76 @@ PROFILES={
     'through_act_06':dict(act=6,slots=43,known=9,memories=6,prefix='act6',scene='Bar_Q1_Act6'),
     'through_act_07':dict(act=7,slots=47,known=9,memories=7,prefix='act7',scene='Bar_Q1_Act7')}
 ENDING_PHASES=('EndingReady','EndingEntered','EndingReading','Complete')
+FINAL_RECIPES=('recipe_test_stir','recipe_manhattan','recipe_dry_martini','recipe_negroni','recipe_gin_fizz','recipe_manwol','recipe_hanky_panky','recipe_french_75','recipe_last_word')
 
 
 def profile_for_act(act):
     return PROFILES[f'through_act_{act:02}']
 
 
-def validate_records(report,captures,checkpoints,expected_supply=None):
+def final_known_card(recipe,content):
+    """Project shipped recipe truth into the selected Known page's text contract."""
+    names={i['id']:i['label'] for i in content['ingredients']}
+    name=next(c['name'] for c in content['cocktails'] if c['id']==recipe['cocktailId'])
+    card=[name,'만들어 본 기록    ·    '+recipe['method'].capitalize(),'재료와 양']
+    for amount in recipe['amounts']:
+        card.extend((names[amount['ingredientId']],format(amount['ml'],'.2f').rstrip('0').rstrip('.')+' ml'+(' · Dash' if amount['ingredientId']==recipe['dashIngredient'] else '')))
+    method=recipe['method'];late=recipe['lateIngredient']
+    if method=='stir':preparation='혼합 잔에 얼음 · 재료를 담은 뒤 원을 그리며 젓기\n서빙 잔에 거르기'
+    elif method=='build':preparation='서빙 잔에 얼음과 재료 · 가볍게 젓기'
+    elif method=='float':preparation=' → '.join(names[i] for i in recipe['layerOrder'])+'\n각 재료를 낮게, 천천히 층으로 쌓기'
+    elif not late:preparation='재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · 열어서 U로 거르기'
+    else:
+        preparation=names[late]+' 제외 · 나머지 재료와 얼음을 셰이커에\n뚜껑을 닫고 흔들기 · '
+        preparation+=('열어서 U로 거르기\n'+names[late]+' · 마지막에 양을 재어 따르고 G로 가볍게 젓기' if 'late_measured_pour' in recipe['preparation'] else '열어 잔에 옮기기\n'+names[late]+' · 마지막에 Splash')
+    glass={'old_fashioned':'올드 패션드 잔','cocktail':'칵테일 잔','tumbler':'텀블러 잔','flute':'플루트 잔'}[recipe['glassware']]
+    if recipe['requiredGarnish']:
+        garnish={'cherry':'체리','orange_slice':'오렌지 슬라이스','orange_zest':'오렌지 제스트'}[recipe['requiredGarnish']]+' · '+('잔 안' if recipe['garnishPosition']=='in_glass' else '잔 가장자리')
+    else:garnish='가니시 생략 가능' if recipe['optionalGarnish'] else '가니시 없음'
+    return card+['준비',preparation,'마무리 · '+glass+' · '+('서빙 얼음' if method=='build' else '서빙 얼음 없음')+'\n'+garnish]
+
+
+def validate_final_reading(report,captures,known_before_services=None,content=None):
+    errors=[];by_label={}
+    content=content if content is not None else read(ROOT/'Content/Campaign/act7.json')
+    known_cards={r['id']:final_known_card(r,content) for r in content['recipes']}
+    for capture in captures:by_label.setdefault(capture['label'],[]).append(capture)
+    def preferences(c,setting):
+        return c.get('largeText') is bool(setting&1) and c.get('highContrast') is bool(setting&2)
+    for setting in range(4):
+        labels=[f'p09-{kind}-{setting}' for kind in ('settings','guide','coda')]+[f'p09-known-{setting}-{recipe}' for recipe in FINAL_RECIPES]
+        for label in labels:
+            rows=by_label.get(label,[])
+            if len(rows)!=1:errors.append('Missing or duplicate final reading capture: '+label)
+            elif rows[0].get('phase')!='Complete' or rows[0].get('known')!=9 or not preferences(rows[0],setting):
+                errors.append('Invalid final reading state: '+label)
+            if len(rows)==1 and label.startswith('p09-known-') and rows[0].get('recipeCardText')!=known_cards.get(label.split('-',3)[3]):
+                errors.append('Wrong final Known recipe detail: '+label)
+    def detail(prefix,slot,phase,card):
+        for setting in range(4):
+            label=prefix+'-'+str(setting);rows=by_label.get(label,[])
+            if len(rows)!=1 or card is None or rows[0].get('slot')!=slot or rows[0].get('phase')!=phase or not preferences(rows[0],setting) or rows[0].get('recipeCardText')!=card:
+                errors.append('Missing or invalid final detail capture: '+label)
+    def empty_card(method):
+        return ['이름을 기다리는 한 잔','대화 속에서 들은 단서    ·    '+method,'재료와 양','아직 적어 둔 재료가 없습니다.','준비','준비 순서는 아직 듣지 못했습니다.']
+    if report.get('startSlot')==0 and report.get('startDepartures')==0 and not report.get('fixture','').startswith('continue'):
+        detail('p09-unknown-detail',0,'Welcome',empty_card('제조법 미상'))
+    visited=report.get('visitedSlots',[])
+    # The published Brewing checkpoint has already consumed Request. A Continue
+    # from it serves slot 0 but cannot revisit its earlier method-only reading.
+    if 0 in visited and (report.get('startSlot'),report.get('startPhase'))!=(0,'Brewing'):
+        detail('p09-method-only-clue',0,'Request',empty_card('Stir'))
+    for slot,recipe,prefix,base,title,glass in (
+        (29,'recipe_french_75','p09-french-partial','codex-french-clues','프렌치 75','플루트 잔'),
+        (40,'recipe_last_word','p09-last-word-partial','codex-last-word-clues','라스트 워드','칵테일 잔')):
+        if slot not in visited or recipe in (known_before_services or {}).get(slot,{}):continue
+        rows=by_label.get(base,[]);c=rows[0] if len(rows)==1 else {};card=c.get('recipeCardText',[])
+        valid=c.get('slot')==slot and c.get('phase')=='Brewing' and card[:2]==[title,'대화 속에서 들은 단서    ·    Shake'] and {'재료와 양','준비'}<=set(card) and not any(glass in line for line in card)
+        detail(prefix,slot,'Brewing',card if valid else None)
+    return errors
+
+
+def validate_records(report,captures,checkpoints,expected_supply=None,known_before_services=None,content=None):
     errors=[]
     def require(condition,message):
         if not condition: errors.append(message)
@@ -29,12 +92,15 @@ def validate_records(report,captures,checkpoints,expected_supply=None):
     if profile is None: return ['Unsupported campaign evidence scope']
     total=profile['slots'];prefix=profile['prefix']
     require(report.get('status')=='PASS' and not report.get('errors'),'Player did not pass')
-    require(report.get('scene')==profile['scene'],'Wrong campaign scene')
+    final_candidate=report.get('finalCandidate',False)
+    require(not final_candidate or profile['act']==7,'Final presentation requires complete ACT7 scope')
+    require(report.get('scene')==('Bar_Q1_Final' if final_candidate else profile['scene']),'Wrong campaign scene')
     require('Simulated production InputSystem' in report.get('tier','') and 'NOT native OS input' in report.get('tier',''),'Evidence tier must exclude native OS input')
     require(report.get('departures')==total and report.get('known')==profile['known'] and report.get('memories')==profile['memories'],'Campaign completion counts are incomplete')
     require(report.get('services')==report.get('expectedServices') and report.get('services',0)>=total,'Wrong actual service count')
     require(not any(c.get('overflow') for c in captures),'Text overflow')
     require(not any(c.get('invalidRenderers') for c in captures),'Visible asset/material failure')
+    if final_candidate:errors.extend(validate_final_reading(report,captures,known_before_services,content))
     names=[c['name'] for c in checkpoints]
     require(len(names)==len(set(names)),'Duplicate checkpoint name')
     require(prefix+'-complete' in names,'Missing completed checkpoint')
@@ -456,24 +522,29 @@ def validate_history_binding(folder,start,history_root,populated_namespaces,act=
     return errors
 
 
-def inventory(act):
-    folders=('Unity/Assets','Unity/Packages','Unity/ProjectSettings','Content/Campaign',f'Validation/Builds/Act{act}Production')
+def inventory(act,final_candidate=False):
+    folders=('Unity/Assets','Unity/Packages','Unity/ProjectSettings','Content/Campaign','Validation/Builds/FinalProduction' if final_candidate else f'Validation/Builds/Act{act}Production')
     return {p.relative_to(ROOT).as_posix():sha(p) for folder in folders for p in sorted((ROOT/folder).rglob('*')) if p.is_file()}
 
 
-def verify(folder,act=3):
+def verify(folder,act=3,final_candidate=False):
     report=read(folder/'player-result.json');captures=lines(folder/'captures.jsonl');checkpoints=lines(folder/'checkpoints.jsonl')
     content=read(ROOT/f'Content/Campaign/act{act}.json')
-    errors=validate_records(report,captures,checkpoints,content['supply'] if act>=4 else None);profile=profile_for_act(act);total=profile['slots']
+    # These published checkpoints also undergo the existing archive hash checks.
+    known_before={slot:read(path)['payload'].get('knownReceipts',{}) for slot in (29,40)
+                  if final_candidate and (path:=folder/'checkpoints'/f'before-service-{slot}'/'slot1/current.json').is_file()}
+    errors=validate_records(report,captures,checkpoints,content['supply'] if act>=4 else None,known_before,content);profile=profile_for_act(act);total=profile['slots']
     def require(condition,message):
         if not condition: errors.append(message)
     expected=read(folder/'expected-run.json');process=read(folder/'process.json')
+    require(expected.get('finalCandidate',False)==report.get('finalCandidate',False)==final_candidate,'Wrong requested presentation candidate')
     require(expected.get('act')==act and report.get('scope')==f'through_act_{act:02}','Wrong requested campaign scope')
     require(process['exitCode']==0 and not process['timedOut'],'Player process did not complete')
     log=folder/'errors.log';require(not log.exists() or not log.read_text(encoding='utf-8-sig').strip(),'Runtime error log is not empty')
     require(expected['height'] in (720,1080) and expected['width']==expected['height']*16//9,'Wrong target resolution')
-    require(read(folder/'inventory.json')['files']==inventory(act),'Source/Player inventory changed')
-    require(expected['executableSha256'].lower()==sha(ROOT/f'Validation/Builds/Act{act}Production/SurlhwaAct{act}.exe'),'Executable changed')
+    require(read(folder/'inventory.json')['files']==inventory(act,final_candidate),'Source/Player inventory changed')
+    executable=ROOT/('Validation/Builds/FinalProduction/SurlhwaFinal.exe' if final_candidate else f'Validation/Builds/Act{act}Production/SurlhwaAct{act}.exe')
+    require(expected['executableSha256'].lower()==sha(executable),'Executable changed')
     args=expected['arguments']
     def argument(key):
         require(args.count(key)==1,'Missing or duplicate argument: '+key)
@@ -569,10 +640,11 @@ def verify(folder,act=3):
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=('inventory','verify-inventory','verify'));p.add_argument('path',type=Path);p.add_argument('--act',type=int,choices=(2,3,4,5,6,7),default=3);args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=('inventory','verify-inventory','verify'));p.add_argument('path',type=Path);p.add_argument('--act',type=int,choices=(2,3,4,5,6,7),default=3);p.add_argument('--final-candidate',action='store_true');args=p.parse_args()
+    if args.final_candidate and args.act!=7: p.error('Final presentation requires ACT7')
     if args.mode=='inventory':
-        args.path.write_text(json.dumps(dict(act=args.act,files=inventory(args.act)),indent=2),encoding='utf-8');print('CAMPAIGN_INVENTORY_WRITTEN');return
-    errors=([] if read(args.path)['files']==inventory(args.act) else ['Source/Player inventory changed']) if args.mode=='verify-inventory' else verify(args.path,args.act)
+        args.path.write_text(json.dumps(dict(act=args.act,finalCandidate=args.final_candidate,files=inventory(args.act,args.final_candidate)),indent=2),encoding='utf-8');print('CAMPAIGN_INVENTORY_WRITTEN');return
+    errors=([] if read(args.path)['files']==inventory(args.act,args.final_candidate) else ['Source/Player inventory changed']) if args.mode=='verify-inventory' else verify(args.path,args.act,args.final_candidate)
     if errors: print(json.dumps(dict(status='FAIL',errors=errors),indent=2));raise SystemExit(2)
     if args.mode=='verify' and args.act>=3:
         report=read(args.path/'player-result.json');payload=read(args.path/'save/slot1/current.json')['payload'];origin=args.path/'origin/slot1/current.json'

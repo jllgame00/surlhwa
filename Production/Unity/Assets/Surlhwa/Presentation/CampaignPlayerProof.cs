@@ -25,6 +25,9 @@ namespace Surlhwa.Presentation
         private bool finePourInput; private ContainerRole fineRole; private decimal fineStart,fineTarget; private Key fineKey;
         private readonly List<string> checks=new List<string>(),errors=new List<string>(); private readonly List<float> frames=new List<float>(); private int captures;
         private bool media,audioRecording; private BinaryWriter audio; private int audioChannels,audioBytes,mediaFrame; private float mediaStart,nextMedia;
+        private bool finalCandidate,detailedMedia,methodClueCaptured; private float detailUntil;
+        private readonly HashSet<string> recordedTools=new HashSet<string>();
+        private readonly HashSet<string> measuredMethods=new HashSet<string>(); private bool earlyPerformanceHeld,oneMemoryPerformanceHeld,pairedPerformanceHeld,performanceSettled;
         private bool expanded,act3,act4,act5,act6,act7,odysseusMismatchObserved,deliberateFailure,retryObserved,quixoteMismatchObserved,memoryThreeCaptured,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved,lastWordFailure,lastWordRetryObserved,simCheongMismatchObserved,memorySixCaptured,earlyLastWordRequested,earlyLastWordObserved,lastWordFallbackObserved;
         private int expectedServices,startSlot,startDepartures,lastDepartures,totalSlots,expectedMemories;
         private string[] suppliedIngredients=Array.Empty<string>(); private readonly HashSet<string> shelfSelections=new HashSet<string>();
@@ -42,7 +45,9 @@ namespace Surlhwa.Presentation
             keyboard=InputSystem.AddDevice<Keyboard>(); mouse=InputSystem.AddDevice<Mouse>();
             InputSystem.onBeforeUpdate+=QueueStirForCurrentFrame;
             render=new RenderTexture(Screen.width,Screen.height,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB); render.Create();
-            media=Arg("-campaignMedia")=="1";
+            finalCandidate=Arg("-campaignFinalCandidate")=="1"; detailedMedia=Arg("-campaignDetailedMedia")=="1";
+            media=Arg("-campaignMedia")=="1" || detailedMedia;
+            if(media && CampaignPerformanceProbe.Requested) { Fail("Performance runs must not capture motion or audio."); yield break; }
             if(media) {
                 Directory.CreateDirectory(Path.Combine(output,"frames")); audioChannels=AudioSettings.speakerMode==AudioSpeakerMode.Mono ? 1 : 2; audioRecording=AudioRenderer.Start();
                 if(!audioRecording) { Fail("AudioRenderer unavailable"); yield break; }
@@ -64,7 +69,7 @@ namespace Surlhwa.Presentation
                 bool pendingAccepted=initial.State.CurrentService!=null && !initial.State.CompletedOccurrences.Contains(initial.State.OccurrenceId) &&
                     (initial.CurrentEncounter.RequiredDiscovery==null || initial.Knowledge.Project(initial.CurrentEncounter.RequiredDiscovery).Known);
                 expectedServices=initial.State.Services.Count+totalSlots-startDepartures-(pendingAccepted ? 1 : 0);
-                Check(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="Bar_Q1_Act"+expectedMemories,"ACT "+expectedMemories+" dedicated production scene");
+                Check(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name==(finalCandidate ? "Bar_Q1_Final" : "Bar_Q1_Act"+expectedMemories),"ACT "+expectedMemories+" dedicated production scene");
                 if(fixture.Contains("hanky-retry")) Check(startSlot<=21 && !initial.Knowledge.Project("recipe_hanky_panky").Known,"required Hanky failure begins before earned discovery");
                 if(fixture.Contains("quixote-mismatch")) Check(act3 && (startSlot<27 || (startSlot==27 && initial.State.CurrentService==null)),"Quixote mismatch begins before the actual slot 27 service");
                 if(fixture.Contains("french-retry")) Check(act4 && startSlot<=29 && !initial.Knowledge.Project("recipe_french_75").Known,"required French failure begins before earned discovery");
@@ -78,6 +83,11 @@ namespace Surlhwa.Presentation
                 memoryThreeCaptured=initial.State.Memories.Any(x=>x.Id=="mem_03");
                 memorySixCaptured=initial.State.Memories.Any(x=>x.Id=="mem_06");
                 ArchiveCheckpoint(proofPrefix+"-start"); yield return Capture(proofPrefix+"-start");
+                if(finalCandidate && startSlot==0 && startPhase=="Welcome") {
+                    var unknown=initial.Knowledge.Project("recipe_dry_martini");
+                    Check(!unknown.Known && unknown.Method==null && unknown.Ingredients.Count==0,"fresh Dry Martini detail is Unknown");
+                    yield return RecipeReadingMatrix("recipe_dry_martini","p09-unknown-detail");
+                }
             }
             while(!failed && owner.Session?.State.Phase!=CampaignPhase.Complete)
             {
@@ -95,6 +105,19 @@ namespace Surlhwa.Presentation
                     ArchiveCheckpoint("act6-memory-after-41"); yield return Capture("act6-earned-memory-after-41");
                 }
                 var phase=s.State.Phase; if(phase==CampaignPhase.Complete) break;
+                if(CampaignPerformanceProbe.Requested && phase==CampaignPhase.Request &&
+                    (!earlyPerformanceHeld || (s.State.Memories.Count==1 && !oneMemoryPerformanceHeld) || (s.CurrentEncounter.GuestIds.Count==2 && !pairedPerformanceHeld))) {
+                    earlyPerformanceHeld=true; oneMemoryPerformanceHeld|=s.State.Memories.Count==1; pairedPerformanceHeld|=s.CurrentEncounter.GuestIds.Count==2;
+                    yield return PerformanceHold("room-"+s.State.Memories.Count+"-memories"+(s.CurrentEncounter.GuestIds.Count==2 ? "-paired" : "-solo"),62);
+                }
+                if(finalCandidate && !methodClueCaptured && s.State.SlotIndex==0 && phase==CampaignPhase.Request) {
+                    methodClueCaptured=true; yield return Click("도감  Tab");
+                    int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),"recipe_dry_martini");
+                    yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"method-only learned recipe page");
+                    var clue=s.Knowledge.Project("recipe_dry_martini"); Check(clue.Method!=null && clue.Ingredients.Count==0 && !clue.Known,"actual first consumed method clue remains Partial");
+                    yield return Capture("p09-method-only-clue"); yield return Click("돌아가기  Esc");
+                    yield return RecipeReadingMatrix("recipe_dry_martini","p09-method-only-clue");
+                }
                 if(act7 && (phase==CampaignPhase.EndingReady || phase==CampaignPhase.EndingEntered || phase==CampaignPhase.EndingReading)) {
                     string label=phase==CampaignPhase.EndingReady ? "act7-ending-ready" : "act7-ending-"+s.State.LineIndex;
                     Check(s.State.CompletedOccurrences.Count==47 && s.State.Memories.Count==7 && owner.Memory.OdysseusVisible,"ending follows every departure and earned MEM-07");
@@ -120,6 +143,7 @@ namespace Surlhwa.Presentation
                         yield return Click("도감  Tab"); int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),"recipe_french_75");
                         yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"partial French 75 recipe page");
                         yield return Capture("codex-french-clues"); yield return Click("돌아가기  Esc");
+                        if(finalCandidate && !s.Knowledge.Project("recipe_french_75").Known) yield return RecipeReadingMatrix("recipe_french_75","p09-french-partial");
                     }
                     if(act6 && s.State.SlotIndex==39 && firstAttempt && earlyLastWordRequested) {
                         Check(s.Supply.Count==22,"all 22 physical ingredients supplied before Last Word disclosure");
@@ -136,6 +160,7 @@ namespace Surlhwa.Presentation
                             yield return Capture("act6-last-word-known-fallback");
                         }
                         yield return InspectLastWordPage(fallback ? "codex-last-word-fallback-known" : "codex-last-word-clues",fallback);
+                        if(finalCandidate && !fallback) yield return RecipeReadingMatrix("recipe_last_word","p09-last-word-partial");
                     }
                     bool omitZest=expanded && s.State.SlotIndex==21 && fixture.Contains("hanky-retry") && !deliberateFailure;
                     bool omitGentle=act4 && s.State.SlotIndex==29 && fixture.Contains("french-retry") && !frenchFailure;
@@ -178,7 +203,11 @@ namespace Surlhwa.Presentation
                     string label=proofPrefix+"-"+phase.ToString().ToLowerInvariant()+"-"+s.State.SlotIndex+"-"+s.State.LineIndex;
                     ArchiveCheckpoint(label); yield return Capture(label);
                 }
-                if(phase==CampaignPhase.Choice) { yield return Capture("prince-choice"); yield return Press(Key.Enter); Check(s.State.Phase==CampaignPhase.ChoiceResponse && s.State.PrinceChoice=="keep","keyboard choice exactly once through production focus"); continue; }
+                if(phase==CampaignPhase.Choice) {
+                    yield return Capture("prince-choice"); string choice=Arg("-campaignPrinceChoice")=="seek" ? "seek" : "keep";
+                    if(choice=="seek") yield return Click(owner.Content.Texts[owner.Content.PrinceChoices[choice]].Value); else yield return Press(Key.Enter);
+                    Check(s.State.Phase==CampaignPhase.ChoiceResponse && s.State.PrinceChoice==choice,"choice exactly once through production controls"); continue;
+                }
                 if(phase==CampaignPhase.Intro && s.CurrentEncounter.PrinceVisit.HasValue && s.State.LineIndex==0) {
                     ArchiveCheckpoint("prince-intro-"+s.CurrentEncounter.PrinceVisit);
                     yield return Capture("prince-intro-"+s.CurrentEncounter.PrinceVisit);
@@ -190,7 +219,8 @@ namespace Surlhwa.Presentation
             if(failed) yield break;
             if(expanded) { ArchiveDepartures(); ArchiveCheckpoint(proofPrefix+"-complete"); }
             yield return new WaitForSecondsRealtime(.4f); yield return Capture("earned-memory");
-            if(media) yield return new WaitForSecondsRealtime(23f);
+            if(media) yield return new WaitForSecondsRealtime(finalCandidate ? 28f : 23f);
+            if(CampaignPerformanceProbe.Requested) yield return PerformanceHold("complete-seven-memory-room",62);
             if(expanded) {
                 Check(owner.Session.State.Services.Count==expectedServices,expectedServices+" actual services");
                 Check(owner.Session.State.CompletedOccurrences.Count==totalSlots,totalSlots+" natural departures");
@@ -250,13 +280,47 @@ namespace Surlhwa.Presentation
             yield return Click("도감  Tab");
             foreach(var r in owner.Content.Catalog.Recipes.Values) { yield return Click(owner.Content.Catalog.Cocktails[r.CocktailId].Name); yield return Capture("codex-known-"+r.Method+"-"+r.Id); }
             yield return Click("돌아가기  Esc"); yield return Click("설정  Esc"); yield return Click("글자 크기 바꾸기"); yield return Capture("settings-large"); yield return Click("돌아가기  Esc");
+            if(finalCandidate) yield return ReadingMatrix();
+            if(CampaignPerformanceProbe.Requested) {
+                if(startSlot==0) Check(earlyPerformanceHeld && oneMemoryPerformanceHeld && pairedPerformanceHeld,"steady early, one-memory and paired workloads observed");
+                for(int cycle=0;cycle<20;cycle++) {
+                    CampaignPerformanceProbe.Scenario="codex-lifecycle-"+cycle;
+                    yield return Click("도감  Tab"); yield return new WaitForSecondsRealtime(.3f); yield return Click("돌아가기  Esc"); yield return new WaitForSecondsRealtime(.3f);
+                }
+                yield return Click("설정  Esc"); if(!owner.LargeText) yield return Click("글자 크기 바꾸기"); yield return Click("돌아가기  Esc");
+                yield return Click("도감  Tab"); yield return PerformanceHold("large-korean-codex",10); yield return Click("돌아가기  Esc");
+                yield return Click("설정  Esc"); yield return Click("글자 크기 바꾸기"); yield return Click("돌아가기  Esc");
+                CampaignPerformanceProbe.Scenario=null;
+            }
+            if(finalCandidate) yield return MenuAudioAndContinue();
             Check(FindObjectsByType<UnityEngine.EventSystems.EventSystem>(FindObjectsSortMode.None).Length==1,"one EventSystem");
             Finish();
+        }
+        private IEnumerator MenuAudioAndContinue()
+        {
+            string current=Path.Combine(owner.StorageRoot,"slot1","current.json"),previous=Path.Combine(owner.StorageRoot,"slot1","previous.json");
+            string currentHash=Hash(current),previousHash=File.Exists(previous) ? Hash(previous) : null; long sequence=owner.Session.State.Sequence;
+            yield return Click("설정  Esc"); yield return Click("저장된 기록으로 나가기");
+            Check(owner.Session==null,"completed story returns to saved menu through its control");
+            yield return Click("설정  Esc"); yield return Click("고요하게");
+            var sources=owner.Audio.GetComponents<AudioSource>();
+            Check(owner.MasterVolume==0 && sources.Length==5 && sources.All(x=>x.volume==0),"actual Player menu mute silences every source gain");
+            yield return Capture("p12-menu-muted"); yield return Click("소리 보통"); yield return new WaitForSecondsRealtime(.4f);
+            Check(Mathf.Abs(owner.MasterVolume-.65f)<.0001f && sources.Any(x=>x.clip==owner.Room && Mathf.Abs(x.volume-.0975f)<.0001f) &&
+                sources.Any(x=>x.clip==owner.Winter && Mathf.Abs(x.volume-.052f)<.0001f),"actual Player menu restore applies configured ambience gain");
+            Check(sources.Where(x=>x.clip==owner.Music).All(x=>!x.isPlaying) && !owner.Audio.PhysicalPlaying,"menu restore does not replay completion or physical audio");
+            yield return Capture("p12-menu-restored"); yield return Click("돌아가기  Esc"); yield return Click("이어 하기");
+            Check(owner.Session?.State.Phase==CampaignPhase.Complete && owner.Session.State.Sequence==sequence && Hash(current)==currentHash && (File.Exists(previous) ? Hash(previous) : null)==previousHash,
+                "completed menu Continue preserves both published generations without another write");
+            Check(sources.Where(x=>x.clip==owner.Music).All(x=>!x.isPlaying),"completed menu Continue does not restart ending music");
+            yield return Capture("p12-completed-menu-continue");
         }
         private void Log(string text,string stack,LogType type) { if(type==LogType.Error || type==LogType.Exception || type==LogType.Assert) { errors.Add(text); failed=true; Finish(); } }
         private void ArchiveCheckpoint(string name)
         {
             if(expanded && !archived.Add(name)) return;
+            CampaignPerformanceProbe.BeginCapture("archive-"+name);
+            try {
             string destination=Path.Combine(output,"checkpoints",name,"slot1"); Directory.CreateDirectory(destination);
             // Copy actual published generations for later Continue coverage; never construct or alter a save.
             foreach(string file in new[]{"current.json","previous.json"}) { string source=Path.Combine(owner.StorageRoot,"slot1",file); if(File.Exists(source)) File.Copy(source,Path.Combine(destination,file),true); }
@@ -267,6 +331,7 @@ namespace Surlhwa.Presentation
                     phase=owner.Session.State.Phase.ToString(),services=owner.Session.State.Services.Count,departures=owner.Session.State.CompletedOccurrences.Count,
                     sequence=owner.Session.State.Sequence,currentHash=Hash(current),previousHash=File.Exists(previous) ? Hash(previous) : null})+"\n");
             }
+            } finally { CampaignPerformanceProbe.EndCapture(); }
         }
         private void ArchiveDepartures()
         {
@@ -279,7 +344,9 @@ namespace Surlhwa.Presentation
         [Serializable] private sealed class CheckpointEvidence { public string name,phase,currentHash,previousHash; public int slot,services,departures; public long sequence; }
         private void LateUpdate()
         {
-            if(render==null || owner.Ui==null) return; Canvas.ForceUpdateCanvases(); RenderPipeline.SubmitRenderRequest(owner.Camera,new UniversalRenderPipeline.SingleCameraRequest{destination=render}); frames.Add(Time.unscaledDeltaTime*1000);
+            if(render==null || owner.Ui==null) return;
+            if(CampaignPerformanceProbe.Requested) return;
+            Canvas.ForceUpdateCanvases(); RenderPipeline.SubmitRenderRequest(owner.Camera,new UniversalRenderPipeline.SingleCameraRequest{destination=render}); frames.Add(Time.unscaledDeltaTime*1000);
             if(audioRecording) {
                 int count=AudioRenderer.GetSampleCountForCaptureFrame()*audioChannels;
                 using(var buffer=new NativeArray<float>(count,Allocator.Temp)) {
@@ -288,10 +355,70 @@ namespace Surlhwa.Presentation
                     var bytes=new byte[count*2]; Buffer.BlockCopy(pcm,0,bytes,0,bytes.Length); audio.Write(bytes); audioBytes+=bytes.Length;
                 }
             }
+            string tool=owner.Input?.ActiveTool; if(detailedMedia && tool!=null && recordedTools.Add(tool)) detailUntil=Time.realtimeSinceStartup+8;
+            var phase=owner.Session?.State.Phase;
+            bool detail=detailedMedia && (Time.realtimeSinceStartup<detailUntil || phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing || phase==CampaignPhase.EndingEntered || phase==CampaignPhase.EndingReading);
             if(media && Time.realtimeSinceStartup>=nextMedia) {
-                nextMedia=Time.realtimeSinceStartup+.2f; SavePixels(Path.Combine(output,"frames",(++mediaFrame).ToString("D5")+".png"));
+                nextMedia=Time.realtimeSinceStartup+(detail ? 1f/60 : .2f);
+                string frameImage="frames/"+(++mediaFrame).ToString("D5")+(detailedMedia ? ".jpg" : ".png");
+                SavePixels(Path.Combine(output,frameImage),detailedMedia);
                 File.AppendAllText(Path.Combine(output,"frame-times.csv"),mediaFrame+","+(Time.realtimeSinceStartup-mediaStart).ToString(System.Globalization.CultureInfo.InvariantCulture)+"\n");
+                if(detailedMedia) File.AppendAllText(Path.Combine(output,"motion-times.jsonl"),JsonUtility.ToJson(new MotionFrame{
+                    frame=mediaFrame,image=frameImage,time=Time.realtimeSinceStartup-mediaStart,audioTime=audioBytes/(float)(AudioSettings.outputSampleRate*audioChannels*2),
+                    requestedHz=detail ? 60 : 5,slot=owner.Session?.State.SlotIndex ?? -1,phase=phase?.ToString() ?? "menu",tool=tool,
+                    liquid=owner.Input?.AcceptedLiquidThisStep ?? false,stir=owner.Input?.AcceptedStirThisStep ?? false,shake=owner.Input?.AcceptedShakeThisStep ?? false,
+                    actors=CampaignEvidenceProbe.VisibleActors().Select(a=>new ActorFrame{id=a.GuestId,position=a.transform.position,mesh=a.Plane.sharedMesh.name}).ToArray()})+"\n");
             }
+        }
+        [Serializable] private sealed class ActorFrame { public string id,mesh; public Vector3 position; }
+        [Serializable] private sealed class MotionFrame { public int frame,requestedHz,slot; public float time,audioTime; public string image,phase,tool; public bool liquid,stir,shake; public ActorFrame[] actors; }
+        private IEnumerator PerformanceHold(string label,float seconds)
+        {
+            CampaignPerformanceProbe.Scenario="awaiting-focus:"+label; float deadline=Time.realtimeSinceStartup+60;
+            while(!UnityEngine.Application.isFocused || !(owner.Session?.Focused ?? true)) {
+                if(Time.realtimeSinceStartup>=deadline) { Fail("Performance foreground wait expired: "+label); yield break; }
+                yield return null;
+            }
+            if(!performanceSettled) {
+                CampaignPerformanceProbe.Scenario="initial-settling"; yield return new WaitForSecondsRealtime(5); performanceSettled=true;
+            }
+            CampaignPerformanceProbe.Scenario=label; yield return new WaitForSecondsRealtime(seconds); CampaignPerformanceProbe.Scenario=null;
+        }
+        private IEnumerator ReadingMatrix()
+        {
+            foreach(int setting in new[]{0,1,3,2}) {
+                bool large=(setting&1)!=0,contrast=(setting&2)!=0;
+                yield return Click("설정  Esc");
+                if(owner.LargeText!=large) yield return Click("글자 크기 바꾸기");
+                if(owner.HighContrast!=contrast) yield return Click("글자 대비 바꾸기");
+                yield return Capture("p09-settings-"+setting); yield return Click("돌아가기  Esc");
+                yield return Capture("p09-coda-"+setting); yield return Click("손길  B"); yield return Capture("p09-guide-"+setting); yield return Click("돌아가기  Esc");
+                yield return Click("도감  Tab");
+                foreach(var recipe in owner.Content.Catalog.Recipes.Values) {
+                    yield return Click(owner.Content.Catalog.Cocktails[recipe.CocktailId].Name); yield return Capture("p09-known-"+setting+"-"+recipe.Id);
+                }
+                yield return Click("돌아가기  Esc");
+            }
+            yield return Click("설정  Esc"); if(owner.LargeText) yield return Click("글자 크기 바꾸기"); if(owner.HighContrast) yield return Click("글자 대비 바꾸기"); yield return Click("돌아가기  Esc");
+        }
+        private IEnumerator RecipeReadingMatrix(string recipeId,string label)
+        {
+            bool initialLarge=owner.LargeText,initialContrast=owner.HighContrast;
+            long sequence=owner.Session.State.Sequence; int known=owner.Session.Knowledge.KnownReceipts.Count;
+            int page=Array.IndexOf(owner.Content.Catalog.Recipes.Keys.ToArray(),recipeId);
+            foreach(int setting in new[]{0,1,3,2}) {
+                yield return Click("설정  Esc");
+                if(owner.LargeText!=((setting&1)!=0)) yield return Click("글자 크기 바꾸기");
+                if(owner.HighContrast!=((setting&2)!=0)) yield return Click("글자 대비 바꾸기");
+                yield return Click("돌아가기  Esc"); yield return Click("도감  Tab");
+                yield return ClickButton(owner.Ui.GetComponentsInChildren<Button>().Single(x=>x.name=="Recipe page "+page),"reading matrix "+recipeId);
+                yield return Capture(label+"-"+setting); yield return Click("돌아가기  Esc");
+            }
+            yield return Click("설정  Esc");
+            if(owner.LargeText!=initialLarge) yield return Click("글자 크기 바꾸기");
+            if(owner.HighContrast!=initialContrast) yield return Click("글자 대비 바꾸기");
+            yield return Click("돌아가기  Esc");
+            Check(owner.Session.State.Sequence==sequence && owner.Session.Knowledge.KnownReceipts.Count==known,"reading settings do not advance or discover "+recipeId);
         }
         private void Queue()
         { InputSystem.QueueStateEvent(keyboard,new KeyboardState(keys)); var state=new MouseState{position=pointer}.WithButton(MouseButton.Left,down); InputSystem.QueueStateEvent(mouse,state); }
@@ -380,6 +507,8 @@ namespace Surlhwa.Presentation
         }
         private IEnumerator InspectSupplyPages()
         {
+            bool previousLargeText=owner.LargeText;
+            if(finalCandidate && !previousLargeText) { yield return Click("설정  Esc"); yield return Click("글자 크기 바꾸기"); yield return Click("돌아가기  Esc"); }
             suppliedIngredients=owner.Session.Supply.OrderBy(x=>x,StringComparer.Ordinal).ToArray();
             for(int n=0;n<5 && PageButton("이전 재료")!=null;n++) yield return Click("이전 재료");
             Check(PageButton("이전 재료")==null,"physical shelf begins at first page");
@@ -390,14 +519,17 @@ namespace Surlhwa.Presentation
             }
             foreach(string id in suppliedIngredients) { yield return SelectIngredient(id); shelfSelections.Add(id); }
             Check(shelfSelections.SetEquals(suppliedIngredients),"every supplied ingredient selected through visible shelf controls");
+            if(finalCandidate && !previousLargeText) { yield return Click("설정  Esc"); yield return Click("글자 크기 바꾸기"); yield return Click("돌아가기  Esc"); }
         }
         private IEnumerator SelectIngredient(string id)
         {
             Button button=IngredientButton(id);
+            for(int n=0;button==null && n<5 && PageButton("이전 재료")!=null;n++) {
+                yield return Click("이전 재료"); button=IngredientButton(id);
+            }
             for(int n=0;button==null && n<5;n++) {
-                string page=PageButton("다음 재료")!=null ? "다음 재료" : PageButton("이전 재료")!=null ? "이전 재료" : null;
-                if(page==null) break;
-                yield return Click(page); button=IngredientButton(id);
+                if(PageButton("다음 재료")==null) break;
+                yield return Click("다음 재료"); button=IngredientButton(id);
             }
             if(button==null) { Fail("No visible supplied ingredient control: "+id); yield break; }
             yield return ClickButton(button,button.GetComponentInChildren<TextMeshProUGUI>().text); Check(owner.Input.SelectedIngredient==id,"ingredient "+id);
@@ -417,6 +549,12 @@ namespace Surlhwa.Presentation
         }
         private IEnumerator Prepare(string id,bool omitZest=false,bool omitGentle=false,bool omitStrain=false)
         {
+            if(finalCandidate) {
+                string glass=owner.Content.RecipePresentation[id].Glassware;
+                int profile=glass=="cocktail" ? 1 : glass=="tumbler" ? 2 : glass=="flute" ? 3 : 0;
+                for(int i=0;i<4 && owner.Workbench.ServingProfile!=profile;i++) yield return Press(Key.V);
+                Check(owner.Workbench.ServingProfile==profile,"manual physical glass selection "+glass);
+            }
             var recipe=owner.Content.Catalog.Recipes[id]; yield return Click(char.ToUpperInvariant(recipe.Method[0])+recipe.Method.Substring(1));
             if(recipe.Method=="stir")
             {
@@ -463,7 +601,9 @@ namespace Surlhwa.Presentation
                 }
             }
             string failureSuffix=omitZest ? "-missing-zest" : omitGentle ? "-missing-gentle" : omitStrain ? "-wrong-pour" : "";
-            yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method+failureSuffix); yield return Click("손님께 내기"); yield return Idle();
+            yield return Capture("prepared-"+owner.Session.State.SlotIndex+"-"+recipe.Method+failureSuffix);
+            if(CampaignPerformanceProbe.Requested && measuredMethods.Add(recipe.Method.ToString())) yield return PerformanceHold("prepared-"+recipe.Method,10);
+            yield return Click("손님께 내기"); yield return Idle();
             var result=owner.Session.State.CurrentService?.Outcome;
             if(omitZest) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required Hanky missing-zest preparation fails without discovery");
             else if(omitGentle) Check(owner.Session.State.Phase==CampaignPhase.Reaction && result?.RecipeId==id && result.Preparation!=PreparationResult.Good && !owner.Session.Knowledge.Project(id).Known,"required French missing-GentleStir preparation fails without discovery");
@@ -494,11 +634,16 @@ namespace Surlhwa.Presentation
         }
         private IEnumerator Capture(string label)
         {
-            yield return null; Canvas.ForceUpdateCanvases(); var texts=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(x=>x.isActiveAndEnabled && !string.IsNullOrWhiteSpace(x.text)).ToArray();
+            yield return null; CampaignPerformanceProbe.BeginCapture(label);
+            try {
+            Canvas.ForceUpdateCanvases();
+            if(CampaignPerformanceProbe.Requested) RenderPipeline.SubmitRenderRequest(owner.Camera,new UniversalRenderPipeline.SingleCameraRequest{destination=render});
+            var texts=owner.Ui.GetComponentsInChildren<TextMeshProUGUI>().Where(x=>x.isActiveAndEnabled && !string.IsNullOrWhiteSpace(x.text)).ToArray();
             var overflow=texts.Where(x=>x.isTextOverflowing).Select(x=>x.text).ToArray(); if(overflow.Length>0) errors.Add("Text overflow "+label+": "+string.Join(" | ",overflow));
             string image=(++captures).ToString("D3")+"-"+label+".png"; SavePixels(Path.Combine(output,image));
             if(expanded) RecordCapture(label,image,overflow);
             File.AppendAllText(Path.Combine(output,"capture-times.csv"),captures+","+label+","+(Time.realtimeSinceStartup-mediaStart).ToString(System.Globalization.CultureInfo.InvariantCulture)+"\n");
+            } finally { CampaignPerformanceProbe.EndCapture(); }
         }
         private void RecordCapture(string label,string image,string[] overflow)
         {
@@ -537,22 +682,24 @@ namespace Surlhwa.Presentation
                 overflow=overflow,invalidRenderers=invalidRenderers,services=state?.Services.Count ?? 0,departures=state?.CompletedOccurrences.Count ?? 0,
                 known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=state?.Memories.Count ?? 0,loversVisible=owner.Memory.LoversVisible,windmillVisible=owner.Memory.WindmillVisible,hamletVisible=owner.Memory.HamletVisible,faustVisible=owner.Memory.FaustVisible,simCheongVisible=owner.Memory.SimCheongVisible,odysseusVisible=owner.Memory.OdysseusVisible,
                 visibleIngredients=act4 ? VisibleIngredients() : Array.Empty<string>(),
+                largeText=owner.LargeText,highContrast=owner.HighContrast,
                 act=state==null ? 0 : owner.Content.ActAt(state.SlotIndex),servingVessels=serving.Length})+"\n");
         }
         [Serializable] private sealed class CaptureEvidence
         {
             public string label,image,phase,textId,textRole,displayedSpeaker; public string[] guestIds,visibleActors,actorBindingIds,visibleText,recipeCardText,overflow,invalidRenderers,visibleIngredients;
-            public int slot,line,services,departures,known,memories,servingVessels,act; public bool loversVisible,windmillVisible,hamletVisible,faustVisible,simCheongVisible,odysseusVisible;
+            public int slot,line,services,departures,known,memories,servingVessels,act; public bool largeText,highContrast,loversVisible,windmillVisible,hamletVisible,faustVisible,simCheongVisible,odysseusVisible;
         }
-        private void SavePixels(string path)
-        { var prior=RenderTexture.active; RenderTexture.active=render; var texture=new Texture2D(render.width,render.height,TextureFormat.RGB24,false); texture.ReadPixels(new Rect(0,0,render.width,render.height),0,0); texture.Apply(); RenderTexture.active=prior; File.WriteAllBytes(path,texture.EncodeToPNG()); Destroy(texture); }
+        private void SavePixels(string path,bool motion=false)
+        { var prior=RenderTexture.active; RenderTexture.active=render; var texture=new Texture2D(render.width,render.height,TextureFormat.RGB24,false); texture.ReadPixels(new Rect(0,0,render.width,render.height),0,0); texture.Apply(); RenderTexture.active=prior; File.WriteAllBytes(path,motion ? texture.EncodeToJPG(95) : texture.EncodeToPNG()); Destroy(texture); }
         private void Check(bool good,string label) { if(good) checks.Add(label); else Fail(label); }
         private void Fail(string reason) { failed=true; errors.Add(reason); Finish(); }
         private void Finish()
         {
+            CampaignPerformanceProbe.Finish();
             if(audioRecording) { AudioRenderer.Stop(); audioRecording=false; audio.BaseStream.Position=4; audio.Write(36+audioBytes); audio.BaseStream.Position=40; audio.Write(audioBytes); audio.Dispose(); audio=null; } media=false;
             File.WriteAllText(Path.Combine(output,"player-result.json"),JsonUtility.ToJson(new Result{status=errors.Count==0 ? "PASS" : "FAIL",tier="Simulated production InputSystem in built Player; NOT native OS input",checks=checks.ToArray(),errors=errors.ToArray(),frames=frames.ToArray(),captures=captures,
-                scope=owner?.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,fixture=fixture,services=owner.Session?.State.Services.Count ?? 0,
+                scope=owner?.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,fixture=fixture,finalCandidate=finalCandidate,services=owner.Session?.State.Services.Count ?? 0,
                 departures=owner.Session?.State.CompletedOccurrences.Count ?? 0,known=owner.Session?.Knowledge.KnownReceipts.Count ?? 0,memories=owner.Session?.State.Memories.Count ?? 0,
                 expectedServices=expectedServices,startSlot=startSlot,startDepartures=startDepartures,startPhase=startPhase,visitedSlots=visited.OrderBy(x=>x).ToArray(),deliberateFailure=deliberateFailure,retryObserved=retryObserved,quixoteMismatchObserved=quixoteMismatchObserved,
                 frenchFailure=frenchFailure,frenchRetryObserved=frenchRetryObserved,hamletMismatchObserved=hamletMismatchObserved,faustMismatchObserved=faustMismatchObserved,
@@ -560,7 +707,7 @@ namespace Surlhwa.Presentation
                 suppliedIngredients=suppliedIngredients,shelfSelections=shelfSelections.OrderBy(x=>x,StringComparer.Ordinal).ToArray()},true));
             UnityEngine.Application.Quit(errors.Count==0 ? 0 : 2);
         }
-        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved,lastWordFailure,lastWordRetryObserved,simCheongMismatchObserved,earlyLastWordObserved,lastWordFallbackObserved,odysseusMismatchObserved; }
+        [Serializable] private sealed class Result { public string status,tier,scope,scene,fixture,startPhase; public string[] checks,errors,suppliedIngredients,shelfSelections; public float[] frames; public int captures,services,departures,known,memories,expectedServices,startSlot,startDepartures; public int[] visitedSlots; public bool finalCandidate,deliberateFailure,retryObserved,quixoteMismatchObserved,frenchFailure,frenchRetryObserved,hamletMismatchObserved,faustMismatchObserved,lastWordFailure,lastWordRetryObserved,simCheongMismatchObserved,earlyLastWordObserved,lastWordFallbackObserved,odysseusMismatchObserved; }
         private void OnDestroy() { UnityEngine.Application.logMessageReceived-=Log; InputSystem.onBeforeUpdate-=QueueStirForCurrentFrame; if(keyboard!=null) InputSystem.RemoveDevice(keyboard); if(mouse!=null) InputSystem.RemoveDevice(mouse); if(render!=null) { render.Release(); Destroy(render); } }
     }
 }

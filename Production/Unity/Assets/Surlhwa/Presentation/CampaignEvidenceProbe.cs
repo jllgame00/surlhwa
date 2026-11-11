@@ -19,6 +19,7 @@ namespace Surlhwa.Presentation
         private static int Foreground() { GetWindowThreadProcessId(GetForegroundWindow(),out uint p); return (int)p; }
         private void Start()
         {
+            if(CampaignPerformanceProbe.Requested) { enabled=false; return; }
             owner=GetComponent<CampaignController>(); var args=Environment.GetCommandLineArgs(); int i=Array.IndexOf(args,"-campaignEvidenceRoot");
             if(i<0 || i+1>=args.Length) { enabled=false; return; } output=Path.GetFullPath(args[i+1]); Directory.CreateDirectory(output);
             UnityEngine.Application.logMessageReceived+=Log;
@@ -29,7 +30,7 @@ namespace Surlhwa.Presentation
         [Serializable] public sealed class Observation
         {
             public string observedUtc,phase,modal,ingredient,target,recipe,recognition,preparation,saveError,textRole,textId,displayedSpeaker,tool,guest,scope,scene;
-            public int processId,foregroundProcessId,encounter,line,act,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners;
+            public int processId,foregroundProcessId,encounter,line,act,services,known,memories,shakeReversals,layerCount,eventSystems,audioListeners,servingProfile;
             public long sequence; public bool focused,nativeOwnershipEstablished,nativeInterrupted,saving,fits,quality,actComplete,shakerClosed,memoryVisible,memoryGlowing;
             public double jigger,mixing,shaker,serving,visibleServingMl,stirDegrees,frameMs,stirX,stirY,stirRadius,pointerX,pointerY;
             public string[] visibleText,overflowText,guestIds,visibleActors,actorBindingIds,invalidRenderers; public bool loversMemoryVisible,windmillMemoryVisible,hamletMemoryVisible,faustMemoryVisible,simCheongMemoryVisible,odysseusMemoryVisible; public Control[] controls;
@@ -59,7 +60,7 @@ namespace Surlhwa.Presentation
                 processId=System.Diagnostics.Process.GetCurrentProcess().Id,foregroundProcessId=Foreground(),focused=UnityEngine.Application.isFocused,nativeOwnershipEstablished=armed,nativeInterrupted=interrupted,
                 scope=owner.Content?.Scope,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,act=s==null ? 0 : owner.Content.ActAt(s.State.SlotIndex),
                 encounter=s?.State.SlotIndex ?? -1,line=s?.State.LineIndex ?? -1,services=s?.State.Services.Count ?? 0,known=s?.Knowledge.KnownReceipts.Count ?? 0,memories=s?.State.Memories.Count ?? 0,sequence=s?.State.Sequence ?? 0,
-                saving=s?.IsSaving ?? owner.Busy,ingredient=owner.Input.SelectedIngredient,target=owner.Input.Target.ToString(),tool=owner.Input.ActiveTool,guest=s?.CurrentEncounter.GuestId,
+                saving=s?.IsSaving ?? owner.Busy,ingredient=owner.Input.SelectedIngredient,target=owner.Input.Target.ToString(),tool=owner.Input.ActiveTool,guest=s?.CurrentEncounter.GuestId,servingProfile=owner.Workbench.ServingProfile,
                 recipe=outcome?.RecipeId,recognition=outcome?.Recognition.ToString(),preparation=outcome?.Preparation.ToString(),fits=outcome?.Fits ?? false,quality=outcome?.QualityGood ?? false,actComplete=s?.State.ActComplete ?? false,
                 jigger=(double)(s?.Brew?.Container(ContainerRole.Jigger).TotalMl ?? 0),mixing=(double)(s?.Brew?.Container(ContainerRole.Mixing).TotalMl ?? 0),shaker=(double)(s?.Brew?.Container(ContainerRole.Shaker).TotalMl ?? 0),serving=(double)(s?.Brew?.Container(ContainerRole.Serving).TotalMl ?? s?.State.CurrentService?.Snapshot.TotalMl ?? 0),visibleServingMl=(double)owner.Workbench.ServingFillMl,
                 stirDegrees=s?.Brew?.StirAcceptedDegrees ?? 0,shakeReversals=s?.Brew?.ShakeReversals ?? 0,shakerClosed=s?.Brew?.ShakerClosed ?? false,layerCount=owner.Workbench.VisibleLayerCount,

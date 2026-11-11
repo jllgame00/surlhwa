@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SURLHWA · Gate 3 review draft · 2026-11-11</title>
+  <style>
+    :root{color-scheme:dark}
+    *{box-sizing:border-box}
+    body{margin:0;background:#171b21;color:#e1d8c5;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{max-width:1160px;margin:auto;padding:36px 24px 60px}
+    h1,h2,h3{font-weight:500;line-height:1.25}
+    h1{font-size:2rem;margin:8px 0 18px}h2{font-size:1.4rem;margin:0 0 16px}h3{font-size:1.05rem}
+    p{margin:10px 0 16px}a{color:#dfbc79;text-underline-offset:3px}
+    a:focus-visible{outline:2px solid #dfbc79;outline-offset:4px}
+    small,.muted{color:#b7bdc1}.eyebrow{font-size:.8rem;letter-spacing:.12em;color:#c5b38d;text-transform:uppercase}
+    .notice{padding:18px 20px;background:#28251f;border-left:3px solid #dfbc79}
+    .notice strong{display:block;letter-spacing:.05em;margin-bottom:6px}
+    nav{display:flex;gap:10px 24px;flex-wrap:wrap;margin:22px 0 30px;font-size:.9rem}
+    section{border-top:1px solid #454b50;padding-top:24px;margin-top:30px;scroll-margin-top:16px}
+    .facts{display:flex;gap:20px 42px;flex-wrap:wrap;margin:18px 0}
+    .facts div{display:flex;gap:9px;align-items:baseline}.facts dt{font-size:1.75rem;color:#f0dfbd}.facts dd{margin:0;color:#b7bdc1}
+    .identity{margin:20px 0;padding:16px 20px;background:#20262d}.identity p{margin:5px 0}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+    figure{margin:0;background:#20262d;border:1px solid #3b4148}
+    figure a{display:block}img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#11161b}
+    figcaption{padding:12px 15px;font-size:.9rem}figcaption strong{display:block;color:#f0dfbd}figcaption small{display:block;margin-top:4px}
+    .table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.94rem}
+    th,td{text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid #454b50}
+    th{font-weight:500;color:#f0dfbd}thead{background:#20262d}.status{white-space:nowrap;color:#dfbc79}
+    code{font-size:.9em;overflow-wrap:anywhere}ul{padding-left:22px}li{margin:7px 0}
+    footer{border-top:1px solid #454b50;margin-top:36px;padding-top:18px;font-size:.85rem;color:#b7bdc1}
+    @media(max-width:720px){main{padding:24px 16px 40px}.grid{grid-template-columns:1fr}h1{font-size:1.7rem}th,td{padding:10px 8px}.facts{gap:12px 25px}}
+    @media print{body{background:white;color:#222}main{max-width:none;padding:0}a{color:#594516}.notice,.identity,figure,thead{background:#f5f2ec}small,.muted,footer,.facts dd{color:#555}.facts dt,th,figcaption strong{color:#222}figure{break-inside:avoid}nav{display:none}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">설화 · SURLHWA / 2026-11-11</div>
+    <h1>Gate 3 · Release candidate review draft</h1>
+    <p class="notice"><strong>DRAFT — NOT READY</strong>
+      Build04 identity, current regression results and replacement captures are pending.
+      Dedicated performance evidence and final owner judgment remain open.
+      The images below retain their actual earlier versions; none is presented as Build04.</p>
+    <nav aria-label="Review sections">
+      <a href="#scope">Scope &amp; identity</a><a href="#views">Actual Player views</a>
+      <a href="#status">Technical status</a><a href="#sources">Preservation &amp; sources</a>
+      <a href="#decision">Owner decision sheet</a>
+    </nav>
+  </header>
+
+  <section id="scope">
+    <h2>The authored campaign, through the common ending</h2>
+    <dl class="facts"><div><dt>47</dt><dd>visits</dd></div><div><dt>20</dt><dd>nights</dd></div><div><dt>7</dt><dd>earned memories</dd></div></dl>
+    <p>ACT1–7, nine reachable Known recipes, and the common ending with eight shared lines and one Prince-choice line.
+      ACT2–7 content is committed; the current P09–P12 candidate adds the scheduled UI, art, motion and audio pass.
+      Q1, the accepted ACT1 flow and the approved Prince seated pose remain the baseline.</p>
+    <div class="identity" aria-label="Candidate identity pending">
+      <p><strong>Final review commit:</strong> <span class="status">PENDING</span> · current source base <code>e558504</code> plus uncommitted candidate work.</p>
+      <p><strong>Final binary / scene / inventory:</strong> <span class="status">PENDING BUILD04</span> · not yet pinned for an owner ruling.</p>
+      <p><strong>Retained full-route evidence:</strong> Build03 · <code>Bar_Q1_Final</code> · Unity 6000.3.7f1 ·
+        <a href="Evidence/final-build-03-manifest.json">build record</a> ·
+        <a href="Evidence/final-campaign-media-720-02/expected-run.json">launch identity</a> ·
+        <a href="Evidence/final-campaign-media-720-02/inventory.json">run inventory</a>.</p>
+    </div>
+    <p class="muted">Exact scope, save/ending boundaries and evidence history:
+      <a href="GATE3_RC_REVIEW_DRAFT.md">technical package draft</a> ·
+      <a href="ACT7_RUNTIME_CHECKPOINT.md">committed ACT7 and ending</a>.</p>
+  </section>
+
+  <section id="views">
+    <h2>Actual Player views</h2>
+    <p>Open an image for its original resolution. These are normal-material Player renders driven by simulated production InputSystem controls,
+      not native OS-input certification. The 1080p references are older builds and do not validate the latest corrections.</p>
+    <div class="grid">
+      <figure>
+        <a href="Evidence/final-campaign-media-720-02/315-earned-memory.png"><img src="Evidence/final-campaign-media-720-02/315-earned-memory.png" width="1280" height="720" alt="Build03 seven-memory coda in the warm Q1 bar with the winter exterior visible"></a>
+        <figcaption><strong>Build03 · 1280×720 · Seven-memory coda</strong>
+          Completed full-route media02. Snow and memory surface candidate; anchor image precedes R02.
+          <small>Actual Player render · simulated production input · not Build04.</small></figcaption>
+      </figure>
+      <figure>
+        <a href="Evidence/final-campaign-media-720-02/161-prepared-29-shake.png"><img src="Evidence/final-campaign-media-720-02/161-prepared-29-shake.png" width="1280" height="720" alt="Build03 prepared French 75 in a manually selected flute, with actual liquid and shaker ice"></a>
+        <figcaption><strong>Build03 · 1280×720 · Prepared French 75</strong>
+          Actual serving liquid, manually selected flute and retained shaker ice. Shell art does not replace preparation state.
+          <small>Actual Player render · simulated production input · not Build04.</small></figcaption>
+      </figure>
+      <figure>
+        <a href="Evidence/final-sample-complete-1080-01/037-p09-known-1-recipe_french_75.png"><img src="Evidence/final-sample-complete-1080-01/037-p09-known-1-recipe_french_75.png" width="1920" height="1080" loading="lazy" alt="Earlier Build02 Korean Known recipe detail for French 75 with LargeText enabled"></a>
+        <figcaption><strong>Build02 · 1920×1080 · Known recipe / LargeText</strong>
+          Earlier completed-save UI sample. This is a bounded Codex reference, not a current full-route result.
+          <small>Actual Player render · simulated production input · historical Build02, not Build04.</small></figcaption>
+      </figure>
+      <figure>
+        <a href="Evidence/act7-player-complete-1080-01/004-earned-memory.png"><img src="Evidence/act7-player-complete-1080-01/004-earned-memory.png" width="1920" height="1080" loading="lazy" alt="Historical committed ACT7 completed Continue showing all seven memory pieces before the final art pass"></a>
+        <figcaption><strong>ACT7 integration · 1920×1080 · Earlier room baseline</strong>
+          Completed Continue from <code>Bar_Q1_Act7</code>, before the final art bindings. Compare preserved supports and composition.
+          <small>Actual Player render · simulated production input · historical ACT7, not Build04.</small></figcaption>
+      </figure>
+    </div>
+    <p><strong>Motion and listening previews: pending.</strong> No encoded fullmedia02 clip exists at this draft checkpoint.
+      Raw recordings are retained; actual timestamp/audio-clock packaging and review remain open.
+      <a href="P11_P12_RUNTIME_CHECKPOINT.md">Motion/audio evidence and limits</a>.</p>
+    <p class="muted">Additional verified stills:
+      <a href="Evidence/final-campaign-media-720-02/027-prepared-5-float.png">Build03 · Prince / Manwol Float · 720p</a> ·
+      <a href="Evidence/final-sample-complete-1080-01/004-earned-memory.png">Build02 · final-art coda sample · 1080p</a>.</p>
+  </section>
+
+  <section id="status">
+    <h2>What the evidence currently establishes</h2>
+    <div class="table-scroll"><table>
+      <thead><tr><th scope="col">Area</th><th scope="col">Recorded result and remaining limit</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Full campaign · Build03</th><td><strong>PASS:</strong> 373 captures, 2,652 checks, zero reported errors; 47 services/departures, nine Known recipes, seven memories. Natural exit 0, no timeout. This is functional simulated-input evidence for its own binary.
+          <a href="Evidence/final-campaign-media-720-02/player-result.json">Result</a> · <a href="Evidence/final-campaign-media-720-02/process.json">process</a>.</td></tr>
+        <tr><th scope="row">Current R01 / R02 fixes</th><td><strong>Awaiting GREEN and current captures.</strong> R01 restricts the ending cleanup prop to content with an authored ending, preserving legacy ACT1/ACT6 Complete. R02 restores the accidentally excluded weathered-anchor edge bands. Both have observed behavioral RED and minimal source fixes; Build03 cannot prove them.
+          <a href="P11_P12_RUNTIME_CHECKPOINT.md">R01 record</a> · <a href="P10_ART_PRODUCTION_REVIEW.md">R02 record</a>.</td></tr>
+        <tr><th scope="row">Editor / tools</th><td>Latest completed source checkpoint linked here: graphics-enabled Editor03 <strong>859/859 PASS</strong>; Tools06 <strong>175 tests, OK</strong>. Full Editor04 is pending for the new regressions. Historical failures remain in the technical record.
+          <a href="Evidence/final-editor-full-03.xml">Editor result</a> · <a href="Evidence/final-tools-06.log">tool result</a>.</td></tr>
+        <tr><th scope="row">Native interaction</th><td>Earlier normal-window pointer use reached the ending/coda, Codex/settings, menu and completed Continue. <strong>Return-key delivery was not observed.</strong> Changed hold/regrip/focus boundaries and broader native coverage remain open; current-build menu master/mute behavior also needs actual verification.
+          <a href="Evidence/final-native-ending-720-02/009-complete.png">Observed coda</a> · <a href="GATE3_RC_REVIEW_DRAFT.md">limits and event records</a>.</td></tr>
+        <tr><th scope="row">Performance</th><td><strong>NOT RUN.</strong> Dedicated foreground, uncaptured normal-camera measurements are pending. Capture-heavy media is not a benchmark. Named hardware, focus coverage, missing counters and observer overhead must accompany the future result.
+          <a href="FINAL_PERFORMANCE_METHOD.md">Measurement method</a>.</td></tr>
+        <tr><th scope="row">Presentation judgment</th><td><strong>HUMAN SIGNOFF REQUIRED.</strong> Technical checks do not decide art quality, Korean readability, motion/bartending feel, music/mix, pacing or emotional impact. The eleven decisions below stay open.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted">Supporting reviews:
+      <a href="P09_RUNTIME_CHECKPOINT.md">UI / holds</a> ·
+      <a href="P10_ART_PRODUCTION_REVIEW.md">art</a> ·
+      <a href="P11_P12_RUNTIME_CHECKPOINT.md">motion / audio</a> ·
+      <a href="FINAL_AUDIO_CUE_MAP.md">audio source and cue map</a>.</p>
+  </section>
+
+  <section id="sources">
+    <h2>Preservation and source trail</h2>
+    <p>Final and accepted ACT7 retain <strong>2,013 serialized objects</strong>, with no added/removed objects or changed transforms.
+      Differences are 83 renderer blocks for snow materials and one controller block for art/font/audio references.
+      The approved Prince texture hash and source contacts are preserved. All six new PNGs match their recorded source and manifest hashes.</p>
+    <p>Warm interior, U-counter, visible winter exterior, 1.12 character scale, memory supports and content authority remain protected.
+      Liquid, ice, garnish and layers continue to come from actual preparation. Candidate source tracking does not grant final art approval or public-distribution rights clearance.</p>
+    <ul>
+      <li><a href="P10_ART_PRODUCTION_REVIEW.md">Art implementation, preservation audit, exact hashes and retained rights caveats</a> · <a href="P10_ART_SOURCE_INVENTORY.json">preparation inventory</a>.</li>
+      <li><a href="../SourceArt/FinalProduction/assets.json">Six-asset final source manifest</a> · <a href="../SourceArt/PROVENANCE.json">older migration caveats</a> · <a href="ACT7_CAST_PROVENANCE.json">ACT7 cast provenance</a>.</li>
+      <li><a href="Q1_OWNER_CONFIRMATION.md">Q1 / Prince owner ruling</a> · <a href="GATE2_OWNER_APPROVAL.md">accepted ACT1 and expansion authority</a> · <a href="PRESENTATION_DEBT.md">preserved presentation debt</a>.</li>
+    </ul>
+  </section>
+
+  <section id="decision">
+    <h2>One bundled owner decision · PD01–PD11</h2>
+    <p>Every row remains <strong>HUMAN_SIGNOFF_REQUIRED</strong>. No approval has been inferred from tests, a build or another row.
+      The eventual ruling must name the exact final commit/build, reviewed evidence and accepted scope. This draft is not an approval request.</p>
+    <div class="table-scroll"><table aria-label="Eleven open owner presentation decisions">
+      <thead><tr><th scope="col">Debt</th><th scope="col">Owner review focus</th><th scope="col">Decision</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">PD01</th><td>Codex composition, hierarchy and Unknown / Partial / Known interaction at 720p and 1080p.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD02</th><td>Korean dialogue, requests, Guide, results, settings and save/Continue readability.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD03</th><td>Snow pattern, accumulation, winter ground and warm/cold balance in stills and motion.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD04</th><td>Environment materials and accumulated-memory density without clutter or lost silhouettes.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD05</th><td>Arrival, turn, seating, listening, standing and departure across the cast.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD06</th><td>Character/environment palette, scale, source consistency and retained Prince contact.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD07</th><td>Grounded footstep weight, timbre, cadence and contact; matched audition and separate room loudness.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD08</th><td>Quiet/action/reading mix, fatigue, silence and lifecycle after objective mute/stop verification.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD09</th><td>Sparse music, entrances/exits, placement and emotional pacing within the room.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD10</th><td>Tool, glass and garnish art with actual liquid, ice, layering and contact states.</td><td class="status">Open · not recorded</td></tr>
+        <tr><th scope="row">PD11</th><td>Gesture, release/regrip, response timing and focus-transition comfort using actual controls.</td><td class="status">Open · not recorded</td></tr>
+      </tbody>
+    </table></div>
+    <p class="muted">Dialogue pacing, overall campaign rhythm and emotional impact also remain owner judgments.
+      Objective implementation defects must be resolved as technical work, rather than waived as subjective polish.</p>
+  </section>
+
+  <footer>
+    Offline review draft · <code>review-gate3-rc-20261111-01.html</code> · no external assets or scripts.<br>
+    Earlier review packages and evidence remain intact. Replace pending identity/status and attach current captures before presenting a final Gate 3 package.
+  </footer>
+</main>
+</body>
+</html>

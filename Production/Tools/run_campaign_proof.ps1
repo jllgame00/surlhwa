@@ -14,9 +14,15 @@ param(
  [switch]$EarlyLastWord,
  [switch]$OdysseusMismatch,
  [switch]$Media,
+ [switch]$FinalCandidate,
+ [switch]$DetailedMedia,
+ [switch]$SeekChoice,
+ [switch]$Performance,
  [ValidateRange(60,7200)][int]$TimeoutSeconds=1800
 )
 $ErrorActionPreference='Stop'
+if(($FinalCandidate -or $DetailedMedia -or $SeekChoice) -and $Act -ne 7){throw 'Final presentation evidence uses the complete ACT 7 campaign.'}
+if($Performance -and ($Media -or $DetailedMedia -or -not $FinalCandidate)){throw 'Performance requires the final candidate without motion/audio capture.'}
 if($Act -eq 2 -and ($Start -eq 'Prior' -or $QuixoteMismatch)){throw 'ACT 2 uses Legacy or Checkpoint; Quixote is ACT 3 only.'}
 if($FailHanky -and $QuixoteMismatch){throw 'Use separate runs for required discovery retry and Quixote mismatch.'}
 if(($FailFrench -or $HamletMismatch) -and $Act -ne 4){throw 'French discovery and Hamlet mismatch require ACT 4.'}
@@ -28,6 +34,8 @@ if($OdysseusMismatch -and ($Act -ne 7 -or $FailLastWord -or $SimCheongMismatch -
 $productionPath=Split-Path $PSScriptRoot -Parent
 $outputPath=Join-Path $productionPath "Validation/Evidence/$EvidenceName"
 $executablePath=Join-Path $productionPath "Validation/Builds/Act${Act}Production/SurlhwaAct${Act}.exe"
+if($FinalCandidate){$executablePath=Join-Path $productionPath 'Validation/Builds/FinalProduction/SurlhwaFinal.exe'}
+$candidateArgs=@();if($FinalCandidate){$candidateArgs=@('--final-candidate')}
 $validator=Join-Path $PSScriptRoot 'verify_campaign_proof.py'
 if(-not(Test-Path -LiteralPath $executablePath)){throw 'Build the selected campaign Player before running the proof.'}
 if(Test-Path -LiteralPath $outputPath){throw "Preserve existing evidence: $outputPath"}
@@ -83,15 +91,37 @@ if($SimCheongMismatch){$fixture+='-simcheong-mismatch'}
 if($EarlyLastWord){$fixture+='-early-last-word'}
 if($OdysseusMismatch){$fixture+='-odysseus-mismatch'}
 $width=[int]($Height*16/9)
-$arguments=@('-batchmode','-force-d3d11','-screen-fullscreen','0','-screen-width',[string]$width,'-screen-height',[string]$Height,
+$arguments=@('-force-d3d11','-screen-fullscreen','0','-screen-width',[string]$width,'-screen-height',[string]$Height,
  '-campaignEvidenceRoot',$outputPath,'-campaignSaveRoot',$savePath,'-campaignProof',$fixture,'-logFile',(Join-Path $outputPath 'Player.log'))
+if(-not $Performance){$arguments=@('-batchmode')+$arguments}
 $arguments+=@('-campaignHistoryRoot',$historyPath,'-campaignLegacySaveRoot',$legacyPath)
 if($Media){$arguments+=@('-campaignMedia','1')}
-& python $validator inventory (Join-Path $outputPath 'inventory.json') --act $Act
+if($DetailedMedia){$arguments+=@('-campaignDetailedMedia','1')}
+if($FinalCandidate){$arguments+=@('-campaignFinalCandidate','1')}
+if($SeekChoice){$arguments+=@('-campaignPrinceChoice','seek')}
+if($Performance){
+ $arguments+=@('-campaignPerformance','1','-campaignPerformanceRoot',$outputPath)
+ $hostInfo=[ordered]@{observedUtc=[DateTime]::UtcNow.ToString('o');errors=@();note='Read-only host inventory; no power, driver or quality setting changes.'}
+ foreach($query in @(
+  @{key='cpu';class='Win32_Processor';fields=@('Name','NumberOfCores','NumberOfLogicalProcessors','MaxClockSpeed')},
+  @{key='os';class='Win32_OperatingSystem';fields=@('Caption','Version','BuildNumber','TotalVisibleMemorySize','FreePhysicalMemory')},
+  @{key='gpu';class='Win32_VideoController';fields=@('Name','DriverVersion','DriverDate','AdapterRAM')},
+  @{key='storage';class='Win32_DiskDrive';fields=@('Model','MediaType','InterfaceType','Size')}
+ )){
+  try {$hostInfo[$query.key]=@(Get-CimInstance -ClassName $query.class | Select-Object -Property $query.fields)}
+  catch {$hostInfo.errors+=($query.key+': '+$_.Exception.Message)}
+ }
+ try {$hostInfo['powerScheme']=(& powercfg /getactivescheme | Out-String).Trim();if($LASTEXITCODE -ne 0){throw 'Power scheme query failed.'}}
+ catch {$hostInfo.errors+=('powerScheme: '+$_.Exception.Message)}
+ $hostInfo | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $outputPath 'performance-host.json') -Encoding utf8
+}
+& python $validator inventory (Join-Path $outputPath 'inventory.json') --act $Act @candidateArgs
 if($LASTEXITCODE -ne 0){throw "ACT $Act source/Player inventory failed"}
-[ordered]@{startedUtc=[DateTime]::UtcNow.ToString('o');width=$width;height=$Height;act=$Act;start=$Start;fixture=$fixture;executableSha256=(Get-FileHash -LiteralPath $executablePath).Hash;arguments=$arguments;tier='Simulated production InputSystem; actual Player camera/UI rendering; NOT native OS input'}|ConvertTo-Json -Depth 4|Set-Content -LiteralPath (Join-Path $outputPath 'expected-run.json') -Encoding utf8
+# Performance is an explicitly interactive foreground benchmark. Other proof runs remain hidden.
+$launchWindowStyle=if($Performance){'Normal'}else{'Hidden'}
+[ordered]@{startedUtc=[DateTime]::UtcNow.ToString('o');width=$width;height=$Height;act=$Act;start=$Start;fixture=$fixture;finalCandidate=[bool]$FinalCandidate;windowStyle=$launchWindowStyle;executableSha256=(Get-FileHash -LiteralPath $executablePath).Hash;arguments=$arguments;tier='Simulated production InputSystem; actual Player camera/UI rendering; NOT native OS input'}|ConvertTo-Json -Depth 4|Set-Content -LiteralPath (Join-Path $outputPath 'expected-run.json') -Encoding utf8
 $quotedArguments=$arguments|ForEach-Object {'"'+($_ -replace '(\\*)"','$1$1\"' -replace '(\\+)$','$1$1')+'"'}
-$playerProcess=Start-Process -FilePath $executablePath -ArgumentList $quotedArguments -WindowStyle Hidden -PassThru
+$playerProcess=Start-Process -FilePath $executablePath -ArgumentList $quotedArguments -WindowStyle $launchWindowStyle -PassThru
 Write-Output "ACT $Act $fixture ${Height}p PID $($playerProcess.Id)"
 $clock=[Diagnostics.Stopwatch]::StartNew();$samples=@();$timedOut=$false
 while(-not $playerProcess.HasExited){
@@ -101,9 +131,9 @@ while(-not $playerProcess.HasExited){
 }
 $playerProcess.WaitForExit()
 [ordered]@{exitCode=$playerProcess.ExitCode;timedOut=$timedOut;seconds=$clock.Elapsed.TotalSeconds;maxWorkingSetBytes=($samples|Measure-Object -Maximum).Maximum}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $outputPath 'process.json') -Encoding utf8
-& python $validator verify-inventory (Join-Path $outputPath 'inventory.json') --act $Act
+& python $validator verify-inventory (Join-Path $outputPath 'inventory.json') --act $Act @candidateArgs
 if($LASTEXITCODE -ne 0){throw 'Source/Player changed during proof; preserve this attempt as incomplete evidence.'}
 if($playerProcess.ExitCode -ne 0 -or $timedOut){throw "ACT $Act proof incomplete: exit $($playerProcess.ExitCode), timeout $timedOut. Evidence: $outputPath"}
-& python $validator verify $outputPath --act $Act
+& python $validator verify $outputPath --act $Act @candidateArgs
 if($LASTEXITCODE -ne 0){throw "ACT $Act evidence completeness failed: $outputPath"}
 Write-Output "ACT $Act simulated-input proof verified: $outputPath"

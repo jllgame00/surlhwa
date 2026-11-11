@@ -1,0 +1,148 @@
+{
+  "authorship": "Original deterministic synthesis and authored note/rest/dynamic arrangement; no external samples",
+  "sampleRate": 48000,
+  "assets": {
+    "FootGroundedBody": {
+      "sha256": "1dbc1677da3fb540f592c5b6561d94bdccfdae737c5d3aee9f6877caabac613a",
+      "seconds": 0.52,
+      "channels": 1,
+      "peak": 0.2987437618964194,
+      "rms": 0.03570921617106511,
+      "dc": -1.2255394485818596e-05,
+      "clippedSamples": 0
+    },
+    "FootGroundedRoll": {
+      "sha256": "0ffbec992ad8a4babfb2bb8f716c94c7f71308c1a5f63f9d22663842b920191a",
+      "seconds": 0.52,
+      "channels": 1,
+      "peak": 0.31739264067134126,
+      "rms": 0.044464441487734666,
+      "dc": 0.00018649541875925178,
+      "clippedSamples": 0
+    },
+    "ShakeContact": {
+      "sha256": "1375a4a04be6024c53d0eb4e7e970a54f9699730dbc59b85e428d30e89b5697e",
+      "seconds": 0.24,
+      "channels": 1,
+      "peak": 0.11544266023440808,
+      "rms": 0.011606823007887708,
+      "dc": -1.9452475933208245e-06,
+      "clippedSamples": 0
+    },
+    "BarReturn": {
+      "sha256": "8bdc433161ce9272963d03867c246b4bc8ae678c2826eefbf02fdc5973099275",
+      "seconds": 26.5,
+      "channels": 2,
+      "peak": 0.0910469694163757,
+      "rms": 0.01739505498318187,
+      "dc": 1.691367132393571e-08,
+      "clippedSamples": 0
+    },
+    "BarReturnSparse": {
+      "sha256": "d83944ad4b00894cbd564a3ea3423a3cbe7e5a8202194af0070bad4d04d1101c",
+      "seconds": 26.5,
+      "channels": 2,
+      "peak": 0.090614529948564,
+      "rms": 0.017074344502046954,
+      "dc": 3.4818330320939087e-09,
+      "clippedSamples": 0
+    },
+    "FootGroundedFinal": {
+      "sha256": "33323f6bd599d5836aad47957a688c8e5d81cf343d47ac6beb6cd81918772a85",
+      "seconds": 0.52,
+      "channels": 1,
+      "peak": 0.47895955925783756,
+      "rms": 0.05725063623141442,
+      "dc": -1.9648404720477335e-05,
+      "clippedSamples": 0
+    }
+  },
+  "noteEvents": [
+    [
+      0.75,
+      64,
+      0.105,
+      -0.12
+    ],
+    [
+      4.1,
+      59,
+      0.085,
+      0.08
+    ],
+    [
+      8.6,
+      66,
+      0.073,
+      0.12
+    ],
+    [
+      13.0,
+      64,
+      0.067,
+      -0.08
+    ],
+    [
+      18.6,
+      62,
+      0.048,
+      0.04
+    ]
+  ],
+  "selectedFoot": "FootGroundedFinal: Body at control-matched sequence loudness; final in-room mix validation remains pending",
+  "selectedMusic": "BarReturn: sparse five-note contour with two quiet lower resonances",
+  "bassEvents": [
+    [
+      1.12,
+      52,
+      0.022,
+      -0.03
+    ],
+    [
+      13.38,
+      47,
+      0.016,
+      0.03
+    ]
+  ],
+  "matchedAuditions": {
+    "Control": {
+      "measuredLufs": -24.8,
+      "auditionGainDb": 0.0,
+      "sha256": "5b61f141e8b7e077e0db1bd6f0e307039a662865cf489d90c337bdbbd9bdba86",
+      "seconds": 4.0,
+      "channels": 1,
+      "peak": 0.584716796875,
+      "rms": 0.046255970870611625,
+      "dc": -0.00016407585144042968,
+      "clippedSamples": 0
+    },
+    "Body": {
+      "measuredLufs": -28.9,
+      "auditionGainDb": 4.099999999999998,
+      "sha256": "e0c30ecf8c34c77205943507f1400d53a274c0291a525a115c7c50cba7df8633",
+      "seconds": 4.0,
+      "channels": 1,
+      "peak": 0.47895955925783756,
+      "rms": 0.04128402089706023,
+      "dc": -1.02171704546482e-05,
+      "clippedSamples": 0
+    },
+    "Roll": {
+      "measuredLufs": -28.0,
+      "auditionGainDb": 3.1999999999999993,
+      "sha256": "8f0fcb929aeeabda6303f910f4498986f91cb8a7d09221ed7188dafe88febeb8",
+      "seconds": 4.0,
+      "channels": 1,
+      "peak": 0.45877194576842806,
+      "rms": 0.04634624076049946,
+      "dc": 0.00014017530557499985,
+      "clippedSamples": 0
+    }
+  },
+  "loudnessMethod": "FFmpeg EBU R128 integrated level of identical four-contact sequences; audition matching only, not final mix approval",
+  "generatorSha256": "e38e8eb83483626bd7f7c967a1f3e3339d7318be021f31da70b9ffaa46133a32",
+  "protectedControlSha256": "6bdffc91a8816662f452a9df81a5e32810a4db7f059cdca342fdeda5e63d7c2a",
+  "gate": "HUMAN_SIGNOFF_REQUIRED at Gate3; no subjective PASS",
+  "selectionLimit": "Source shape/level and authored arrangement assessed; this agent cannot hear tool audio. Listening and emotional approval remain explicit Gate3 work, not an automated PASS."
+}

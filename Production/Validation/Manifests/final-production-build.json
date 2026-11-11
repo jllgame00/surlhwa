@@ -1,0 +1,10 @@
+{
+    "result": "Succeeded",
+    "scene": "Assets/Surlhwa/Scenes/Bar_Q1_Final.unity",
+    "output": "D:\\univ\\surlhwa\\SURLHWA_PRODUCTION\\Production\\Validation\\Builds\\FinalProduction\\SurlhwaFinal.exe",
+    "unity": "6000.3.7f1",
+    "errors": 0,
+    "warnings": 0,
+    "bytes": 193279236,
+    "seconds": 25.823224099999999
+}

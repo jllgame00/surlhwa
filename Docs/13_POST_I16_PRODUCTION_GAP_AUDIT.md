@@ -2995,3 +2995,69 @@ ACT 1/Gate 2 judgment. OUT_OF_SCOPE: ACT 2–7 until formal Gate 2 closure.
 Current package: [accepted-baseline Gate 2](../Production/Validation/review-gate2-current.html),
 [verification and limits](../Production/Validation/GATE2_ACCEPTED_BASELINE.md),
 [manifest](../Production/Validation/Manifests/gate2-accepted-baseline.json).
+
+## 2026-11-11 Production expansion and interrupted-session recovery
+
+This is a later implementation record. The preceding Gate 2 preparation,
+bounded-demo findings and their original evidence classes remain historical.
+The owner subsequently closed Gate 2 at `7c9c987`; see the explicit
+[approval record](../Production/Validation/GATE2_OWNER_APPROVAL.md). Final
+presentation approval was not granted by that direction approval.
+
+The resumed branch is `production-rebuild`. Current Git history contains the
+following completed campaign units after the previously reported `2277ef0`
+content/domain checkpoint. Existing work was inspected and preserved rather
+than repeated or reset.
+
+| Commit | Implemented unit | Detailed retained evidence |
+| --- | --- | --- |
+| `184e1af` | ACT 2 runtime, distinct solo/paired lovers, one shared service, Hanky Panky discovery, memory and save/Continue | [ACT 2 checkpoint](../Production/Validation/ACT2_RUNTIME_CHECKPOINT.md) |
+| `4790c33` | ACT 3 Quixote, windmill, persistent remembered chair and continuation | [ACT 3 checkpoint](../Production/Validation/ACT3_RUNTIME_CHECKPOINT.md) |
+| `33de7c7` | ACT 4 Hamlet, French 75, Shake finish/discovery retry, memory and continuation | [ACT 4 checkpoint](../Production/Validation/ACT4_RUNTIME_CHECKPOINT.md) |
+| `2541b62` | ACT 5 Faust, authored ordinary pacing, contained memory and continuation | [ACT 5 checkpoint](../Production/Validation/ACT5_RUNTIME_CHECKPOINT.md) |
+| `3c25ba0` | ACT 6 Sim Cheong, Last Word learning/fallback/Strain, lotus and continuation | [ACT 6 checkpoint](../Production/Validation/ACT6_RUNTIME_CHECKPOINT.md) |
+| `72ee053` | ACT 7 Odysseus, MEM07 and persistent canonical common ending | [ACT 7 checkpoint](../Production/Validation/ACT7_RUNTIME_CHECKPOINT.md) |
+| `e558504` | Scheduled P09-P13 finishing plans and source audits | [Expansion plan](../Production/Validation/PRODUCTION_EXPANSION_PLAN.md) |
+
+The current expansion is 47 encounters across 20 nights, nine recipes,
+22 ingredients and seven memories. The older four-night demo remains historical
+scope. WHAT, HOW, QUALITY, FIT, KNOWLEDGE and SUPPLY retain their existing owners.
+No new economy, completionist ending, quest framework or recipe catalogue was
+introduced. Main completion follows natural ACT 7 departure, irrespective of
+final service FIT or complete recipe knowledge. EndingReady, entered/reading
+cursor, bounded saved-choice Prince recall and Complete use existing durable
+checkpoints and exactly-once receipts. Completed Continue stays in the bar and
+does not publish another completion. ACT 1 content and approved Q1/Prince anchors
+remain protected.
+
+The committed ACT 7 checkpoint retains 576 standalone tests, 140 tooling tests,
+726 Editor tests and nine actual simulated-production-input Player runs covering
+Open/Quiet, final FIT failure, farewell/ending cursors and completed reloads.
+The [runtime summary](../Production/Validation/Evidence/act7-final-runtime-summary.json)
+indexes 248 captures, 1,431 assertions, 149 checkpoints and 296 saved generations.
+Those counts describe that exact campaign checkpoint, not a later final build.
+
+P09-P12 finishing is now implemented as an uncommitted candidate, with a separate
+`Bar_Q1_Final` scene: journal/Codex and reading settings, source-traced snow and
+tool/glass/garnish surfaces, directional contact/seat transitions, restrained
+later-memory surfaces, accepted-action audio, grounded footstep candidate and
+sparse ending music. The [Gate 3 draft](../Production/Validation/GATE3_RC_REVIEW_DRAFT.md)
+and package-specific records retain current evidence and open work. No final RC
+readiness or aesthetic approval is asserted at this recovery checkpoint.
+
+Current graphics-enabled Editor evidence is 859/859, standalone 576/576 and
+tools 175/175. Earlier real shelf/menu defects, the corrected destroyed-input
+callback and the separate NullGfx invocation failure remain recorded. The first
+full media route reached 47 services but failed 13 text-overflow checks; it stays
+FAIL. A separately named corrected full Player run is still in progress.
+Pre-commit review has also identified a legacy-scope ending-prop guard, an overly
+broad memory-surface name exclusion and two proof-verifier checks for correction;
+see [review findings](../Production/Validation/Evidence/final-precommit-review-01.json).
+These are objective work, not reclassified presentation debt.
+
+Owner/local changes, frozen RC1 and pinned Canon/Architecture remain preserved.
+Native pointer ending/menu observations are bounded evidence; unavailable
+keyboard/held-input delivery is not native certification. Dedicated foreground
+performance and final exact-candidate packaging are still outstanding here.
+PD01-PD11 remain open for the single Gate 3 ruling. No routine owner approval is
+requested and nothing has been pushed.

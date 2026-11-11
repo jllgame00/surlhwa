@@ -16,7 +16,7 @@ namespace Surlhwa.Presentation
         public TextAsset[] PriorBundles=Array.Empty<TextAsset>();
         public CampaignArtSet Art;
         public Camera Camera; public CharacterView Bartender,Ordinary,Prince,Chunhyang,Mongryong,Quixote,Hamlet,Faust,SimCheong,Odysseus;
-        public AudioClip Room,Winter,Pour,Stir,Strain,Ice,Glass,Seat,Entrance,Foot,Music;
+        public AudioClip Room,Winter,Pour,Stir,Strain,Ice,Glass,Seat,Entrance,Foot,Music,Shake;
         public CampaignContent Content { get; private set; } public CampaignSession Session { get; private set; }
         public SliceInputAdapter Input { get; private set; } public SliceWorkbenchView Workbench { get; private set; }
         public CampaignUi Ui { get; private set; } public CampaignAudio Audio { get; private set; }
@@ -31,7 +31,9 @@ namespace Surlhwa.Presentation
         
         
         internal CampaignSaveStore EvidenceStore => store;
-        private CampaignSaveStore store; private Vector3 seatPosition; private CampaignPhase lastPhase=(CampaignPhase)(-1); private int lastEncounter=-1,lastFoot=-1; private float poseClock; private int lastCommandFrame=-1;
+        private CampaignSaveStore store; private Vector3 seatPosition; private CampaignPhase lastPhase=(CampaignPhase)(-1); private int lastEncounter=-1; private float poseClock; private int lastCommandFrame=-1;
+        private CampaignSession motionSession;
+        private CharacterView presentedSolo;
         private CampaignContinuation continuation; private string legacyRoot;
         private readonly System.Collections.Generic.List<(CampaignContinuation Converter,string Root)> historySources=new System.Collections.Generic.List<(CampaignContinuation,string)>();
         public float MasterVolume { get; private set; }=.65f; public bool LargeText { get; private set; } public bool HighContrast { get; private set; }
@@ -56,7 +58,7 @@ namespace Surlhwa.Presentation
                 Workbench=work.AddComponent<SliceWorkbenchView>(); Workbench.Initialize(Art!=null ? Art.Grip : Grip); Workbench.ExtendedTools=true;
                 if(Art!=null) { Workbench.ApplyArt(Art); gameObject.AddComponent<CampaignCharacterArt>().Initialize(this); }
                 Audio=gameObject.AddComponent<CampaignAudio>(); Audio.Initialize(this); Input.AcceptedCue+=Audio.Cue;
-                Ui=gameObject.AddComponent<CampaignUi>(); Ui.Initialize(this,Font); Memory=gameObject.AddComponent<CampaignMemoryView>();
+                Ui=gameObject.AddComponent<CampaignUi>(); Ui.Initialize(this,Font); Memory=gameObject.AddComponent<CampaignMemoryView>(); Memory.RefineSurfaces=Art!=null && Art.RefineMemorySurfaces;
                 seatPosition=Ordinary!=null ? Ordinary.transform.position : new Vector3(-.72f,0,-2);
                 Cast=GetComponent<CampaignCastView>() ?? gameObject.AddComponent<CampaignCastView>(); Cast.Initialize(this,seatPosition); Cast.Hide();
                 if(CanShow(Bartender)) Bartender.Show(true,false); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true); if(CanShow(Faust)) Faust.Show(false,true); if(CanShow(SimCheong)) SimCheong.Show(false,true); if(CanShow(Odysseus)) Odysseus.Show(false,true);
@@ -107,7 +109,7 @@ namespace Surlhwa.Presentation
             }
             if(command=="back") { if(Session?.Modals.Count>0) CloseModal(); else if(Ui.MenuModal!=null) Ui.CloseMenu(); else OpenModal("settings"); return; }
             if(command=="guide" || command=="codex" || command=="settings") { OpenModal(command); return; }
-            if(command=="glass") { if(Session?.CanInteract==true && Session.State.Phase==CampaignPhase.Brewing) Workbench.CocktailGlass=!Workbench.CocktailGlass; return; }
+            if(command=="glass") { if(Session?.CanInteract==true && Session.State.Phase==CampaignPhase.Brewing) Workbench.CyclePresentationGlass(); return; }
             if(command=="advance") { if(Ui.ActivateFocused()) return; Advance(); }
         }
         public void OpenModal(string name)
@@ -178,42 +180,40 @@ namespace Surlhwa.Presentation
                 Workbench.Refresh(Session.Brew,Input,Time.unscaledDeltaTime,ending ? null : Session.State.CurrentService?.Snapshot); Audio.Refresh(Input,Session.CanInteract);
                 Ui.Refresh(); Memory.Refresh(Session.State,seatPosition); await Session.TickAsync(Math.Min(Time.unscaledDeltaTime,.25f));
             }
-            else { Cast?.Hide(); Workbench.Refresh(null,null,0); Memory.Refresh(null,seatPosition); Ui.Refresh(); }
+            else { Cast?.Hide(); Workbench.Refresh(null,null,0); Audio.Refresh(Input,false); Memory.Refresh(null,seatPosition); Ui.Refresh(); }
         }
         private void AnimateGuest()
         {
+            if(Session==null) {
+                presentedSolo?.Show(false,true); presentedSolo=null;
+                foreach(var guest in new[]{Ordinary,Prince,Quixote,Hamlet,Faust,SimCheong,Odysseus}) guest?.Show(false,true);
+                Cast?.Hide(); motionSession=null; lastPhase=(CampaignPhase)(-1); lastEncounter=-1; poseClock=0; return;
+            }
             var phase=Session.State.Phase; int encounter=Session.State.SlotIndex;
-            if(lastPhase!=phase || lastEncounter!=encounter) { poseClock=0; lastFoot=-1; lastPhase=phase; lastEncounter=encounter; if(phase==CampaignPhase.Arriving) Audio.Cue("entrance"); if(phase==CampaignPhase.Intro) Audio.Cue("seat"); }
+            if(motionSession!=Session || lastPhase!=phase || lastEncounter!=encounter) {
+                motionSession=Session; poseClock=0; lastPhase=phase; lastEncounter=encounter;
+                foreach(var guest in new[]{Ordinary,Prince,Quixote,Hamlet,Faust,SimCheong,Odysseus}) guest?.ResetMotion();
+                if(phase==CampaignPhase.Arriving) Audio?.Cue("entrance"); if(phase==CampaignPhase.Intro) Audio?.Cue("seat");
+            }
             if(Session.CanInteract) poseClock+=Time.unscaledDeltaTime;
             if(CampaignCastView.OwnsGuest(Session.CurrentEncounter.GuestId)) {
-                if(CanShow(Prince)) Prince.Show(false,true); if(CanShow(Ordinary)) Ordinary.Show(false,true); if(CanShow(Quixote)) Quixote.Show(false,true); if(CanShow(Hamlet)) Hamlet.Show(false,true); if(CanShow(Faust)) Faust.Show(false,true); if(CanShow(SimCheong)) SimCheong.Show(false,true); if(CanShow(Odysseus)) Odysseus.Show(false,true);
-                Cast.Refresh(phase,poseClock,seatPosition); return;
+                presentedSolo?.Show(false,true); presentedSolo=null;
+                foreach(var guest in new[]{Ordinary,Prince,Quixote,Hamlet,Faust,SimCheong,Odysseus}) guest?.Show(false,true);
+                Cast?.Refresh(phase,poseClock,seatPosition); return;
             }
             Cast?.Hide();
             Vector3 activeSeat=SoloGuestSeatPosition;
             if(PrinceChairReserved && phase!=CampaignPhase.Brewing && Session.State.CurrentService?.Snapshot!=null)
                 Workbench?.SetServingPresentationPosition(new Vector3(activeSeat.x+.1714286f,1.055f,-.65f));
             CharacterView actor=SelectGuestActor(Session.CurrentEncounter.GuestId);
-            foreach(var other in new[]{Ordinary,Prince,Quixote,Hamlet,Faust,SimCheong,Odysseus}) if(other!=actor && CanShow(other)) other.Show(false,true);
-            if(!CanShow(actor)) return; // Logical stage clock does not depend on a renderer or clip.
-            bool traveling=phase==CampaignPhase.Arriving || phase==CampaignPhase.Departing;
+            if(presentedSolo!=actor) { presentedSolo?.Show(false,true); presentedSolo=actor; }
+            foreach(var other in new[]{Ordinary,Prince,Quixote,Hamlet,Faust,SimCheong,Odysseus}) if(other!=actor) other?.Show(false,true);
+            if(!CanShow(actor)) { actor?.Show(false,true); return; } // No stale surface when a binding is lost.
             if(phase==CampaignPhase.Welcome || phase==CampaignPhase.Complete || phase>=CampaignPhase.EndingReady || phase==CampaignPhase.NightIntro || phase==CampaignPhase.NightEnd) { actor.Show(false,true); return; }
-            if(traveling)
-            {
-                Vector3 entry=new Vector3(-4.25f,0,-2.65f), seat=activeSeat;
-                bool departing=phase==CampaignPhase.Departing;
-                float walkClock=departing ? Mathf.Max(0,poseClock-.18f) : poseClock;
-                bool walking=departing ? poseClock>=.18f : poseClock<1.25f;
-                float duration=departing ? 1.32f : 1.25f;
-                float t=Mathf.SmoothStep(0,1,walkClock/duration); if(departing) t=1-t;
-                actor.transform.position=Vector3.Lerp(entry,seat,t);
-                int frame=(int)(walkClock*6),foot=frame/2;
-                if(walking && Session.CanInteract && foot!=lastFoot) { lastFoot=foot; Audio.Cue("foot"); }
-                bool canWalk=actor.WalkMeshes!=null && actor.WalkMeshes.Length>0 && actor.WalkMaterials!=null && actor.WalkMaterials.Length>0
-                    && actor.WalkMeshes[frame%actor.WalkMeshes.Length]!=null && actor.WalkMaterials[frame%actor.WalkMaterials.Length]!=null;
-                if(walking && canWalk) actor.ShowWalkFrame(frame); else actor.Show(true,!walking && (!departing || poseClock<.09f));
-            }
-            else { actor.transform.position=activeSeat; actor.Show(true,true); }
+            Vector3 entry=new Vector3(-4.25f,activeSeat.y,-2.65f);
+            var sample=CharacterMotionSample.At(phase,poseClock,activeSeat,entry,CharacterMotionSample.Exit(Camera,entry));
+            actor.Present(sample);
+            if(actor.ObserveFootContact(sample,Session.CanInteract)) Audio?.Cue("foot");
         }
         private void OnApplicationFocus(bool focus) { Input?.Stop(); Session?.SetFocus(focus); }
         private void OnDestroy() { Session?.Dispose(); if(Workbench!=null) Destroy(Workbench.gameObject); }

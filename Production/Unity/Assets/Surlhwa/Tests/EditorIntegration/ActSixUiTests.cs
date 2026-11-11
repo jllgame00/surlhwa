@@ -86,7 +86,7 @@ namespace Surlhwa.SpatialTests
             RenderCodex(index);
             var texts=ui.GetComponentsInChildren<TextMeshProUGUI>().Select(x=>x.text).ToArray();
             var preparation=texts.Single(x=>x.Contains("셰이커") && x.Contains("흔들기"));
-            Assert.That(preparation,Does.Contain("U로 거르기")); Assert.That(preparation,Does.Contain("가니시 없음"));
+            Assert.That(preparation,Does.Contain("U로 거르기")); Assert.That(string.Join("\n",texts),Does.Contain("가니시 없음"));
             foreach(string wrong in new[]{"소다","샴페인","Splash","가볍게 젓기","G로"}) Assert.That(preparation,Does.Not.Contain(wrong));
             Assert.That(owner.Session.Knowledge.Project("recipe_last_word").Known,Is.False,"Visible authored facts are not a discovery receipt.");
             var footer=ui.GetComponentsInChildren<TextMeshProUGUI>().Single(x=>x.text=="발견은 이름을 남깁니다. 단서는 그 전의 길을 비춥니다.");

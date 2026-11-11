@@ -19,7 +19,8 @@ namespace Surlhwa.Presentation
         public bool Focused { get; private set; }
         private Image focusVeil;
         private float revealRemaining;
-        private const float RevealSeconds=.22f;
+        private float RevealSeconds => Owner.Art!=null && Owner.Art.RefineToolMotion ? .18f : .22f;
+        private float RevealOpacity => Owner.Art!=null && Owner.Art.RefineToolMotion ? .42f : .58f;
 
         private void Awake() { ApplyView(false); }
         // Input projection changes immediately. This veil never gates input or progression.
@@ -41,7 +42,7 @@ namespace Surlhwa.Presentation
                 rect.offsetMin=rect.offsetMax=Vector2.zero;
             }
             revealRemaining=RevealSeconds;
-            focusVeil.color=new Color(.035f,.030f,.028f,.58f);
+            focusVeil.color=new Color(.035f,.030f,.028f,RevealOpacity);
             focusVeil.enabled=true;
         }
         public void ApplyView(bool focused, string framing="Normal")
@@ -66,22 +67,21 @@ namespace Surlhwa.Presentation
         {
             foreach(var actor in new[]{Owner.Bartender,Owner.Ordinary,Owner.Prince,Owner.Quixote,Owner.Hamlet,Owner.Faust,Owner.SimCheong,Owner.Odysseus}) {
                 if(actor==null || actor.Plane==null || actor.SeatAnchor==null || actor.Renderer==null) continue;
-                var plane=actor.Plane.transform;
                 bool seated=actor!=Owner.Bartender && actor.Plane.sharedMesh==actor.SeatedMesh;
                 float scale=Focused ? 1 : CharacterScale;
-                plane.localScale=Vector3.one*scale;
-                plane.localRotation=Focused ? FocusAngle : WorldAngle;
-                // Scale about the authored seat contact, not the sprite canvas center.
-                Vector3 hip=Quaternion.Inverse(FocusAngle)*actor.SeatAnchor.localPosition;
-                plane.localPosition=seated ? actor.SeatAnchor.localPosition-plane.localRotation*(hip*scale) : Vector3.zero;
+                Vector3 depth=Vector3.zero;
                 if(seated) {
                     var material=actor==Owner.Prince ? PrinceSideQuarter : actor.SeatedMaterial!=null && actor.SeatedMaterial.name.StartsWith("OrdinaryCoat") ? OrdinaryBackQuarter : null;
                     actor.Renderer.sharedMaterial=!Focused && material!=null ? material : actor.SeatedMaterial;
                     // Presentation surface thickness; pelvis/root/contact and gameplay path stay fixed.
-                    if(!Focused && (material!=null || actor==Owner.Quixote || actor==Owner.Hamlet || actor==Owner.Faust || actor==Owner.SimCheong || actor==Owner.Odysseus)) plane.localPosition-=Quaternion.Inverse(actor.transform.rotation)*Owner.Camera.transform.forward*.14f;
+                    if(!Focused && (material!=null || actor==Owner.Quixote || actor==Owner.Hamlet || actor==Owner.Faust || actor==Owner.SimCheong || actor==Owner.Odysseus)) depth=Quaternion.Inverse(actor.transform.rotation)*Owner.Camera.transform.forward*.14f;
                 }
+                // The motion sample's facing and the accepted Q1 contact have one
+                // final composition; LateUpdate must not erase the walking turn.
+                actor.ComposePresentation(Focused ? FocusAngle : WorldAngle,scale,depth);
             }
             Owner.Cast?.ApplyView(Focused);
+            Owner.GetComponent<CampaignCharacterArt>()?.ApplyPresentation();
         }
         private void LateUpdate()
         {
@@ -94,7 +94,7 @@ namespace Surlhwa.Presentation
             if(focusVeil!=null && focusVeil.enabled) {
                 revealRemaining=Mathf.Max(0,revealRemaining-Time.unscaledDeltaTime);
                 float t=revealRemaining/RevealSeconds;
-                focusVeil.color=new Color(.035f,.030f,.028f,.58f*t*t);
+                focusVeil.color=new Color(.035f,.030f,.028f,RevealOpacity*t*t);
                 if(revealRemaining==0) focusVeil.enabled=false;
             }
         }

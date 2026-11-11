@@ -6,6 +6,7 @@ namespace Surlhwa.Presentation
     // The existing empty stool remains the chair; this view only reads the earned receipt.
     public sealed class CampaignMemoryView : MonoBehaviour
     {
+        public bool RefineSurfaces;
         private GameObject star; private Material material; private Mesh mesh;
         private GameObject lovers;
         private GameObject windmill;
@@ -212,7 +213,28 @@ namespace Surlhwa.Presentation
             var tint=new Material(Shader.Find("Universal Render Pipeline/Unlit")); tint.SetColor("_BaseColor",color); tint.SetFloat("_Cull",0);
             go.AddComponent<MeshFilter>().sharedMesh=shape; var renderer=go.AddComponent<MeshRenderer>(); renderer.sharedMaterial=tint;
             renderer.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off; renderer.receiveShadows=false;
-            loversOwned.Add(shape); loversOwned.Add(tint); return go.transform;
+            loversOwned.Add(shape); loversOwned.Add(tint);
+            if(RefineSurfaces && !name.ToLowerInvariant().Contains("shadow") && !name.ToLowerInvariant().Contains("water") && !name.ToLowerInvariant().Contains("ripple") && name!="Tiny contained red point")
+                SurfaceEdges(go.transform,rectangles,color);
+            return go.transform;
+        }
+        private void SurfaceEdges(Transform parent,Rect[] rectangles,Color color)
+        {
+            // Small authored edge bands stay inside the original pixel silhouette and support plane.
+            for(int side=0;side<2;side++) {
+                var points=new System.Collections.Generic.List<Vector3>(); var indices=new System.Collections.Generic.List<int>();
+                foreach(var r in rectangles) {
+                    float edge=Mathf.Min(.004f,Mathf.Min(r.width,r.height)*.18f); if(edge<.0005f) continue;
+                    var band=side==0 ? new Rect(r.xMin,r.yMax-edge,r.width,edge) : new Rect(r.xMin,r.yMin,edge,r.height-edge);
+                    int n=points.Count; points.Add(new Vector3(band.xMin,band.yMin,-.001f)); points.Add(new Vector3(band.xMin,band.yMax,-.001f));
+                    points.Add(new Vector3(band.xMax,band.yMax,-.001f)); points.Add(new Vector3(band.xMax,band.yMin,-.001f)); indices.AddRange(new[]{n,n+1,n+2,n,n+2,n+3});
+                }
+                var detail=new GameObject(side==0 ? "Worn upper edge" : "Quiet material edge"); detail.transform.SetParent(parent,false);
+                var geometry=new Mesh{vertices=points.ToArray(),triangles=indices.ToArray()}; geometry.RecalculateBounds();
+                var material=new Material(Shader.Find("Universal Render Pipeline/Unlit")); material.SetColor("_BaseColor",Color.Lerp(color,side==0 ? new Color(.86f,.79f,.65f) : new Color(.16f,.17f,.16f),side==0 ? .22f : .25f)); material.SetFloat("_Cull",0);
+                detail.AddComponent<MeshFilter>().sharedMesh=geometry; var surface=detail.AddComponent<MeshRenderer>(); surface.sharedMaterial=material;
+                surface.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off; surface.receiveShadows=false; loversOwned.Add(geometry); loversOwned.Add(material);
+            }
         }
         private void OnDestroy()
         {
