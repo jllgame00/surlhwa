@@ -140,6 +140,10 @@ Agreed narrow seams for parallel execution after ACT6 commit:
   minimal serialized diff audit. Root alone launches Unity/build/Players; freeze
   C# for Editor and inventories for Player. Record objective evidence separately
   from native-input and final subjective signoff.
-- [ ] Commit internally complete ACT7/ending, then proceed to scheduled P09–P12
+- [x] Commit internally complete ACT7/ending, then proceed to scheduled P09–P12
   presentation/audio production and P13 full-campaign/native/performance work.
   No presentation debt closes merely because the campaign reaches its ending.
+
+ACT7 checkpoint: 72ee053; nine actual simulated-input Player runs and full
+576 .NET /140 tooling /726 Editor regression pass. P09-P12 execution continues
+autonomously; this is not Gate3 readiness or final presentation approval.
