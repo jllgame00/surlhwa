@@ -1,0 +1,138 @@
+{
+  "status": "PASS_BOUNDED_NATIVE_RELOAD",
+  "observedUtc": "2026-11-21T13:51:33.985501+00:00",
+  "candidate": "983b7b3ace846aaec86813c5049234c6c7d19e94",
+  "inputTier": "OS-native pointer via @oai/sky; no campaignProof or synthetic InputSystem devices",
+  "resolution": "1280x720 client; CUA PNGs include native titlebar",
+  "source": "Fresh copies of earned current-build portfolio-1080-20261121-01 checkpoints; source hashes preserved",
+  "cases": [
+    {
+      "case": "mid/launch1->launch2",
+      "status": "PASS",
+      "expected": {
+        "phase": "Intro",
+        "encounter": 28,
+        "line": 0,
+        "services": 28,
+        "memories": 3,
+        "known": 7,
+        "sequence": 314,
+        "textId": "text_rc1_0188"
+      },
+      "observed": {
+        "phase": "Intro",
+        "encounter": 28,
+        "line": 0,
+        "services": 28,
+        "memories": 3,
+        "known": 7,
+        "sequence": 314,
+        "textId": "text_rc1_0188"
+      },
+      "processes": [
+        {
+          "exitCode": 0,
+          "pid": 46524,
+          "exitedUtc": "2026-11-21T13:43:11.6864573Z"
+        },
+        {
+          "exitCode": 0,
+          "pid": 46392,
+          "exitedUtc": "2026-11-21T13:43:57.4147342Z"
+        }
+      ],
+      "saveSha256": "a2ccbbed1d74c3e76f71dfc3d895ed197cff1bebf708f80d0cf4ed2586170eb5",
+      "continueUnchangedSave": "asserted byte-for-byte immediately after Continue before any subsequent input"
+    },
+    {
+      "case": "ending/launch1->launch2",
+      "status": "PASS",
+      "expected": {
+        "phase": "EndingReading",
+        "encounter": 46,
+        "line": 1,
+        "services": 47,
+        "memories": 7,
+        "known": 9,
+        "sequence": 555,
+        "textId": "text_rc1_0002"
+      },
+      "observed": {
+        "phase": "EndingReading",
+        "encounter": 46,
+        "line": 1,
+        "services": 47,
+        "memories": 7,
+        "known": 9,
+        "sequence": 555,
+        "textId": "text_rc1_0002"
+      },
+      "processes": [
+        {
+          "exitCode": 0,
+          "pid": 13480,
+          "exitedUtc": "2026-11-21T13:45:55.1433795Z"
+        },
+        {
+          "exitCode": 0,
+          "pid": 48332,
+          "exitedUtc": "2026-11-21T13:48:59.6529148Z"
+        }
+      ],
+      "saveSha256": "d657c524217953c45d03bbfa79afea4c4f7ca405a5312134444d436267139938",
+      "continueUnchangedSave": "asserted byte-for-byte immediately after Continue before any subsequent input"
+    },
+    {
+      "case": "ending/launch2->launch3",
+      "status": "PASS",
+      "expected": {
+        "phase": "Complete",
+        "encounter": 46,
+        "line": 0,
+        "services": 47,
+        "memories": 7,
+        "known": 9,
+        "sequence": 563,
+        "textId": "text_rc1_0008"
+      },
+      "observed": {
+        "phase": "Complete",
+        "encounter": 46,
+        "line": 0,
+        "services": 47,
+        "memories": 7,
+        "known": 9,
+        "sequence": 563,
+        "textId": "text_rc1_0008"
+      },
+      "processes": [
+        {
+          "exitCode": 0,
+          "pid": 48332,
+          "exitedUtc": "2026-11-21T13:48:59.6529148Z"
+        },
+        {
+          "exitCode": 0,
+          "pid": 11992,
+          "exitedUtc": "2026-11-21T13:49:52.8012508Z"
+        }
+      ],
+      "saveSha256": "2eae2dd319557c3316ddaf6e84770751730e3623cac72a604c7d493aceaae330",
+      "continueUnchangedSave": "asserted byte-for-byte immediately after Continue before any subsequent input"
+    }
+  ],
+  "limitations": [
+    "F12 was attempted once but no Unity key observation or capture was produced; keyboard certification unavailable",
+    "No full-campaign native tool/held-input or regrip certification",
+    "No crash recovery or forced termination tested; all five exits were native titlebar close, code 0",
+    "Subjective feel and audiovisual approval remain owner-owned"
+  ],
+  "logAudit": {
+    "processes": 5,
+    "transitionObservations": 25,
+    "observedInterruptions": 0,
+    "observedSaveErrors": 0,
+    "playerLogErrorLines": 0,
+    "note": "Counted all retained transitions and scanned each native Player.log for Exception/Error/Assertion."
+  }
+}

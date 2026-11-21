@@ -122,3 +122,14 @@ These are campaign-functionality prerequisites, not closure of any presentation
 row. All PD01-PD11 remain OPEN. The dedicated P09-P12 finishing plans now exist;
 their implementation, actual motion/audio review evidence, practical native-input
 checks and P13 performance/regression work follow this checkpoint before Gate3.
+
+## 2026-11-21 final RC review candidate
+
+P09–P12 candidates at `983b7b3` now have the current-build campaign, native reload,
+foreground measurement and media package linked from
+[GATE3_FINAL_RC_20261121.md](GATE3_FINAL_RC_20261121.md). Objective shelf/menu
+corrections are supported by current Player evidence. This does not close any
+PD01–PD11 row: all remain HUMAN_SIGNOFF_REQUIRED for the single Gate 3 ruling.
+Native keyboard/full held-tool coverage, isolated performance hitches and exact
+contact-timing limitations are separately identified as VALIDATION_DEBT; they
+are not hidden in aesthetic debt. No subjective approval is inferred.

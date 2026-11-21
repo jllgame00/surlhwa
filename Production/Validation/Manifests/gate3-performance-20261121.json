@@ -1,0 +1,2754 @@
+{
+  "status": "MEASURED_WITH_BOUNDED_LIMITATIONS",
+  "candidate": "983b7b3ace846aaec86813c5049234c6c7d19e94",
+  "steadyForegroundCoverage": "PASS",
+  "stutterFreeCertification": false,
+  "hardwareAccepted": false,
+  "full": {
+    "evidence": "rc-performance-1080-20261121-01",
+    "status": "MEASUREMENTS_RECORDED",
+    "process": {
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 1719.0301823999998,
+      "maxWorkingSetBytes": 751308800
+    },
+    "rawSamples": 101490,
+    "foregroundSamples": 96784,
+    "backgroundEligibleSamples": 7,
+    "excludedCaptureSamples": 4546,
+    "excludedWarmupSamples": 153,
+    "droppedSamples": 0,
+    "unobservedFrameIds": 0,
+    "metrics": {
+      "frameMs": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 16.6653,
+        "p95": 16.8222,
+        "p99": 17.2269,
+        "worst": 807.384
+      },
+      "unityDeltaMs": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 16.666900366544724,
+        "p95": 16.67090505361557,
+        "p99": 16.71290397644043,
+        "worst": 806.9540858268738
+      },
+      "mainThreadMs": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 16.6588,
+        "p95": 16.6742,
+        "p99": 16.7355,
+        "worst": 806.9535
+      },
+      "gcAllocatedBytes": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 13488.0,
+        "p95": 28582.0,
+        "p99": 5852844.0,
+        "worst": 9136786.0
+      },
+      "totalUsedBytes": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 281260416.0,
+        "p95": 300585676.0,
+        "p99": 308265883.0,
+        "worst": 322588640.0
+      },
+      "systemUsedBytes": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 548679680.0,
+        "p95": 592633856.0,
+        "p99": 613163008.0,
+        "worst": 751513600.0
+      },
+      "gfxUsedBytes": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 66009377.0,
+        "p95": 66090745.0,
+        "p99": 66102173.0,
+        "worst": 66102199.0
+      },
+      "workingSetBytes": {
+        "status": "UNAVAILABLE",
+        "reason": "Unity Mono Process.WorkingSet64 returned constant zero; do not interpret as zero memory. External process maxWorkingSetBytes and Profiler systemUsedBytes are retained."
+      },
+      "probeMs": {
+        "count": 96784,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 0.005699999999999999,
+        "p95": 0.0076,
+        "p99": 0.16349999999999998,
+        "worst": 0.7327
+      },
+      "cpuFrameMs": {
+        "count": 84422,
+        "missing": 12362,
+        "invalid": 0,
+        "p50": 16.6668,
+        "p95": 16.6872,
+        "p99": 16.7471,
+        "worst": 388.335
+      },
+      "timingMainMs": {
+        "count": 84422,
+        "missing": 12362,
+        "invalid": 0,
+        "p50": 1.106,
+        "p95": 1.4871,
+        "p99": 2.1098,
+        "worst": 388.3196
+      },
+      "presentWaitMs": {
+        "count": 84422,
+        "missing": 12362,
+        "invalid": 0,
+        "p50": 15.5483,
+        "p95": 15.7455,
+        "p99": 15.8004,
+        "worst": 18.4795
+      },
+      "gpuMs": {
+        "count": 84419,
+        "missing": 12365,
+        "invalid": 0,
+        "p50": 0.201728,
+        "p95": 0.582656,
+        "p99": 0.75264,
+        "worst": 2.102272
+      }
+    },
+    "workloads": [
+      {
+        "scenario": "room-0-memories-solo",
+        "phase": "Request",
+        "slot": 0,
+        "memories": 0,
+        "modal": "",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 3720,
+        "steadySeconds": 62.00557029999999,
+        "metrics": {
+          "frameMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6662,
+            "p95": 16.7984,
+            "p99": 17.2096,
+            "worst": 18.6316
+          },
+          "unityDeltaMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666892915964127,
+            "p95": 16.670996323227882,
+            "p99": 16.70699380338192,
+            "worst": 17.06719771027565
+          },
+          "mainThreadMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6584,
+            "p95": 16.6846,
+            "p99": 16.7541,
+            "worst": 18.7764
+          },
+          "gcAllocatedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 3216.0,
+            "p95": 3216.0,
+            "p99": 3216.0,
+            "worst": 3324.0
+          },
+          "totalUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 269300493.0,
+            "p95": 274485884.0,
+            "p99": 274977404.0,
+            "worst": 275184708.0
+          },
+          "systemUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 515653632.0,
+            "p95": 516014080.0,
+            "p99": 613335040.0,
+            "worst": 613400576.0
+          },
+          "gfxUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65862215.0,
+            "p95": 65862215.0,
+            "p99": 65862215.0,
+            "worst": 65862215.0
+          },
+          "workingSetBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.005699999999999999,
+            "p95": 0.0078,
+            "p99": 0.1695,
+            "worst": 0.3109
+          },
+          "cpuFrameMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.6667,
+            "p95": 16.7008,
+            "p99": 16.7687,
+            "worst": 18.7867
+          },
+          "timingMainMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.0091,
+            "p95": 1.2574,
+            "p99": 1.9366,
+            "worst": 3.2161
+          },
+          "presentWaitMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.6451,
+            "p95": 15.7805,
+            "p99": 15.8224,
+            "worst": 16.0245
+          },
+          "gpuMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.161792,
+            "p95": 0.165888,
+            "p99": 0.1792,
+            "worst": 0.674816
+          }
+        }
+      },
+      {
+        "scenario": "prepared-stir",
+        "phase": "Brewing",
+        "slot": 0,
+        "memories": 0,
+        "modal": "",
+        "method": "stir",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 593,
+        "steadySeconds": 9.8839787,
+        "metrics": {
+          "frameMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6668,
+            "p95": 16.7858,
+            "p99": 17.1616,
+            "worst": 17.2197
+          },
+          "unityDeltaMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.670996323227882,
+            "p99": 16.690094023942947,
+            "worst": 16.95210486650467
+          },
+          "mainThreadMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6583,
+            "p95": 16.6718,
+            "p99": 16.7448,
+            "worst": 17.073
+          },
+          "gcAllocatedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 4102.0,
+            "p95": 4102.0,
+            "p99": 4102.0,
+            "worst": 4190.0
+          },
+          "totalUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 264574965.0,
+            "p95": 265424085.0,
+            "p99": 265530581.0,
+            "worst": 265551061.0
+          },
+          "systemUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 544702464.0,
+            "p95": 544702464.0,
+            "p99": 544702464.0,
+            "worst": 544702464.0
+          },
+          "gfxUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65871887.0,
+            "p95": 65871887.0,
+            "p99": 65871887.0,
+            "worst": 65871887.0
+          },
+          "workingSetBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0061,
+            "p95": 0.0076,
+            "p99": 0.1726,
+            "worst": 0.2241
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.6863,
+            "p99": 16.7721,
+            "worst": 17.0829
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0014,
+            "p95": 1.2211,
+            "p99": 1.7232,
+            "worst": 2.4964
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.6519,
+            "p95": 15.7935,
+            "p99": 15.8077,
+            "worst": 15.8272
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.195584,
+            "p95": 0.198656,
+            "p99": 0.214016,
+            "worst": 0.265216
+          }
+        }
+      },
+      {
+        "scenario": "prepared-float",
+        "phase": "Brewing",
+        "slot": 5,
+        "memories": 0,
+        "modal": "",
+        "method": "float",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 593,
+        "steadySeconds": 9.884196700000006,
+        "metrics": {
+          "frameMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666,
+            "p95": 16.8303,
+            "p99": 17.1828,
+            "worst": 17.4142
+          },
+          "unityDeltaMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666801646351814,
+            "p95": 16.673702746629715,
+            "p99": 16.721902415156364,
+            "worst": 16.945302486419678
+          },
+          "mainThreadMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6589,
+            "p95": 16.6945,
+            "p99": 16.7625,
+            "worst": 17.1599
+          },
+          "gcAllocatedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 5808.0,
+            "p95": 5808.0,
+            "p99": 5808.0,
+            "worst": 5896.0
+          },
+          "totalUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 284926249.0,
+            "p95": 286320466.0,
+            "p99": 286471500.0,
+            "worst": 286546911.0
+          },
+          "systemUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 546340864.0,
+            "p95": 546340864.0,
+            "p99": 546340864.0,
+            "worst": 546340864.0
+          },
+          "gfxUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65960343.0,
+            "p95": 65960343.0,
+            "p99": 65960343.0,
+            "worst": 66027927.0
+          },
+          "workingSetBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0061,
+            "p95": 0.0106,
+            "p99": 0.17679999999999998,
+            "worst": 0.219
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.7085,
+            "p99": 16.7905,
+            "worst": 17.1691
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0116,
+            "p95": 1.2849,
+            "p99": 2.1728,
+            "worst": 2.7131
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.6441,
+            "p95": 15.786,
+            "p99": 15.824,
+            "worst": 15.923
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.188416,
+            "p95": 0.193536,
+            "p99": 0.211968,
+            "worst": 0.270336
+          }
+        }
+      },
+      {
+        "scenario": "prepared-build",
+        "phase": "Brewing",
+        "slot": 6,
+        "memories": 0,
+        "modal": "",
+        "method": "build",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 593,
+        "steadySeconds": 9.884958200000003,
+        "metrics": {
+          "frameMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6664,
+            "p95": 16.8161,
+            "p99": 17.1632,
+            "worst": 17.5803
+          },
+          "unityDeltaMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.671499237418175,
+            "p99": 16.76420122385025,
+            "worst": 17.090993002057076
+          },
+          "mainThreadMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6586,
+            "p95": 16.6715,
+            "p99": 16.7716,
+            "worst": 17.1194
+          },
+          "gcAllocatedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 6168.0,
+            "p95": 6168.0,
+            "p99": 6168.0,
+            "worst": 6256.0
+          },
+          "totalUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 262077849.0,
+            "p95": 263432818.0,
+            "p99": 263537607.0,
+            "worst": 263603626.0
+          },
+          "systemUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 548134912.0,
+            "p95": 548159488.0,
+            "p99": 548159488.0,
+            "worst": 548159488.0
+          },
+          "gfxUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65960783.0,
+            "p95": 65960783.0,
+            "p99": 65960783.0,
+            "worst": 65960783.0
+          },
+          "workingSetBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0059,
+            "p95": 0.0079,
+            "p99": 0.16540000000000002,
+            "worst": 0.2858
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.6949,
+            "p99": 16.781,
+            "worst": 17.1363
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0193,
+            "p95": 1.2516,
+            "p99": 1.7065,
+            "worst": 2.852
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.6344,
+            "p95": 15.7771,
+            "p99": 15.8206,
+            "worst": 16.1254
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.190464,
+            "p95": 0.196608,
+            "p99": 0.205824,
+            "worst": 0.252928
+          }
+        }
+      },
+      {
+        "scenario": "prepared-shake",
+        "phase": "Brewing",
+        "slot": 13,
+        "memories": 0,
+        "modal": "",
+        "method": "shake",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 593,
+        "steadySeconds": 9.884460599999999,
+        "metrics": {
+          "frameMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6668,
+            "p95": 16.8073,
+            "p99": 17.1093,
+            "worst": 18.1718
+          },
+          "unityDeltaMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.670500859618187,
+            "p99": 16.688300296664238,
+            "worst": 17.15330220758915
+          },
+          "mainThreadMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6592,
+            "p95": 16.669,
+            "p99": 16.6977,
+            "worst": 17.1485
+          },
+          "gcAllocatedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 8850.0,
+            "p95": 8850.0,
+            "p99": 8850.0,
+            "worst": 8938.0
+          },
+          "totalUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 273230683.0,
+            "p95": 285245547.0,
+            "p99": 285516734.0,
+            "worst": 285667856.0
+          },
+          "systemUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 549691392.0,
+            "p95": 549691392.0,
+            "p99": 549691392.0,
+            "worst": 549691392.0
+          },
+          "gfxUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65961663.0,
+            "p95": 65961663.0,
+            "p99": 65961663.0,
+            "worst": 66029247.0
+          },
+          "workingSetBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.006,
+            "p95": 0.0076,
+            "p99": 0.1626,
+            "worst": 0.28190000000000004
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.667,
+            "p95": 16.6785,
+            "p99": 16.7275,
+            "worst": 17.1573
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0146,
+            "p95": 1.2728,
+            "p99": 2.0437,
+            "worst": 2.2828
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.6402,
+            "p95": 15.7622,
+            "p99": 15.8058,
+            "worst": 16.1568
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.193536,
+            "p95": 0.198656,
+            "p99": 0.21504,
+            "worst": 0.228352
+          }
+        }
+      },
+      {
+        "scenario": "room-1-memories-solo",
+        "phase": "Request",
+        "slot": 17,
+        "memories": 1,
+        "modal": "",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 3720,
+        "steadySeconds": 62.008462300000076,
+        "metrics": {
+          "frameMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6651,
+            "p95": 16.8115,
+            "p99": 17.1353,
+            "worst": 17.6284
+          },
+          "unityDeltaMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.672300174832344,
+            "p99": 16.728203743696213,
+            "worst": 17.047597095370293
+          },
+          "mainThreadMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6589,
+            "p95": 16.6783,
+            "p99": 16.7435,
+            "worst": 17.0443
+          },
+          "gcAllocatedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 9944.0,
+            "p95": 9944.0,
+            "p99": 9944.0,
+            "worst": 10032.0
+          },
+          "totalUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 284065933.0,
+            "p95": 293512013.0,
+            "p99": 295024317.0,
+            "worst": 295520036.0
+          },
+          "systemUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 534159360.0,
+            "p95": 580300800.0,
+            "p99": 580317184.0,
+            "worst": 580317184.0
+          },
+          "gfxUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65963373.0,
+            "p95": 65963373.0,
+            "p99": 65963373.0,
+            "worst": 65963373.0
+          },
+          "workingSetBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0055,
+            "p95": 0.0072,
+            "p99": 0.1652,
+            "worst": 0.7327
+          },
+          "cpuFrameMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.6936,
+            "p99": 16.752,
+            "worst": 17.2448
+          },
+          "timingMainMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.0356,
+            "p95": 1.2879,
+            "p99": 1.9131,
+            "worst": 3.9552
+          },
+          "presentWaitMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.6196,
+            "p95": 15.7587,
+            "p99": 15.8,
+            "worst": 16.1361
+          },
+          "gpuMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.164864,
+            "p95": 0.16896,
+            "p99": 0.182272,
+            "worst": 1.63328
+          }
+        }
+      },
+      {
+        "scenario": "room-1-memories-paired",
+        "phase": "Request",
+        "slot": 20,
+        "memories": 1,
+        "modal": "",
+        "method": "",
+        "paired": true,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 3720,
+        "steadySeconds": 62.0035936000001,
+        "metrics": {
+          "frameMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6652,
+            "p95": 16.7951,
+            "p99": 17.1612,
+            "worst": 17.4578
+          },
+          "unityDeltaMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.670599579811096,
+            "p99": 16.688095405697823,
+            "worst": 17.000503838062286
+          },
+          "mainThreadMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6587,
+            "p95": 16.6703,
+            "p99": 16.7119,
+            "worst": 16.9939
+          },
+          "gcAllocatedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 10836.0,
+            "p95": 10836.0,
+            "p99": 10836.0,
+            "worst": 10924.0
+          },
+          "totalUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 286130011.0,
+            "p95": 294461527.0,
+            "p99": 296087489.0,
+            "worst": 296552427.0
+          },
+          "systemUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 536268800.0,
+            "p95": 574103552.0,
+            "p99": 574496768.0,
+            "worst": 574496768.0
+          },
+          "gfxUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 65964141.0,
+            "p95": 65964141.0,
+            "p99": 65964141.0,
+            "worst": 65964141.0
+          },
+          "workingSetBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0056,
+            "p95": 0.0072,
+            "p99": 0.16349999999999998,
+            "worst": 0.20379999999999998
+          },
+          "cpuFrameMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.6667,
+            "p95": 16.6839,
+            "p99": 16.7285,
+            "worst": 17.006
+          },
+          "timingMainMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.0389,
+            "p95": 1.2721,
+            "p99": 1.9147,
+            "worst": 4.1926
+          },
+          "presentWaitMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.6151,
+            "p95": 15.7436,
+            "p99": 15.7845,
+            "worst": 16.0775
+          },
+          "gpuMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.167936,
+            "p95": 0.172032,
+            "p99": 0.18432,
+            "worst": 1.626112
+          }
+        }
+      },
+      {
+        "scenario": "complete-seven-memory-room",
+        "phase": "Complete",
+        "slot": 46,
+        "memories": 7,
+        "modal": "",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 3713,
+        "steadySeconds": 61.88920770000008,
+        "metrics": {
+          "frameMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.665,
+            "p95": 16.7837,
+            "p99": 17.119,
+            "worst": 19.7283
+          },
+          "unityDeltaMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666801646351814,
+            "p95": 16.670599579811096,
+            "p99": 16.697002574801445,
+            "worst": 17.190299928188324
+          },
+          "mainThreadMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.659,
+            "p95": 16.6708,
+            "p99": 16.7148,
+            "worst": 17.2161
+          },
+          "gcAllocatedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 3740.0,
+            "p95": 3740.0,
+            "p99": 3740.0,
+            "worst": 82334.0
+          },
+          "totalUsedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 288536426.0,
+            "p95": 294257476.0,
+            "p99": 294840821.0,
+            "worst": 295030842.0
+          },
+          "systemUsedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 559243264.0,
+            "p95": 595656704.0,
+            "p99": 595656704.0,
+            "worst": 595656704.0
+          },
+          "gfxUsedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66039713.0,
+            "p95": 66039713.0,
+            "p99": 66039713.0,
+            "worst": 66039713.0
+          },
+          "workingSetBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0056,
+            "p95": 0.0079,
+            "p99": 0.1616,
+            "worst": 0.2832
+          },
+          "cpuFrameMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6667,
+            "p95": 16.6819,
+            "p99": 16.7396,
+            "worst": 17.226
+          },
+          "timingMainMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0206,
+            "p95": 1.2588,
+            "p99": 1.9391,
+            "worst": 4.1119
+          },
+          "presentWaitMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.6342,
+            "p95": 15.7939,
+            "p99": 15.8378,
+            "worst": 16.0674
+          },
+          "gpuMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.461824,
+            "p95": 0.49152,
+            "p99": 0.493568,
+            "worst": 1.72544
+          }
+        }
+      },
+      {
+        "scenario": "large-korean-codex",
+        "phase": "Complete",
+        "slot": 46,
+        "memories": 7,
+        "modal": "codex",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": true,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 601,
+        "steadySeconds": 10.017199999999999,
+        "metrics": {
+          "frameMs": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6658,
+            "p95": 16.794,
+            "p99": 17.1613,
+            "worst": 19.7771
+          },
+          "unityDeltaMs": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666801646351814,
+            "p95": 16.670500859618187,
+            "p99": 16.690200194716454,
+            "worst": 16.780903562903404
+          },
+          "mainThreadMs": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.659,
+            "p95": 16.6702,
+            "p99": 16.6935,
+            "worst": 16.7741
+          },
+          "gcAllocatedBytes": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 3740.0,
+            "p95": 3740.0,
+            "p99": 3740.0,
+            "worst": 3828.0
+          },
+          "totalUsedBytes": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 285587389.0,
+            "p95": 301886286.0,
+            "p99": 302009166.0,
+            "worst": 302067388.0
+          },
+          "systemUsedBytes": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 560885760.0,
+            "p95": 560885760.0,
+            "p99": 560885760.0,
+            "worst": 560885760.0
+          },
+          "gfxUsedBytes": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66039713.0,
+            "p95": 66039713.0,
+            "p99": 66039713.0,
+            "worst": 66039713.0
+          },
+          "workingSetBytes": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 601,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.005699999999999999,
+            "p95": 0.007700000000000001,
+            "p99": 0.1614,
+            "worst": 0.1898
+          },
+          "cpuFrameMs": {
+            "count": 593,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.68,
+            "p99": 16.7142,
+            "worst": 16.781
+          },
+          "timingMainMs": {
+            "count": 593,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.071,
+            "p95": 1.2959,
+            "p99": 2.1418,
+            "worst": 4.1762
+          },
+          "presentWaitMs": {
+            "count": 593,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.5827,
+            "p95": 15.7452,
+            "p99": 15.7948,
+            "worst": 15.8135
+          },
+          "gpuMs": {
+            "count": 593,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.72192,
+            "p95": 0.765952,
+            "p99": 0.768,
+            "worst": 0.897024
+          }
+        }
+      }
+    ],
+    "hitchesOver33_34ms": [
+      {
+        "frame": 20659,
+        "timeSeconds": 347.7209494,
+        "frameMs": 377.8097,
+        "phase": "Brewing",
+        "slot": 8,
+        "memories": 0,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 17615.0,
+        "mainThreadMs": 377.4723,
+        "contextStableFrames": 0
+      },
+      {
+        "frame": 49471,
+        "timeSeconds": 832.0211512,
+        "frameMs": 807.384,
+        "phase": "Brewing",
+        "slot": 21,
+        "memories": 1,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 22323.0,
+        "mainThreadMs": 806.9535,
+        "contextStableFrames": 0
+      },
+      {
+        "frame": 75306,
+        "timeSeconds": 1269.6645625,
+        "frameMs": 388.486,
+        "phase": "Brewing",
+        "slot": 35,
+        "memories": 4,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 26919.0,
+        "mainThreadMs": 388.3276,
+        "contextStableFrames": 28
+      },
+      {
+        "frame": 77755,
+        "timeSeconds": 1311.4362683,
+        "frameMs": 83.0005,
+        "phase": "Brewing",
+        "slot": 37,
+        "memories": 5,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 28465.0,
+        "mainThreadMs": 82.901,
+        "contextStableFrames": 0
+      },
+      {
+        "frame": 82465,
+        "timeSeconds": 1391.7969846,
+        "frameMs": 221.7767,
+        "phase": "Brewing",
+        "slot": 40,
+        "memories": 5,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 30071.0,
+        "mainThreadMs": 221.7108,
+        "contextStableFrames": 461
+      },
+      {
+        "frame": 82510,
+        "timeSeconds": 1392.6898964,
+        "frameMs": 159.3028,
+        "phase": "Brewing",
+        "slot": 40,
+        "memories": 5,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 30801.0,
+        "mainThreadMs": 159.5585,
+        "contextStableFrames": 506
+      }
+    ],
+    "metadata": {
+      "schemaVersion": 1,
+      "captureGuardFrames": 8,
+      "capacity": 216000,
+      "samples": 101490,
+      "droppedSamples": 0,
+      "width": 1920,
+      "height": 1080,
+      "vSyncCount": 0,
+      "targetFrameRate": 60,
+      "cpuCores": 20,
+      "systemMemoryMb": 32581,
+      "gpuMemoryMb": 8018,
+      "processId": 52956,
+      "startedUtc": "2026-11-21T13:50:03.3453114Z",
+      "finishedUtc": "2026-11-21T14:18:38.4198736Z",
+      "deviceName": "DESKTOP-0KQP7KH",
+      "operatingSystem": "Windows 11  (10.0.26200)",
+      "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+      "gpuName": "NVIDIA GeForce RTX 3070",
+      "graphicsApi": "Direct3D 11.0 [level 11.1]",
+      "unityVersion": "6000.3.7f1",
+      "buildGuid": "48f2cf8de54d45a69f9e5683165cf18d",
+      "scene": "Bar_Q1_Final",
+      "inputTier": "simulated production InputSystem",
+      "renderPath": "normal camera",
+      "workingSetError": "",
+      "timingError": "",
+      "outputError": "",
+      "gpuAvailability": "positive delayed GPU timings observed; deduplicate raw timestamp in summary",
+      "driverSource": "performance-host.json; graphicsApi is not an OS driver version",
+      "intervalClock": "Stopwatch Update-to-Update, previous frame/context; wall interval includes cap/vsync/wait and probe overhead",
+      "timingAttribution": "FrameTimingManager delayed up to four frames; unique timestamp, workload attribution only after eight stable frames",
+      "overhead": "fixed sample buffer; ProfilerRecorder and FrameTimingManager; process working set sampled at 1 Hz; serialization only at startup/Finish",
+      "capturePolicy": "raw intervals retained; exclude startFrame-1 through endFrame+8; unfinished intervals excluded through end",
+      "finalized": true,
+      "developmentBuild": true,
+      "batchMode": false,
+      "continuousCapture": false,
+      "evidenceProbeEnabledAtStart": false,
+      "frameTimingFeatureEnabled": true,
+      "managedInitializationBytes": 51683328,
+      "sampleBufferManagedBytes": 50114560,
+      "rawTelemetryBytes": 78159668,
+      "captureTelemetryBytes": 177695,
+      "stopwatchFrequency": 10000000,
+      "observedGpuSamples": 101142,
+      "warmupSeconds": 5.0,
+      "initializationMs": 23.3837,
+      "durationSeconds": 1715.0873951,
+      "serializationMs": 725.5587,
+      "counters": [
+        {
+          "name": "Main Thread",
+          "category": "Internal",
+          "unit": "TimeNanoseconds",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "GC Allocated In Frame",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "Total Used Memory",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "System Used Memory",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "Gfx Used Memory",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        }
+      ]
+    },
+    "host": {
+      "observedUtc": "2026-11-21T13:49:56.6740377Z",
+      "errors": [],
+      "note": "Read-only host inventory; no power, driver or quality setting changes.",
+      "cpu": [
+        {
+          "Name": "12th Gen Intel(R) Core(TM) i7-12700KF",
+          "NumberOfCores": 12,
+          "NumberOfLogicalProcessors": 20,
+          "MaxClockSpeed": 3610
+        }
+      ],
+      "os": [
+        {
+          "Caption": "Microsoft Windows 11 Home",
+          "Version": "10.0.26200",
+          "BuildNumber": "26200",
+          "TotalVisibleMemorySize": 33363376,
+          "FreePhysicalMemory": 12617256
+        }
+      ],
+      "gpu": [
+        {
+          "Name": "Parsec Virtual Display Adapter",
+          "DriverVersion": "0.45.0.0",
+          "DriverDate": "/Date(1706140800000)/",
+          "AdapterRAM": null
+        },
+        {
+          "Name": "NVIDIA GeForce RTX 3070",
+          "DriverVersion": "32.0.16.1088",
+          "DriverDate": "/Date(1784678400000)/",
+          "AdapterRAM": 4293918720
+        }
+      ],
+      "storage": [
+        {
+          "Model": "Samsung SSD 980 PRO 1TB",
+          "MediaType": "Fixed hard disk media",
+          "InterfaceType": "SCSI",
+          "Size": 1000202273280
+        },
+        {
+          "Model": "ST2000DM008-2UB102",
+          "MediaType": "Fixed hard disk media",
+          "InterfaceType": "IDE",
+          "Size": 2000396321280
+        }
+      ],
+      "powerScheme": "\uc804\uc6d0 \uad6c\uc131\ud45c GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (\uace0\uc131\ub2a5)"
+    },
+    "rawSummary": "performance-summary.json"
+  },
+  "lateRepeat": {
+    "evidence": "rc-performance-late-1080-20261121-02",
+    "status": "MEASUREMENTS_RECORDED",
+    "process": {
+      "exitCode": 0,
+      "timedOut": false,
+      "seconds": 435.2350876,
+      "maxWorkingSetBytes": 813064192
+    },
+    "rawSamples": 25420,
+    "foregroundSamples": 23789,
+    "backgroundEligibleSamples": 4,
+    "excludedCaptureSamples": 1500,
+    "excludedWarmupSamples": 127,
+    "droppedSamples": 0,
+    "unobservedFrameIds": 0,
+    "metrics": {
+      "frameMs": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 16.666,
+        "p95": 16.8353,
+        "p99": 17.3137,
+        "worst": 66.0418
+      },
+      "unityDeltaMs": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 16.666900366544724,
+        "p95": 16.671201214194298,
+        "p99": 16.72220043838024,
+        "worst": 65.9945011138916
+      },
+      "mainThreadMs": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 16.6585,
+        "p95": 16.6865,
+        "p99": 16.7684,
+        "worst": 65.976
+      },
+      "gcAllocatedBytes": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 18908.0,
+        "p95": 32224.0,
+        "p99": 6446868.0,
+        "worst": 9039228.0
+      },
+      "totalUsedBytes": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 286829366.0,
+        "p95": 307978286.0,
+        "p99": 310672488.0,
+        "worst": 327285670.0
+      },
+      "systemUsedBytes": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 556863488.0,
+        "p95": 606973952.0,
+        "p99": 638889984.0,
+        "worst": 812548096.0
+      },
+      "gfxUsedBytes": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 66013295.0,
+        "p95": 66080853.0,
+        "p99": 66080981.0,
+        "worst": 66080981.0
+      },
+      "workingSetBytes": {
+        "status": "UNAVAILABLE",
+        "reason": "Unity Mono Process.WorkingSet64 returned constant zero; do not interpret as zero memory. External process maxWorkingSetBytes and Profiler systemUsedBytes are retained."
+      },
+      "probeMs": {
+        "count": 23789,
+        "missing": 0,
+        "invalid": 0,
+        "p50": 0.0066,
+        "p95": 0.0087,
+        "p99": 0.1671,
+        "worst": 0.5438
+      },
+      "cpuFrameMs": {
+        "count": 21140,
+        "missing": 2649,
+        "invalid": 0,
+        "p50": 16.6669,
+        "p95": 16.6985,
+        "p99": 16.774,
+        "worst": 40.4354
+      },
+      "timingMainMs": {
+        "count": 21140,
+        "missing": 2649,
+        "invalid": 0,
+        "p50": 1.1158,
+        "p95": 1.5168,
+        "p99": 2.2762,
+        "worst": 40.4182
+      },
+      "presentWaitMs": {
+        "count": 21140,
+        "missing": 2649,
+        "invalid": 0,
+        "p50": 15.5384,
+        "p95": 15.6985,
+        "p99": 15.7457,
+        "worst": 18.4818
+      },
+      "gpuMs": {
+        "count": 21140,
+        "missing": 2649,
+        "invalid": 0,
+        "p50": 0.188416,
+        "p95": 0.26624,
+        "p99": 0.287744,
+        "worst": 21.897216
+      }
+    },
+    "workloads": [
+      {
+        "scenario": "prepared-shake",
+        "phase": "Brewing",
+        "slot": 40,
+        "memories": 5,
+        "modal": "",
+        "method": "shake",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 600,
+        "steadySeconds": 10.000684199999997,
+        "metrics": {
+          "frameMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6663,
+            "p95": 16.7489,
+            "p99": 16.9363,
+            "worst": 17.3712
+          },
+          "unityDeltaMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.669699922204018,
+            "p99": 16.688697040081024,
+            "worst": 16.90579578280449
+          },
+          "mainThreadMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6586,
+            "p95": 16.6673,
+            "p99": 16.6865,
+            "worst": 16.894
+          },
+          "gcAllocatedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 18908.0,
+            "p95": 18908.0,
+            "p99": 18908.0,
+            "worst": 18996.0
+          },
+          "totalUsedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 264516628.0,
+            "p95": 269049111.0,
+            "p99": 269535344.0,
+            "worst": 269627973.0
+          },
+          "systemUsedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 512950272.0,
+            "p95": 538738688.0,
+            "p99": 538738688.0,
+            "worst": 538738688.0
+          },
+          "gfxUsedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66002681.0,
+            "p95": 66002681.0,
+            "p99": 66002681.0,
+            "worst": 66002681.0
+          },
+          "workingSetBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0067,
+            "p95": 0.0088,
+            "p99": 0.161,
+            "worst": 0.192
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.667,
+            "p95": 16.6784,
+            "p99": 16.7121,
+            "worst": 16.9023
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.0721,
+            "p95": 1.2832,
+            "p99": 1.8141,
+            "worst": 2.2785
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.5821,
+            "p95": 15.7129,
+            "p99": 15.7419,
+            "worst": 15.7867
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.190464,
+            "p95": 0.193536,
+            "p99": 0.208896,
+            "worst": 1.057792
+          }
+        }
+      },
+      {
+        "scenario": "room-5-memories-solo",
+        "phase": "Request",
+        "slot": 41,
+        "memories": 5,
+        "modal": "",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 3720,
+        "steadySeconds": 62.00615890000006,
+        "metrics": {
+          "frameMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6655,
+            "p95": 16.8056,
+            "p99": 17.1697,
+            "worst": 18.0491
+          },
+          "unityDeltaMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.670797020196915,
+            "p99": 16.708800569176674,
+            "worst": 17.090603709220886
+          },
+          "mainThreadMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6585,
+            "p95": 16.6773,
+            "p99": 16.7444,
+            "worst": 18.0441
+          },
+          "gcAllocatedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 18358.0,
+            "p95": 18358.0,
+            "p99": 18358.0,
+            "worst": 18446.0
+          },
+          "totalUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 294149421.0,
+            "p95": 304320199.0,
+            "p99": 305713015.0,
+            "worst": 306190311.0
+          },
+          "systemUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 539734016.0,
+            "p95": 605454336.0,
+            "p99": 605667328.0,
+            "worst": 605667328.0
+          },
+          "gfxUsedBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66004089.0,
+            "p95": 66004089.0,
+            "p99": 66004089.0,
+            "worst": 66004089.0
+          },
+          "workingSetBytes": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 3720,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0065,
+            "p95": 0.0085,
+            "p99": 0.1675,
+            "worst": 0.4111
+          },
+          "cpuFrameMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.6916,
+            "p99": 16.7556,
+            "worst": 18.0534
+          },
+          "timingMainMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.0839,
+            "p95": 1.3233,
+            "p99": 2.0064,
+            "worst": 4.3457
+          },
+          "presentWaitMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.5705,
+            "p95": 15.7071,
+            "p99": 15.7403,
+            "worst": 16.0758
+          },
+          "gpuMs": {
+            "count": 3712,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.169984,
+            "p95": 0.17408,
+            "p99": 0.188416,
+            "worst": 0.239616
+          }
+        }
+      },
+      {
+        "scenario": "prepared-stir",
+        "phase": "Brewing",
+        "slot": 42,
+        "memories": 6,
+        "modal": "",
+        "method": "stir",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 593,
+        "steadySeconds": 9.884901700000006,
+        "metrics": {
+          "frameMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6639,
+            "p95": 16.8125,
+            "p99": 16.959,
+            "worst": 17.3695
+          },
+          "unityDeltaMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.675198450684547,
+            "p99": 16.785401850938797,
+            "worst": 16.887301579117775
+          },
+          "mainThreadMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6584,
+            "p95": 16.6854,
+            "p99": 16.7796,
+            "worst": 16.8968
+          },
+          "gcAllocatedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 19468.0,
+            "p95": 19468.0,
+            "p99": 19468.0,
+            "worst": 19556.0
+          },
+          "totalUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 293491195.0,
+            "p95": 298680323.0,
+            "p99": 299191141.0,
+            "worst": 299409016.0
+          },
+          "systemUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 568565760.0,
+            "p95": 568565760.0,
+            "p99": 568565760.0,
+            "worst": 568565760.0
+          },
+          "gfxUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66010889.0,
+            "p95": 66010889.0,
+            "p99": 66010889.0,
+            "worst": 66010889.0
+          },
+          "workingSetBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0066,
+            "p95": 0.0083,
+            "p99": 0.1693,
+            "worst": 0.20980000000000001
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6667,
+            "p95": 16.7006,
+            "p99": 16.7899,
+            "worst": 16.9066
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0834,
+            "p95": 1.2977,
+            "p99": 1.5371,
+            "worst": 3.0685
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.5707,
+            "p95": 15.7144,
+            "p99": 15.7704,
+            "worst": 15.8038
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.198656,
+            "p95": 0.202752,
+            "p99": 0.216064,
+            "worst": 1.21344
+          }
+        }
+      },
+      {
+        "scenario": "prepared-build",
+        "phase": "Brewing",
+        "slot": 44,
+        "memories": 6,
+        "modal": "",
+        "method": "build",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 593,
+        "steadySeconds": 9.884239199999998,
+        "metrics": {
+          "frameMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6665,
+            "p95": 16.8477,
+            "p99": 17.2647,
+            "worst": 17.4825
+          },
+          "unityDeltaMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.670996323227882,
+            "p99": 16.711400821805,
+            "worst": 16.83780550956726
+          },
+          "mainThreadMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6588,
+            "p95": 16.6769,
+            "p99": 16.7483,
+            "worst": 16.9815
+          },
+          "gcAllocatedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 20182.0,
+            "p95": 20182.0,
+            "p99": 20182.0,
+            "worst": 20270.0
+          },
+          "totalUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 281987135.0,
+            "p95": 287396925.0,
+            "p99": 287880253.0,
+            "worst": 288051980.0
+          },
+          "systemUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 568840192.0,
+            "p95": 568840192.0,
+            "p99": 568840192.0,
+            "worst": 568840192.0
+          },
+          "gfxUsedBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66013295.0,
+            "p95": 66013295.0,
+            "p99": 66013295.0,
+            "worst": 66013295.0
+          },
+          "workingSetBytes": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 593,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0067,
+            "p95": 0.0089,
+            "p99": 0.1685,
+            "worst": 0.1997
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.689,
+            "p99": 16.7607,
+            "worst": 17.0192
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.1032,
+            "p95": 1.4083,
+            "p99": 2.3833,
+            "worst": 2.8935
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.552,
+            "p95": 15.6847,
+            "p99": 15.7447,
+            "worst": 15.808
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.192512,
+            "p95": 0.196608,
+            "p99": 0.214016,
+            "worst": 0.28672
+          }
+        }
+      },
+      {
+        "scenario": "complete-seven-memory-room",
+        "phase": "Complete",
+        "slot": 46,
+        "memories": 7,
+        "modal": "",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": false,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 3713,
+        "steadySeconds": 61.88984899999996,
+        "metrics": {
+          "frameMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6667,
+            "p95": 16.7962,
+            "p99": 17.1562,
+            "worst": 18.2036
+          },
+          "unityDeltaMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.671597957611084,
+            "p99": 16.70590229332447,
+            "worst": 17.277296632528305
+          },
+          "mainThreadMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6584,
+            "p95": 16.6856,
+            "p99": 16.7515,
+            "worst": 17.2762
+          },
+          "gcAllocatedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 3740.0,
+            "p95": 3740.0,
+            "p99": 3740.0,
+            "worst": 82334.0
+          },
+          "totalUsedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 304940933.0,
+            "p95": 310153517.0,
+            "p99": 310637189.0,
+            "worst": 310803516.0
+          },
+          "systemUsedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 556879872.0,
+            "p95": 606318592.0,
+            "p99": 606531584.0,
+            "worst": 606531584.0
+          },
+          "gfxUsedBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66018521.0,
+            "p95": 66018521.0,
+            "p99": 66018521.0,
+            "worst": 66018521.0
+          },
+          "workingSetBytes": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 3713,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0066,
+            "p95": 0.0086,
+            "p99": 0.1649,
+            "worst": 0.3914
+          },
+          "cpuFrameMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.7015,
+            "p99": 16.7639,
+            "worst": 17.2866
+          },
+          "timingMainMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 1.0599,
+            "p95": 1.3132,
+            "p99": 1.9331,
+            "worst": 3.1253
+          },
+          "presentWaitMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 15.5936,
+            "p95": 15.7312,
+            "p99": 15.7705,
+            "worst": 16.2417
+          },
+          "gpuMs": {
+            "count": 3712,
+            "missing": 1,
+            "invalid": 0,
+            "p50": 0.16896,
+            "p95": 0.17408,
+            "p99": 0.18944,
+            "worst": 1.72032
+          }
+        }
+      },
+      {
+        "scenario": "large-korean-codex",
+        "phase": "Complete",
+        "slot": 46,
+        "memories": 7,
+        "modal": "codex",
+        "method": "",
+        "paired": false,
+        "focused": true,
+        "saving": false,
+        "largeText": true,
+        "highContrast": false,
+        "width": 1920,
+        "height": 1080,
+        "vSyncCount": 0,
+        "targetFrameRate": 60,
+        "samples": 600,
+        "steadySeconds": 10.001726400000011,
+        "metrics": {
+          "frameMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6672,
+            "p95": 16.8081,
+            "p99": 17.2896,
+            "worst": 18.2592
+          },
+          "unityDeltaMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.666900366544724,
+            "p95": 16.676396131515503,
+            "p99": 16.742998734116554,
+            "worst": 16.947994008660316
+          },
+          "mainThreadMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 16.6585,
+            "p95": 16.7267,
+            "p99": 16.8452,
+            "worst": 18.241
+          },
+          "gcAllocatedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 3740.0,
+            "p95": 3740.0,
+            "p99": 3757.0,
+            "worst": 3828.0
+          },
+          "totalUsedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 266231777.0,
+            "p95": 266776962.0,
+            "p99": 266885057.0,
+            "worst": 266907485.0
+          },
+          "systemUsedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 559874048.0,
+            "p95": 559874048.0,
+            "p99": 559874048.0,
+            "worst": 559874048.0
+          },
+          "gfxUsedBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 66018521.0,
+            "p95": 66018521.0,
+            "p99": 66018521.0,
+            "worst": 66018521.0
+          },
+          "workingSetBytes": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "worst": 0.0
+          },
+          "probeMs": {
+            "count": 600,
+            "missing": 0,
+            "invalid": 0,
+            "p50": 0.0066,
+            "p95": 0.0087,
+            "p99": 0.1652,
+            "worst": 0.1831
+          },
+          "cpuFrameMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 16.6669,
+            "p95": 16.7373,
+            "p99": 16.8569,
+            "worst": 18.251
+          },
+          "timingMainMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 1.1138,
+            "p95": 1.3463,
+            "p99": 2.303,
+            "worst": 2.7259
+          },
+          "presentWaitMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 15.5428,
+            "p95": 15.6687,
+            "p99": 15.7318,
+            "worst": 15.8625
+          },
+          "gpuMs": {
+            "count": 592,
+            "missing": 8,
+            "invalid": 0,
+            "p50": 0.27648,
+            "p95": 0.287744,
+            "p99": 0.305152,
+            "worst": 2.098176
+          }
+        }
+      }
+    ],
+    "hitchesOver33_34ms": [
+      {
+        "frame": 9639,
+        "timeSeconds": 163.7141313,
+        "frameMs": 66.0418,
+        "phase": "Brewing",
+        "slot": 42,
+        "memories": 6,
+        "modal": "",
+        "saving": false,
+        "gcAllocatedBytes": 29965.0,
+        "mainThreadMs": 65.976,
+        "contextStableFrames": 0
+      },
+      {
+        "frame": 24378,
+        "timeSeconds": 414.174136,
+        "frameMs": 40.3554,
+        "phase": "Complete",
+        "slot": 46,
+        "memories": 7,
+        "modal": "codex",
+        "saving": false,
+        "gcAllocatedBytes": 13591.0,
+        "mainThreadMs": 40.4275,
+        "contextStableFrames": 6
+      }
+    ],
+    "metadata": {
+      "schemaVersion": 1,
+      "captureGuardFrames": 8,
+      "capacity": 216000,
+      "samples": 25420,
+      "droppedSamples": 0,
+      "width": 1920,
+      "height": 1080,
+      "vSyncCount": 0,
+      "targetFrameRate": 60,
+      "cpuCores": 20,
+      "systemMemoryMb": 32581,
+      "gpuMemoryMb": 8018,
+      "processId": 53000,
+      "startedUtc": "2026-11-21T14:20:49.3262883Z",
+      "finishedUtc": "2026-11-21T14:28:01.0084566Z",
+      "deviceName": "DESKTOP-0KQP7KH",
+      "operatingSystem": "Windows 11  (10.0.26200)",
+      "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+      "gpuName": "NVIDIA GeForce RTX 3070",
+      "graphicsApi": "Direct3D 11.0 [level 11.1]",
+      "unityVersion": "6000.3.7f1",
+      "buildGuid": "48f2cf8de54d45a69f9e5683165cf18d",
+      "scene": "Bar_Q1_Final",
+      "inputTier": "simulated production InputSystem",
+      "renderPath": "normal camera",
+      "workingSetError": "",
+      "timingError": "",
+      "outputError": "",
+      "gpuAvailability": "positive delayed GPU timings observed; deduplicate raw timestamp in summary",
+      "driverSource": "performance-host.json; graphicsApi is not an OS driver version",
+      "intervalClock": "Stopwatch Update-to-Update, previous frame/context; wall interval includes cap/vsync/wait and probe overhead",
+      "timingAttribution": "FrameTimingManager delayed up to four frames; unique timestamp, workload attribution only after eight stable frames",
+      "overhead": "fixed sample buffer; ProfilerRecorder and FrameTimingManager; process working set sampled at 1 Hz; serialization only at startup/Finish",
+      "capturePolicy": "raw intervals retained; exclude startFrame-1 through endFrame+8; unfinished intervals excluded through end",
+      "finalized": true,
+      "developmentBuild": true,
+      "batchMode": false,
+      "continuousCapture": false,
+      "evidenceProbeEnabledAtStart": false,
+      "frameTimingFeatureEnabled": true,
+      "managedInitializationBytes": 51687424,
+      "sampleBufferManagedBytes": 50114560,
+      "rawTelemetryBytes": 19706071,
+      "captureTelemetryBytes": 55129,
+      "stopwatchFrequency": 10000000,
+      "observedGpuSamples": 25291,
+      "warmupSeconds": 5.0,
+      "initializationMs": 22.8867,
+      "durationSeconds": 431.69484,
+      "serializationMs": 279.7167,
+      "counters": [
+        {
+          "name": "Main Thread",
+          "category": "Internal",
+          "unit": "TimeNanoseconds",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "GC Allocated In Frame",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "Total Used Memory",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "System Used Memory",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        },
+        {
+          "name": "Gfx Used Memory",
+          "category": "Memory",
+          "unit": "Bytes",
+          "reason": "",
+          "available": true
+        }
+      ]
+    },
+    "host": {
+      "observedUtc": "2026-11-21T14:20:43.8409308Z",
+      "errors": [],
+      "note": "Read-only host inventory; no power, driver or quality setting changes.",
+      "cpu": [
+        {
+          "Name": "12th Gen Intel(R) Core(TM) i7-12700KF",
+          "NumberOfCores": 12,
+          "NumberOfLogicalProcessors": 20,
+          "MaxClockSpeed": 3610
+        }
+      ],
+      "os": [
+        {
+          "Caption": "Microsoft Windows 11 Home",
+          "Version": "10.0.26200",
+          "BuildNumber": "26200",
+          "TotalVisibleMemorySize": 33363376,
+          "FreePhysicalMemory": 13265564
+        }
+      ],
+      "gpu": [
+        {
+          "Name": "Parsec Virtual Display Adapter",
+          "DriverVersion": "0.45.0.0",
+          "DriverDate": "/Date(1706140800000)/",
+          "AdapterRAM": null
+        },
+        {
+          "Name": "NVIDIA GeForce RTX 3070",
+          "DriverVersion": "32.0.16.1088",
+          "DriverDate": "/Date(1784678400000)/",
+          "AdapterRAM": 4293918720
+        }
+      ],
+      "storage": [
+        {
+          "Model": "Samsung SSD 980 PRO 1TB",
+          "MediaType": "Fixed hard disk media",
+          "InterfaceType": "SCSI",
+          "Size": 1000202273280
+        },
+        {
+          "Model": "ST2000DM008-2UB102",
+          "MediaType": "Fixed hard disk media",
+          "InterfaceType": "IDE",
+          "Size": 2000396321280
+        }
+      ],
+      "powerScheme": "\uc804\uc6d0 \uad6c\uc131\ud45c GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (\uace0\uc131\ub2a5)"
+    },
+    "rawSummary": "performance-summary.json"
+  },
+  "limits": [
+    "Simulated production InputSystem; normal camera, genuine foreground; development build at 1920x1080/60fps target/VSync 0",
+    "Four room workloads each exceed 60 contiguous focused eligible seconds; prepared-method eligible holds are about 9.88 seconds after capture guards",
+    "Isolated full-route CPU stalls remain included and unassigned; do not silently remove them or assert GC/host/implementation causality",
+    "Only 1080p current foreground performance measured; not minimum-spec, 720p or probe-free shipping certification",
+    "No draw/batch counters were collected by the existing probe",
+    "50,114,560-byte managed sample buffer plus retained full-resolution RenderTexture and proof overhead; occasional native window snapshots are supporting observations and their overhead was not subtracted",
+    "Constant-zero Unity working-set counter is unusable; use external process high-water and positive Profiler memory counters",
+    "GC allocation counters are observations, not proof of collection cause or a collection-count measurement"
+  ],
+  "comparison": {
+    "baseline": "Manifests/gate2-q1-performance.json",
+    "sameNamedCpuGpu": true,
+    "baselineTier": "Uncapped pose-held offscreen Q1 harness; controller/UI held; not normal-camera frame or GPU timing",
+    "baseline1080P95Ms": [
+      0.7652990221977234,
+      0.6764951944351196
+    ],
+    "baselineDrawsAbout": 429.5,
+    "conclusion": "No apples-to-apples speed ratio: current wall time includes a 60fps wait and normal gameplay/UI/probe overhead. Compare actual current CPU active/GPU cost and sustained room coverage; no hardware acceptance inferred."
+  }
+}

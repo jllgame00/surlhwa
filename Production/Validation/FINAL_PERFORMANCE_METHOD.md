@@ -91,3 +91,14 @@ the next actual run. The graphics-enabled Editor regression is separate
 evidence, not a Player performance result. See the evolving
 [Gate 3 draft](GATE3_RC_REVIEW_DRAFT.md) for its verification chronology and
 remaining native/media work.
+
+## 2026-11-21 measured candidate
+
+The [final Gate 3 RC record](GATE3_FINAL_RC_20261121.md) and
+[structured results](Manifests/gate3-performance-20261121.json) supersede the
+historical not-run status above for source `983b7b3`. Actual 1080p foreground
+full-route and bounded late-repeat measurements are retained, both exit 0.
+Required steady room coverage passes; isolated 83–807 ms full-route and
+40/66 ms repeat hitches remain documented validation debt. The constant-zero
+Unity working-set counter is unavailable, not zero memory. Raw telemetry and
+capture exclusions are preserved; no minimum-spec or stutter-free claim is made.

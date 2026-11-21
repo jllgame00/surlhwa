@@ -3061,3 +3061,60 @@ keyboard/held-input delivery is not native certification. Dedicated foreground
 performance and final exact-candidate packaging are still outstanding here.
 PD01-PD11 remain open for the single Gate 3 ruling. No routine owner approval is
 requested and nothing has been pushed.
+
+## 2026-11-21 Final Gate 3 RC review preparation
+
+Later record; the preceding pending/failed/interrupted checkpoints remain
+historical. The presentation source was already committed as `983b7b3` on
+`production-rebuild`, with a clean worktree at this resumption. No gameplay,
+asset, content, stable-ID or save-format changes were made in this phase.
+
+The current [Gate 3 RC package](../Production/Validation/GATE3_FINAL_RC_20261121.md)
+is **GATE3_FINAL_RC_READY_FOR_OWNER_REVIEW**, with explicitly bounded validation
+limitations, not final owner acceptance or a stutter-free shipping claim.
+Retained Editor04 is 863/863, tooling08 is 182/182, and corrected build04 is
+Succeeded with zero errors/warnings. The fresh current-build 1080p portfolio
+route passes 47 visits / 20 nights, nine Known recipes, seven memories,
+376 captures and 2,664 checks; 279 checkpoints and 557 saved generations remain
+archived. Its full source/content/asset/tool/Player inventory still matches.
+The older 373-capture build03 evidence is preserved under its own identity.
+
+Three new native pointer/reload cases pass across five actual Player processes,
+all normally closed with exit 0: ACT3 farewell/new memory/next guest, exact
+ending reading cursor, and Complete. Continue leaves the current save bytes
+unchanged in each case. Fresh isolated earned-save copies and origin hashes
+protect historical and user saves. Keyboard delivery and full native held-tool,
+regrip/focus boundaries remain VALIDATION_DEBT; pointer success does not certify
+them. Prior physical-Escape and sandbox failures remain preserved.
+
+The 1080p normal-camera foreground run passes its campaign proof (2,665 checks),
+exits 0 and retains 96,784 eligible foreground samples. Required zero-memory,
+one-memory, paired and seven-memory room intervals each exceed 60 contiguous
+focused seconds. Frame p95/p99 are 16.822/17.227 ms, GPU p95 0.583 ms. Six
+non-capture brewing hitches of 83–807 ms remain in the result. A separate earned
+late-checkpoint repeat exits 0, p95/p99 16.835/17.314 ms; the original late
+159/222 ms stalls do not recur, but 40/66 ms hitches remain. Cause is unassigned.
+This is measured coverage with bounded hitch debt, not a claim that every frame
+meets 60 fps. Constant-zero Unity working-set readings are unavailable; external
+process and positive Profiler memory observations are reported. Historical Q1
+uncapped/pose-held samples are not treated as equivalent to capped normal play.
+
+PASS: current complete loop, learning/Recommendation route, persistence and
+ending coverage, corrected Korean/menu lifecycle checks, bounded native reload,
+required steady foreground coverage and package identity checks.
+VALIDATION_DEBT: isolated hitch attribution, broad native keyboard/tool coverage,
+minimum hardware/probe-free performance and exact contact/media timing.
+HUMAN_SIGNOFF_REQUIRED: PD01–PD11, final readability/composition, pacing, audio,
+feel and emotional impact. DEFERRED_PRESENTATION: further bounded refinement
+identified by that bundled ruling. OUT_OF_SCOPE: future content/system/platform
+expansion. No known objective implementation defect is reclassified as art debt.
+Source provenance/reuse caveats remain in the final review; technical integration
+does not grant blanket public-release clearance.
+
+The package includes unchanged Player files, isolated owner-review launch
+instructions, original 1080p stills/BEST8, five recorded clips, raw performance,
+native observations, earned checkpoints, commit history and payload hashes.
+No push was performed in this phase. The local origin reflog records the baseline
+`983b7b3` as pushed on November 11; the earlier never-pushed summary was stale.
+The new documentation checkpoint remains local. No reset/clean/stash/restore or
+historical-evidence replacement was used.
